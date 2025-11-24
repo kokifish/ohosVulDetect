@@ -1,5 +1,6 @@
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import testNapi from 'libentry.so';
+
+// import testNapi from 'libentry.so'; // traditional so loading
 
 const DOMAIN = 0x0000;
 
@@ -14,13 +15,13 @@ struct Index {
         Text(this.message)
           .fontSize($r('app.float.page_text_font_size'))
           .fontWeight(FontWeight.Bold)
-          .onClick(() => {
+          .onClick(async () => { // async for dynamic so loading
             this.message = 'Welcome';
-            hilog.info(DOMAIN, 'testTag', 'Test NAPI 2 + 3 = %{public}d', testNapi.add(2, 3));
+            let testNapi = await import("libentry.so")
+            // hilog.info(DOMAIN, 'testTag', 'Test NAPI 2 + 3 = %{public}d', testNapi.add(2, 3));
+            hilog.info(DOMAIN, 'testTag', 'Test NAPI 2 + 3 = %{public}d', testNapi.default.add(2, 3));
           })
-      }
-      .width('100%')
-    }
-    .height('100%')
+      }.width('100%')
+    }.height('100%')
   }
 }
