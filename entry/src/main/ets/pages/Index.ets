@@ -21,6 +21,11 @@ struct Index {
             // hilog.info(DOMAIN, 'testTag', 'Test NAPI 2 + 3 = %{public}d', testNapi.add(2, 3));
             hilog.info(DOMAIN, 'testTag', 'Test NAPI 2 + 3 = %{public}d', testNapi.default.add(2, 3));
           })
+        Text("C2").onClick(async () => { // async for dynamic so loading
+          this.message = 'CC2';
+          let testNapi = await import("libentry.so")
+          hilog.info(DOMAIN, 'testTag', 'Test NAPI 3 + 5 = %{public}d', testNapi.default.add(3, 5));
+        })
       }.width('100%')
     }.height('100%')
   }
