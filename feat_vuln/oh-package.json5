@@ -1,0 +1,12 @@
+{
+  "name": "feat_vuln",
+  "version": "1.0.0",
+  "description": "planted labeled vulnerabilities + safe twins",
+  "main": "",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lib_common": "file:../lib_common",
+    "libentry.so": "file:./src/main/cpp/types/libentry"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "planted vulnerabilities"
+    },
+    {
+      "name": "VulnAbility_desc",
+      "value": "vuln challenges browser"
+    },
+    {
+      "name": "VulnAbility_label",
+      "value": "ovd-vuln"
+    },
+    {
+      "name": "BackdoorAbility_desc",
+      "value": "exported backdoor surface (planted)"
+    },
+    {
+      "name": "BackdoorAbility_label",
+      "value": "ovd-backdoor"
+    },
+    {
+      "name": "perm_location_reason",
+      "value": "benchmark location demo"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "feat_api",
+  "version": "1.0.0",
+  "description": "benign API coverage demos",
+  "main": "",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lib_common": "file:../lib_common",
+    "lib_shared": "file:../lib_shared"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "lib_common",
+  "version": "1.0.0",
+  "description": "benchmark common: logger, demo registry model, runner",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

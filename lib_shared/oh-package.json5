@@ -1,0 +1,9 @@
+{
+  "name": "lib_shared",
+  "version": "1.0.0",
+  "description": "benchmark dynamic shared library (HSP)",
+  "main": "Index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

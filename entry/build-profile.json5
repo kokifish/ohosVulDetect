@@ -5,11 +5,6 @@
       "copyCodeResource": {
         "enable": false
       }
-    },
-    "externalNativeOptions": {
-      "path": "./src/main/cpp/CMakeLists.txt",
-      "arguments": "",
-      "cppFlags": "--std=c++14",
     }
   },
   "buildOptionSet": [
@@ -18,17 +13,11 @@
       "arkOptions": {
         "obfuscation": {
           "ruleOptions": {
-            "enable": false,
+            "enable": true,
             "files": [
               "./obfuscation-rules.txt"
             ]
           }
-        }
-      },
-      "nativeLib": {
-        "debugSymbol": {
-          "strip": true,
-          "exclude": []
         }
       }
     },

@@ -1,0 +1,60 @@
+{
+  "module": {
+    "name": "feat_api",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "ApiAbility",
+    "deviceTypes": [
+      "phone"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET"
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO"
+      },
+      {
+        "name": "ohos.permission.VIBRATE"
+      },
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING"
+      },
+      {
+        "name": "ohos.permission.APPROXIMATELY_LOCATION",
+        "reason": "$string:perm_location_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.LOCATION",
+        "reason": "$string:perm_location_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      }
+    ],
+    "abilities": [
+      {
+        "name": "ApiAbility",
+        "srcEntry": "./ets/apiability/ApiAbility.ets",
+        "description": "$string:ApiAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:ApiAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": false
+      }
+    ]
+  }
+}

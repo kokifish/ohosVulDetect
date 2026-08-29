@@ -1,0 +1,19 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Backdoor",
+    "pages/SecretPage",
+    "pages/CryptoPage",
+    "pages/NetPage",
+    "pages/WebPage",
+    "pages/InjPage",
+    "pages/StoragePage",
+    "pages/LogPage",
+    "pages/IpcPage",
+    "pages/PermPage",
+    "pages/AuthPage",
+    "pages/DebugPage",
+    "pages/ConfPage",
+    "pages/NativePage"
+  ]
+}

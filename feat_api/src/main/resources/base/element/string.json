@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "benign API coverage demos"
+    },
+    {
+      "name": "ApiAbility_desc",
+      "value": "API coverage demos"
+    },
+    {
+      "name": "ApiAbility_label",
+      "value": "ovd-api"
+    },
+    {
+      "name": "perm_location_reason",
+      "value": "benchmark location demo"
+    }
+  ]
+}

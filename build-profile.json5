@@ -3,6 +3,20 @@
     "signingConfigs": [],
     "products": [
       {
+        "name": "emulator",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.1.1(24)",
+        "compatibleSdkVersion": "6.1.1(24)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "nativeCompiler": "BiSheng",
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      },
+      {
         "name": "default",
         "signingConfig": "default",
         "targetSdkVersion": "26.0.0",
@@ -34,7 +48,60 @@
         {
           "name": "default",
           "applyToProducts": [
-            "default"
+            "default",
+            "emulator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "feat_api",
+      "srcPath": "./feat_api",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default",
+            "emulator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "feat_vuln",
+      "srcPath": "./feat_vuln",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default",
+            "emulator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lib_common",
+      "srcPath": "./lib_common",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default",
+            "emulator"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lib_shared",
+      "srcPath": "./lib_shared",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default",
+            "emulator"
           ]
         }
       ]

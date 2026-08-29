@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "lib_shared",
+    "type": "shared",
+    "deviceTypes": [
+      "phone"
+    ],
+    "deliveryWithInstall": true
+  }
+}
