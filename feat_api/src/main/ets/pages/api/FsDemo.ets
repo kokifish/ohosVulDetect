@@ -1,5 +1,7 @@
 import { fileIo, picker } from '@kit.CoreFileKit';
 import { common } from '@kit.AbilityKit';
+import { resourceManager } from '@kit.LocalizationKit';
+import { util } from '@kit.ArkTS';
 import { Case, DemoScaffold } from 'lib_common';
 
 // 文件：同步/异步对、stat/copy/list、目录操作；picker 安全选择器。
@@ -50,6 +52,13 @@ struct FsDemo {
             const photoPicker = new picker.PhotoViewPicker();
             const res: picker.PhotoSelectResult = await photoPicker.select();
             return `picked=${res.photoUris.length}`;
+          }),
+          new Case('rawfile-res', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
+            const rm: resourceManager.ResourceManager = ctx.resourceManager;
+            const raw: Uint8Array = await rm.getRawFileContent('bench.txt');
+            const txt: string = util.TextDecoder.create('utf-8').decodeToString(raw);
+            const cfg: resourceManager.Configuration = rm.getConfigurationSync();
+            return `${txt.trim().slice(0, 20)}… dir=${cfg.direction} locale=${cfg.locale}`;
           })
         ]
       })

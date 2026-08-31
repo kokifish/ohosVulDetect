@@ -1,4 +1,6 @@
 // 动画形态：animateTo（闭包改状态）/.animation 隐式/TransitionEffect/geometryTransition。
+import { curves } from '@kit.ArkUI';
+
 @Entry
 @Component
 struct AnimDemo {
@@ -39,7 +41,7 @@ struct AnimDemo {
 
       Button('animateTo toggle')
         .onClick(() => {
-          this.getUIContext().animateTo({ duration: 500, curve: Curve.Friction }, () => {
+          this.getUIContext().animateTo({ duration: 500, curve: curves.cubicBezierCurve(0.2, 0.0, 0.1, 1.0) }, () => {
             this.toggle = !this.toggle;
             this.angle = this.angle === 0 ? 180 : 0;
             this.animSize = this.animSize === 80 ? 140 : 80;

@@ -1,7 +1,9 @@
 import { i18n, intl } from '@kit.LocalizationKit';
 import { common } from '@kit.AbilityKit';
 import { hilog, hiTraceMeter } from '@kit.PerformanceAnalysisKit';
-import { Case, DemoScaffold } from 'lib_common';
+import { systemDateTime } from '@kit.BasicServicesKit';
+import { util, buffer, url } from '@kit.ArkTS';
+import { BENCH, Case, DemoScaffold } from 'lib_common';
 
 // i18n/intl（构造器+实例方法）、hilog 变参格式化、hiTraceMeter 打点。
 @Entry
@@ -34,6 +36,15 @@ struct I18nDemo {
             }
             hiTraceMeter.finishTrace('bench_section', 1);
             return `traced s=${s}`;
+          }),
+          new Case('util-buffer-url', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
+            const enc: Uint8Array = new util.TextEncoder().encodeInto('bench-42');
+            const dec: string = util.TextDecoder.create('utf-8').decodeToString(enc);
+            const b64: string = new util.Base64().encodeToStringSync(enc);
+            const hex: string = buffer.from('buffer-src', 'utf-8').toString('hex');
+            const u = url.URL.parseURL(`${BENCH.API_BASE}/get?k=v`);
+            const t: number = await systemDateTime.getTime();
+            return `${dec} b64=${b64} hex=${hex} host=${u.host} t=${t}`;
           })
         ]
       })

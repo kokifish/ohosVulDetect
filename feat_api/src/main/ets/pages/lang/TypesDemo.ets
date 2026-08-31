@@ -84,6 +84,18 @@ class Registry {
   }
 }
 
+class Tally {
+  private n: number = 0;
+
+  get value(): number {
+    return this.n;
+  }
+
+  set bump(_: number) {
+    this.n += 1;
+  }
+}
+
 @Entry
 @Component
 struct TypesDemo {
@@ -124,6 +136,36 @@ struct TypesDemo {
           // 可选链 + 空值合并
           const rec: Record<string, Object> = {};
           this.lines.push(`opt=${(rec['x'] as string | undefined)?.length ?? 'none'}`);
+        })
+      Button('run lang extras')
+        .onClick(() => {
+          // DataView 二进制视图
+          const ab = new ArrayBuffer(8);
+          const dv = new DataView(ab);
+          dv.setFloat64(0, 3.14159, true);
+          this.lines.push(`dv f64=${dv.getFloat64(0, true).toFixed(5)} last-byte=${dv.getUint8(7)}`);
+          // BigInt 超安全整数
+          const big: bigint = 9007199254740993n;
+          this.lines.push(`bigint+1=${big + 1n} safe=${Number.MAX_SAFE_INTEGER}`);
+          // RegExp 捕获组
+          const m = /ovd-(\d+)/.exec('id ovd-42 end');
+          this.lines.push(`regexp g1=${m?.[1]} idx=${m?.index}`);
+          // getter/setter 存取器
+          const c = new Tally();
+          c.bump = 1;
+          c.bump = 2;
+          this.lines.push(`accessor value=${c.value}`);
+          // 标签循环跳转
+          let hits = 0;
+          outer: for (let i = 0; i < 3; i += 1) {
+            for (let j = 0; j < 3; j += 1) {
+              if (i + j > 2) {
+                continue outer;
+              }
+              hits += 1;
+            }
+          }
+          this.lines.push(`labeled hits=${hits}`);
         })
       Scroll() {
         Column({ space: 2 }) {
