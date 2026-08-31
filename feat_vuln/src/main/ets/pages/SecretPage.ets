@@ -1,4 +1,5 @@
-import { Runner } from 'lib_common';
+import { Case, DemoScaffold } from 'lib_common';
+import { common } from '@kit.AbilityKit';
 import { ovdSecret001 } from '../vulns/secret/OVD-SECRET-001';
 import { ovdSecret001S } from '../vulns/secret/OVD-SECRET-001S';
 import { ovdSecret002 } from '../vulns/secret/OVD-SECRET-002';
@@ -9,36 +10,20 @@ import { ovdSecret005 } from '../vulns/secret/OVD-SECRET-005';
 @Entry
 @Component
 struct SecretPage {
-  @State lines: string[] = [];
-  private runner: Runner = new Runner([]);
-
-  aboutToAppear(): void {
-    this.runner = new Runner(this.lines);
-  }
-
   build() {
     Column() {
-      Text('hardcoded secrets').fontSize(20).margin(8)
-      Flex({ wrap: FlexWrap.Wrap }) {
-        Button('001 AK/SK').margin(4).onClick(() => this.runner.run('001', () => ovdSecret001()))
-        Button('001S asset').margin(4).onClick(() => this.runner.run('001S', () => ovdSecret001S()))
-        Button('002 apikey').margin(4).onClick(() => this.runner.run('002', () => ovdSecret002()))
-        Button('003 pem').margin(4).onClick(() => this.runner.run('003', () => ovdSecret003()))
-        Button('004 dbpwd').margin(4).onClick(() => this.runner.run('004', () => ovdSecret004()))
-        Button('005 obfuscated').margin(4).onClick(() => this.runner.run('005', () => ovdSecret005()))
-      }
-      .width('100%')
-      Scroll() {
-        Column({ space: 2 }) {
-          ForEach(this.lines, (l: string, i: number) => {
-            Text(l).fontSize(11).fontFamily('monospace')
-          }, (l: string, i: number) => `${i}-${l}`)
-        }
-        .alignItems(HorizontalAlign.Start)
-        .width('100%')
-      }
-      .layoutWeight(1)
-      .margin(4)
+      DemoScaffold({
+        title: 'hardcoded secrets',
+        cases: [
+          new Case('001 AK/SK', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret001()),
+          new Case('001S asset', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret001S()),
+          new Case('002 apikey', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret002()),
+          new Case('003 pem', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret003()),
+          new Case('004 dbpwd', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret004()),
+          new Case('005 obfuscated', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret005())
+        ]
+      })
+
     }
     .height('100%')
   }

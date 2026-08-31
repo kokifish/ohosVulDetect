@@ -1,23 +1,17 @@
 import { socket } from '@kit.NetworkKit';
-import { BENCH, Runner } from 'lib_common';
+import { common } from '@kit.AbilityKit';
+import { BENCH, Case, DemoScaffold } from 'lib_common';
 
 // TCP/UDP/TLS 三种 socket：工厂构造 + on 事件 + await。
 @Entry
 @Component
 struct SocketDemo {
-  @State lines: string[] = [];
-  private runner: Runner = new Runner([]);
-
-  aboutToAppear(): void {
-    this.runner = new Runner(this.lines);
-  }
-
   build() {
     Column() {
-      Text('socket TCP/UDP/TLS').fontSize(20).margin(8)
-      Flex({ wrap: FlexWrap.Wrap }) {
-        Button('tcp-connect-send').margin(4).onClick(() => {
-          this.runner.run('tcp', async () => {
+      DemoScaffold({
+        title: 'socket TCP/UDP/TLS',
+        cases: [
+          new Case('tcp-connect-send', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const tcp = socket.constructTCPSocketInstance();
             let got = 0;
             tcp.on('message', (info: socket.SocketMessageInfo) => {
@@ -29,19 +23,15 @@ struct SocketDemo {
             tcp.off('message');
             await tcp.close();
             return `tcp sent, recv=${got}B`;
-          });
-        })
-        Button('udp-bind-sendTo').margin(4).onClick(() => {
-          this.runner.run('udp', async () => {
+          }),
+          new Case('udp-bind-sendTo', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const udp = socket.constructUDPSocketInstance();
             await udp.bind({ address: '0.0.0.0', port: 0 });
             await udp.send({ data: 'bench-udp', address: { address: BENCH.TCP_HOST, port: 80 } });
             udp.close();
             return 'udp sent';
-          });
-        })
-        Button('tls-connect').margin(4).onClick(() => {
-          this.runner.run('tls', async () => {
+          }),
+          new Case('tls-connect', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const tls = socket.constructTLSSocketInstance();
             await tls.connect({
               address: { address: BENCH.TCP_HOST, port: 443 },
@@ -50,21 +40,10 @@ struct SocketDemo {
             const proto = tls.getProtocol();
             await tls.close();
             return `tls ${proto ?? 'connected'}`;
-          });
-        })
-      }
-      .width('100%')
-      Scroll() {
-        Column({ space: 2 }) {
-          ForEach(this.lines, (l: string, i: number) => {
-            Text(l).fontSize(11).fontFamily('monospace')
-          }, (l: string, i: number) => `${i}-${l}`)
-        }
-        .alignItems(HorizontalAlign.Start)
-        .width('100%')
-      }
-      .layoutWeight(1)
-      .margin(4)
+          })
+        ]
+      })
+
     }
     .height('100%')
   }

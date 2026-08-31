@@ -1,25 +1,17 @@
-import { common } from '@kit.AbilityKit';
 import { fileIo, picker } from '@kit.CoreFileKit';
-import { Runner } from 'lib_common';
+import { common } from '@kit.AbilityKit';
+import { Case, DemoScaffold } from 'lib_common';
 
 // 文件：同步/异步对、stat/copy/list、目录操作；picker 安全选择器。
 @Entry
 @Component
 struct FsDemo {
-  @State lines: string[] = [];
-  private runner: Runner = new Runner([]);
-
-  aboutToAppear(): void {
-    this.runner = new Runner(this.lines);
-  }
-
   build() {
     Column() {
-      Text('fileIo/fs + picker').fontSize(20).margin(8)
-      Flex({ wrap: FlexWrap.Wrap }) {
-        Button('fs-sync-rw').margin(4).onClick(() => {
-          this.runner.run('fs-sync-rw', () => {
-            const ctx = this.getUIContext().getHostContext() as common.UIAbilityContext;
+      DemoScaffold({
+        title: 'fileIo/fs + picker',
+        cases: [
+          new Case('fs-sync-rw', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const path = `${ctx.filesDir}/bench.txt`;
             const f: fileIo.File = fileIo.openSync(path, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE | fileIo.OpenMode.TRUNC);
             fileIo.writeSync(f.fd, 'hello-bench-fs');
@@ -35,11 +27,8 @@ struct FsDemo {
               text += String.fromCharCode(b);
             }
             return `size=${stat.size} read=${text}`;
-          });
-        })
-        Button('fs-async-dir').margin(4).onClick(() => {
-          this.runner.run('fs-async-dir', async () => {
-            const ctx = this.getUIContext().getHostContext() as common.UIAbilityContext;
+          }),
+          new Case('fs-async-dir', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const dir = `${ctx.filesDir}/bench_dir`;
             if (!fileIo.accessSync(dir)) {
               fileIo.mkdirSync(dir);
@@ -51,36 +40,20 @@ struct FsDemo {
             const names: string = fileIo.listFileSync(dir).join(',');
             fileIo.rmdirSync(dir);
             return `files=${names}`;
-          });
-        })
-        Button('doc-picker').margin(4).onClick(() => {
-          this.runner.run('doc-picker', async () => {
-            const ctx = this.getUIContext().getHostContext() as common.UIAbilityContext;
+          }),
+          new Case('doc-picker', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const docPicker = new picker.DocumentViewPicker(ctx);
             const uris: Array<string> = await docPicker.select();
             return `picked=${uris.length}`;
-          });
-        })
-        Button('photo-picker').margin(4).onClick(() => {
-          this.runner.run('photo-picker', async () => {
+          }),
+          new Case('photo-picker', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const photoPicker = new picker.PhotoViewPicker();
             const res: picker.PhotoSelectResult = await photoPicker.select();
             return `picked=${res.photoUris.length}`;
-          });
-        })
-      }
-      .width('100%')
-      Scroll() {
-        Column({ space: 2 }) {
-          ForEach(this.lines, (l: string, i: number) => {
-            Text(l).fontSize(11).fontFamily('monospace')
-          }, (l: string, i: number) => `${i}-${l}`)
-        }
-        .alignItems(HorizontalAlign.Start)
-        .width('100%')
-      }
-      .layoutWeight(1)
-      .margin(4)
+          })
+        ]
+      })
+
     }
     .height('100%')
   }
