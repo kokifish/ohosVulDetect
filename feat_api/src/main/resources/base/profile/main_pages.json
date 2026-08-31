@@ -37,6 +37,7 @@
     "pages/ui/NodeDemo",
     "pages/ui/GestureCanvasDemo",
     "pages/ui/BuilderDemo",
+    "pages/ui/ComponentsDemo",
     "pages/lang/ClosureDemo",
     "pages/lang/TypesDemo"
   ]

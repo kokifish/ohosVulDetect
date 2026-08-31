@@ -40,6 +40,7 @@ export const UI_DEMOS: DemoItem[] = [
   new DemoItem('ui-node', 'NodeController/UIObserver/RenderNode', 'pages/ui/NodeDemo'),
   new DemoItem('ui-gesture-canvas', 'gestures + Canvas', 'pages/ui/GestureCanvasDemo'),
   new DemoItem('ui-builder', '@Builder/@Styles/@Extend/modifier', 'pages/ui/BuilderDemo'),
+  new DemoItem('ui-components', 'component gallery 30+', 'pages/ui/ComponentsDemo'),
   new DemoItem('lang-closure', 'closures/lexenv stress', 'pages/lang/ClosureDemo'),
   new DemoItem('lang-types', 'generics/union/enum/try', 'pages/lang/TypesDemo'),
 ];

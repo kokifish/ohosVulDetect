@@ -8,7 +8,7 @@
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 28 个良性 API demo 页 + 10 个 UI/语言特性页（含 lexenv 压力页） |
+| feat_api | feature HAP | 28 个良性 API demo 页 + 11 个 UI/语言特性页（组件画廊 + lexenv 压力页） |
 | feat_vuln | feature HAP | 13 类漏洞页 + BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner |
 | lib_shared | HSP | 静态/动态 import 目标 |
