@@ -47,4 +47,5 @@ export const UI_DEMOS: DemoItem[] = [
   new DemoItem('lang-generator', 'function*/async*/iterators', 'pages/lang/GeneratorDemo'),
   new DemoItem('lang-ops', 'operators/comparisons', 'pages/lang/OpsDemo'),
   new DemoItem('lang-callforms', 'spread/rest/super/regex', 'pages/lang/CallFormsDemo'),
+  new DemoItem('lang-runtime', 'class runtime helpers + misc', 'pages/lang/RuntimeDemo'),
 ];

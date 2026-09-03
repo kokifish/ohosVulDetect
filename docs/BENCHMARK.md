@@ -128,9 +128,9 @@ ohre 侧缺口（截至 2026-09-03，feat_api hap 实测 823 条 `!UNKNOWN TAC`�
 `ldlazysendablemodulevar`/`wideldlazysendablemodulevar`（`NACtoTAC.py` dispatch 表缺项；
 其余 9 条 sendable 指令已有 handler）。语料采纳前需先补齐 ohre 支持，否则 UNKNOWN 门禁不通过。
 
-## 语言特性页与 ArkTS 语法限制（2026-09-03，lang-generator/ops/callforms）
+## 语言特性页与 ArkTS 语法限制（2026-09-03，lang-generator/ops/callforms + lang-runtime）
 
-lang 页覆盖 34 条新指令（全 app 104→138/267）。关键手段与限制：
+lang 页累计覆盖 54 条新指令（全 app 104→158/267）。关键手段与限制：
 
 - **`.ts` 文件同模块编译**：arkts-* 严格检查只作用于 `.ets`；generator、for-in、Symbol、
   Function.apply、解构声明等被禁特性放在 `pages/lang/TsFeatures.ts`（与 .ets 同目录、进同一
@@ -144,6 +144,21 @@ lang 页覆盖 34 条新指令（全 app 104→138/267）。关键手段与限�
   原型上，常得 undefined），demo 里读回用 `this.x`。
 - 部署坑：`hdc file send` 对不存在的本地路径可能静默"成功"（返回码不可靠），重装验证前务必比对
   `md5sum`；同 versionCode 覆盖安装可能不生效，建议先 `bm uninstall`。
+
+lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为独立 agent 实证后落地：
+
+- 私有字段全家族（create/define/st/ldprivateproperty）、callinit、definefieldbyvalue（计算键字面量）、
+  copydataproperties（对象展开）、createobjectwithexcludedkeys（解构 rest）、delobjprop、
+  ldsuperbyvalue/stsuperbyvalue（基类带索引签名 + super[k]）、supercallspread（元组 spread 调 super）、
+  callthisrange（函数数组取出 + ≥4 参调用）、gettemplateobject（tagged template）、
+  setobjectwithproto（字面量 __proto__ 键）、tonumber（一元 +）、throw.patternnoncoercible、
+  debugger（release 会被剥离，仅 debug 语料可见）、wide.newlexenv/wide.ldlexvar/wide.stlexvar。
+- 词法环境 wide 压力（tools/gen_lexwide_stress.py 生成 LexWideLab.ets）三个必要条件：
+  ① 单一作用域 >127 个被捕获变量（仅声明不捕获不占槽位）；② 值必须从参数派生——字面量 const
+  会被 release 常量折叠进箭头函数，捕获整个消失；③ 箭头须经数组/循环间接调用——直接调用会被
+  release 内联，词法环境随之消除。
+- 运行时可达性区分：`fs[0](1,2,3,4)`（函数数组动态调用，运行时合法）vs `o[m]()`（对象动态方法
+  调用，运行时 TypeError）——后者只能做编译覆盖。
 
 ## 模拟器运行（6.1.1(24) 镜像）
 

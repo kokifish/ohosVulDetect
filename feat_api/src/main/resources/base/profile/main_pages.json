@@ -43,6 +43,7 @@
     "pages/lang/TypesDemo",
     "pages/lang/GeneratorDemo",
     "pages/lang/OpsDemo",
-    "pages/lang/CallFormsDemo"
+    "pages/lang/CallFormsDemo",
+    "pages/lang/RuntimeDemo"
   ]
 }
