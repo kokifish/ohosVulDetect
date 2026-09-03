@@ -26,6 +26,7 @@
     "pages/api/BgTaskDemo",
     "pages/api/WindowDemo",
     "pages/api/TaskPoolDemo",
+    "pages/api/SendableDemo",
     "pages/api/WorkerDemo",
     "pages/api/DynamicImportDemo",
     "pages/api/I18nDemo",

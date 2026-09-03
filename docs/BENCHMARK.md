@@ -8,7 +8,7 @@
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 28 个良性 API demo 页 + 11 个 UI/语言特性页（组件画廊 + lexenv 压力页） |
+| feat_api | feature HAP | 29 个良性 API demo 页（含 sendable 指令实验室）+ 11 个 UI/语言特性页（组件画廊 + lexenv 压力页） |
 | feat_vuln | feature HAP | 13 类漏洞页 + BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner |
 | lib_shared | HSP | 静态/动态 import 目标 |
@@ -96,7 +96,39 @@ python3 ohosVulDetect/groundtruth/score_vs_ohre.py test.out ohosVulDetect/build/
 - native 密钥只在 libentry.so 可见（abc 级负样本成立）；`Math.random` 在 IR 中为 `Math."random"`
 - 全量 may-ld-from（未解析 lexenv）= 235，可作为 SA 简化能力基线
 
-### 模拟器运行（6.1.1(24) 镜像）
+### Sendable 指令覆盖实验室（2026-09-03）
+
+目的：让语料覆盖全部 14 条 `callruntime.*sendable*` 指令（含 5 条 wide 变体）。
+代码：`feat_api/src/main/ets/concurrent/SendableLab.ets`（8 种形态，文件内注释逐条对应指令）+
+`SendableWideLab.ets`/`SendableWideData.ets`（压力生成物，`tools/gen_sendable_stress.py` 生成，勿手改）+
+页面 `pages/api/SendableDemo.ets`（入口 `api-sendable`）。
+
+指令 → 触发源码形态（es2panda 实证，@Sendable → "use sendable" 上下文；@Concurrent 不产生 sendable 指令）：
+
+| 指令 | 触发形态 |
+|---|---|
+| definesendableclass | 定义 `@Sendable class`（func_main_0） |
+| newsendableenv / widenewsendableenv | 模块顶层有 @Sendable 类（env 大小 >127 用 wide） |
+| stsendablevar / widestsendablevar | func_main_0 把 @Sendable 类存入 env 槽位（槽位号=类定义顺序） |
+| ldsendablevar / wideldsendablevar | 任意函数按名引用本模块 @Sendable 类 |
+| ldsendableclass | @Sendable 类方法内引用自身类（如 `clone(): Self { return new Self(...) }`） |
+| ldsendableexternalmodulevar / wide | @Sendable 函数内访问普通 import 绑定 |
+| ldlazysendablemodulevar / wide | @Sendable 函数内访问 `import lazy` 绑定（API≥12） |
+| ldsendablelocalmodulevar / wide | @Sendable 函数内访问本模块导出顶层变量（API≥18；本工程 API26） |
+
+wide 阈值统一为 MAX_INT8=127（不是 255）。压力规模：136 个 @Sendable 类 + 136 eager + 12 lazy import + 136 个本模块 `let` 变量（索引从 0 数起的取阈值+8 余量；lazy 索引按名字母序落在全部 eager 之后、必为 wide，故仅需少量，且绑定名用 `z*` 前缀保证排在 `w*` 之后）。
+
+坑（release 混淆构建实测）：
+- 未被页面 import 的 .ets 会被 tree-shake，新文件必须接入页面；
+- 本模块 `export const` 在 release 会被常量折叠成字面量，wide localmodulevar 随之消失——生成器用 `export let`；
+- `taskpool.execute` 只接受 `@Concurrent` 函数；`@Sendable` 函数在 UI 线程直接调用即可。
+
+ohre 侧缺口（截至 2026-09-03，feat_api hap 实测 823 条 `!UNKNOWN TAC`，全部来自下述 5 个指令名）：
+`ldsendableclass`、`ldsendablelocalmodulevar`/`wideldsendablelocalmodulevar`、
+`ldlazysendablemodulevar`/`wideldlazysendablemodulevar`（`NACtoTAC.py` dispatch 表缺项；
+其余 9 条 sendable 指令已有 handler）。语料采纳前需先补齐 ohre 支持，否则 UNKNOWN 门禁不通过。
+
+## 模拟器运行（6.1.1(24) 镜像）
 
 - feat_api 38 个 demo 入口全遍历：52 ✅ / 9 ❌（失败均为环境因素：socket 沙箱、user_grant 弹窗、backgroundModes schema、GCM 401）
 - feat_vuln 13 类：37 ✅ / 4 ❌（新增 CRYPTO-007；Backdoor 页 load-url 按钮实测拉起 Web 加载，WEB-006 可达）（asset 201、location 开关、file:// 目标不存在、GCM 401）

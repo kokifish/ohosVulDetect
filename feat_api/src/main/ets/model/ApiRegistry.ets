@@ -26,6 +26,7 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-bgtask', 'backgroundTaskManager', 'pages/api/BgTaskDemo'),
   new DemoItem('api-window', 'window/fullscreen/orientation', 'pages/api/WindowDemo'),
   new DemoItem('api-taskpool', 'taskpool + @Concurrent + @Sendable', 'pages/api/TaskPoolDemo'),
+  new DemoItem('api-sendable', '@Sendable function shapes', 'pages/api/SendableDemo'),
   new DemoItem('api-worker', 'ThreadWorker + message', 'pages/api/WorkerDemo'),
   new DemoItem('api-dynamic-import', 'import() lazy + HSP', 'pages/api/DynamicImportDemo'),
   new DemoItem('api-i18n', 'i18n/intl/hilog/hiTrace', 'pages/api/I18nDemo'),
