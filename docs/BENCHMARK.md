@@ -67,8 +67,8 @@ $E -install -deviceType phone -osVersion "HarmonyOS 6.1.1(24)"
 $E -create ovdbench -deviceType phone -osVersion "HarmonyOS 6.1.1(24)"
 $E -start ovdbench -noWindow          # 前台可去掉 -noWindow
 HDC=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/toolchains/hdc
-$HDC file send build/outputs/emulator/ohosVulDetect-emulator-unsigned.app /data/local/tmp/ovd.app
-$HDC shell "bm install -p /data/local/tmp/ovd.app"      # 模拟器接受未签名 debug 包
+$HDC file send build/outputs/emulator/ohosVulDetect-emulator-unsigned.app /data/local/tmp/ohosvuldetect.app
+$HDC shell "bm install -p /data/local/tmp/ohosvuldetect.app"      # 模拟器接受未签名 debug 包
 $HDC shell "aa start -a EntryAbility -b com.koki.VD"
 $HDC shell "snapshot_display -f /data/local/tmp/s.jpeg" # 截图
 $E -stop ovdbench
