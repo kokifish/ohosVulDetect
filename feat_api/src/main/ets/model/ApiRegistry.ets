@@ -44,4 +44,7 @@ export const UI_DEMOS: DemoItem[] = [
   new DemoItem('ui-components', 'component gallery 30+', 'pages/ui/ComponentsDemo'),
   new DemoItem('lang-closure', 'closures/lexenv stress', 'pages/lang/ClosureDemo'),
   new DemoItem('lang-types', 'generics/union/enum/try', 'pages/lang/TypesDemo'),
+  new DemoItem('lang-generator', 'function*/async*/iterators', 'pages/lang/GeneratorDemo'),
+  new DemoItem('lang-ops', 'operators/comparisons', 'pages/lang/OpsDemo'),
+  new DemoItem('lang-callforms', 'spread/rest/super/regex', 'pages/lang/CallFormsDemo'),
 ];

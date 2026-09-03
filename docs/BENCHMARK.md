@@ -128,6 +128,23 @@ ohre 侧缺口（截至 2026-09-03，feat_api hap 实测 823 条 `!UNKNOWN TAC`�
 `ldlazysendablemodulevar`/`wideldlazysendablemodulevar`（`NACtoTAC.py` dispatch 表缺项；
 其余 9 条 sendable 指令已有 handler）。语料采纳前需先补齐 ohre 支持，否则 UNKNOWN 门禁不通过。
 
+## 语言特性页与 ArkTS 语法限制（2026-09-03，lang-generator/ops/callforms）
+
+lang 页覆盖 34 条新指令（全 app 104→138/267）。关键手段与限制：
+
+- **`.ts` 文件同模块编译**：arkts-* 严格检查只作用于 `.ets`；generator、for-in、Symbol、
+  Function.apply、解构声明等被禁特性放在 `pages/lang/TsFeatures.ts`（与 .ets 同目录、进同一
+  modules.abc），页面 orchestrate 调用。非元组 spread 在 .ts 中同样被禁，需元组类型。
+- **运行时与编译期不一致**：`.ts` 里的 `o[m]()` 动态方法调用能编译出 `callthis1`（非 withname），
+  但 ArkTS 运行时抛 TypeError——此类"仅编译覆盖"函数页面以 `typeof fn` 引用防 tree-shake，不得调用。
+- **本工具链（SDK26 es2abc 部分求值）不可达指令**：`createregexpwithliteral`（正则字面量被降级为
+  `new RegExp(字符串)`）、`closeiterator`、`getresumeoffset`、`jeq*/jstricteq*` 比较跳转族
+  （一律拆成 `eq/ne + jeqz/jnez`）、`ldsendableclass` 之外见上文 sendable 一节。
+- super 属性语义：`super.x = v` 无 setter 时落到 this 自有属性；`super.x` 读走原型链（类字段不在
+  原型上，常得 undefined），demo 里读回用 `this.x`。
+- 部署坑：`hdc file send` 对不存在的本地路径可能静默"成功"（返回码不可靠），重装验证前务必比对
+  `md5sum`；同 versionCode 覆盖安装可能不生效，建议先 `bm uninstall`。
+
 ## 模拟器运行（6.1.1(24) 镜像）
 
 - feat_api 38 个 demo 入口全遍历：52 ✅ / 9 ❌（失败均为环境因素：socket 沙箱、user_grant 弹窗、backgroundModes schema、GCM 401）

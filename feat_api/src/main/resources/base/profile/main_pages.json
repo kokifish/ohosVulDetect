@@ -40,6 +40,9 @@
     "pages/ui/BuilderDemo",
     "pages/ui/ComponentsDemo",
     "pages/lang/ClosureDemo",
-    "pages/lang/TypesDemo"
+    "pages/lang/TypesDemo",
+    "pages/lang/GeneratorDemo",
+    "pages/lang/OpsDemo",
+    "pages/lang/CallFormsDemo"
   ]
 }
