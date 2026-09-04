@@ -75,7 +75,9 @@ def gen(out: pathlib.Path, count: int, imports_n: int) -> None:
     mapped = ", ".join(f"m{i}: number" for i in range(128))
     lines += [
         f"export function restWide({mapped}, ...rest: number[]): number {{",
-        "  return rest.length + m0;",
+        "  // 勿读 m0：>127 形参的调用在部分槽位发生参数错位（实测 m0 得到运行时内部对象，",
+        "  // toString 为 'Cannot get source code'）；copyrestargs 触发只依赖 rest 前形参数量。",
+        "  return rest.length;",
         "}",
         "",
         # 调用包装：防 ArkGuard 剥离未被页面调用的导出。

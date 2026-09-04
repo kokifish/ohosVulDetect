@@ -111,8 +111,27 @@ export function tsNameSet(): string {
 
 import { globalAssignRun } from './GlobalAssign';
 
-// trystglobalbyname（GlobalAssign.js 内对未声明标识符赋值）的保活引用：只 typeof 不调用
-// （esm 严格模式运行时必抛 ReferenceError）。
+// trystglobalbyname（GlobalAssign.js）运行化：先预置 globalThis 同名属性（ldglobal+stobjbyname，
+// 必成功），再调用赋值函数——trystglobalbyname 命中 global object own 属性分支，不再抛
+// ReferenceError（运行时 handler 语义实测）。
 export function tsGlobalRef(): string {
-  return `global=${typeof globalAssignRun}`;
+  globalThis['ovdUndeclaredGlobal' as ESObject] = 7;
+  const r: number = globalAssignRun() as number;
+  return `global=${r} after=${globalThis['ovdUndeclaredGlobal' as ESObject]}`;
+}
+
+// callthis2/3（非 withname）：成员 tag 的 tagged template——gettemplateobject 打断了
+// callee 与 ldobjbyname 的相邻性，不再转 withname；N = 替换表达式数 + 1。
+export function tsMemberTagCalls(): string {
+  const o = {
+    t2(strings: TemplateStringsArray, v: number): number {
+      return strings.length + v;
+    },
+    t3(strings: TemplateStringsArray, a: number, b: number): number {
+      return strings.length + a + b;
+    }
+  };
+  const r2 = o.t2`a${1}b`;
+  const r3 = o.t3`a${1}b${2}c`;
+  return `tag=${r2}/${r3}`;
 }

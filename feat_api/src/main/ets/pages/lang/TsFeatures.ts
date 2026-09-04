@@ -121,16 +121,46 @@ export function tsNewSpread(): number {
   return p.a * 10 + p.b;
 }
 
-// 编译期覆盖用（callthis1 非 withname 形态）：ArkTS 运行时禁止动态索引方法调用（TypeError），
-// 页面仅以 typeof 引用防 tree-shake，不得真正调用。
+// callthis1（非 withname）形态一：动态下标方法调用。运行时可达性分界（2026-09-04 实测）：
+// 显式 Record<string, 函数类型> 标注 → 合法；无类型标注的对象字面量 / 类实例 → TypeError。
 export function tsDynamicMethod(): string {
-  const o = {
-    greet(prefix: string): string {
-      return `${prefix}dyn`;
-    }
+  const o: Record<string, (p: string) => string> = {
+    'greet': (p: string): string => `${p}dyn`
   };
   const m = 'greet';
   return o[m]('hi-');
+}
+
+// callthis1（非 withname）形态二：yield* 委托——编译器把内层对被委托迭代器的
+// next(v)/throw(e)/return(v) 展开为非 withname 的 callthis1（iterators.cpp CallMethodWithValue）。
+class Delegate {
+  v: number = 0;
+
+  next(x?: number): { value: number, done: boolean } {
+    this.v += x ?? 1;
+    return { value: this.v, done: false };
+  }
+
+  return(v: number): { value: number, done: boolean } {
+    return { value: v, done: true };
+  }
+
+  [Symbol.iterator](): Delegate {
+    return this;
+  }
+}
+
+export function* tsYieldStarDelegate(): Generator<number, number, number> {
+  const sent = yield* new Delegate() as any;
+  return sent;
+}
+
+export function tsYieldStarDrive(): string {
+  const g = tsYieldStarDelegate();
+  const a = g.next(10);
+  const b = g.next(32);
+  const fin = g.return(7);
+  return `ys=${a.value},${b.value} fin=${fin.value}`;
 }
 
 export function tsDestruct(): number {
@@ -168,4 +198,28 @@ export function tsGenResumeWithArg(): string {
     threw = 'caught';
   }
   return `second=${second.value} fin=${fin.done ? fin.value : 'nd'} ${threw}`;
+}
+
+// callthis1（非 withname）变体：字面量下标 / 可选链调用（均实测运行可达）。
+export function tsLiteralIndexCall(): string {
+  const o = {
+    greet(p: string): string {
+      return `${p}lit`;
+    }
+  };
+  return o['greet']('hi-');
+}
+
+export function tsRecordIndexCall(k: string): string {
+  const o: Record<string, (p: string) => string> = {
+    'greet': (p: string): string => `${p}rec`
+  };
+  return o[k]('hi-');
+}
+
+export function tsOptChainCall(k: string): string {
+  const o: Record<string, ((p: string) => string) | undefined> = {
+    'greet': (p: string): string => `${p}opt`
+  };
+  return o[k]?.('hi-') ?? 'none';
 }

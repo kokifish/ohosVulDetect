@@ -432,7 +432,9 @@ export function callRangeDirect(): number {
 }
 
 export function restWide(m0: number, m1: number, m2: number, m3: number, m4: number, m5: number, m6: number, m7: number, m8: number, m9: number, m10: number, m11: number, m12: number, m13: number, m14: number, m15: number, m16: number, m17: number, m18: number, m19: number, m20: number, m21: number, m22: number, m23: number, m24: number, m25: number, m26: number, m27: number, m28: number, m29: number, m30: number, m31: number, m32: number, m33: number, m34: number, m35: number, m36: number, m37: number, m38: number, m39: number, m40: number, m41: number, m42: number, m43: number, m44: number, m45: number, m46: number, m47: number, m48: number, m49: number, m50: number, m51: number, m52: number, m53: number, m54: number, m55: number, m56: number, m57: number, m58: number, m59: number, m60: number, m61: number, m62: number, m63: number, m64: number, m65: number, m66: number, m67: number, m68: number, m69: number, m70: number, m71: number, m72: number, m73: number, m74: number, m75: number, m76: number, m77: number, m78: number, m79: number, m80: number, m81: number, m82: number, m83: number, m84: number, m85: number, m86: number, m87: number, m88: number, m89: number, m90: number, m91: number, m92: number, m93: number, m94: number, m95: number, m96: number, m97: number, m98: number, m99: number, m100: number, m101: number, m102: number, m103: number, m104: number, m105: number, m106: number, m107: number, m108: number, m109: number, m110: number, m111: number, m112: number, m113: number, m114: number, m115: number, m116: number, m117: number, m118: number, m119: number, m120: number, m121: number, m122: number, m123: number, m124: number, m125: number, m126: number, m127: number, ...rest: number[]): number {
-  return rest.length + m0;
+  // 勿读 m0：>127 形参的调用在部分槽位发生参数错位（实测 m0 得到运行时内部对象，
+  // toString 为 'Cannot get source code'）；copyrestargs 触发只依赖 rest 前形参数量。
+  return rest.length;
 }
 
 export function restWideCall(): number {

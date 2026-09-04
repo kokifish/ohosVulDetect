@@ -191,3 +191,31 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
   （无 TS 注解！）对未声明标识符赋值——esm 严格模式运行时必抛 ReferenceError，仅编译覆盖（typeof 桥接保活）。
 - debug 语料口径：debug 构建（--debug-info）额外产出 debugger/newlexenvwithname/wide.newlexenvwithname，
   但 debug 关优化（无 nop、内联/折叠行为不同），覆盖统计取两模式并集。
+
+## 运行时可达性收口（2026-09-04 第二轮，release 171/267）
+
+- `trystglobalbyname` **运行化**：ArkTS 运行时该指令无 sloppy 自动建全局语义（global record 与
+  global object own 属性均未命中 → ReferenceError），但**先 `globalThis.x = 预置` 再赋值**即命中
+  own 属性分支成功（RuntimeHelpers.ts tsGlobalRef，实测 global=42 after=42）。
+- 新增非 withname callthis 形态（此前仅 o[m]() 一种且运行时炸）：**yield\* 委托**的内层
+  next(v)/return(v) → callthis1（tsYieldStarDrive 运行验证 ys=1,33 fin=7）；**成员 tag 的
+  tagged template**（gettemplateobject 打断 withname 相邻性）→ callthis2/3（tag=3/6 运行验证）。
+- **o[m]() 运行时硬限制确证**：对象字面量形态同样 TypeError（此前仅测过类实例）——动态下标方法
+  调用在 ArkTS 运行时不可运行，仅编译覆盖（tsDynamicMethod，typeof 保活）。
+- `taskpool.execute` 第 3 参 Priority 枚举在 API24 运行时返回空 {}（去掉即 ✅，n=10⁶ sum 正确）——
+  历史 heavySum ❌ 基线项已修复，feat_api 基线 53✅/8❌。
+- commonjs 路线证伪：未声明赋值在 esm/cjs 下编译为同一指令且运行时同样必抛（handler 无
+  sloppy 分支）；ldglobalvar/stglobalvar/st(t)consttoglobalrecord 仅 script 模式发射，
+  应用管线（esm|cjs 二选一）不可达——放弃，覆盖只能靠应用外产物。
+- debug 语料动态验证：debug 包在模拟器全页通过，debugger 语句无调试器时 no-op。
+
+## 运行时可达性边界补充（2026-09-04 第三轮实测）
+
+- **动态下标调用的真实分界**：`o[m]()` 在显式 `Record<string, 函数类型>` 标注的对象上**运行时合法**
+  （变量下标/字面量下标/可选链 `o[k]?.()` 均实测通过）——此前"对象字面量也炸"的结论仅适用于
+  **无类型标注**的对象字面量与类实例（动态下标解析得 undefined → "not callable"）。
+  tsDynamicMethod 已改 Record 形态真实运行（dyn=hi-dyn），**"仅编译覆盖"清单清零**。
+- **>127 形参函数的调用错位**：128+ 形参函数被调用时部分槽位参数错位（实测 restWide 的 m0
+  读到运行时内部对象，toString 为 "Cannot get source code"；对照 a129 读取正常）。规避：超宽
+  函数不读具体形参值（copyrestargs 等指令触发只依赖形参数量）。疑为编译器/运行时在 16 位
+  寄存器编号边界的行为，值得向 ohre 语料标注。
