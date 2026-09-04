@@ -87,3 +87,32 @@ export function tsTemplateAndMisc(s: string): string {
   debugger;
   return `tonumber=${n} tpl=${t} proto=${(withProto as any).m} deany=${q}`;
 }
+
+// callruntime.topropertykey：类体计算属性名（对象字面量计算键不触发，只走 definefieldbyvalue）。
+// 计算方法同时产出 stownbyvaluewithnameset；不通过 c[k]() 调用（运行时禁动态方法名调用）。
+export function tsComputedClassKey(k: string): string {
+  class WithComputedMethod {
+    [k](): number {
+      return 7;
+    }
+  }
+  const m = new WithComputedMethod() as any;
+  return `${typeof m[k]}:${typeof m[k] === 'function'}`;
+}
+
+// stownbynamewithnameset：非计算键同时含 "." 与 "\" 且值为匿名函数（es2panda IsLegalNameFormat
+// 的历史行为，源码级实证；见 docs/BENCHMARK.md）。不动态取值，用 Object.keys 验证。
+export function tsNameSet(): string {
+  const o = { 'a.b\\c': function (): number {
+    return 1;
+  } };
+  return `nameset=${Object.keys(o).length}`;
+}
+
+import { globalAssignRun } from './GlobalAssign';
+
+// trystglobalbyname（GlobalAssign.js 内对未声明标识符赋值）的保活引用：只 typeof 不调用
+// （esm 严格模式运行时必抛 ReferenceError）。
+export function tsGlobalRef(): string {
+  return `global=${typeof globalAssignRun}`;
+}

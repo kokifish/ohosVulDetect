@@ -13,3 +13,4 @@
 /.appanalyzer
 __pycache__/
 BuildProfile.ets
+compare_dis/

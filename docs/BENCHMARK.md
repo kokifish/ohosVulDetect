@@ -173,3 +173,21 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 - SDK 26 API 面变化清单（本项目适配记录）：CoreFileKit 导出 `fileIo`（非 fs）、`rcp.createSession`（非 new Session）、
   emitter 事件 id 为 string、`RdbPredicates.limitAs`、`Curve.Ease/EaseOut/Friction`、`animateTo` 需经 UIContext、
   `@Provider/@Consumer` 需带参、asset.Value 仅 boolean|number|Uint8Array、`display.on(type, cb)` 2 参。
+
+## 巨型参数 wide 与杂项形态（2026-09-04，lang-runtime 扩展）
+
+应用代码口径 158→**169/267**；并入 debug 语料后 **172/267**（debug 贡献 debugger/newlexenvwithname/
+wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py --dump-dir compare_dis`
+（release 构建跑一次落快照 → debug 构建再跑即并集；compare_dis/ 已 gitignore）。
+
+- `tools/gen_wide_stress.py` → WideFormsLab.ts + WideFormsData.ts（.ts 不能 import .ets，数据文件需同为 .ts）：
+  `wide.callrange/callthisrange/newobjrange`（128+ 实参）、`wide.copyrestargs`（rest 前 128+ 形参，调用包装
+  防剥离）、`wide.createobjectwithexcludedkeys`（130 排除键）、`wide.ldlocalmodulevar`（136 export let +
+  同模块读取）、`wide.ldexternalmodulevar`（import 136 个跨文件 const——跨文件 const 不折叠）；
+  **callrange 基础形态修正为可达**（≥4 参动态函数调用）。
+- 杂项：`callruntime.topropertykey` = 类体计算属性名（计算字段被 TS 规则禁止，方法形态 `class A { [k]() {} }` 即可，
+  附带 stownbyvaluewithnameset）；`stownbynamewithnameset` = 非计算键同时含 `.` 与 `\` 且值为匿名函数
+  （`{'a.b\\c': function(){}}`，es2panda IsLegalNameFormat 历史行为）；`trystglobalbyname` = 纯 .js 文件
+  （无 TS 注解！）对未声明标识符赋值——esm 严格模式运行时必抛 ReferenceError，仅编译覆盖（typeof 桥接保活）。
+- debug 语料口径：debug 构建（--debug-info）额外产出 debugger/newlexenvwithname/wide.newlexenvwithname，
+  但 debug 关优化（无 nop、内联/折叠行为不同），覆盖统计取两模式并集。

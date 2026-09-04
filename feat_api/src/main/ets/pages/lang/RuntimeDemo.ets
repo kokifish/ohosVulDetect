@@ -1,7 +1,9 @@
 // 类运行时 helper 压力页：私有字段/super 索引访问/动态属性/对象展开解构/tagged template/
-// __proto__ 字面量/一元 +/debugger（RuntimeHelpers.ts 实现），叠加词法环境 wide 压力（LexWideLab.ets）。
-import { tsPrivate, tsObjectHelpers, tsSuperIndex, tsCallRange, tsTemplateAndMisc } from './RuntimeHelpers';
+// __proto__ 字面量/一元 +/debugger/类计算属性名/withnameset（RuntimeHelpers.ts），
+// 叠加词法环境 wide（LexWideLab.ets）与巨型参数 wide（WideFormsLab.ts）。
+import { tsPrivate, tsObjectHelpers, tsSuperIndex, tsCallRange, tsTemplateAndMisc, tsComputedClassKey, tsNameSet, tsGlobalRef } from './RuntimeHelpers';
 import { lexWideStress } from './LexWideLab';
+import { localReadWide, externalReadWide, newWide, callRangeWide, callRangeDirect, restWideCall, excludedWide } from './WideFormsLab';
 
 @Entry
 @Component
@@ -10,7 +12,7 @@ struct RuntimeDemo {
 
   build() {
     Column({ space: 10 }) {
-      Text('runtime helpers / lexenv wide').fontSize(20)
+      Text('runtime helpers / wide forms').fontSize(20)
       Button('run runtime-helper battery')
         .onClick(() => {
           this.lines.push(tsPrivate());
@@ -18,10 +20,20 @@ struct RuntimeDemo {
           this.lines.push(tsSuperIndex());
           this.lines.push(`callrange=${tsCallRange()}`);
           this.lines.push(tsTemplateAndMisc('41'));
+          this.lines.push(tsComputedClassKey('dynKey'));
+          this.lines.push(tsNameSet());
+          this.lines.push(tsGlobalRef());
         })
       Button('run lexenv wide stress')
         .onClick(() => {
           this.lines.push(`lexwide=${lexWideStress(Math.floor(Date.now() / 1000) % 97)}`);
+        })
+      Button('run arg-scale wide forms')
+        .onClick(() => {
+          const local = localReadWide();
+          const ext = externalReadWide();
+          this.lines.push(`neww=${newWide()} callr=${callRangeWide()} direct=${callRangeDirect()} rest=${restWideCall()}`);
+          this.lines.push(`reads=${local % 97}/${ext % 97} excl=${excludedWide({} as ESObject)}`);
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }
