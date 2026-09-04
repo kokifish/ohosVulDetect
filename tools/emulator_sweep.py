@@ -6,9 +6,14 @@
   python3 tools/emulator_sweep.py feat_vuln  # 遍历 feat_vuln 分类页（cat- 页）
 
 前置：
-  1. `python3 build.py --product emulator` 已构建，且已在模拟器 `bm install`（见 docs/BENCHMARK.md）；
-  2. 模拟器已启动（Emulator -start ovdbench -noWindow）；
+  1. 已 `bm install` 对应包（API24 镜像装 emulator product，API26 镜像装 default product 均可，见 docs/BENCHMARK.md）；
+  2. 模拟器已启动（API24: Emulator -start ovdbench；API26 镜像亦可）；
   3. hdc 路径默认取 DevEco SDK，可用环境变量 HDC 覆盖。
+
+双环境自适应（启动时探测一次）：
+  - API ≥ 26：`aa start` 拒绝 exported:false 的 ability（错误 10103001），改走 entry 壳路由
+    （启动 EntryAbility → 点 "API Coverage"/"Vuln Challenges" 按钮）；
+  - 分辨率按 `hidumper -s RenderService` 实测值做比例坐标滑动（新镜像 1320x2232，旧 1260x2720）。
 
 输出：stdout JSON（{页面: [结果行]}），✅=调用成功，❌=调用返回 BusinessError（被页面捕获展示）。
 """
@@ -21,11 +26,30 @@ import time
 
 HDC = os.environ.get("HDC", "/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/toolchains/hdc")
 ABILITY = 'ApiAbility'
+SHELL_BTN = 'API Coverage'  # feat_api 模式的壳入口按钮文案；feat_vuln 模式改为 'Vuln Challenges'
+SCREEN_W, SCREEN_H = 1260, 2720  # 探测失败时的回退分辨率
+USE_SHELL_ROUTE = False
 
 
 def sh(cmd):
     r = subprocess.run(f'{HDC} shell "{cmd}"', shell=True, capture_output=True, text=True, timeout=30)
     return r.stdout
+
+
+def detect_env():
+    """探测 API 版本与分辨率；API≥26 时启用壳路由。"""
+    global SCREEN_W, SCREEN_H, USE_SHELL_ROUTE
+    ver = sh("param get const.ohos.apiversion").strip()
+    try:
+        if int(ver) >= 26:
+            USE_SHELL_ROUTE = True
+    except ValueError:
+        pass
+    m = re.search(r'render resolution=(\d+)x(\d+)', sh("hidumper -s RenderService -a screen"))
+    if m:
+        SCREEN_W, SCREEN_H = int(m.group(1)), int(m.group(2))
+    print(f"# env: api={ver or '?'} screen={SCREEN_W}x{SCREEN_H} shell_route={USE_SHELL_ROUTE}",
+          file=sys.stderr)
 
 
 def dump():
@@ -62,16 +86,27 @@ def click(x, y, wait=1.2):
     time.sleep(wait)
 
 
-def swipe(x1, y1, x2, y2, wait=1.0):
-    subprocess.run(f'{HDC} shell "uitest uiInput swipe {x1} {y1} {x2} {y2} 300"', shell=True, capture_output=True)
+def swipe_up(wait=1.5):
+    """按分辨率比例上滑列表（不同镜像分辨率不同，绝对坐标会落进导航区）。"""
+    subprocess.run(f'{HDC} shell "uitest uiInput swipe {SCREEN_W // 2} {int(SCREEN_H * 0.8)} '
+                   f'{SCREEN_W // 2} {int(SCREEN_H * 0.2)} 300"', shell=True, capture_output=True)
     time.sleep(wait)
 
 
 def goto_list():
     sh("aa force-stop com.koki.VD")
     time.sleep(1.0)
-    sh(f"aa start -a {ABILITY} -b com.koki.VD")
-    time.sleep(3.5)
+    if not USE_SHELL_ROUTE:
+        sh(f"aa start -a {ABILITY} -b com.koki.VD")
+        time.sleep(3.5)
+        return
+    sh("aa start -a EntryAbility -b com.koki.VD")
+    time.sleep(4.5)
+    for a in nodes(dump()):
+        if SHELL_BTN in a.get('text', ''):
+            click(*center(a['bounds']), 4.5)
+            return
+    print(f"# WARN: 壳入口按钮 {SHELL_BTN!r} 未找到", file=sys.stderr)
 
 
 results = {}
@@ -106,7 +141,7 @@ def visit_rows(prefix_list, budget_seconds=600):
         if not rows:
             found = False
             for _try in range(4):
-                swipe(630, 2300, 630, 600, wait=1.5)
+                swipe_up()
                 tree2 = dump()
                 if any(a.get('text', '').startswith(p) and a.get('text', '') not in visited
                        for a in nodes(tree2) for p in prefix_list):
@@ -125,9 +160,11 @@ def visit_rows(prefix_list, budget_seconds=600):
 
 if __name__ == '__main__':
     mode = sys.argv[1] if len(sys.argv) > 1 else 'feat_api'
+    detect_env()
     if mode == 'feat_vuln':
         ABILITY = 'VulnAbility'
+        SHELL_BTN = 'Vuln Challenges'
         visit_rows(['cat-'], budget_seconds=600)
     else:
-        visit_rows(['api-', 'ui-', 'lang-'], budget_seconds=900)
+        visit_rows(['api-', 'ui-', 'lang-'], budget_seconds=1200)
     print(json.dumps(results, ensure_ascii=False, indent=1))

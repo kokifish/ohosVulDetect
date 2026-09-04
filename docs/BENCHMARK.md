@@ -238,3 +238,17 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
 3. **网络沙箱放开**：API24 上 socket/net 类环境 ❌，API26 上 connection 查询类 ✅。
 4. **bgtask 401 跨版本一致**（backgroundModes schema 问题与运行时版本无关）。
 5. 模拟器分辨率不同（新镜像 1320x2232 vs 旧 1260x2720），自动化 swipe 坐标需按比例计算。
+
+### API26 全量遍历基线（2026-09-04，emulator_sweep.py 已双环境固化）
+
+`tools/emulator_sweep.py` 现已自适应：启动时探测 API 版本与分辨率（`param get` / `hidumper`），
+API≥26 自动走 entry 壳路由（EntryAbility → "API Coverage"/"Vuln Challenges"），滑动按比例坐标。
+
+default release（API26 语料）在 API26 模拟器全量遍历：**46 页 0 崩溃**（api 29 + ui 11 + lang 6），
+**62✅ / 8❌**，❌ 全部为环境类：socket×2（沙箱）、crypto aes-gcm 401、sensor×3（授权弹窗）、
+dm-devices 201（授权）、bgtask 401。相对 API24 基线（52✅/9❌）的变化：**asset 201 与 location ❌
+在 API26 上转 ✅**，其余环境项一致；✅ 增量含新页面 case 与上述转正项。
+
+注：lang 页输出为 Text（'=' 行）而非 DemoScaffold 的 ✅/❌，sweep 对其无信号，其运行正确性由
+API26 矩阵轮逐页实测背书（6 页数值逐项正确）。全量遍历约 20 分钟（壳路由每页 ~20s），
+budget 默认 1200s 只够 34 页，lang/ui 尾部页需补跑（可传 prefix 复用 visit_rows）。
