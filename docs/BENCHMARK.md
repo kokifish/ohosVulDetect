@@ -1,7 +1,7 @@
 # ohosVulDetect 基准测试 App — 构建与使用手册
 
 多模块 HarmonyOS 基准应用：① 广覆盖 API/ArkUI/语言特性，作为逆向工具反编译准确性语料；
-② 预埋 51 个带标签漏洞 + 7 个安全孪生（groundtruth/manifest.json），作为 VulDetector 检测基准。
+② 预埋 53 个带标签漏洞 + 7 个安全孪生（groundtruth/manifest.json），作为 VulDetector 检测基准。
 
 ## 结构
 

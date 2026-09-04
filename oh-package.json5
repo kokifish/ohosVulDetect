@@ -2,9 +2,5 @@
   "modelVersion": "6.0.1",
   "description": "ohosVulDetect benchmark corpus app",
   "dependencies": {
-  },
-  "devDependencies": {
-    "@ohos/hypium": "1.0.24",
-    "@ohos/hamock": "1.0.0"
   }
 }
