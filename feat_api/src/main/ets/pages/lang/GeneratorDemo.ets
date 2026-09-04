@@ -2,7 +2,7 @@
 // 本页编排调用。目标指令见 TsFeatures.ts 文件头。
 import {
   tsManualNext, tsForOfSum, tsForOfClose, tsForAwaitTotal,
-  tsForInKeys, tsForInSum
+  tsForInKeys, tsForInSum, tsGenResumeWithArg
 } from './TsFeatures';
 
 @Entry
@@ -16,6 +16,7 @@ struct GeneratorDemo {
       Button('run generator battery')
         .onClick(() => {
           this.lines.push(tsManualNext());
+          this.lines.push(tsGenResumeWithArg());
           this.lines.push(`forof-sum=${tsForOfSum()}`);
           this.lines.push(`break-close=${tsForOfClose()}`);
           const scores: Record<string, number> = { 'a': 1, 'b': 2, 'c': 3 };

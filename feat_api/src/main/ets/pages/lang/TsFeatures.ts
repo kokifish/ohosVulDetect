@@ -147,3 +147,25 @@ export function tsSymbolKey(): string {
   o[s] = 7;
   return `${typeof s}:${o[s]}`;
 }
+
+export function tsGenResumeWithArg(): string {
+  // generator 带值恢复 / return 带值 / throw —— 观察是否 emit 非 withname 的 callthis1
+  function* echo(): Generator<number, number, number> {
+    const got = yield 1;
+    yield got === undefined ? -1 : got;
+    return 99;
+  }
+  const g = echo();
+  g.next();
+  const second = g.next(42);
+  const fin = g.return(7);
+  let threw = 'no';
+  const g2 = echo();
+  g2.next();
+  try {
+    g2.throw(new Error('stop'));
+  } catch (e) {
+    threw = 'caught';
+  }
+  return `second=${second.value} fin=${fin.done ? fin.value : 'nd'} ${threw}`;
+}
