@@ -219,3 +219,22 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
   读到运行时内部对象，toString 为 "Cannot get source code"；对照 a129 读取正常）。规避：超宽
   函数不读具体形参值（copyrestargs 等指令触发只依赖形参数量）。疑为编译器/运行时在 16 位
   寄存器编号边界的行为，值得向 ohre 语料标注。
+
+## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
+
+在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
+
+| 构建形态 | 安装 | 运行 | 结果 |
+|---|---|---|---|
+| default release（API26 语料 + ArkGuard 混淆） | ✅ | ✅ | 6 重点页全绿，数值与 API24 逐项一致 |
+| default debug（不混淆） | ✅ | ✅ | lang-runtime 16 行全对（rest=2 干净、debugger no-op）、0 TypeError |
+| emulator release（API24 兼容包） | ✅ | ✅ | sendable/taskpool/runtime 全部正常（向上兼容） |
+
+与 API24 的差异（均为实测）：
+1. **`aa start` 可见性校验收紧**：API26 拒绝拉起 `exported:false` 的 ability（错误 10103001），
+   API24 不拦。自动化遍历需走 entry 壳入口（EntryAbility exported:true → 点 "API Coverage"）。
+2. **taskpool Priority 参数**：`execute(fn, args, Priority.HIGH)` 在 API26 运行时 ✅ 正常返回，
+   API24 返回空 `{}`——是 API24 运行时限制而非用法错误；源码不加 Priority 以兼容双 product。
+3. **网络沙箱放开**：API24 上 socket/net 类环境 ❌，API26 上 connection 查询类 ✅。
+4. **bgtask 401 跨版本一致**（backgroundModes schema 问题与运行时版本无关）。
+5. 模拟器分辨率不同（新镜像 1320x2232 vs 旧 1260x2720），自动化 swipe 坐标需按比例计算。

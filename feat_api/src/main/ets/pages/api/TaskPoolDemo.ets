@@ -12,7 +12,8 @@ struct TaskPoolDemo {
       DemoScaffold({
         title: 'taskpool + @Concurrent + @Sendable',
         cases: [
-          // 注意：带 Priority 枚举第 3 参在 API24 运行时返回空 {}（2026-09-04 实测），勿加。
+          // 注意：带 Priority 枚举第 3 参在 API24 运行时返回空 {}（API26 正常，2026-09-04 双端实测）；
+          // 为兼容 emulator(API24) product 不加。
           new Case('heavySum-high', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const r: Object = await taskpool.execute(heavySum, 1000000);
             return `sum=${Number(r)}`;
