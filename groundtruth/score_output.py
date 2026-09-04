@@ -3,14 +3,14 @@
 
 匹配规则（对 manifest 每条）：
 - constants：在源文件 record 域内全部命中（scope=global 时全域）；
-  布尔/数字按 ohre IR 文本形态归一化（true→TRUE，int→"n" 与 "n.0" 皆可命中）；
+  布尔/数字按逆向工具 IR 文本形态归一化（true→TRUE，int→"n" 与 "n.0" 皆可命中）；
 - call：全部 token 在函数块（无则 record 域）命中，token 裸形态或 "引号" 形态均可；
 - predicate：IR 谓词（return-true / empty-array / fixed-nonce）在函数块判定；
 - skip：标记为 skip 的条目不计入 TP/FN（难度用例，另行列出）；
 - native 条目在 .so 字符串匹配；manifest 条目在 module.json 匹配；
 - 孪生（expected=false）：用其 twin_of 条目的规则在孪生 record 上判定，命中即 FP。
 
-用法：python3 score_vs_ohre.py <test.out> <app文件> [manifest.json]
+用法：python3 score_output.py <test.out> <app文件> [manifest.json]
 """
 import json
 import pathlib

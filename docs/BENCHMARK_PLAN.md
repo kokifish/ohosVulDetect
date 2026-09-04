@@ -1,7 +1,7 @@
 # ohosVulDetect 基准测试 App 开发计划（v1 草案，供审阅）
 
 > 目标：把 ohosVulDetect 从模板 App 升级为 **鸿蒙逆向/安全分析基准测试样本**：
-> ① 尽可能广地覆盖 HarmonyOS 特性、组件与 API（含各种调用方式），用于 ohre 反编译准确性的度量；
+> ① 尽可能广地覆盖 HarmonyOS 特性、组件与 API（含各种调用方式），用于逆向工具反编译准确性的度量；
 > ② 预埋尽可能多的**带标签**漏洞/风险，用于 VulDetector 检出能力的打分（precision/recall）；
 > ③ 结构清晰、逻辑简单——每个 demo / 漏洞都是独立小文件，一键可构建 hap+app。
 >
@@ -15,9 +15,9 @@
 1. **一个事实源（ground truth）**：所有预埋漏洞登记在 `groundtruth/manifest.json`，代码内以 `// VULN: OVD-XXX-NNN` 注释标记，二者由脚本强一致校验。
 2. **成对 twin**：每个漏洞配一个"安全孪生"（safe twin，`...S` 后缀），用于压制"全部报毒"型工具的 FPR（OWASP Benchmark 方法）。
 3. **每文件一事**：一个 demo = 一个域 = 一个文件；一个漏洞 = 一个函数。页面只是"执行按钮 + 结果展示"，不含业务逻辑。
-4. **多模块即多 abc**：每个 HAP/HSP 模块编译为独立 `ets/modules.abc`，.app 内含多个可独立分析的字节码文件——本身就是对 ohre 多模块处理能力的覆盖。
-5. **可验证**：每模块带 hypium/UiTest 冒烟；ohre 侧新增 `test/bench_score.py`，对构建产物跑 VulDetector 规则并输出 scorecard。
-6. **产物不进 git**：`*.hap/*.app/test.out/compare_out/` 保持 gitignored（与 ohre 仓库约定一致）。
+4. **多模块即多 abc**：每个 HAP/HSP 模块编译为独立 `ets/modules.abc`，.app 内含多个可独立分析的字节码文件——本身就是对逆向工具多模块处理能力的覆盖。
+5. **可验证**：每模块带 hypium/UiTest 冒烟；工具侧新增 `test/bench_score.py`，对构建产物跑 VulDetector 规则并输出 scorecard。
+6. **产物不进 git**：`*.hap/*.app/test.out/compare_out/` 保持 gitignored（与逆向工具仓库约定一致）。
 
 ## 2. 项目架构（多模块）
 
@@ -93,7 +93,7 @@ ohosVulDetect/
 - **列表渲染**：ForEach / LazyForEach+IDataSource+cachedCount / Repeat(.key/.virtualScroll/.template)。
 - **导航**：Navigation+NavPathStack(push/replace/pop/传参)+NavDestination 生命周期+route_map.json；legacy `router` 对照页。
 - **高级 UI**：NodeController+BuilderNode、RenderNode 自绘、FrameNode 树遍历、UIObserver；animateTo/.animation/keyframeAnimateTo/TransitionEffect/geometryTransition；手势组；Canvas/Path2D。
-- **语言/IR 压力构造**（对 ohre 最有价值）：闭包捕获循环变量与多层闭包（lexenv 深层用例）、async/await 链 + Promise.all/race、async UI 事件处理器、try/catch/finally + 自定义 Error 子类、class 继承 + interface 多态分发、泛型类/函数、union/optional narrowing、Record 索引访问、枚举位运算、`import()` 动态加载 HSP、static 方法/字段。
+- **语言/IR 压力构造**（对逆向工具最有价值）：闭包捕获循环变量与多层闭包（lexenv 深层用例）、async/await 链 + Promise.all/race、async UI 事件处理器、try/catch/finally + 自定义 Error 子类、class 继承 + interface 多态分发、泛型类/函数、union/optional narrowing、Record 索引访问、枚举位运算、`import()` 动态加载 HSP、static 方法/字段。
 - **API 26 新特性**（按 Beta 可用性，带 API 版本守卫）：沉浸式光效组件、多形态窗口/平行视界 2.0（可延后到 Release 版本）。
 
 ### 3.3 调用方式矩阵（每个域内刻意轮换）
@@ -118,9 +118,9 @@ callback 式 / Promise.then / async-await / Sync 孪生 / on-off-once 订阅 / �
 | 认证/会话/随机 | OVD-AUTH/RAND | 3 | 客户端硬编码口令门、`Date.now()>EXPIRE` 授权锁、`Math.random()` 生成 token |
 | 调试残留 | OVD-DEBUG | 2 | `IS_DEBUG=true` 泄 PII、后门 PIN `0000` 提权 |
 | 配置泄露 | OVD-CONF | 2 | 内网 IP `http://10.x` / `ws://192.168.x` 字面量 |
-| 原生层 | OVD-NATIVE | 2 | .so 内硬编码 AES 密钥、napi handler `strcpy` 溢出（ohre 的负样本：abc-only 工具应报不出） |
+| 原生层 | OVD-NATIVE | 2 | .so 内硬编码 AES 密钥、napi handler `strcpy` 溢出（逆向工具的负样本：abc-only 工具应报不出） |
 
-要点：所有字符串常量都会进入 abc literal pool，与 ohre 的 `match_str_pattern`/literal 分析直接对齐；twin 用 Asset Kit/HUKS/RdbPredicates 参数绑定/白名单校验实现"正确写法"。
+要点：所有字符串常量都会进入 abc literal pool，与逆向工具的 `match_str_pattern`/literal 分析直接对齐；twin 用 Asset Kit/HUKS/RdbPredicates 参数绑定/白名单校验实现"正确写法"。
 
 ## 5. Ground truth manifest（schema）
 
@@ -145,26 +145,26 @@ callback 式 / Promise.then / async-await / Sync 孪生 / on-off-once 订阅 / �
 }
 ```
 
-评分（owre 侧 `test/bench_score.py`）：strict 匹配（module+function）与 loose（module+category）两档；TP/FP/FN/TN → 每 category 的 precision/recall/F1 与总 **Youden = TPR − FPR**；同时输出反编译门禁（`MODULE_ANALYZED` 计数 == 方法清单、`NOT MODULE_ANALYZED` == 0、无 worker 崩溃、与上一版 method 清单零丢失）。
+评分（工具侧 `test/bench_score.py`）：strict 匹配（module+function）与 loose（module+category）两档；TP/FP/FN/TN → 每 category 的 precision/recall/F1 与总 **Youden = TPR − FPR**；同时输出反编译门禁（`MODULE_ANALYZED` 计数 == 方法清单、`NOT MODULE_ANALYZED` == 0、无 worker 崩溃、与上一版 method 清单零丢失）。
 
 ## 6. 分阶段计划（每阶段验收后再进入下一阶段）
 
 | 阶段 | 内容 | 验收标准 |
 |---|---|---|
-| **P0 骨架**（0.5–1 天） | 拆多模块（feat_api/feat_vuln/lib_common/lib_shared）、DemoRegistry+Navigation 主页、manifest schema + check 脚本 | hap+app 构建通过；ohre 全模块 MODULE_ANALYZED == 预期；method 清单入库为基线 |
-| **P1 API 覆盖**（2–3 天） | §3.1 二十个域 demo + 调用方式矩阵轮换 | 构建通过；ohre 0 opcode gap；抽查 ~20 个代表调用可被 `match_call_chain` 命中 |
-| **P2 UI/语言特性**（1–2 天） | §3.2 V1/V2 状态、导航、懒加载、动画闭包、Node 族、worker/taskpool/sendable、动态 import | ohre 全量 MODULE_ANALYZED 不回退；lexenv 用例的 `may-ld-from` 数量记录在案（作为 SA 简化能力基线） |
-| **P3 漏洞预埋**（2–3 天） | §4 全量 + twins + manifest | check_manifest 一致；构建通过；ohre method 清单仅按预期新增 |
-| **P4 基准评分**（1–2 天，ohre 主仓库） | VulDetector 规则注册表（JSON 化）+ `test/bench_score.py` + 首份 scorecard | 输出 scorecard；基准 app 纳入 compare_versions 回归集 |
+| **P0 骨架**（0.5–1 天） | 拆多模块（feat_api/feat_vuln/lib_common/lib_shared）、DemoRegistry+Navigation 主页、manifest schema + check 脚本 | hap+app 构建通过；工具全模块 MODULE_ANALYZED == 预期；method 清单入库为基线 |
+| **P1 API 覆盖**（2–3 天） | §3.1 二十个域 demo + 调用方式矩阵轮换 | 构建通过；工具 0 opcode gap；抽查 ~20 个代表调用可被 `match_call_chain` 命中 |
+| **P2 UI/语言特性**（1–2 天） | §3.2 V1/V2 状态、导航、懒加载、动画闭包、Node 族、worker/taskpool/sendable、动态 import | 工具全量 MODULE_ANALYZED 不回退；lexenv 用例的 `may-ld-from` 数量记录在案（作为 SA 简化能力基线） |
+| **P3 漏洞预埋**（2–3 天） | §4 全量 + twins + manifest | check_manifest 一致；构建通过；工具 method 清单仅按预期新增 |
+| **P4 基准评分**（1–2 天，工具主仓库） | VulDetector 规则注册表（JSON 化）+ `test/bench_score.py` + 首份 scorecard | 输出 scorecard；基准 app 纳入 compare_versions 回归集 |
 | **P5 进阶变体**（后续按需） | ArkGuard 混淆 release 变体、HMS Kit（需 AGC）、Scan Kit、分布式、API26 沉浸式光效、Cangjie 混合开发（可选） | 变体各自出 scorecard 对比 |
 
 ## 7. 风险与开放问题（需你拍板）
 
 1. **HMS 云依赖 Kit**（Push/Map/Account/Analytics 需 AGC 配置）：建议 v1 跳过，P5 可选。是否同意？
 2. **敏感权限声明**：为制造 OVD-PERM 用例会声明 LOCATION/CAMERA/MIC 等申请-不用组合（静态分析语料不受运行时授权影响）。是否接受？
-3. **ArkGuard 混淆变体**：混淆后 ohre 命中率必然下降，是"困难模式"对照。放在 P5 还是提前？
+3. **ArkGuard 混淆变体**：混淆后逆向工具命中率必然下降，是"困难模式"对照。放在 P5 还是提前？
 4. **bundleName** 沿用 `com.koki.VD` 还是改 `com.koki.ohosvuldetect`（影响 deeplink scheme 命名 `ovd://`）？
-5. ohre 侧 P4 的代码（VulDetector 规则表 + scorer）提交需另行授权（AGENTS.md 约定）。
+5. 工具侧 P4 的代码（VulDetector 规则表 + scorer）提交需另行授权（AGENTS.md 约定）。
 
 ## 8. 关键参考
 

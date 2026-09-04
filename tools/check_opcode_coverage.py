@@ -5,13 +5,14 @@
 - 已用 = 当前 build 产物 + --dis-dir 快照目录（默认 compare_dis/，可为空）中出现的指令助记符并集。
   典型用法：release 构建后 `--dump-dir compare_dis` 落快照 → debug 构建后再跑本脚本（自动并入），
   得到 release∪debug 并集（debug 贡献 debugger/newlexenvwithname/wide.newlexenvwithname）。
-- 全集 = ohre 仓库 isa.yaml 的 sig 列表（--isa-yaml 覆盖）。
+- 全集 = 逆向工具链仓库 isa.yaml 的 sig 列表（--isa-yaml 或环境变量 ISA_YAML 指定路径）。
 - 差集分类：deprecated/experimental、wide、其他（结构性不可达清单见 docs/BENCHMARK.md）。
 
-用法（在 ohosVulDetect 子模块根目录）：
+用法（在 ohosVulDetect 仓库根目录）：
   python3 tools/check_opcode_coverage.py --dump-dir compare_dis
 """
 import argparse
+import os
 import pathlib
 import re
 import subprocess
@@ -27,14 +28,17 @@ NOISE = {"u8", "u32", "u1", "i8", "i32", "f64"}
 def main() -> int:
     ap = argparse.ArgumentParser(description="opcode coverage across module abc files")
     ap.add_argument("--ark-disasm", dest="ark_disasm", default="/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/toolchains/ark_disasm")
-    ap.add_argument("--isa-yaml", dest="isa_yaml", default=str(pathlib.Path.home() / "git_space/ohre_dev/ohre/abcre/dis/enum/isa.yaml"))
+    ap.add_argument("--isa-yaml", dest="isa_yaml", default=os.environ.get("ISA_YAML"))
     ap.add_argument("--dump-dir", dest="dump_dir", default="compare_dis", help="反汇编快照目录（并集用；空则仅统计当前产物）")
     args = ap.parse_args()
 
     root = pathlib.Path(__file__).resolve().parent.parent
+    if not args.isa_yaml:
+        print("ERROR: 未指定 isa.yaml：用 --isa-yaml 或环境变量 ISA_YAML 指向逆向工具链仓库的 isa.yaml")
+        return 1
     isa_path = pathlib.Path(args.isa_yaml)
     if not isa_path.exists():
-        print(f"ERROR: isa.yaml 不存在: {isa_path}（可用 --isa-yaml 覆盖）")
+        print(f"ERROR: isa.yaml 不存在: {isa_path}（可用 --isa-yaml 或 ISA_YAML 覆盖）")
         return 1
     full = set(re.findall(r"sig: ([a-z0-9._]+)", isa_path.read_text()))
 

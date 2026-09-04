@@ -3,7 +3,7 @@
 
 用法：
   python3 build.py                  # release 构建（ArkGuard 混淆全开），两个 product 全出
-  python3 build.py --product default   # 仅 default（API 26，ohre 语料）
+  python3 build.py --product default   # 仅 default（API 26 全量语料）
   python3 build.py --product emulator  # 仅 emulator（compatibleSdkVersion 6.1.1(24)，模拟器安装用）
   python3 build.py --debug          # debug 构建（不混淆）
   python3 build.py --clean          # 构建前清理

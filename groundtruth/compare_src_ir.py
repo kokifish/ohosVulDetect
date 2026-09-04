@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""源码 vs ohre IR 逐函数结构化比对（Layer 1：自动化清单核对）。
+"""源码 vs 逆向工具 IR 逐函数结构化比对（Layer 1：自动化清单核对）。
 
 对每个源码函数（feat_vuln/feat_api 的 export function 与页面 build 闭包所在的 record），
 从源码抽取：字符串字面量、数字字面量、API 调用名、控制流关键词（await/for/while/try/throw/new）；

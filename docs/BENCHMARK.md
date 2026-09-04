@@ -1,6 +1,6 @@
 # ohosVulDetect 基准测试 App — 构建与使用手册
 
-多模块 HarmonyOS 基准应用：① 广覆盖 API/ArkUI/语言特性，作为 ohre 反编译准确性语料；
+多模块 HarmonyOS 基准应用：① 广覆盖 API/ArkUI/语言特性，作为逆向工具反编译准确性语料；
 ② 预埋 51 个带标签漏洞 + 7 个安全孪生（groundtruth/manifest.json），作为 VulDetector 检测基准。
 
 ## 结构
@@ -21,7 +21,7 @@
 
 ```bash
 python3 build.py                    # release 构建（ArkGuard 混淆，两个 product 全出）
-python3 build.py --product default  # 仅 default（API 26，ohre 语料）
+python3 build.py --product default  # 仅 default（API 26 全量语料）
 python3 build.py --product emulator # 仅 emulator（模拟器安装变体）
 python3 build.py --debug            # debug 构建（不混淆）
 python3 build.py --clean            # 构建前清理（改混淆规则/product 后建议使用）
@@ -51,9 +51,9 @@ $HV --no-daemon assembleApp --mode project -p product=<default|emulator> -p buil
 - `-enable-filename-obfuscation`：多包（HAP×3 + HSP）各自独立改写 record 路径，跨包模块解析 `SyntaxError`，进程启动即退（exit 254）；
 - `-enable-export-obfuscation`：HSP 导出名跨包映射不一致，`&lib_shared/Index& does not provide an export name 'b1'`，同样 SyntaxError。
 
-混淆实测结论（模拟器全量遍历 + ohre 逆向）：
+混淆实测结论（模拟器全量遍历 + 逆向工具验证）：
 - 混淆 release 包运行行为与 debug 完全一致（feat_api 52✅/9❌ 同一组环境性失败；feat_vuln 36✅/4❌）；
-- ohre 对混淆包完全兼容（NOT MODULE_ANALYZED=0、UNKNOWN ops=0），方法名/record 路径保留（export/filename 关闭所致），字符串字面量不受混淆影响；
+- 逆向工具对混淆包完全兼容（NOT MODULE_ANALYZED=0、UNKNOWN ops=0），方法名/record 路径保留（export/filename 关闭所致），字符串字面量不受混淆影响；
 - 混淆语料基准分（v2）：TP=51 FN=1 FP=0 TN=7（P=1.000/R=0.981/F1=0.990）；
   唯一 FN 为 property 混淆改写 JSON 对象字面量属性名（`idcard`），属"困难模式"预期效果。
 
@@ -76,13 +76,13 @@ $E -stop ovdbench
 
 自动化遍历脚本：`tools/emulator_sweep.py`（用法见文件头注释）。
 
-## ohre 逆向 + 基准评分
+## 逆向工具输出 + 基准评分
 
 ```bash
-cd <ohre 仓库根>
+cd <逆向工具仓库根>
 PYTHONHASHSEED=0 .venv/bin/python examples/dis_demo.py ohosVulDetect/build/outputs/default/ohosVulDetect-default-unsigned.app
 python3 ohosVulDetect/groundtruth/check_manifest.py                                   # manifest↔源码一致性
-python3 ohosVulDetect/groundtruth/score_vs_ohre.py test.out ohosVulDetect/build/outputs/default/ohosVulDetect-default-unsigned.app
+python3 ohosVulDetect/groundtruth/score_output.py test.out ohosVulDetect/build/outputs/default/ohosVulDetect-default-unsigned.app
 ```
 
 ### 首轮基线（2026-08-29，API26 debug 包）
@@ -123,10 +123,10 @@ wide 阈值统一为 MAX_INT8=127（不是 255）。压力规模：136 个 @Send
 - 本模块 `export const` 在 release 会被常量折叠成字面量，wide localmodulevar 随之消失——生成器用 `export let`；
 - `taskpool.execute` 只接受 `@Concurrent` 函数；`@Sendable` 函数在 UI 线程直接调用即可。
 
-ohre 侧缺口（截至 2026-09-03，feat_api hap 实测 823 条 `!UNKNOWN TAC`，全部来自下述 5 个指令名）：
+工具侧缺口（截至 2026-09-03，feat_api hap 实测 823 条 `!UNKNOWN TAC`，全部来自下述 5 个指令名）：
 `ldsendableclass`、`ldsendablelocalmodulevar`/`wideldsendablelocalmodulevar`、
 `ldlazysendablemodulevar`/`wideldlazysendablemodulevar`（`NACtoTAC.py` dispatch 表缺项；
-其余 9 条 sendable 指令已有 handler）。语料采纳前需先补齐 ohre 支持，否则 UNKNOWN 门禁不通过。
+其余 9 条 sendable 指令已有 handler）。语料采纳前需先补齐工具支持，否则 UNKNOWN 门禁不通过。
 
 ## 语言特性页与 ArkTS 语法限制（2026-09-03，lang-generator/ops/callforms + lang-runtime）
 
@@ -218,7 +218,7 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
 - **>127 形参函数的调用错位**：128+ 形参函数被调用时部分槽位参数错位（实测 restWide 的 m0
   读到运行时内部对象，toString 为 "Cannot get source code"；对照 a129 读取正常）。规避：超宽
   函数不读具体形参值（copyrestargs 等指令触发只依赖形参数量）。疑为编译器/运行时在 16 位
-  寄存器编号边界的行为，值得向 ohre 语料标注。
+  寄存器编号边界的行为，值得向工具侧语料标注。
 
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
