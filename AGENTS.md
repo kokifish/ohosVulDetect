@@ -31,12 +31,14 @@
 ## Mandatory（任何语料/页面/生成器改动必做）
 
 ```bash
-python3 build.py --product all          # 双 product release（default=API26 语料 / emulator=模拟器变体）
+python3 build.py                        # 全量 4 变体：api26/api24 × release/debug（api26=SDK26 正式语料，api24=6.1.1(24) 旧模拟器兼容）
 python3 groundtruth/check_manifest.py   # groundtruth 双向一致，必须 OK
 ```
 
-1. 指令覆盖验证：`python3 tools/check_opcode_coverage.py --dump-dir compare_dis`（release 落快照一次，debug 再跑即 release∪debug 并集；当前覆盖率与不可达清单见 docs/BENCHMARK.md）。
-2. 评分：`python3 groundtruth/score_output.py <逆向工具产出的 test.out> build/outputs/default/*.app`。
+产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。
+
+1. 指令覆盖验证：`python3 tools/check_opcode_coverage.py --dump-dir compare_dis`（默认全量构建已含 release+debug，构建后跑一次即得并集；当前覆盖率与不可达清单见 docs/BENCHMARK.md）。
+2. 评分：`python3 groundtruth/score_output.py <逆向工具产出的 test.out> build/out/ohosVulDetect-api26-release-unsigned.app`。
 3. 模拟器运行时验证：bm install 后 `python3 tools/emulator_sweep.py feat_api|feat_vuln`。
    各项基线数字与 ❌ 清单以 docs/BENCHMARK.md 最新记录为准（环境性失败如 socket 沙箱、未授权弹窗不算回退）。
 

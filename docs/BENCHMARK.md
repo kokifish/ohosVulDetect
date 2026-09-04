@@ -20,11 +20,12 @@
 **推荐：一键脚本（自动设置工具链环境）**
 
 ```bash
-python3 build.py                    # release 构建（ArkGuard 混淆，两个 product 全出）
-python3 build.py --product default  # 仅 default（API 26 全量语料）
-python3 build.py --product emulator # 仅 emulator（模拟器安装变体）
-python3 build.py --debug            # debug 构建（不混淆）
-python3 build.py --clean            # 构建前清理（改混淆规则/product 后建议使用）
+python3 build.py                    # 全量构建：api26+api24 双 SDK × release+debug 双模式（4 变体全出，默认）
+python3 build.py --sdk api26        # 仅 API 26（SDK 26.0.0 全量语料），双模式
+python3 build.py --sdk api24        # 仅 API 24（6.1.1(24)，旧模拟器镜像安装用）
+python3 build.py --mode release     # 仅 release（ArkGuard 混淆），双 SDK
+python3 build.py --mode debug       # 仅 debug（不混淆）
+python3 build.py --clean            # 构建前清理（改混淆规则/SDK 后建议使用；--sdk 与 --mode 可自由组合）
 ```
 
 仅 3 个可选参数；工具链路径默认 `/Applications/DevEco-Studio.app`，可用环境变量 `DEVECO_STUDIO_HOME`/`DEVECO_SDK_HOME` 覆盖。
@@ -37,11 +38,15 @@ export DEVECO_SDK_HOME=/Applications/DevEco-Studio.app/Contents/sdk
 HV=/Applications/DevEco-Studio.app/Contents/tools/hvigor/bin/hvigorw
 
 ohpm install --all
-$HV --no-daemon assembleHap --mode module -p product=<default|emulator> -p buildMode=<release|debug>
-$HV --no-daemon assembleApp --mode project -p product=<default|emulator> -p buildMode=<release|debug>
+$HV --no-daemon assembleHap --mode module -p product=<default|api24> -p buildMode=<release|debug>
+$HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMode=<release|debug>
 ```
 
-产物：`build/outputs/{default,emulator}/ohosVulDetect-*-unsigned.app`。
+（hvigor 强制要求名为 "default" 的 product 存在，default 即 api26；`--sdk api26` 内部即传 `product=default`）
+
+产物统一收集到 `build/out/`，文件名区分 SDK 与模式：`ohosVulDetect-<sdk>-<mode>-unsigned.app` 与
+各模块 `<模块>-<sdk>-<mode>-unsigned.{hap|hsp}`；hvigor 原始产物在 `build/outputs/<product>/` 与
+`*/build/<product>/outputs/default/`（.har/.tgz 中间产物不收集）。
 
 ### ArkGuard 混淆（release 默认开启）
 
@@ -67,7 +72,7 @@ $E -install -deviceType phone -osVersion "HarmonyOS 6.1.1(24)"
 $E -create ovdbench -deviceType phone -osVersion "HarmonyOS 6.1.1(24)"
 $E -start ovdbench -noWindow          # 前台可去掉 -noWindow
 HDC=/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony/toolchains/hdc
-$HDC file send build/outputs/emulator/ohosVulDetect-emulator-unsigned.app /data/local/tmp/ohosvuldetect.app
+$HDC file send build/out/ohosVulDetect-api24-release-unsigned.app /data/local/tmp/ohosvuldetect.app
 $HDC shell "bm install -p /data/local/tmp/ohosvuldetect.app"      # 模拟器接受未签名 debug 包
 $HDC shell "aa start -a EntryAbility -b com.koki.VD"
 $HDC shell "snapshot_display -f /data/local/tmp/s.jpeg" # 截图
@@ -80,9 +85,9 @@ $E -stop ovdbench
 
 ```bash
 cd <逆向工具仓库根>
-PYTHONHASHSEED=0 .venv/bin/python examples/dis_demo.py ohosVulDetect/build/outputs/default/ohosVulDetect-default-unsigned.app
+PYTHONHASHSEED=0 .venv/bin/python examples/dis_demo.py ohosVulDetect/build/out/ohosVulDetect-api26-release-unsigned.app
 python3 ohosVulDetect/groundtruth/check_manifest.py                                   # manifest↔源码一致性
-python3 ohosVulDetect/groundtruth/score_output.py test.out ohosVulDetect/build/outputs/default/ohosVulDetect-default-unsigned.app
+python3 ohosVulDetect/groundtruth/score_output.py test.out ohosVulDetect/build/out/ohosVulDetect-api26-release-unsigned.app
 ```
 
 ### 首轮基线（2026-08-29，API26 debug 包）
@@ -177,8 +182,8 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 ## 巨型参数 wide 与杂项形态（2026-09-04，lang-runtime 扩展）
 
 应用代码口径 158→**169/267**；并入 debug 语料后 **172/267**（debug 贡献 debugger/newlexenvwithname/
-wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py --dump-dir compare_dis`
-（release 构建跑一次落快照 → debug 构建再跑即并集；compare_dis/ 已 gitignore）。
+wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py --dump-dir compare_dis`（默认全量构建已含 release+debug，
+构建后跑一次即得并集；compare_dis/ 已 gitignore）。
 
 - `tools/gen_wide_stress.py` → WideFormsLab.ts + WideFormsData.ts（.ts 不能 import .ets，数据文件需同为 .ts）：
   `wide.callrange/callthisrange/newobjrange`（128+ 实参）、`wide.copyrestargs`（rest 前 128+ 形参，调用包装
@@ -226,15 +231,15 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
 
 | 构建形态 | 安装 | 运行 | 结果 |
 |---|---|---|---|
-| default release（API26 语料 + ArkGuard 混淆） | ✅ | ✅ | 6 重点页全绿，数值与 API24 逐项一致 |
-| default debug（不混淆） | ✅ | ✅ | lang-runtime 16 行全对（rest=2 干净、debugger no-op）、0 TypeError |
-| emulator release（API24 兼容包） | ✅ | ✅ | sendable/taskpool/runtime 全部正常（向上兼容） |
+| api26 release（API26 语料 + ArkGuard 混淆） | ✅ | ✅ | 6 重点页全绿，数值与 API24 逐项一致 |
+| api26 debug（不混淆） | ✅ | ✅ | lang-runtime 16 行全对（rest=2 干净、debugger no-op）、0 TypeError |
+| api24 release（API24 兼容包） | ✅ | ✅ | sendable/taskpool/runtime 全部正常（向上兼容） |
 
 与 API24 的差异（均为实测）：
 1. **`aa start` 可见性校验收紧**：API26 拒绝拉起 `exported:false` 的 ability（错误 10103001），
    API24 不拦。自动化遍历需走 entry 壳入口（EntryAbility exported:true → 点 "API Coverage"）。
 2. **taskpool Priority 参数**：`execute(fn, args, Priority.HIGH)` 在 API26 运行时 ✅ 正常返回，
-   API24 返回空 `{}`——是 API24 运行时限制而非用法错误；源码不加 Priority 以兼容双 product。
+   API24 返回空 `{}`——是 API24 运行时限制而非用法错误；源码不加 Priority 以兼容双 SDK。
 3. **网络沙箱放开**：API24 上 socket/net 类环境 ❌，API26 上 connection 查询类 ✅。
 4. **bgtask 401 跨版本一致**（backgroundModes schema 问题与运行时版本无关）。
 5. 模拟器分辨率不同（新镜像 1320x2232 vs 旧 1260x2720），自动化 swipe 坐标需按比例计算。

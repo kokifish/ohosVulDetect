@@ -6,7 +6,7 @@
   python3 tools/emulator_sweep.py feat_vuln  # 遍历 feat_vuln 分类页（cat- 页）
 
 前置：
-  1. 已 `bm install` 对应包（API24 镜像装 emulator product，API26 镜像装 default product 均可，见 docs/BENCHMARK.md）；
+  1. 已 `bm install` 对应包（API24 镜像装 api24 包，API26 镜像装 api26 包，见 docs/BENCHMARK.md）；
   2. 模拟器已启动（API24: Emulator -start ovdbench；API26 镜像亦可）；
   3. hdc 路径默认取 DevEco SDK，可用环境变量 HDC 覆盖。
 

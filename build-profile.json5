@@ -2,11 +2,12 @@
   "app": {
     "signingConfigs": [],
     "products": [
+      // hvigor 强制要求存在名为 "default" 的 product；default 即 api26（正式语料）
       {
-        "name": "emulator",
+        "name": "default",
         "signingConfig": "default",
-        "targetSdkVersion": "6.1.1(24)",
-        "compatibleSdkVersion": "6.1.1(24)",
+        "targetSdkVersion": "26.0.0",
+        "compatibleSdkVersion": "26.0.0",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "nativeCompiler": "BiSheng",
@@ -17,10 +18,10 @@
         }
       },
       {
-        "name": "default",
+        "name": "api24",
         "signingConfig": "default",
-        "targetSdkVersion": "26.0.0",
-        "compatibleSdkVersion": "26.0.0",
+        "targetSdkVersion": "6.1.1(24)",
+        "compatibleSdkVersion": "6.1.1(24)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "nativeCompiler": "BiSheng",
@@ -49,7 +50,7 @@
           "name": "default",
           "applyToProducts": [
             "default",
-            "emulator"
+            "api24"
           ]
         }
       ]
@@ -62,7 +63,7 @@
           "name": "default",
           "applyToProducts": [
             "default",
-            "emulator"
+            "api24"
           ]
         }
       ]
@@ -75,7 +76,7 @@
           "name": "default",
           "applyToProducts": [
             "default",
-            "emulator"
+            "api24"
           ]
         }
       ]
@@ -88,7 +89,7 @@
           "name": "default",
           "applyToProducts": [
             "default",
-            "emulator"
+            "api24"
           ]
         }
       ]
@@ -101,7 +102,7 @@
           "name": "default",
           "applyToProducts": [
             "default",
-            "emulator"
+            "api24"
           ]
         }
       ]

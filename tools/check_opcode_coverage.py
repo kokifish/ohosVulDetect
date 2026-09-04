@@ -20,7 +20,9 @@ import sys
 import tempfile
 
 MODULES = ["entry", "feat_api", "feat_vuln", "lib_shared"]
-PRODUCTS = ["default", "emulator"]
+PRODUCTS = ["api26", "api24"]
+# hvigor 强制要求名为 "default" 的 product 存在，default 即 api26
+PRODUCT_OF = {"api26": "default", "api24": "api24"}
 OPCODE_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)", re.M)
 NOISE = {"u8", "u32", "u1", "i8", "i32", "f64"}
 
@@ -52,7 +54,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as td:
         for m in MODULES:
             for p in PRODUCTS:
-                abc = root / m / "build" / p / "intermediates" / "loader_out" / "default" / "ets" / "modules.abc"
+                abc = root / m / "build" / PRODUCT_OF[p] / "intermediates" / "loader_out" / "default" / "ets" / "modules.abc"
                 if not abc.exists():
                     continue
                 out = pathlib.Path(td) / f"{m}_{p}.dis"
