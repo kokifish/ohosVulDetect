@@ -135,3 +135,11 @@ export function tsMemberTagCalls(): string {
   const r3 = o.t3`a${1}b${2}c`;
   return `tag=${r2}/${r3}`;
 }
+
+import { constAssignRun } from './GlobalAssign';
+
+// throw.constassignment（constAssignRun in GlobalAssign.js）：.js 的 const 重赋值走专用
+// throw 指令；.ts/.ets 中 const 重赋值是编译期错误，只能以 .js 形态覆盖。
+export function tsConstAssign(): string {
+  return `const=${constAssignRun()}`;
+}

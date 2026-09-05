@@ -19,7 +19,7 @@
 - feat_api：路由页 pages/api(29)、pages/ui(9)、pages/lang(6)；受限特性（generator/for-in/Symbol 等，arkts-* 严格 lint 只查 .ets）放 pages/lang 下 .ts/.js（TsFeatures.ts、RuntimeHelpers.ts、WideForms*.ts、GlobalAssign.js）仍编译进同一 abc；concurrent/ 与 workers/ 为非页源码。
 - feat_vuln：vulns/ 12 类 46 个源文件 + web/（NativeBridge）；13 个分类页（Index.ets 内联 cat- 清单）+ Backdoor 页/Ability(exported, ovd://backdoor) + cpp libentry.so。
 - groundtruth/：manifest.json（53 漏洞 + 7 孪生）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、extract_ir_records.py（test.out 按 record 切分）。
-- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*（勿手改，改生成器再重新生成）。
+- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（130 个 star-import 微模块）（均勿手改，改生成器再重新生成）。
 - docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/不可达指令清单/部署坑），改语料前先读，一切数字以此为准。
 - docs/ohos.md = 鸿蒙能力全景调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）与本项目覆盖差距、改进优先级，语料扩展前先读。
 

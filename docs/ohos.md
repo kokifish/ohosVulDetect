@@ -92,6 +92,8 @@
 
 ### 5.1 指令：已用 174/267，未用 93
 
+> **P1 执行结果（2026-09-04）**：候选清单实证完毕——4 条新覆盖（`throw.constassignment`、`wide.supercallthisrange`、`callruntime.wideldlazymodulevar`、`wide.getmodulenamespace`），release 口径 171→**175/267**、快照并集 174→**178/267**；其余候选全部归因（es2abc 发射替代指令或语义非法），未用 89 条自此**全部有明确归因**。逐条归因见 docs/BENCHMARK.md「指令收口 P1」节，下表保留为快照口径。
+
 | 未用类别 | 数量 | 处置 |
 |---|---|---|
 | deprecated.* | 45 | 结构性放弃（编译器不再生成） |
@@ -146,7 +148,9 @@
 
 | 优先级 | 内容 | 验收 |
 |---|---|---|
-| P1 指令收口 | 按 5.1 候选清单逐条编译实证（临时文件 + ark_disasm 确认），可达者落入 lang 页；不可达者把原因记入 BENCHMARK.md 不可达清单 | 覆盖率提升；「未用-其他」清单清零或全部有归因 |
+| 优先级 | 内容 | 验收 |
+|---|---|---|
+| P1 指令收口 | **已完成（2026-09-04）**：+4 指令（throw.constassignment / wide.supercallthisrange / callruntime.wideldlazymodulevar / wide.getmodulenamespace），release 175、并集 178/267；未用 89 条全部归因（见 BENCHMARK「指令收口 P1」节）。遗留：RuntimeDemo 新电池的模拟器运行验证 | ✅ |
 | P2 组件补齐 | 新建 1–2 个 ui 页集中补 5.2 缺口第 1–7 项（约 25 个组件）；PatternLock/SaveButton/PasteButton 同步在 feat_vuln 造孪生素材 | sweep 全绿；组件计数更新进 BENCHMARK |
 | P3 API 域扩展 | 5.3 缺口前 8 名逐个建页（每域 3–6 个代表调用，延续调用方式矩阵轮换）；每域考虑配漏洞孪生 | sweep 通过；ApiRegistry/main_pages 双注册 |
 | P4 语言特性 | 5.4 候选实证后落 lang 页 | 新增指令计入覆盖并集 |

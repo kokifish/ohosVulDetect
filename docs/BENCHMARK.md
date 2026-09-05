@@ -225,6 +225,39 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
   函数不读具体形参值（copyrestargs 等指令触发只依赖形参数量）。疑为编译器/运行时在 16 位
   寄存器编号边界的行为，值得向工具侧语料标注。
 
+## 指令收口 P1（2026-09-04 第四轮，release 175 / 快照并集 178/267）
+
+对 docs/ohos.md §5.1 的 20 条候选逐条「临时探针 + ark_disasm」实证，可达形态落入正式语料，
+其余全部归因——**未用 89 条（deprecated 45 + wide 6 + 其他 38）自此全部有明确归因**。
+
+新增覆盖（+4）与触发形态：
+- `throw.constassignment`：.js 内 const 重赋值（GlobalAssign.js constAssignRun，RuntimeHelpers tsConstAssign 接线）——.ts/.ets 中该形态是编译期错误，只能 .js 覆盖；
+- `wide.supercallthisrange`：130 个字面量实参的 `super(...)`（父构造器必须 rest 签名，否则 TS 实参数校验不过）；
+- `callruntime.wideldlazymodulevar`：非 @Sendable 普通函数读 `import lazy` 绑定（lz0..lz129，索引 >127 即 wide；非 wide 版已在快照并集中）；
+- `wide.getmodulenamespace`：130 个 `import * as` 微模块（生成器产物 WideNs0..129.ts），模块表索引 >127 即 wide。
+
+归因清单（探针实证 SDK26 es2abc 行为，源码级不可达）：
+- `testin`：`in` 表达式发射 `isin`；
+- `isfalse/istrue`：布尔强制（`!!x`、`Boolean(x)`、`new.target ? :`）发射 `callruntime.isfalse/istrue`；
+- `ldobjbyindex/stobjbyindex`（含 wide 3 条）：下标访问（含常量下标，常量会被折叠成 ldai）一律 `ld/stobjbyvalue`；
+- `ldnewtarget`：new.target 为构造器隐式参数传递；
+- `ldsymbol`：`Symbol.iterator` 等经 `tryldglobalbyname "Symbol"` 解析；
+- `ldthis/ldthisby*/stthisby*`：this 恒在参数寄存器（类方法与 .js 普通函数同）；
+- `ldfunction`：命名函数表达式自引用与 `arguments` 路径均走词法闭包，不发射；
+- `definefieldbyindex/byname`：类字段初始化（含数字字面量计算键、非标识符引号名）一律 `stobjbyvalue`；
+- `supercallarrowrange`（含 wide）：箭头函数内 super() 调用在 JS/TS 语义非法；6 实参 super() 发射 u8 档 supercallthisrange（已覆盖）；
+- `throw.deletesuperproperty`：`delete super.p` 被降级为 `delobjprop`（作用于 this）；
+- `throw.undefinedifhole`：TDZ 检查发射 `throw.undefinedifholewithname`；
+- `wide.ldpatchvar/stpatchvar`：patch 动态更新机制，应用构建不发射；
+- script 族 4 条与 deprecated 45 条维持既有结论。
+
+坑与注意（本轮新踩）：
+- `.ts/.js` 不能 import `.ets`——跨形态数据文件必须同为 .ts/.js（探针曾因此编译失败）；
+- `.js` 文件内禁类型注解（`let x: string` 直接编译错）；
+- ≥128 实参 super 调用的父构造器签名必须 rest 化（TS 校验实参数）；
+- star import 同一模块会被去重，`wide.getmodulenamespace` 需要 ≥128 个不同微模块文件；
+- 本轮新增 RuntimeDemo 电池输出（superw/lazyw/nsw/const=）模拟器运行验证待补（形态均为 try/catch 或只读求和，风险低）。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
