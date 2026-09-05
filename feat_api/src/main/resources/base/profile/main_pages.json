@@ -44,6 +44,7 @@
     "pages/lang/GeneratorDemo",
     "pages/lang/OpsDemo",
     "pages/lang/CallFormsDemo",
-    "pages/lang/RuntimeDemo"
+    "pages/lang/RuntimeDemo",
+    "pages/lang/SugarsDemo"
   ]
 }

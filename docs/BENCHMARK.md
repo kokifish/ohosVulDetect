@@ -256,7 +256,59 @@ wide.newlexenvwithname）。覆盖统计工具：`tools/check_opcode_coverage.py
 - `.js` 文件内禁类型注解（`let x: string` 直接编译错）；
 - ≥128 实参 super 调用的父构造器签名必须 rest 化（TS 校验实参数）；
 - star import 同一模块会被去重，`wide.getmodulenamespace` 需要 ≥128 个不同微模块文件；
-- 本轮新增 RuntimeDemo 电池输出（superw/lazyw/nsw/const=）模拟器运行验证待补（形态均为 try/catch 或只读求和，风险低）。
+- 本轮新增 RuntimeDemo 电池输出（superw/lazyw/nsw/const=）已于 2026-09-06 模拟器定点验证数值正确（见「第三轮假设 + 模拟器全面回归」节）。
+
+## 第二轮深挖 + 语法糖语料页（2026-09-06，release 176 / 快照并集 179/267）
+
+对剩余 44 条非 deprecated 未用指令做第二轮假设驱动的批量探针（访问器/私有品牌/可选下标/switch/
+正则字面量/arguments/script 模式 .js/async generator 等），并新增语法糖语料页：
+
+**testin 归因修正并覆盖（+1）**：`#私有字段 in obj`（品牌检查，Sugars.ts Priv.has）发射
+`testin imm,imm,imm`；公有属性 `k in obj` 才是 `isin`。P1 轮"testin→isin"的归因只对了公有形态，
+探针轮未覆盖到是因为该形态被 release 内联/摇树干扰。Sugars 页将其固化为稳定语料。
+
+**新语料页 lang-sugars**（SugarsDemo.ets + Sugars.ts，id `lang-sugars`）：访问器族（get/set/
+静态 get/super 访问器/对象字面量 getter 与 this）、私有品牌检查、`a?.[i]`、逻辑赋值三连
+（&&=/||=/??=）、`filter(Boolean)`、switch fallthrough、do-while、标签 break、链式三元、
+逗号表达式、BigInt/数值分隔符/指数/**、String.raw、static 静态块、类字段箭头词法 super 方法、
+async generator + for-await-of + 标签 break、entries/fromEntries/map/filter/join/flat/reduce/
+slice 负索引链、嵌套解构/数组交换/属性-方法-计算键三连简写、new.target 箭头捕获。
+定位是"复杂源码 → 通用指令降级路径"的反编译对照样本（多数糖不产生新指令）。
+
+**第二轮实测归因（release + debug 双口径，全部未产生新指令）**：
+- 类/对象字面量访问器与 this → 常规 ldobjbyname/stobjbyname + 参数寄存器 this，无 ldthis 族/definefieldby*；
+- `a?.[i]`、`arguments[i]`（.js）→ ldobjbyvalue 路径，无 ldobjbyindex/stobjbyindex；
+- .js 正则字面量（`/^\d+$/.test`、`s.match(/../)`）→ 降级 `new RegExp(...)`，无 createregexpwithliteral；
+- switch 字符串/枚举 → lda.str + eq/jnez 序列，无 jeq/jstricteq 族；
+- async generator for-await → getasynciterator/resumegenerator/getresumemode 链（均已有），无 closeiterator；
+- 字段箭头 super 方法 ≥4 参 → ldsuperbyname + callthiswithname 路径，无 supercallarrowrange；
+- **script 模式终证**：无任何 import/export 的纯 .js（var/let/const 顶层赋值）在 debug 构建中也整体
+  被丢弃（abc 中不存在）——ldglobalvar/stglobalvar/st(const/to)globalrecord 4 条在应用管线下结构性不可达。
+
+**剩余 88 条未用 = deprecated 45 + wide 6 + 其他 37，全部两轮归因完毕**；除 deprecated 与
+patch 机制（wide.ldpatchvar/stpatchvar）外，其余均为 es2abc 的确定性发射策略（替代指令见上文两节）。
+
+坑与注意：`Array.prototype.at` 需 es2022 lib（本工程 lib 配置不支持，糖形态用 `slice(-1)[0]` 替代）。
+
+## 第三轮假设 + 模拟器全面回归（2026-09-06，并集维持 179/267）
+
+**第三轮探针归因（零新增，铁证补齐）**：
+- `closeiterator`：es2panda 将迭代器关闭协议**降级为显式 `ldobjbyname "return" + callthis0`**（for-of 遍历
+  generator/自定义迭代器 + break/return/try-finally 全形态实测，反汇编可见该序列，不发 closeiterator）；
+- `ldfunction`：局部递归「函数声明」与命名函数表达式、arguments 路径全部走词法闭包；
+- `ldsymbol`：`Symbol.hasInstance` 计算静态成员同样经全局解析路径。
+至此**三轮实证后，源码级可达覆盖已穷尽：179/267，未用 88 条全部归因**（45 deprecated + 6 wide + 37 其他，
+每条均有 es2abc 替代发射路径或语义非法/管线不可达的证据）。
+
+**模拟器全面回归（api26 release，emulator 7.0.0.32）**：
+- feat_api 全量 45 页（api 29 + ui 9 + lang 7）0 崩溃，**62✅ / 9❌**：8 项与 2026-09-04 基线完全一致
+  （socket×2、aes-gcm 401、sensor×3、dm 201、bgtask 401），新增 `ws send ❌` 为公网 echo 服务器抖动
+  （复测连 send 行都未出现，WebSocketDemo 代码零改动，判环境性）；
+- lang-runtime 定点验证：新增行 `const=const`（throw.constassignment 运行时捕获）、`superw=1`、
+  `lazyw=76 nsw=76`（1..130 求和 8515 % 97 = 76，与 lazy/ns 微模块总数吻合）、既有 15 行全部与基线一致；
+- lang-sugars 定点验证：10 行数值逐一正确（acc=8/4/11、priv=true1、sw=2 do=3 lab=1,2 ter=mid、
+  big=1、stat=3 sup=6、ent=2 back=1 arr=4,6 flat=6 at=30、swap=21、nt=1、fa=3）；
+- feat_vuln 13 页 **37✅ / 4❌** 与基线完全一致（GCM 401、web 17100003、asset 201、location 开关关闭）。
 
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 

@@ -13,7 +13,7 @@
 ② 预埋带标签漏洞 + 安全孪生（groundtruth/manifest.json），作为漏洞检测评分基准。
 成功标准：指令覆盖与 groundtruth 一致性持续可验证，且 App 在模拟器上运行正确。
 
-## Structure（规模：29 api 页 / 9 ui 页 / 6 lang 页 / 13 漏洞类 53+7 孪生）
+## Structure（规模：29 api 页 / 9 ui 页 / 7 lang 页 / 13 漏洞类 53+7 孪生）
 
 - entry（entry HAP 壳：Index 两按钮跨 HAP 拉起 feature）→ feat_api / feat_vuln（feature HAP，各编译独立 modules.abc）→ lib_common（HAR：DemoScaffold/Logger/DemoItem/Runner/Constants）→ lib_shared（HSP：静态/动态 import 目标）。
 - feat_api：路由页 pages/api(29)、pages/ui(9)、pages/lang(6)；受限特性（generator/for-in/Symbol 等，arkts-* 严格 lint 只查 .ets）放 pages/lang 下 .ts/.js（TsFeatures.ts、RuntimeHelpers.ts、WideForms*.ts、GlobalAssign.js）仍编译进同一 abc；concurrent/ 与 workers/ 为非页源码。

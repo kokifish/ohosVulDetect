@@ -92,7 +92,8 @@
 
 ### 5.1 指令：已用 174/267，未用 93
 
-> **P1 执行结果（2026-09-04）**：候选清单实证完毕——4 条新覆盖（`throw.constassignment`、`wide.supercallthisrange`、`callruntime.wideldlazymodulevar`、`wide.getmodulenamespace`），release 口径 171→**175/267**、快照并集 174→**178/267**；其余候选全部归因（es2abc 发射替代指令或语义非法），未用 89 条自此**全部有明确归因**。逐条归因见 docs/BENCHMARK.md「指令收口 P1」节，下表保留为快照口径。
+> **P1 执行结果（2026-09-04）**：候选清单实证完毕——4 条新覆盖（`throw.constassignment`、`wide.supercallthisrange`、`callruntime.wideldlazymodulevar`、`wide.getmodulenamespace`）。
+> **第二轮深挖（2026-09-06）**：`testin` 经私有品牌检查 `#priv in obj` 覆盖（公有 `k in o` 才是 `isin`）——release 176、快照并集 **179/267**；剩余 88 条（deprecated 45 + wide 6 + 其他 37）经两轮 release+debug 实测**全部归因**（含 script 模式 .js 在 debug 下也被丢弃的终证）。逐条归因见 docs/BENCHMARK.md「指令收口 P1」「第二轮深挖」两节，下表保留为快照口径。
 
 | 未用类别 | 数量 | 处置 |
 |---|---|---|
@@ -150,7 +151,7 @@
 |---|---|---|
 | 优先级 | 内容 | 验收 |
 |---|---|---|
-| P1 指令收口 | **已完成（2026-09-04）**：+4 指令（throw.constassignment / wide.supercallthisrange / callruntime.wideldlazymodulevar / wide.getmodulenamespace），release 175、并集 178/267；未用 89 条全部归因（见 BENCHMARK「指令收口 P1」节）。遗留：RuntimeDemo 新电池的模拟器运行验证 | ✅ |
+| P1 指令收口 | **已完成（三轮，2026-09-04/06）**：累计 +5 指令（throw.constassignment / wide.supercallthisrange / callruntime.wideldlazymodulevar / wide.getmodulenamespace / testin），release 176、并集 179/267；未用 88 条全部三轮归因，**源码级可达覆盖已穷尽**（含 closeiterator 降级铁证）；模拟器全面回归通过（feat_api 62✅/9❌、feat_vuln 37✅/4❌、新页数值正确，见 BENCHMARK 第三轮节） | ✅ |
 | P2 组件补齐 | 新建 1–2 个 ui 页集中补 5.2 缺口第 1–7 项（约 25 个组件）；PatternLock/SaveButton/PasteButton 同步在 feat_vuln 造孪生素材 | sweep 全绿；组件计数更新进 BENCHMARK |
 | P3 API 域扩展 | 5.3 缺口前 8 名逐个建页（每域 3–6 个代表调用，延续调用方式矩阵轮换）；每域考虑配漏洞孪生 | sweep 通过；ApiRegistry/main_pages 双注册 |
 | P4 语言特性 | 5.4 候选实证后落 lang 页 | 新增指令计入覆盖并集 |
