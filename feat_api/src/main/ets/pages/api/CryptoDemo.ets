@@ -30,8 +30,14 @@ struct CryptoDemo {
             const iv: cryptoFramework.DataBlob = await ivRand.generateRandom(12);
             const aadBlob = new Uint8Array([1, 2, 3, 4]);
             const cipher: cryptoFramework.Cipher = cryptoFramework.createCipher('AES256|GCM|PKCS7');
-            await cipher.init(cryptoFramework.CryptoMode.ENCRYPT_MODE, symKey,
-              { iv: { data: iv.data }, aad: { data: aadBlob } } as cryptoFramework.GcmParamsSpec);
+            // GcmParamsSpec 必填 algName：API26 运行时严格校验 ParamsSpec，缺失报 401（API24 不查）
+            const gcmParams: cryptoFramework.GcmParamsSpec = {
+              algName: 'GcmParamsSpec',
+              iv: { data: iv.data },
+              aad: { data: aadBlob },
+              authTag: { data: new Uint8Array(16) }, // 类型必填；加密模式下被忽略，tag 由 doFinal 产出
+            };
+            await cipher.init(cryptoFramework.CryptoMode.ENCRYPT_MODE, symKey, gcmParams);
             const out: cryptoFramework.DataBlob = await cipher.doFinal({ data: new Uint8Array([9, 9, 9]) });
             return `gcm-ct=${this.toHex(out.data)}`;
           }),

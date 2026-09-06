@@ -123,7 +123,6 @@ export function sugarDestruct(): string {
   return `c=${c} d=${d} rest=${Object.keys(rest).length} swap=${x}${y} obj=${Object.keys(obj).length}`;
 }
 
-// new.target 的箭头捕获（构造器隐参 vs 词法捕获的对照形态）。
 export class NT {
   r: number;
   constructor() {
@@ -134,3 +133,15 @@ export class NT {
 export function sugarNewTarget(): string {
   return `nt=${new NT().r}`;
 }
+
+// 数字字符串键的静态字段：key 经 ToPropertyKey 转 int64 → callruntime.definefieldbyindex
+// （es2panda 静态/private 字段无条件走类 initializer；实例字段需 --use-define-semantic，
+// hvigor 的 .ets 管线即 define 语义。计算键 [n] 走 definefieldbyvalue 是另一条路径）。
+export class NumKeyStatic {
+  static '9': number = 9;
+  static '22': number = 11;
+}
+export function sugarNumericKeys(): number {
+  return (NumKeyStatic as ESObject)['9'] + (NumKeyStatic as ESObject)['22'];
+}
+

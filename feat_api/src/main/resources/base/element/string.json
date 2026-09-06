@@ -15,6 +15,14 @@
     {
       "name": "perm_location_reason",
       "value": "benchmark location demo"
+    },
+    {
+      "name": "perm_sensor_reason",
+      "value": "benchmark sensor demo"
+    },
+    {
+      "name": "perm_dm_reason",
+      "value": "benchmark distributed device demo"
     }
   ]
 }

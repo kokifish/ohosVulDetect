@@ -310,6 +310,66 @@ patch 机制（wide.ldpatchvar/stpatchvar）外，其余均为 es2abc 的确定�
   big=1、stat=3 sup=6、ent=2 back=1 arr=4,6 flat=6 at=30、swap=21、nt=1、fa=3）；
 - feat_vuln 13 页 **37✅ / 4❌** 与基线完全一致（GCM 401、web 17100003、asset 201、location 开关关闭）。
 
+## 第四轮：es2abc 旗标与源码级归因（2026-09-06，并集 179→180/267）
+
+方法：SDK 自带 es2abc 独立调用（`ets/build-tools/ets-loader/bin/ark/.../es2abc`）做旗标矩阵探针
+（--use-define-semantic / --opt-level 0-2 / --extension as / --target-api-version 11），并对照上游
+`arkcompiler_ets_frontend` master 源码逐条定位发射点（pandagen.cpp / helpers.cpp / options.cpp）。
+
+**新覆盖（+1）：`callruntime.definefieldbyindex`** —— 数字字符串键的静态字段（`static '9': number = 9`，
+Sugars.ts NumKeyStatic）。es2panda 静态/private 字段无条件进类 initializer，key 经 ToPropertyKey 转
+int64 走 imm 路径（计算键 `[n]` 走 definefieldbyvalue 是另一条）。**target 24 默认 hvigor 管线即可发射**，
+无需旗标；模拟器实测 `nk=20`（9+11）。计算键 `[K]`（const/enum 折叠、static 变体）实测均走 byvalue。
+
+**源码级终论（上游证据）**：`DefineFieldByName`（pandagen.cpp:610）与 `IsTrue/Isfalse`（:1130/:1193）
+按 `--target-api-version` 二选一——**<12（含 11）发 `definefieldbyname`/`istrue`/`isfalse`，≥12(beta3)
+发 `definepropertybyname`/`callruntime.istrue/isfalse`**；es2abc 默认 target=24（options.cpp:571），
+ets-loader 把 product 的 compatibleSdkVersion 原样传给该旗标（module_mode.js generateEs2AbcCmd）。
+本机 es2abc 实测 `--target-api-version 11` 可产出 istrue/isfalse（`!b`/`&&`/三元即触发）。
+**依 AGENTS.md 优先级（构建链最新 > 指令覆盖），旧 SDK 路线搁置**：这 3 条按「真实野生产物存在、
+语料不可达、工具必须支持」处理；唯一不降级的可选路线是 byteCode-HAR（用当前 es2abc 加旗标
+离线编译微模块、经 `--enable-abc-input` 合并，机制同上），仅在需要时再评估。
+
+**管线实验（api11 product）**：临时 product compatibleSdkVersion "4.1.0(11)"（runtimeOS OpenHarmony，
+需 compileSdkVersion + local.properties sdk.dir）→ hvigor 在 SDK 解析阶段失败（本机仅装 default/26
+组件，sdkmanager 无法解析 4.1.0(11)，且依上述优先级不再引入旧 SDK）。**可行但不采用的解封路径**：
+不装旧 SDK 的替代是 byteCode-HAR（module_mode 的 `--enable-abc-input` 预编译 abc 合并机制：
+用当前 es2abc 加 `--target-api-version 11` 离线编译微模块并按 byteCodeHar 结构打入），仅在有需要时再评估。
+
+坑与注意：
+- `--opt-level=0` 必须空格分隔（`--opt-level 0`），`=` 形式 pandargs 报错；
+- `.ets`（extension as）禁计算类字段，数字键形态只能放 .ts；
+- 对象字面量纯数字键会被 createobjectwithbuffer 吸收，需类字段形态才见 definefieldbyindex；
+- 外部真实 hap 交叉验证（12 hap+3 abc）：外部实发 106 条中本项目已覆盖 105 条（本轮后 106/106 中
+  除 definefieldbyname/isfalse/istrue 3 条老工具链指令外的全部——见 ohos.md §5.1）。
+
+## 模拟器全面回归第二轮：修复与终版基线（2026-09-06）
+
+对全部 60 个注册页（feat_api 45 + feat_vuln 13 类页 + Backdoor）+ 7 个 lang 页逐行数值 + deeplink 做全面
+动态测试。**发现 4 项此前误记为「环境性失败」的其实是代码/配置缺陷，已修复**：
+
+1. **aes-gcm 401（真代码 bug，feat_api CryptoDemo + feat_vuln OVD-CRYPTO-001S 两处）**：GcmParamsSpec
+   缺必填 `algName: 'GcmParamsSpec'` 与 `authTag`（注意字段名是 **algName** 不是 algoName；加密模式
+   authTag 给 16 字节占位即可）。API24 运行时不校验故曾通过，API26 严格校验报 401。已改为显式类型
+   const，两处均 ✅；
+2. **web-005 17100003（可修）**：loadUrl 的 file:// 目标文件不存在；改为先在 filesDir 写 bench.txt 再加载 → ✅；
+3. **sensor 201（可修）**：ACCELEROMETER/GYROSCOPE 未声明（均为 SYSTEM_GRANT，声明即自动授权，
+   atm 无需也不能手动授予）；module.json5 补声明后 accel-on-off / sensor-once 均 ✅；
+4. **dm-devices 201（可修）**：需 DISTRIBUTED_DATASYNC（user_grant），补声明 + `atm perm -g` 授权 → ✅。
+   **注意 atm 授权按安装计**：bm uninstall 重装后需重授（tokenID 用 `atm dump -t -b com.koki.VD` 查），
+   sweep 前置步骤已含。
+
+**终版基线（api26 release，全页面）**：
+- feat_api 45 页 0 崩溃，**66✅ / 7❌**：socket×2（沙箱禁原始 socket）、ws send（公网 echo 服务器抖动，
+  复测可恢复）、vibrate（模拟器无马达 14600101）、location×2 + feat_vuln PRIV-002（系统定位开关默认
+  关闭，无 CLI 可开，需系统设置）、bgtask（backgroundModes 已从 SDK26 schema 移除）——**全部已在
+  源码相应用例处加 `// ENV(不可修复)` 注释**；
+- feat_vuln 13 类页 **39✅ / 2❌**（asset 001S：关键资产存储要求设备锁屏凭据，模拟器无锁屏密码 → 201，
+  已注释；PRIV-002 同定位开关）；
+- lang 7 页逐行数值全对（closure fib(12)=233、generator ys=1,33、runtime priv=15/const=const/lexwide、
+  sugars nk=20/fa=3/nt=1 等）；deeplink `ovd://backdoor` 实拉起 BackdoorAbility；
+- 覆盖率维持 180/267，manifest 双向一致。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：

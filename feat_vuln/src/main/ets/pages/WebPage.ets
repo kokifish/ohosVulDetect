@@ -1,5 +1,6 @@
 import { webview } from '@kit.ArkWeb';
 import { common } from '@kit.AbilityKit';
+import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
 import { NativeBridge } from '../web/NativeBridge';
 
@@ -35,7 +36,13 @@ struct WebPage {
         Button('loadUrl(file://)').margin(4).onClick(() => {
           // VULN: OVD-WEB-005 fileAccess(true) + 本地文件加载（CWE-79/200）
           this.runner.run('web-005', () => {
-            this.controller.loadUrl('file:///data/storage/el2/base/haps/feat_vuln/files/bench.txt');
+            // 先落盘目标文件再加载：否则 file:// 目标不存在，运行时报 17100003（曾误记为环境性失败）
+            const ctx = getContext(this) as common.UIAbilityContext;
+            const target = `${ctx.filesDir}/bench.txt`;
+            const f = FileIo.openSync(target, FileIo.OpenMode.READ_WRITE | FileIo.OpenMode.CREATE | FileIo.OpenMode.TRUNC);
+            FileIo.writeSync(f.fd, '<html><body>bench-file</body></html>');
+            FileIo.closeSync(f);
+            this.controller.loadUrl(`file://${target}`);
             return 'file:// load issued';
           });
         })

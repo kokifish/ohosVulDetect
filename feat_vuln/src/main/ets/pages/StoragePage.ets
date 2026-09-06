@@ -17,6 +17,7 @@ struct StoragePage {
           new Case('001 prefs-token', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             return ovdStor001(ctx, 'eyJhbGciOiJIUzI1NiJ9.bench-payload.benchsig');
           }),
+          // ENV(不可修复): asset 关键资产存储要求设备已设锁屏凭据，模拟器无锁屏密码 → 201
           new Case('001S asset', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor001S('eyJhbGciOiJIUzI1NiJ9.bench-payload.benchsig')),
           new Case('002 cred-file', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             return ovdStor002(ctx);

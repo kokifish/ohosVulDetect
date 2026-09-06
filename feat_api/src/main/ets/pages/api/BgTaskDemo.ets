@@ -11,6 +11,7 @@ struct BgTaskDemo {
       DemoScaffold({
         title: 'backgroundTaskManager',
         cases: [
+          // ENV(不可修复): backgroundModes 已从 SDK26 module.json5 schema 移除（BENCHMARK「已知事项」），运行时 401
           new Case('bg-running', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const waInfo: wantAgent.WantAgentInfo = {
               wants: [{ bundleName: 'com.koki.VD', abilityName: 'ApiAbility' }],

@@ -11,6 +11,7 @@ struct SocketDemo {
       DemoScaffold({
         title: 'socket TCP/UDP/TLS',
         cases: [
+          // ENV(不可修复): 模拟器沙箱禁原始 socket（connect 报 2301115/2303600），真机可过
           new Case('tcp-connect-send', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const tcp = socket.constructTCPSocketInstance();
             let got = 0;
@@ -31,6 +32,7 @@ struct SocketDemo {
             udp.close();
             return 'udp sent';
           }),
+          // ENV(不可修复): 同上，沙箱网络限制
           new Case('tls-connect', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const tls = socket.constructTLSSocketInstance();
             await tls.connect({

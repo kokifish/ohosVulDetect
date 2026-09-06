@@ -13,6 +13,14 @@
 ② 预埋带标签漏洞 + 安全孪生（groundtruth/manifest.json），作为漏洞检测评分基准。
 成功标准：指令覆盖与 groundtruth 一致性持续可验证，且 App 在模拟器上运行正确。
 
+### 优先级（冲突时按序取舍）
+
+**构建链保持最新 > ArkTS 汇编指令覆盖 > 组件/API 覆盖。**
+
+- SDK/DevEco 有新版本即升级，语料回退时优先适配新构建链（改写/替换语料形态），不为保覆盖冻结版本、更不引入旧 SDK 构建链（如 api11 product / 旧版 es2abc 路线就此搁置）；
+- 仅旧工具链产物才含的指令（`definefieldbyname`/`isfalse`/`istrue` 等，target-api-version 11 门控，见 docs/BENCHMARK.md 第四轮节）按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；
+- 升级后丢失的覆盖须在 BENCHMARK.md 记录归因（编译器行为变化），不可静默缩水。
+
 ## Structure（规模：29 api 页 / 9 ui 页 / 7 lang 页 / 13 漏洞类 53+7 孪生）
 
 - entry（entry HAP 壳：Index 两按钮跨 HAP 拉起 feature）→ feat_api / feat_vuln（feature HAP，各编译独立 modules.abc）→ lib_common（HAR：DemoScaffold/Logger/DemoItem/Runner/Constants）→ lib_shared（HSP：静态/动态 import 目标）。

@@ -33,6 +33,7 @@ struct PermPage {
         Button('001 declared-unused').margin(4).onClick(() => this.runner.run('001', () => ovdPerm001()))
         Button('paste-001 pwd').margin(4).onClick(() => this.runner.run('PASTE-001', () => ovdPaste001('Admin@123')))
         Button('priv-001 fingerprint').margin(4).onClick(() => this.runner.run('PRIV-001', () => ovdPriv001()))
+        // ENV(不可修复): 模拟器系统定位开关默认关闭（3301100 switch off），需系统设置开启
         Button('priv-002 locate').margin(4).onClick(() => this.runner.run('PRIV-002', () => ovdPriv002()))
       }
       .width('100%')

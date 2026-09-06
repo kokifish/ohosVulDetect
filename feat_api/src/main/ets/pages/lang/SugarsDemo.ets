@@ -3,7 +3,7 @@
 // 反编译对照价值：复杂语法糖 → 通用指令的降级路径还原。
 import {
   sugarAccessors, sugarPrivLogic, sugarFlow, sugarNumbers, sugarStaticSuper,
-  sugarForAwait, sugarFunctional, sugarDestruct, sugarNewTarget
+  sugarForAwait, sugarFunctional, sugarDestruct, sugarNewTarget, sugarNumericKeys
 } from './Sugars';
 
 @Entry
@@ -25,6 +25,7 @@ struct SugarsDemo {
           this.lines.push(sugarFunctional({ 'a': 1, 'b': 2 }));
           this.lines.push(sugarDestruct());
           this.lines.push(sugarNewTarget());
+          this.lines.push(`nk=${sugarNumericKeys()}`);
         })
       Button('run for-await sugar')
         .onClick(() => {

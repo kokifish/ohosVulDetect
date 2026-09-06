@@ -42,6 +42,36 @@
           ],
           "when": "inuse"
         }
+      },
+      {
+        "name": "ohos.permission.ACCELEROMETER",
+        "reason": "$string:perm_sensor_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.GYROSCOPE",
+        "reason": "$string:perm_sensor_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC",
+        "reason": "$string:perm_dm_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
       }
     ],
     "abilities": [
