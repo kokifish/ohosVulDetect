@@ -54,21 +54,26 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as td:
         for m in MODULES:
             for p in PRODUCTS:
-                abc = root / m / "build" / PRODUCT_OF[p] / "intermediates" / "loader_out" / "default" / "ets" / "modules.abc"
-                if not abc.exists():
-                    continue
-                out = pathlib.Path(td) / f"{m}_{p}.dis"
-                r = subprocess.run([args.ark_disasm, str(abc), str(out)], capture_output=True, text=True)
-                if r.returncode != 0 or not out.exists():
-                    print(f"WARN: 反汇编失败 {m}/{p}: {abc}", file=sys.stderr)
-                    continue
-                seen_any = True
-                text = out.read_text(errors="ignore")
-                used |= {mm.group(1) for mm in OPCODE_RE.finditer(text)}
-                if True:
-                    out.rename(dump / f"{m}_{p}.dis")  # 落快照，供下次并集
+                # 扫描点：每模块 ets/{modules,widgets}.abc（卡片产物）+ src/main/resources/rawfile/*.abc（数据形态 abc）
+                base = root / m / "build" / PRODUCT_OF[p] / "intermediates" / "loader_out" / "default" / "ets"
+                abcs = [base / "modules.abc", base / "widgets.abc"]
+                rawdir = root / m / "src" / "main" / "resources" / "rawfile"
+                if rawdir.is_dir():
+                    abcs += sorted(rawdir.glob("*.abc"))
+                for abc in abcs:
+                    if not abc.exists():
+                        continue
+                    out = pathlib.Path(td) / f"{m}_{p}_{abc.stem}.dis"
+                    r = subprocess.run([args.ark_disasm, str(abc), str(out)], capture_output=True, text=True)
+                    if r.returncode != 0 or not out.exists():
+                        print(f"WARN: 反汇编失败 {m}/{p}: {abc}", file=sys.stderr)
+                        continue
+                    seen_any = True
+                    text = out.read_text(errors="ignore")
+                    used |= {mm.group(1) for mm in OPCODE_RE.finditer(text)}
+                    out.rename(dump / f"{m}_{p}_{abc.stem}.dis")  # 落快照，供下次并集
     if not seen_any:
-        print("ERROR: 未找到任何 modules.abc 或快照（先跑 build.py）")
+        print("ERROR: 未找到任何 modules.abc/widgets.abc/rawfile abc 或快照（先跑 build.py）")
         return 1
     used -= NOISE
 
