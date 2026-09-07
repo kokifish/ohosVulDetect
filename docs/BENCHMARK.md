@@ -173,6 +173,9 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 
 ## 已知事项
 
+- **工具链版本（2026-09-07 核对）**：本机 DevEco Studio 26.0.0（SDK 26.0.0.32 **Beta2**，模拟器镜像 7.0.0.32）；
+  官方 2026-08-29 已发布 26.0.0 Release（DevEco Studio 26.0.0.821 / SDK 26.0.0.105）——按 AGENTS 优先级待升级，
+  升级后须重跑全量构建 + 覆盖率（es2abc 行为差异可能增减指令，变化须归因记录）+ sweep 回归；
 - `backgroundModes` 已从 module.json5 schema 移除（SDK 26），后台任务 demo 运行时 401；
 - DataShareExtensionAbility 在 26.0.0 Beta SDK 未公开，IPC-003 改为 TCP 后门无认证用例；
 - SDK 26 API 面变化清单（本项目适配记录）：CoreFileKit 导出 `fileIo`（非 fs）、`rcp.createSession`（非 new Session）、
