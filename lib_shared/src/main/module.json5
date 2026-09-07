@@ -5,6 +5,7 @@
     "deviceTypes": [
       "phone"
     ],
-    "deliveryWithInstall": true
+    "deliveryWithInstall": true,
+    "routerMap": "$profile:route_map"
   }
 }

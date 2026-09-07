@@ -30,6 +30,8 @@
     "pages/api/WorkerDemo",
     "pages/api/DynamicImportDemo",
     "pages/api/I18nDemo",
+    "pages/api/FormDemo",
+    "pages/api/RouteMapDemo",
     "pages/ui/StateV1Demo",
     "pages/ui/StateV2Demo",
     "pages/ui/ListDemo",
