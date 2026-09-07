@@ -78,6 +78,29 @@ static napi_value VulnCopy(napi_env env, napi_callback_info info)
     return result;
 }
 
+// rawfile abc 执行：napi_run_script_path 仅接受 rawfile 下的 abc 路径（自动拼
+// /data/storage/el1/bundle/ 沙箱前缀），每次调用新建独立 JS 上下文，返回脚本完成值。
+static napi_value RunAbcRawfile(napi_env env, napi_callback_info info)
+{
+    size_t argc = 1;
+    napi_value args[1] = {nullptr};
+    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+
+    size_t len = 0;
+    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    char *path = new char[len + 1];
+    napi_get_value_string_utf8(env, args[0], path, len + 1, nullptr);
+
+    napi_value result = nullptr;
+    napi_status st = napi_run_script_path(env, path, &result);
+    delete[] path;
+    if (st != napi_ok || result == nullptr) {
+        napi_throw_error(env, nullptr, "napi_run_script_path failed");
+        return nullptr;
+    }
+    return result;
+}
+
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports)
 {
@@ -85,6 +108,7 @@ static napi_value Init(napi_env env, napi_value exports)
         {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"xorNative", nullptr, XorNative, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"vulnCopy", nullptr, VulnCopy, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"runAbcRawfile", nullptr, RunAbcRawfile, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
