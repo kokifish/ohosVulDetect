@@ -85,6 +85,21 @@
         "startWindowBackground": "$color:start_window_background",
         "exported": false
       }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "ApiFormAbility",
+        "srcEntry": "./ets/form/ApiFormAbility.ets",
+        "label": "$string:ApiWidgetCard_label",
+        "description": "$string:ApiFormAbility_desc",
+        "type": "form",
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:form_config"
+          }
+        ]
+      }
     ]
   }
 }

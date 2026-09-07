@@ -23,6 +23,18 @@
     {
       "name": "perm_dm_reason",
       "value": "benchmark distributed device demo"
+    },
+    {
+      "name": "ApiFormAbility_desc",
+      "value": "benchmark ArkTS card form"
+    },
+    {
+      "name": "ApiWidgetCard_label",
+      "value": "VD Card"
+    },
+    {
+      "name": "ApiWidgetCard_desc",
+      "value": "benchmark dynamic ArkTS card"
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "forms": [
+    {
+      "name": "ApiWidgetCard",
+      "displayName": "$string:ApiWidgetCard_label",
+      "description": "$string:ApiWidgetCard_desc",
+      "src": "./ets/widget/ApiWidgetCard.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "renderingMode": "fullColor",
+      "isDefault": true,
+      "updateEnabled": true,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "2*2"
+      ],
+      "formConfigAbility": "ability://ApiFormAbility",
+      "isDynamic": true,
+      "metadata": []
+    }
+  ]
+}
