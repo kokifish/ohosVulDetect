@@ -175,10 +175,10 @@
 
 | # | 途径 | abc 落位 | 证据 | 本项目状态 |
 |---|---|---|---|---|
-| 1 | **ArkTS 卡片**（FormExtensionAbility + WidgetCard，共包方式） | 同一 HAP 内额外产出 **`ets/widgets.abc`** 与 modules.abc 并存 | ets-loader `ark_define.js` 的 `WIDGETS_ABC="widgets.abc"` + `module_mode.js` 按 `widgetCompile` 切换产物名；官方「创建ArkTS卡片」：共包方式卡片 UI 与应用代码同 module 同 HAP | ❌ 未覆盖（首选扩展点） |
-| 2 | **rawfile 放 .abc 数据文件** | `resources/rawfile/*.abc`，任意数量 | 官方 FAQ（faqs-ndk-65）：`napi_run_script_path` **仅接受 rawfile 下的 abc**，自动拼沙箱路径 `/data/storage/el1/bundle/<hap>/resources/rawfile/x.abc`，每次执行新建独立 JS 上下文 | ❌ 未覆盖（feat_vuln 已有 cpp libentry.so，具备 NAPI 执行条件；且 es2abc 脚本模式产物 record 结构与模块模式有差异，语料价值高） |
+| 1 | **ArkTS 卡片**（FormExtensionAbility + WidgetCard，共包方式） | 同一 HAP 内额外产出 **`ets/widgets.abc`** 与 modules.abc 并存 | ets-loader `ark_define.js` 的 `WIDGETS_ABC="widgets.abc"` + `module_mode.js` 按 `widgetCompile` 切换产物名；官方「创建ArkTS卡片」：共包方式卡片 UI 与应用代码同 module 同 HAP | ✅ 已落地（2026-09-07 第六轮，feat_api 卡片 ApiWidgetCard + FormDemo 页） |
+| 2 | **rawfile 放 .abc 数据文件** | `resources/rawfile/*.abc`，任意数量 | 官方 FAQ（faqs-ndk-65）：`napi_run_script_path` **仅接受 rawfile 下的 abc**，自动拼沙箱路径 `/data/storage/el1/bundle/<hap>/resources/rawfile/x.abc`，每次执行新建独立 JS 上下文 | ✅ 已落地（feat_vuln bench_script.abc + NativePage，**完成值恒 undefined、以脚本内自校验闭环**，+4 指令） |
 | 3 | 多包 App | 每 HAP/HSP 各 1 个 modules.abc | 本仓库 4 包 4 abc | ✅ 已有 |
-| 4 | **字节码 HAR 依赖** | tgz 内含独立 `ets/modules.abc`；但宿主构建以 `--enable-abc-input --remove-redundant-file` **原样并入宿主 modules.abc**（不做语法检查/重编译），宿主包内 abc 数不变 | hvigor `byte-code-har-utils.js`、ets-loader `module_mode.js` abcPaths 合并逻辑；官方「构建HAR」文档 | ❌ 未依赖过。注意：**"abc 原样合并"机制正是第五轮搁置的 patch 对指令注入通道**（手造 abc 伪装字节码 HAR 即可入包，待小规模实证） |
+| 4 | **字节码 HAR 依赖** | tgz 内含独立 `ets/modules.abc`；但宿主构建以 `--enable-abc-input --remove-redundant-file` **原样并入宿主 modules.abc**（不做语法检查/重编译），宿主包内 abc 数不变 | hvigor `byte-code-har-utils.js`、ets-loader `module_mode.js` abcPaths 合并逻辑；官方「构建HAR」文档 | 已实证（2026-09-07 /tmp 探针：HAR tgz 内确有 `package/ets/modules.abc` + `.d.ets` 桩；宿主消费后仍 1 个 abc，`&lib_common.*&1.0.0` record 原样并入）。**"abc 原样合并"机制正是第五轮搁置的 patch 对指令注入通道**（手造 abc 伪装字节码 HAR 即可入包；注入通道已实证，缺的只是能产出 patch 指令的 abc 载荷） |
 | 5 | 独立卡片包（API 20+） | 卡片 UI 独立 library 模块 → 独立卡片包（formWidgetModule/formExtensionModule 互相关联） | 官方「创建ArkTS卡片」方式二 | ❌ 未覆盖（与 #1 二选一即可） |
 | 6 | 集成态 HSP | HSP 静态打进消费方，不增加 abc 数 | hvigor `package-shared-tgz.js` integratedHsp 分支 | ❌ 未覆盖（形态补全用） |
 | 7 | patch.abc（热修）/ 加密 abc（官方应用加密 code-protect） | 运行时/发布态形态，非正常构建产物 | 第五轮已归因；加密 abc 是逆向工具"野外"形态 | 观察项（不做语料目标） |
@@ -199,7 +199,7 @@
 
 **混淆（ArkGuard）**：release 经 `arkOptions.obfuscation.ruleOptions`；本项目已开 `-enable-property-obfuscation -enable-toplevel-obfuscation`（filename/export 混淆实测跨包 HAP/HSP 加载崩溃，注释在 obfuscation-rules.txt）；**官方另有 API26 应用加密（code-protect，内核级 abc 加密）与 ohpm 三方加固（Virbox/爱加密等）**——加密 abc 是逆向工具野外兼容项，不入语料。
 
-**本项目形态对照**：✅ 应用内 HSP（静态+动态 import）、源码 HAR、多 HAP（entry+2 feature）、native so（libs/arm64-v8a）、release 混淆；❌ 卡片 widgets.abc、rawfile abc、route_map 路由、HSP 内 UIAbility/ExtensionAbility、字节码 HAR 依赖、集成态 HSP、独立卡片包。
+**本项目形态对照**：✅ 应用内 HSP（静态+动态 import）、源码 HAR、多 HAP（entry+2 feature）、native so（libs/arm64-v8a）、release 混淆、**ArkTS 卡片 widgets.abc（第六轮）**、**rawfile abc + napi 执行（第六轮）**、**route_map 跨包 Navigation（第六轮）**；❌ HSP 内 UIAbility/ExtensionAbility、字节码 HAR 工程内依赖（机制已探针实证）、集成态 HSP、独立卡片包。
 
 ### 7.3 组件/API 覆盖率：权威清单与提升路径
 
@@ -215,12 +215,12 @@
 - `ohpm.openharmony.cn`：真实三方库（大量**字节码 HAR**，含真实第三方 abc + 混淆变体）→ 作逆向工具**鲁棒性测试集**（非语料源；实测 @ohos/lottie 2.0.33 为源码 HAR，需挑选真正的字节码包）。
 - OpenHarmony-TPC、awesome-harmony 系列作补充。
 
-### 7.4 对本项目的落地建议（排在工具链升级 26.0.0 Release 之后执行，避免双回归）
+### 7.4 对本项目的落地建议（1–3 已于 2026-09-07 第六轮落地；其余排在工具链升级 26.0.0 Release 之后）
 
-1. **ArkTS 卡片页**（扩展点 #1）：feat_api 或新模块加 FormExtensionAbility + WidgetCard（form_config.json + extensionAbilities）→ 一次拿下 `ets/widgets.abc` 第二 abc 形态 + FormKit API 域（formProvider/formInfo/formBindingData/postCardAction）+ 卡片受限组件集。注意 sweep 需适配卡片非路由页。
-2. **rawfile abc + napi_run_script_path**（#2）：es2abc 脚本模式产 abc 入 rawfile，feat_vuln cpp 侧执行——覆盖"abc 数据文件"形态 + script 模式 record 差异。
-3. **route_map.json 跨包 Navigation 路由 + HSP UIAbility**（API14+ 形态）。
-4. **字节码 HAR 依赖实证**（#4）：引一个 ohpm 字节码 HAR 或自建探针 HAR，验证 `--enable-abc-input` 原样合并行为；顺带为 patch 对指令（wide.ldpatchvar/stpatchvar）注入路线做小规模 PoC。
-5. 集成态 HSP（#6，可选形态补全）。
+1. ✅ **ArkTS 卡片页**：feat_api FormExtensionAbility（ApiFormAbility）+ 动态卡片（ApiWidgetCard）→ `ets/widgets.abc` 第二 abc 形态 + FormKit API 域（formProvider/formInfo/formBindingData/postCardAction）+ 卡片受限组件集（SDK `ets/component/form_config.json` 即卡片组件白名单，38 个）。
+2. ✅ **rawfile abc + napi_run_script_path**：es2abc 脚本模式 abc 入 rawfile，feat_vuln cpp 执行——script 模式全局变量指令族（ldglobalvar/stglobalvar/stconsttoglobalrecord/sttoglobalrecord）+4 条，模块模式产物不含。
+3. ✅ **route_map.json 跨包 Navigation 路由**：lib_shared 注册系统路由表，feat_api api-route-map 页按名路由 + onPop 回程断言。
+4. ⏳ **字节码 HAR 注入 PoC（载荷侧）**：合并通道已实证（见 7.1 #4）；产出含 patch 对指令的 abc 载荷仍缺 assembler，维持待评估。
+5. ⏳ HSP 内 UIAbility（API14+）、集成态 HSP、独立卡片包（API20+）——形态补全，可选。
 
 **参考来源**：官方文档——创建ArkTS卡片（harmonyos-guides/arkts-ui-widget-creation）、HSP（in-app-hsp）、集成态HSP（integrated-hsp）、HAR（har-package）、构建HAR（ide-hvigor-build-har）、应用加密（code-protect）、napi_run_script_path 限制（harmonyos-faqs/faqs-ndk-65）、程序包结构（application-package-structure-stage）、混淆选项（source-obfuscation-rule-options）；本地——ets-loader `gen_abc_plugin.js`/`ark_define.js`/`module_mode.js`、hvigor-ohos-plugin `build-opt.d.ts`/`target-task-service.js`/`byte-code-har-utils.js`/`package-shared-tgz.js`、SDK `ets/component/component_config.json`。

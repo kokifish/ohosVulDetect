@@ -93,6 +93,21 @@ def swipe_up(wait=1.5):
     time.sleep(wait)
 
 
+def dismiss_dialog():
+    """关掉挡屏的系统对话框（如无浏览器镜像上 openLink 弹的「No options to open with」）。
+    该对话框属系统进程，goto_list 的 force-stop 关不掉，会盖住壳入口按钮导致遍历提前终止。"""
+    tree = dump()
+    hit = [t for t in (a.get('text', '') for a in nodes(tree))
+           if t in ('No options to open with', '选择打开方式', '无法打开')]
+    if not hit:
+        return False
+    for a in nodes(tree):
+        if a.get('text', '') in ('OK', '确定'):
+            click(*center(a['bounds']), 1.2)
+            return True
+    return False
+
+
 def goto_list():
     sh("aa force-stop com.koki.VD")
     time.sleep(1.0)
@@ -102,6 +117,7 @@ def goto_list():
         return
     sh("aa start -a EntryAbility -b com.koki.VD")
     time.sleep(4.5)
+    dismiss_dialog()
     for a in nodes(dump()):
         if SHELL_BTN in a.get('text', ''):
             click(*center(a['bounds']), 4.5)
@@ -120,7 +136,9 @@ def run_page_buttons(page_name, max_btn=8):
     for b in btns[:max_btn]:
         x, y = center(b['bounds'])
         click(x, y, 2.2)
+        dismiss_dialog()  # openLink 等用例可能弹系统对话框，挡住后续按钮与结果区
     time.sleep(1.5)
+    dismiss_dialog()
     tree = dump()
     lines = [a.get('text', '') for a in nodes(tree)
              if a.get('text', '') and ('✅' in a.get('text', '') or '❌' in a.get('text', '')
@@ -140,7 +158,7 @@ def visit_rows(prefix_list, budget_seconds=600):
                 rows.append((t, a['bounds']))
         if not rows:
             found = False
-            for _try in range(4):
+            for _try in range(8):
                 swipe_up()
                 tree2 = dump()
                 if any(a.get('text', '').startswith(p) and a.get('text', '') not in visited
@@ -148,6 +166,12 @@ def visit_rows(prefix_list, budget_seconds=600):
                     found = True
                     break
             if not found:
+                # 列表加载/滚动抖动下可能误判「遍历完毕」：重启应用复核一次再放弃
+                goto_list()
+                tree2 = dump()
+                if any(a.get('text', '').startswith(p) and a.get('text', '') not in visited
+                       for a in nodes(tree2) for p in prefix_list):
+                    continue
                 break
             continue
         name = rows[0][0]
