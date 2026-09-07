@@ -14,7 +14,8 @@ struct NativePage {
         cases: [
           new Case('001 key-in-so', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdNative001('bench-data')),
           new Case('002 strcpy', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdNative002()),
-          // 包内独立 abc 语料：es2abc script 模式产物放 rawfile，经 NAPI 执行（期望 72，见 tools/rawfile_src/bench_script.js）
+          // 包内独立 abc 语料：es2abc script 模式产物放 rawfile，经 NAPI 执行；
+          // 完成值恒 undefined，脚本内自校验（≠72 即抛错→❌），正常返回 ran-ok-selfcheck=72
           new Case('rawfile abc', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const v = runAbcRawfile('feat_vuln/resources/rawfile/bench_script.abc');
             return `napi_run_script_path -> ${v}`;

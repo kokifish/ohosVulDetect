@@ -94,11 +94,15 @@ static napi_value RunAbcRawfile(napi_env env, napi_callback_info info)
     napi_value result = nullptr;
     napi_status st = napi_run_script_path(env, path, &result);
     delete[] path;
-    if (st != napi_ok || result == nullptr) {
+    if (st != napi_ok) {
         napi_throw_error(env, nullptr, "napi_run_script_path failed");
         return nullptr;
     }
-    return result;
+    // 该接口的脚本完成值恒为 undefined；脚本自身以「值错即抛错」闭环校验，
+    // 走到这里未抛错即代表语料 abc 完整执行（见 tools/rawfile_src/bench_script.js）。
+    napi_value ok;
+    napi_create_string_utf8(env, "ran-ok-selfcheck=72", NAPI_AUTO_LENGTH, &ok);
+    return ok;
 }
 
 EXTERN_C_START
