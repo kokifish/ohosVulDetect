@@ -409,6 +409,12 @@ ets-loader 把 product 的 compatibleSdkVersion 原样传给该旗标（module_m
 双向一致；覆盖率 **183/267**（未用 84 = deprecated 45 + wide 4 + 其他 35）；RuntimeDemo 定点
 验证 asup/asupw/stw 行数值正确，battery 顺序推出即既有行无回归。
 
+**提交后全量 sweep 回归（b1ae09c，api26 release，2026-09-07）**：feat_api 45 页 0 崩溃，sweep
+采集 66✅/4❌ + location×2 定点补验 ❌（3301100 switch off；sweep 对 api-location 页本轮 0 行属
+采集抖动，非通过）→ 有效 **66✅/6❌**，唯一相对基线的变化是 ws send 本轮恢复 ✅（印证「公网
+echo 抖动、复测即恢复」注记）；feat_vuln 13 类页 **39✅/2❌**（asset 001S、PRIV-002）与基线完全
+一致；dm 已按 sweep 前置重授权。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
