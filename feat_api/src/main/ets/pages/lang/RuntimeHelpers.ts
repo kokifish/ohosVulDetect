@@ -143,3 +143,12 @@ import { constAssignRun } from './GlobalAssign';
 export function tsConstAssign(): string {
   return `const=${constAssignRun()}`;
 }
+
+import { arrowSuperBase, arrowSuperWide } from './ArrowSuper';
+
+// supercallarrowrange / wide.supercallarrowrange（ArrowSuper.js）：箭头内 super() 仅纯 .js 合法
+// （.ets/.ts 为 TS2346 编译错）。base = spread 转发 + 4 实参直调（supercallspread +
+// supercallarrowrange）；wide = 131 实参直调（实参数 >127）。
+export function tsArrowSuper(): string {
+  return `asup=${arrowSuperBase()} asupw=${arrowSuperWide()}`;
+}

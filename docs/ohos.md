@@ -90,12 +90,13 @@
 
 ## 5. 与本项目覆盖对比（差距分析）
 
-### 5.1 指令：已用 174/267，未用 93
+### 5.1 指令：已用 183/267，未用 84（P1→P5 逐轮增补，动态基线以 docs/BENCHMARK.md 为准）
 
 > **P1 执行结果（2026-09-04）**：候选清单实证完毕——4 条新覆盖（`throw.constassignment`、`wide.supercallthisrange`、`callruntime.wideldlazymodulevar`、`wide.getmodulenamespace`）。
 > **第二轮深挖（2026-09-06）**：`testin` 经私有品牌检查 `#priv in obj` 覆盖（公有 `k in o` 才是 `isin`）。
 > **第四轮 es2abc 旗标+源码归因（2026-09-06）**：`callruntime.definefieldbyindex` 经数字字符串键静态字段覆盖（target 24 默认管线）——release 176、快照并集 **180/267**。
-> 剩余未用 87 条中，`definefieldbyname`/`isfalse`/`istrue` 三条已**源码级定性为 target-api-version 11 门控**（上游 pandagen.cpp 按 <12/≥12 二选一；本机 es2abc 支持 `--target-api-version 11`）。依 AGENTS.md 优先级（构建链最新 > 指令覆盖），旧 SDK 路线搁置，这 3 条按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；其余 84 条（deprecated 45 + wide 6 + 其他 33）为 es2abc 确定性发射策略，三轮实证不可达。逐条归因见 docs/BENCHMARK.md 四个归因小节。
+> **P5 wide 专项（2026-09-07）**：+3（`supercallarrowrange`/`wide.supercallarrowrange` = .js 箭头 super、`wide.stownbyindex` = 巨数组字面量，见 BENCHMARK 第五轮节）——并集 **183/267**。
+> 剩余未用 84 条中，`definefieldbyname`/`isfalse`/`istrue` 三条已**源码级定性为 target-api-version 11 门控**（上游 pandagen.cpp 按 <12/≥12 二选一；本机 es2abc 支持 `--target-api-version 11`）。依 AGENTS.md 优先级（构建链最新 > 指令覆盖），旧 SDK 路线搁置，这 3 条按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；wide 剩余 4 条终局归因（`wide.ldobjbyindex`/`wide.stobjbyindex` 基础形态零发射、`wide.ldpatchvar`/`wide.stpatchvar` patch 管线专属——两遍编译+符号表机制可生成但不属于 app 产物）；其余（deprecated 45 + 其他）为 es2abc 确定性发射策略，多轮实证不可达。逐条归因见 docs/BENCHMARK.md 各归因小节。
 
 | 未用类别 | 数量 | 处置 |
 |---|---|---|

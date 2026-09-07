@@ -373,6 +373,42 @@ ets-loader 把 product 的 compatibleSdkVersion 原样传给该旗标（module_m
   sugars nk=20/fa=3/nt=1 等）；deeplink `ovd://backdoor` 实拉起 BackdoorAbility；
 - 覆盖率维持 180/267，manifest 双向一致。
 
+## 第五轮：wide 变体专项收口（2026-09-07，并集 180→183/267）
+
+对剩余 6 条未用 wide 逐条深挖（isa.yaml 语义 + 上游发射点 + 本地 es2abc 探针实证），+3 条运行可达覆盖、修正 1 条旧归因：
+
+**新覆盖（+3，全部运行时数值验证通过）**：
+- `supercallarrowrange` / `wide.supercallarrowrange`（pages/lang/ArrowSuper.js，RuntimeDemo asup 行）：
+  **修正 P1 轮归因**——「箭头函数内 super() 语义非法」只是 TS 口径（TS2346，.ets/.ts 编译错）；
+  纯 .js（无类型注解）按 JS 语义完全合法，es2panda 照常发射 supercallarrow 家族：spread 转发
+  `(...a) => super(...a)` → supercallspread；4 实参直调 → supercallarrowrange；131 实参直调 →
+  wide.supercallarrowrange（实参数 >127，字面量必须显式列出，spread 只发 supercallspread）。
+  运行时实测（API26 模拟器）`asup=8 asupw=131`。
+- `wide.stownbyindex`（tools/gen_stown_stress.py → WideStoreLab.ts，RuntimeDemo stw 行）：
+  stownbyindex 基础形态本就由数组字面量逐元素发射（ApiRegistry 的 createemptyarray + 逐元素
+  stownbyindex imm1,v,imm2）；其 imm2（元素下标）编码为**有符号 16 位**，**切换阈值是 32768
+  （0x8000）**——不是常见 wide 的 i8 档 127，也不是 65536。32780 个「函数调用派生值」元素的
+  数组字面量 → 下标 32768..32779 共 12 条 wide.stownbyindex；元素必须调用派生（全常量会被吸收
+  进 createarraywithbuffer 字面量缓冲，不发射逐元素存储）。运行时实测 `stw=65560`。
+- **wide 阈值通则修订**：按指令 imm 位宽分档——i8 档 >127、i16 档 >32767（byindex 家族 imm2）。
+
+**剩余 wide 4 条终局归因**：
+- `wide.ldobjbyindex` / `wide.stobjbyindex`：基础形态零发射（es2panda 一切下标读写一律
+  ld/stobjbyvalue，三轮探针实证），基础不存在则 wide 无从触发；
+- `wide.ldpatchvar` / `wide.stpatchvar`：patch 管线专属。本地实证两遍编译机制可用
+  （首遍 `--dump-symbol-table` → 次遍 `--input-symbol-table` + `--generate-patch`，产出的
+  patch.abc 含 patch_main_0/1 与重发射函数）；但 WIDE_STPATCHVAR 发射不可在独立 es2abc 复现——
+  script 模式顶层变量走 tryldglobalbyname 不产生 patch 槽；CJS 探针（--commonjs）下新增词法变量
+  被 hotfix 与 cold-fix 双双拒绝（"lexical variable added or removed ... not supported"，证明
+  lexenv 感知 diff 存在）、新增函数走 patch_main_1 definefunc 但无 stpatchvar 存储对。上游文档
+  口径：module 模式新增顶层变量/新增函数 → AllocSlotfromPatchEnv → WIDE_STPATCHVAR，需 ESM
+  protoBin 管线的模块词法环境注册。patch abc 不属于 app 产物（运行时由补丁框架加载），纳入语料
+  需 byteCode-HAR 注入或扩展工具输入集，维持待评估。
+
+**门禁**：全量 4 变体构建 OK（api26 release app 1065→1323KB，WideStoreLab 为增量主体）；manifest
+双向一致；覆盖率 **183/267**（未用 84 = deprecated 45 + wide 4 + 其他 35）；RuntimeDemo 定点
+验证 asup/asupw/stw 行数值正确，battery 顺序推出即既有行无回归。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
