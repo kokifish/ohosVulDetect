@@ -415,6 +415,52 @@ ets-loader 把 product 的 compatibleSdkVersion 原样传给该旗标（module_m
 echo 抖动、复测即恢复」注记）；feat_vuln 13 类页 **39✅/2❌**（asset 001S、PRIV-002）与基线完全
 一致；dm 已按 sweep 前置重授权。
 
+## 第六轮：打包形态扩展——卡片 widgets.abc / rawfile abc / routerMap HSP（2026-09-07，并集 183→187/267）
+
+背景调研见 docs/ohos.md §7（多 abc / HSP / HAR 打包专题）。落地三项新语料形态 + 一项机制实证：
+
+**新增形态**：
+- **ArkTS 卡片**（4161d89）：feat_api 增 FormExtensionAbility（ets/form/ApiFormAbility.ets）+ 动态卡片
+  （ets/widget/ApiWidgetCard.ets，form_config.json isDynamic=true）→ HAP 内出现与 modules.abc 并存的
+  第二 abc **`ets/widgets.abc`**（api26 release 6.9KB；api24 变体同样产出）。FormDemo 页（api-form）
+  覆盖 formProvider.getFormsInfo/filter、formBindingData、formInfo/formError 枚举。坑：form_config
+  必填 isDefault/updateEnabled（hvigor schema 逐字段报错）；FormType 枚举成员是 `eTS` 不是 UI。
+  运行时实测 `total=1 [feat_api:ApiWidgetCard]`（type=2/dim=2/upd=true）——卡片注册链路完整。
+- **rawfile abc**（73b613c、d3d85bc）：tools/rawfile_src/bench_script.js 经 tools/gen_rawfile_abc.py
+  （es2abc script 模式）编译入 feat_vuln `resources/rawfile/bench_script.abc`；cpp 侧 napi_run_script_path
+  执行（仅接受 rawfile 路径，自动拼 /data/storage/el1/bundle/ 前缀，独立 JS 上下文）。
+  **+4 指令：ldglobalvar / stglobalvar / stconsttoglobalrecord / sttoglobalrecord**（script 模式
+  全局变量族，模块模式产物不含）。坑：该接口完成值恒 undefined → 改为脚本内自校验（合计≠72 抛错→❌），
+  native 返回 ran-ok-selfcheck=72；实测 ✅。
+- **routerMap 跨包路由**（8a1663e）：lib_shared 增 route_map.json + module.json5 routerMap +
+  NavDestination（HspRoutePage + @Builder hspRouteBuilder）；feat_api api-route-map 页 Navigation
+  pushPathByName('hspRoute')（无本地 navDestination builder），HSP 页 600ms 后自动 pop('hsp-ok-42')，
+  宿主 onPop 断言往返。实测 ✅ `pop=hsp-ok-42`。
+- **字节码 HAR 机制实证**（/tmp 探针，不入库）：byteCodeHar=true 的 HAR 产物为 tgz，内含
+  `package/ets/modules.abc` + `.d.ets` 类型桩（无源码）；消费方（file:./libs/x.har 依赖）构建后
+  宿主仍只有 1 个 abc，HAR 的 record（`&lib_common.*&1.0.0`）经 `--enable-abc-input` **原样并入**
+  宿主 modules.abc——注入通道成立（产出 patch 对指令载荷仍缺 assembler，维持待评估）。
+
+**包内 abc 终态（api26 release）**：entry=ets/modules.abc；feat_api=ets/modules.abc + ets/widgets.abc；
+feat_vuln=ets/modules.abc + resources/rawfile/bench_script.abc；lib_shared=ets/modules.abc。
+check_opcode_coverage.py 相应增加 widgets.abc 与 rawfile/*.abc 扫描点（8b881e6）。
+
+**门禁**：全量 4 变体构建 OK；manifest 60 双向一致；覆盖率 **187/267**（未用 80 = deprecated 45 +
+wide 4 + 其他 31），+4 全部来自 rawfile script abc（widgets.abc 无新增指令，纯形态语料）。
+
+**全量 sweep 回归（d3d85bc，api26 release，含工具加固）**：
+- feat_vuln **40✅/2❌**：基线 39✅/2❌ + 新 rawfile case ✅（ran-ok-selfcheck=72）；❌2 = asset 001S、
+  PRIV-002 定位开关，均为基线已知环境项。
+- feat_api **70✅/8❌**，31 个 Case 页全部覆盖（✅/❌ 行只来自 api 页；ui/lang 16 页为纯展示/数值页，
+  by design 0 行）。相对基线 66✅/6❌：**+5✅**（api-form×4 + api-route-map×1），基线 6❌ 全数复现
+  （socket×2 / vibrate / location×2 / bgtask）；另 ws send、agent-download 本轮 ❌——host 直连两端点
+  均 200、app 自身 http 行 ✅、两页代码零改动，判定公网路径抖动（环境项，不计回退）。
+- ui/lang 16 页：定向遍历全部打开（0 崩溃）；抽查 ui-components 渲染正常、lang-runtime 数值行
+  `asup=8 asupw=131` 与第五轮一致。
+- sweep 工具加固（本轮三次提前终止的归因）：无浏览器镜像上 api-ability 的 openLink 用例弹系统
+  「No options to open with」对话框且 **force-stop 关不掉**，盖屏导致遍历提前 break；另 ui/lang
+  段列表滚动抖动会误判「遍历完毕」。已加对话框消解 + 放弃前重启复核 + 滑动次数加倍。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
