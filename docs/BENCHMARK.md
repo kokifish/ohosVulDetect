@@ -461,6 +461,25 @@ wide 4 + 其他 31），+4 全部来自 rawfile script abc（widgets.abc 无新�
   「No options to open with」对话框且 **force-stop 关不掉**，盖屏导致遍历提前 break；另 ui/lang
   段列表滚动抖动会误判「遍历完毕」。已加对话框消解 + 放弃前重启复核 + 滑动次数加倍。
 
+### 第六轮增补：wide.callthisrangewithname + FormLink 卡片（2026-09-08，并集 187→188/268）
+
+> isa.yaml 上游新增 `wide.callthisrangewithname`（全集 267→268），本轮将其覆盖；同轮 FormLink 入卡片。
+
+- **wide.callthisrangewithname**（pages/lang/WideNameCall.ts，RuntimeDemo arg-scale 按钮新增 wcn 行）：
+  归因修正——withname 家族来自 **namespace 导入对象的具名方法调用**（语料中的 hilog.info、
+  JSON.stringify 即基形态来源）；本地接收者（含 .ts 类型化）的 `obj.m(131 实参)` 只发
+  `wide.callthisrange`（无 name）。落法：`util.format(fmt, 0..130)` = **132 实参**（fmt + 131 个数值，
+  >127 切 wide），防内联沿用函数数组 + 循环间接调用。运行时实测 **`wcn=131`**（format 返回串切分计数）。
+- **FormLink 进 ApiWidgetCard**（卡片专属交互组件，@form，API10+）：卡片内 router / message 两种
+  FormLink + 保留一处 postCardAction（命令式对照），组件覆盖 68→**69/137**；widgets.abc 含 FormLink
+  record（编译级验证）+ api-form 页 getFormsInfo 4 case ✅（注册链路不回归）。
+- **门禁**：全量 4 变体构建 OK；manifest 60 双向一致；覆盖率 **188/268**（未用 80 = deprecated 45 +
+  wide 4 + 其他 31）。
+- **动态回归**：feat_vuln **40✅/2❌**（与第六轮完全一致）；feat_api sweep **71✅/5❌**（33 页；相对第六轮
+  70✅/8❌：agent-download 恢复 ✅ 印证抖动判定，ws send 仍 ❌（echo 公网路径项），api-location 本轮
+  未采集行属已知采集抖动（前日定点 ❌ 3301100 不变））；ui/lang 段停点为已知 sweep 自动化抖动（该段
+  0-✅-行页，wcn/lang-runtime 已定点验证）；定点验证 `wcn=131`、`stw=65560` 不变、api-form 4✅。
+
 ## API26 模拟器测试矩阵与 API24 差异（2026-09-04）
 
 在 API26 模拟器（emulator 7.0.0.32，1320x2232）上实测全部构建形态：
