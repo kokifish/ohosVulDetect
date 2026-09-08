@@ -7,6 +7,7 @@ import { tsDynamicMethod, tsLiteralIndexCall, tsRecordIndexCall, tsOptChainCall 
 import { lexWideStress } from './LexWideLab';
 import { localReadWide, externalReadWide, newWide, callRangeWide, callRangeDirect, restWideCall, excludedWide, superWide, lazyReadWide, nsWide } from './WideFormsLab';
 import { stownWide } from './WideStoreLab';
+import { wideNameCall } from './WideNameCall';
 
 @Entry
 @Component
@@ -49,6 +50,7 @@ struct RuntimeDemo {
           this.lines.push(`reads=${local % 97}/${ext % 97} excl=${excludedWide({} as ESObject)}`);
           this.lines.push(`superw=${superWide()} lazyw=${lazyReadWide() % 97} nsw=${nsWide() % 97}`);
           this.lines.push(`stw=${stownWide()}`);
+          this.lines.push(`wcn=${wideNameCall()}`);
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }
