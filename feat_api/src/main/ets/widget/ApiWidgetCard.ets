@@ -20,7 +20,31 @@ struct ApiWidgetCard {
         .fontWeight(FontWeight.Bold)
         .fontColor(Color.Black)
       Row({ space: 8 }) {
-        Text('router')
+        // FormLink：卡片专属交互组件（@form），声明式 router/message 动作
+        FormLink({
+          action: 'router',
+          moduleName: 'feat_api',
+          abilityName: 'ApiAbility'
+        }) {
+          Text('formlink-router')
+            .fontSize(14)
+            .padding(6)
+            .borderRadius(8)
+            .backgroundColor(0xB0D0B0)
+            .fontColor(Color.Black)
+        }
+        FormLink({
+          action: 'message',
+          params: { msg: 'formlink-msg' }
+        }) {
+          Text('formlink-msg')
+            .fontSize(14)
+            .padding(6)
+            .borderRadius(8)
+            .backgroundColor(0xB0B0D0)
+            .fontColor(Color.Black)
+        }
+        Text('postCardAction')
           .fontSize(14)
           .padding(6)
           .borderRadius(8)
@@ -30,18 +54,6 @@ struct ApiWidgetCard {
             postCardAction(this, {
               'action': 'router',
               'abilityName': 'ApiAbility'
-            });
-          })
-        Text('message')
-          .fontSize(14)
-          .padding(6)
-          .borderRadius(8)
-          .backgroundColor(0xD0D0D0)
-          .fontColor(Color.Black)
-          .onClick(() => {
-            postCardAction(this, {
-              'action': 'message',
-              'params': { 'msg': 'from-card' }
             });
           })
       }
