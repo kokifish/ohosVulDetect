@@ -512,3 +512,33 @@ dm-devices 201（授权）、bgtask 401。相对 API24 基线（52✅/9❌）的
 注：lang 页输出为 Text（'=' 行）而非 DemoScaffold 的 ✅/❌，sweep 对其无信号，其运行正确性由
 API26 矩阵轮逐页实测背书（6 页数值逐项正确）。全量遍历约 20 分钟（壳路由每页 ~20s），
 budget 默认 1200s 只够 34 页，lang/ui 尾部页需补跑（可传 prefix 复用 visit_rows）。
+
+## 递归深度压力语料（2026-09-08，feat_api lang + tools/gen_recursion_stress.py）
+
+**目的**：为逆向工具链的反 RecursionError 改造（`CodeBlock.get_all_prev_cbs_var2val` 迭代化、
+`AsmArg.clone` 迭代化+memo）提供"改造前必崩、改造后可分析"的真实端到端语料。
+
+- **RecursionChainLab.ets**（feat_api，生成器 `tools/gen_recursion_stress.py`）：
+  `recursionChainStress` = for 循环体内 8 条 x 600 项布尔短路链（仅 `(x > 0)`/`(x < 9)` 两个常量
+  交替）≈ 4800 个基本块。实测：改造前（工具链递归版，生效上限 3000）stage-1 首次深链查询即
+  `RecursionError`（CodeBlock.get_all_prev_cbs_var2val），单进程与 --mp（worker 崩溃丢模块）皆复现；
+  改造后可完整分析、无任何递归错误。运行时由 RuntimeDemo 'run recursion depth stress' 按钮触发（n=1 秒回）。
+- **invalidate_propagated_reads 平方级成本：既有语料固有，已随 2026-09-09 索引化修复消除**：
+  `CopyPropagation.invalidate_propagated_reads` 原实现每遇 CALL/AWAIT 指令即全表扫描 v2v 字典，
+  方法规模大时呈平方级。基线对照实验（cProfile）证明该成本是 ovd 既有语料自身的属性——
+  无链语料的 feat_api stage-1 894s 中该函数占 847s（303,614 次调用），链语料仅次要增量；
+  修复（`_read_value_keys` 索引，行为与全表扫描完全等价）后同一无链 hap stage-1 降至 43.5s（20.6 倍），
+  含 8x600 链语料的完整 app 主流程 93.2 -> 15.7 分钟（评分只需主流程产出的 test.out）；
+  extract 演示流程（dis_demo 尾部的 extract_all_methods，走 VulDetector 深度拷贝路径）
+  仍需约 40 分钟，属另一条未优化路径。
+- **AsmArg.clone 深图触发：源码不可达（归因存档）**——>2950 深 AsmArg 图无法由可编译 ArkTS 产生：
+  ① Record/interface 嵌套对象字面量：arkts-no-untyped-obj-literals / 类型比较器约 12 层
+  "Excessive stack depth comparing types"；② 嵌套数组字面量（含逐级变量链）：es2abc 切成约 11 层
+  块用存储指令链接，AsmArg 深度恒约 12，且容器不做拷贝传播替换；③ 嵌套构造调用：语义分析不把
+  构造参数链接进对象字段；④ 成员访问链（FIELD ref_base 深链）：es2panda 对总访问数二次方
+  （3200 级 38 分钟 CPU 无法完成，debug 无混淆同样）；⑤ 单函数语句上限约 1400 条封顶任何
+  逐语句累积。该触发改由工具链仓 `test/test_recursion_safety.py`（合成深图/环图差分）覆盖。
+- **ArkTS 编译器上限速查（本轮实测）**：单函数语句数 ~1400（"too large for control flow analysis"）；
+  单布尔表达式项数 ~700-800（900 触发 Unknown Error 00308018）；嵌套字面量深度 ~2400-2600
+  （entry 实测 2400 过 / 2600 挂）；模块级复杂度预算共享（两巨型语料同模块叠加触发 Unknown Error）；
+  成员访问总数呈二次方代价。

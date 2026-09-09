@@ -5,6 +5,7 @@
 import { tsPrivate, tsObjectHelpers, tsSuperIndex, tsCallRange, tsTemplateAndMisc, tsComputedClassKey, tsNameSet, tsGlobalRef, tsMemberTagCalls, tsConstAssign, tsArrowSuper } from './RuntimeHelpers';
 import { tsDynamicMethod, tsLiteralIndexCall, tsRecordIndexCall, tsOptChainCall } from './TsFeatures';
 import { lexWideStress } from './LexWideLab';
+import { recursionChainStress } from './RecursionChainLab';
 import { localReadWide, externalReadWide, newWide, callRangeWide, callRangeDirect, restWideCall, excludedWide, superWide, lazyReadWide, nsWide } from './WideFormsLab';
 import { stownWide } from './WideStoreLab';
 import { wideNameCall } from './WideNameCall';
@@ -39,6 +40,10 @@ struct RuntimeDemo {
       Button('run lexenv wide stress')
         .onClick(() => {
           this.lines.push(`lexwide=${lexWideStress(Math.floor(Date.now() / 1000) % 97)}`);
+        })
+      Button('run recursion depth stress')
+        .onClick(() => {
+          this.lines.push(`chain=${recursionChainStress(7, 1)}`);
         })
       Button('run arg-scale wide forms')
         .onClick(() => {
