@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 115 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 115;
+// 共 131 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 131;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -119,9 +119,25 @@ export function stringStressAt(i: number): string {
   if (i === 109) { return "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody"; }
   if (i === 110) { return "# Title\n> quote \"x\"\n- item `y`\n"; }
   if (i === 111) { return "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP=="; }
-  if (i === 112) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 113) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 114) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 112) { return "\", lead"; }
+  if (i === 113) { return "trail ,\""; }
+  if (i === 114) { return "a ,\" b"; }
+  if (i === 115) { return "\","; }
+  if (i === 116) { return "\"\"\"\""; }
+  if (i === 117) { return "\"\"\"\"\""; }
+  if (i === 118) { return "\"\"\"\"\"\""; }
+  if (i === 119) { return "\"\\\""; }
+  if (i === 120) { return "\"\"\\\"\"\""; }
+  if (i === 121) { return "\"\\\\\""; }
+  if (i === 122) { return "pre\njump_label_0:"; }
+  if (i === 123) { return "x\njump_label_1:\npost"; }
+  if (i === 124) { return "body\n.catchall\nmore"; }
+  if (i === 125) { return "pre\n.function any n.e.f(any a0) <static> {"; }
+  if (i === 126) { return "pre\n.function any f(any a0, any a1) {"; }
+  if (i === 127) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
+  if (i === 128) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 129) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 130) { return "a\"b\\c\td\ne\rf\"g`h"; }
   return "string-stress-fallback";
 }
 
@@ -240,6 +256,22 @@ export function stringStressArray(): Array<string> {
     "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody",
     "# Title\n> quote \"x\"\n- item `y`\n",
     "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP==",
+    "\", lead",
+    "trail ,\"",
+    "a ,\" b",
+    "\",",
+    "\"\"\"\"",
+    "\"\"\"\"\"",
+    "\"\"\"\"\"\"",
+    "\"\\\"",
+    "\"\"\\\"\"\"",
+    "\"\\\\\"",
+    "pre\njump_label_0:",
+    "x\njump_label_1:\npost",
+    "body\n.catchall\nmore",
+    "pre\n.function any n.e.f(any a0) <static> {",
+    "pre\n.function any f(any a0, any a1) {",
+    "lab\n\tldai 0x1\n\tjnez jump_label_9",
     "{\"k\":\"v\"}\n# STRING ====================\n😀tail",
     "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬",
     "a\"b\\c\td\ne\rf\"g`h",
@@ -276,18 +308,31 @@ export function stringStressObject(): Record<string, string> {
   };
 }
 
-// 面①补：stobjbyname/ldobjbyname 的字符串操作数（动态键读写）。
+// 面①补：stobjbyname/ldobjbyname 的字符串操作数（动态键读写，覆盖 ", 相邻与连引号键）。
 export function stringStressFields(): string {
   const o: Record<string, string> = {};
   o['a"b'] = 'v"x';
   o['k\\n'] = 'v\\y';
   o['k\n'] = 'v\nz';
   o["[offset:0x1, name_value:x]"] = "pool";
+  o[',k'] = 'comma-key';
+  o['""""'] = 'quad-key';
+  o['jump_label_0:'] = 'label-key';
+  o['.catchall'] = 'catchall-key';
   let s = '';
   for (const k in o) {
     s += k.length > 0 ? o[k] : '';
   }
-  return s;
+  return s + o[',k'] + o['jump_label_0:'];
+}
+
+// 面①补：throw.undefinedifholewithname（捕获变量洞检查，单字符串操作数形态）。
+export function stringStressLexenv(base: number): number {
+  const a = base + 1;
+  const b = base + 2;
+  const c = base + 3;
+  const pick = (): number => a + b + c;
+  return pick();
 }
 
 // 模板字面量块（含引号/换行/制表/反斜杠块 + 插值）。
@@ -318,6 +363,7 @@ export function stringStressChecksum(): string {
     len += stringStressAt(i).length;
   }
   len += stringStressFields().length;
+  len += stringStressLexenv(cnt);
   len += stringStressTpl(cnt).length;
   return `n=${cnt} len=${len} acc=${acc}`;
 }

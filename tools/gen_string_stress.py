@@ -14,8 +14,14 @@ ark_disasm 文本输出对字符串只做「部分转义」——反斜杠/控�
      值内出现 "\\n[offset:" 会伪造下一条池条目，"# xx ====================" 会伪造段结束）。
 
 用例分组：引号族 / 反斜杠族 / 换行回车族 / 转义文本与真实字符碰撞 / MUTF-8 与 Unicode /
-池条目伪造 / 方法体伪造 / 段分隔伪造 / record 伪造 / 超长 / 近重复（池去重+strip 边界）/
+池条目伪造 / 方法体伪造 / 段分隔伪造 / record 伪造 / 操作数分支矩阵（", 相邻、连引号、
+字面 "\\ 序列、label/.catchall/.function 变体伪造）/ 超长 / 近重复（池去重+strip 边界）/
 现实漏洞载荷（XSS、SQLi、log4j、HTTP CRLF 等）/ 乱炖组合。
+
+指令面可达性说明（es2abc 实测）：字符串操作数指令中 lda.str / stobjbyname / ldobjbyname /
+throw.undefinedifholewithname 可由语料定向触发；tryldglobalbyname/stglobalbyname 的操作数
+只能是合法标识符（内容不可恶劣化）；newlexenvwithname 名字数组在当前 SDK 闭包形态下不可达
+（闭包走无名 newlexenv），其 literal 数组解析路径由数组/对象字面量组等价覆盖。
 
 用法：python3 tools/gen_string_stress.py   （在 ohosVulDetect 子模块根目录执行）
 生成后由 pages/lang/RuntimeDemo.ets 挂载（防 tree-shake 并做运行时校验和验证）。
@@ -194,6 +200,26 @@ def build_cases() -> list[tuple[str, str]]:
     add('# Title\n> quote "x"\n- item `y`\n', "payload")
     add("0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP==", "payload")
 
+    # ---- 操作数分支矩阵：", 相邻 / 连引号 / 字面转义序列 / label 与 catchall 伪造 ----
+    # 针对下游 find_next_delimiter 类函数的引号配对分支：", lookahead 特判、连引号特判、
+    # 字面 "\ 序列特判，以及方法段 label/.catchall/.function 变体伪造。
+    add('", lead', "operand-branch")
+    add('trail ,"', "operand-branch")
+    add('a ," b', "operand-branch")
+    add('",', "operand-branch")
+    add('""""', "operand-branch")
+    add('"""""', "operand-branch")
+    add('""""""', "operand-branch")
+    add('"\\"', "operand-branch")            # 内容 = " \ " 三字符（引号+反斜杠+引号）
+    add('""\\"""', "operand-branch")         # 内容 = " " \ " " 五字符
+    add('"\\\\"', "operand-branch")          # 内容 = " \ \ " 四字符
+    add('pre\njump_label_0:', "operand-branch")
+    add('x\njump_label_1:\npost', "operand-branch")
+    add('body\n.catchall\nmore', "operand-branch")
+    add('pre\n.function any n.e.f(any a0) <static> {', "operand-branch")
+    add('pre\n.function any f(any a0, any a1) {', "operand-branch")
+    add('lab\n\tldai 0x1\n\tjnez jump_label_9', "operand-branch")
+
     # ---- 乱炖组合 ----
     add('{"k":"v"}\n# STRING ====================\n😀tail', "combo")
     add("multi\n[offset:0x1, name_value:x]\r\nevil\u202ex\u202c", "combo")
@@ -267,18 +293,31 @@ def gen(out: pathlib.Path) -> int:
         "  };",
         "}",
         "",
-        "// 面①补：stobjbyname/ldobjbyname 的字符串操作数（动态键读写）。",
+        "// 面①补：stobjbyname/ldobjbyname 的字符串操作数（动态键读写，覆盖 \", 相邻与连引号键）。",
         "export function stringStressFields(): string {",
         '  const o: Record<string, string> = {};',
         '  o[\'a"b\'] = \'v"x\';',
         "  o['k\\\\n'] = 'v\\\\y';",
         "  o['k\\n'] = 'v\\nz';",
         '  o["[offset:0x1, name_value:x]"] = "pool";',
+        "  o[',k'] = 'comma-key';",
+        "  o['\"\"\"\"'] = 'quad-key';",
+        "  o['jump_label_0:'] = 'label-key';",
+        "  o['.catchall'] = 'catchall-key';",
         "  let s = '';",
         "  for (const k in o) {",
         "    s += k.length > 0 ? o[k] : '';",
         "  }",
-        "  return s;",
+        "  return s + o[',k'] + o['jump_label_0:'];",
+        "}",
+        "",
+        "// 面①补：throw.undefinedifholewithname（捕获变量洞检查，单字符串操作数形态）。",
+        "export function stringStressLexenv(base: number): number {",
+        "  const a = base + 1;",
+        "  const b = base + 2;",
+        "  const c = base + 3;",
+        "  const pick = (): number => a + b + c;",
+        "  return pick();",
         "}",
         "",
         "// 模板字面量块（含引号/换行/制表/反斜杠块 + 插值）。",
@@ -309,6 +348,7 @@ def gen(out: pathlib.Path) -> int:
         "    len += stringStressAt(i).length;",
         "  }",
         "  len += stringStressFields().length;",
+        "  len += stringStressLexenv(cnt);",
         "  len += stringStressTpl(cnt).length;",
         "  return `n=${cnt} len=${len} acc=${acc}`;",
         "}",

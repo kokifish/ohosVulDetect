@@ -557,13 +557,26 @@ backslashreplace` 观察时 `\t`/`\\`/`\ufeff` 均为显示假象，实测池与
 ② LITERALS 段缓冲（createarraywithbuffer/createobjectwithbuffer 的键与值）；③ STRING 段字符串池
 （`[offset:0x…, name_value:裸值]`，值内 `\n[offset:` 伪造池条目、`# XXX ====…` 伪造段分隔）。
 
-- **StringStressLab.ts**（feat_api lang，生成器 `tools/gen_string_stress.py`，115 用例）：
+- **StringStressLab.ts**（feat_api lang，生成器 `tools/gen_string_stress.py`，131 用例）：
   分组 = 基础边界 / 引号 / 反斜杠 / 换行回车 / 转义碰撞 / Unicode+代理对 / 池伪造 / 方法伪造 /
-  段伪造 / record 伪造 / 超长 / 近重复 / 现实漏洞载荷（XSS、SQLi、log4j、HTTP CRLF…）/ 乱炖组合。
-  形态 = `stringStressAt(i)` if-chain（115×lda.str）+ 数组字面量 + 恶劣键对象字面量 +
-  动态键读写 + 模板块 + `stringStressChecksum()` 校验和（防 tree-shake）。挂载于 RuntimeDemo
-  'run string stress battery' 按钮；**运行时基线：`strstress=n=254 len=13029 acc=61717372`**
-  （API26 release 包，2026-09-10 模拟器实测）。
+  段伪造 / record 伪造 / **操作数分支矩阵** / 超长 / 近重复 / 现实漏洞载荷（XSS、SQLi、log4j、
+  HTTP CRLF…）/ 乱炖组合。
+  形态 = `stringStressAt(i)` if-chain（131×lda.str）+ 数组字面量 + 恶劣键对象字面量 +
+  动态键读写（`",k`/`""""`/`jump_label_0:`/`.catchall` 键）+ 捕获洞检查
+  （throw.undefinedifholewithname 单串操作数面）+ 模板块 + `stringStressChecksum()` 校验和
+  （防 tree-shake）。挂载于 RuntimeDemo 'run string stress battery' 按钮；
+  **运行时基线：`strstress=n=286 len=14385 acc=61781209`**
+  （API26 release 包，2026-09-10 第二轮后模拟器实测）。
+- **操作数分支矩阵（2026-09-10 第二轮，+16 用例 #112-127）**：针对 `find_next_delimiter` 类
+  引号配对函数的全分支定向：`",` 相邻（值首/中间/尾部）、4/5/6 连引号、字面 `"\` 序列、
+  label/`.catchall`/`.function` 变体伪造。逐用例同步归因：**奇数连引号（5 连）挂、偶数（4/6 连）
+  不挂；`",` 值首/中间挂、尾部不挂；`"\`（引号+反斜杠+引号，恰为解析器硬编码特判 `'"\\"'`
+  的对抗形态）挂；双换行 label 伪造挂（孤儿引号机制）、单换行不挂**——8/16 挂死全部落在
+  既有 Bug#2（AsmMethod._process_common_inst idx 归零），无新 bug 类。指令面可达性（es2abc
+  实测）：lda.str/stobjbyname/ldobjbyname/throw.undefinedifholewithname 可定向触发；
+  tryldglobalbyname 等操作数只能是合法标识符（内容不可恶劣化）；newlexenvwithname 名字数组
+  在当前 SDK 闭包形态不可达（闭包走无名 newlexenv），其 literal 数组解析路径由数组/对象
+  字面量组等价覆盖。
 - **逆向工具链实测 bug 清单**（临时脚本逐用例最小模块 → es2abc → ark_disasm → DisFile 往返比对；
   均已最小复现归因，按严重度排序）：
   1. **整模块静默为空**：字符串内容含 `\n# XXX ====================`（伪造段分隔行）→ 段扫描/
