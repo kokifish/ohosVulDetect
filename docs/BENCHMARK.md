@@ -528,9 +528,13 @@ budget 默认 1200s 只够 34 页，lang/ui 尾部页需补跑（可传 prefix �
   方法规模大时呈平方级。基线对照实验（cProfile）证明该成本是 ovd 既有语料自身的属性——
   无链语料的 feat_api stage-1 894s 中该函数占 847s（303,614 次调用），链语料仅次要增量；
   修复（`_read_value_keys` 索引，行为与全表扫描完全等价）后同一无链 hap stage-1 降至 43.5s（20.6 倍），
-  含 8x600 链语料的完整 app 主流程 93.2 -> 15.7 分钟（评分只需主流程产出的 test.out）；
-  extract 演示流程（dis_demo 尾部的 extract_all_methods，走 VulDetector 深度拷贝路径）
-  仍需约 40 分钟，属另一条未优化路径。
+  含 8x600 链语料的完整 app 主流程 93.2 -> 15.7 分钟（评分只需主流程产出的 test.out）。
+- **extract 演示流程的平方级（2026-09-09 第二轮修复消除）**：dis_demo 尾部的
+  extract_all_methods（run_cp=True）走 VulDetector 深度拷贝路径，其 var2val_assign 裸字典
+  分支每次赋值全表扫描 v2v（逐条目递归检查）——同族二次方。CPro_cb_deep/CPro_greedy 改为
+  包 Var2ValState（rev_deps 索引化失效，两分支行为等价由 test_var2val_parity.py 钉死）后：
+  全 app extract 阶段 41 分钟 -> 53 秒（约 46 倍；剖析口径 7698.8s -> 169.9s，全线程累计），
+  全语料 2740 文件输出树 diff 零差异，完整流程约 16 分钟。
 - **AsmArg.clone 深图触发：源码不可达（归因存档）**——>2950 深 AsmArg 图无法由可编译 ArkTS 产生：
   ① Record/interface 嵌套对象字面量：arkts-no-untyped-obj-literals / 类型比较器约 12 层
   "Excessive stack depth comparing types"；② 嵌套数组字面量（含逐级变量链）：es2abc 切成约 11 层
