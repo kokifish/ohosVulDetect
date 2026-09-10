@@ -1,7 +1,8 @@
 // 类运行时 helper 压力页：私有字段/super 索引访问/动态属性/对象展开解构/tagged template/
 // __proto__ 字面量/一元 +/debugger/类计算属性名/withnameset（RuntimeHelpers.ts），
 // 叠加词法环境 wide（LexWideLab.ets）、巨型参数 wide（WideFormsLab.ts）、
-// 箭头 super（ArrowSuper.js）与巨数组 stownbyindex wide（WideStoreLab.ts）。
+// 箭头 super（ArrowSuper.js）与巨数组 stownbyindex wide（WideStoreLab.ts），
+// 以及字符串边界语料（StringStressLab.ts：引号/换行/代理对/伪造反汇编文本结构）。
 import { tsPrivate, tsObjectHelpers, tsSuperIndex, tsCallRange, tsTemplateAndMisc, tsComputedClassKey, tsNameSet, tsGlobalRef, tsMemberTagCalls, tsConstAssign, tsArrowSuper } from './RuntimeHelpers';
 import { tsDynamicMethod, tsLiteralIndexCall, tsRecordIndexCall, tsOptChainCall } from './TsFeatures';
 import { lexWideStress } from './LexWideLab';
@@ -9,6 +10,7 @@ import { recursionChainStress } from './RecursionChainLab';
 import { localReadWide, externalReadWide, newWide, callRangeWide, callRangeDirect, restWideCall, excludedWide, superWide, lazyReadWide, nsWide } from './WideFormsLab';
 import { stownWide } from './WideStoreLab';
 import { wideNameCall } from './WideNameCall';
+import { stringStressChecksum } from './StringStressLab';
 
 @Entry
 @Component
@@ -56,6 +58,10 @@ struct RuntimeDemo {
           this.lines.push(`superw=${superWide()} lazyw=${lazyReadWide() % 97} nsw=${nsWide() % 97}`);
           this.lines.push(`stw=${stownWide()}`);
           this.lines.push(`wcn=${wideNameCall()}`);
+        })
+      Button('run string stress battery')
+        .onClick(() => {
+          this.lines.push(`strstress=${stringStressChecksum()}`);
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }

@@ -546,3 +546,41 @@ budget 默认 1200s 只够 34 页，lang/ui 尾部页需补跑（可传 prefix �
   单布尔表达式项数 ~700-800（900 触发 Unknown Error 00308018）；嵌套字面量深度 ~2400-2600
   （entry 实测 2400 过 / 2600 挂）；模块级复杂度预算共享（两巨型语料同模块叠加触发 Unknown Error）；
   成员访问总数呈二次方代价。
+
+## 字符串边界语料（2026-09-10，feat_api lang + tools/gen_string_stress.py）
+
+**目的**：ark_disasm 文本输出对字符串**完全零转义**（引号、换行、CR、控制字符一律裸输出；
+代理对按 MUTF-8/CESU-8 裸字节写出，会使整个 .dis 不再是合法 UTF-8——注意 Python repr/`errors=
+backslashreplace` 观察时 `\t`/`\\`/`\ufeff` 均为显示假象，实测池与方法操作数两处皆无转义），
+下游按行/按引号切分的文本解析器存在结构性风险。本语料把全部边界形态同时压入三个解析面：
+① METHODS 段指令操作数（`lda.str "…"`/`stobjbyname`，引号配对与换行伪造指令行）；
+② LITERALS 段缓冲（createarraywithbuffer/createobjectwithbuffer 的键与值）；③ STRING 段字符串池
+（`[offset:0x…, name_value:裸值]`，值内 `\n[offset:` 伪造池条目、`# XXX ====…` 伪造段分隔）。
+
+- **StringStressLab.ts**（feat_api lang，生成器 `tools/gen_string_stress.py`，115 用例）：
+  分组 = 基础边界 / 引号 / 反斜杠 / 换行回车 / 转义碰撞 / Unicode+代理对 / 池伪造 / 方法伪造 /
+  段伪造 / record 伪造 / 超长 / 近重复 / 现实漏洞载荷（XSS、SQLi、log4j、HTTP CRLF…）/ 乱炖组合。
+  形态 = `stringStressAt(i)` if-chain（115×lda.str）+ 数组字面量 + 恶劣键对象字面量 +
+  动态键读写 + 模板块 + `stringStressChecksum()` 校验和（防 tree-shake）。挂载于 RuntimeDemo
+  'run string stress battery' 按钮；**运行时基线：`strstress=n=254 len=13029 acc=61717372`**
+  （API26 release 包，2026-09-10 模拟器实测）。
+- **逆向工具链实测 bug 清单**（临时脚本逐用例最小模块 → es2abc → ark_disasm → DisFile 往返比对；
+  均已最小复现归因，按严重度排序）：
+  1. **整模块静默为空**：字符串内容含 `\n# XXX ====================`（伪造段分隔行）→ 段扫描/
+     `_count_parts` 段序断言崩溃 → 管线 `init_single_dis_file` 吞异常返回空 DisFile →
+     该 abc 全部 methods/records/literals/strings 丢失。**发布产物 feat_api release .dis 实测 0.6s 崩溃**。
+  2. **解析死循环（挂死+内存膨胀）**：内容含 `"`（JSON/SQL/HTML/XSS/URL/XML 等 19/44 引号类用例）
+     → 指令操作数行引号失衡 → `find_next_delimiter_single_line` 返回 -1 →
+     `AsmMethod._process_common_inst` 第二循环 `idx = -1 + 1 = 0` 永不前进。多行操作数的孤儿
+     收尾 `"` 行同样触发。最小复现：`lda.str "say "hi" ok"`、`lda.str """"`。
+  3. **换行加倍**：池多行字符串重组 `"\n".join(readlines 含行尾 \n)` → `\n`→`\n\n`、孤立
+     `\r`→`\r\n`；含换行字符串全部 round-trip 损坏（newline 组 12/12）。
+  4. **代理对静默丢失**：`open(errors="ignore")` 吞 CESU-8 裸字节 → emoji/𝕏/孤立代理内容残缺
+     （`x\ud800y`→`xy`）；且方法操作数处的裸字节使整个 .dis 非法 UTF-8，殃及全文件。
+  5. **整池丢失**：值内 `\n[offset:0x…, name_value:x]` → 伪造行被当新条目 → 首段无闭括号
+     → `AsmString` 断言 → string 任务整体被 `future.result()` 吞 → asmstrs 全空。
+  6. **方法体切碎/伪造指令入 IR**：内容行伪装 `L_ESSlotNumberAnnotation:`/`\tsta v0`/
+     `.function …{`/`}` → 方法错误切分（单用例实测 methods 归零或翻倍）、伪指令进入 IR。
+- **复现方法**：`python3 tools/gen_string_stress.py` 重生成语料 → `build.py` → 对 feat_api 的
+  modules.abc 跑 ark_disasm → 以逆向工具链仓 DisFile 解析该 .dis（逐用例归因用「单用例最小模块」
+  法，详见工具链仓会话记录；勿在本公开仓放置引用私有路径的脚本）。
