@@ -2,12 +2,18 @@ import { common, Want } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { BENCH, Logger } from 'lib_common';
 import { hspVersion } from 'lib_shared';
+import { methNameStressChecksum } from '../methname/MethNameStressLab';
 
 // entry 只做壳：展示基准信息 + 拉起两个 feature HAP（跨 HAP startAbility 调用形态）。
+// 另承载方法名注入语料（MethNameStressLab.ts，红队载荷，运行时为合法对象字面量）。
 @Entry
 @Component
 struct Index {
   @State status: string = 'ready';
+
+  aboutToAppear(): void {
+    Logger.info('Entry', `methname=${methNameStressChecksum()}`);
+  }
 
   private startFeature(abilityName: string): void {
     try {

@@ -565,8 +565,8 @@ backslashreplace` 观察时 `\t`/`\\`/`\ufeff` 均为显示假象，实测池与
   动态键读写（`",k`/`""""`/`jump_label_0:`/`.catchall` 键）+ 捕获洞检查
   （throw.undefinedifholewithname 单串操作数面）+ 模板块 + `stringStressChecksum()` 校验和
   （防 tree-shake）。挂载于 RuntimeDemo 'run string stress battery' 按钮；
-  **运行时基线：`strstress=n=286 len=14385 acc=61781209`**
-  （API26 release 包，2026-09-10 第二轮后模拟器实测）。
+  **运行时基线：`strstress=n=294 len=14713 acc=61827192`**
+  （API26 release 包，2026-09-11 红队轮 lit-spoof 组入库后模拟器实测）。
 - **操作数分支矩阵（2026-09-10 第二轮，+16 用例 #112-127）**：针对 `find_next_delimiter` 类
   引号配对函数的全分支定向：`",` 相邻（值首/中间/尾部）、4/5/6 连引号、字面 `"\` 序列、
   label/`.catchall`/`.function` 变体伪造。逐用例同步归因：**奇数连引号（5 连）挂、偶数（4/6 连）
@@ -597,3 +597,38 @@ backslashreplace` 观察时 `\t`/`\\`/`\ufeff` 均为显示假象，实测池与
 - **复现方法**：`python3 tools/gen_string_stress.py` 重生成语料 → `build.py` → 对 feat_api 的
   modules.abc 跑 ark_disasm → 以逆向工具链仓 DisFile 解析该 .dis（逐用例归因用「单用例最小模块」
   法，详见工具链仓会话记录；勿在本公开仓放置引用私有路径的脚本）。
+
+## 红队第二轮：方法名注入与 literal 伪造（2026-09-11，字符串解析修复后）
+
+**背景**：字符串池/指令操作数两处解析修复后，以「合法 TS、es2abc 可编译、运行时正常」为
+约束继续挖掘。本轮命中 **方法名注入面**——对象字面量字符串键方法/存取器的键内容会成为
+abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印），直接注入 `.function` 行解析。
+
+- **红队载荷落地**：
+  - `entry/src/main/ets/methname/MethNameStressLab.ts`（生成器 `tools/gen_methname_stress.py`，
+    16 键：换行/括号/`<static>`/伪造签名/引号/逗号/`#*#`前缀/label/ESSlot/offset/CJK/CR-LF/
+    换行字段），Index aboutToAppear 挂载（hilog 校验和 `methname keys=16`，运行时实证正常）。
+  - `StringStressLab.ts` 新增 lit-spoof 组（4 用例：值内伪造 LITERALS 段起始行形态，135 总）。
+- **命中清单（逐探针最小模块归因，probe_kit 口径 methods/lits vs .function/起始行计数）**：
+  - **R1 换行键方法/存取器**：`.function` 行断行无括号 → `_process_method_1st_line`
+    `split("(")[1]` IndexError → methods 任务 chunk 整体报废。最小复现 `{ 'n\nl'() {...} }`。
+  - **R2 括号键**（`a(b`/`(`）：方法名截断 + 参数错位，methods+literals 双丢；`(` 键使方法名
+    坍缩为 `#*#`（多方法同名互覆）。
+  - **R3 空格+`<tok>`+`{` 键**（如 `x <static> {`、`f(any a0) <static> {`）：method_type 被键内
+    token 劫持 + lits 全丢。
+  - **R4 引号/逗号键**：结构存活但 literal 方法三元组丢失（只剩 method_amount）、method_name
+    携带 `"`/`,` 污染下游。
+  - **R5 literal 起始行伪造**：字符串值含 `\n<数字> 0x<hex> { ` → literal 丢失/垃圾化
+    （t09 单发丢 2/3 且幸存者内容成垃圾；多伪造叠加 literal 全灭 9→0）。
+  - **R6（语义级）`.catch` 区间行被丢弃**：`_process_method_inst` 显式 skip 含 `.catchall` 的行，
+    异常流信息不进 IR（try_begin label 留存）。
+- **端到端自证（API26 release 发布产物）**：含载荷的 entry abc 解析后 **116 个 .function 仅
+  存 57（丢 59，51%）**、literal 49→44；feat_api lit-spoof 组随 135 用例入 modules.abc。
+- **已验证安全面（合法且不破坏解析，记录防重测）**：unicode/ZWNJ 标识符（方法名/记录名）、
+  tagged template cooked+raw 双形态、namespace `#&` 点号编码、enum 字符串键、寄存器名参数
+  （a0/v0/sp——es2abc 统一改名 any a0..aN，无碰撞）、用户函数名 `func_main_0` 撞隐式 main
+  （方法名字典不互覆）、类字符串键成员/存取器（es2abc 改写为 `#~C>#` 安全名）、ES2022 字符串
+  导出名（es2abc 不支持，源码级不可达）。
+- **复现方法**：红队探针工具（/tmp 临时）按「TS 源 → es2abc → ark_disasm → DisFile 子进程解析
+  → methods/literals 计数 vs .function/literal 起始行计数」判定；载荷重建
+  `python3 tools/gen_methname_stress.py && python3 tools/gen_string_stress.py && python3 build.py`。

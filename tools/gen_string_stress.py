@@ -150,6 +150,12 @@ def build_cases() -> list[tuple[str, str]]:
     add("name_value:v", "pool-spoof")
     add("a, b: c, d: e", "pool-spoof")
 
+    # ---- literal 起始行伪造（值内伪造 LITERALS 段条目形态，攻击 literal 分块与闭合扫描）----
+    add('fake\n0 0x590 { 2 [ string:"x", null_value:0, ]}', "lit-spoof")
+    add("fake\n1 0x1 { ", "lit-spoof")
+    add('fake\n2 0x2 { 3 [ string:"m", method:f, method_affiliate:0, ]}', "lit-spoof")
+    add("fake\n999999 0xdeadbeef { 999 [ ", "lit-spoof")
+
     # ---- METHODS 段伪造（\n 后伪造指令行 / 方法边界 / .function 头）----
     add("fake\nL_ESSlotNumberAnnotation:", "method-spoof")
     add("L_ESSlotNumberAnnotation:", "method-spoof")
