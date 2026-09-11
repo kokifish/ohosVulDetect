@@ -47,6 +47,10 @@
     "pages/lang/OpsDemo",
     "pages/lang/CallFormsDemo",
     "pages/lang/RuntimeDemo",
-    "pages/lang/SugarsDemo"
+    "pages/lang/SugarsDemo",
+    "pages/ui/RelativeDemo",
+    "pages/ui/RichTextDemo",
+    "pages/ui/ImageDemo",
+    "pages/ui/ArkUiLibDemo"
   ]
 }

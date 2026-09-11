@@ -632,3 +632,28 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
 - **复现方法**：红队探针工具（/tmp 临时）按「TS 源 → es2abc → ark_disasm → DisFile 子进程解析
   → methods/literals 计数 vs .function/literal 起始行计数」判定；载荷重建
   `python3 tools/gen_methname_stress.py && python3 tools/gen_string_stress.py && python3 build.py`。
+
+## 组件覆盖第八轮：官方主推组件 + 高级组件库抽样（2026-09-11，feat_api ui ×4 页，未提交）
+
+**新增 4 页（DemoItem ui-relative / ui-richtext / ui-image / ui-arkuilib，48→52 路由页）**，
+组件覆盖 ~70 → **~88 / 公开 ~156**，Kit ~20 → **~21**（新增 @kit.ImageKit 显式用例）：
+
+- **ui-relative**：RelativeContainer（官方主推相对布局，anchor 对齐四象限 + container 锚 + 交叉锚）、
+  Blank、ColumnSplit（divider/resizeable）、ScrollBar（独立组件 + Scroller 联动 scrollTo）、
+  ListItemGroup（@Builder header 分组）。坑：嵌套 Scroll 吞外层滑动手势 → 内层加
+  `nestedScroll(SELF_FIRST)`；ColumnSplit divider 无 color 字段；组件名是 ScrollBar 非 Scrollbar。
+- **ui-richtext**：Span/ImageSpan/ContainerSpan（Text 内联族）、SymbolGlyph/SymbolSpan
+  （sys.symbol 符号字体，fontColor 数组形态）、Hyperlink。坑：本 SDK 无 ohos_folder/ohos_plus
+  符号（编译期校验），用 ohos_star/ohos_trash/ohos_wifi/ohos_lungs；HyperlinkAttribute 无
+  fontSize/color；ContainerSpan 无 textBackground。
+- **ui-image**：Image 全变体（资源源 / pixelmap 源 / 五种 objectFit / alt / interpolation /
+  sourceSize / autoResize / renderMode.Template / draggable）+ **@kit.ImageKit**
+  `image.createPixelMap(RGBA buffer)` 运行时构造源（亲和 Kit 覆盖）。
+- **ui-arkuilib**（@kit.ArkUI 导入形态）：Chip（LabelOptions/activated/onClicked）、ChipGroup
+  （items: ChipGroupItemOptions[] + onChange 回调数组）、SegmentButton（capsule 工厂 +
+  selectedIndexes @Link 必填）、SubHeader（primaryTitle/secondaryTitle）、ToolBar
+  （toolBarList 内联）、CounterComponent（options.type + numberOptions 嵌套，
+  CounterType.COMPACT）。坑：这些签名与早期文档差异大，以 SDK .d.ets 为准。
+- **门禁**：build.py 4 变体 OK；manifest 60 双向一致；指令覆盖维持 188/268（组件页无新增指令，
+  红队载荷伪影 body/end 仍在）；模拟器 API26 release 四页定点验证全过（标记 16/16 命中，
+  hilog 仅 SegmentButton 系统资源回退的良性 E 级日志，无 JS Error）。
