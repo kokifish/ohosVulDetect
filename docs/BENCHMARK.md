@@ -633,6 +633,21 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   → methods/literals 计数 vs .function/literal 起始行计数」判定；载荷重建
   `python3 tools/gen_methname_stress.py && python3 tools/gen_string_stress.py && python3 build.py`。
 
+## 红队第二轮工具链收口与残留口径（2026-09-12）
+
+- **命中清单已全数修复**：R1–R5 在逆向工具链侧逐项收口（跨行签名续接、括号组语法选组、
+  definemethod/definefunc 续行吸收与逗号名重组、literal/段边界三行块判定）。API26 release
+  entry 116 个 `.function` 行现解析 114（此前仅 57）；feat_api 曾因载荷内单行伪段头整批
+  静默丢失 99 个方法（Sugars/SugarsDemo/TsFeatures 全段），已恢复；四变体 app 端到端
+  exit=0。WideStoreLab/bench_script 暴露的 5 种全局变量与 wide 存储指令（ldglobalvar 族、
+  wide.stownbyindex）已支持，无真实操作码 UNKNOWN。
+- **同名诱饵口径**：载荷刻意重名的诱饵函数（`evil`/`n.e.f`/`f` 各 4 份、`#*#` 空名 2 份）
+  在工具链方法字典中按同名覆盖仅保留 1 份——**同键覆盖是输出模型口径，不是方法丢失**；
+  函数覆盖比对按唯一名计数。
+- **指令级残留口径**：每变体约 8–9 条 UNKNOWN 指令均为载荷字符串在方法体内造成的行错位
+  残片（op 形如 `",`、`post"`）+ 1 条有界吸收降级；根治需指令行语法级定界（工具链侧已
+  立项），不在本轮范围。R6（.catch 区间行）维持已知取舍。
+
 ## 组件覆盖第八轮：官方主推组件 + 高级组件库抽样（2026-09-11，feat_api ui ×4 页，未提交）
 
 **新增 4 页（DemoItem ui-relative / ui-richtext / ui-image / ui-arkuilib，48→52 路由页）**，
