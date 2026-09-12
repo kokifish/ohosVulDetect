@@ -1,4 +1,5 @@
-// SAFE 孪生集合（web）：OVD-WEB-001S..006S（WebView 安全配置面），合并文件，勿手改。
+// SAFE 孪生集合（web）：OVD-WEB-001S..007S（WebView 安全配置面），合并文件，勿手改。
+import { webview } from '@kit.ArkWeb';
 
 // SAFE: OVD-WEB-001S 发布包关闭 Web 调试（CWE-489 加固）
 export function ovdWeb001S(): string {
@@ -32,4 +33,20 @@ export function ovdWeb005S(url: string): string {
 const EXT_URL_ALLOWLIST: string[] = ['https://bench.example.com/help'];
 export function ovdWeb006S(externalUrl: string): string {
   return EXT_URL_ALLOWLIST.includes(externalUrl) ? `load ok: ${externalUrl}` : 'external url refused';
+}
+
+// SAFE: OVD-WEB-007S 桥方法先校验当前页面 host 白名单再分发（CWE-749 加固）
+const BRIDGE_HOSTS: string[] = ['bench.example.com'];
+export function ovdWeb007S(controller: webview.WebviewController, method: string): string {
+  let host = '';
+  try {
+    const u = controller.getUrl();
+    host = u.replace('https://', '').replace('http://', '').split('/')[0];
+  } catch (e) {
+    return 'bridge refused: url unavailable';
+  }
+  if (!BRIDGE_HOSTS.includes(host)) {
+    return `bridge refused: origin ${host} not allowlisted`;
+  }
+  return `bridge allowed for ${host}: ${method}`;
 }

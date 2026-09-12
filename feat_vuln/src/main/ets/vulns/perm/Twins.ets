@@ -39,3 +39,8 @@ export function ovdPriv001S(consent: boolean): string {
 export function ovdPriv002S(foregroundOnly: boolean): string {
   return foregroundOnly ? 'one-shot location for feature use, https, no tracking channel' : 'location denied in background';
 }
+
+// SAFE: OVD-PASTE-003S 敏感数据拒绝入板；公开文本限定应用内共享范围（CWE-200 加固）
+export function ovdPaste003S(isSecret: boolean): string {
+  return isSecret ? 'refused: secret never goes cross-device' : 'public text copied, in-app scope only';
+}

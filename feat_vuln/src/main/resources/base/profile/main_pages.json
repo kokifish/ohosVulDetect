@@ -14,6 +14,7 @@
     "pages/AuthPage",
     "pages/DebugPage",
     "pages/ConfPage",
-    "pages/NativePage"
+    "pages/NativePage",
+    "pages/FormVulnPage"
   ]
 }

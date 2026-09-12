@@ -735,3 +735,22 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
 - **评分影响**：test.out 全流程后 TN 7→53，FP 率指标对全部 19 类生效。
   注：本轮发现 sweep 的 run_page_buttons 只点当前屏前 8 个按钮且页内不滚动——页面案例数
   超过 8 后（如 CryptoPage 14 个）尾部按钮不被遍历，需用定向驱动补验（本次已做）。
+
+## 鸿蒙特色漏洞族（2026-09-12，+7 对 vuln/twin，120 条，未提交）
+
+**新攻击面族**（userAuth / FormKit 卡片 / JS 桥来源域 / 剪贴板跨设备，均为鸿蒙独有形态）：
+- **OVD-AUTH-004/005/006 + 004S/005S/006S**：userAuth 结果仅客户端置信（不验 token）、支付级
+  操作用 ATL1+PIN、challenge 固定 deadbeef 复用；孪生分别服务端 token 验证、ATL3 生物认证、
+  cryptoRandom challenge。
+- **OVD-FORM-001/002 + 001S/002S（新分类页 cat-form）**：卡片 postCardAction router 目标未
+  白名单（CWE-601）、onFormEvent 消息未校验整包落 preferences；孪生为全等白名单与
+  schema/长度校验。坑：postCardAction 是组件域 API（standalone 函数禁 this）——真实调用面
+  放 FormVulnPage onClick 内联（WebPage 组件内 VULN 先例），规则改 string-literal
+  （'form.router issued'）。
+- **OVD-WEB-007 + 007S**：原生桥不校验页面来源域直接分发（controller.runJavaScript）；
+  孪生先 getUrl() 提 host 比对白名单（ArkTS 无 URL 全局，手工解析）。
+- **OVD-PASTE-003 + 003S**：敏感令牌入粘贴板且 setProperty shareOption=CROSSDEVICE
+  （枚举名无下划线、PasteDataProperty 全字段必填）；孪生拒绝敏感入板。
+- **门禁**：check_manifest 120 条双向一致、4 变体构建 OK、静态 FP/TP 双向自检零残留、
+  模拟器 bench24 定向验证 7 对 14 案例 ✅（含 cat-form 新页）、hilog 无 JS Error。
+  漏洞总数 53→60、孪生 53→60；检测规则沿用 string-literal / api-call+constant 双形态。

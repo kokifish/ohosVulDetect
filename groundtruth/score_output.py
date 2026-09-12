@@ -97,12 +97,14 @@ def main() -> int:
     manifest = json.loads(pathlib.Path(manifest_path).read_text())
     by_id = {v["id"]: v for v in manifest["vulns"]}
 
-    def hit_of(det: dict, source: str, function: str):
+    def hit_of(det: dict, source: str, function: str, twin: bool = False):
         rec = record_text(blocks, source)
         if not rec:
             return False, "block-not-found"
         fn = function_block(blocks, source, function)
-        where = test_out if det.get("scope") == "global" else rec
+        # a twin is judged by its own record only: a global-scope rule would find
+        # the vulnerable twin's constant elsewhere in the app and false-positive
+        where = test_out if det.get("scope") == "global" and not twin else rec
         consts = norm_constants([c for c in det.get("constants", [])])
         c_ok = all(any(f in where for f in forms) for _, forms in consts)
         calls = det.get("call", [])
@@ -135,7 +137,7 @@ def main() -> int:
             else:
                 hit, detail = all(c in module_json for c in det.get("constants", [])), "module.json"
         elif not v.get("expected", True) and "twin_of" in v:
-            hit, detail = hit_of(by_id[v["twin_of"]].get("detection", {}), v["source"], v.get("function", "-"))
+            hit, detail = hit_of(by_id[v["twin_of"]].get("detection", {}), v["source"], v.get("function", "-"), twin=True)
             detail = f"rule-of-{v['twin_of']}: {detail}"
         else:
             hit, detail = hit_of(det, v["source"], v.get("function", "-"))

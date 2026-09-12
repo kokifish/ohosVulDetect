@@ -4,7 +4,8 @@ import { ovdPerm001 } from '../vulns/perm/OVD-PERM-001';
 import { ovdPaste001 } from '../vulns/perm/OVD-PASTE-001';
 import { ovdPriv001 } from '../vulns/perm/OVD-PRIV-001';
 import { ovdPriv002 } from '../vulns/perm/OVD-PRIV-002';
-import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S } from '../vulns/perm/Twins';
+import { ovdPaste003 } from '../vulns/perm/OVD-PASTE-003';
+import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S } from '../vulns/perm/Twins';
 
 // 权限/隐私/粘贴板；PASTE-002 由 onPageShow 生命周期触发。
 @Entry
@@ -43,6 +44,8 @@ struct PermPage {
         Button('PERM-001S on-demand').margin(4).onClick(() => this.runner.run('PERM-001S', () => ovdPerm001S('scan')))
         Button('PRIV-001S consent').margin(4).onClick(() => this.runner.run('PRIV-001S', () => ovdPriv001S(true)))
         Button('PRIV-002S one-shot').margin(4).onClick(() => this.runner.run('PRIV-002S', () => ovdPriv002S(true)))
+        Button('PASTE-003 cross-device').margin(4).onClick(() => this.runner.run('PASTE-003', () => ovdPaste003('tok_bench_secret')))
+        Button('PASTE-003S refuse').margin(4).onClick(() => this.runner.run('PASTE-003S', () => ovdPaste003S(true)))
       }
       .width('100%')
       Scroll() {

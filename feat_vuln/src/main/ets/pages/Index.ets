@@ -8,6 +8,7 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-web', 'WebView (6)', 'pages/WebPage'),
   new DemoItem('cat-inj', '注入 (4+1S)', 'pages/InjPage'),
   new DemoItem('cat-storage', '不安全存储 (4+1S)', 'pages/StoragePage'),
+  new DemoItem('cat-form', 'FormKit 卡片注入 (2+2S)', 'pages/FormVulnPage'),
   new DemoItem('cat-log', '敏感日志 (2+1S)', 'pages/LogPage'),
   new DemoItem('cat-ipc', 'IPC/导出面 (5)', 'pages/IpcPage'),
   new DemoItem('cat-perm', '权限/隐私/粘贴板 (5)', 'pages/PermPage'),

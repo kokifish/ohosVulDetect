@@ -1,5 +1,6 @@
 import { webview } from '@kit.ArkWeb';
-import { ovdWeb001S, ovdWeb002S, ovdWeb003S, ovdWeb004S, ovdWeb005S, ovdWeb006S } from '../vulns/web/Twins';
+import { ovdWeb007 } from '../vulns/web/OVD-WEB-007';
+import { ovdWeb001S, ovdWeb002S, ovdWeb003S, ovdWeb004S, ovdWeb005S, ovdWeb006S, ovdWeb007S } from '../vulns/web/Twins';
 import { common } from '@kit.AbilityKit';
 import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
@@ -56,6 +57,12 @@ struct WebPage {
         this.runner.run('web-004S', () => ovdWeb004S());
         this.runner.run('web-005S', () => ovdWeb005S('https://bench.example.com/home'));
         this.runner.run('web-006S', () => ovdWeb006S('https://bench.example.com/help'));
+      })
+      Button('WEB-007 bridge-no-origin').margin(4).onClick(() => {
+        this.runner.run('web-007', () => ovdWeb007(this.controller, 'stealToken'));
+      })
+      Button('web-007S origin-check').margin(4).onClick(() => {
+        this.runner.run('web-007S', () => ovdWeb007S(this.controller, 'getVersion'));
       })
       // VULN: OVD-WEB-002 桥暴露；OVD-WEB-005 fileAccess(true)；
       // VULN: OVD-NET-003 证书错误直接 confirm 放行
