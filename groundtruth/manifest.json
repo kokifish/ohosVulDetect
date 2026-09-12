@@ -1,1827 +1,2070 @@
 {
-  "schema_version": "1.0",
-  "app": {
-    "bundle": "com.koki.VD",
-    "api_version": 26,
-    "variant": "debug"
+ "schema_version": "1.0",
+ "app": {
+  "bundle": "com.koki.VD",
+  "api_version": 26,
+  "variant": "debug"
+ },
+ "vulns": [
+  {
+   "id": "OVD-SECRET-001",
+   "title": "hardcoded cloud AK/SK pair",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-001.ets",
+   "function": "ovdSecret001",
+   "expected": true,
+   "twin": "OVD-SECRET-001S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "AKIDBENCH7f3k99xz2q4w8e5r1t0y6u",
+     "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLE"
+    ]
+   }
   },
-  "vulns": [
-    {
-      "id": "OVD-SECRET-001",
-      "title": "hardcoded cloud AK/SK pair",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-001.ets",
-      "function": "ovdSecret001",
-      "expected": true,
-      "twin": "OVD-SECRET-001S",
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "AKIDBENCH7f3k99xz2q4w8e5r1t0y6u",
-          "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLE"
-        ]
-      }
-    },
-    {
-      "id": "OVD-SECRET-001S",
-      "title": "twin: secret from Asset Store Kit",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-001S.ets",
-      "function": "ovdSecret001S",
-      "expected": false,
-      "twin_of": "OVD-SECRET-001",
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "asset",
-          "add"
-        ],
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-SECRET-002",
-      "title": "hardcoded LLM api key sk-",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-002.ets",
-      "function": "ovdSecret002",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "sk-ovdbench-9f8e7d6c5b4a3210fedcba9876543210"
-        ]
-      },
-      "twin": "OVD-SECRET-002S"
-    },
-    {
-      "id": "OVD-SECRET-003",
-      "title": "embedded PEM private key",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-321",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-003.ets",
-      "function": "ovdSecret003",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "-----BEGIN RSA PRIVATE KEY-----"
-        ]
-      },
-      "twin": "OVD-SECRET-003S"
-    },
-    {
-      "id": "OVD-SECRET-004",
-      "title": "hardcoded DB password in connection string",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-004.ets",
-      "function": "ovdSecret004",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "P@ssw0rd_bench_2026",
-          "jdbc:mysql://root:"
-        ]
-      },
-      "twin": "OVD-SECRET-004S"
-    },
-    {
-      "id": "OVD-SECRET-005",
-      "title": "secret reassembled via concat/fromCharCode (anti-grep)",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-005.ets",
-      "function": "ovdSecret005",
-      "expected": true,
-      "detection": {
-        "type": "string-op-flow",
-        "constants": [
-          "wJal",
-          "fromCharCode"
-        ]
-      },
-      "twin": "OVD-SECRET-005S"
-    },
-    {
-      "id": "OVD-CRYPTO-001",
-      "title": "AES-ECB mode",
-      "category": "weak-crypto",
-      "cwe": "CWE-327",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-001.ets",
-      "function": "ovdCrypto001",
-      "expected": true,
-      "twin": "OVD-CRYPTO-001S",
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createCipher"
-        ],
-        "constants": [
-          "AES256|ECB|PKCS7"
-        ]
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-001S",
-      "title": "twin: AES-GCM random key/IV",
-      "category": "weak-crypto",
-      "cwe": "CWE-327",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-001S.ets",
-      "function": "ovdCrypto001S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-001",
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createCipher"
-        ],
-        "constants": [
-          "AES256|GCM|PKCS7"
-        ]
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-002",
-      "title": "MD5 password digest, no salt",
-      "category": "weak-crypto",
-      "cwe": "CWE-327",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-002.ets",
-      "function": "ovdCrypto002",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createMd"
-        ],
-        "constants": [
-          "MD5"
-        ]
-      },
-      "twin": "OVD-CRYPTO-002S"
-    },
-    {
-      "id": "OVD-CRYPTO-003",
-      "title": "SHA1 integrity digest",
-      "category": "weak-crypto",
-      "cwe": "CWE-328",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-003.ets",
-      "function": "ovdCrypto003",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createMd"
-        ],
-        "constants": [
-          "SHA1"
-        ]
-      },
-      "twin": "OVD-CRYPTO-003S"
-    },
-    {
-      "id": "OVD-CRYPTO-004",
-      "title": "fixed all-zero IV with CBC",
-      "category": "weak-crypto",
-      "cwe": "CWE-329",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-004.ets",
-      "function": "ovdCrypto004",
-      "expected": true,
-      "detection": {
-        "type": "api-call+const-array",
-        "call": [
-          "createCipher"
-        ],
-        "constants": [
-          "AES256|CBC|PKCS7"
-        ]
-      },
-      "twin": "OVD-CRYPTO-004S"
-    },
-    {
-      "id": "OVD-CRYPTO-005",
-      "title": "literal sym key imported into HUKS",
-      "category": "weak-crypto",
-      "cwe": "CWE-321",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-005.ets",
-      "function": "ovdCrypto005",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "importKeyItem"
-        ],
-        "constants": [
-          "0123456789abcdef0123456789abcdef"
-        ]
-      },
-      "twin": "OVD-CRYPTO-005S"
-    },
-    {
-      "id": "OVD-CRYPTO-006",
-      "title": "RSA1024 + PKCS1 for sensitive data",
-      "category": "weak-crypto",
-      "cwe": "CWE-326",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-006.ets",
-      "function": "ovdCrypto006",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createAsyKeyGenerator"
-        ],
-        "constants": [
-          "RSA1024|PRIMES_2",
-          "RSA1024|PKCS1"
-        ]
-      },
-      "twin": "OVD-CRYPTO-006S"
-    },
-    {
-      "id": "OVD-NET-001",
-      "title": "credentials over http://",
-      "category": "cleartext-transport",
-      "cwe": "CWE-319",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-001.ets",
-      "function": "ovdNet001",
-      "expected": true,
-      "twin": "OVD-NET-001S",
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "http://httpbin.org/post"
-        ]
-      }
-    },
-    {
-      "id": "OVD-NET-001S",
-      "title": "twin: https transport",
-      "category": "cleartext-transport",
-      "cwe": "CWE-319",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-001S.ets",
-      "function": "ovdNet001S",
-      "expected": false,
-      "twin_of": "OVD-NET-001",
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "https://httpbin.org/post"
-        ]
-      }
-    },
-    {
-      "id": "OVD-NET-002",
-      "title": "ws:// to LAN address",
-      "category": "cleartext-transport",
-      "cwe": "CWE-319",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-002.ets",
-      "function": "ovdNet002",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "ws://192.168.1.100:9000/telemetry"
-        ]
-      },
-      "twin": "OVD-NET-002S"
-    },
-    {
-      "id": "OVD-NET-003",
-      "title": "web onSslErrorReceive -> confirm",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "build",
-      "expected": true,
-      "detection": {
-        "type": "call-chain",
-        "call": [
-          "onSslErrorEventReceive",
-          "handleConfirm"
-        ]
-      },
-      "twin": "OVD-NET-003S"
-    },
-    {
-      "id": "OVD-NET-004",
-      "title": "custom cert verify always returns true",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-004.ets",
-      "function": "ovdNet004",
-      "expected": true,
-      "detection": {
-        "type": "predicate",
-        "predicate": "return-true"
-      },
-      "twin": "OVD-NET-004S"
-    },
-    {
-      "id": "OVD-NET-005",
-      "title": "empty certificate-pinning whitelist",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-005.ets",
-      "function": "ovdNet005",
-      "expected": true,
-      "detection": {
-        "type": "predicate",
-        "predicate": "empty-array"
-      },
-      "twin": "OVD-NET-005S"
-    },
-    {
-      "id": "OVD-WEB-001",
-      "title": "setWebDebuggingAccess(true) in release build",
-      "category": "webview-risk",
-      "cwe": "CWE-489",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "aboutToAppear",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "setWebDebuggingAccess"
-        ],
-        "constants": [
-          true
-        ]
-      },
-      "twin": "OVD-WEB-001S"
-    },
-    {
-      "id": "OVD-WEB-002",
-      "title": "javaScriptProxy exposes getToken/readFile/pay",
-      "category": "webview-risk",
-      "cwe": "CWE-749",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "javaScriptProxy",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "javaScriptProxy"
-        ],
-        "constants": [
-          "getToken",
-          "readFile",
-          "pay"
-        ]
-      },
-      "twin": "OVD-WEB-002S"
-    },
-    {
-      "id": "OVD-WEB-003",
-      "title": "runJavaScript with unsanitized template",
-      "category": "webview-risk",
-      "cwe": "CWE-94",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "build",
-      "expected": true,
-      "detection": {
-        "type": "api-call+string-concat",
-        "call": [
-          "runJavaScript"
-        ]
-      },
-      "twin": "OVD-WEB-003S"
-    },
-    {
-      "id": "OVD-WEB-004",
-      "title": "MixedMode.ALL allows mixed content",
-      "category": "webview-risk",
-      "cwe": "CWE-311",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "build",
-      "expected": true,
-      "detection": {
-        "type": "enum-ref",
-        "constants": [
-          "MixedMode.All"
-        ]
-      },
-      "twin": "OVD-WEB-004S"
-    },
-    {
-      "id": "OVD-WEB-005",
-      "title": "fileAccess(true) + file:// loadUrl",
-      "category": "webview-risk",
-      "cwe": "CWE-79",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
-      "function": "build",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "loadUrl"
-        ],
-        "constants": [
-          "file://"
-        ]
-      },
-      "twin": "OVD-WEB-005S"
-    },
-    {
-      "id": "OVD-WEB-006",
-      "title": "deeplink url loaded into Web without whitelist",
-      "category": "webview-risk",
-      "cwe": "CWE-601",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/Backdoor.ets",
-      "function": "aboutToAppear",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "startsWith"
-        ],
-        "constants": [
-          "last_want_uri"
-        ]
-      },
-      "twin": "OVD-WEB-006S"
-    },
-    {
-      "id": "OVD-INJ-001",
-      "title": "SQLi via querySql template string",
-      "category": "injection-sql",
-      "cwe": "CWE-89",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-001.ets",
-      "function": "ovdInj001",
-      "expected": true,
-      "twin": "OVD-INJ-001S",
-      "detection": {
-        "type": "api-call+string-concat",
-        "call": [
-          "querySql"
-        ]
-      }
-    },
-    {
-      "id": "OVD-INJ-001S",
-      "title": "twin: RdbPredicates binding",
-      "category": "injection-sql",
-      "cwe": "CWE-89",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-001S.ets",
-      "function": "ovdInj001S",
-      "expected": false,
-      "twin_of": "OVD-INJ-001",
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "RdbPredicates",
-          "equalTo"
-        ]
-      }
-    },
-    {
-      "id": "OVD-INJ-002",
-      "title": "DELETE via executeSql concat",
-      "category": "injection-sql",
-      "cwe": "CWE-89",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-002.ets",
-      "function": "ovdInj002",
-      "expected": true,
-      "detection": {
-        "type": "api-call+string-concat",
-        "call": [
-          "executeSql"
-        ],
-        "constants": [
-          "DELETE FROM users WHERE name"
-        ]
-      },
-      "twin": "OVD-INJ-002S"
-    },
-    {
-      "id": "OVD-INJ-003",
-      "title": "path traversal into fs.openSync",
-      "category": "injection-path",
-      "cwe": "CWE-22",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-003.ets",
-      "function": "ovdInj003",
-      "expected": true,
-      "detection": {
-        "type": "api-call+string-concat",
-        "call": [
-          "openSync"
-        ],
-        "constants": [
-          "etc/hosts"
-        ],
-        "scope": "global"
-      },
-      "twin": "OVD-INJ-003S"
-    },
-    {
-      "id": "OVD-INJ-004",
-      "title": "JSON.parse of external payload drives navigation",
-      "category": "injection-json",
-      "cwe": "CWE-20",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-004.ets",
-      "function": "ovdInj004",
-      "expected": true,
-      "detection": {
-        "type": "api-call-flow",
-        "call": [
-          "parse",
-          "pushUrl"
-        ],
-        "constants": [
-          "getToken"
-        ]
-      },
-      "twin": "OVD-INJ-004S"
-    },
-    {
-      "id": "OVD-STOR-001",
-      "title": "auth token plaintext in preferences",
-      "category": "insecure-storage",
-      "cwe": "CWE-312",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-001.ets",
-      "function": "ovdStor001",
-      "expected": true,
-      "twin": "OVD-STOR-001S",
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "putSync"
-        ],
-        "constants": [
-          "auth_token"
-        ]
-      }
-    },
-    {
-      "id": "OVD-STOR-001S",
-      "title": "twin: token in asset store",
-      "category": "insecure-storage",
-      "cwe": "CWE-312",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-001S.ets",
-      "function": "ovdStor001S",
-      "expected": false,
-      "twin_of": "OVD-STOR-001",
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "asset",
-          "add"
-        ]
-      }
-    },
-    {
-      "id": "OVD-STOR-002",
-      "title": "credentials written to user_credentials.txt",
-      "category": "insecure-storage",
-      "cwe": "CWE-668",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-002.ets",
-      "function": "ovdStor002",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "writeSync"
-        ],
-        "constants": [
-          "user_credentials.txt",
-          "pwd=Admin@123"
-        ]
-      },
-      "twin": "OVD-STOR-002S"
-    },
-    {
-      "id": "OVD-STOR-003",
-      "title": "S1 security level for password table",
-      "category": "insecure-storage",
-      "cwe": "CWE-668",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/db/BenchDb.ets",
-      "function": "getStore",
-      "expected": true,
-      "detection": {
-        "type": "enum-ref",
-        "constants": [
-          "S1"
-        ]
-      },
-      "twin": "OVD-STOR-003S"
-    },
-    {
-      "id": "OVD-STOR-004",
-      "title": "PII response cached plaintext in cacheDir",
-      "category": "insecure-storage",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-004.ets",
-      "function": "ovdStor004",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "writeSync"
-        ],
-        "constants": [
-          "profile_cache.json",
-          "110101199001011234"
-        ]
-      },
-      "twin": "OVD-STOR-004S"
-    },
-    {
-      "id": "OVD-LOG-001",
-      "title": "hilog %{public}s leaks auth token",
-      "category": "sensitive-log",
-      "cwe": "CWE-532",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-001.ets",
-      "function": "ovdLog001",
-      "expected": true,
-      "twin": "OVD-LOG-001S",
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "hilog",
-          "info"
-        ],
-        "constants": [
-          "%{public}s",
-          "token="
-        ]
-      }
-    },
-    {
-      "id": "OVD-LOG-001S",
-      "title": "twin: %{private}s masked",
-      "category": "sensitive-log",
-      "cwe": "CWE-532",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-001S.ets",
-      "function": "ovdLog001S",
-      "expected": false,
-      "twin_of": "OVD-LOG-001",
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "hilog",
-          "info"
-        ],
-        "constants": [
-          "%{private}s"
-        ]
-      }
-    },
-    {
-      "id": "OVD-LOG-002",
-      "title": "hilog prints password",
-      "category": "sensitive-log",
-      "cwe": "CWE-532",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-002.ets",
-      "function": "ovdLog002",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "hilog",
-          "debug"
-        ],
-        "constants": [
-          "pwd="
-        ]
-      },
-      "twin": "OVD-LOG-002S"
-    },
-    {
-      "id": "OVD-IPC-001",
-      "title": "exported:true ability without caller verification",
-      "category": "ipc-export",
-      "cwe": "CWE-862",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/module.json5",
-      "function": "-",
-      "expected": true,
-      "detection": {
-        "type": "manifest",
-        "constants": [
-          "exported",
-          "ovd",
-          "backdoor"
-        ]
-      },
-      "twin": "OVD-IPC-001S"
-    },
-    {
-      "id": "OVD-IPC-002",
-      "title": "magic want param returns embedded credential",
-      "category": "ipc-export",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/abilities/BackdoorAbility.ets",
-      "function": "onCreate",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "0vD_b4ckd00r",
-          "OVDBACKDOORSECRET123"
-        ]
-      },
-      "twin": "OVD-IPC-002S"
-    },
-    {
-      "id": "OVD-IPC-003",
-      "title": "unauthenticated local TCP backdoor echoes token",
-      "category": "ipc-export",
-      "cwe": "CWE-306",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/OVD-IPC-003.ets",
-      "function": "ovdIpc003",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "bind",
-          "send"
-        ],
-        "constants": [
-          "0.0.0.0",
-          "18888"
-        ]
-      },
-      "twin": "OVD-IPC-003S"
-    },
-    {
-      "id": "OVD-IPC-004",
-      "title": "deeplink path param read without sanitization",
-      "category": "ipc-export",
-      "cwe": "CWE-22",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/abilities/BackdoorAbility.ets",
-      "function": "onCreate",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "ovd://backdoor?path="
-        ]
-      },
-      "twin": "OVD-IPC-004S"
-    },
-    {
-      "id": "OVD-IPC-005",
-      "title": "emitter event flips admin state unvalidated",
-      "category": "ipc-export",
-      "cwe": "CWE-345",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/abilities/VulnAbility.ets",
-      "function": "registerEmitterBackdoor",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "emitter",
-          "on"
-        ],
-        "constants": [
-          "ovd_is_admin"
-        ]
-      },
-      "twin": "OVD-IPC-005S"
-    },
-    {
-      "id": "OVD-PERM-001",
-      "title": "CAMERA/MICROPHONE declared but never used",
-      "category": "permission-misuse",
-      "cwe": "CWE-732",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/module.json5",
-      "function": "-",
-      "expected": true,
-      "detection": {
-        "type": "manifest",
-        "constants": [
-          "ohos.permission.CAMERA",
-          "ohos.permission.MICROPHONE"
-        ]
-      },
-      "twin": "OVD-PERM-001S"
-    },
-    {
-      "id": "OVD-PASTE-001",
-      "title": "password written to system pasteboard",
-      "category": "pasteboard-misuse",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PASTE-001.ets",
-      "function": "ovdPaste001",
-      "expected": true,
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "setData"
-        ],
-        "constants": [
-          "password copied"
-        ]
-      },
-      "twin": "OVD-PASTE-001S"
-    },
-    {
-      "id": "OVD-PASTE-002",
-      "title": "pasteboard read on page lifecycle",
-      "category": "pasteboard-misuse",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/pages/PermPage.ets",
-      "function": "onPageShow",
-      "expected": true,
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "getData"
-        ],
-        "constants": [
-          "onPageShow read"
-        ]
-      },
-      "twin": "OVD-PASTE-002S"
-    },
-    {
-      "id": "OVD-PRIV-001",
-      "title": "device fingerprint posted to LAN collector",
-      "category": "privacy",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PRIV-001.ets",
-      "function": "ovdPriv001",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "http://10.20.31.11:8080/collect"
-        ]
-      },
-      "twin": "OVD-PRIV-001S"
-    },
-    {
-      "id": "OVD-PRIV-002",
-      "title": "continuous location to LAN ws tracker",
-      "category": "privacy",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PRIV-002.ets",
-      "function": "ovdPriv002",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "ws://192.168.1.100:9000/track"
-        ]
-      },
-      "twin": "OVD-PRIV-002S"
-    },
-    {
-      "id": "OVD-AUTH-001",
-      "title": "client-side hardcoded credential gate",
-      "category": "auth-flaw",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-001.ets",
-      "function": "ovdAuth001",
-      "expected": true,
-      "twin": "OVD-AUTH-001S",
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "admin",
-          "Admin@123"
-        ]
-      }
-    },
-    {
-      "id": "OVD-AUTH-001S",
-      "title": "twin: salted hash verification",
-      "category": "auth-flaw",
-      "cwe": "CWE-287",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-001S.ets",
-      "function": "ovdAuth001S",
-      "expected": false,
-      "twin_of": "OVD-AUTH-001",
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "createMd"
-        ]
-      }
-    },
-    {
-      "id": "OVD-AUTH-002",
-      "title": "client-only license expiry check",
-      "category": "auth-flaw",
-      "cwe": "CWE-693",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-002.ets",
-      "function": "ovdAuth002",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "Date",
-          "now"
-        ],
-        "constants": [
-          1893456000000
-        ]
-      },
-      "twin": "OVD-AUTH-002S"
-    },
-    {
-      "id": "OVD-AUTH-003",
-      "title": "session token from Math.random",
-      "category": "weak-random",
-      "cwe": "CWE-338",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-003.ets",
-      "function": "ovdAuth003",
-      "expected": true,
-      "detection": {
-        "type": "api-call",
-        "call": [
-          "Math",
-          "random"
-        ]
-      },
-      "twin": "OVD-AUTH-003S"
-    },
-    {
-      "id": "OVD-DEBUG-001",
-      "title": "IS_DEBUG=true dumps sensitive data",
-      "category": "debug-leftover",
-      "cwe": "CWE-489",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/debug/OVD-DEBUG-001.ets",
-      "function": "ovdDebug001",
-      "expected": true,
-      "detection": {
-        "type": "constant-flag",
-        "constants": [
-          "IS_DEBUG"
-        ]
-      },
-      "twin": "OVD-DEBUG-001S"
-    },
-    {
-      "id": "OVD-DEBUG-002",
-      "title": "backdoor PIN 0000 grants admin",
-      "category": "debug-leftover",
-      "cwe": "CWE-912",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/debug/OVD-DEBUG-002.ets",
-      "function": "ovdDebug002",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "0000"
-        ]
-      },
-      "twin": "OVD-DEBUG-002S"
-    },
-    {
-      "id": "OVD-CONF-001",
-      "title": "internal admin endpoint hardcoded",
-      "category": "config-leak",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/conf/OVD-CONF-001.ets",
-      "function": "ovdConf001",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "http://10.20.31.11:8080/admin"
-        ]
-      },
-      "twin": "OVD-CONF-001S"
-    },
-    {
-      "id": "OVD-CONF-002",
-      "title": "internal debug ws endpoint hardcoded",
-      "category": "config-leak",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/conf/OVD-CONF-002.ets",
-      "function": "ovdConf002",
-      "expected": true,
-      "detection": {
-        "type": "string-literal",
-        "constants": [
-          "ws://192.168.1.100:9000/debug"
-        ]
-      },
-      "twin": "OVD-CONF-002S"
-    },
-    {
-      "id": "OVD-NATIVE-001",
-      "title": "encryption key embedded in libentry.so",
-      "category": "native-risk",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/cpp/napi_init.cpp",
-      "function": "XorNative",
-      "expected": true,
-      "detection": {
-        "type": "native",
-        "constants": [
-          "w4d4f4k2ovd-native-key"
-        ],
-        "notes": "abc-only tools should MISS this (negative control for IR; positive for .so strings scan)"
-      },
-      "twin": "OVD-NATIVE-001S"
-    },
-    {
-      "id": "OVD-NATIVE-002",
-      "title": "strcpy without bounds in napi handler",
-      "category": "native-risk",
-      "cwe": "CWE-120",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/cpp/napi_init.cpp",
-      "function": "VulnCopy",
-      "expected": true,
-      "detection": {
-        "type": "native",
-        "constants": [
-          "strcpy"
-        ],
-        "notes": "negative control for abc-only tools"
-      },
-      "twin": "OVD-NATIVE-002S"
-    },
-    {
-      "id": "OVD-CRYPTO-007",
-      "title": "GCM fixed literal nonce",
-      "category": "weak-crypto",
-      "cwe": "CWE-1204",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-007.ets",
-      "function": "ovdCrypto007",
-      "expected": true,
-      "detection": {
-        "type": "api-call+constant",
-        "call": [
-          "createCipher"
-        ],
-        "constants": [
-          "bench-fixed-nonce!!",
-          "AES256|GCM|PKCS7"
-        ]
-      },
-      "notes": "安全对照复用 OVD-CRYPTO-001S（GCM+随机 IV）",
-      "twin": "OVD-CRYPTO-007S"
-    },
-    {
-      "id": "OVD-BACK-001",
-      "title": "backup enabled while tokens stored in plaintext",
-      "category": "insecure-storage",
-      "cwe": "CWE-530",
-      "module": "entry",
-      "source": "entry/src/main/resources/base/profile/backup_config.json",
-      "function": "-",
-      "expected": true,
-      "detection": {
-        "type": "manifest",
-        "constants": [
-          "\"allowToBackupRestore\": true"
-        ]
-      },
-      "twin": "OVD-BACK-001S"
-    },
-    {
-      "id": "OVD-SECRET-002S",
-      "title": "twin: key 运行时下发 (OVD-SECRET-002)",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
-      "function": "ovdSecret002S",
-      "expected": false,
-      "twin_of": "OVD-SECRET-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-SECRET-003S",
-      "title": "twin: KMS 别名解析 (OVD-SECRET-003)",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-321",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
-      "function": "ovdSecret003S",
-      "expected": false,
-      "twin_of": "OVD-SECRET-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-SECRET-004S",
-      "title": "twin: DSN 零口令 (OVD-SECRET-004)",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
-      "function": "ovdSecret004S",
-      "expected": false,
-      "twin_of": "OVD-SECRET-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-SECRET-005S",
-      "title": "twin: 别名获取无拼接 (OVD-SECRET-005)",
-      "category": "hardcoded-secret",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
-      "function": "ovdSecret005S",
-      "expected": false,
-      "twin_of": "OVD-SECRET-005",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-002S",
-      "title": "twin: SHA-256+盐 (OVD-CRYPTO-002)",
-      "category": "weak-crypto",
-      "cwe": "CWE-327",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto002S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-003S",
-      "title": "twin: SHA-256 (OVD-CRYPTO-003)",
-      "category": "weak-crypto",
-      "cwe": "CWE-328",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto003S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-004S",
-      "title": "twin: GCM+随机IV (OVD-CRYPTO-004)",
-      "category": "weak-crypto",
-      "cwe": "CWE-329",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto004S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-005S",
-      "title": "twin: HUKS 内生成 (OVD-CRYPTO-005)",
-      "category": "weak-crypto",
-      "cwe": "CWE-321",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto005S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-005",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-006S",
-      "title": "twin: RSA3072 (OVD-CRYPTO-006)",
-      "category": "weak-crypto",
-      "cwe": "CWE-326",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto006S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-006",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CRYPTO-007S",
-      "title": "twin: 随机 nonce (OVD-CRYPTO-007)",
-      "category": "weak-crypto",
-      "cwe": "CWE-1204",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
-      "function": "ovdCrypto007S",
-      "expected": false,
-      "twin_of": "OVD-CRYPTO-007",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NET-002S",
-      "title": "twin: wss+运行时端点 (OVD-NET-002)",
-      "category": "cleartext-transport",
-      "cwe": "CWE-319",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
-      "function": "ovdNet002S",
-      "expected": false,
-      "twin_of": "OVD-NET-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NET-003S",
-      "title": "twin: ssl 错误一律取消 (OVD-NET-003)",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
-      "function": "ovdNet003S",
-      "expected": false,
-      "twin_of": "OVD-NET-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NET-004S",
-      "title": "twin: 逐项比较 pin (OVD-NET-004)",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
-      "function": "ovdNet004S",
-      "expected": false,
-      "twin_of": "OVD-NET-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NET-005S",
-      "title": "twin: 非空 pin 白名单 (OVD-NET-005)",
-      "category": "cert-validation-bypass",
-      "cwe": "CWE-295",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
-      "function": "ovdNet005S",
-      "expected": false,
-      "twin_of": "OVD-NET-005",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-001S",
-      "title": "twin: 发布版关调试 (OVD-WEB-001)",
-      "category": "webview-risk",
-      "cwe": "CWE-489",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb001S",
-      "expected": false,
-      "twin_of": "OVD-WEB-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-002S",
-      "title": "twin: 桥方法白名单 (OVD-WEB-002)",
-      "category": "webview-risk",
-      "cwe": "CWE-749",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb002S",
-      "expected": false,
-      "twin_of": "OVD-WEB-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-003S",
-      "title": "twin: 输入转义 (OVD-WEB-003)",
-      "category": "webview-risk",
-      "cwe": "CWE-94",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb003S",
-      "expected": false,
-      "twin_of": "OVD-WEB-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-004S",
-      "title": "twin: 禁混合内容 (OVD-WEB-004)",
-      "category": "webview-risk",
-      "cwe": "CWE-311",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb004S",
-      "expected": false,
-      "twin_of": "OVD-WEB-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-005S",
-      "title": "twin: https 白名单 (OVD-WEB-005)",
-      "category": "webview-risk",
-      "cwe": "CWE-79",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb005S",
-      "expected": false,
-      "twin_of": "OVD-WEB-005",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-WEB-006S",
-      "title": "twin: 全等白名单 (OVD-WEB-006)",
-      "category": "webview-risk",
-      "cwe": "CWE-601",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
-      "function": "ovdWeb006S",
-      "expected": false,
-      "twin_of": "OVD-WEB-006",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-INJ-002S",
-      "title": "twin: 参数化谓词 (OVD-INJ-002)",
-      "category": "injection-sql",
-      "cwe": "CWE-89",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
-      "function": "ovdInj002S",
-      "expected": false,
-      "twin_of": "OVD-INJ-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-INJ-003S",
-      "title": "twin: 沙箱前缀校验 (OVD-INJ-003)",
-      "category": "injection-path",
-      "cwe": "CWE-22",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
-      "function": "ovdInj003S",
-      "expected": false,
-      "twin_of": "OVD-INJ-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-INJ-004S",
-      "title": "twin: 路由白名单 (OVD-INJ-004)",
-      "category": "injection-json",
-      "cwe": "CWE-20",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
-      "function": "ovdInj004S",
-      "expected": false,
-      "twin_of": "OVD-INJ-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-STOR-002S",
-      "title": "twin: 凭据入 Asset (OVD-STOR-002)",
-      "category": "insecure-storage",
-      "cwe": "CWE-668",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
-      "function": "ovdStor002S",
-      "expected": false,
-      "twin_of": "OVD-STOR-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-STOR-003S",
-      "title": "twin: 库安全级 S4 (OVD-STOR-003)",
-      "category": "insecure-storage",
-      "cwe": "CWE-668",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
-      "function": "ovdStor003S",
-      "expected": false,
-      "twin_of": "OVD-STOR-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-STOR-004S",
-      "title": "twin: 缓存脱敏 (OVD-STOR-004)",
-      "category": "insecure-storage",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
-      "function": "ovdStor004S",
-      "expected": false,
-      "twin_of": "OVD-STOR-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-BACK-001S",
-      "title": "twin: 备份排除敏感 (OVD-BACK-001)",
-      "category": "insecure-storage",
-      "cwe": "CWE-530",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
-      "function": "ovdBack001S",
-      "expected": false,
-      "twin_of": "OVD-BACK-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-LOG-002S",
-      "title": "twin: 日志脱敏 (OVD-LOG-002)",
-      "category": "sensitive-log",
-      "cwe": "CWE-532",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/log/Twins.ets",
-      "function": "ovdLog002S",
-      "expected": false,
-      "twin_of": "OVD-LOG-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-IPC-001S",
-      "title": "twin: 校验调用方 (OVD-IPC-001)",
-      "category": "ipc-export",
-      "cwe": "CWE-862",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
-      "function": "ovdIpc001S",
-      "expected": false,
-      "twin_of": "OVD-IPC-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-IPC-002S",
-      "title": "twin: 来源验证 (OVD-IPC-002)",
-      "category": "ipc-export",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
-      "function": "ovdIpc002S",
-      "expected": false,
-      "twin_of": "OVD-IPC-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-IPC-003S",
-      "title": "twin: 回环+令牌 (OVD-IPC-003)",
-      "category": "ipc-export",
-      "cwe": "CWE-306",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
-      "function": "ovdIpc003S",
-      "expected": false,
-      "twin_of": "OVD-IPC-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-IPC-004S",
-      "title": "twin: 参数白名单 (OVD-IPC-004)",
-      "category": "ipc-export",
-      "cwe": "CWE-22",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
-      "function": "ovdIpc004S",
-      "expected": false,
-      "twin_of": "OVD-IPC-004",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-IPC-005S",
-      "title": "twin: 签名校验 (OVD-IPC-005)",
-      "category": "ipc-export",
-      "cwe": "CWE-345",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
-      "function": "ovdIpc005S",
-      "expected": false,
-      "twin_of": "OVD-IPC-005",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-PERM-001S",
-      "title": "twin: 按需+用途 (OVD-PERM-001)",
-      "category": "permission-misuse",
-      "cwe": "CWE-732",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
-      "function": "ovdPerm001S",
-      "expected": false,
-      "twin_of": "OVD-PERM-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-PASTE-001S",
-      "title": "twin: 拒绝凭据入板 (OVD-PASTE-001)",
-      "category": "pasteboard-misuse",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
-      "function": "ovdPaste001S",
-      "expected": false,
-      "twin_of": "OVD-PASTE-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-PASTE-002S",
-      "title": "twin: 用户手势后读 (OVD-PASTE-002)",
-      "category": "pasteboard-misuse",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
-      "function": "ovdPaste002S",
-      "expected": false,
-      "twin_of": "OVD-PASTE-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-PRIV-001S",
-      "title": "twin: 匿名+https+同意 (OVD-PRIV-001)",
-      "category": "privacy",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
-      "function": "ovdPriv001S",
-      "expected": false,
-      "twin_of": "OVD-PRIV-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-PRIV-002S",
-      "title": "twin: 前台单次 (OVD-PRIV-002)",
-      "category": "privacy",
-      "cwe": "CWE-359",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
-      "function": "ovdPriv002S",
-      "expected": false,
-      "twin_of": "OVD-PRIV-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-AUTH-002S",
-      "title": "twin: 服务端签名 (OVD-AUTH-002)",
-      "category": "auth-flaw",
-      "cwe": "CWE-693",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
-      "function": "ovdAuth002S",
-      "expected": false,
-      "twin_of": "OVD-AUTH-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-AUTH-003S",
-      "title": "twin: cryptoRandom (OVD-AUTH-003)",
-      "category": "weak-random",
-      "cwe": "CWE-338",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
-      "function": "ovdAuth003S",
-      "expected": false,
-      "twin_of": "OVD-AUTH-003",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-DEBUG-001S",
-      "title": "twin: debuggable 门控 (OVD-DEBUG-001)",
-      "category": "debug-leftover",
-      "cwe": "CWE-489",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/debug/Twins.ets",
-      "function": "ovdDebug001S",
-      "expected": false,
-      "twin_of": "OVD-DEBUG-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-DEBUG-002S",
-      "title": "twin: 服务端 MFA (OVD-DEBUG-002)",
-      "category": "debug-leftover",
-      "cwe": "CWE-912",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/debug/Twins.ets",
-      "function": "ovdDebug002S",
-      "expected": false,
-      "twin_of": "OVD-DEBUG-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CONF-001S",
-      "title": "twin: 端点运行时拉取 (OVD-CONF-001)",
-      "category": "config-leak",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/conf/Twins.ets",
-      "function": "ovdConf001S",
-      "expected": false,
-      "twin_of": "OVD-CONF-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-CONF-002S",
-      "title": "twin: 发布构建裁剪 (OVD-CONF-002)",
-      "category": "config-leak",
-      "cwe": "CWE-200",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/conf/Twins.ets",
-      "function": "ovdConf002S",
-      "expected": false,
-      "twin_of": "OVD-CONF-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NATIVE-001S",
-      "title": "twin: 运行期注入密钥 (OVD-NATIVE-001)",
-      "category": "native-risk",
-      "cwe": "CWE-798",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/native/Twins.ets",
-      "function": "ovdNative001S",
-      "expected": false,
-      "twin_of": "OVD-NATIVE-001",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    },
-    {
-      "id": "OVD-NATIVE-002S",
-      "title": "twin: 边界裁剪后进桥 (OVD-NATIVE-002)",
-      "category": "native-risk",
-      "cwe": "CWE-120",
-      "module": "feat_vuln",
-      "source": "feat_vuln/src/main/ets/vulns/native/Twins.ets",
-      "function": "ovdNative002S",
-      "expected": false,
-      "twin_of": "OVD-NATIVE-002",
-      "detection": {
-        "type": "safe-twin",
-        "constants": []
-      }
-    }
-  ]
+  {
+   "id": "OVD-SECRET-001S",
+   "title": "twin: secret from Asset Store Kit",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-001S.ets",
+   "function": "ovdSecret001S",
+   "expected": false,
+   "twin_of": "OVD-SECRET-001",
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "asset",
+     "add"
+    ],
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SECRET-002",
+   "title": "hardcoded LLM api key sk-",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-002.ets",
+   "function": "ovdSecret002",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "sk-ovdbench-9f8e7d6c5b4a3210fedcba9876543210"
+    ]
+   },
+   "twin": "OVD-SECRET-002S"
+  },
+  {
+   "id": "OVD-SECRET-003",
+   "title": "embedded PEM private key",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-321",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-003.ets",
+   "function": "ovdSecret003",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "-----BEGIN RSA PRIVATE KEY-----"
+    ]
+   },
+   "twin": "OVD-SECRET-003S"
+  },
+  {
+   "id": "OVD-SECRET-004",
+   "title": "hardcoded DB password in connection string",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-004.ets",
+   "function": "ovdSecret004",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "P@ssw0rd_bench_2026",
+     "jdbc:mysql://root:"
+    ]
+   },
+   "twin": "OVD-SECRET-004S"
+  },
+  {
+   "id": "OVD-SECRET-005",
+   "title": "secret reassembled via concat/fromCharCode (anti-grep)",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/OVD-SECRET-005.ets",
+   "function": "ovdSecret005",
+   "expected": true,
+   "detection": {
+    "type": "string-op-flow",
+    "constants": [
+     "wJal",
+     "fromCharCode"
+    ]
+   },
+   "twin": "OVD-SECRET-005S"
+  },
+  {
+   "id": "OVD-CRYPTO-001",
+   "title": "AES-ECB mode",
+   "category": "weak-crypto",
+   "cwe": "CWE-327",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-001.ets",
+   "function": "ovdCrypto001",
+   "expected": true,
+   "twin": "OVD-CRYPTO-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createCipher"
+    ],
+    "constants": [
+     "AES256|ECB|PKCS7"
+    ]
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-001S",
+   "title": "twin: AES-GCM random key/IV",
+   "category": "weak-crypto",
+   "cwe": "CWE-327",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-001S.ets",
+   "function": "ovdCrypto001S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-001",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createCipher"
+    ],
+    "constants": [
+     "AES256|GCM|PKCS7"
+    ]
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-002",
+   "title": "MD5 password digest, no salt",
+   "category": "weak-crypto",
+   "cwe": "CWE-327",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-002.ets",
+   "function": "ovdCrypto002",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createMd"
+    ],
+    "constants": [
+     "MD5"
+    ]
+   },
+   "twin": "OVD-CRYPTO-002S"
+  },
+  {
+   "id": "OVD-CRYPTO-003",
+   "title": "SHA1 integrity digest",
+   "category": "weak-crypto",
+   "cwe": "CWE-328",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-003.ets",
+   "function": "ovdCrypto003",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createMd"
+    ],
+    "constants": [
+     "SHA1"
+    ]
+   },
+   "twin": "OVD-CRYPTO-003S"
+  },
+  {
+   "id": "OVD-CRYPTO-004",
+   "title": "fixed all-zero IV with CBC",
+   "category": "weak-crypto",
+   "cwe": "CWE-329",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-004.ets",
+   "function": "ovdCrypto004",
+   "expected": true,
+   "detection": {
+    "type": "api-call+const-array",
+    "call": [
+     "createCipher"
+    ],
+    "constants": [
+     "AES256|CBC|PKCS7"
+    ]
+   },
+   "twin": "OVD-CRYPTO-004S"
+  },
+  {
+   "id": "OVD-CRYPTO-005",
+   "title": "literal sym key imported into HUKS",
+   "category": "weak-crypto",
+   "cwe": "CWE-321",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-005.ets",
+   "function": "ovdCrypto005",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "importKeyItem"
+    ],
+    "constants": [
+     "0123456789abcdef0123456789abcdef"
+    ]
+   },
+   "twin": "OVD-CRYPTO-005S"
+  },
+  {
+   "id": "OVD-CRYPTO-006",
+   "title": "RSA1024 + PKCS1 for sensitive data",
+   "category": "weak-crypto",
+   "cwe": "CWE-326",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-006.ets",
+   "function": "ovdCrypto006",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createAsyKeyGenerator"
+    ],
+    "constants": [
+     "RSA1024|PRIMES_2",
+     "RSA1024|PKCS1"
+    ]
+   },
+   "twin": "OVD-CRYPTO-006S"
+  },
+  {
+   "id": "OVD-NET-001",
+   "title": "credentials over http://",
+   "category": "cleartext-transport",
+   "cwe": "CWE-319",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-001.ets",
+   "function": "ovdNet001",
+   "expected": true,
+   "twin": "OVD-NET-001S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "http://httpbin.org/post"
+    ]
+   }
+  },
+  {
+   "id": "OVD-NET-001S",
+   "title": "twin: https transport",
+   "category": "cleartext-transport",
+   "cwe": "CWE-319",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-001S.ets",
+   "function": "ovdNet001S",
+   "expected": false,
+   "twin_of": "OVD-NET-001",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "https://httpbin.org/post"
+    ]
+   }
+  },
+  {
+   "id": "OVD-NET-002",
+   "title": "ws:// to LAN address",
+   "category": "cleartext-transport",
+   "cwe": "CWE-319",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-002.ets",
+   "function": "ovdNet002",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ws://192.168.1.100:9000/telemetry"
+    ]
+   },
+   "twin": "OVD-NET-002S"
+  },
+  {
+   "id": "OVD-NET-003",
+   "title": "web onSslErrorReceive -> confirm",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "build",
+   "expected": true,
+   "detection": {
+    "type": "call-chain",
+    "call": [
+     "onSslErrorEventReceive",
+     "handleConfirm"
+    ]
+   },
+   "twin": "OVD-NET-003S"
+  },
+  {
+   "id": "OVD-NET-004",
+   "title": "custom cert verify always returns true",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-004.ets",
+   "function": "ovdNet004",
+   "expected": true,
+   "detection": {
+    "type": "predicate",
+    "predicate": "return-true"
+   },
+   "twin": "OVD-NET-004S"
+  },
+  {
+   "id": "OVD-NET-005",
+   "title": "empty certificate-pinning whitelist",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-005.ets",
+   "function": "ovdNet005",
+   "expected": true,
+   "detection": {
+    "type": "predicate",
+    "predicate": "empty-array"
+   },
+   "twin": "OVD-NET-005S"
+  },
+  {
+   "id": "OVD-WEB-001",
+   "title": "setWebDebuggingAccess(true) in release build",
+   "category": "webview-risk",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "aboutToAppear",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "setWebDebuggingAccess"
+    ],
+    "constants": [
+     true
+    ]
+   },
+   "twin": "OVD-WEB-001S"
+  },
+  {
+   "id": "OVD-WEB-002",
+   "title": "javaScriptProxy exposes getToken/readFile/pay",
+   "category": "webview-risk",
+   "cwe": "CWE-749",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "javaScriptProxy",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "javaScriptProxy"
+    ],
+    "constants": [
+     "getToken",
+     "readFile",
+     "pay"
+    ]
+   },
+   "twin": "OVD-WEB-002S"
+  },
+  {
+   "id": "OVD-WEB-003",
+   "title": "runJavaScript with unsanitized template",
+   "category": "webview-risk",
+   "cwe": "CWE-94",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "build",
+   "expected": true,
+   "detection": {
+    "type": "api-call+string-concat",
+    "call": [
+     "runJavaScript"
+    ]
+   },
+   "twin": "OVD-WEB-003S"
+  },
+  {
+   "id": "OVD-WEB-004",
+   "title": "MixedMode.ALL allows mixed content",
+   "category": "webview-risk",
+   "cwe": "CWE-311",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "build",
+   "expected": true,
+   "detection": {
+    "type": "enum-ref",
+    "constants": [
+     "MixedMode.All"
+    ]
+   },
+   "twin": "OVD-WEB-004S"
+  },
+  {
+   "id": "OVD-WEB-005",
+   "title": "fileAccess(true) + file:// loadUrl",
+   "category": "webview-risk",
+   "cwe": "CWE-79",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/WebPage.ets",
+   "function": "build",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "loadUrl"
+    ],
+    "constants": [
+     "file://"
+    ]
+   },
+   "twin": "OVD-WEB-005S"
+  },
+  {
+   "id": "OVD-WEB-006",
+   "title": "deeplink url loaded into Web without whitelist",
+   "category": "webview-risk",
+   "cwe": "CWE-601",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/Backdoor.ets",
+   "function": "aboutToAppear",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "startsWith"
+    ],
+    "constants": [
+     "last_want_uri"
+    ]
+   },
+   "twin": "OVD-WEB-006S"
+  },
+  {
+   "id": "OVD-INJ-001",
+   "title": "SQLi via querySql template string",
+   "category": "injection-sql",
+   "cwe": "CWE-89",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-001.ets",
+   "function": "ovdInj001",
+   "expected": true,
+   "twin": "OVD-INJ-001S",
+   "detection": {
+    "type": "api-call+string-concat",
+    "call": [
+     "querySql"
+    ]
+   }
+  },
+  {
+   "id": "OVD-INJ-001S",
+   "title": "twin: RdbPredicates binding",
+   "category": "injection-sql",
+   "cwe": "CWE-89",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-001S.ets",
+   "function": "ovdInj001S",
+   "expected": false,
+   "twin_of": "OVD-INJ-001",
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "RdbPredicates",
+     "equalTo"
+    ]
+   }
+  },
+  {
+   "id": "OVD-INJ-002",
+   "title": "DELETE via executeSql concat",
+   "category": "injection-sql",
+   "cwe": "CWE-89",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-002.ets",
+   "function": "ovdInj002",
+   "expected": true,
+   "detection": {
+    "type": "api-call+string-concat",
+    "call": [
+     "executeSql"
+    ],
+    "constants": [
+     "DELETE FROM users WHERE name"
+    ]
+   },
+   "twin": "OVD-INJ-002S"
+  },
+  {
+   "id": "OVD-INJ-003",
+   "title": "path traversal into fs.openSync",
+   "category": "injection-path",
+   "cwe": "CWE-22",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-003.ets",
+   "function": "ovdInj003",
+   "expected": true,
+   "detection": {
+    "type": "api-call+string-concat",
+    "call": [
+     "openSync"
+    ],
+    "constants": [
+     "etc/hosts"
+    ],
+    "scope": "global"
+   },
+   "twin": "OVD-INJ-003S"
+  },
+  {
+   "id": "OVD-INJ-004",
+   "title": "JSON.parse of external payload drives navigation",
+   "category": "injection-json",
+   "cwe": "CWE-20",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/OVD-INJ-004.ets",
+   "function": "ovdInj004",
+   "expected": true,
+   "detection": {
+    "type": "api-call-flow",
+    "call": [
+     "parse",
+     "pushUrl"
+    ],
+    "constants": [
+     "getToken"
+    ]
+   },
+   "twin": "OVD-INJ-004S"
+  },
+  {
+   "id": "OVD-STOR-001",
+   "title": "auth token plaintext in preferences",
+   "category": "insecure-storage",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-001.ets",
+   "function": "ovdStor001",
+   "expected": true,
+   "twin": "OVD-STOR-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "auth_token"
+    ]
+   }
+  },
+  {
+   "id": "OVD-STOR-001S",
+   "title": "twin: token in asset store",
+   "category": "insecure-storage",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-001S.ets",
+   "function": "ovdStor001S",
+   "expected": false,
+   "twin_of": "OVD-STOR-001",
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "asset",
+     "add"
+    ]
+   }
+  },
+  {
+   "id": "OVD-STOR-002",
+   "title": "credentials written to user_credentials.txt",
+   "category": "insecure-storage",
+   "cwe": "CWE-668",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-002.ets",
+   "function": "ovdStor002",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "writeSync"
+    ],
+    "constants": [
+     "user_credentials.txt",
+     "pwd=Admin@123"
+    ]
+   },
+   "twin": "OVD-STOR-002S"
+  },
+  {
+   "id": "OVD-STOR-003",
+   "title": "S1 security level for password table",
+   "category": "insecure-storage",
+   "cwe": "CWE-668",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/db/BenchDb.ets",
+   "function": "getStore",
+   "expected": true,
+   "detection": {
+    "type": "enum-ref",
+    "constants": [
+     "S1"
+    ]
+   },
+   "twin": "OVD-STOR-003S"
+  },
+  {
+   "id": "OVD-STOR-004",
+   "title": "PII response cached plaintext in cacheDir",
+   "category": "insecure-storage",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-004.ets",
+   "function": "ovdStor004",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "writeSync"
+    ],
+    "constants": [
+     "profile_cache.json",
+     "110101199001011234"
+    ]
+   },
+   "twin": "OVD-STOR-004S"
+  },
+  {
+   "id": "OVD-LOG-001",
+   "title": "hilog %{public}s leaks auth token",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-001.ets",
+   "function": "ovdLog001",
+   "expected": true,
+   "twin": "OVD-LOG-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "info"
+    ],
+    "constants": [
+     "%{public}s",
+     "token="
+    ]
+   }
+  },
+  {
+   "id": "OVD-LOG-001S",
+   "title": "twin: %{private}s masked",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-001S.ets",
+   "function": "ovdLog001S",
+   "expected": false,
+   "twin_of": "OVD-LOG-001",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "info"
+    ],
+    "constants": [
+     "%{private}s"
+    ]
+   }
+  },
+  {
+   "id": "OVD-LOG-002",
+   "title": "hilog prints password",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-002.ets",
+   "function": "ovdLog002",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "debug"
+    ],
+    "constants": [
+     "pwd="
+    ]
+   },
+   "twin": "OVD-LOG-002S"
+  },
+  {
+   "id": "OVD-IPC-001",
+   "title": "exported:true ability without caller verification",
+   "category": "ipc-export",
+   "cwe": "CWE-862",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/module.json5",
+   "function": "-",
+   "expected": true,
+   "detection": {
+    "type": "manifest",
+    "constants": [
+     "exported",
+     "ovd",
+     "backdoor"
+    ]
+   },
+   "twin": "OVD-IPC-001S"
+  },
+  {
+   "id": "OVD-IPC-002",
+   "title": "magic want param returns embedded credential",
+   "category": "ipc-export",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/abilities/BackdoorAbility.ets",
+   "function": "onCreate",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "0vD_b4ckd00r",
+     "OVDBACKDOORSECRET123"
+    ]
+   },
+   "twin": "OVD-IPC-002S"
+  },
+  {
+   "id": "OVD-IPC-003",
+   "title": "unauthenticated local TCP backdoor echoes token",
+   "category": "ipc-export",
+   "cwe": "CWE-306",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/OVD-IPC-003.ets",
+   "function": "ovdIpc003",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "bind",
+     "send"
+    ],
+    "constants": [
+     "0.0.0.0",
+     "18888"
+    ]
+   },
+   "twin": "OVD-IPC-003S"
+  },
+  {
+   "id": "OVD-IPC-004",
+   "title": "deeplink path param read without sanitization",
+   "category": "ipc-export",
+   "cwe": "CWE-22",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/abilities/BackdoorAbility.ets",
+   "function": "onCreate",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ovd://backdoor?path="
+    ]
+   },
+   "twin": "OVD-IPC-004S"
+  },
+  {
+   "id": "OVD-IPC-005",
+   "title": "emitter event flips admin state unvalidated",
+   "category": "ipc-export",
+   "cwe": "CWE-345",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/abilities/VulnAbility.ets",
+   "function": "registerEmitterBackdoor",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "emitter",
+     "on"
+    ],
+    "constants": [
+     "ovd_is_admin"
+    ]
+   },
+   "twin": "OVD-IPC-005S"
+  },
+  {
+   "id": "OVD-PERM-001",
+   "title": "CAMERA/MICROPHONE declared but never used",
+   "category": "permission-misuse",
+   "cwe": "CWE-732",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/module.json5",
+   "function": "-",
+   "expected": true,
+   "detection": {
+    "type": "manifest",
+    "constants": [
+     "ohos.permission.CAMERA",
+     "ohos.permission.MICROPHONE"
+    ]
+   },
+   "twin": "OVD-PERM-001S"
+  },
+  {
+   "id": "OVD-PASTE-001",
+   "title": "password written to system pasteboard",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PASTE-001.ets",
+   "function": "ovdPaste001",
+   "expected": true,
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "setData"
+    ],
+    "constants": [
+     "password copied"
+    ]
+   },
+   "twin": "OVD-PASTE-001S"
+  },
+  {
+   "id": "OVD-PASTE-002",
+   "title": "pasteboard read on page lifecycle",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/pages/PermPage.ets",
+   "function": "onPageShow",
+   "expected": true,
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "getData"
+    ],
+    "constants": [
+     "onPageShow read"
+    ]
+   },
+   "twin": "OVD-PASTE-002S"
+  },
+  {
+   "id": "OVD-PRIV-001",
+   "title": "device fingerprint posted to LAN collector",
+   "category": "privacy",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PRIV-001.ets",
+   "function": "ovdPriv001",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "http://10.20.31.11:8080/collect"
+    ]
+   },
+   "twin": "OVD-PRIV-001S"
+  },
+  {
+   "id": "OVD-PRIV-002",
+   "title": "continuous location to LAN ws tracker",
+   "category": "privacy",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PRIV-002.ets",
+   "function": "ovdPriv002",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ws://192.168.1.100:9000/track"
+    ]
+   },
+   "twin": "OVD-PRIV-002S"
+  },
+  {
+   "id": "OVD-AUTH-001",
+   "title": "client-side hardcoded credential gate",
+   "category": "auth-flaw",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-001.ets",
+   "function": "ovdAuth001",
+   "expected": true,
+   "twin": "OVD-AUTH-001S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "admin",
+     "Admin@123"
+    ]
+   }
+  },
+  {
+   "id": "OVD-AUTH-001S",
+   "title": "twin: salted hash verification",
+   "category": "auth-flaw",
+   "cwe": "CWE-287",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-001S.ets",
+   "function": "ovdAuth001S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-001",
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "createMd"
+    ]
+   }
+  },
+  {
+   "id": "OVD-AUTH-002",
+   "title": "client-only license expiry check",
+   "category": "auth-flaw",
+   "cwe": "CWE-693",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-002.ets",
+   "function": "ovdAuth002",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "Date",
+     "now"
+    ],
+    "constants": [
+     1893456000000
+    ]
+   },
+   "twin": "OVD-AUTH-002S"
+  },
+  {
+   "id": "OVD-AUTH-003",
+   "title": "session token from Math.random",
+   "category": "weak-random",
+   "cwe": "CWE-338",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-003.ets",
+   "function": "ovdAuth003",
+   "expected": true,
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "Math",
+     "random"
+    ]
+   },
+   "twin": "OVD-AUTH-003S"
+  },
+  {
+   "id": "OVD-DEBUG-001",
+   "title": "IS_DEBUG=true dumps sensitive data",
+   "category": "debug-leftover",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/OVD-DEBUG-001.ets",
+   "function": "ovdDebug001",
+   "expected": true,
+   "detection": {
+    "type": "constant-flag",
+    "constants": [
+     "IS_DEBUG"
+    ]
+   },
+   "twin": "OVD-DEBUG-001S"
+  },
+  {
+   "id": "OVD-DEBUG-002",
+   "title": "backdoor PIN 0000 grants admin",
+   "category": "debug-leftover",
+   "cwe": "CWE-912",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/OVD-DEBUG-002.ets",
+   "function": "ovdDebug002",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "0000"
+    ]
+   },
+   "twin": "OVD-DEBUG-002S"
+  },
+  {
+   "id": "OVD-CONF-001",
+   "title": "internal admin endpoint hardcoded",
+   "category": "config-leak",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/OVD-CONF-001.ets",
+   "function": "ovdConf001",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "http://10.20.31.11:8080/admin"
+    ]
+   },
+   "twin": "OVD-CONF-001S"
+  },
+  {
+   "id": "OVD-CONF-002",
+   "title": "internal debug ws endpoint hardcoded",
+   "category": "config-leak",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/OVD-CONF-002.ets",
+   "function": "ovdConf002",
+   "expected": true,
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ws://192.168.1.100:9000/debug"
+    ]
+   },
+   "twin": "OVD-CONF-002S"
+  },
+  {
+   "id": "OVD-NATIVE-001",
+   "title": "encryption key embedded in libentry.so",
+   "category": "native-risk",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/cpp/napi_init.cpp",
+   "function": "XorNative",
+   "expected": true,
+   "detection": {
+    "type": "native",
+    "constants": [
+     "w4d4f4k2ovd-native-key"
+    ],
+    "notes": "abc-only tools should MISS this (negative control for IR; positive for .so strings scan)"
+   },
+   "twin": "OVD-NATIVE-001S"
+  },
+  {
+   "id": "OVD-NATIVE-002",
+   "title": "strcpy without bounds in napi handler",
+   "category": "native-risk",
+   "cwe": "CWE-120",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/cpp/napi_init.cpp",
+   "function": "VulnCopy",
+   "expected": true,
+   "detection": {
+    "type": "native",
+    "constants": [
+     "strcpy"
+    ],
+    "notes": "negative control for abc-only tools"
+   },
+   "twin": "OVD-NATIVE-002S"
+  },
+  {
+   "id": "OVD-CRYPTO-007",
+   "title": "GCM fixed literal nonce",
+   "category": "weak-crypto",
+   "cwe": "CWE-1204",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-007.ets",
+   "function": "ovdCrypto007",
+   "expected": true,
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createCipher"
+    ],
+    "constants": [
+     "bench-fixed-nonce!!",
+     "AES256|GCM|PKCS7"
+    ]
+   },
+   "notes": "安全对照复用 OVD-CRYPTO-001S（GCM+随机 IV）",
+   "twin": "OVD-CRYPTO-007S"
+  },
+  {
+   "id": "OVD-BACK-001",
+   "title": "backup enabled while tokens stored in plaintext",
+   "category": "insecure-storage",
+   "cwe": "CWE-530",
+   "module": "entry",
+   "source": "entry/src/main/resources/base/profile/backup_config.json",
+   "function": "-",
+   "expected": true,
+   "detection": {
+    "type": "manifest",
+    "constants": [
+     "\"allowToBackupRestore\": true"
+    ]
+   },
+   "twin": "OVD-BACK-001S"
+  },
+  {
+   "id": "OVD-SECRET-002S",
+   "title": "twin: key 运行时下发 (OVD-SECRET-002)",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
+   "function": "ovdSecret002S",
+   "expected": false,
+   "twin_of": "OVD-SECRET-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SECRET-003S",
+   "title": "twin: KMS 别名解析 (OVD-SECRET-003)",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-321",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
+   "function": "ovdSecret003S",
+   "expected": false,
+   "twin_of": "OVD-SECRET-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SECRET-004S",
+   "title": "twin: DSN 零口令 (OVD-SECRET-004)",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
+   "function": "ovdSecret004S",
+   "expected": false,
+   "twin_of": "OVD-SECRET-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SECRET-005S",
+   "title": "twin: 别名获取无拼接 (OVD-SECRET-005)",
+   "category": "hardcoded-secret",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/secret/Twins.ets",
+   "function": "ovdSecret005S",
+   "expected": false,
+   "twin_of": "OVD-SECRET-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-002S",
+   "title": "twin: SHA-256+盐 (OVD-CRYPTO-002)",
+   "category": "weak-crypto",
+   "cwe": "CWE-327",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto002S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-003S",
+   "title": "twin: SHA-256 (OVD-CRYPTO-003)",
+   "category": "weak-crypto",
+   "cwe": "CWE-328",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto003S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-004S",
+   "title": "twin: GCM+随机IV (OVD-CRYPTO-004)",
+   "category": "weak-crypto",
+   "cwe": "CWE-329",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto004S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-005S",
+   "title": "twin: HUKS 内生成 (OVD-CRYPTO-005)",
+   "category": "weak-crypto",
+   "cwe": "CWE-321",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto005S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-006S",
+   "title": "twin: RSA3072 (OVD-CRYPTO-006)",
+   "category": "weak-crypto",
+   "cwe": "CWE-326",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto006S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-006",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CRYPTO-007S",
+   "title": "twin: 随机 nonce (OVD-CRYPTO-007)",
+   "category": "weak-crypto",
+   "cwe": "CWE-1204",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+   "function": "ovdCrypto007S",
+   "expected": false,
+   "twin_of": "OVD-CRYPTO-007",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NET-002S",
+   "title": "twin: wss+运行时端点 (OVD-NET-002)",
+   "category": "cleartext-transport",
+   "cwe": "CWE-319",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
+   "function": "ovdNet002S",
+   "expected": false,
+   "twin_of": "OVD-NET-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NET-003S",
+   "title": "twin: ssl 错误一律取消 (OVD-NET-003)",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
+   "function": "ovdNet003S",
+   "expected": false,
+   "twin_of": "OVD-NET-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NET-004S",
+   "title": "twin: 逐项比较 pin (OVD-NET-004)",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
+   "function": "ovdNet004S",
+   "expected": false,
+   "twin_of": "OVD-NET-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NET-005S",
+   "title": "twin: 非空 pin 白名单 (OVD-NET-005)",
+   "category": "cert-validation-bypass",
+   "cwe": "CWE-295",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
+   "function": "ovdNet005S",
+   "expected": false,
+   "twin_of": "OVD-NET-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-001S",
+   "title": "twin: 发布版关调试 (OVD-WEB-001)",
+   "category": "webview-risk",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb001S",
+   "expected": false,
+   "twin_of": "OVD-WEB-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-002S",
+   "title": "twin: 桥方法白名单 (OVD-WEB-002)",
+   "category": "webview-risk",
+   "cwe": "CWE-749",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb002S",
+   "expected": false,
+   "twin_of": "OVD-WEB-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-003S",
+   "title": "twin: 输入转义 (OVD-WEB-003)",
+   "category": "webview-risk",
+   "cwe": "CWE-94",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb003S",
+   "expected": false,
+   "twin_of": "OVD-WEB-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-004S",
+   "title": "twin: 禁混合内容 (OVD-WEB-004)",
+   "category": "webview-risk",
+   "cwe": "CWE-311",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb004S",
+   "expected": false,
+   "twin_of": "OVD-WEB-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-005S",
+   "title": "twin: https 白名单 (OVD-WEB-005)",
+   "category": "webview-risk",
+   "cwe": "CWE-79",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb005S",
+   "expected": false,
+   "twin_of": "OVD-WEB-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-006S",
+   "title": "twin: 全等白名单 (OVD-WEB-006)",
+   "category": "webview-risk",
+   "cwe": "CWE-601",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb006S",
+   "expected": false,
+   "twin_of": "OVD-WEB-006",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-INJ-002S",
+   "title": "twin: 参数化谓词 (OVD-INJ-002)",
+   "category": "injection-sql",
+   "cwe": "CWE-89",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
+   "function": "ovdInj002S",
+   "expected": false,
+   "twin_of": "OVD-INJ-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-INJ-003S",
+   "title": "twin: 沙箱前缀校验 (OVD-INJ-003)",
+   "category": "injection-path",
+   "cwe": "CWE-22",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
+   "function": "ovdInj003S",
+   "expected": false,
+   "twin_of": "OVD-INJ-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-INJ-004S",
+   "title": "twin: 路由白名单 (OVD-INJ-004)",
+   "category": "injection-json",
+   "cwe": "CWE-20",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/inj/Twins.ets",
+   "function": "ovdInj004S",
+   "expected": false,
+   "twin_of": "OVD-INJ-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-STOR-002S",
+   "title": "twin: 凭据入 Asset (OVD-STOR-002)",
+   "category": "insecure-storage",
+   "cwe": "CWE-668",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
+   "function": "ovdStor002S",
+   "expected": false,
+   "twin_of": "OVD-STOR-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-STOR-003S",
+   "title": "twin: 库安全级 S4 (OVD-STOR-003)",
+   "category": "insecure-storage",
+   "cwe": "CWE-668",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
+   "function": "ovdStor003S",
+   "expected": false,
+   "twin_of": "OVD-STOR-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-STOR-004S",
+   "title": "twin: 缓存脱敏 (OVD-STOR-004)",
+   "category": "insecure-storage",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
+   "function": "ovdStor004S",
+   "expected": false,
+   "twin_of": "OVD-STOR-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-BACK-001S",
+   "title": "twin: 备份排除敏感 (OVD-BACK-001)",
+   "category": "insecure-storage",
+   "cwe": "CWE-530",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
+   "function": "ovdBack001S",
+   "expected": false,
+   "twin_of": "OVD-BACK-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-LOG-002S",
+   "title": "twin: 日志脱敏 (OVD-LOG-002)",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/Twins.ets",
+   "function": "ovdLog002S",
+   "expected": false,
+   "twin_of": "OVD-LOG-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-IPC-001S",
+   "title": "twin: 校验调用方 (OVD-IPC-001)",
+   "category": "ipc-export",
+   "cwe": "CWE-862",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc001S",
+   "expected": false,
+   "twin_of": "OVD-IPC-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-IPC-002S",
+   "title": "twin: 来源验证 (OVD-IPC-002)",
+   "category": "ipc-export",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc002S",
+   "expected": false,
+   "twin_of": "OVD-IPC-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-IPC-003S",
+   "title": "twin: 回环+令牌 (OVD-IPC-003)",
+   "category": "ipc-export",
+   "cwe": "CWE-306",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc003S",
+   "expected": false,
+   "twin_of": "OVD-IPC-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-IPC-004S",
+   "title": "twin: 参数白名单 (OVD-IPC-004)",
+   "category": "ipc-export",
+   "cwe": "CWE-22",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc004S",
+   "expected": false,
+   "twin_of": "OVD-IPC-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-IPC-005S",
+   "title": "twin: 签名校验 (OVD-IPC-005)",
+   "category": "ipc-export",
+   "cwe": "CWE-345",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc005S",
+   "expected": false,
+   "twin_of": "OVD-IPC-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PERM-001S",
+   "title": "twin: 按需+用途 (OVD-PERM-001)",
+   "category": "permission-misuse",
+   "cwe": "CWE-732",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPerm001S",
+   "expected": false,
+   "twin_of": "OVD-PERM-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PASTE-001S",
+   "title": "twin: 拒绝凭据入板 (OVD-PASTE-001)",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPaste001S",
+   "expected": false,
+   "twin_of": "OVD-PASTE-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PASTE-002S",
+   "title": "twin: 用户手势后读 (OVD-PASTE-002)",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPaste002S",
+   "expected": false,
+   "twin_of": "OVD-PASTE-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PRIV-001S",
+   "title": "twin: 匿名+https+同意 (OVD-PRIV-001)",
+   "category": "privacy",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPriv001S",
+   "expected": false,
+   "twin_of": "OVD-PRIV-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PRIV-002S",
+   "title": "twin: 前台单次 (OVD-PRIV-002)",
+   "category": "privacy",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPriv002S",
+   "expected": false,
+   "twin_of": "OVD-PRIV-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-AUTH-002S",
+   "title": "twin: 服务端签名 (OVD-AUTH-002)",
+   "category": "auth-flaw",
+   "cwe": "CWE-693",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+   "function": "ovdAuth002S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-AUTH-003S",
+   "title": "twin: cryptoRandom (OVD-AUTH-003)",
+   "category": "weak-random",
+   "cwe": "CWE-338",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+   "function": "ovdAuth003S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-DEBUG-001S",
+   "title": "twin: debuggable 门控 (OVD-DEBUG-001)",
+   "category": "debug-leftover",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/Twins.ets",
+   "function": "ovdDebug001S",
+   "expected": false,
+   "twin_of": "OVD-DEBUG-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-DEBUG-002S",
+   "title": "twin: 服务端 MFA (OVD-DEBUG-002)",
+   "category": "debug-leftover",
+   "cwe": "CWE-912",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/Twins.ets",
+   "function": "ovdDebug002S",
+   "expected": false,
+   "twin_of": "OVD-DEBUG-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CONF-001S",
+   "title": "twin: 端点运行时拉取 (OVD-CONF-001)",
+   "category": "config-leak",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/Twins.ets",
+   "function": "ovdConf001S",
+   "expected": false,
+   "twin_of": "OVD-CONF-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-CONF-002S",
+   "title": "twin: 发布构建裁剪 (OVD-CONF-002)",
+   "category": "config-leak",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/Twins.ets",
+   "function": "ovdConf002S",
+   "expected": false,
+   "twin_of": "OVD-CONF-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NATIVE-001S",
+   "title": "twin: 运行期注入密钥 (OVD-NATIVE-001)",
+   "category": "native-risk",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/native/Twins.ets",
+   "function": "ovdNative001S",
+   "expected": false,
+   "twin_of": "OVD-NATIVE-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-NATIVE-002S",
+   "title": "twin: 边界裁剪后进桥 (OVD-NATIVE-002)",
+   "category": "native-risk",
+   "cwe": "CWE-120",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/native/Twins.ets",
+   "function": "ovdNative002S",
+   "expected": false,
+   "twin_of": "OVD-NATIVE-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-AUTH-004",
+   "title": "userAuth 结果仅客户端置信",
+   "category": "auth-flaw",
+   "cwe": "CWE-602",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-004.ets",
+   "function": "ovdAuth004",
+   "expected": true,
+   "twin": "OVD-AUTH-004S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "getUserAuthInstance"
+    ],
+    "constants": [
+     "trust-client-result-only"
+    ]
+   }
+  },
+  {
+   "id": "OVD-AUTH-005",
+   "title": "支付级操作用最低信任级",
+   "category": "auth-flaw",
+   "cwe": "CWE-308",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-005.ets",
+   "function": "ovdAuth005",
+   "expected": true,
+   "twin": "OVD-AUTH-005S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "getUserAuthInstance"
+    ],
+    "constants": [
+     "ATL1",
+     "pay-context"
+    ]
+   }
+  },
+  {
+   "id": "OVD-AUTH-006",
+   "title": "认证 challenge 固定复用",
+   "category": "auth-flaw",
+   "cwe": "CWE-330",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-006.ets",
+   "function": "ovdAuth006",
+   "expected": true,
+   "twin": "OVD-AUTH-006S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "getUserAuthInstance"
+    ],
+    "constants": [
+     "deadbeef-fixed-challenge"
+    ]
+   }
+  },
+  {
+   "id": "OVD-FORM-001",
+   "title": "卡片 router 目标未白名单",
+   "category": "form-injection",
+   "cwe": "CWE-601",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/form/OVD-FORM-001.ets",
+   "function": "ovdForm001",
+   "expected": true,
+   "twin": "OVD-FORM-001S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "form.router issued"
+    ]
+   }
+  },
+  {
+   "id": "OVD-FORM-002",
+   "title": "卡片消息未校验落库",
+   "category": "form-injection",
+   "cwe": "CWE-20",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/form/OVD-FORM-002.ets",
+   "function": "ovdForm002",
+   "expected": true,
+   "twin": "OVD-FORM-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "put"
+    ],
+    "constants": [
+     "form_raw_event"
+    ]
+   }
+  },
+  {
+   "id": "OVD-WEB-007",
+   "title": "原生桥无来源域校验",
+   "category": "webview-risk",
+   "cwe": "CWE-749",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/OVD-WEB-007.ets",
+   "function": "ovdWeb007",
+   "expected": true,
+   "twin": "OVD-WEB-007S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "runJavaScript"
+    ],
+    "constants": [
+     "bridge-no-origin-check"
+    ]
+   }
+  },
+  {
+   "id": "OVD-PASTE-003",
+   "title": "敏感数据跨设备共享",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PASTE-003.ets",
+   "function": "ovdPaste003",
+   "expected": true,
+   "twin": "OVD-PASTE-003S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "setData"
+    ],
+    "constants": [
+     "cross-device"
+    ]
+   }
+  },
+  {
+   "id": "OVD-AUTH-004S",
+   "title": "twin: 服务端 token 验证后授权",
+   "category": "auth-flaw",
+   "cwe": "CWE-602",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+   "function": "ovdAuth004S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-004",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-AUTH-005S",
+   "title": "twin: 支付用 ATL3 生物认证",
+   "category": "auth-flaw",
+   "cwe": "CWE-308",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+   "function": "ovdAuth005S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-005",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-AUTH-006S",
+   "title": "twin: challenge 加密随机生成",
+   "category": "auth-flaw",
+   "cwe": "CWE-330",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+   "function": "ovdAuth006S",
+   "expected": false,
+   "twin_of": "OVD-AUTH-006",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-FORM-001S",
+   "title": "twin: router 目标白名单",
+   "category": "form-injection",
+   "cwe": "CWE-601",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/form/Twins.ets",
+   "function": "ovdForm001S",
+   "expected": false,
+   "twin_of": "OVD-FORM-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-FORM-002S",
+   "title": "twin: 消息 schema/长度校验",
+   "category": "form-injection",
+   "cwe": "CWE-20",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/form/Twins.ets",
+   "function": "ovdForm002S",
+   "expected": false,
+   "twin_of": "OVD-FORM-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-WEB-007S",
+   "title": "twin: 桥 host 白名单校验",
+   "category": "webview-risk",
+   "cwe": "CWE-749",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
+   "function": "ovdWeb007S",
+   "expected": false,
+   "twin_of": "OVD-WEB-007",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-PASTE-003S",
+   "title": "twin: 敏感数据拒绝跨设备",
+   "category": "pasteboard-misuse",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPaste003S",
+   "expected": false,
+   "twin_of": "OVD-PASTE-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  }
+ ]
 }
