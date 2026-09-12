@@ -2,7 +2,7 @@ import { Case, DemoScaffold } from 'lib_common';
 import { ovdCrypto002S, ovdCrypto003S, ovdCrypto004S, ovdCrypto005S, ovdCrypto006S, ovdCrypto007S } from '../vulns/crypto/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdCrypto001 } from '../vulns/crypto/OVD-CRYPTO-001';
-import { ovdCrypto001S } from '../vulns/crypto/OVD-CRYPTO-001S';
+import { ovdCrypto001S } from '../vulns/crypto/Twins';
 import { ovdCrypto002 } from '../vulns/crypto/OVD-CRYPTO-002';
 import { ovdCrypto003 } from '../vulns/crypto/OVD-CRYPTO-003';
 import { ovdCrypto004 } from '../vulns/crypto/OVD-CRYPTO-004';

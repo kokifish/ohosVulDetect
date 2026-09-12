@@ -1,6 +1,19 @@
 // SAFE 孪生集合（net）：OVD-NET-002S/003S/004S/005S，合并文件，勿手改。
-import { webSocket } from '@kit.NetworkKit';
+import { http, webSocket } from '@kit.NetworkKit';
 import { BusinessError } from '@kit.BasicServicesKit';
+
+// SAFE: OVD-NET-001S 对照实现：https 通道提交（CWE-319 加固）
+
+export async function ovdNet001S(user: string, pass: string): Promise<string> {
+  const req: http.HttpRequest = http.createHttp();
+  const resp: http.HttpResponse = await req.request('https://httpbin.org/post', {
+    method: http.RequestMethod.POST,
+    extraData: JSON.stringify({ 'user': user, 'password': pass }),
+    expectDataType: http.HttpDataType.STRING
+  });
+  req.destroy();
+  return `login sent over https, status=${resp.responseCode}`;
+}
 
 // SAFE: OVD-NET-002S 调试通道走 wss + 运行时配置端点（CWE-319 加固）
 export function ovdNet002S(endpoint: string): string {

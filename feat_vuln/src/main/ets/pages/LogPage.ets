@@ -2,7 +2,7 @@ import { Case, DemoScaffold } from 'lib_common';
 import { ovdLog002S } from '../vulns/log/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdLog001 } from '../vulns/log/OVD-LOG-001';
-import { ovdLog001S } from '../vulns/log/OVD-LOG-001S';
+import { ovdLog001S } from '../vulns/log/Twins';
 import { ovdLog002 } from '../vulns/log/OVD-LOG-002';
 
 @Entry

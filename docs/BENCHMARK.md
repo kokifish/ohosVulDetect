@@ -754,3 +754,20 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
 - **门禁**：check_manifest 120 条双向一致、4 变体构建 OK、静态 FP/TP 双向自检零残留、
   模拟器 bench24 定向验证 7 对 14 案例 ✅（含 cat-form 新页）、hilog 无 JS Error。
   漏洞总数 53→60、孪生 53→60；检测规则沿用 string-literal / api-call+constant 双形态。
+
+## 简化轮：孪生统一/注册单源/生成物自解释（2026-09-13，未提交）
+
+1. **孪生文件统一**：旧 7 个 per-ID 文件（OVD-*-001S.ets）并入各类 `Twins.ets`，删 7 文件、
+   7 处页面 import 改向、manifest source 同步——孪生组织单一范式。**合并引入的真实 FP 教训**：
+   同文件多孪生的常量会跨函数组合命中规则（log Twins 中 001S 的 `token=` + 002S 的
+   `%{public}s` 拼出 LOG-001 规则）→ 001S 文案改 `cred=***`；新孪生并入既有 Twins.ets 时
+   须跑静态 FP 自检（跨孪生常量组合是合并式孪生文件的特有风险面）。
+2. **tools/sync_pages.py**：页面注册单源门禁（feat_api ApiRegistry / feat_vuln Index cat- ↔
+   main_pages.json 双向一致 + allowlist 壳页），`--fix` 自动补注册；替代 AGENTS checklist
+   ②③ 的人工同步。自测：摘除一条注册即 FAIL、--fix 恢复、复原 OK。
+3. **gen_wide_stress.py**：WideFormsLab.ts 头部加"同目录 WideNs*.ts/WideFormsData.ts 均为
+   生成物"索引说明并重生（WideNs 字节不变，仅 +1 行）——目录级自解释。
+- **门禁**：check_manifest 120 一致、sync_pages OK、静态 FP 零残留、4 变体构建 OK、
+  指令覆盖维持 188/268、模拟器 bench24 定向验证 14/14（7 个迁移 001S + 各页漏洞案例回归；
+  STOR-001S asset 201 为基线已知 ENV）、lang-runtime `neww=1 callr=9 rest=2` 证明 WideNs
+  重生后运行正常、hilog 无 JS Error。

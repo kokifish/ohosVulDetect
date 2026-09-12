@@ -39,8 +39,14 @@ def gen_ns_modules(outdir: pathlib.Path, ns_n: int) -> None:
         (outdir / f"WideNs{i}.ts").write_text(f"{HEADER}\nexport const v: number = {i + 1};\n")
 
 
+LAB_HEADER = (
+    "// 本文件由 tools/gen_wide_stress.py 生成，勿手改。\n"
+    f"// 同目录 WideNs0..127.ts（star-import 微模块群）与 WideFormsData.ts 亦为该生成器产物，勿手改/勿删。"
+)
+
+
 def gen(out: pathlib.Path, count: int, imports_n: int, lazy_n: int, ns_n: int) -> None:
-    lines = [HEADER]
+    lines = [LAB_HEADER]
     lines.append(f"import {{ {', '.join(f'w{i}' for i in range(imports_n))} }} from './WideFormsData';")
     # import lazy 绑定：普通（非 @Sendable）函数读取即发射 callruntime.ldlazymodulevar（索引 >127 部分为 wide）。
     lines.append(f"import lazy {{ {', '.join(f'lz{i}' for i in range(lazy_n))} }} from './WideFormsData';")

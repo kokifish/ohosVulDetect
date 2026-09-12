@@ -5,7 +5,7 @@ import { ovdAuth006 } from '../vulns/auth/OVD-AUTH-006';
 import { ovdAuth002S, ovdAuth003S, ovdAuth004S, ovdAuth005S, ovdAuth006S } from '../vulns/auth/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdAuth001 } from '../vulns/auth/OVD-AUTH-001';
-import { ovdAuth001S } from '../vulns/auth/OVD-AUTH-001S';
+import { ovdAuth001S } from '../vulns/auth/Twins';
 import { ovdAuth002 } from '../vulns/auth/OVD-AUTH-002';
 import { ovdAuth003 } from '../vulns/auth/OVD-AUTH-003';
 

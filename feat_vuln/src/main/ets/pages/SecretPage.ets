@@ -2,7 +2,7 @@ import { Case, DemoScaffold } from 'lib_common';
 import { ovdSecret002S, ovdSecret003S, ovdSecret004S, ovdSecret005S } from '../vulns/secret/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdSecret001 } from '../vulns/secret/OVD-SECRET-001';
-import { ovdSecret001S } from '../vulns/secret/OVD-SECRET-001S';
+import { ovdSecret001S } from '../vulns/secret/Twins';
 import { ovdSecret002 } from '../vulns/secret/OVD-SECRET-002';
 import { ovdSecret003 } from '../vulns/secret/OVD-SECRET-003';
 import { ovdSecret004 } from '../vulns/secret/OVD-SECRET-004';

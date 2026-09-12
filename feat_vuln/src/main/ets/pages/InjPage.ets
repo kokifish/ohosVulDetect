@@ -3,7 +3,7 @@ import { ovdInj002S, ovdInj003S, ovdInj004S } from '../vulns/inj/Twins';
 import { common } from '@kit.AbilityKit';
 import { BenchDb } from '../db/BenchDb';
 import { ovdInj001 } from '../vulns/inj/OVD-INJ-001';
-import { ovdInj001S } from '../vulns/inj/OVD-INJ-001S';
+import { ovdInj001S } from '../vulns/inj/Twins';
 import { ovdInj002 } from '../vulns/inj/OVD-INJ-002';
 import { ovdInj003 } from '../vulns/inj/OVD-INJ-003';
 import { ovdInj004 } from '../vulns/inj/OVD-INJ-004';

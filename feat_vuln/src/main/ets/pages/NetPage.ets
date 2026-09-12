@@ -2,7 +2,7 @@ import { Case, DemoScaffold } from 'lib_common';
 import { ovdNet002S, ovdNet003S, ovdNet004S, ovdNet005S } from '../vulns/net/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdNet001 } from '../vulns/net/OVD-NET-001';
-import { ovdNet001S } from '../vulns/net/OVD-NET-001S';
+import { ovdNet001S } from '../vulns/net/Twins';
 import { ovdNet002 } from '../vulns/net/OVD-NET-002';
 import { ovdNet004Usage } from '../vulns/net/OVD-NET-004';
 import { ovdNet005 } from '../vulns/net/OVD-NET-005';

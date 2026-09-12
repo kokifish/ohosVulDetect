@@ -50,11 +50,11 @@
     "pages/lang/SugarsDemo",
     "pages/ui/RelativeDemo",
     "pages/ui/RichTextDemo",
-    "pages/ui/ImageDemo",
     "pages/ui/ArkUiLibDemo",
     "pages/ui/SecurityDemo",
     "pages/ui/DialogsDemo",
     "pages/ui/OffscreenDemo",
-    "pages/api/UserAuthDemo"
+    "pages/api/UserAuthDemo",
+    "pages/ui/ImageDemo"
   ]
 }

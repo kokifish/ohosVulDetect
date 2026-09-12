@@ -3,6 +3,16 @@ import { relationalStore } from '@kit.ArkData';
 import { common } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 
+// SAFE: OVD-INJ-001S 对照实现：RdbPredicates 参数绑定（CWE-89 加固）
+
+export async function ovdInj001S(store: relationalStore.RdbStore, userName: string): Promise<string> {
+  const pred = new relationalStore.RdbPredicates('users').equalTo('name', userName);
+  const rs: relationalStore.ResultSet = await store.query(pred, ['name', 'password']);
+  const n: number = rs.rowCount;
+  rs.close();
+  return `predicates query rows=${n}`;
+}
+
 // SAFE: OVD-INJ-002S 参数化谓词删除，杜绝 SQL 拼接（CWE-89 加固）
 export async function ovdInj002S(ctx: common.Context, target: string): Promise<string> {
   const cfg: relationalStore.StoreConfig = { name: 'safe_inj.db', securityLevel: relationalStore.SecurityLevel.S4 };

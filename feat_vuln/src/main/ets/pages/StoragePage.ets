@@ -2,7 +2,7 @@ import { Case, DemoScaffold } from 'lib_common';
 import { ovdBack001S, ovdStor002S, ovdStor003S, ovdStor004S } from '../vulns/storage/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdStor001 } from '../vulns/storage/OVD-STOR-001';
-import { ovdStor001S } from '../vulns/storage/OVD-STOR-001S';
+import { ovdStor001S } from '../vulns/storage/Twins';
 import { ovdStor002 } from '../vulns/storage/OVD-STOR-002';
 import { ovdStor004 } from '../vulns/storage/OVD-STOR-004';
 
