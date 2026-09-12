@@ -1,4 +1,5 @@
 import { Case, DemoScaffold } from 'lib_common';
+import { ovdNative001S, ovdNative002S } from '../vulns/native/Twins';
 import { common } from '@kit.AbilityKit';
 import { runAbcRawfile } from 'libentry.so';
 import { ovdNative001 } from '../vulns/native/OVD-NATIVE-001';
@@ -19,7 +20,9 @@ struct NativePage {
           new Case('rawfile abc', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const v = runAbcRawfile('feat_vuln/resources/rawfile/bench_script.abc');
             return `napi_run_script_path -> ${v}`;
-          })
+          }),
+          new Case('001S runtime-key', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdNative001S('bench', 'kms-runtime-key')),
+          new Case('002S bounded', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdNative002S('abcdef', 4))
         ]
       })
 

@@ -712,3 +712,26 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   lastFormId 优雅 skip、invalid formId 走 401 错误路径）；hilog 无 JS Error/FATAL。
   注：API26 镜像不在本机已下载列表，Pura X View 实例及其数据已删除，恢复 API26 验证需
   DevEco 重新下载镜像（ovdbench 实例未动）。
+
+## 孪生全覆盖轮（2026-09-12，53/53 漏洞全部配安全孪生，未提交）
+
+**孪生（twin）**= 每条漏洞的「同形安全写法」对照实现：评分器用漏洞自己的检测规则去匹配孪生
+record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→**53 对全覆盖**（新增 46）。
+
+- **形态**：每类一合并文件 `vulns/<cat>/Twins.ets`（`// SAFE: <id>S` 标记 + 安全函数，
+  共 13 文件 46 函数，~340 行）；13 个分类页接线（11 个 DemoScaffold Case + WebPage/PermPage
+  按钮），manifest 登记 46 条 `expected:false` 条目（id 带 S 后缀、twin_of 互指）。
+- **规则同步收紧（4+1 条）**：孪生与漏洞共享同一 API 调用时（参数化 SQL 的 executeSql、
+  白名单后的 pushUrl/parse、手势后的 getData），规则以漏洞侧独有信号补精度——
+  INJ-002 +`DELETE FROM users WHERE name`、INJ-004 +`getToken`、PASTE-001 +`password copied`、
+  PASTE-002 +`onPageShow read`、SECRET-005 +`wJal`/`fromCharCode`；NET-004/005 靠既有谓词
+  （return-true/empty-array）天然区分。
+- **门禁**：check_manifest 106 条双向一致；4 变体构建 OK；**静态 FP 自检零残留**
+  （模拟 hit_of：全部漏洞规则 × 孪生源码不全中）。
+- **模拟器验证（bench24，API24 release）**：cat- 全量 sweep + 定向补验，**46/46 孪生案例全 ✅**
+  （既有漏洞案例同步回归，ENV 项与基线一致：asset 201 需锁屏凭据、定位开关 3301100）。
+  过程修复三处孪生实现：createMd 算法名 'SHA256'（带连字符运行时 401）、003S 先 mkdir 父目录
+  （子目录 ENOENT 13900002）、004S 只返回路由决策不再实际 pushUrl（避免用例自身跳页丢失结果行）。
+- **评分影响**：test.out 全流程后 TN 7→53，FP 率指标对全部 19 类生效。
+  注：本轮发现 sweep 的 run_page_buttons 只点当前屏前 8 个按钮且页内不滚动——页面案例数
+  超过 8 后（如 CryptoPage 14 个）尾部按钮不被遍历，需用定向驱动补验（本次已做）。

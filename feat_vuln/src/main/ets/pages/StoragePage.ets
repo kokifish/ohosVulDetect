@@ -1,4 +1,5 @@
 import { Case, DemoScaffold } from 'lib_common';
+import { ovdBack001S, ovdStor002S, ovdStor003S, ovdStor004S } from '../vulns/storage/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdStor001 } from '../vulns/storage/OVD-STOR-001';
 import { ovdStor001S } from '../vulns/storage/OVD-STOR-001S';
@@ -24,7 +25,11 @@ struct StoragePage {
           }),
           new Case('004 pii-cache', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             return ovdStor004(ctx);
-          })
+          }),
+          new Case('002S asset', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor002S()),
+          new Case('003S rdb-s4', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor003S(ctx, 'safe_store.db')),
+          new Case('004S redacted', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor004S(ctx)),
+          new Case('BACK-001S policy', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdBack001S())
         ]
       })
 

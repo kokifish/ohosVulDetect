@@ -1,4 +1,5 @@
 import { Case, DemoScaffold } from 'lib_common';
+import { ovdAuth002S, ovdAuth003S } from '../vulns/auth/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdAuth001 } from '../vulns/auth/OVD-AUTH-001';
 import { ovdAuth001S } from '../vulns/auth/OVD-AUTH-001S';
@@ -16,7 +17,9 @@ struct AuthPage {
           new Case('001 hardcoded', (ctx: common.UIAbilityContext, log: (s: string) => void) => `ovdAuth001('admin','Admin@123')=${ovdAuth001('admin', 'Admin@123')}`),
           new Case('001S salted', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth001S('admin', 'Admin@123')),
           new Case('002 license', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth002()),
-          new Case('003 weakToken', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth003())
+          new Case('003 weakToken', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth003()),
+          new Case('002S server-license', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth002S(true, false)),
+          new Case('003S crypto-random', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth003S())
         ]
       })
 

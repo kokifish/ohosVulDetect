@@ -1,4 +1,5 @@
 import { Case, DemoScaffold } from 'lib_common';
+import { ovdCrypto002S, ovdCrypto003S, ovdCrypto004S, ovdCrypto005S, ovdCrypto006S, ovdCrypto007S } from '../vulns/crypto/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdCrypto001 } from '../vulns/crypto/OVD-CRYPTO-001';
 import { ovdCrypto001S } from '../vulns/crypto/OVD-CRYPTO-001S';
@@ -24,7 +25,13 @@ struct CryptoPage {
           new Case('004 fixedIV', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto004()),
           new Case('005 literalKey', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto005()),
           new Case('006 RSA1024', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto006()),
-          new Case('007 fixedNonce', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto007())
+          new Case('007 fixedNonce', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto007()),
+          new Case('002S salted-sha256', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto002S('pw-input', 'per-user-salt')),
+          new Case('003S sha256', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto003S('payload')),
+          new Case('004S gcm-randiv', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto004S()),
+          new Case('005S huks-gen', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto005S()),
+          new Case('006S rsa3072', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto006S()),
+          new Case('007S gcm-randnonce', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto007S())
         ]
       })
 

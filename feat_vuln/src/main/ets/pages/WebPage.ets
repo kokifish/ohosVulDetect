@@ -1,4 +1,5 @@
 import { webview } from '@kit.ArkWeb';
+import { ovdWeb001S, ovdWeb002S, ovdWeb003S, ovdWeb004S, ovdWeb005S, ovdWeb006S } from '../vulns/web/Twins';
 import { common } from '@kit.AbilityKit';
 import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
@@ -48,6 +49,14 @@ struct WebPage {
         })
       }
       .width('100%')
+      Button('SAFE twins 001-006').margin(4).onClick(() => {
+        this.runner.run('web-001S', () => ovdWeb001S());
+        this.runner.run('web-002S', () => ovdWeb002S('getVersion') ? 'bridge allowed: getVersion' : 'refused');
+        this.runner.run('web-003S', () => ovdWeb003S('bench<input>'));
+        this.runner.run('web-004S', () => ovdWeb004S());
+        this.runner.run('web-005S', () => ovdWeb005S('https://bench.example.com/home'));
+        this.runner.run('web-006S', () => ovdWeb006S('https://bench.example.com/help'));
+      })
       // VULN: OVD-WEB-002 桥暴露；OVD-WEB-005 fileAccess(true)；
       // VULN: OVD-NET-003 证书错误直接 confirm 放行
       // VULN: OVD-WEB-004 MixedMode.ALL 允许混合内容
