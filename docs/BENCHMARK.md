@@ -672,3 +672,23 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
 - **门禁**：build.py 4 变体 OK；manifest 60 双向一致；指令覆盖维持 188/268（组件页无新增指令，
   红队载荷伪影 body/end 仍在）；模拟器 API26 release 四页定点验证全过（标记 16/16 命中，
   hilog 仅 SegmentButton 系统资源回退的良性 E 级日志，无 JS Error）。
+
+## 组件覆盖第九轮：安全控件/全局弹窗/离屏绘制（2026-09-12，feat_api ui ×3 页，未提交）
+
+**新增 3 页（ui-security / ui-dialogs / ui-offscreen，52→55 路由页）**，组件覆盖 ~88 → **~99 / 公开 ~156**：
+
+- **ui-security**：PatternLock（图案锁，onPatternComplete/controller.reset）、**SaveButton/PasteButton**
+  （免权限安全控件；注意事件是 `.onClick(SaveButtonCallback)` 而非 onSave/onPaste，签名
+  `(event, result, error?)`；icon/text 走构造 options）。
+- **ui-dialogs**：AlertDialog.show（primary/secondaryButton）、ActionSheet.show（sheets 数组）、
+  DatePickerDialog/TimePickerDialog/TextPickerDialog/**CalendarPickerDialog**（.show 全家；经典静态
+  形态在 API26 仍可编译）。
+- **ui-offscreen**：OffscreenCanvas（离屏 2D 绘制 → transferToImageBitmap → 在屏 Canvas
+  transferFromImageBitmap 上屏）、RichText（HTML 组件，仅 onStart 有事件）、**WithTheme**
+  （自定义主题；CustomTheme.colors 要求 Colors **54 个 token 全部显式**——半数必填，缺一编译报错，
+  脚本化生成；WithTheme/ThemeColorMode 是全局组件**无需 import**，CustomTheme/Colors 从
+  @kit.ArkUI 导入）。
+- **门禁**：build.py 4 变体 OK；manifest 60 一致；指令覆盖维持 188/268；模拟器 API26 release
+  三页定点验证全过（ui-security 5/5、ui-offscreen 5/5 含 offscreen=transferred 与 richtext=start
+  回调、ui-dialogs 实弹窗交互 alert=ok / sheet=a 回调验证）；hilog 无 JS Error。
+

@@ -109,7 +109,7 @@
 
 **候选待实证清单（P1）**：`isfalse/istrue`（布尔强制转换上下文）、`testin`（.ts 内 `in` 运算符）、`ldobjbyindex/stobjbyindex`（索引下标访问的替代发射路径，当前语料均未触发）、`ldfunction`（函数对象取值）、`ldnewtarget`（.ts 内 new.target）、`ldsymbol`（Symbol 作为值传递）、`ldthis/ldthisbyname/ldthisbyvalue/stthisbyname/stthisbyvalue`（顶层/独立 this 语义，arkts 禁 standalone-this，需 .ts 实证）、`supercallarrowrange`、`callruntime.definefieldbyindex / definefieldbyname`、`throw.constassignment / deletesuperproperty / undefinedifhole`（.ts 内 const 重赋值、delete super、TDZ 提前访问）、`callruntime.wideldlazymodulevar`（@Sendable 函数内 lazy import >127 个，扩生成器可达）、`wide.ldobjbyindex/stobjbyindex/stownbyindex`（索引号 >127 的下标访问）、`wide.getmodulenamespace`（import * as >127 个模块）；`wide.ldpatchvar/stpatchvar`（patch 动态更新机制）与 `wide.supercallarrowrange/supercallthisrange`（super 调用参数 >127）疑应用构建不可达，实证后归档。
 
-### 5.2 组件：已覆盖约 88 个 vs 公开约 156 个（2026-09-11 第八轮 +18：RelativeContainer/Blank/ColumnSplit/ScrollBar/ListItemGroup/Span/ImageSpan/ContainerSpan/SymbolGlyph/SymbolSpan/Hyperlink/Image/Chip/ChipGroup/SegmentButton/SubHeader/ToolBar/CounterComponent）
+### 5.2 组件：已覆盖约 99 个 vs 公开约 156 个（2026-09-12 第九轮 +11：PatternLock/SaveButton/PasteButton/AlertDialog/ActionSheet/DatePickerDialog/TimePickerDialog/TextPickerDialog/CalendarPickerDialog/OffscreenCanvas/RichText/WithTheme）
 
 已覆盖集中在 ComponentsDemo（约 53）+ 其他 ui 页（Navigation/NavDestination/Tabs/TabContent/Swiper/Stack/Flex/Canvas/LazyForEach/Repeat/Web）+ 零散（Stepper/StepperItem/RowSplit/NodeContainer/CustomDialog/CheckboxGroup/CalendarPicker/bindSheet/bindMenu/bindContextMenu）。
 

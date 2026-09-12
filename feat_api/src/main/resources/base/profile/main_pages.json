@@ -51,6 +51,9 @@
     "pages/ui/RelativeDemo",
     "pages/ui/RichTextDemo",
     "pages/ui/ImageDemo",
-    "pages/ui/ArkUiLibDemo"
+    "pages/ui/ArkUiLibDemo",
+    "pages/ui/SecurityDemo",
+    "pages/ui/DialogsDemo",
+    "pages/ui/OffscreenDemo"
   ]
 }
