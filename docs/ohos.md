@@ -125,7 +125,7 @@
 9. 主题/占位：WithTheme（API12）、ContentSlot（API12）
 10. 放弃项：[系] 14 个（仅系统应用）、[停] 5 个、[卡]/[元]/[穿] 专用、API26 独占（WithEnv 等，模拟器镜像可试）
 
-### 5.3 Kit：已覆盖约 21 个端侧 Kit vs 端侧共 47 个（2026-09-11 +ImageKit）
+### 5.3 Kit：已覆盖约 22 个端侧 Kit vs 端侧共 47 个（2026-09-12 第十轮 +UserAuthenticationKit）
 
 已覆盖域（feat_api 29 个 demo）：ArkTS、AbilityKit、ArkUI、ArkWeb、ArkData（prefs/rdb/kv）、CoreFileKit、AssetStoreKit、CryptoArchitectureKit、UniversalKeystoreKit、NetworkKit（http/rcp/socket/ws/netConn）、MediaKit、SensorServiceKit、LocationKit、BasicServicesKit（notify/paste/request）、BackgroundTasksKit、PerformanceAnalysisKit（hilog）、LocalizationKit（i18n/intl）；taskpool/sendable/worker 属 ArkTS 并发。
 

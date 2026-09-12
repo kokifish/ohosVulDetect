@@ -54,6 +54,7 @@
     "pages/ui/ArkUiLibDemo",
     "pages/ui/SecurityDemo",
     "pages/ui/DialogsDemo",
-    "pages/ui/OffscreenDemo"
+    "pages/ui/OffscreenDemo",
+    "pages/api/UserAuthDemo"
   ]
 }

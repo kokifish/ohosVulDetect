@@ -692,3 +692,23 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   三页定点验证全过（ui-security 5/5、ui-offscreen 5/5 含 offscreen=transferred 与 richtext=start
   回调、ui-dialogs 实弹窗交互 alert=ok / sheet=a 回调验证）；hilog 无 JS Error。
 
+## Kit 覆盖第十轮：UserAuthenticationKit + FormKit 深化（2026-09-12，未提交）
+
+- **api-userauth（UserAuthDemo，路由页 55→56，Kit ~21→~22）**：userAuth.getAvailableStatus
+  （FINGERPRINT/PIN/FACE × ATL1，错误码路径）、getEnrolledState（credentialCount/credentialDigest——
+  无 isEnrolled 字段）、getUserAuthInstance + on('result', IAuthCallback)（回调是**对象字面量**
+  {onResult(UserAuthResult)} 而非函数；UserAuthResult 仅 result/token，无 remainAttempts），
+  25s 兜底防系统认证 UI 阻塞遍历。feat_api 新增 ohos.permission.ACCESS_BIOMETRIC。
+- **FormKit 深化（FormDemo +3 案例）**：ApiFormAbility.onAddForm 记录 lastFormId 到 AppStorage；
+  setFormNextRefreshTime(lastFormId)、updateForm(lastFormId)（无卡片时优雅 skip 行）、
+  setNextRefresh(invalid) 错误路径。formAgent 在本 SDK 不存在（不可达，记录）。
+- **门禁**：build.py 4 变体 OK；manifest 60 一致。
+- **模拟器验证（2026-09-12 补全，API24 release 包）**：原 Pura X View(API26) 实例在 hdc
+  守护进程重启后失联且无法重启（疑似被杀 VM 占用 Hypervisor 槽位）；经授权删除并以本机
+  已下载镜像重建 **bench24**（`Emulator -create bench24 -deviceType phone -osVersion
+  "HarmonyOS 6.1.1(24)" -instancePath ~/.Huawei/Emulator/deployed -imageRoot ~/Library/Huawei/Sdk`）。
+  定点验证全过：api-userauth 三案例 ✅（fresh 实例无录入凭据，全链路返回 12500010=NOT_ENROLLED，
+  语义正确，含 onResult 回调路径）；api-form 七案例 ✅（getFormsInfo 命中 ApiWidgetCard、
+  lastFormId 优雅 skip、invalid formId 走 401 错误路径）；hilog 无 JS Error/FATAL。
+  注：API26 镜像不在本机已下载列表，Pura X View 实例及其数据已删除，恢复 API26 验证需
+  DevEco 重新下载镜像（ovdbench 实例未动）。

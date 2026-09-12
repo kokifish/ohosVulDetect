@@ -7,6 +7,9 @@ export default class ApiFormAbility extends FormExtensionAbility {
   onAddForm(want: Want): formBindingData.FormBindingData {
     const formId = want.parameters?.[formInfo.FormParam.IDENTITY_KEY];
     const name = want.parameters?.[formInfo.FormParam.NAME_KEY];
+    if (typeof formId === 'string' && formId.length > 0) {
+      AppStorage.setOrCreate('lastFormId', formId);
+    }
     return formBindingData.createFormBindingData({
       title: `vd-card-${formId ?? 'none'}-${name ?? 'noname'}`,
       count: 42

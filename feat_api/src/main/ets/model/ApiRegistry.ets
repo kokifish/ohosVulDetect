@@ -31,6 +31,7 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-dynamic-import', 'import() lazy + HSP', 'pages/api/DynamicImportDemo'),
   new DemoItem('api-i18n', 'i18n/intl/hilog/hiTrace', 'pages/api/I18nDemo'),
   new DemoItem('api-form', 'FormKit card (widgets.abc)', 'pages/api/FormDemo'),
+  new DemoItem('api-userauth', 'UserAuthenticationKit: userAuth status/enrolled/instance', 'pages/api/UserAuthDemo'),
   new DemoItem('api-route-map', 'routerMap -> HSP NavDestination', 'pages/api/RouteMapDemo'),
 ];
 
