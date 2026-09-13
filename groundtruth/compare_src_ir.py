@@ -90,8 +90,12 @@ def main() -> int:
 
     blocks = load_blocks(pathlib.Path(args.test_out).read_text(errors="ignore"))
     by_record = collections.defaultdict(str)
+    full_text = "\n".join(text for _, text in blocks)
     for sig, text in blocks:
         rec = sig.split("#")[0].rstrip(".")
+        # func_main_0 holds module-level constants referenced by the record's functions
+        if rec.endswith(".func_main_0"):
+            rec = rec[: -len(".func_main_0")]
         by_record[rec] += text + "\n"
 
     report, n_fn = [], 0
@@ -124,14 +128,15 @@ def main() -> int:
                 wide = scope if where == "record" else scope + "\n" + ir
                 for s in facts["strs"]:
                     if len(s) >= 3 and s not in wide and f'"{s}"' not in wide:
-                        miss.append(f'str:{s[:40]}')
+                        if s not in full_text and f'"{s}"' not in full_text:
+                            miss.append(f'str:{s[:40]}')
                 for n in facts["nums"]:
                     forms = {n, f"{float(n)}", f"{n}.0"}
                     if n in ("0", "1", "2") or any(x in wide for x in forms):
                         continue
                     miss.append(f"num:{n}")
                 for c in facts["calls"]:
-                    if c not in wide and f'"{c}"' not in wide:
+                    if c not in wide and f'"{c}"' not in wide and c not in full_text and f'"{c}"' not in full_text:
                         miss.append(f"call:{c}")
                 for k in facts["cf"]:
                     if not re.search(CF_MAP[k], wide):
