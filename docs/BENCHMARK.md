@@ -648,7 +648,7 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   残片（op 形如 `",`、`post"`）+ 1 条有界吸收降级；根治需指令行语法级定界（工具链侧已
   立项），不在本轮范围。R6（.catch 区间行）维持已知取舍。
 
-## 组件覆盖第八轮：官方主推组件 + 高级组件库抽样（2026-09-11，feat_api ui ×4 页，未提交）
+## 组件覆盖第八轮：官方主推组件 + 高级组件库抽样（2026-09-11，feat_api ui ×4 页）
 
 **新增 4 页（DemoItem ui-relative / ui-richtext / ui-image / ui-arkuilib，48→52 路由页）**，
 组件覆盖 ~70 → **~88 / 公开 ~156**，Kit ~20 → **~21**（新增 @kit.ImageKit 显式用例）：
@@ -673,7 +673,7 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   红队载荷伪影 body/end 仍在）；模拟器 API26 release 四页定点验证全过（标记 16/16 命中，
   hilog 仅 SegmentButton 系统资源回退的良性 E 级日志，无 JS Error）。
 
-## 组件覆盖第九轮：安全控件/全局弹窗/离屏绘制（2026-09-12，feat_api ui ×3 页，未提交）
+## 组件覆盖第九轮：安全控件/全局弹窗/离屏绘制（2026-09-12，feat_api ui ×3 页）
 
 **新增 3 页（ui-security / ui-dialogs / ui-offscreen，52→55 路由页）**，组件覆盖 ~88 → **~99 / 公开 ~156**：
 
@@ -692,7 +692,7 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   三页定点验证全过（ui-security 5/5、ui-offscreen 5/5 含 offscreen=transferred 与 richtext=start
   回调、ui-dialogs 实弹窗交互 alert=ok / sheet=a 回调验证）；hilog 无 JS Error。
 
-## Kit 覆盖第十轮：UserAuthenticationKit + FormKit 深化（2026-09-12，未提交）
+## Kit 覆盖第十轮：UserAuthenticationKit + FormKit 深化（2026-09-12）
 
 - **api-userauth（UserAuthDemo，路由页 55→56，Kit ~21→~22）**：userAuth.getAvailableStatus
   （FINGERPRINT/PIN/FACE × ATL1，错误码路径）、getEnrolledState（credentialCount/credentialDigest——
@@ -713,7 +713,7 @@ abc 里的方法名本体（`.function any #*#<键>(...)`，零转义打印）�
   注：API26 镜像不在本机已下载列表，Pura X View 实例及其数据已删除，恢复 API26 验证需
   DevEco 重新下载镜像（ovdbench 实例未动）。
 
-## 孪生全覆盖轮（2026-09-12，53/53 漏洞全部配安全孪生，未提交）
+## 孪生全覆盖轮（2026-09-12，53/53 漏洞全部配安全孪生）
 
 **孪生（twin）**= 每条漏洞的「同形安全写法」对照实现：评分器用漏洞自己的检测规则去匹配孪生
 record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→**53 对全覆盖**（新增 46）。
@@ -736,7 +736,7 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
   注：本轮发现 sweep 的 run_page_buttons 只点当前屏前 8 个按钮且页内不滚动——页面案例数
   超过 8 后（如 CryptoPage 14 个）尾部按钮不被遍历，需用定向驱动补验（本次已做）。
 
-## 鸿蒙特色漏洞族（2026-09-12，+7 对 vuln/twin，120 条，未提交）
+## 鸿蒙特色漏洞族（2026-09-12，+7 对 vuln/twin，120 条）
 
 **新攻击面族**（userAuth / FormKit 卡片 / JS 桥来源域 / 剪贴板跨设备，均为鸿蒙独有形态）：
 - **OVD-AUTH-004/005/006 + 004S/005S/006S**：userAuth 结果仅客户端置信（不验 token）、支付级
@@ -755,7 +755,7 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
   模拟器 bench24 定向验证 7 对 14 案例 ✅（含 cat-form 新页）、hilog 无 JS Error。
   漏洞总数 53→60、孪生 53→60；检测规则沿用 string-literal / api-call+constant 双形态。
 
-## 简化轮：孪生统一/注册单源/生成物自解释（2026-09-13，未提交）
+## 简化轮：孪生统一/注册单源/生成物自解释（2026-09-13）
 
 1. **孪生文件统一**：旧 7 个 per-ID 文件（OVD-*-001S.ets）并入各类 `Twins.ets`，删 7 文件、
    7 处页面 import 改向、manifest source 同步——孪生组织单一范式。**合并引入的真实 FP 教训**：
@@ -772,7 +772,7 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
   STOR-001S asset 201 为基线已知 ENV）、lang-runtime `neww=1 callr=9 rest=2` 证明 WideNs
   重生后运行正常、hilog 无 JS Error。
 
-## 特殊字符串缺口轮：空串/NUL/C0 全扫 + 跨版本编译测试（2026-09-13，166 用例，未提交）
+## 特殊字符串缺口轮：空串/NUL/C0 全扫 + 跨版本编译测试（2026-09-13，166 用例）
 
 **缺口审计**（对既有 135 用例）：空串仅值形态 1 条；NUL 完全缺失；C0 控制字符 32 码点仅
 覆盖 5 个；动态空键/对象空键/空模板块缺失。
@@ -793,7 +793,7 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
 - **门禁**：4 变体构建 OK、manifest 一致、模拟器 api24 冒烟新基线
   `strstress=n=356 len=14972 acc=61828065`、hilog 无 JS Error。
 
-## 指令续行伪装轮：inst-mimic 组（2026-09-13，186 用例，未提交）
+## 指令续行伪装轮：inst-mimic 组（2026-09-13，186 用例）
 
 **场景**：`lda.str` 操作数因字符串含 `\n` 跨行，续行以 `\t` 开头即与真实指令行完全同形——
 正是方法名注入轮"孤儿引号 + 指令误读"机制的字符串版。新增 **inst-mimic 组 20 用例**
@@ -814,7 +814,7 @@ mov v0, a0（参数名同形）、returnundefined、ldexternalmodulevar、tryldg
 - **门禁**：manifest 一致、模拟器 api24 新基线 `strstress=n=396 len=16332 acc=62028365`、
   hilog 无 JS Error。
 
-## tab 前缀续行轮：A1 缺陷复现 + 操作数面 round-trip 门禁（2026-09-14，200 用例，未提交）
+## tab 前缀续行轮：A1 缺陷复现 + 操作数面 round-trip 门禁（2026-09-14，200 用例）
 
 **触发**：逆向工具链侧手工最小用例（`Flow invariant is violated:\n\t\tEmission from another
 coroutine is detected.\n`——第三方库多行报错文案形态）解析为 `lda.str ''`。实证发现本项目
@@ -862,3 +862,49 @@ method-spoof 6、section-spoof 4、combo 3、operand-branch 2、unicode 2、fall
 
 **构建/门禁**：4 变体构建 OK、manifest 一致、指令覆盖 188/268 无回退；sweep strstress
 基线因用例数变化待重跑更新（n 由 396 升至约 428）。
+
+## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
+
+**1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：
+读 SDK `component_config.json`（137 组件）、`@kit.*.d.ts` 全集（openharmony 47 + hms 56 并集
+= 103，修正 ohos.md §7.3 "47" 的口径——那只是 openharmony 目录）、顶层 `@ohos.*.d.ts`（447），
+与语料 import/用法对比。组件识别用 `Name(` 调用形式（ArkTS 声明式语法无 `<>` 包裹）+ `new Name` /
+`Name.show(`（对话框全局方法族）/`@Name`（@CustomDialog）。引用了 SDK 不存在的模块即 exit 1（漂移门禁）。
+实测：**组件 85/137、Kit 25/103、@ohos 2/447（语料走 @kit 聚合 import）**；抓到两处人工清单漂移
+（§5.2 快照仍记 Stack 已覆盖——实测 Stack 已不在语料；RelativeContainer 第八轮已覆盖——快照仍列缺口），
+已在 ohos.md §5.2 加「脚本对账为准」注记。另：注册表各 cat- 页描述数字（如 "6+1S"）是孪生轮之前的
+旧口径，仅文案漂移不影响 sweep（按 id 前缀发现），待后续轮顺手修正。
+
+**2. `tools/emulator_sweep.py` 重构（按钮全量遍历 + 三类实测缺陷修复）**：
+旧版 `max_btn=8` 只点前 8 个按钮（孪生轮已记录），且日志区（layoutWeight 滚动区）首屏外的
+✅/❌ 行采不到。本轮实测另发现两类注入缺陷并修复：
+- **UI 忙时注入点击/滑动被静默吞掉**：重电池 handler + GC 尾部可达 ~20s，期间 touch/swipe 全丢
+  （实测定位：单独点必中、连点必丢、空闲 20s 后恢复；冷启动模块加载期连列表滑动都丢——曾致
+  整轮 0 页遍历）。修复：发现循环等列表就绪信号（页头文本）+ 重启复核 ×3；api/cat 页在
+  「行数 < 按钮数」时触发逐按钮验证式补击（点击后轮询页面文本签名确认生效，间隔 3/10/20s 递增）。
+- **用例内真实导航跳页**（漏洞语义本身，如 INJ-004 无白名单 pushUrl）：多轮点击会跟着逛到别的页。
+  修复：进页记录锚文本（页标题），点击后仍在则继续、跳走则自动重回本页续点剩余按钮。
+- 结果行合并：集合去重 + settle 轮询（连续 2 次无新行）+ 日志区翻屏。
+用法不变，第二参数可覆盖遍历预算秒数。
+
+**3. lang 7 页 `run selfcheck` 按钮（`Selfcheck.ts` + 各页确定性基线断言）**：
+lang/ui 页此前 sweep 零信号、靠人工定点。现每页一个 selfcheck：重跑页面电池并整行比对
+`key=value` 基线（各轮模拟器定点验证值），seed 类行（lexwide/reads/chain/strstress）只校验前缀
+形态；全过输出 `✅ selfcheck <page> pass=N/N`，否则 `❌ ... missing: <行>`——sweep 自动采集。
+要点与坑：**RuntimeDemo 的 selfcheck 必须置首按钮**——其他电池跑过后堆内大对象垃圾会使全电池
+重跑静默失败（实测 120s 无输出、无 JS crash 日志），干净堆上 5s 出行；sweep 侧对 lang 页也在
+进页时优先验证式点击 selfcheck。selfcheck 首轮即抓出 3 处基线推导错值（closure 的
+`loop=[1,11,21]`——闭包捕获 i=0..2；callforms 的 `super=d>go:derived`——漏 d> 前缀；runtime 的
+`global=42`——与文档既有基线一致），修正后全部通过，正是该门禁的价值。
+
+**4. 实测（bench24，api24 release，本机 atm 无 perm 子命令、跨安装授权项按安装周期失效）**：
+- **lang 7/7 全绿**：closure 6/6、types 13/13、generator 7/7、ops 2/2、callforms 7/7、
+  runtime 24/24、sugars 10/10；
+- **feat_vuln 14 页首次全案例采集**（此前 8 按钮上限 + 漏采）：cat-crypto **14/14**、cat-secret 10/10、
+  cat-net 9/9、cat-storage 8/8、cat-web 10、cat-auth 13、cat-form 4、cat-log 4、cat-debug 4、
+  cat-conf 4、**cat-ipc 7✅+ev 行（此前整页 0 行）**、**cat-native 5/5（此前不在遍历范围）**、
+  cat-inj 7/8（`004 json-nav` 跳页语义致本行随重进丢失，属已知取舍；并采到 1 条串页残留
+  web-007S 变体行）、cat-perm 8✅2❌。合计约 **106✅ / 3❌**：asset 201（模拟器无锁屏凭据，ENV）、
+  PRIV-002 3301100（定位开关，ENV）、PRIV-001 2300028 timeout（公网 http 抖动，与 ws send 同类，
+  复测可恢复）。
+- 门禁：4 变体构建 OK、manifest 120 双向一致、sync_pages OK、指令覆盖 188/268 无回退。未提交。
