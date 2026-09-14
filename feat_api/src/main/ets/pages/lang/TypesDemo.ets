@@ -1,5 +1,7 @@
 // 类型系统压力页：泛型类/函数、接口多态分发、union+typeof narrowing、枚举位运算、
 // Record 索引、static 成员、自定义 Error + try/catch/finally、可选链/空值合并。
+import { selfcheckLine } from './Selfcheck';
+
 interface BenchShape {
   name(): string;
   area(): number;
@@ -166,6 +168,61 @@ struct TypesDemo {
             }
           }
           this.lines.push(`labeled hits=${hits}`);
+        })
+      Button('run selfcheck')
+        .onClick(() => {
+          // 两电池的确定性基线（docs/BENCHMARK.md 定点验证值），重新执行并整行比对。
+          const actual: string[] = [];
+          const shapes: BenchShape[] = [new BenchCircle(2), new Square(3)];
+          const areas = shapes.map((s: BenchShape): string => `${s.name()}=${s.area().toFixed(1)}`);
+          actual.push(`shapes=[${areas.join(',')}]`);
+          const box = new Box<number>();
+          box.put(1);
+          box.put(2);
+          actual.push(`box take=${box.take()} size=${box.size} pick=${pick<string>('a', 'b', false)}`);
+          actual.push(Registry.describe('bench') + ' ' + Registry.describe(7));
+          actual.push(`flags rw=${PermFlags.READ | PermFlags.WRITE} hasExec=${((PermFlags.READ | PermFlags.WRITE) & PermFlags.EXEC) !== 0}`);
+          const scores: Record<string, number> = { 'alice': 90 };
+          scores['bob'] = 85;
+          actual.push(`scores alice+bob=${scores['alice'] + scores['bob']}`);
+          try {
+            throw new BenchError('bench-throw', 42);
+          } catch (e) {
+            actual.push(`caught code=${(e as BenchError).code} msg=${(e as BenchError).message}`);
+          } finally {
+            actual.push('finally ran');
+          }
+          const recX: Record<string, Object> = {};
+          actual.push(`opt=${(recX['x'] as string | undefined)?.length ?? 'none'}`);
+          const ab = new ArrayBuffer(8);
+          const dv = new DataView(ab);
+          dv.setFloat64(0, 3.14159, true);
+          actual.push(`dv f64=${dv.getFloat64(0, true).toFixed(5)} last-byte=${dv.getUint8(7)}`);
+          const big: bigint = 9007199254740993n;
+          actual.push(`bigint+1=${big + 1n} safe=${Number.MAX_SAFE_INTEGER}`);
+          const m = /ovd-(\d+)/.exec('id ovd-42 end');
+          actual.push(`regexp g1=${m?.[1]} idx=${m?.index}`);
+          const c = new Tally();
+          c.bump = 1;
+          c.bump = 2;
+          actual.push(`accessor value=${c.value}`);
+          let hits = 0;
+          outer: for (let i = 0; i < 3; i += 1) {
+            for (let j = 0; j < 3; j += 1) {
+              if (i + j > 2) {
+                continue outer;
+              }
+              hits += 1;
+            }
+          }
+          actual.push(`labeled hits=${hits}`);
+          this.lines.push(selfcheckLine('types',
+            ['shapes=[circle=12.6,square=9.0]', 'box take=2 size=1 pick=b', 'str:bench num:7',
+              'flags rw=3 hasExec=false', 'scores alice+bob=175', 'caught code=42 msg=bench-throw',
+              'finally ran', 'opt=none', 'dv f64=3.14159 last-byte=64',
+              'bigint+1=9007199254740994 safe=9007199254740991', 'regexp g1=42 idx=3',
+              'accessor value=2', 'labeled hits=6'],
+            actual, []));
         })
       Scroll() {
         Column({ space: 2 }) {

@@ -5,6 +5,7 @@
 // 此处保留正则语法作语料（见 docs/BENCHMARK.md）。
 import * as lc from 'lib_common';
 import { tsSpreadCall, tsRestLen, tsArraySpread, tsNewSpread, tsDynamicMethod, tsDestruct, tsSymbolKey } from './TsFeatures';
+import { selfcheckLine } from './Selfcheck';
 
 class CfBase {
   tag: string = 'base';
@@ -59,6 +60,28 @@ struct CallFormsDemo {
           this.lines.push(`spread=${tsSpreadCall()} rest=${tsRestLen(1, 2, 3)} arrspread=${tsArraySpread()}`);
           this.lines.push(`newspread=${tsNewSpread()} dynfn=${typeof tsDynamicMethod}`);
           this.lines.push(`destruct=${tsDestruct()} symbol=${tsSymbolKey()}`);
+        })
+      Button('run selfcheck')
+        .onClick(() => {
+          const actual: string[] = [];
+          const d = new CfDerived();
+          actual.push(`super=${d.greet('go:')} prop=${d.superProp()}`);
+          actual.push(`ns=${lc.Case !== undefined}`);
+          const re = /b+([0-9])/g;
+          const hit = re.exec('abbb7c');
+          actual.push(`re=${hit ? hit[1] : 'none'} ${'a1b2'.replace(/[0-9]/g, '#')}`);
+          const o: Record<string, number> = {};
+          const k: string = 'dyn-key';
+          o[k] = 41;
+          actual.push(`dynkey=${o['dyn-key']}`);
+          actual.push(`spread=${tsSpreadCall()} rest=${tsRestLen(1, 2, 3)} arrspread=${tsArraySpread()}`);
+          actual.push(`newspread=${tsNewSpread()} dynfn=${typeof tsDynamicMethod}`);
+          actual.push(`destruct=${tsDestruct()} symbol=${tsSymbolKey()}`);
+          this.lines.push(selfcheckLine('callforms',
+            ['super=d>go:derived prop=via-super', 'ns=true', 're=7 a#b#', 'dynkey=41',
+              'spread=21 rest=6 arrspread=6015', 'newspread=34 dynfn=function',
+              'destruct=43 symbol=symbol:7'],
+            actual, []));
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }

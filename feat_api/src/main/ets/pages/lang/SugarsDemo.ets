@@ -5,6 +5,7 @@ import {
   sugarAccessors, sugarPrivLogic, sugarFlow, sugarNumbers, sugarStaticSuper,
   sugarForAwait, sugarFunctional, sugarDestruct, sugarNewTarget, sugarNumericKeys
 } from './Sugars';
+import { selfcheckLine } from './Selfcheck';
 
 @Entry
 @Component
@@ -30,6 +31,28 @@ struct SugarsDemo {
       Button('run for-await sugar')
         .onClick(() => {
           sugarForAwait().then((r: string) => { this.lines.push(r); });
+        })
+      Button('run selfcheck')
+        .onClick(() => {
+          const actual: string[] = [];
+          actual.push(sugarAccessors());
+          actual.push(sugarPrivLogic([1, undefined, 2]));
+          actual.push(sugarFlow(4));
+          actual.push(sugarNumbers());
+          actual.push(sugarStaticSuper());
+          actual.push(sugarFunctional({ 'a': 1, 'b': 2 }));
+          actual.push(sugarDestruct());
+          actual.push(sugarNewTarget());
+          actual.push(`nk=${sugarNumericKeys()}`);
+          sugarForAwait().then((r: string): void => {
+            actual.push(r);
+            this.lines.push(selfcheckLine('sugars',
+              ['acc=8/4/11', 'priv=true1 f=true nz=2 oe=2', 'sw=2 do=3 lab=1,2 ter=mid comma=1',
+                'big=1 sep=1000000 exp=1000 pow=1024 rawlen=11', 'stat=3 sup=6',
+                'ent=2 back=1 arr=4,6 flat=6 at=30', 'c=7 d=8 rest=2 swap=21 obj=3', 'nt=1',
+                'nk=20', 'fa=3'],
+              actual, []));
+          });
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }

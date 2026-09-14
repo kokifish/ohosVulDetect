@@ -3,6 +3,8 @@
 // 目标指令：exp/mod2/shl2/shr2(>>>)/ashr2(>>)/xor2/not/inc/dec/ldnan/ldinfinity/lesseq。
 // 注：比较跳转在本工具链一律拆成 eq/ne + jeqz/jnez，jeq*/jstricteq* 跳转变体实测不可达
 // （见 docs/BENCHMARK.md）；`>>` 实测对应 ashr2、`>>>` 对应 shr2。
+import { selfcheckLine } from './Selfcheck';
+
 function opBattery(x: number): string {
   const a = x % 9;
   const parts: string[] = [
@@ -70,6 +72,15 @@ struct OpsDemo {
           const x = Math.floor(Date.now() / 1000);
           this.lines.push(opBattery(x));
           this.lines.push(cmpBattery(x));
+        })
+      Button('run selfcheck')
+        .onClick(() => {
+          // 电池输入取运行时钟，行值不定；selfcheck 用固定输入 12345（a=12345%9=6）钉死基线。
+          const actual: string[] = [opBattery(12345), cmpBattery(12345)];
+          this.lines.push(selfcheckLine('ops',
+            ['pow=36 mod=1 shl=24 ashr=3 shr=2147483645 xor=5 not=-7 neg=-6 incdec=6 nan=true,inf=true',
+              'ne4,eqnull,eqund,nflag,ge=true,le=false'],
+            actual, []));
         })
       ForEach(this.lines, (l: string) => Text(l).fontSize(14), (l: string) => l)
     }

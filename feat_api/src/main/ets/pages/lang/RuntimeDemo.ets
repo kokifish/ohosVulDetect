@@ -11,6 +11,7 @@ import { localReadWide, externalReadWide, newWide, callRangeWide, callRangeDirec
 import { stownWide } from './WideStoreLab';
 import { wideNameCall } from './WideNameCall';
 import { stringStressChecksum } from './StringStressLab';
+import { selfcheckLine } from './Selfcheck';
 
 @Entry
 @Component
@@ -20,6 +21,48 @@ struct RuntimeDemo {
   build() {
     Column({ space: 10 }) {
       Text('runtime helpers / wide forms').fontSize(20)
+      // selfcheck 置首：全电池重跑必须在干净堆上执行（其他电池跑过后大对象垃圾
+      // 会使本处理器静默失败，实测 120s 无输出）；sweep 按布局序点击，先自检后跑电池。
+      Button('run selfcheck')
+        .onClick(() => {
+          // 全电池重跑 + 基线断言（基线=docs/BENCHMARK.md 各轮模拟器定点验证值）。
+          // seed 类行（lexwide/reads/chain/strstress）只校验前缀形态，不钉死数值。
+          const actual: string[] = [];
+          actual.push(tsPrivate());
+          actual.push(tsObjectHelpers());
+          actual.push(tsSuperIndex());
+          actual.push(`callrange=${tsCallRange()}`);
+          actual.push(tsTemplateAndMisc('41'));
+          actual.push(tsComputedClassKey('dynKey'));
+          actual.push(tsNameSet());
+          actual.push(tsGlobalRef());
+          actual.push(tsMemberTagCalls());
+          actual.push(tsConstAssign());
+          actual.push(tsArrowSuper());
+          actual.push(`dyn=${tsDynamicMethod()}`);
+          actual.push(`lit=${tsLiteralIndexCall()}`);
+          actual.push(`rec=${tsRecordIndexCall('greet')}`);
+          actual.push(`opt=${tsOptChainCall('greet')}`);
+          const local = localReadWide();
+          const ext = externalReadWide();
+          actual.push(`neww=${newWide()} callr=${callRangeWide()} rest=${restWideCall()}`);
+          actual.push(`direct=${callRangeDirect()}`);
+          actual.push(`reads=${local % 97}/${ext % 97} excl=${excludedWide({} as ESObject)}`);
+          actual.push(`superw=${superWide()} lazyw=${lazyReadWide() % 97} nsw=${nsWide() % 97}`);
+          actual.push(`stw=${stownWide()}`);
+          actual.push(`wcn=${wideNameCall()}`);
+          actual.push(`lexwide=${lexWideStress(7)}`);
+          actual.push(`chain=${recursionChainStress(7, 1)}`);
+          actual.push(`strstress=${stringStressChecksum()}`);
+          this.lines.push(selfcheckLine('runtime',
+            ['priv=15 same=true', 'computed=3 spread=3 rest=1 del=1', 'superidx=none own=7',
+              'callrange=10', 'tonumber=41 tpl=a[41]b proto=1 deany=9', 'function:true',
+              'nameset=1', 'global=42 after=42', 'tag=3/6', 'const=const', 'asup=8 asupw=131',
+              'dyn=hi-dyn', 'lit=hi-lit', 'rec=hi-rec', 'opt=hi-opt',
+              'neww=1 callr=9 rest=2', 'direct=NaN', 'superw=1 lazyw=76 nsw=76',
+              'stw=65560', 'wcn=131'],
+            actual, ['reads=', 'lexwide=', 'chain=', 'strstress=n=']));
+        })
       Button('run runtime-helper battery')
         .onClick(() => {
           this.lines = [];
