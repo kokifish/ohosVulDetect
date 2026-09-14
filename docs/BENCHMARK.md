@@ -771,3 +771,24 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
   指令覆盖维持 188/268、模拟器 bench24 定向验证 14/14（7 个迁移 001S + 各页漏洞案例回归；
   STOR-001S asset 201 为基线已知 ENV）、lang-runtime `neww=1 callr=9 rest=2` 证明 WideNs
   重生后运行正常、hilog 无 JS Error。
+
+## 特殊字符串缺口轮：空串/NUL/C0 全扫 + 跨版本编译测试（2026-09-13，166 用例，未提交）
+
+**缺口审计**（对既有 135 用例）：空串仅值形态 1 条；NUL 完全缺失；C0 控制字符 32 码点仅
+覆盖 5 个；动态空键/对象空键/空模板块缺失。
+
+- **+31 用例**（135→166）：`a\x00b`（NUL，MUTF-8 C0 80 裸字节）；**c0-sweep 组**（\x02-\x0c、
+  \x0e-\x1f 逐码点 29 条，池+操作数双面）；**EmptyShapes 函数**（动态空键 `o['']` 读写、
+  空 key 对象字面量、空块模板 cooked/raw）。
+- **跨版本编译测试（api26/api24 × release/debug 四变体）**：空串/C0/NUL 指令形态
+  **四变体完全一致**（ArkGuard 混淆不改字符串形态）——`lda.str ""` ×526、`string:""` literal
+  空键 ×48、池空条目、C0 裸字节行 ×66。
+- **编译器行为归因（新结论）**：es2abc 对动态键（含空键）恒走 `lda.str ""` +
+  **stobjbyvalue/ldobjbyvalue**（键为运行时值）；`stobjbyname/ldobjbyname` 的键恒为静态
+  字面量形态 → **"stobjbyname 空串操作数"源码级不可达**，空键操作数面由 byvalue+池空串承载。
+- **最新工具链 166 用例逐条往返（/tmp 工具，子进程超时防挂死）**：162 OK / 0 挂死 / 0 崩溃。
+  实锤两处静默丢失（真 bug，报逆向工具链仓库）：① **MUTF-8 NUL（C0 80）字节被丢弃**
+  （`a\x00b`→池 `ab`）；② **无法配对的孤立 CESU-8 代理字节被丢弃**（`x\ud800y`→`xy`）。
+  配对代理重组行为正确（`\ud83d\ude00pair`→`😀pair`，第 4 个 MISSING 属断言口径非 bug）。
+- **门禁**：4 变体构建 OK、manifest 一致、模拟器 api24 冒烟新基线
+  `strstress=n=356 len=14972 acc=61828065`、hilog 无 JS Error。

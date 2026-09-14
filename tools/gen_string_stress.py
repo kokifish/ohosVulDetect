@@ -69,6 +69,7 @@ def build_cases() -> list[tuple[str, str]]:
     add("   ", "basic")
     add("  padded  ", "basic")
     add("]", "basic")
+    add("a\x00b", "basic")   # NUL：MUTF-8 裸字节，全文件非法 UTF-8
     add("]}", "basic")
     add("] ] ]", "basic")
 
@@ -226,6 +227,13 @@ def build_cases() -> list[tuple[str, str]]:
     add('pre\n.function any f(any a0, any a1) {', "operand-branch")
     add('lab\n\tldai 0x1\n\tjnez jump_label_9', "operand-branch")
 
+    # ---- C0 控制字符全扫（\x02-\x0c、\x0e-\x1f 逐码点，池+操作数双面系统化）----
+    for _cp in list(range(0x02, 0x0d)) + list(range(0x0e, 0x20)):
+        add(chr(_cp), "c0-sweep")
+
+    # ---- 空串专项（空键/空模板块，指令操作数面的空串形态由 EmptyShapes 函数承载）----
+    add("", "empty-operand")
+
     # ---- 乱炖组合 ----
     add('{"k":"v"}\n# STRING ====================\n😀tail', "combo")
     add("multi\n[offset:0x1, name_value:x]\r\nevil\u202ex\u202c", "combo")
@@ -314,7 +322,15 @@ def gen(out: pathlib.Path) -> int:
         "  for (const k in o) {",
         "    s += k.length > 0 ? o[k] : '';",
         "  }",
-        "  return s + o[',k'] + o['jump_label_0:'];",
+        "  return s + o[''] + o[',k'] + o['jump_label_0:'];",
+        "}",
+        "",
+        "// 空 key 对象字面量（literal string:\"\" 空键）+ 空块模板（cooked/raw 空串）。",
+        "export function stringStressEmptyShapes(x: number): string {",
+        "  const emptyKey: Record<string, number> = { '': 1, 'a': 2 };",
+        "  const chunked = `pre${x}suf`;",
+        "  const emptyChunks = `${x}`;",
+        "  return `ek=${emptyKey['']} c0=${chunked.length} c1=${emptyChunks.length}`;",
         "}",
         "",
         "// 面①补：throw.undefinedifholewithname（捕获变量洞检查，单字符串操作数形态）。",
