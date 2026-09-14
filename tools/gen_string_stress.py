@@ -227,6 +227,30 @@ def build_cases() -> list[tuple[str, str]]:
     add('pre\n.function any f(any a0, any a1) {', "operand-branch")
     add('lab\n\tldai 0x1\n\tjnez jump_label_9', "operand-branch")
 
+    # ---- 指令续行伪装（lda.str 跨行操作数，续行命中真实指令语法谱系）----
+    # 机理：字符串含 \n 使 lda.str 操作数跨行，续行以 \t 开头即与真指令行同形；
+    # 逐形态覆盖寄存器/立即数/带引号操作数/标签/方法闭括号/literal 元素行/wide 变体。
+    add('x\n\tlda.str "in\\"ner"\ny', "inst-mimic")            # 嵌套引号串
+    add('x\n\tlda.str ""\ny', "inst-mimic")                     # 嵌套空串
+    add('pre\n\tsta v0\n\tldai 0x2a\npost', "inst-mimic")     # 寄存器+立即数
+    add('x\n\tldobjbyname 0x0, "code"\ny', "inst-mimic")        # imm+引号串操作数
+    add('x\n\tstobjbyname 0x1, "a, b"\ny', "inst-mimic")        # 引号内逗号操作数
+    add('x\n\tcallthis1 0x7, v13, v14\ny', "inst-mimic")        # 多寄存器调用
+    add('x\n\tjnez jump_label_3\n\tjmp jump_label_4\ny', "inst-mimic")
+    add('x\njump_label_5:\ny', "inst-mimic")                     # 0 列标签行
+    add('x\n\tthrow.undefinedifholewithname "h"\ny', "inst-mimic")
+    add('x\n\tnewlexenv 0x3\ny', "inst-mimic")
+    add('x\n\tmov v0, a0\ny', "inst-mimic")                     # 寄存器间 mov（参数名 a0 同形）
+    add('x\n\treturnundefined\npost', "inst-mimic")
+    add('x\n\tldexternalmodulevar 0x1\ny', "inst-mimic")
+    add('x\n\ttryldglobalbyname 0x4, "JSON"\ny', "inst-mimic")
+    add('x\n\tcreateobjectwithbuffer 0x6, { 4 [ string:"k", string:"v", ]}\ny', "inst-mimic")
+    add('x\n.catchall:begin, end, target\ny', "inst-mimic")      # 异常区间行
+    add('x\n\twide.ldlexvar 0x80, 0x81\ny', "inst-mimic")       # wide 变体
+    add('x\n\tsuspendgenerator 0x0, v0, v1\ny', "inst-mimic")
+    add('x\n  string:"fake", i32:42, ]}\ny', "inst-mimic")       # literal 元素行（LITERALS 面伪装）
+    add('a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz', "inst-mimic")
+
     # ---- C0 控制字符全扫（\x02-\x0c、\x0e-\x1f 逐码点，池+操作数双面系统化）----
     for _cp in list(range(0x02, 0x0d)) + list(range(0x0e, 0x20)):
         add(chr(_cp), "c0-sweep")

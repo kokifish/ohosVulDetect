@@ -792,3 +792,24 @@ record，命中即记 FP——没有孪生的类别无法测误报。本轮 7→
   配对代理重组行为正确（`\ud83d\ude00pair`→`😀pair`，第 4 个 MISSING 属断言口径非 bug）。
 - **门禁**：4 变体构建 OK、manifest 一致、模拟器 api24 冒烟新基线
   `strstress=n=356 len=14972 acc=61828065`、hilog 无 JS Error。
+
+## 指令续行伪装轮：inst-mimic 组（2026-09-13，186 用例，未提交）
+
+**场景**：`lda.str` 操作数因字符串含 `\n` 跨行，续行以 `\t` 开头即与真实指令行完全同形——
+正是方法名注入轮"孤儿引号 + 指令误读"机制的字符串版。新增 **inst-mimic 组 20 用例**
+（166→186），续行覆盖真实指令语法谱系：嵌套引号/空串 `lda.str`、寄存器+立即数（sta v0 +
+ldai 0x2a）、imm+引号操作数（ldobjbyname/stobjbyname，含引号内逗号）、多寄存器调用
+（callthis1）、跳转对（jnez/jmp）、**0 列标签行**、throw.undefinedifholewithname、newlexenv、
+mov v0, a0（参数名同形）、returnundefined、ldexternalmodulevar、tryldglobalbyname、
+**内联 literal 缓冲行**（createobjectwithbuffer … ]}）、.catchall 区间行、**wide 变体**
+（wide.ldlexvar）、suspendgenerator、**literal 元素行**（string:"fake", i32:42, ]}）、
+以及全流程组合（寄存器流+标签+returnundefined）。
+
+- **跨版本编译测试**：4 变体构建 OK；伪装形态在发布 .dis 全部落位（LITERALS/METHODS 双段，
+  每形态 4-5 处 = if-chain + 数组字面量 + 池）。
+- **最新工具链实测**：186 用例逐条往返 **182 OK / 0 挂死 / 0 崩溃**（20 个伪装续行全过；
+  4 MISSING 为上轮已归档的 NUL/孤立代理丢失，非本轮新增）；方法面 **2545/2545 = 100%**，
+  12 条伪造 .function 行正确甄别——**该工具链版本已正确处理整类续行伪装**，本轮价值转为
+  常驻回归防线（升级/改动后防退化）。
+- **门禁**：manifest 一致、模拟器 api24 新基线 `strstress=n=396 len=16332 acc=62028365`、
+  hilog 无 JS Error。

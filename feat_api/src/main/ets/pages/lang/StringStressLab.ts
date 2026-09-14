@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 166 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 166;
+// 共 186 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 186;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -140,39 +140,59 @@ export function stringStressAt(i: number): string {
   if (i === 130) { return "pre\n.function any n.e.f(any a0) <static> {"; }
   if (i === 131) { return "pre\n.function any f(any a0, any a1) {"; }
   if (i === 132) { return "lab\n\tldai 0x1\n\tjnez jump_label_9"; }
-  if (i === 133) { return "\u0002"; }
-  if (i === 134) { return "\u0003"; }
-  if (i === 135) { return "\u0004"; }
-  if (i === 136) { return "\u0005"; }
-  if (i === 137) { return "\u0006"; }
-  if (i === 138) { return "\u0007"; }
-  if (i === 139) { return "\u0008"; }
-  if (i === 140) { return "\t"; }
-  if (i === 141) { return "\n"; }
-  if (i === 142) { return "\u000b"; }
-  if (i === 143) { return "\u000c"; }
-  if (i === 144) { return "\u000e"; }
-  if (i === 145) { return "\u000f"; }
-  if (i === 146) { return "\u0010"; }
-  if (i === 147) { return "\u0011"; }
-  if (i === 148) { return "\u0012"; }
-  if (i === 149) { return "\u0013"; }
-  if (i === 150) { return "\u0014"; }
-  if (i === 151) { return "\u0015"; }
-  if (i === 152) { return "\u0016"; }
-  if (i === 153) { return "\u0017"; }
-  if (i === 154) { return "\u0018"; }
-  if (i === 155) { return "\u0019"; }
-  if (i === 156) { return "\u001a"; }
-  if (i === 157) { return "\u001b"; }
-  if (i === 158) { return "\u001c"; }
-  if (i === 159) { return "\u001d"; }
-  if (i === 160) { return "\u001e"; }
-  if (i === 161) { return "\u001f"; }
-  if (i === 162) { return ""; }
-  if (i === 163) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 164) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 165) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 133) { return "x\n\tlda.str \"in\\\"ner\"\ny"; }
+  if (i === 134) { return "x\n\tlda.str \"\"\ny"; }
+  if (i === 135) { return "pre\n\tsta v0\n\tldai 0x2a\npost"; }
+  if (i === 136) { return "x\n\tldobjbyname 0x0, \"code\"\ny"; }
+  if (i === 137) { return "x\n\tstobjbyname 0x1, \"a, b\"\ny"; }
+  if (i === 138) { return "x\n\tcallthis1 0x7, v13, v14\ny"; }
+  if (i === 139) { return "x\n\tjnez jump_label_3\n\tjmp jump_label_4\ny"; }
+  if (i === 140) { return "x\njump_label_5:\ny"; }
+  if (i === 141) { return "x\n\tthrow.undefinedifholewithname \"h\"\ny"; }
+  if (i === 142) { return "x\n\tnewlexenv 0x3\ny"; }
+  if (i === 143) { return "x\n\tmov v0, a0\ny"; }
+  if (i === 144) { return "x\n\treturnundefined\npost"; }
+  if (i === 145) { return "x\n\tldexternalmodulevar 0x1\ny"; }
+  if (i === 146) { return "x\n\ttryldglobalbyname 0x4, \"JSON\"\ny"; }
+  if (i === 147) { return "x\n\tcreateobjectwithbuffer 0x6, { 4 [ string:\"k\", string:\"v\", ]}\ny"; }
+  if (i === 148) { return "x\n.catchall:begin, end, target\ny"; }
+  if (i === 149) { return "x\n\twide.ldlexvar 0x80, 0x81\ny"; }
+  if (i === 150) { return "x\n\tsuspendgenerator 0x0, v0, v1\ny"; }
+  if (i === 151) { return "x\n  string:\"fake\", i32:42, ]}\ny"; }
+  if (i === 152) { return "a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz"; }
+  if (i === 153) { return "\u0002"; }
+  if (i === 154) { return "\u0003"; }
+  if (i === 155) { return "\u0004"; }
+  if (i === 156) { return "\u0005"; }
+  if (i === 157) { return "\u0006"; }
+  if (i === 158) { return "\u0007"; }
+  if (i === 159) { return "\u0008"; }
+  if (i === 160) { return "\t"; }
+  if (i === 161) { return "\n"; }
+  if (i === 162) { return "\u000b"; }
+  if (i === 163) { return "\u000c"; }
+  if (i === 164) { return "\u000e"; }
+  if (i === 165) { return "\u000f"; }
+  if (i === 166) { return "\u0010"; }
+  if (i === 167) { return "\u0011"; }
+  if (i === 168) { return "\u0012"; }
+  if (i === 169) { return "\u0013"; }
+  if (i === 170) { return "\u0014"; }
+  if (i === 171) { return "\u0015"; }
+  if (i === 172) { return "\u0016"; }
+  if (i === 173) { return "\u0017"; }
+  if (i === 174) { return "\u0018"; }
+  if (i === 175) { return "\u0019"; }
+  if (i === 176) { return "\u001a"; }
+  if (i === 177) { return "\u001b"; }
+  if (i === 178) { return "\u001c"; }
+  if (i === 179) { return "\u001d"; }
+  if (i === 180) { return "\u001e"; }
+  if (i === 181) { return "\u001f"; }
+  if (i === 182) { return ""; }
+  if (i === 183) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 184) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 185) { return "a\"b\\c\td\ne\rf\"g`h"; }
   return "string-stress-fallback";
 }
 
@@ -312,6 +332,26 @@ export function stringStressArray(): Array<string> {
     "pre\n.function any n.e.f(any a0) <static> {",
     "pre\n.function any f(any a0, any a1) {",
     "lab\n\tldai 0x1\n\tjnez jump_label_9",
+    "x\n\tlda.str \"in\\\"ner\"\ny",
+    "x\n\tlda.str \"\"\ny",
+    "pre\n\tsta v0\n\tldai 0x2a\npost",
+    "x\n\tldobjbyname 0x0, \"code\"\ny",
+    "x\n\tstobjbyname 0x1, \"a, b\"\ny",
+    "x\n\tcallthis1 0x7, v13, v14\ny",
+    "x\n\tjnez jump_label_3\n\tjmp jump_label_4\ny",
+    "x\njump_label_5:\ny",
+    "x\n\tthrow.undefinedifholewithname \"h\"\ny",
+    "x\n\tnewlexenv 0x3\ny",
+    "x\n\tmov v0, a0\ny",
+    "x\n\treturnundefined\npost",
+    "x\n\tldexternalmodulevar 0x1\ny",
+    "x\n\ttryldglobalbyname 0x4, \"JSON\"\ny",
+    "x\n\tcreateobjectwithbuffer 0x6, { 4 [ string:\"k\", string:\"v\", ]}\ny",
+    "x\n.catchall:begin, end, target\ny",
+    "x\n\twide.ldlexvar 0x80, 0x81\ny",
+    "x\n\tsuspendgenerator 0x0, v0, v1\ny",
+    "x\n  string:\"fake\", i32:42, ]}\ny",
+    "a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz",
     "\u0002",
     "\u0003",
     "\u0004",
