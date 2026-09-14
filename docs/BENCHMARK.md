@@ -813,3 +813,52 @@ mov v0, a0（参数名同形）、returnundefined、ldexternalmodulevar、tryldg
   常驻回归防线（升级/改动后防退化）。
 - **门禁**：manifest 一致、模拟器 api24 新基线 `strstress=n=396 len=16332 acc=62028365`、
   hilog 无 JS Error。
+
+## tab 前缀续行轮：A1 缺陷复现 + 操作数面 round-trip 门禁（2026-09-14，200 用例，未提交）
+
+**触发**：逆向工具链侧手工最小用例（`Flow invariant is violated:\n\t\tEmission from another
+coroutine is detected.\n`——第三方库多行报错文案形态）解析为 `lda.str ''`。实证发现本项目
+**无任何门禁能捕获该缺陷**：`compare_src_ir.py` 只扫 `*.ets` 且为模糊单向包含检查；
+既往字符串轮「182/186 全过」均为**字符串池面**口径，AsmMethod 指令操作数值从未被断言。
+
+**机理修正**（实证，已同步生成器文档）：ark_disasm 对字符串裸输出的不止 `"`/`\n`/`\r`，
+**`\t` 也裸输出**——字符串续行可与真指令行「`\t`+词」完全同形。工具链
+`find_line_end` 旧启发式（`\t` 开头 + 首词匹配 `[a-zA-Z0-9.]*` 即认为下一条指令开始）
+把 `\n\t\tEmission…` 这类散文续行误判为指令 → 操作数截断，`rfind('"')` 回落到开引号 → 空串。
+工具链侧已暂存修复（首词须为真 ISA 操作码），散文续行恢复，但暴露**新的截断面**：
+
+1. **指令形态续行**（inst-mimic 组 20/20 仍截断）：`sta v0`/`lda.str` 等真操作码续行文本级
+   与指令不可区分，需引号感知扫描才能正确归属；
+2. **裸 `}` 残留行**（此前被遮蔽，现显形）：`plain\ntext\n}\nafter` 用例在 case 164 处触发
+   `is_method_end_line` → **方法体整体截断**，其后 36 用例连带丢失（含 c0-sweep 全部；
+   修复前该行被「幽灵指令 64 行吞噬」吞掉，两种缺陷互相遮蔽）；
+3. **幽灵指令多行吞噬**：截断残留行被当作指令解析、操作数引号失衡时按
+   `MAX_INST_SPAN_LINES=64` 连续吸收，整段真实指令消失；
+4. c0-sweep 29 例归因待定（dis 侧 `\tlda.str "\x02"` 裸字节行存在，被 2 遮蔽，修复后复跑）。
+
+**语料**：新增 **tab-break 组 14 用例**（186→200）：A1 双 tab 散文续行、单 tab、A1 完整镜像
+（含尾部 `\n` 使闭引号独行 + `\tsta v0` 后续）、`\t`+数字/点号词首、裸 tab 行、tab+CR 行、
+截断点前含引号（操作数=静默错误前缀）、三重 tab、多行指令形态、不闭合引号残留行
+（幽灵吞噬面）、裸 `}` 残留行（方法截断面）、嵌套空 `lda.str` 续行；stringStressFields
+新增恶劣键 `k\n\tv`、`}\n`（stobjbyname 跨行操作数面）。
+
+**新门禁 `groundtruth/check_string_stress.py`**（操作数面 round-trip）：
+
+```bash
+python3 groundtruth/check_string_stress.py <逆向工具 test.out>
+```
+
+从 `tools/gen_string_stress.py` 取全部用例期望值，在 test.out 的 `stringStressAt` 方法块上
+重建 `lda.str` 操作数序列（debug 指令行 `N    lda.str <raw>` 锚定、跨行逐字节拼接、
+`newline=''` 保 CR），多重集合比对 + stringStressFields 静态值子集核对；非白名单
+（NUL/孤立代理，既有归档）差异即 FAIL 并按用例分组输出定位清单。
+限制：内容自身存在「行首 数字+空格+字母」行会误判边界（当前语料无此形态）。
+
+**实测（当前工具链含暂存 find_line_end 修复）**：recovered 148/201、missing 76、extra 23
+→ FAIL（符合预期，即剩余缺陷的定位清单）：inst-mimic 20、c0-sweep 29、tab-break 6、
+method-spoof 6、section-spoof 4、combo 3、operand-branch 2、unicode 2、fallback 1 等
+（多出侧含 `''`×16、`y"`、代理对 CESU-8 文本形态）。工具链修复 2/4 后复跑本门禁回归。
+池面口径结论（上轮「20 个伪装续行全过」）与操作数面实测矛盾，以本门禁为准。
+
+**构建/门禁**：4 变体构建 OK、manifest 一致、指令覆盖 188/268 无回退；sweep strstress
+基线因用例数变化待重跑更新（n 由 396 升至约 428）。

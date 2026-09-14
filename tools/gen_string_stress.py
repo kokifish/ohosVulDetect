@@ -2,9 +2,10 @@
 """生成字符串边界压力源文件（feat_api/src/main/ets/pages/lang/StringStressLab.ts）。
 
 背景（SDK26 es2abc + ark_disasm 实证，探针见 docs/BENCHMARK.md 对应轮次）：
-ark_disasm 文本输出对字符串只做「部分转义」——反斜杠/控制字符/U+2028 等转成转义文本，
-但 **双引号、换行 \\n、回车 \\r 原样裸输出**；代理对按 MUTF-8(CESU-8) 裸字节写出，
-会使整个 .dis 文件不再是合法 UTF-8。下游按行/按引号切分的文本解析器因此存在结构性风险。
+ark_disasm 文本输出对字符串只做「部分转义」——反斜杠与 \x01-\x1f 中的多数控制字符、U+2028 等转成转义文本，
+但 **双引号、换行 \n、回车 \r、制表符 \t 原样裸输出**（\t 裸输出使字符串续行可与真指令行「\t+操作码」完全同形）；
+代理对按 MUTF-8(CESU-8) 裸字节写出，会使整个 .dis 文件不再是合法 UTF-8。
+下游按行/按引号切分的文本解析器因此存在结构性风险。
 
 本语料把全部边界形态同时压入 ark_disasm 输出的三个解析面：
   ① METHODS 段指令操作数：lda.str "..."、stobjbyname/ldobjbyname "key"（引号配对被内嵌 " 破坏，
@@ -251,6 +252,27 @@ def build_cases() -> list[tuple[str, str]]:
     add('x\n  string:"fake", i32:42, ]}\ny', "inst-mimic")       # literal 元素行（LITERALS 面伪装）
     add('a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz', "inst-mimic")
 
+    # ---- tab 前缀续行截断族（真实缺陷复现组，2026-09-14 A1 用例扩展）----
+    # 机理：下游 find_line_end 类「下一条指令开始」启发式把「\t 开头 + 首词 [a-zA-Z0-9.]*」的
+    # 续行误判为指令行，lda.str 操作数在首个此类续行处被截断；截断后 rfind('"') 回落到
+    # 开引号（操作数变空串）或内容内引号（操作数=错误前缀），残留行再被当作指令解析——
+    # 带未闭合引号的残留行会触发幽灵指令的 64 行吞噬，裸 "}" 残留行会把方法体整体截断。
+    # 真实世界来源：Flow invariant 消息（第三方 JS 库多行报错文案，含 \n\t\t 缩进续行）。
+    add('Flow invariant is violated:\n\t\tEmission from another coroutine is detected.\n', "tab-break")
+    add('Flow invariant is violated:\n\tEmission from another coroutine is detected.\n', "tab-break")
+    add('A1 mirror: emission precedes\n\t\tEmission from another coroutine is detected.\n\tsta v0\n', "tab-break")
+    add('start\n\t42digits then words\n', "tab-break")       # \t+数字词首（regex 命中）
+    add('start\n\t.dotPrefixed tail\n', "tab-break")         # \t+点词首（regex 命中）
+    add('start\n\t\nmiddle\n', "tab-break")                  # 裸 tab 行（strip 后空串仍命中 regex）
+    add('start\n\t\r\nmid\n', "tab-break")                   # tab+CR 续行
+    add('pre"quote\n\tword\n', "tab-break")                  # 截断点前有引号：操作数=静默错误前缀
+    add('a\n\t\t\tdeep tab indent\nb', "tab-break")          # 三重 tab 词首续行
+    add('x\n\tsta v0\n\treturnundefined\n', "tab-break")     # 多行 tab 指令形态 + 尾部 \n（闭引号独行）
+    add('x\n\tldobjbyname 0x0, "k\n', "tab-break")           # 残留行带不闭合引号：幽灵指令 64 行吞噬
+    add('plain\ntext\n}\nafter', "tab-break")                # 裸 "}" 残留行：方法体截断面
+    add('head\n\tlda.str ""\n\treturnundefined\n', "tab-break")
+    add('\n\tTabs lead\t\n\tand trail\n', "tab-break")
+
     # ---- C0 控制字符全扫（\x02-\x0c、\x0e-\x1f 逐码点，池+操作数双面系统化）----
     for _cp in list(range(0x02, 0x0d)) + list(range(0x0e, 0x20)):
         add(chr(_cp), "c0-sweep")
@@ -337,6 +359,8 @@ def gen(out: pathlib.Path) -> int:
         '  o[\'a"b\'] = \'v"x\';',
         "  o['k\\\\n'] = 'v\\\\y';",
         "  o['k\\n'] = 'v\\nz';",
+        "  o['k\\n\\tv'] = 'tab-key';",
+        "  o['}\\n'] = 'brace-key';",
         '  o["[offset:0x1, name_value:x]"] = "pool";',
         "  o[',k'] = 'comma-key';",
         "  o['\"\"\"\"'] = 'quad-key';",

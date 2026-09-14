@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 186 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 186;
+// 共 200 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 200;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -160,39 +160,53 @@ export function stringStressAt(i: number): string {
   if (i === 150) { return "x\n\tsuspendgenerator 0x0, v0, v1\ny"; }
   if (i === 151) { return "x\n  string:\"fake\", i32:42, ]}\ny"; }
   if (i === 152) { return "a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz"; }
-  if (i === 153) { return "\u0002"; }
-  if (i === 154) { return "\u0003"; }
-  if (i === 155) { return "\u0004"; }
-  if (i === 156) { return "\u0005"; }
-  if (i === 157) { return "\u0006"; }
-  if (i === 158) { return "\u0007"; }
-  if (i === 159) { return "\u0008"; }
-  if (i === 160) { return "\t"; }
-  if (i === 161) { return "\n"; }
-  if (i === 162) { return "\u000b"; }
-  if (i === 163) { return "\u000c"; }
-  if (i === 164) { return "\u000e"; }
-  if (i === 165) { return "\u000f"; }
-  if (i === 166) { return "\u0010"; }
-  if (i === 167) { return "\u0011"; }
-  if (i === 168) { return "\u0012"; }
-  if (i === 169) { return "\u0013"; }
-  if (i === 170) { return "\u0014"; }
-  if (i === 171) { return "\u0015"; }
-  if (i === 172) { return "\u0016"; }
-  if (i === 173) { return "\u0017"; }
-  if (i === 174) { return "\u0018"; }
-  if (i === 175) { return "\u0019"; }
-  if (i === 176) { return "\u001a"; }
-  if (i === 177) { return "\u001b"; }
-  if (i === 178) { return "\u001c"; }
-  if (i === 179) { return "\u001d"; }
-  if (i === 180) { return "\u001e"; }
-  if (i === 181) { return "\u001f"; }
-  if (i === 182) { return ""; }
-  if (i === 183) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 184) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 185) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 153) { return "Flow invariant is violated:\n\t\tEmission from another coroutine is detected.\n"; }
+  if (i === 154) { return "Flow invariant is violated:\n\tEmission from another coroutine is detected.\n"; }
+  if (i === 155) { return "A1 mirror: emission precedes\n\t\tEmission from another coroutine is detected.\n\tsta v0\n"; }
+  if (i === 156) { return "start\n\t42digits then words\n"; }
+  if (i === 157) { return "start\n\t.dotPrefixed tail\n"; }
+  if (i === 158) { return "start\n\t\nmiddle\n"; }
+  if (i === 159) { return "start\n\t\r\nmid\n"; }
+  if (i === 160) { return "pre\"quote\n\tword\n"; }
+  if (i === 161) { return "a\n\t\t\tdeep tab indent\nb"; }
+  if (i === 162) { return "x\n\tsta v0\n\treturnundefined\n"; }
+  if (i === 163) { return "x\n\tldobjbyname 0x0, \"k\n"; }
+  if (i === 164) { return "plain\ntext\n}\nafter"; }
+  if (i === 165) { return "head\n\tlda.str \"\"\n\treturnundefined\n"; }
+  if (i === 166) { return "\n\tTabs lead\t\n\tand trail\n"; }
+  if (i === 167) { return "\u0002"; }
+  if (i === 168) { return "\u0003"; }
+  if (i === 169) { return "\u0004"; }
+  if (i === 170) { return "\u0005"; }
+  if (i === 171) { return "\u0006"; }
+  if (i === 172) { return "\u0007"; }
+  if (i === 173) { return "\u0008"; }
+  if (i === 174) { return "\t"; }
+  if (i === 175) { return "\n"; }
+  if (i === 176) { return "\u000b"; }
+  if (i === 177) { return "\u000c"; }
+  if (i === 178) { return "\u000e"; }
+  if (i === 179) { return "\u000f"; }
+  if (i === 180) { return "\u0010"; }
+  if (i === 181) { return "\u0011"; }
+  if (i === 182) { return "\u0012"; }
+  if (i === 183) { return "\u0013"; }
+  if (i === 184) { return "\u0014"; }
+  if (i === 185) { return "\u0015"; }
+  if (i === 186) { return "\u0016"; }
+  if (i === 187) { return "\u0017"; }
+  if (i === 188) { return "\u0018"; }
+  if (i === 189) { return "\u0019"; }
+  if (i === 190) { return "\u001a"; }
+  if (i === 191) { return "\u001b"; }
+  if (i === 192) { return "\u001c"; }
+  if (i === 193) { return "\u001d"; }
+  if (i === 194) { return "\u001e"; }
+  if (i === 195) { return "\u001f"; }
+  if (i === 196) { return ""; }
+  if (i === 197) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 198) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 199) { return "a\"b\\c\td\ne\rf\"g`h"; }
   return "string-stress-fallback";
 }
 
@@ -352,6 +366,20 @@ export function stringStressArray(): Array<string> {
     "x\n\tsuspendgenerator 0x0, v0, v1\ny",
     "x\n  string:\"fake\", i32:42, ]}\ny",
     "a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz",
+    "Flow invariant is violated:\n\t\tEmission from another coroutine is detected.\n",
+    "Flow invariant is violated:\n\tEmission from another coroutine is detected.\n",
+    "A1 mirror: emission precedes\n\t\tEmission from another coroutine is detected.\n\tsta v0\n",
+    "start\n\t42digits then words\n",
+    "start\n\t.dotPrefixed tail\n",
+    "start\n\t\nmiddle\n",
+    "start\n\t\r\nmid\n",
+    "pre\"quote\n\tword\n",
+    "a\n\t\t\tdeep tab indent\nb",
+    "x\n\tsta v0\n\treturnundefined\n",
+    "x\n\tldobjbyname 0x0, \"k\n",
+    "plain\ntext\n}\nafter",
+    "head\n\tlda.str \"\"\n\treturnundefined\n",
+    "\n\tTabs lead\t\n\tand trail\n",
     "\u0002",
     "\u0003",
     "\u0004",
@@ -424,6 +452,8 @@ export function stringStressFields(): string {
   o['a"b'] = 'v"x';
   o['k\\n'] = 'v\\y';
   o['k\n'] = 'v\nz';
+  o['k\n\tv'] = 'tab-key';
+  o['}\n'] = 'brace-key';
   o["[offset:0x1, name_value:x]"] = "pool";
   o[',k'] = 'comma-key';
   o['""""'] = 'quad-key';
