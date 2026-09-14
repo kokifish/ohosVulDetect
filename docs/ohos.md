@@ -111,6 +111,8 @@
 
 ### 5.2 组件：已覆盖约 99 个 vs 公开约 156 个（2026-09-12 第九轮 +11：PatternLock/SaveButton/PasteButton/AlertDialog/ActionSheet/DatePickerDialog/TimePickerDialog/TextPickerDialog/CalendarPickerDialog/OffscreenCanvas/RichText/WithTheme）
 
+> 2026-09-14 起组件/Kit/API 差距以 `tools/check_corpus_coverage.py` 脚本对账为准（component_config.json / @kit 全集 / @ohos 三维，含清单漂移门禁）；下方人工清单为调研快照，仅存历史价值（例：脚本实测 Stack 已不在语料、RelativeContainer 第八轮已覆盖，快照均有出入）。
+
 已覆盖集中在 ComponentsDemo（约 53）+ 其他 ui 页（Navigation/NavDestination/Tabs/TabContent/Swiper/Stack/Flex/Canvas/LazyForEach/Repeat/Web）+ 零散（Stepper/StepperItem/RowSplit/NodeContainer/CustomDialog/CheckboxGroup/CalendarPicker/bindSheet/bindMenu/bindContextMenu）。
 
 **缺口（公开可用、普通 App 可落地，按价值排序）**：
@@ -150,8 +152,6 @@
 
 ## 6. 下一步改进建议（优先级）
 
-| 优先级 | 内容 | 验收 |
-|---|---|---|
 | 优先级 | 内容 | 验收 |
 |---|---|---|
 | P1 指令收口 | **已完成（三轮，2026-09-04/06）**：累计 +5 指令（throw.constassignment / wide.supercallthisrange / callruntime.wideldlazymodulevar / wide.getmodulenamespace / testin），release 176、并集 179/267；未用 88 条全部三轮归因，**源码级可达覆盖已穷尽**（含 closeiterator 降级铁证）；模拟器全面回归通过（feat_api 62✅/9❌、feat_vuln 37✅/4❌、新页数值正确，见 BENCHMARK 第三轮节） | ✅ |
