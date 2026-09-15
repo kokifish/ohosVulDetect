@@ -136,7 +136,7 @@ def build_cases() -> list[tuple[str, str]]:
     add("emoji😀🀄𝕏末", "unicode")
     add("x\ud800y", "unicode")            # 孤立高代理（源码必为转义形态）
     add("x\udfffy", "unicode")            # 孤立低代理
-    add("\ud83d\ude00pair", "unicode")    # 转义形态的代理对
+    add("\U0001f600pair", "unicode")     # 解码码点形态（😀；工具侧合法代理对重组语义见门禁 _recombine_pairs 保险丝）
     add("e\u0301na\u0308ive", "unicode")
     add("a\u00a0b", "unicode")
     add("a\u200bb\u200dc", "unicode")
@@ -273,6 +273,17 @@ def build_cases() -> list[tuple[str, str]]:
     add('head\n\tlda.str ""\n\treturnundefined\n', "tab-break")
     add('\n\tTabs lead\t\n\tand trail\n', "tab-break")
 
+    # ---- closer-guard：闭行判据修复面 + 文本级歧义行为锁（2026-09-15）----
+    # 预期形态（闭引号行后紧邻 .catchall/.catch）需 es2abc 生成异常区域指令，实测本 SDK 对
+    # 不可失败 try/catch 消除区域（stringStressAt 内 0 条 .catch 指令）、可保留场景区域指令
+    # 固定落位方法尾（handler 后）——紧邻形态在本工具链不可达，归因记录；本用例退化为
+    # try 上下文等价的多行恢复用例（指令形态续行 + 非换行结尾，与 ad84a0f 修复面同域）。
+    add('x\n\tsta v0\nq', "closer-guard")
+    # 用例 2：文本级根本歧义——首物理行行尾引号 + 紧随指令形态行，与「操作数已正常闭合 + 真指令」
+    # 逐字节同形；解析器取「已闭合」解释：操作数='p'，\tsta v0 成真指令，q" 为 skip payload
+    # residue line。行为由门禁 KNOWN_LIMITATIONS 精确锁定（双向漂移均红灯）。
+    add('p"\n\tsta v0\nq', "closer-guard")
+
     # ---- C0 控制字符全扫（\x02-\x0c、\x0e-\x1f 逐码点，池+操作数双面系统化）----
     for _cp in list(range(0x02, 0x0d)) + list(range(0x0e, 0x20)):
         add(chr(_cp), "c0-sweep")
@@ -328,6 +339,11 @@ def gen(out: pathlib.Path) -> int:
     for i in range(n):
         lines.append(f"  if (i === {i}) {{ return {ts(i)}; }}")
     lines += [
+        f"  if (i === {n}) {{",
+        "    // 门禁防线：非字面量 return 路径——return v9（无引号）不得开启操作数收集区产出幻影操作数",
+        '    const derived = "closer-guard-derived" + i;',
+        "    return derived;",
+        "  }",
         '  return "string-stress-fallback";',
         "}",
         "",

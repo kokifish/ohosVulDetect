@@ -863,6 +863,23 @@ method-spoof 6、section-spoof 4、combo 3、operand-branch 2、unicode 2、fall
 **构建/门禁**：4 变体构建 OK、manifest 一致、指令覆盖 188/268 无回退。strstress 新基线
 （2026-09-14 bench24 api24 release 定点实测）：**`strstress=n=424 len=17386 acc=62188276`**。
 
+**收尾（2026-09-15，工具链 ad84a0f 引号感知解析落地后）**：① 缺陷②（裸 `}` 方法体截断）、
+缺陷①（inst-mimic 续行截断）、缺陷③（幽灵 64 行吞噬）及 c0-sweep 遮蔽全部修复，操作数面
+实测 88/201 → **200/201**；② 唯一残差 = emoji 代理对书写语义（MUTF-8 还原为解码码点），
+已由语料期望侧改写消解（`\ud83d\ude00pair` → `\U0001f600pair`，门禁 `_recombine_pairs`
+保留为保险丝）；③ 新增已知限制：**文本级根本歧义**（内容行尾引号 + 紧随指令形态行，两形态
+逐字节同形，解析取「已闭合」解释、残渣行以 skip payload residue line 日志显形）——由语料
+closer-guard 组（歧义形态 + 非字面量 return 门禁防线）与门禁 KNOWN_LIMITATIONS 精确行为锁
+固化（截短值双向漂移均红灯）；说明书原设计的「`.catchall` 跟随者正向锁」实测**不可达**：
+es2abc 对不可失败 try/catch 消除异常区域（stringStressAt 内 0 条 .catch 指令），可保留场景
+的区域指令固定落位方法尾 handler 后、与闭引号行不相邻——归因记录，用例退化为 try 上下文
+等价的多行恢复用例（首版 try/catch 双分支同字面量曾致门禁 extra×2，已修正为单条平铺）；④ 门禁已切换到提升后 IR 面
+（子模块 0811b91，`N    return "<raw>"` 锚定；原 NAC 锚定面因方法完整提升而消失）。
+closer-guard 轮后语料 **202 用例**，门禁终态 **203/203 RESULT: OK**（含行为锁），评分
+**F1=1.000（TP=60 FN=0 FP=0 TN=60）**，主仓 compare_versions 12 hap 全部 equal，
+string-parse 快照 545 用例全绿（+3 键）。运行时基线同步更新（bench24 api24 release 定点）：
+**`strstress=n=428 len=17444 acc=62194198`**（n=2×202+24，与用例数精确吻合）。
+
 ## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
 
 **1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：

@@ -2,8 +2,8 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 200 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 200;
+// 共 202 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 202;
 
 // 面①：方法体 lda.str 操作数（含全部用例）。
 export function stringStressAt(i: number): string {
@@ -69,7 +69,7 @@ export function stringStressAt(i: number): string {
   if (i === 59) { return "emoji😀🀄𝕏末"; }
   if (i === 60) { return "x\ud800y"; }
   if (i === 61) { return "x\udfffy"; }
-  if (i === 62) { return "\ud83d\ude00pair"; }
+  if (i === 62) { return "😀pair"; }
   if (i === 63) { return "énäive"; }
   if (i === 64) { return "a b"; }
   if (i === 65) { return "a​b‍c"; }
@@ -174,39 +174,46 @@ export function stringStressAt(i: number): string {
   if (i === 164) { return "plain\ntext\n}\nafter"; }
   if (i === 165) { return "head\n\tlda.str \"\"\n\treturnundefined\n"; }
   if (i === 166) { return "\n\tTabs lead\t\n\tand trail\n"; }
-  if (i === 167) { return "\u0002"; }
-  if (i === 168) { return "\u0003"; }
-  if (i === 169) { return "\u0004"; }
-  if (i === 170) { return "\u0005"; }
-  if (i === 171) { return "\u0006"; }
-  if (i === 172) { return "\u0007"; }
-  if (i === 173) { return "\u0008"; }
-  if (i === 174) { return "\t"; }
-  if (i === 175) { return "\n"; }
-  if (i === 176) { return "\u000b"; }
-  if (i === 177) { return "\u000c"; }
-  if (i === 178) { return "\u000e"; }
-  if (i === 179) { return "\u000f"; }
-  if (i === 180) { return "\u0010"; }
-  if (i === 181) { return "\u0011"; }
-  if (i === 182) { return "\u0012"; }
-  if (i === 183) { return "\u0013"; }
-  if (i === 184) { return "\u0014"; }
-  if (i === 185) { return "\u0015"; }
-  if (i === 186) { return "\u0016"; }
-  if (i === 187) { return "\u0017"; }
-  if (i === 188) { return "\u0018"; }
-  if (i === 189) { return "\u0019"; }
-  if (i === 190) { return "\u001a"; }
-  if (i === 191) { return "\u001b"; }
-  if (i === 192) { return "\u001c"; }
-  if (i === 193) { return "\u001d"; }
-  if (i === 194) { return "\u001e"; }
-  if (i === 195) { return "\u001f"; }
-  if (i === 196) { return ""; }
-  if (i === 197) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
-  if (i === 198) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
-  if (i === 199) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 167) { return "x\n\tsta v0\nq"; }
+  if (i === 168) { return "p\"\n\tsta v0\nq"; }
+  if (i === 169) { return "\u0002"; }
+  if (i === 170) { return "\u0003"; }
+  if (i === 171) { return "\u0004"; }
+  if (i === 172) { return "\u0005"; }
+  if (i === 173) { return "\u0006"; }
+  if (i === 174) { return "\u0007"; }
+  if (i === 175) { return "\u0008"; }
+  if (i === 176) { return "\t"; }
+  if (i === 177) { return "\n"; }
+  if (i === 178) { return "\u000b"; }
+  if (i === 179) { return "\u000c"; }
+  if (i === 180) { return "\u000e"; }
+  if (i === 181) { return "\u000f"; }
+  if (i === 182) { return "\u0010"; }
+  if (i === 183) { return "\u0011"; }
+  if (i === 184) { return "\u0012"; }
+  if (i === 185) { return "\u0013"; }
+  if (i === 186) { return "\u0014"; }
+  if (i === 187) { return "\u0015"; }
+  if (i === 188) { return "\u0016"; }
+  if (i === 189) { return "\u0017"; }
+  if (i === 190) { return "\u0018"; }
+  if (i === 191) { return "\u0019"; }
+  if (i === 192) { return "\u001a"; }
+  if (i === 193) { return "\u001b"; }
+  if (i === 194) { return "\u001c"; }
+  if (i === 195) { return "\u001d"; }
+  if (i === 196) { return "\u001e"; }
+  if (i === 197) { return "\u001f"; }
+  if (i === 198) { return ""; }
+  if (i === 199) { return "{\"k\":\"v\"}\n# STRING ====================\n😀tail"; }
+  if (i === 200) { return "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬"; }
+  if (i === 201) { return "a\"b\\c\td\ne\rf\"g`h"; }
+  if (i === 202) {
+    // 门禁防线：非字面量 return 路径——return v9（无引号）不得开启操作数收集区产出幻影操作数
+    const derived = "closer-guard-derived" + i;
+    return derived;
+  }
   return "string-stress-fallback";
 }
 
@@ -275,7 +282,7 @@ export function stringStressArray(): Array<string> {
     "emoji😀🀄𝕏末",
     "x\ud800y",
     "x\udfffy",
-    "\ud83d\ude00pair",
+    "😀pair",
     "énäive",
     "a b",
     "a​b‍c",
@@ -380,6 +387,8 @@ export function stringStressArray(): Array<string> {
     "plain\ntext\n}\nafter",
     "head\n\tlda.str \"\"\n\treturnundefined\n",
     "\n\tTabs lead\t\n\tand trail\n",
+    "x\n\tsta v0\nq",
+    "p\"\n\tsta v0\nq",
     "\u0002",
     "\u0003",
     "\u0004",
