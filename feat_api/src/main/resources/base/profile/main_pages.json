@@ -55,6 +55,10 @@
     "pages/ui/DialogsDemo",
     "pages/ui/OffscreenDemo",
     "pages/api/UserAuthDemo",
-    "pages/ui/ImageDemo"
+    "pages/ui/ImageDemo",
+    "pages/api/ContactsDemo",
+    "pages/api/CalendarDemo",
+    "pages/api/AvSessionDemo",
+    "pages/api/CameraDemo"
   ]
 }

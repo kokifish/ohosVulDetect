@@ -35,6 +35,14 @@
     {
       "name": "ApiWidgetCard_desc",
       "value": "benchmark dynamic ArkTS card"
+    },
+    {
+      "name": "perm_contacts_reason",
+      "value": "benchmark contacts demo"
+    },
+    {
+      "name": "perm_calendar_reason",
+      "value": "benchmark calendar demo"
     }
   ]
 }

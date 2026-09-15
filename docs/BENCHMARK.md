@@ -860,8 +860,8 @@ method-spoof 6、section-spoof 4、combo 3、operand-branch 2、unicode 2、fall
 （多出侧含 `''`×16、`y"`、代理对 CESU-8 文本形态）。工具链修复 2/4 后复跑本门禁回归。
 池面口径结论（上轮「20 个伪装续行全过」）与操作数面实测矛盾，以本门禁为准。
 
-**构建/门禁**：4 变体构建 OK、manifest 一致、指令覆盖 188/268 无回退；sweep strstress
-基线因用例数变化待重跑更新（n 由 396 升至约 428）。
+**构建/门禁**：4 变体构建 OK、manifest 一致、指令覆盖 188/268 无回退。strstress 新基线
+（2026-09-14 bench24 api24 release 定点实测）：**`strstress=n=424 len=17386 acc=62188276`**。
 
 ## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
 
@@ -908,3 +908,37 @@ lang/ui 页此前 sweep 零信号、靠人工定点。现每页一个 selfcheck�
   PRIV-002 3301100（定位开关，ENV）、PRIV-001 2300028 timeout（公网 http 抖动，与 ws send 同类，
   复测可恢复）。
 - 门禁：4 变体构建 OK、manifest 120 双向一致、sync_pages OK、指令覆盖 188/268 无回退。未提交。
+
+## Kit 覆盖第十一轮：Contacts/Calendar/AVSession/Camera + 漏洞语料说明文档（2026-09-14，未提交）
+
+**新增 4 页（api-contacts / api-calendar / api-avsession / api-camera，路由页 60）**，Kit ~22 → **~26**
+（新增 ContactsKit/CalendarKit/AVSessionKit/CameraKit 显式用例；全部确定性调用、无 UI 拉起，sweep 安全）：
+
+- **api-contacts**：addContact/queryContacts/queryGroups。READ/WRITE_CONTACTS（user_grant）已声明，
+  未授权环境按 BusinessError 201 记录——调用面即语料，❌ 属 by design ENV。
+- **api-calendar**：createCalendar（CalendarType.LOCAL）/getCalendar+addEvent/getEvents。
+  READ/WRITE_CALENDAR 同上 201。
+- **api-avsession**：createAVSession+setAVMetadata+activate+deactivate+destroy、createController 往返、
+  生命周期。无权限。**实测定案（API24 模拟器）**：应用进程内仅首次 createAVSession 成功——此后即使
+  deactivate+destroy、1.5s×4 重试乃至数分钟后 create 仍报 6600101（会话销毁后服务端槽位疑似不释放，
+  系统服务行为而非用例缺陷）。首例全链路为稳定成功样本；其余用例的 6600101/201 是确定性服务端
+  行为记录（注释如实落档，createWithRetry 保留吸收真瞬态）。
+- **api-camera**：getSupportedCameras/getSupportedSceneModes/isTorchSupported+getTorchMode。
+  设备枚举无需 CAMERA 权限，bench24 实测 `cameras=2 [1/1,2/1] modes=2 torch=false`。
+- 坑（签名核实）：CalendarAccount 字段是 name/type/displayName 扁平结构（无嵌套 calendarAccount）；
+  CameraManager 无 isTorchActive（用 getTorchMode）。
+
+**模拟器验证（bench24，api24 release）**：api-camera 3/3 全绿（真实设备枚举 `cameras=2 [1/1,2/1]
+modes=2 torch=false`）；api-avsession 首例全链路 ✅ + 6600101 定案如上；contacts/calendar 全部 201
+（声明未授权的预期行为）。4 页编译入 4 变体产物，指令覆盖 188/268 无回退。
+
+**完整回归（同日，最终产物全量）**：feat_api 全量 sweep 预算 70min 覆盖 35 页（含全部新页），
+**94✅/12❌**——基线 ENV 项全数复现（socket×2、vibrate、location×2、bgtask 401）+ 装机周期项
+（dm 201 需重授权、notify 1600004/1600007 系统通知开关未开、agent-download 13400001 公网抖动）+
+avsession 已知定案；无功能性回归。api-camera 全量轮 0 行属预算尾采集抖动，定点复测 3/3 ✅。
+lang 段定向补跑 **7/7 selfcheck 全绿**（closure 6/6、types 13/13、generator 7/7、ops 2/2、
+callforms 7/7、runtime 24/24、sugars 10/10）。ui 段 16 页 by design 0 信号（未遍历，无回归面）。
+
+**docs/VULNS.md（新）**：60 条漏洞语料逐条说明（漏洞类型/成因代码形态/利用方式/危害），按 17 族组织，
+与 manifest.json 的 ID/CWE/检测规则形态一一对应；含检测口径备注（多形态规则设计意图、孪生 FP 防线、
+SECRET-005 与 NATIVE-001 两类对抗样本的分层考核意图）。

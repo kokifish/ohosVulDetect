@@ -33,6 +33,10 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-form', 'FormKit card (widgets.abc)', 'pages/api/FormDemo'),
   new DemoItem('api-userauth', 'UserAuthenticationKit: userAuth status/enrolled/instance', 'pages/api/UserAuthDemo'),
   new DemoItem('api-route-map', 'routerMap -> HSP NavDestination', 'pages/api/RouteMapDemo'),
+  new DemoItem('api-contacts', 'ContactsKit: add/query contacts', 'pages/api/ContactsDemo'),
+  new DemoItem('api-calendar', 'CalendarKit: calendar account/event', 'pages/api/CalendarDemo'),
+  new DemoItem('api-avsession', 'AVSessionKit: media session lifecycle', 'pages/api/AvSessionDemo'),
+  new DemoItem('api-camera', 'CameraKit: device enum/modes/torch', 'pages/api/CameraDemo'),
 ];
 
 export const UI_DEMOS: DemoItem[] = [

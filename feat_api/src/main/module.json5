@@ -15,6 +15,46 @@
         "name": "ohos.permission.INTERNET"
       },
       {
+        "name": "ohos.permission.READ_CONTACTS",
+        "reason": "$string:perm_contacts_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.WRITE_CONTACTS",
+        "reason": "$string:perm_contacts_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.READ_CALENDAR",
+        "reason": "$string:perm_calendar_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.WRITE_CALENDAR",
+        "reason": "$string:perm_calendar_reason",
+        "usedScene": {
+          "abilities": [
+            "ApiAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
         "name": "ohos.permission.ACCESS_BIOMETRIC"
       },
       {
