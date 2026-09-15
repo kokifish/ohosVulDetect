@@ -880,6 +880,38 @@ closer-guard 轮后语料 **202 用例**，门禁终态 **203/203 RESULT: OK**�
 string-parse 快照 545 用例全绿（+3 键）。运行时基线同步更新（bench24 api24 release 定点）：
 **`strstress=n=428 len=17444 acc=62194198`**（n=2×202+24，与用例数精确吻合）。
 
+## 歧义矩阵轮：14 组合系统化 + 函数拆分 + literal 面门禁（2026-09-15，未提交）
+
+**P1 歧义矩阵（+14 用例，202→216）**：内容首段行尾形态（`p"`/`p`/`p""`/`p\`）× 紧随行形态
+（`\tsta v0`/`\tldobjbyname`/`return`/`jump_label_0:`/`.catchall`/`}`/`# STRING ====`）系统化。
+首轮无锁入语料，门禁 MISSING/EXTRA 实证各组合真实行为（bench24/api26 与 api24 双口径一致）：
+
+- **仅 `.catchall`/`return` 跟随行的 2 组合完整恢复**；其余 12 组合在 TAC render 截短为 `'p'`
+  （6 组合）或**整体缺失**（6 组合 + matrix-fallback，方法 CFG 自 `}` 跟随行的 case 起截断）。
+- 分层归因：.dis 完整（14 分支全在）、parse 层快照 573 全绿——截短发生在 **lift/TAC-render 面**
+  （机理：解析器对「首物理行行尾引号」取已闭合解释，`}` 跟随行在已闭合状态下被当方法尾）。
+  已按 KNOWN_LIMITATIONS 精确行为锁固化（截短值/缺失双向漂移红灯）。
+- **结构发现与处置**：单函数 if-chain 越过工具链 lift 容量阈值后 TAC dump 中途截断
+  （216 用例止于 351 块、c0-sweep/combo 全灭）→ 矩阵组拆至独立 `stringStressMatrix` 函数，
+  stringStressAt 回到 202 用例全恢复；拆分后运行时 `n=456`（2×216+24）与理论精确吻合，
+  证明运行时无回归（lift 丢失仅影响工具链 dump 面）。
+
+**P2 literal 缓冲面全量门禁（--dis 模式）**：TAC 面看不到 literal 值（createarraywithbuffer
+只渲染偏移）→ 门禁新增 `--dis <feat_api.dis>`：对 ark_disasm LITERALS 节做 oracle 走查
+（数组缓冲 count==216 全用例按序 + 对象缓冲 count==48 键值交错按序），literal 值零转义裸出、
+期望侧直比（MUTF-8 编码：NUL→C0 80、非 BMP→CESU-8 代理对）。**新发现（SDK 工具缺陷）**：
+ark_disasm 的 literal 打印器把歧义矩阵组 14 值渲染为空串（abc 字节完整、方法面同值渲染完整）
+——literal 面对该 14 值有损，其 round-trip 由 parse 快照 + TAC 面行为锁覆盖，已从 literal
+oracle 排除并归因记录。走查采用「行首锚定 count 候选迭代 + 有序 find」，节/缓冲级精确边界
+文本层不可判定（lit-spoof 即攻击该面）的残余弱点已在 docstring 声明。
+
+**P0 复测**：门禁双口径（api26/api24 release）TAC+LITERALS 全绿；主仓
+`test_hostile_parse_regressions.py` 23 项全绿（已闭合解释 + 残渣跳过行为被主仓自身回归锁定）；
+`skip payload residue line` 日志在当前解析路径不触发（静默闭合），措辞已修正。
+独立 agent 审计：核心通过、无 P0；其 P1/P2 建议（走查边界声明、BENCHMARK 记录、死代码、
+_mutf8 统一、锁表注释补 case3 机理）均已落实。**门禁终态：207/207 + LITERALS OK（双口径），
+评分 F1=1.000，运行时 `strstress=n=456 len=18060 acc=62274075`。**
+
 ## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
 
 **1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：

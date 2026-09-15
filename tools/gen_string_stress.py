@@ -284,6 +284,21 @@ def build_cases() -> list[tuple[str, str]]:
     # residue line。行为由门禁 KNOWN_LIMITATIONS 精确锁定（双向漂移均红灯）。
     add('p"\n\tsta v0\nq', "closer-guard")
 
+    # ---- 歧义矩阵：内容首段行尾形态 × 紧随行形态 系统化（2026-09-15 P1）----
+    # 模板 f'{A}\n{B}\ntail'：A 行尾形态决定解析器是否提前闭合（引号行尾 = 歧义触发），
+    # B 行形态决定提前闭合后的残留走向（真指令/标签/异常区域/方法尾/段标记）。
+    # 首轮无锁入语料，门禁 MISSING/EXTRA 实证各组合真实行为后，截短者入 KNOWN_LIMITATIONS。
+    _amb = [
+        ('p"', '\tsta v0'), ('p"', '\tldobjbyname 0x0, "k"'), ('p"', 'return'),
+        ('p"', 'jump_label_0:'), ('p"', '.catchall'), ('p"', '}'),
+        ('p"', '# STRING ===================='),
+        ('p', '\tsta v0'), ('p', '.catchall'), ('p', '}'),
+        ('p""', '\tsta v0'), ('p""', '.catchall'),
+        ('p\\', '\tsta v0'), ('p\\', '# STRING ===================='),
+    ]
+    for _a, _b in _amb:
+        add(f'{_a}\n{_b}\ntail', "ambiguity-matrix")
+
     # ---- C0 控制字符全扫（\x02-\x0c、\x0e-\x1f 逐码点，池+操作数双面系统化）----
     for _cp in list(range(0x02, 0x0d)) + list(range(0x0e, 0x20)):
         add(chr(_cp), "c0-sweep")
@@ -321,9 +336,18 @@ def gen(out: pathlib.Path) -> int:
     cases = build_cases()
     keys = pick_keys(cases)
     n = len(cases)
+    # 歧义矩阵用例拆独立函数：stringStressAt 的 if-chain CFG 随用例数线性增长，
+    # 越过工具链 lift 容量阈值后 TAC dump 从中间截断（2026-09-15 实测 216 用例止于 351 块）；
+    # 拆函数把每函数 CFG 规模压回安全区。
+    main_cases = [(c, g) for c, g in cases if g != "ambiguity-matrix"]
+    mat_cases = [(c, g) for c, g in cases if g == "ambiguity-matrix"]
+    n_main = len(main_cases)
 
-    def ts(i: int) -> str:
-        return f'"{enc(cases[i][0])}"'
+    def ts_main(i: int) -> str:
+        return f'"{enc(main_cases[i][0])}"'
+
+    def ts_mat(i: int) -> str:
+        return f'"{enc(mat_cases[i][0])}"'
 
     lines: list[str] = [
         HEADER,
@@ -332,14 +356,15 @@ def gen(out: pathlib.Path) -> int:
         "// （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。",
         f"// 共 {n} 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。",
         f"export const STRING_STRESS_CASES: number = {n};",
+        f"export const MAT_CASES: number = {len(mat_cases)};",
         "",
-        "// 面①：方法体 lda.str 操作数（含全部用例）。",
+        "// 面①：方法体 lda.str 操作数（歧义矩阵组拆至 stringStressMatrix，防 lift 容量截断）。",
         "export function stringStressAt(i: number): string {",
     ]
-    for i in range(n):
-        lines.append(f"  if (i === {i}) {{ return {ts(i)}; }}")
+    for i in range(n_main):
+        lines.append(f"  if (i === {i}) {{ return {ts_main(i)}; }}")
     lines += [
-        f"  if (i === {n}) {{",
+        f"  if (i === {n_main}) {{",
         "    // 门禁防线：非字面量 return 路径——return v9（无引号）不得开启操作数收集区产出幻影操作数",
         '    const derived = "closer-guard-derived" + i;',
         "    return derived;",
@@ -347,12 +372,23 @@ def gen(out: pathlib.Path) -> int:
         '  return "string-stress-fallback";',
         "}",
         "",
+        "// 面①b：歧义矩阵组（独立函数防 lift 容量截断，见 gen 头注释）。",
+        "export function stringStressMatrix(i: number): string {",
+    ]
+    for i in range(len(mat_cases)):
+        lines.append(f"  if (i === {i}) {{ return {ts_mat(i)}; }}")
+    lines += [
+        '  return "matrix-stress-fallback";',
+        "}",
+        "",
         "// 面②a：数组字面量缓冲（含全部用例）。",
         "export function stringStressArray(): Array<string> {",
         "  return [",
     ]
-    for i in range(n):
-        lines.append(f"    {ts(i)},")
+    for i in range(n_main):
+        lines.append(f"    {ts_main(i)},")
+    for i in range(len(mat_cases)):
+        lines.append(f"    {ts_mat(i)},")
     lines += [
         "  ];",
         "}",
@@ -429,9 +465,13 @@ def gen(out: pathlib.Path) -> int:
         "    cnt += 1;",
         "    len += k.length + obj[k].length;",
         "  }",
-        "  for (let i = 0; i < STRING_STRESS_CASES; i++) {",
+        "  for (let i = 0; i < STRING_STRESS_CASES - MAT_CASES; i++) {",
         "    cnt += 1;",
         "    len += stringStressAt(i).length;",
+        "  }",
+        "  for (let i = 0; i < MAT_CASES; i++) {",
+        "    cnt += 1;",
+        "    len += stringStressMatrix(i).length;",
         "  }",
         "  len += stringStressFields().length;",
         "  len += stringStressLexenv(cnt);",

@@ -2,10 +2,11 @@
 // 字符串边界语料：把引号/换行/回车/代理对/伪造 ark_disasm 文本结构等全部边界形态
 // 同时压入三个解析面：方法体指令操作数（lda.str / stobjbyname）、字面量缓冲
 // （createarraywithbuffer / createobjectwithbuffer 的键与值）、字符串池。
-// 共 202 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
-export const STRING_STRESS_CASES: number = 202;
+// 共 216 个用例；预期故障模式与实证依据见 tools/gen_string_stress.py 文档字符串。
+export const STRING_STRESS_CASES: number = 216;
+export const MAT_CASES: number = 14;
 
-// 面①：方法体 lda.str 操作数（含全部用例）。
+// 面①：方法体 lda.str 操作数（歧义矩阵组拆至 stringStressMatrix，防 lift 容量截断）。
 export function stringStressAt(i: number): string {
   if (i === 0) { return "The quick brown fox jumps"; }
   if (i === 1) { return ""; }
@@ -217,6 +218,25 @@ export function stringStressAt(i: number): string {
   return "string-stress-fallback";
 }
 
+// 面①b：歧义矩阵组（独立函数防 lift 容量截断，见 gen 头注释）。
+export function stringStressMatrix(i: number): string {
+  if (i === 0) { return "p\"\n\tsta v0\ntail"; }
+  if (i === 1) { return "p\"\n\tldobjbyname 0x0, \"k\"\ntail"; }
+  if (i === 2) { return "p\"\nreturn\ntail"; }
+  if (i === 3) { return "p\"\njump_label_0:\ntail"; }
+  if (i === 4) { return "p\"\n.catchall\ntail"; }
+  if (i === 5) { return "p\"\n}\ntail"; }
+  if (i === 6) { return "p\"\n# STRING ====================\ntail"; }
+  if (i === 7) { return "p\n\tsta v0\ntail"; }
+  if (i === 8) { return "p\n.catchall\ntail"; }
+  if (i === 9) { return "p\n}\ntail"; }
+  if (i === 10) { return "p\"\"\n\tsta v0\ntail"; }
+  if (i === 11) { return "p\"\"\n.catchall\ntail"; }
+  if (i === 12) { return "p\\\n\tsta v0\ntail"; }
+  if (i === 13) { return "p\\\n# STRING ====================\ntail"; }
+  return "matrix-stress-fallback";
+}
+
 // 面②a：数组字面量缓冲（含全部用例）。
 export function stringStressArray(): Array<string> {
   return [
@@ -422,6 +442,20 @@ export function stringStressArray(): Array<string> {
     "{\"k\":\"v\"}\n# STRING ====================\n😀tail",
     "multi\n[offset:0x1, name_value:x]\r\nevil‮x‬",
     "a\"b\\c\td\ne\rf\"g`h",
+    "p\"\n\tsta v0\ntail",
+    "p\"\n\tldobjbyname 0x0, \"k\"\ntail",
+    "p\"\nreturn\ntail",
+    "p\"\njump_label_0:\ntail",
+    "p\"\n.catchall\ntail",
+    "p\"\n}\ntail",
+    "p\"\n# STRING ====================\ntail",
+    "p\n\tsta v0\ntail",
+    "p\n.catchall\ntail",
+    "p\n}\ntail",
+    "p\"\"\n\tsta v0\ntail",
+    "p\"\"\n.catchall\ntail",
+    "p\\\n\tsta v0\ntail",
+    "p\\\n# STRING ====================\ntail",
   ];
 }
 
@@ -515,9 +549,13 @@ export function stringStressChecksum(): string {
     cnt += 1;
     len += k.length + obj[k].length;
   }
-  for (let i = 0; i < STRING_STRESS_CASES; i++) {
+  for (let i = 0; i < STRING_STRESS_CASES - MAT_CASES; i++) {
     cnt += 1;
     len += stringStressAt(i).length;
+  }
+  for (let i = 0; i < MAT_CASES; i++) {
+    cnt += 1;
+    len += stringStressMatrix(i).length;
   }
   len += stringStressFields().length;
   len += stringStressLexenv(cnt);
