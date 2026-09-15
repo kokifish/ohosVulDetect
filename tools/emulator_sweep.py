@@ -180,15 +180,30 @@ def reopen_page(prefix):
     return False
 
 
+PERM_ALLOW = ('始终允许', '仅本次允许', '允许', 'Allow')  # 优先常驻授权
+
+
 def post_click(anchor):
-    """点击后处置：吞系统对话框；返回是否仍在目标页（按锚文本，空锚不校验）。"""
+    """点击后处置：吞系统对话框 + 自动允许权限/通知弹窗；返回是否仍在目标页。"""
     tree = dump()
     texts = [a.get('text', '') for a in nodes(tree)]
     if any(t in ('No options to open with', '选择打开方式', '无法打开') for t in texts):
         for a in nodes(tree):
             if a.get('text', '') in ('OK', '确定'):
                 click(*center(a['bounds']), 1.2)
-                texts = [a.get('text', '') for a in nodes(dump())]
+                tree = dump()
+                texts = [a.get('text', '') for a in nodes(tree)]
+                break
+    if any(t in PERM_ALLOW for t in texts):
+        # 权限/通知授权弹窗：基准要求授权态（更多 API 面可达），按优先级点击允许
+        for want in PERM_ALLOW:
+            for a in nodes(tree):
+                if a.get('text', '') == want and a.get('type') == 'Button':
+                    click(*center(a['bounds']), 1.5)
+                    tree = dump()
+                    texts = [a.get('text', '') for a in nodes(tree)]
+                    break
+            if not any(t in PERM_ALLOW for t in texts):
                 break
     return (not anchor) or anchor in texts
 

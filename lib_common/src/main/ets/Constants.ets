@@ -4,7 +4,7 @@
 export class BENCH {
   static readonly VERSION: string = 'ovd-bench-1.0.0';
   static readonly API_BASE: string = 'https://httpbin.org';
-  static readonly WS_ECHO: string = 'wss://echo.websocket.org';
-  static readonly TCP_HOST: string = '93.184.216.34';
+  static readonly WS_ECHO: string = 'wss://ws.postman-echo.com/raw';
+  static readonly TCP_HOST: string = '1.1.1.1';
   static readonly BUNDLE: string = 'com.koki.VD';
 }

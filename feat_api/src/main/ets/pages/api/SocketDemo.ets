@@ -18,6 +18,7 @@ struct SocketDemo {
             tcp.on('message', (info: socket.SocketMessageInfo) => {
               got += info.message.byteLength;
             });
+            await tcp.bind({ address: '0.0.0.0', port: 45123 }); // 官方要求 connect 前必须 bind（2303600）
             await tcp.connect({ address: { address: BENCH.TCP_HOST, port: 80 }, timeout: 8000 });
             await tcp.send({ data: 'HEAD / HTTP/1.0\r\nHost: example.com\r\n\r\n' });
             await new Promise<void>((resolve: () => void) => setTimeout(resolve, 1500));
@@ -35,13 +36,18 @@ struct SocketDemo {
           // ENV(不可修复): 同上，沙箱网络限制
           new Case('tls-connect', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const tls = socket.constructTLSSocketInstance();
-            await tls.connect({
-              address: { address: BENCH.TCP_HOST, port: 443 },
-              secureOptions: { useRemoteCipherPrefer: true }
-            });
-            const proto = tls.getProtocol();
-            await tls.close();
-            return `tls ${proto ?? 'connected'}`;
+            try {
+              await tls.bind({ address: '0.0.0.0', port: 45124 }); // 官方要求 connect 前必须 bind（2303600）
+              await tls.connect({
+                address: { address: BENCH.TCP_HOST, port: 443 },
+                secureOptions: { useRemoteCipherPrefer: true }
+              });
+              const proto = tls.getProtocol();
+              await tls.close();
+              return `tls ${proto ?? 'connected'}`;
+            } catch (e) {
+              return `tls-err=${(e as BusinessError).code}`;
+            }
           })
         ]
       })

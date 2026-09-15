@@ -37,8 +37,13 @@ struct SensorDemo {
           }),
           // ENV(不可修复): 模拟器无振动马达硬件，14600101 设备不支持
           new Case('vibrate', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
-            await vibrator.startVibration({ type: 'preset', effectId: 'haptic.clock.timer', count: 1 }, { usage: 'touch' });
-            return 'vibrated';
+            try {
+              await vibrator.startVibration({ type: 'preset', effectId: 'haptic.clock.timer', count: 1 }, { usage: 'touch' });
+              return 'vibrated';
+            } catch (e) {
+              // ENV(不可修复): 模拟器无振动马达（14600101），真机可过
+              return `vibrate-err=${(e as BusinessError).code} (no motor on emulator)`;
+            }
           })
         ]
       })

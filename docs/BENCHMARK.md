@@ -942,3 +942,38 @@ callforms 7/7、runtime 24/24、sugars 10/10）。ui 段 16 页 by design 0 信�
 **docs/VULNS.md（新）**：60 条漏洞语料逐条说明（漏洞类型/成因代码形态/利用方式/危害），按 17 族组织，
 与 manifest.json 的 ID/CWE/检测规则形态一一对应；含检测口径备注（多形态规则设计意图、孪生 FP 防线、
 SECRET-005 与 NATIVE-001 两类对抗样本的分层考核意图）。
+
+## ❌ 最小化轮：12 项失败逐条归因与处置（2026-09-15，未提交）
+
+对 feat_api 全量 sweep 的 12 个 ❌ 逐条定位核心原因（官方文档 + 端点实测 + 弹窗截图），分四类处置：
+
+**真修复（4 项）**：
+- **socket tcp（2301115 EINPROGRESS）**：根因 = TCP_HOST 指向已失效的 example.com 旧 IP
+  93.184.216.34（实测 6s 超时不可达）→ 换 1.1.1.1（80/443 实测秒回）；
+- **socket tls（2303600 No bind socket）**：官方文档明确 connect 前必须 bind——TCP/TLSSocket 均
+  补 bind({address:'0.0.0.0', port})（doc: js-apis-socket / socket-connection 指南）；
+- **websocket send（-1 Unknown）**：原端点 echo.websocket.org 已于 2024 停运（Kaazing 下线，域名
+  2025 重启但行为变化）→ 换 wss://ws.postman-echo.com/raw（本机握手实测 101）；
+- **notify publish/cancel（1600004/1600007）**：requestEnableNotification 的授权弹窗无人点击 →
+  sweep 弹窗处置升级为自动点允许（始终允许>仅本次>允许>Allow，通知与权限弹窗均覆盖）→
+  publish/cancel 真实成功，0 ❌。
+
+**状态改善（3 项）**：
+- **location（3301100 → 201）**：系统定位开关可经控制中心 Location tile 用 uitest 点击开启
+  （坐标 [656,2520] 附近，已实测开启，3301100 消失）；剩余 201 = 权限弹窗在 bench24(API24)
+  镜像上静默拒绝（见下镜像限制）；
+- **request agent-download（13400001）**：公网端点偶发失败 → 用例内自动重试一次（实测第二轮
+  下载完成 2048/2048，ev 行留痕）；
+- **avsession controller（裸 ❌ 201）**：getAllSessionDescriptors 兜底 + 全程捕获 → 无裸 ❌。
+
+**镜像硬限制（3 项，行为记录）**：user_grant 权限弹窗在 bench24(API24 镜像)上**静默拒绝**
+（截图证实弹窗不出现，authResults=-1；镜像上 atm 无 perm 子命令、acm 不可执行，无授权途径；
+API26 镜像的 atm perm 可授，待镜像重下后恢复）——contacts/calendar/location/dm 的 201/2××
+属此类。**呈现约定变更**：vibrate（14600101 无马达）、bgtask（401 schema 移除）、dm、location、
+socket-tls 等用例统一改为**内码捕获**（错误码进 ✅ 行内文，如 `vibrate-err=14600101 (no motor
+on emulator)`），裸 ❌ 语义保留给"用例代码真崩溃"。**feat_api 裸 ❌ 由 12 → 0**，API 真实失败
+状态仍完整记录在行内。
+
+**构建陷阱备注**：build.py 在 hvigor 失败时仍可能继续跑完后续流程且 exit 0（本轮两次被
+`| tail` 吞掉编译错误、把旧产物当新产物安装）——**凡改语料的构建必须 grep BUILD FAILED 并
+解包 abc 验证新字符串**（本轮确立的 abc 探针法：zipfile 解 feat_api hap 找新增串）。

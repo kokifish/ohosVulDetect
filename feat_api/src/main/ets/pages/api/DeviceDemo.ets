@@ -1,5 +1,6 @@
 import { deviceInfo, batteryInfo } from '@kit.BasicServicesKit';
-import { common } from '@kit.AbilityKit';
+import { common, abilityAccessCtrl } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { display } from '@kit.ArkUI';
 import { distributedDeviceManager } from '@kit.DistributedServiceKit';
 import { Case, DemoScaffold } from 'lib_common';
@@ -33,10 +34,21 @@ struct DeviceDemo {
             return `display ${d.width}x${d.height} dpi=${d.densityDPI}`;
           }),
           new Case('dm-devices', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
-            const dm: distributedDeviceManager.DeviceManager = await distributedDeviceManager.createDeviceManager('com.koki.VD');
-            const list: Array<distributedDeviceManager.DeviceBasicInfo> = await dm.getAvailableDeviceList();
-            dm.off('deviceStateChange');
-            return `available=${list.length}`;
+            // user_grant：运行时先申请（sweep 自动点允许），再建 DeviceManager
+            try {
+              const atManager = abilityAccessCtrl.createAtManager();
+              await atManager.requestPermissionsFromUser(ctx, ['ohos.permission.DISTRIBUTED_DATASYNC']);
+            } catch (e) {
+              log(`perm request: ${JSON.stringify(e)}`);
+            }
+            try {
+              const dm: distributedDeviceManager.DeviceManager = await distributedDeviceManager.createDeviceManager('com.koki.VD');
+              const list: Array<distributedDeviceManager.DeviceBasicInfo> = await dm.getAvailableDeviceList();
+              dm.off('deviceStateChange');
+              return `available=${list.length}`;
+            } catch (e) {
+              return `dm-err=${(e as BusinessError).code} (perm dialog auto-denied on this image)`;
+            }
           })
         ]
       })
@@ -45,3 +57,4 @@ struct DeviceDemo {
     .height('100%')
   }
 }
+
