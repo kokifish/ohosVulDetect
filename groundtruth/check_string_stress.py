@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""字符串应力语料 round-trip 门禁（METHODS 段指令操作数面）。
+"""字符串应力语料 round-trip 门禁（提升后 IR 的 return 字面量面）。
 
 背景：ark_disasm 对字符串零转义输出（双引号、\\n、\\r、\\t 裸输出，\\t 使字符串续行与真指令行
 「\\t+操作码」完全同形），逆向工具按行/引号启发式切分指令流时存在多个截断面：
@@ -9,16 +9,18 @@
 字符串池（STRING 段）round-trip 已有既往红队覆盖，但 AsmMethod 指令操作数值从未被断言——
 2026-09-14 前各轮「全过」结论均未触达该面，本门禁补上。
 
-数据流：逆向工具对构建产物输出 test.out（含 AsmMethod debug dump，指令行形如 `N    lda.str <raw>`，
-操作数原样裸出、可跨物理行）。本脚本从 tools/gen_string_stress.py 取全部用例期望值，
-在 test.out 的 stringStressAt 方法块上重建 lda.str 操作数序列（跨行拼接逐字节还原，须保 CR），
-做多重集合比对；stringStressFields 的静态值做子集核对（次级）。任何非白名单差异即 FAIL，
+数据流（2026-09-15 TAC 面适配）：逆向工具的引号感知解析修复落地后，stringStressAt 能完整
+解析并提升，test.out 的 AsmMethod dump 不再含有 `N    lda.str <raw>` 的原始 NAC 行（未提升
+方法的兜底 dump 面），本门禁改为从提升后 IR 重建操作数：TAC debug 对 STR 字面量零转义渲染
+（`N    return "<raw>"`，跨物理行、内容裸出）。重建规则与 NAC 面同构：`return "` 起始、
+下一 TAC 行（`<idx>` 补宽 4 + 空格）/块标记前截止、剥尾部闭引号，须 newline='' 保 CR。
+stringStressFields 的静态值做引号包裹子串核对（次级）。任何非白名单差异即 FAIL，
 并按用例分组输出定位清单。
 
 用法：python3 groundtruth/check_string_stress.py <test.out> [--root ohosVulDetect根目录]
 退出码：0 = 全部 round-trip；1 = 存在白名单外缺失/多出。
 
-已知限制：操作数内容若自身存在「行首 <数字>+空格+字母」的行会被误判为指令边界
+已知限制：操作数内容若自身存在「行首 <数字>+空格+字母」的行会被误判为 TAC 行边界
 （当前语料无此形态；literal 伪造组行首数字后跟 0x 十六进制，不命中）。
 """
 import argparse
@@ -30,15 +32,18 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# MUTF-8 裸字节导致的既有已记录损失（NUL / 孤立代理对，见 docs/BENCHMARK.md 对应轮次）
-KNOWN_LOSSES = {"a\x00b", "x\ud800y", "x\udfffy"}
+# 工具契约（MUTF-8 还原轮）：合法 CESU-8 代理对重组为解码码点、孤立代理逐字保留、
+# NUL 保留；期望侧过同一变换后再对齐 test.out 的 backslashreplace 写出形态
 
 # stringStressFields 中的静态值（动态键读写的 value 侧）
 FIELDS_VALUES = ["v\"x", "v\\y", "v\nz", "tab-key", "brace-key", "pool",
                  "comma-key", "quad-key", "label-key", "catchall-key"]
 
-_INST_LINE = re.compile(r"^\d+\s+[a-zA-Z.]")
-_LDASTR_LINE = re.compile(r"^\d+\s+lda\.str (.*)$")
+# TAC debug 行：指令索引 + 补宽空格 + 字母/点开头（0x 十六进制行首不命中）；
+# 块/方法标记行（.language / lexenv_name_map 只出现在方法头，块内出现即为字符串内容）
+_TAC_LINE = re.compile(r"^\d+\s+[a-zA-Z.]")
+_SEGMENT_MARK = re.compile(r"^(\[\d+/\d+\]|AsmMethod:|CodeBlocks:|>> )")
+_TAC_RETURN = re.compile(r'^\d+\s+return "(.*)$')
 
 
 def load_gen_cases(root: pathlib.Path) -> list[tuple[str, str]]:
@@ -64,27 +69,29 @@ def find_block(blocks: list[tuple[str, str]], name: str) -> str:
     return ""
 
 
-def extract_ldastr_operands(block: str) -> list[str]:
-    """重建 stringStressAt 的 lda.str 操作数序列。
+def extract_return_operands(block: str) -> list[str]:
+    """从提升后 IR 重建 stringStressAt 的 return 字面量操作数。
 
-    debug 指令行以「<idx>  <op>」开头；多行操作数的续行是裸内容（可含 \\r/\\t/引号），
-    直到下一条指令行。逐行拼接、以 \\n 连接可逐字节还原（内容尾部 \\n 表现为空续行）。
+    TAC debug 行形如 `N    return "<raw>`（索引补宽 4 + 空格）；多行操作数的续行是裸内容
+    （可含 \\r/\\t/引号），直到下一 TAC 行或段标记。逐行收集后剥掉尾部闭引号（内容自带的
+    尾引号与闭引号同形时以最外层为准——闭引号总是区域最后一个字符）。
     """
     ops: list[str] = []
     cur: list[str] | None = None
     for ln in block.split("\n"):
-        if _INST_LINE.match(ln):
-            if cur is not None:
-                ops.append("\n".join(cur))
-                cur = None
-            m = _LDASTR_LINE.match(ln)
-            if m:
-                cur = [m.group(1)]
+        if cur is not None and (_TAC_LINE.match(ln) or _SEGMENT_MARK.match(ln)):
+            ops.append("\n".join(cur))
+            cur = None
+        m = _TAC_RETURN.match(ln)
+        if m and cur is None:
+            cur = [m.group(1)]
         elif cur is not None:
             cur.append(ln)
     if cur is not None:
         ops.append("\n".join(cur))
-    return ops
+    # 正则已消费开引号：内容 = 末引号之前的全部（闭引号恒为区域最后一个引号，
+    # 越过它的段尾空白自然丢弃；内容自带的首/尾引号原样保留）
+    return [o[: o.rfind('"')] if '"' in o else o for o in ops]
 
 
 def main() -> int:
@@ -104,7 +111,29 @@ def main() -> int:
     if not block:
         print("FAIL: stringStressAt 方法块未在 test.out 中找到（方法面缺失或方法名被改写）")
         return 1
-    got = collections.Counter(extract_ldastr_operands(block))
+    def _recombine_pairs(s_: str) -> str:
+        # 工具契约（MUTF-8 还原轮）：合法 CESU-8 代理对重组为解码码点，孤立代理保留
+        out = []
+        i = 0
+        while i < len(s_):
+            c = s_[i]
+            if "\ud800" <= c <= "\udbff" and i + 1 < len(s_) and "\udc00" <= s_[i + 1] <= "\udfff":
+                out.append(chr(0x10000 + ((ord(c) - 0xD800) << 10) + (ord(s_[i + 1]) - 0xDC00)))
+                i += 2
+            else:
+                out.append(c)
+                i += 1
+        return "".join(out)
+
+    def _writer_norm(s_: str) -> str:
+        # 合法代理对先按工具语义重组；孤立代理经 backslashreplace 转义为 \udXXX 文本
+        # （test.out 的写出形态），期望侧过同一变换后可比
+        return _recombine_pairs(s_).encode("utf-8", "backslashreplace").decode("utf-8")
+
+    expected = collections.Counter(
+        {_writer_norm(c): n for c, n in expected.items()}
+    )
+    got = collections.Counter(extract_return_operands(block))
 
     missing = expected - got
     extra = got - expected
@@ -116,10 +145,7 @@ def main() -> int:
           f"missing {sum(missing.values())}, extra {sum(extra.values())}")
 
     fail = False
-    miss_known = [c for c in missing if c in KNOWN_LOSSES]
-    miss_new = [c for c in missing if c not in KNOWN_LOSSES]
-    if miss_known:
-        print(f"known losses (MUTF-8 documented, {len(miss_known)}): {[repr(c)[:40] for c in miss_known]}")
+    miss_new = list(missing)
     if miss_new:
         fail = True
         by_grp = collections.defaultdict(list)
@@ -141,8 +167,7 @@ def main() -> int:
     if not fblock:
         print("WARN: stringStressFields 方法块未找到，次级核对跳过")
     else:
-        fops = extract_ldastr_operands(fblock)
-        fmiss = [v for v in FIELDS_VALUES if v not in fops]
+        fmiss = [v for v in FIELDS_VALUES if f'"{v}"' not in fblock]
         if fmiss:
             fail = True
             print(f"FIELDS missing values: {[repr(v) for v in fmiss]}")
