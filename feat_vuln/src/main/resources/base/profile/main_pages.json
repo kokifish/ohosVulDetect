@@ -15,6 +15,12 @@
     "pages/DebugPage",
     "pages/ConfPage",
     "pages/NativePage",
-    "pages/FormVulnPage"
+    "pages/FormVulnPage",
+    "pages/CertPage",
+    "pages/MediaVulnPage",
+    "pages/KeylogPage",
+    "pages/DrmVulnPage",
+    "pages/SpeechVulnPage",
+    "pages/A11yVulnPage"
   ]
 }

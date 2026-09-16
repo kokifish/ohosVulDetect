@@ -934,6 +934,58 @@ _mutf8 统一、锁表注释补 case3 机理）均已落实。**门禁终态：2
 manifest 120 一致；sync_pages OK；指令覆盖 188/268 无回退；对账 Kit **33/103**（+4，无漂移）；
 abc 探针全中；模拟器定向 sweep **4 页 0 ❌**（cert/input 全功能，medialib/a11y 按约定记录）。
 
+## P2 落地轮：歧义矩阵验证 + 漏洞规则多样化 + Kit 批次三 + compare_versions（2026-09-15，未提交）
+
+### 1. 歧义矩阵外溢验证（ark_disasm literal 打印器）
+
+最小探针（16 隔离变体 → es2abc → ark_disasm）推翻了此前「literal 打印器渲染空串」的假设：
+**ark_disasm literal 打印器对全部 16 个边界变体（含引号行尾/tab 指令续行/`}` 行/CRLF）均完整渲染**。
+此前在 feat_api .dis 中看到的空串条目实为 **c0-sweep 组的裸控制字节**（\x02-\x1f 不可见于终端），
+并非渲染缺陷。ark_disasm literal 打印器无已知触发条件，无需向 ark_disasm 上游报障。
+16 变体最小复现 .ts 已留在 /tmp/ovd_lit_probe.ts（含构建与反汇编命令）。
+
+### 2. 漏洞规则形态多样化（72 对 = 60 + 12 新对）
+
+新增 6 族 × 2 对，刻意使用 flow/predicate 规则形态（此前 3/60 → 现 6/72）：
+
+| 族 | 新对 | 规则形态 | Kit API 面 |
+|---|---|---|---|
+| CERT | CERT-001/001S + CERT-002/002S | flow(call+const) / predicate(return-true)+call | DeviceCertificateKit |
+| MEDIA | MEDIA-001/001S + MEDIA-002/002S | flow(call+const) ×2 | MediaLibraryKit |
+| KEYLOG | KEYLOG-001/001S + KEYLOG-002/002S | flow(call+const) ×2 | InputKit(inputConsumer) |
+| DRM | DRM-001/001S + DRM-002/002S | predicate(return-true)+call / flow(call+const) | DrmKit |
+| SPEECH | SPEECH-001/001S + SPEECH-002/002S | flow(call+const) ×2 | CoreSpeechKit |
+| A11Y | A11Y-001/001S + A11Y-002/002S | flow(call+const) ×2 | AccessibilityKit |
+
+CERT-002 的 `return true` 在 async 函数中被 Promise 机制改写为非 `return TRUE` 形态 →
+谓词不命中（首轮 FN）。修正：改同步函数 + callback 形式的 createX509Cert → TAC 直出
+`return TRUE`，谓词命中。经验：**predicate return-true 规则须落在同步函数体内**。
+
+静态 FP 自检 PASS（12 条新规则 constants × 孪生源码零命中）。评分：**F1=1.000（TP=72 FN=0
+FP=0 TN=72）**，manifest 144 条双向一致。
+
+### 3. Kit 批次三（3 页，Kit 35/103）
+
+| 页面 | Kit | 用例 | 运行时 |
+|---|---|---|---|
+| api-drm | DrmKit | createMediaKeySystem + getStatistics/getMaxContentProtectionLevel | ❌ 24700201（模拟器无 DRM 插件，graceful） |
+| api-speech | CoreSpeechKit | createEngine + startListening/shutdown | ✅ 引擎模拟器可用 |
+| api-inputmon | InputKit | inputConsumer hotkeyChange 订阅/退订 | ❌ 401（需系统权限，graceful） |
+
+坑：Kit 子集暴露不全（@kit.InputKit 无 keyPressed 重载/KeyEvent 类型）→ 直连 @ohos 全量模块；
+`inputConsumer.HotkeyOptions` 形状为 `{preKeys, finalKey}`（非 keyCode/isRepeat）；
+`SpeechRecognitionEngine` 无 sessionId 属性；`StartParams.audioInfo` 需 AudioInfo 对象
+（`audioType: string, sampleRate/soundChannel/sampleBit: number`）。
+
+### 4. compare_versions 矩阵轮补跑
+
+12 hap 全部 equal ✓（歧义矩阵 +14 矩阵 + 2 closer-guard 用例不改变指令面形态，跨轮 diff 仅 .ts 生成物）。
+
+**门禁终态**：4 变体构建 OK（多轮迭代后）；manifest **144**（vuln=72, twin=72）双向一致；
+sync_pages OK（路由页 67）；指令覆盖 **188/268 无回退**；对账 Kit **35/103**（+2 DrmKit/
+CoreSpeechKit，无漂移）；abc 探针全中；评分 **F1=1.000（TP=72 TN=72）**；运行时 strstress
+**n=456** 不变；模拟器定向 sweep **9 页**（6 cat + 3 api）0 崩溃。
+
 ## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
 
 **1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：

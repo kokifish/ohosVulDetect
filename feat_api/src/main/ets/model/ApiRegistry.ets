@@ -41,6 +41,9 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-medialib', 'MediaLibraryKit: photoAccessHelper fetch', 'pages/api/MediaLibDemo'),
   new DemoItem('api-input', 'InputKit: device enum/detail', 'pages/api/InputDemo'),
   new DemoItem('api-a11y', 'AccessibilityKit: enabled/screenReader', 'pages/api/A11yDemo'),
+  new DemoItem('api-drm', 'DrmKit: media key system', 'pages/api/DrmDemo'),
+  new DemoItem('api-speech', 'CoreSpeechKit: engine lifecycle', 'pages/api/SpeechDemo'),
+  new DemoItem('api-inputmon', 'InputKit: keyPressed subscribe', 'pages/api/InputMonDemo'),
 ];
 
 export const UI_DEMOS: DemoItem[] = [

@@ -133,27 +133,15 @@ def extract_return_operands(block: str) -> list[str]:
     return [o[: o.rfind('"')] if '"' in o else o for o in ops]
 
 
-def literal_walk_check(dis_path: pathlib.Path, cases: list[tuple[str, str]]) -> list[str]:
-    """LITERALS 节 oracle 走查：数组缓冲（全用例按序）+ 对象缓冲（键值交错按序）。
+def literal_presence_check(dis_path: pathlib.Path, cases: list[tuple[str, str]]) -> list[str]:
+    """LITERALS 面存在性断言：全部用例 + 恶劣键/值以 `string:"<mutf8>"` 形态存在于 .dis。
 
-    literal 值零转义裸出（" \n \r \t 均原样），期望侧无需转义表，直接字节比对。
-    边界与排除说明：literal 值零转义裸出但 **ark_disasm 的 literal 打印器对部分形态有损**
-    （2026-09-15 实测：ambiguity-matrix 组 14 值——首行行尾引号 + tab 指令形态续行——在 .dis
-    里渲染为空串，而 abc 字节完整、方法面同值渲染完整，SDK 工具渲染层缺陷），该 14 值从
-    literal oracle 排除（其 round-trip 由 parse 层快照 + TAC 面行为锁覆盖）。走查 = 有序
-    find（非严格邻接，容忍排除项的空串条目夹在中间）：按 build_cases 顺序逐项从游标向后
-    定位，顺序断言保留；缓冲级精确边界文本层不可判定（lit-spoof 即伪造该面），已知残余
-    弱点见 gen 文档。
+    2026-09-15 实测：es2abc 对大 literal 数组分块（chunk）且不保源码序（歧义矩阵 14 项
+    被拆至独立 chunk 落于文件尾）——有序/单缓冲走查模型不成立；跨 chunk 的多重集合比对
+    受值内子串碰撞限制退化为存在性断言（方法面全量多重集合由 TAC 门禁覆盖）。
+    孤立代理经 surrogatepass 出 CESU-8 字节；NUL 为 C0 80；其余直比。
     """
-    import importlib.util as _ilu
-    spec = _ilu.spec_from_file_location("gen_string_stress", ROOT / "tools" / "gen_string_stress.py")
-    mod = _ilu.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    keys = mod.pick_keys(cases)
-
     def _mutf8(x: str) -> bytes:
-        # MUTF-8/CESU-8：按 UTF-16 码元编码——NUL → C0 80，非 BMP 字符拆代理对
-        # （surrogatepass 出 3 字节 CESU-8），其余同标准 UTF-8
         out = b''
         for ch in x:
             o = ord(ch)
@@ -169,42 +157,18 @@ def literal_walk_check(dis_path: pathlib.Path, cases: list[tuple[str, str]]) -> 
 
     raw = dis_path.read_bytes()
     fails: list[str] = []
-
-    def walk(pos: int, expect_frags: list[bytes]) -> int | None:
-        # 有序 find：按序定位每个期望片段（游标单调前进），顺序断言保留
-        p = pos
-        for i, frag in enumerate(expect_frags):
-            p = raw.find(frag, p)
-            if p < 0:
-                return i + 1
-            p += len(frag)
-        return None
-
-    opener = re.compile(rb'(?m)^(\d+) 0x[0-9a-f]+ \{ (\d+) \[ ')
-    n_keys = len(keys)
-    obj_frags: list[bytes] = []
-    for ki, k in enumerate(keys):
-        obj_frags.append(b'string:"' + _mutf8(k) + b'", ')
-        obj_frags.append(('string:"k' + chr(97 + ki % 26) + str(ki) + 'v", ').encode())
-    # ambiguity-matrix 组 14 值被 ark_disasm literal 打印器渲染为空串（SDK 渲染缺陷，
-    # 见 docstring），从 literal oracle 排除
-    mat_contents = {c for c, g in cases if g == "ambiguity-matrix"}
-    arr_cases = [(c, g) for c, g in cases if c not in mat_contents]
-    arr_frags = [b'string:"' + _mutf8(c) + b'", ' for c, _ in arr_cases]
-
-    def try_buffers(want_cnt: int, frags: list[bytes], label: str) -> None:
-        tried = 0
-        for m in opener.finditer(raw):
-            if int(m.group(2)) != want_cnt:
-                continue
-            tried += 1
-            if walk(m.end(), frags) is None:
-                print(f"  {label}: OK（count=={want_cnt} 缓冲严格邻接走查通过，候选 #{tried}）")
-                return
-        fails.append(f"{label}: 无候选缓冲通过严格邻接走查（count=={want_cnt}，尝试 {tried} 个）")
-
-    try_buffers(len(cases), arr_frags, "array")  # count 含被渲染为空串的排除项
-    try_buffers(2 * n_keys, obj_frags, "object")
+    import importlib.util as _ilu
+    spec = _ilu.spec_from_file_location("gen_string_stress", ROOT / "tools" / "gen_string_stress.py")
+    mod = _ilu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    keys = mod.pick_keys(cases)
+    frags = [(f'case:{c}', b'string:"' + _mutf8(c) + b'"') for c, _ in cases]
+    frags += [(f'key:{k}', b'string:"' + _mutf8(k) + b'"') for k in keys]
+    frags += [(f'value:k{chr(97 + i % 26)}{i}v', b'string:"k' + chr(97 + i % 26).encode() + str(i).encode() + b'v"')
+              for i in range(len(keys))]
+    for label, frag in frags:
+        if frag not in raw:
+            fails.append(f'{label}: {frag[:70]!r} 未在 .dis 全文找到')
     return fails
 
 
@@ -327,14 +291,14 @@ def main() -> int:
 
     # P2：literal 缓冲面全量核对（--dis 启用）
     if args.dis:
-        lfail = literal_walk_check(pathlib.Path(args.dis), cases)
+        lfail = literal_presence_check(pathlib.Path(args.dis), cases)
         if lfail:
             fail = True
             print("LITERALS face FAIL:")
             for f in lfail:
                 print(f"  {f}")
         else:
-            print("LITERALS face: OK（数组缓冲 + 对象缓冲全量按序走查通过）")
+            print("LITERALS face: OK（全用例 + 恶劣键/值存在性断言通过）")
 
     print("RESULT:", "FAIL" if fail else "OK")
     return 1 if fail else 0

@@ -63,6 +63,9 @@
     "pages/api/CertDemo",
     "pages/api/MediaLibDemo",
     "pages/api/InputDemo",
-    "pages/api/A11yDemo"
+    "pages/api/A11yDemo",
+    "pages/api/DrmDemo",
+    "pages/api/SpeechDemo",
+    "pages/api/InputMonDemo"
   ]
 }

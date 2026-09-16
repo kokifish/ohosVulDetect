@@ -16,6 +16,12 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-debug', '调试残留 (2)', 'pages/DebugPage'),
   new DemoItem('cat-conf', '配置泄露 (2)', 'pages/ConfPage'),
   new DemoItem('cat-native', '原生层 (2)', 'pages/NativePage'),
+  new DemoItem('cat-cert', '证书信任 (1+1S)', 'pages/CertPage'),
+  new DemoItem('cat-media', '媒体库隐私 (1+1S)', 'pages/MediaVulnPage'),
+  new DemoItem('cat-keylog', '输入监听 (1+1S)', 'pages/KeylogPage'),
+  new DemoItem('cat-drm', 'DRM 保护 (1+1S)', 'pages/DrmVulnPage'),
+  new DemoItem('cat-speech', '语音会话 (1+1S)', 'pages/SpeechVulnPage'),
+  new DemoItem('cat-a11y', '无障碍侦察 (1+1S)', 'pages/A11yVulnPage'),
 ];
 
 @Entry
