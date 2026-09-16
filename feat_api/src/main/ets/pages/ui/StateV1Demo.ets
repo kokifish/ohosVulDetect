@@ -60,6 +60,8 @@ struct StateV1Demo {
     AppStorage.setOrCreate('bench_storage_v1', 7);
   }
 
+  @State selfcheckResult: string = '';
+
   build() {
     Column({ space: 10 }) {
       Text('state V1').fontSize(20)
@@ -72,6 +74,36 @@ struct StateV1Demo {
         .onClick(() => {
           this.theme = this.theme === 'light' ? 'dark' : 'light';
         })
+      Button('run selfcheck')
+        .onClick(() => {
+          // 确定性状态断言：@State 写入 → @Watch 联动 @StorageLink；@Provide 切换还原。
+          let pass = 0;
+          let total = 0;
+          const origCount = this.count;
+          const origTheme = this.theme;
+          this.count = 42;
+          total += 1;
+          if (this.count === 42) { pass += 1; }
+          total += 1;
+          if (this.storageNum === 42) { pass += 1; } // @Watch 联动
+          this.theme = origTheme === 'dark' ? 'light' : 'dark';
+          total += 1;
+          if (this.theme !== origTheme) { pass += 1; }
+          this.theme = origTheme;
+          total += 1;
+          if (this.theme === origTheme) { pass += 1; }
+          this.count = origCount;
+          total += 1;
+          if (this.count === origCount) { pass += 1; }
+          if (pass === total) {
+            this.selfcheckResult = `✅ selfcheck state-v1 pass=${pass}/${total}`;
+          } else {
+            this.selfcheckResult = `❌ selfcheck state-v1 pass=${pass}/${total}`;
+          }
+        })
+      if (this.selfcheckResult !== '') {
+        Text(this.selfcheckResult).fontSize(12).fontFamily('monospace')
+      }
       UserCard({ user: this.user, copyScore: this.user.score, twoWay: $count })
       ThemeLabel()
     }

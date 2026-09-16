@@ -288,7 +288,7 @@ def run_page_buttons(page_name, max_rounds=2):
         if page_name.startswith('lang-'):
             fallback = [] if seen else [b for b in btns if 'selfcheck' in b.get('text', '')]
         elif page_name.startswith('ui-'):
-            fallback = []
+            fallback = [b for b in btns if 'selfcheck' in b.get('text', '')]
         else:
             fallback = btns if len(seen) < len(btns) else []
         for b in fallback:
