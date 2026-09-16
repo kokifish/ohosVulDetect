@@ -912,6 +912,28 @@ oracle 排除并归因记录。走查采用「行首锚定 count 候选迭代 + 
 _mutf8 统一、锁表注释补 case3 机理）均已落实。**门禁终态：207/207 + LITERALS OK（双口径），
 评分 F1=1.000，运行时 `strstress=n=456 len=18060 acc=62274075`。**
 
+## Kit 覆盖第十二轮：MediaLibrary/Cert/Input/A11y（2026-09-15，未提交）
+
+**新增 4 页（api-cert / api-medialib / api-input / api-a11y，路由页 64）**，Kit 33 → **37**/103
+（对账脚本实测，新增 DeviceCertificateKit/MediaLibraryKit/InputKit/AccessibilityKit）：
+
+- **api-cert**：`cert.createX509Cert`（FORMAT_PEM）解析内置 vd-bench 自签证书（openssl 生成、
+  仅语料用途）→ getVersion/getSerialNumber/getNotBefore/getNotAfter + 非法 PEM 错误路径
+  （err=401）。纯解析、无权限，**实测全功能**：`ver=3 nb=260915184130Z na=360912184130Z`。
+- **api-medialib**：photoAccessHelper.getPhotoAccessHelper + getAssets（empty FetchOptions）。
+  READ_IMAGEVIDEO user_grant 已声明；未授权环境 getAssets 记 201（镜像弹窗静默拒绝，同前）。
+- **api-input**：inputDevice.getDeviceList/getDevice/getKeyboardType。无权限，**实测全功能**：
+  `devices=9 name=QEMU Virtio Mouse keyboardType=1`。
+- **api-a11y**：isOpenAccessibilitySync/isOpenAccessibility/isScreenReaderOpenSync。
+  实测 `false/false/false`（模拟器默认态）。
+- 坑（签名核实教训续）：EncodingBlob 字段是 `encodingFormat`（非 encoding）；
+  accessibility 的读屏 API 是 `isScreenReaderOpenSync`（非 isScreenReaderEnabled）；
+  `getSerialNumber()` 在本镜像返回 undefined（观察记录）。
+
+**门禁**：4 变体构建 OK（两轮迭代修正 EncodingBlob 字段名/common import/isScreenReaderOpenSync）；
+manifest 120 一致；sync_pages OK；指令覆盖 188/268 无回退；对账 Kit **33/103**（+4，无漂移）；
+abc 探针全中；模拟器定向 sweep **4 页 0 ❌**（cert/input 全功能，medialib/a11y 按约定记录）。
+
 ## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
 
 **1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：

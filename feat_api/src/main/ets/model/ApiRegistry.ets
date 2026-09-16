@@ -37,6 +37,10 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-calendar', 'CalendarKit: calendar account/event', 'pages/api/CalendarDemo'),
   new DemoItem('api-avsession', 'AVSessionKit: media session lifecycle', 'pages/api/AvSessionDemo'),
   new DemoItem('api-camera', 'CameraKit: device enum/modes/torch', 'pages/api/CameraDemo'),
+  new DemoItem('api-cert', 'DeviceCertificateKit: X509 parse', 'pages/api/CertDemo'),
+  new DemoItem('api-medialib', 'MediaLibraryKit: photoAccessHelper fetch', 'pages/api/MediaLibDemo'),
+  new DemoItem('api-input', 'InputKit: device enum/detail', 'pages/api/InputDemo'),
+  new DemoItem('api-a11y', 'AccessibilityKit: enabled/screenReader', 'pages/api/A11yDemo'),
 ];
 
 export const UI_DEMOS: DemoItem[] = [

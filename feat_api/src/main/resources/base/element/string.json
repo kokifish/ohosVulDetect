@@ -43,6 +43,10 @@
     {
       "name": "perm_calendar_reason",
       "value": "benchmark calendar demo"
+    },
+    {
+      "name": "perm_medialib_reason",
+      "value": "benchmark medialib demo"
     }
   ]
 }

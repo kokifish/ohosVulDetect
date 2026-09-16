@@ -59,6 +59,10 @@
     "pages/api/ContactsDemo",
     "pages/api/CalendarDemo",
     "pages/api/AvSessionDemo",
-    "pages/api/CameraDemo"
+    "pages/api/CameraDemo",
+    "pages/api/CertDemo",
+    "pages/api/MediaLibDemo",
+    "pages/api/InputDemo",
+    "pages/api/A11yDemo"
   ]
 }
