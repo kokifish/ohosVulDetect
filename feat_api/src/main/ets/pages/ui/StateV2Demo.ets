@@ -43,8 +43,15 @@ struct StateV2Demo {
   }
 
   @Monitor('num')
-  onNumChange(change: Map<string, number>): void {
-    this.history.push(change.get('num') ?? 0);
+  onNumChange(monitor: IMonitor): void {
+    // SDK 实测：回调参数是 IMonitor，value<T>() 返回 IMonitorValue<T> | undefined，
+    // 字段为 before/now/path（本 SDK 无 after）——按 Map.get 写在监控触发即 jscrash
+    const v = monitor.value<number>('num');
+    if (v && typeof v.now === 'number') {
+      this.history.push(v.now);
+    } else {
+      this.history.push(this.num);
+    }
   }
 
   @Local selfcheckResult: string = '';
@@ -68,27 +75,7 @@ struct StateV2Demo {
         })
       Button('run selfcheck')
         .onClick(() => {
-          let pass = 0;
-          let total = 0;
-          const origNum = this.num;
-          const origCount = this.counter.count;
-          this.num = 21;
-          total += 1;
-          if (this.num === 21) { pass += 1; }
-          total += 1;
-          if (this.doubled === 42) { pass += 1; } // @Computed 联动
-          this.counter.bump();
-          total += 1;
-          if (this.counter.count === origCount + 1) { pass += 1; } // @Trace 联动
-          this.num = origNum;
-          this.counter.count = origCount;
-          total += 1;
-          if (this.num === origNum && this.counter.count === origCount) { pass += 1; }
-          if (pass === total) {
-            this.selfcheckResult = `✅ selfcheck state-v2 pass=${pass}/${total}`;
-          } else {
-            this.selfcheckResult = `❌ selfcheck state-v2 pass=${pass}/${total}`;
-          }
+          this.runSelfcheck();
         })
       if (this.selfcheckResult !== '') {
         Text(this.selfcheckResult).fontSize(12).fontFamily('monospace')
@@ -99,5 +86,27 @@ struct StateV2Demo {
     }
     .width('100%')
     .padding(12)
+  }
+
+  // 位图从左到右：@Local 写读 / @Computed 联动 / @Trace 联动 / 恢复
+  private async runSelfcheck(): Promise<void> {
+    const bits: string[] = [];
+    const origNum = this.num;
+    const origCount = this.counter.count;
+    this.num = 21;
+    // @Computed 为渲染驱动重算：事件回调内改依赖后须等一帧再读（API24 镜像实测同步读旧值）
+    await new Promise<void>((r: () => void) => setTimeout(r, 60));
+    bits.push(this.num === 21 ? '1' : '0');
+    bits.push(this.doubled === 42 ? '1' : '0');
+    this.counter.bump();
+    bits.push(this.counter.count === origCount + 1 ? '1' : '0');
+    this.num = origNum;
+    this.counter.count = origCount;
+    await new Promise<void>((r: () => void) => setTimeout(r, 60));
+    bits.push(this.num === origNum && this.counter.count === origCount ? '1' : '0');
+    const pass = bits.filter((b: string): boolean => b === '1').length;
+    const total = bits.length;
+    const mark = pass === total ? '✅' : '❌';
+    this.selfcheckResult = `${mark} selfcheck state-v2 pass=${pass}/${total} bits=${bits.join('')}`;
   }
 }

@@ -2,7 +2,9 @@
 // + AppStorage/@StorageLink。
 @Observed
 class BenchUser {
-  name: string;
+  // SDK 实测（140110）：@Observed 类部分属性标 @Track 时，build 读未标属性即 jscrash
+  // （Illegal usage of not @Track'ed property）——UI 内读取的属性须全部 @Track
+  @Track name: string;
   @Track score: number;
 
   constructor(name: string, score: number) {
@@ -77,29 +79,23 @@ struct StateV1Demo {
       Button('run selfcheck')
         .onClick(() => {
           // 确定性状态断言：@State 写入 → @Watch 联动 @StorageLink；@Provide 切换还原。
-          let pass = 0;
-          let total = 0;
+          // 位图从左到右：@State 写读 / @Watch→StorageLink / @Provide 切换 / 还原主题 / 还原计数
+          const bits: string[] = [];
           const origCount = this.count;
           const origTheme = this.theme;
           this.count = 42;
-          total += 1;
-          if (this.count === 42) { pass += 1; }
-          total += 1;
-          if (this.storageNum === 42) { pass += 1; } // @Watch 联动
+          bits.push(this.count === 42 ? '1' : '0');
+          bits.push(this.storageNum === 42 ? '1' : '0'); // @Watch 联动
           this.theme = origTheme === 'dark' ? 'light' : 'dark';
-          total += 1;
-          if (this.theme !== origTheme) { pass += 1; }
+          bits.push(this.theme !== origTheme ? '1' : '0');
           this.theme = origTheme;
-          total += 1;
-          if (this.theme === origTheme) { pass += 1; }
+          bits.push(this.theme === origTheme ? '1' : '0');
           this.count = origCount;
-          total += 1;
-          if (this.count === origCount) { pass += 1; }
-          if (pass === total) {
-            this.selfcheckResult = `✅ selfcheck state-v1 pass=${pass}/${total}`;
-          } else {
-            this.selfcheckResult = `❌ selfcheck state-v1 pass=${pass}/${total}`;
-          }
+          bits.push(this.count === origCount ? '1' : '0');
+          const pass = bits.filter((b: string): boolean => b === '1').length;
+          const total = bits.length;
+          const mark = pass === total ? '✅' : '❌';
+          this.selfcheckResult = `${mark} selfcheck state-v1 pass=${pass}/${total} bits=${bits.join('')}`;
         })
       if (this.selfcheckResult !== '') {
         Text(this.selfcheckResult).fontSize(12).fontFamily('monospace')
