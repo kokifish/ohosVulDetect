@@ -8,13 +8,14 @@
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见各轮记录） | check_opcode_coverage.py |
-| 组件覆盖 | 85/137 | check_corpus_coverage.py |
+| 组件覆盖 | 104/137（其余 33 为 HMS 侧/需专用运行环境，本 SDK 声明面不可达） | check_corpus_coverage.py |
 | Kit 覆盖 | 35/103（历史轮"37"为计数口径漂移，以对账脚本为准） | check_corpus_coverage.py |
 | @ohos 直连 | 2/447（语料走 @kit 聚合 import） | check_corpus_coverage.py |
 | 漏洞/孪生 | 80 + 80（manifest 160 条，双向一致） | groundtruth/manifest.json |
-| 评分 | F1=1.000（72 对时代实测；80 对待工具链重跑） | score_output.py |
+| 评分 | F1=1.000（80 对口径实测，TP=80 FN=0 FP=0 TN=80） | score_output.py |
 | feat_api 路由页 | 67（api 43 / ui 16 / lang 7 + Index） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
+| 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
 
 > 语料设计 checklist（新族/新规则必读）：① 源文件先小编译实证 → ② 分类页接线 → ③ Index cat- 清单 → ④ main_pages.json → ⑤ manifest 登记 → ⑥ check_manifest + check_twin_fp 双门禁 OK；构建须 grep BUILD FAILED + abc 探针验新串；新孪生常量须与漏洞规则信号隔离（含子串）。
@@ -1132,6 +1133,50 @@ sync_pages OK（路由页 feat_vuln 23）；生成器确定性 7/7；abc 探针�
 对账 Kit **35/103**（历史轮"37"为口径漂移，以脚本为准）、组件 85/137 无漂移；规则形态
 api-call+constant 45%，稀有形态 22/80。**待办**：评分 F1 待工具链重跑 80 对口径；指令覆盖
 188/268 维持口径待重跑；cat-perm 页 sweep verify-click 对 2 个新按钮有采集盲区（人工点击实测 ✅）。
+
+## 工具链闭环 + 组件收尾 + sweep 采集修复轮（2026-09-19）
+
+**P0 工具链闭环（80 对口径首次全链路验证）**：`examples/dis_demo.py --mp`（工具链仓库，只读调用）
+对终版 `ohosVulDetect-api26-release-unsigned.app` 产出 test.out（10.3MB）→
+`score_output.py` **TP=80 FN=0 FP=0 TN=80，F1=1.000**——8 条新形态规则（call-chain/const-array/
+string-op-flow/监听类）全部对真实 IR 验证通过，收紧后的 CRYPTO-007 等规则无回退。
+`check_opcode_coverage`：**188/268 维持**（未用 80 = deprecated/experimental 45 + wide 4 + 其他 31，
+归因不变；本轮新语料未引入新指令面）。
+`check_string_stress <test.out> --dis`：**207/207 + LITERALS 面 OK**（feat_api .dis 由 SDK ark_disasm
+现生成）。主仓 hostile-parse 回归 **26 项全过**（较上轮 23 项为工具链侧自然增长）。
+
+**P2 组件收尾（85 → 104/137）**：新增 `ui-composite`（Stack/Panel/Counter/Menu+MenuItemGroup/
+Navigator/NavRouter+NavDestination/GridContainer/FolderStack/PageTransitionEnter·Exit/
+IndicatorComponent）与 `ui-ark26`（ArcList/ArcListItem/ArcScrollBar/ArcSwiper，@kit.ArkUI 面）两页。
+实测签名坑：IndicatorComponent 不接受子组件；DynamicLayout 必须 `({algorithm})`；FolderStack
+options 不收 alignContent；Lazy*Layout 族必须嵌在 Scroll/List 等滚动父内。**@since 26 组件
+（Lazy*Layout/SelectionContainer/DynamicLayout/ContainerReader）编译面通过但 API24 镜像运行时
+无模块导出（jscrash SyntaxError 实证）→ 移出语料**，待 API26 模拟器恢复后回补。剩余 33 缺口
+均为 HMS 侧/需专用环境（Camera/ColorPicker/Particle/SecurityUI* 等），本 SDK 声明面不可达。
+
+**P0 sweep 采集盲区修复（cat-perm 15/15 全采）**：根因 = Runner 对异步用例完成后把 ✅/❌ 行
+**追加**到日志尾部，日志 Scroll 不自动滚底，整轮采一次时先落的行已被顶出视口——大页固定漏
+~10 行且同页确定性复现。修复：快路径**逐按钮即点即采**（单 dump/按钮）+ 沉降轮加长
+（12 轮、双采、连续 3 轮无新行才停），异步 userAuth/定位类 30-60s 落地线纳入窗口。
+
+**API26 双环境（bench26）恢复受阻——环境级诊断**：本地仍存 `HarmonyOS-7.0.0-B2` 镜像
+（api 26, 7.0.0.32），CLI `-create bench26 -osVersion "HarmonyOS 7.0.0(26.0.0) Beta2"` 可成功建实例
+（须带完整 Beta2 后缀），但 `-start` 对**任何新实例**（bench26/Pura X View/旧 ovdbench）均卡死在
+qemu 生成前（uuid 临时文件/GPU 检查循环，非沙箱、非镜像问题；bench24 为旧期 GUI 启动的常驻
+实例）。恢复路径：DevEco GUI 的设备管理器启动一次即可。**本轮双环境降级为 bench24 单环境**，
+api26-release 产物仅做工具链静态面验证（dis_demo/score/coverage）。
+
+**完整回归（终版产物，bench24）**：feat_api + feat_vuln 全量 sweep——**api 43/43、cat 21/21 全遍历、
+ui 13 页（含 2 新页渲染人工复验），合计 270✅ / 9❌**，❌ 全部为已归档 ENV 类（socket 沙箱、DRM
+24700201×4 模拟器无插件、PRIV 定位 2300028/201、asset 201、A11Y 外传域名解析 2300006）；
+ui 自检页 **state-v1 5/5、state-v2 4/4**；lang 7 页 selfcheck 7/7（本会话早期构建复验，lang 源此后
+未变更）。cat-perm 大页修复后 15/15 全采。逐按钮采集使页均 ~90-120s，全量预算需 ~5500s+，
+尾部页用 visit_rows 分相补跑（es.visited 预置已访问集合）。
+
+**门禁终态**：4 变体构建 OK（P2 页 3 轮迭代修签名）；manifest 160 双向一致；twin_fp FAIL=0；
+sync_pages OK（feat_vuln 23 + feat_api 69 路由页）；生成器确定性 7/7；组件 **104/137**、Kit 35/103；
+评分/覆盖/literal/hostile 四项见上。**待办**：since-26 组件语料回补（依赖 bench26）；API26 镜像
+双环境恢复（DevEco GUI 一次性启动）；工具链 Beta2→Release 升级欠账照旧。
 
 ## ❌ 最小化轮：12 项失败逐条归因与处置（2026-09-15）
 
