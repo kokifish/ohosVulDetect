@@ -11,27 +11,22 @@ jobs:
           python-version: '3.12'
       - name: check_manifest
         run: python3 groundtruth/check_manifest.py
+      - name: check_twin_fp
+        run: python3 tools/check_twin_fp.py
       - name: sync_pages
         run: python3 tools/sync_pages.py
-      - name: generator determinism (string_stress)
+      - name: generator determinism (all)
         run: |
-          python3 tools/gen_string_stress.py --outdir /tmp/gencheck
-          diff /tmp/gencheck/StringStressLab.ts feat_api/src/main/ets/pages/lang/StringStressLab.ts
-      - name: generator determinism (all generators)
-        run: |
-          for gen in tools/gen_*.py; do
+          # 全部纯源码生成器原地重生成，git diff --exit-code 验证与提交内容一致。
+          # gen_rawfile_abc 依赖 SDK 工具链（es2abc），保持本地执行、不进 CI。
+          for gen in tools/gen_string_stress.py tools/gen_lexwide_stress.py \
+                     tools/gen_sendable_stress.py tools/gen_wide_stress.py \
+                     tools/gen_stown_stress.py tools/gen_methname_stress.py \
+                     tools/gen_recursion_stress.py; do
             echo "--- $gen ---"
-            # 逐个生成器跑 dry-run（如有 --outdir 参数则输出到 /tmp 再 diff）
-            case "$gen" in
-              */gen_string_stress.py)
-                python3 "$gen" --outdir /tmp/gencheck_all
-                diff -r /tmp/gencheck_all feat_api/src/main/ets/pages/lang/ --exclude='*.ets' 2>/dev/null || true
-                ;;
-              *)
-                echo "(no determinism check configured)"
-                ;;
-            esac
+            python3 "$gen"
           done
+          git diff --exit-code
       - name: python syntax check
         run: |
           find . -name '*.py' -not -path './oh_modules/*' -not -path './.hvigor/*' \

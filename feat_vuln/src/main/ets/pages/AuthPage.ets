@@ -5,7 +5,8 @@ import { ovdAuth006 } from '../vulns/auth/OVD-AUTH-006';
 import { ovdAuth002S, ovdAuth003S, ovdAuth004S, ovdAuth005S, ovdAuth006S } from '../vulns/auth/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdAuth001 } from '../vulns/auth/OVD-AUTH-001';
-import { ovdAuth001S } from '../vulns/auth/Twins';
+import { ovdAuth001S, ovdAuth007S } from '../vulns/auth/Twins';
+import { ovdAuth007 } from '../vulns/auth/OVD-AUTH-007';
 import { ovdAuth002 } from '../vulns/auth/OVD-AUTH-002';
 import { ovdAuth003 } from '../vulns/auth/OVD-AUTH-003';
 
@@ -29,6 +30,8 @@ struct AuthPage {
           new Case('004S server-token', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth004S(true)),
           new Case('005S ATL3-bio', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth005S()),
           new Case('006S fresh-challenge', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth006S()),
+          new Case('007 device-trust-chain', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth007(ctx)),
+          new Case('007S allowlist-gate', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdAuth007S(ctx)),
         ]
       })
 

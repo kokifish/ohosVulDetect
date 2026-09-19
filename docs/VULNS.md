@@ -1,9 +1,9 @@
 # docs/VULNS.md — 漏洞语料说明（类型 / 成因 / 利用方式 / 危害）
 
-> 口径：与 groundtruth/manifest.json 一一对应的 60 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
+> 口径：与 groundtruth/manifest.json 一一对应的 80 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
 > 本文档回答四个问题：每条语料**是什么漏洞**、**代码里长什么样（成因）**、**攻击者怎么利用**、**造成什么危害**。
 > 所有 ID/常量均为基准虚构载荷（`vd-bench`/`AKIDBENCH`/`ovd://` 等），不含真实凭据；孪生实现见各分类 `Twins.ets`。
-> 静态 FP 自检约定：孪生与漏洞共享 API 时规则以漏洞侧独有信号补精度（如 INJ-002 的 `DELETE FROM users WHERE name`）。
+> 静态 FP 自检：`python3 tools/check_twin_fp.py`（孪生 detection/函数体双面 × 漏洞规则常量子串感知扫描，FAIL=常量级重叠/函数缺失，WARN=设计内 call 级同形）。
 
 ## 总览
 
@@ -11,21 +11,28 @@
 |---|---|---|---|
 | SECRET | 5 | 硬编码秘密/密钥（含反扫描重组变体） | 798/321 |
 | CRYPTO | 7 | 弱算法/弱模式/短密钥/固定 IV·nonce | 327/328/329/326/1204 |
-| NET | 5 | 明文传输/证书校验绕过 | 319/295 |
+| NET | 6 | 明文传输/证书校验绕过（含存储凭据回传链） | 319/295/522 |
 | WEB | 7 | WebView 调试/桥暴露/XSS/混合内容/文件访问/开放跳转/无来源校验桥 | 489/749/94/311/79/601 |
 | INJ | 4 | SQL 注入/路径穿越/不安全反序列化导航 | 89/22/20 |
 | STOR | 4 | 明文存储/低安全级数据库/PII 缓存 | 312/668/359 |
 | LOG | 2 | 日志泄露令牌/口令 | 532 |
 | IPC | 5 | exported 面/魔杖参数/TCP 后门/deeplink 穿越/事件提权 | 862/200/306/22/345 |
 | PERM | 1 | 权限申请-不用 | 732 |
-| PASTE | 3 | 剪贴板敏感数据（含跨设备） | 200/359 |
-| PRIV | 2 | 设备指纹/持续定位外传 | 359 |
-| AUTH | 6 | 客户端鉴权/可预测令牌/userAuth 误用 | 798/693/338/602/308/330 |
+| PASTE | 4 | 剪贴板敏感数据（跨设备/常驻监听） | 200/359 |
+| PRIV | 3 | 设备指纹/持续定位外传（含读→传链） | 359/200 |
+| AUTH | 7 | 客户端鉴权/可预测令牌/userAuth 误用/跨设备信任 | 798/693/338/602/308/330/306 |
 | DEBUG | 2 | 调试开关残留/后门 PIN | 489/912 |
 | CONF | 2 | 内网端点硬编码 | 200 |
 | NATIVE | 2 | .so 内嵌密钥/原生缓冲区溢出 | 798/120 |
 | BACK | 1 | 备份开启 × 明文令牌 | 530 |
-| FORM | 4 | 卡片路由开放跳转/消息未校验（鸿蒙特色） | 601/20 |
+| FORM | 2 | 卡片路由开放跳转/消息未校验（鸿蒙特色） | 601/20 |
+| CERT | 3 | 自签证书/恒真门/pin 失效放行（DeviceCertificateKit） | 295/343 |
+| MEDIA | 3 | 相册枚举外传/静默写入/元数据拼接外传（MediaLibraryKit） | 359/200 |
+| KEYLOG | 3 | 全局热键监听/聚合落盘/join 批量外传（InputKit） | 200/1176 |
+| DRM | 2 | 保护级别不校验/统计越权（DrmKit） | 757/693 |
+| SPEECH | 2 | 语音会话窃听/引擎滥用（CoreSpeechKit） | 200/359 |
+| A11Y | 2 | 无障碍态侦察/读屏情报收集（AccessibilityKit） | 200/359 |
+| BGTASK | 1 | 常驻后台任务掩护静默采集 | 359 |
 
 ---
 
@@ -107,6 +114,10 @@
   - 成因：`PINNING_WHITELIST: string[] = []`，空表直接放行。
   - 利用：假证书不触发 pinning 失败。
   - 危害：pinning 机制名存实亡，用户装了"安全锁"却没插钥匙。
+- **OVD-NET-006 存储凭据经明文信道回传（call-chain 变体）**
+  - 成因：`preferences.getSync('auth_token')` 取出持久化令牌 → `X-Bench-Auth` 头 → `http://vd-relay.example/ingest`。
+  - 利用：同网段嗅探即得长效凭据（比一次性口令价值更高——是"存下来的钥匙"）。
+  - 危害：存储违规与传输违规串联，单点泄露升级为凭据级持续泄露；考核检测器对两步数据流的理解。
 
 ## OVD-WEB — WebView 攻击面（CWE-489/749/94/311/79/601）
 
@@ -237,12 +248,20 @@
   - 成因：`setProperty({shareOption: CROSSDEVICE, localOnly: false})`。
   - 利用：同账号多端剪贴板同步把令牌扩散到其他设备（含不可信环境）。
   - 危害：单设备剪贴板泄露升级为跨设备链路泄露。
+- **OVD-PASTE-004 剪贴板常驻监听**
+  - 成因：`pb.on('update', …)` 生命周期内常驻回调，内容变化即 POST 收集端点。
+  - 利用：用户复制口令/验证码/卡号的瞬间即被截获，无需任何前台交互。
+  - 危害：剪贴板从"被动窥视"升级为"实时监听"，是移动端经典的持续性隐私面。
 - **OVD-PRIV-001 设备指纹上传内网 http**
   - 成因：brand/model/hardware/os 拼 fingerprint POST `http://10.20.31.11/collect`。
   - 危害：设备可追踪标识外传 + 明文通道双违规。
 - **OVD-PRIV-002 持续定位走明文 ws**
   - 成因：`getCurrentLocation()` → `ws://192.168.1.100:9000/track`。
   - 危害：实时位置暴露给第三方，人身安全级隐私风险。
+- **OVD-PRIV-003 设备指纹读取→外传两步链（call-chain 变体）**
+  - 成因：`deviceInfo.productModel/osFullName` 读取后依序 `request` 外传遥测端点，无授权门。
+  - 利用：无感知收集设备画像用于追踪/定向。
+  - 危害：设备可追踪标识外传；考核"先读敏态再外传"顺序数据流的检测。
 
 ## OVD-AUTH — 鉴权与信任链（CWE-798/693/338/602/308/330）
 
@@ -269,6 +288,10 @@
   - 成因：`new Uint8Array([0xde,0xad,0xbe,0xef])` 常量 challenge。
   - 利用：重放历史认证产物（challenge 不新鲜 → 认证证明可复用）。
   - 危害：认证"一次性证明"退化成可重放票据。
+- **OVD-AUTH-007 跨设备信任缺失（call-chain 变体）**
+  - 成因：`createDeviceManager` → `getAvailableDeviceList` 枚举组网设备后不校验信任等级直接同步到 `vd-mesh.example/sync`。
+  - 利用：恶意配对设备进入组网即可无条件接收同步数据。
+  - 危害：分布式场景的信任门缺失——数据流向不可信端点（孪生 007S 按允许列表逐台门控）。
 
 ## OVD-CONF — 内网信息泄露（CWE-200）
 
@@ -300,6 +323,82 @@
   - 危害：存储型注入原语 + 拒绝服务。
 
 ---
+
+## OVD-CERT — 证书信任（DeviceCertificateKit，CWE-295/343）
+
+- **OVD-CERT-001 自签证书直接信任**
+  - 成因：内置 `vd-vuln-selfsigned` PEM 直接 `createX509Cert` 并采信。
+  - 危害：生产信任锚被顶替，中间人证书可被接受。
+- **OVD-CERT-001S 可信 CA 签发语义**：非自签载荷走系统信任锚语义。
+- **OVD-CERT-002 证书校验门恒真（predicate 变体）**
+  - 成因：`createX509Cert` 后校验函数恒 `return true`（同步函数体，predicate 面）。
+  - 危害：校验门形同虚设。
+- **OVD-CERT-002S 真实过期比较**：`getNotAfterTime()` 逐项校验。
+- **OVD-CERT-003 pin 不匹配仍放行（api-call+const-array 变体）**
+  - 成因：`TRUSTED_PINS` 常量数组 + `createX509Cert` 解析对端证书，指纹不在 pin 集合仍继续连接。
+  - 利用：攻击者证书指纹不在 pin 列表 → 本应中止却照常建连。
+  - 危害：pinning 防线存在但判断结果被忽略——"有锁不用"形态；考核 const-array 与调用面的联合判定。
+- **OVD-CERT-003S pin 不匹配即中止**：同形解析，mismatch 即 ABORT。
+
+## OVD-MEDIA — 媒体库隐私（MediaLibraryKit，CWE-359/200）
+
+- **OVD-MEDIA-001 全相册枚举外传（flow 变体）**
+  - 成因：`getAssets` 计数 + `vd-collect.example/album` POST 外传。
+  - 危害：相册规模/内容画像泄露。
+- **OVD-MEDIA-001S 本地计数不上传**：同 API、无外传步骤。
+- **OVD-MEDIA-002 相册静默写入（flow 变体）**
+  - 成因：`createAsset` 无用户交互落盘。
+  - 危害：伪造媒体植入/藏匿载荷。
+- **OVD-MEDIA-002S 用户主动保存**：写入由用户动作触发。
+- **OVD-MEDIA-003 相册元数据拼接外传（string-op-flow 变体）**
+  - 成因：`displayName` 经 `concat` 拼进 `vd-collect.example/media-meta` 查询串外传。
+  - 危害：照片名含人名/地点/会议等高敏语义；考核"字符串算子+端点"联合判定。
+- **OVD-MEDIA-003S 元数据仅本地展示**：无拼接 URL、无外传。
+
+## OVD-KEYLOG — 输入监听（InputKit，CWE-200/1176）
+
+- **OVD-KEYLOG-001 全局热键监听回传（flow 变体）**
+  - 成因：`inputConsumer.on('hotkeyChange')` + `vd-collect.example/keys`。
+  - 危害：隐蔽输入侧信道。
+- **OVD-KEYLOG-001S 本地输入框内处理**：无全局订阅。
+- **OVD-KEYLOG-002 热键事件聚合落盘**
+  - 成因：事件聚合写 `vd-hotkeys.log`。
+  - 危害：输入历史持久化可被后续窃取。
+- **OVD-KEYLOG-002S 页内处理不聚合**。
+- **OVD-KEYLOG-003 按键缓冲 join 后批量外传（string-op-flow 变体）**
+  - 成因：`strokeBuf.join('')` 聚合 + `vd-collect.example/keystrokes` 批量上传。
+  - 危害：批量聚合规避逐条上传审计；考核"字符串算子（join）+端点"联合判定。
+- **OVD-KEYLOG-003S 逐键即时处理**：无聚合缓冲、无端点。
+
+## OVD-DRM — DRM 保护（DrmKit，CWE-757/693）
+
+- **OVD-DRM-001 保护级别不校验即播放（predicate 变体）**
+  - 成因：`getMaxContentProtectionLevel()` 结果不比较，`if (level >= 0 || true)` 放行。
+  - 危害：弱保护内容当强保护放行，版权约束失效。
+- **OVD-DRM-001S 级别门控**：比较后才允许播放。
+- **OVD-DRM-002 统计越权（flow 变体）**：`getStatistics` 越权读取。
+- **OVD-DRM-002S 授权范围内统计**。
+
+## OVD-SPEECH — 语音会话（CoreSpeechKit，CWE-200/359）
+
+- **OVD-SPEECH-001 语音会话窃听（flow 变体）**：`startListening` 无提示采集。
+- **OVD-SPEECH-001S 显式授权后启动**。
+- **OVD-SPEECH-002 引擎滥用（flow 变体）**：`createEngine` 未约束使用场景。
+- **OVD-SPEECH-002S 场景内使用**。
+
+## OVD-A11Y — 无障碍侦察（AccessibilityKit，CWE-200/359）
+
+- **OVD-A11Y-001 读屏态侦察（flow 变体）**：`isScreenReaderOpenSync` 探测辅助功能状态。
+- **OVD-A11Y-001S 按需本地查询**。
+- **OVD-A11Y-002 无障碍开关情报（flow 变体）**：`isOpenAccessibilitySync` 收集。
+- **OVD-A11Y-002S 不做画像**。
+
+## OVD-BGTASK — 后台任务滥用（CWE-359）
+
+- **OVD-BGTASK-001 常驻后台任务掩护静默采集**
+  - 成因：`startBackgroundRunning(DATA_TRANSFER)` 连续任务 + `vd-collect.example/bg-telemetry` 周期外传。
+  - 利用：借"合法后台传输"身份让采集在退到后台后持续运行，绕过进程冻结。
+  - 危害：用户无感知的持续数据外传；连续任务权限被滥用为免杀护身符（孪生 001S 仅一次性短窗延迟、无外传）。
 
 ## 检测口径备注（评分联动）
 

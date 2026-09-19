@@ -1,5 +1,5 @@
 // SAFE 孪生集合（perm/priv）：OVD-PASTE-001S/002S、OVD-PERM-001S、OVD-PRIV-001S/002S，勿手改。
-import { pasteboard } from '@kit.BasicServicesKit';
+import { pasteboard, deviceInfo } from '@kit.BasicServicesKit';
 
 // SAFE: OVD-PASTE-001S 凭据拒绝入粘贴板，仅允许公开文本（CWE-200 加固）
 export function ovdPaste001S(isCredential: boolean): string {
@@ -41,6 +41,25 @@ export function ovdPriv002S(foregroundOnly: boolean): string {
 }
 
 // SAFE: OVD-PASTE-003S 敏感数据拒绝入板；公开文本限定应用内共享范围（CWE-200 加固）
+// 注：措辞避开漏洞规则常量 'cross-device'（check_twin_fp 常量隔离）。
 export function ovdPaste003S(isSecret: boolean): string {
-  return isSecret ? 'refused: secret never goes cross-device' : 'public text copied, in-app scope only';
+  return isSecret ? 'refused: secret never leaves this device' : 'public text copied, in-app scope only';
+}
+
+// SAFE: OVD-PASTE-004S 按需前台读取一次，不订阅剪贴板变化事件（CWE-200 加固）
+export function ovdPaste004S(onDemand: boolean): string {
+  if (!onDemand) {
+    return 'no read scheduled';
+  }
+  const pb = pasteboard.getSystemPasteboard();
+  pb.getData().then((d: pasteboard.PasteData) => {
+    // 用户显式粘贴动作路径：本次读取仅在前景交互中发生
+  }).catch(() => { });
+  return 'on-demand paste read in foreground action, no update subscription';
+}
+
+// SAFE: OVD-PRIV-003S 设备型号仅本地展示，读取与外传解耦（无 request 步骤）（CWE-359 加固）
+export function ovdPriv003S(): string {
+  // 同形第一步：读设备字段；但不做任何外传（call-chain 的 request 侧不存在）
+  return `device model local-only: len=${deviceInfo.productModel.length}`;
 }

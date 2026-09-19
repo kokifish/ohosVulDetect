@@ -21,6 +21,7 @@
     "pages/KeylogPage",
     "pages/DrmVulnPage",
     "pages/SpeechVulnPage",
-    "pages/A11yVulnPage"
+    "pages/A11yVulnPage",
+    "pages/BgtaskVulnPage"
   ]
 }

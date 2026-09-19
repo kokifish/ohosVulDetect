@@ -4,8 +4,10 @@ import { ovdPerm001 } from '../vulns/perm/OVD-PERM-001';
 import { ovdPaste001 } from '../vulns/perm/OVD-PASTE-001';
 import { ovdPriv001 } from '../vulns/perm/OVD-PRIV-001';
 import { ovdPriv002 } from '../vulns/perm/OVD-PRIV-002';
+import { ovdPriv003 } from '../vulns/perm/OVD-PRIV-003';
+import { ovdPaste004 } from '../vulns/perm/OVD-PASTE-004';
 import { ovdPaste003 } from '../vulns/perm/OVD-PASTE-003';
-import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S } from '../vulns/perm/Twins';
+import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S, ovdPriv003S, ovdPaste004S } from '../vulns/perm/Twins';
 
 // 权限/隐私/粘贴板；PASTE-002 由 onPageShow 生命周期触发。
 @Entry
@@ -37,6 +39,8 @@ struct PermPage {
         Button('priv-001 fingerprint').margin(4).onClick(() => this.runner.run('PRIV-001', () => ovdPriv001()))
         // ENV(不可修复): 模拟器系统定位开关默认关闭（3301100 switch off），需系统设置开启
         Button('priv-002 locate').margin(4).onClick(() => this.runner.run('PRIV-002', () => ovdPriv002()))
+        Button('priv-003 fp-chain').margin(4).onClick(() => this.runner.run('PRIV-003', () => ovdPriv003()))
+        Button('paste-004 listener').margin(4).onClick(() => this.runner.run('PASTE-004', () => ovdPaste004()))
       }
       Flex({ wrap: FlexWrap.Wrap }) {
         Button('PASTE-001S refuse').margin(4).onClick(() => this.runner.run('PASTE-001S', () => ovdPaste001S(true)))
@@ -44,6 +48,8 @@ struct PermPage {
         Button('PERM-001S on-demand').margin(4).onClick(() => this.runner.run('PERM-001S', () => ovdPerm001S('scan')))
         Button('PRIV-001S consent').margin(4).onClick(() => this.runner.run('PRIV-001S', () => ovdPriv001S(true)))
         Button('PRIV-002S one-shot').margin(4).onClick(() => this.runner.run('PRIV-002S', () => ovdPriv002S(true)))
+        Button('PRIV-003S local-only').margin(4).onClick(() => this.runner.run('PRIV-003S', () => ovdPriv003S()))
+        Button('PASTE-004S on-demand').margin(4).onClick(() => this.runner.run('PASTE-004S', () => ovdPaste004S(true)))
         Button('PASTE-003 cross-device').margin(4).onClick(() => this.runner.run('PASTE-003', () => ovdPaste003('tok_bench_secret')))
         Button('PASTE-003S refuse').margin(4).onClick(() => this.runner.run('PASTE-003S', () => ovdPaste003S(true)))
       }

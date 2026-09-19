@@ -9,7 +9,9 @@ export function ovdLog001S(user: string): string {
 }
 
 // SAFE: OVD-LOG-002S 日志输出脱敏，凭据不出现在日志域（CWE-532 加固）
+// 注：用户名经 ArkTS 模板直拼（非敏感），不用 %{public}s 格式标记——避免与 OVD-LOG-001
+// 漏洞规则的脱敏失败信号（%{public}s 字面量）在孪生侧重叠。
 export function ovdLog002S(username: string): string {
-  hilog.debug(0x0999, 'AUTH', '%{public}s', `retry login user=${username} (credential redacted)`);
+  hilog.debug(0x0999, 'AUTH', `retry login user=${username} (credential redacted)`);
   return 'masked log emitted';
 }

@@ -6,11 +6,12 @@ import { common } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 
 // SAFE: OVD-STOR-001S 对照实现：token 存 Asset Store Kit（CWE-312 加固）
+// 注：alias 不沿用漏洞侧键名 'auth_token'——孪生常量须与漏洞规则信号隔离（check_twin_fp）。
 
 export async function ovdStor001S(token: string): Promise<string> {
   const enc = new util.TextEncoder();
   const attr: asset.AssetMap = new Map();
-  attr.set(asset.Tag.ALIAS, enc.encodeInto('auth_token'));
+  attr.set(asset.Tag.ALIAS, enc.encodeInto('bench-cred-alias'));
   attr.set(asset.Tag.SECRET, enc.encodeInto(token));
   attr.set(asset.Tag.IS_PERSISTENT, true);
   await asset.add(attr);

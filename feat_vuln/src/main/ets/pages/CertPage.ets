@@ -2,7 +2,8 @@ import { Case, DemoScaffold } from 'lib_common';
 import { common } from '@kit.AbilityKit';
 import { ovdCert001 } from '../vulns/cert/OVD-CERT-001';
 import { ovdCert002 } from '../vulns/cert/OVD-CERT-002';
-import { ovdCert001S, ovdCert002S } from '../vulns/cert/Twins';
+import { ovdCert001S, ovdCert002S, ovdCert003S } from '../vulns/cert/Twins';
+import { ovdCert003 } from '../vulns/cert/OVD-CERT-003';
 
 @Entry
 @Component
@@ -16,6 +17,8 @@ struct CertPage {
           new Case('CERT-001S proper-CA', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCert001S()),
           new Case('CERT-002 gate-always-true', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCert002()),
           new Case('CERT-002S expiry-checked', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCert002S()),
+          new Case('CERT-003 pin-bypass', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCert003()),
+          new Case('CERT-003S strict-pins', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCert003S()),
         ],
       })
     }

@@ -1109,8 +1109,7 @@
           "createCipher"
         ],
         "constants": [
-          "bench-fixed-nonce!!",
-          "AES256|GCM|PKCS7"
+          "bench-fixed-nonce!!"
         ]
       },
       "notes": "安全对照复用 OVD-CRYPTO-001S（GCM+随机 IV）",
@@ -2128,7 +2127,7 @@
       "cwe": "CWE-298",
       "module": "feat_vuln",
       "source": "feat_vuln/src/main/ets/vulns/cert/Twins.ets",
-      "function": "certGateCheckS",
+      "function": "ovdCert002S",
       "expected": false,
       "detection": {
         "type": "api-call",
@@ -2507,6 +2506,308 @@
         ]
       },
       "twin_of": "OVD-A11Y-002"
+    },
+    {
+      "id": "OVD-PRIV-003",
+      "title": "device fingerprint read-then-exfiltrate chain",
+      "category": "privacy",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PRIV-003.ets",
+      "function": "ovdPriv003",
+      "expected": true,
+      "detection": {
+        "type": "call-chain",
+        "call": [
+          "productModel",
+          "request"
+        ],
+        "constants": [
+          "vd-telemetry.example/fingerprint"
+        ]
+      },
+      "twin": "OVD-PRIV-003S"
+    },
+    {
+      "id": "OVD-PRIV-003S",
+      "title": "device model read locally, never transmitted",
+      "category": "privacy",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+      "function": "ovdPriv003S",
+      "expected": false,
+      "detection": {
+        "type": "api-call",
+        "call": [
+          "productModel"
+        ]
+      },
+      "twin_of": "OVD-PRIV-003"
+    },
+    {
+      "id": "OVD-NET-006",
+      "title": "stored token replayed over cleartext http",
+      "category": "cleartext-transport",
+      "cwe": "CWE-319",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/net/OVD-NET-006.ets",
+      "function": "ovdNet006",
+      "expected": true,
+      "detection": {
+        "type": "call-chain",
+        "call": [
+          "getSync",
+          "request"
+        ],
+        "constants": [
+          "X-Bench-Auth",
+          "vd-relay.example/ingest"
+        ]
+      },
+      "twin": "OVD-NET-006S"
+    },
+    {
+      "id": "OVD-NET-006S",
+      "title": "runtime token over https, storage untouched",
+      "category": "cleartext-transport",
+      "cwe": "CWE-319",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/net/Twins.ets",
+      "function": "ovdNet006S",
+      "expected": false,
+      "detection": {
+        "type": "api-call",
+        "call": [
+          "request"
+        ],
+        "constants": [
+          "https://vd-relay-safe.example/ingest"
+        ]
+      },
+      "twin_of": "OVD-NET-006"
+    },
+    {
+      "id": "OVD-CERT-003",
+      "title": "pin mismatch does not abort connection",
+      "category": "cert-trust",
+      "cwe": "CWE-295",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/cert/OVD-CERT-003.ets",
+      "function": "ovdCert003",
+      "expected": true,
+      "detection": {
+        "type": "api-call+const-array",
+        "call": [
+          "createX509Cert"
+        ],
+        "constants": [
+          "sha256/bench-pinAAAA111"
+        ]
+      },
+      "twin": "OVD-CERT-003S"
+    },
+    {
+      "id": "OVD-CERT-003S",
+      "title": "pin mismatch aborts connection",
+      "category": "cert-trust",
+      "cwe": "CWE-295",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/cert/Twins.ets",
+      "function": "ovdCert003S",
+      "expected": false,
+      "detection": {
+        "type": "api-call",
+        "call": [
+          "createX509Cert"
+        ],
+        "constants": [
+          "sha256/safe-pinCCCC333"
+        ]
+      },
+      "twin_of": "OVD-CERT-003"
+    },
+    {
+      "id": "OVD-KEYLOG-003",
+      "title": "keystroke buffer joined then batch-exfiltrated",
+      "category": "input-monitor",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/keylog/OVD-KEYLOG-003.ets",
+      "function": "ovdKeylog003",
+      "expected": true,
+      "detection": {
+        "type": "string-op-flow",
+        "constants": [
+          "vd-keystroke-batch",
+          "join"
+        ]
+      },
+      "twin": "OVD-KEYLOG-003S"
+    },
+    {
+      "id": "OVD-KEYLOG-003S",
+      "title": "per-keystroke in-place handling",
+      "category": "input-monitor",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/keylog/Twins.ets",
+      "function": "ovdKeylog003S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "no batch aggregation"
+        ]
+      },
+      "twin_of": "OVD-KEYLOG-003"
+    },
+    {
+      "id": "OVD-MEDIA-003",
+      "title": "album metadata concatenated into collector URL",
+      "category": "media-privacy",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/media/OVD-MEDIA-003.ets",
+      "function": "ovdMedia003",
+      "expected": true,
+      "detection": {
+        "type": "string-op-flow",
+        "constants": [
+          "vd-collect.example/media-meta",
+          "concat"
+        ]
+      },
+      "twin": "OVD-MEDIA-003S"
+    },
+    {
+      "id": "OVD-MEDIA-003S",
+      "title": "metadata displayed locally only",
+      "category": "media-privacy",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/media/Twins.ets",
+      "function": "ovdMedia003S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "metadata shown locally only"
+        ]
+      },
+      "twin_of": "OVD-MEDIA-003"
+    },
+    {
+      "id": "OVD-PASTE-004",
+      "title": "persistent clipboard update listener",
+      "category": "pasteboard-misuse",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PASTE-004.ets",
+      "function": "ovdPaste004",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "on"
+        ],
+        "constants": [
+          "https://vd-collect.example/clipboard"
+        ]
+      },
+      "twin": "OVD-PASTE-004S"
+    },
+    {
+      "id": "OVD-PASTE-004S",
+      "title": "on-demand foreground paste read only",
+      "category": "pasteboard-misuse",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+      "function": "ovdPaste004S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "no update subscription"
+        ]
+      },
+      "twin_of": "OVD-PASTE-004"
+    },
+    {
+      "id": "OVD-AUTH-007",
+      "title": "device list synced without trust check",
+      "category": "auth-flaw",
+      "cwe": "CWE-306",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/auth/OVD-AUTH-007.ets",
+      "function": "ovdAuth007",
+      "expected": true,
+      "detection": {
+        "type": "call-chain",
+        "call": [
+          "getAvailableDeviceList",
+          "request"
+        ],
+        "constants": [
+          "vd-mesh.example/sync"
+        ]
+      },
+      "twin": "OVD-AUTH-007S"
+    },
+    {
+      "id": "OVD-AUTH-007S",
+      "title": "cross-device sync gated by allowlist",
+      "category": "auth-flaw",
+      "cwe": "CWE-306",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/auth/Twins.ets",
+      "function": "ovdAuth007S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "vd-desk-bench"
+        ]
+      },
+      "twin_of": "OVD-AUTH-007"
+    },
+    {
+      "id": "OVD-BGTASK-001",
+      "title": "continuous task covers silent background harvesting",
+      "category": "bgtask-abuse",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/bgtask/OVD-BGTASK-001.ets",
+      "function": "ovdBgtask001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "startBackgroundRunning"
+        ],
+        "constants": [
+          "https://vd-collect.example/bg-telemetry"
+        ]
+      },
+      "twin": "OVD-BGTASK-001S"
+    },
+    {
+      "id": "OVD-BGTASK-001S",
+      "title": "transient one-shot delay, no harvesting",
+      "category": "bgtask-abuse",
+      "cwe": "CWE-359",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/bgtask/Twins.ets",
+      "function": "ovdBgtask001S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "no exfil"
+        ]
+      },
+      "twin_of": "OVD-BGTASK-001"
     }
   ]
 }

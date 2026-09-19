@@ -10,3 +10,8 @@ export function ovdKeylog001S(): string {
 export function ovdKeylog002S(ctx: common.Context): string {
   return 'local input handled in-page, no global hotkey aggregation';
 }
+
+// SAFE: OVD-KEYLOG-003S 逐键即时处理，不聚合缓冲、不外传（CWE-200 加固）
+export function ovdKeylog003S(): string {
+  return 'each keystroke handled in-place, no batch aggregation';
+}

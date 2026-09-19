@@ -38,3 +38,20 @@ const SPKI_PINS: string[] = ['api.bench.example|sha256/AAAAAAAA', 'cdn.bench.exa
 export function ovdNet005S(host: string): string {
   return SPKI_PINS.some((p: string): boolean => p.startsWith(`${host}|`)) ? 'host pinned' : 'host not pinned: reject';
 }
+
+// SAFE: OVD-NET-006S 凭据运行期注入 + https 信道，不落存储、不进自定义头（CWE-319/522 加固）
+// 注：端点主机与漏洞侧 'vd-relay.example' 断开（子串感知常量隔离，check_twin_fp）。
+export function ovdNet006S(runtimeToken: string): string {
+  if (!runtimeToken) {
+    return 'no token provided: request skipped';
+  }
+  const req: http.HttpRequest = http.createHttp();
+  req.request(`https://vd-relay-safe.example/ingest?session=${runtimeToken.length}`, {
+    method: http.RequestMethod.POST,
+    extraData: 'sync=1',
+    readTimeout: 3000,
+    connectTimeout: 3000
+  }).catch(() => { });
+  req.destroy();
+  return 'runtime token sent over https, nothing read from storage';
+}

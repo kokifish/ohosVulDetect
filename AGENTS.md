@@ -37,13 +37,14 @@
 
 - feat_api 路由页：① 建页 → ② ApiRegistry.ets 加 DemoItem（id 必须带 api-/ui-/lang- 前缀，sweep 依赖前缀遍历）→ ③ main_pages.json 注册。缺 ②/③ 会被 tree-shake 静默丢弃。
 - 仅被 import 复用的库式文件（如 LexWideLab.ets）：放 ets/ 下即可，无需注册。
-- feat_vuln 漏洞：① vulns/ 建文件（`// VULN: OVD-XXX-NNN` 注释）→ ② 分类页接线 → ③ Index.ets cat- 清单 → ④ main_pages.json → ⑤ manifest.json 登记（detection 规则 + 孪生）→ ⑥ check_manifest.py 必须 OK。
+- feat_vuln 漏洞：① vulns/ 建文件（`// VULN: OVD-XXX-NNN` 注释）→ ② 分类页接线 → ③ Index.ets cat- 清单 → ④ main_pages.json → ⑤ manifest.json 登记（detection 规则 + 孪生）→ ⑥ check_manifest.py + check_twin_fp.py 必须 OK（孪生常量须与漏洞规则信号隔离，含子串）。
 
 ## Mandatory（任何语料/页面/生成器改动必做）
 
 ```bash
 python3 build.py                        # 全量 4 变体：api26/api24 × release/debug（api26=SDK26 正式语料，api24=6.1.1(24) 旧模拟器兼容）
 python3 groundtruth/check_manifest.py   # groundtruth 双向一致，必须 OK
+python3 tools/check_twin_fp.py          # 孪生 FP 静态自检，必须 OK（FAIL=0）
 ```
 
 产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。

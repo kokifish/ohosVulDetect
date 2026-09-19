@@ -1,15 +1,31 @@
 # ohosVulDetect 基准测试 App — 构建与使用手册
 
 多模块 HarmonyOS 基准应用：① 广覆盖 API/ArkUI/语言特性，作为逆向工具反编译准确性语料；
-② 预埋 53 个带标签漏洞 + 7 个安全孪生（groundtruth/manifest.json），作为 VulDetector 检测基准。
+② 预埋带标签漏洞 + 安全孪生（groundtruth/manifest.json），作为检测基准。
+
+## 当前基线速查（数字随语料演进，历史轮记录仅作过程存档）
+
+| 维度 | 基线 | 事实源 |
+|---|---|---|
+| 指令覆盖 | 188/268（未用 80 条全归因，见各轮记录） | check_opcode_coverage.py |
+| 组件覆盖 | 85/137 | check_corpus_coverage.py |
+| Kit 覆盖 | 35/103（历史轮"37"为计数口径漂移，以对账脚本为准） | check_corpus_coverage.py |
+| @ohos 直连 | 2/447（语料走 @kit 聚合 import） | check_corpus_coverage.py |
+| 漏洞/孪生 | 80 + 80（manifest 160 条，双向一致） | groundtruth/manifest.json |
+| 评分 | F1=1.000（72 对时代实测；80 对待工具链重跑） | score_output.py |
+| feat_api 路由页 | 67（api 43 / ui 16 / lang 7 + Index） | main_pages.json |
+| 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
+| 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
+
+> 语料设计 checklist（新族/新规则必读）：① 源文件先小编译实证 → ② 分类页接线 → ③ Index cat- 清单 → ④ main_pages.json → ⑤ manifest 登记 → ⑥ check_manifest + check_twin_fp 双门禁 OK；构建须 grep BUILD FAILED + abc 探针验新串；新孪生常量须与漏洞规则信号隔离（含子串）。
 
 ## 结构
 
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 29 个良性 API demo 页（含 sendable 指令实验室）+ 11 个 UI/语言特性页（组件画廊 + lexenv 压力页） |
-| feat_vuln | feature HAP | 13 类漏洞页 + BackdoorAbility(exported, ovd://backdoor) + libentry.so |
+| feat_api | feature HAP | 良性语料路由页 67（api 43 / ui 16 / lang 7 + Index，见基线速查表） |
+| feat_vuln | feature HAP | 漏洞分类页 23（21 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner |
 | lib_shared | HSP | 静态/动态 import 目标 |
 
@@ -880,7 +896,7 @@ closer-guard 轮后语料 **202 用例**，门禁终态 **203/203 RESULT: OK**�
 string-parse 快照 545 用例全绿（+3 键）。运行时基线同步更新（bench24 api24 release 定点）：
 **`strstress=n=428 len=17444 acc=62194198`**（n=2×202+24，与用例数精确吻合）。
 
-## 歧义矩阵轮：14 组合系统化 + 函数拆分 + literal 面门禁（2026-09-15，未提交）
+## 歧义矩阵轮：14 组合系统化 + 函数拆分 + literal 面门禁（2026-09-15）
 
 **P1 歧义矩阵（+14 用例，202→216）**：内容首段行尾形态（`p"`/`p`/`p""`/`p\`）× 紧随行形态
 （`\tsta v0`/`\tldobjbyname`/`return`/`jump_label_0:`/`.catchall`/`}`/`# STRING ====`）系统化。
@@ -912,7 +928,7 @@ oracle 排除并归因记录。走查采用「行首锚定 count 候选迭代 + 
 _mutf8 统一、锁表注释补 case3 机理）均已落实。**门禁终态：207/207 + LITERALS OK（双口径），
 评分 F1=1.000，运行时 `strstress=n=456 len=18060 acc=62274075`。**
 
-## Kit 覆盖第十二轮：MediaLibrary/Cert/Input/A11y（2026-09-15，未提交）
+## Kit 覆盖第十二轮：MediaLibrary/Cert/Input/A11y（2026-09-15）
 
 **新增 4 页（api-cert / api-medialib / api-input / api-a11y，路由页 64）**，Kit 33 → **37**/103
 （对账脚本实测，新增 DeviceCertificateKit/MediaLibraryKit/InputKit/AccessibilityKit）：
@@ -934,7 +950,7 @@ _mutf8 统一、锁表注释补 case3 机理）均已落实。**门禁终态：2
 manifest 120 一致；sync_pages OK；指令覆盖 188/268 无回退；对账 Kit **33/103**（+4，无漂移）；
 abc 探针全中；模拟器定向 sweep **4 页 0 ❌**（cert/input 全功能，medialib/a11y 按约定记录）。
 
-## P2 落地轮：歧义矩阵验证 + 漏洞规则多样化 + Kit 批次三 + compare_versions（2026-09-15，未提交）
+## P2 落地轮：歧义矩阵验证 + 漏洞规则多样化 + Kit 批次三 + compare_versions（2026-09-15）
 
 ### 1. 歧义矩阵外溢验证（ark_disasm literal 打印器）
 
@@ -986,7 +1002,7 @@ sync_pages OK（路由页 67）；指令覆盖 **188/268 无回退**；对账 Ki
 CoreSpeechKit，无漂移）；abc 探针全中；评分 **F1=1.000（TP=72 TN=72）**；运行时 strstress
 **n=456** 不变；模拟器定向 sweep **9 页**（6 cat + 3 api）0 崩溃。
 
-## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14，未提交）
+## 衡量自动化轮：对账脚本 + sweep 全量遍历 + lang 页自检（2026-09-14）
 
 **1. `tools/check_corpus_coverage.py`（新，组件/Kit/@ohos 三维对账 + 清单漂移门禁）**：
 读 SDK `component_config.json`（137 组件）、`@kit.*.d.ts` 全集（openharmony 47 + hms 56 并集
@@ -1030,9 +1046,9 @@ lang/ui 页此前 sweep 零信号、靠人工定点。现每页一个 selfcheck�
   web-007S 变体行）、cat-perm 8✅2❌。合计约 **106✅ / 3❌**：asset 201（模拟器无锁屏凭据，ENV）、
   PRIV-002 3301100（定位开关，ENV）、PRIV-001 2300028 timeout（公网 http 抖动，与 ws send 同类，
   复测可恢复）。
-- 门禁：4 变体构建 OK、manifest 120 双向一致、sync_pages OK、指令覆盖 188/268 无回退。未提交。
+- 门禁：4 变体构建 OK、manifest 120 双向一致、sync_pages OK、指令覆盖 188/268 无回退。
 
-## Kit 覆盖第十一轮：Contacts/Calendar/AVSession/Camera + 漏洞语料说明文档（2026-09-14，未提交）
+## Kit 覆盖第十一轮：Contacts/Calendar/AVSession/Camera + 漏洞语料说明文档（2026-09-14）
 
 **新增 4 页（api-contacts / api-calendar / api-avsession / api-camera，路由页 60）**，Kit ~22 → **~26**
 （新增 ContactsKit/CalendarKit/AVSessionKit/CameraKit 显式用例；全部确定性调用、无 UI 拉起，sweep 安全）：
@@ -1066,7 +1082,58 @@ callforms 7/7、runtime 24/24、sugars 10/10）。ui 段 16 页 by design 0 信�
 与 manifest.json 的 ID/CWE/检测规则形态一一对应；含检测口径备注（多形态规则设计意图、孪生 FP 防线、
 SECRET-005 与 NATIVE-001 两类对抗样本的分层考核意图）。
 
-## ❌ 最小化轮：12 项失败逐条归因与处置（2026-09-15，未提交）
+## 全量 sweep + 孪生 FP 门禁 + 规则形态扩量 + 新攻击面轮（2026-09-19）
+
+**P0 全量 feat_api sweep（HEAD 态基线，重建后 api24 release）**：56 页有信号输出（43 api + 13 ui），
+**117✅/1❌**——唯一 ❌ 为 socket tcp 2301115（模拟器沙箱禁原始 socket，ENV 已知）。补跑段：lang 7 页
+selfcheck **7/7 全绿**（closure 6/6、types 13/13、generator 7/7、ops 2/2、callforms 7/7、runtime 24/24、
+sugars 10/10）；ui 尾 4 页（a11y/drm/speech/inputmon）全部 graceful ✅。**首次运行时验证 ui 自检页即抓出
+两个存量 jscrash（3e6b1e5 引入）**：
+- **V2 @Monitor 回调签名错**：按 `Map.get` 写，本 SDK 实际传 `IMonitor`（`value<T>()` 返回
+  `{before, now, path} | undefined`，**无 after 字段**）→ 监控触发即 `TypeError: get is not callable`
+  进程崩溃（jscrash 实证）；
+- **V1 @Observed 混用 @Track**：仅部分属性标 `@Track` 时 build 读未标属性即 140110
+  `Illegal usage of not @Track'ed property` 首渲染崩溃。
+另 @Computed 在事件回调内**同步读旧值**（渲染驱动重算），自检改 async 等一帧后断言。
+修复后 **state-v1 5/5、state-v2 4/4**，自检行带 `bits=` 位图便于 sweep 直接定位失败项。
+
+**P0 孪生 FP 静态门禁（新 `tools/check_twin_fp.py`，已入 CI）**：口径 = detection 面
+（FULL/CONST=FAIL、CALL=WARN 设计内）+ source 面（按 manifest function 提取**孪生函数体**，非文件粒度；
+FULL=FAIL、PARTIAL=WARN）+ source-MISSING=FAIL；**自有孪生仅豁免 call 级同形，常量级仍须隔离**；
+常量比对**子串感知**（较长方 ≥10，防 `https://` 包络差异）。首轮抓到 FAIL 2 + 自有孪生常量泄漏 3：
+CRYPTO-007 规则瘦身至唯一 nonce 标记（`AES256|GCM|PKCS7` 与全部 GCM 孪生共享、域上不可分）、
+LOG-002S 去 `%{public}s` 措辞、STOR-001S alias `auth_token`→`bench-cred-alias`、PASTE-003S
+`cross-device`→`leaves this device`、NET-006S 端点主机改 `vd-relay-safe.example`（子串）、
+CERT-002S manifest function 笔误修正。**终态 FAIL=0 / WARN=14（全为 call 级设计内）**。
+
+**P1 规则形态扩量（+5 对，稀有形态 13→22 条）**：call-chain ×3（PRIV-003 设备指纹读→传、
+NET-006 存储凭据明文回传、AUTH-007 跨设备信任缺失）、api-call+const-array ×1（CERT-003 pin 不匹配
+仍放行）、string-op-flow ×2（KEYLOG-003 join 聚合外传、MEDIA-003 concat 拼接外传）。
+新对全部过双门禁 + 孪生常量隔离（NET-006S 端点子串即为门禁抓出后改）。
+
+**P1 新攻击面（+3 对，新族 cat-bgtask）**：PASTE-004/004S 剪贴板常驻监听（`on('update')`）、
+AUTH-007/007S 跨设备信任缺失（`getAvailableDeviceList` 不校验即同步）、BGTASK-001/001S
+连续任务掩护静默采集。**运行时全 graceful ✅**：`dm err=201`、`bg err=401`（SDK26 schema 移除）、
+`sub err=401`（hotkey 系统权限）、`fetch err=201`（medialib 未授权）均按约定内码进 ✅ 行。
+
+**编译坑（本轮新增两条 ArkTS 硬约束）**：`BusinessError` 只在 `@kit.BasicServicesKit` 导出
+（AbilityKit 无）；`UIAbilityContext` 无 `abilityInfo`（createDeviceManager 直接传 bundleName 字面量）。
+
+**CI（gates.yml 重写）**：修掉"all generators" no-op 步骤——7 个纯源码生成器原地重生成 +
+`git diff --exit-code` 全覆盖（gen_rawfile_abc 依赖 SDK 工具链保持 local-only）；check_twin_fp 入 CI。
+
+**P0 收尾：存量裸 ❌ graceful 内码化（9 用例，cat-cert/keylog/media 全绿）**：假 PEM 解析 401
+（CERT-001/001S/002S/003/003S）、hotkeyChange 系统权限 401（KEYLOG-001/002/003）、medialib 未授权
+201（MEDIA-001/001S/002/002S/003/003S）统一 try/catch 内码进 ✅ 行；定向复测三页 **18/18 全 ✅
+零 ❌**。检测常量全部保留在源码面（manifest 双向一致不回退）。
+
+**门禁终态**：4 变体构建 OK（4 轮迭代修编译）；manifest **160**（vuln=80, twin=80）双向一致；
+sync_pages OK（路由页 feat_vuln 23）；生成器确定性 7/7；abc 探针全中（12 新常量 + 消失串）；
+对账 Kit **35/103**（历史轮"37"为口径漂移，以脚本为准）、组件 85/137 无漂移；规则形态
+api-call+constant 45%，稀有形态 22/80。**待办**：评分 F1 待工具链重跑 80 对口径；指令覆盖
+188/268 维持口径待重跑；cat-perm 页 sweep verify-click 对 2 个新按钮有采集盲区（人工点击实测 ✅）。
+
+## ❌ 最小化轮：12 项失败逐条归因与处置（2026-09-15）
 
 对 feat_api 全量 sweep 的 12 个 ❌ 逐条定位核心原因（官方文档 + 端点实测 + 弹窗截图），分四类处置：
 

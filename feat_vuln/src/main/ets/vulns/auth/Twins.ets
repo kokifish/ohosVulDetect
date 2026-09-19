@@ -1,6 +1,9 @@
-// SAFE 孪生集合（auth）：OVD-AUTH-002S..006S，勿手改。
+// SAFE 孪生集合（auth）：OVD-AUTH-002S..007S，勿手改。
 import { cryptoFramework } from '@kit.CryptoArchitectureKit';
 import { userAuth } from '@kit.UserAuthenticationKit';
+import { common } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
+import { distributedDeviceManager } from '@kit.DistributedServiceKit';
 
 // SAFE: OVD-AUTH-001S 对照实现：本地只比对加盐摘要，凭据由服务端/Asset 校验（CWE-287 加固）
 
@@ -63,4 +66,26 @@ export async function ovdAuth006S(): Promise<string> {
   }, { title: 'vd-replay-secure' });
   auth.start();
   return `auth issued with fresh ${rnd.data.length}B challenge`;
+}
+
+// SAFE: OVD-AUTH-007S 跨设备同步前逐台比对可信允许列表（CWE-306/284 加固）
+const TRUSTED_DEVICE_NAMES: string[] = ['vd-desk-bench'];
+
+export async function ovdAuth007S(ctx: common.Context): Promise<string> {
+  let peers = 0;
+  let allowed = 0;
+  try {
+    const dm: distributedDeviceManager.DeviceManager =
+      await distributedDeviceManager.createDeviceManager('com.koki.VD');
+    const list: Array<distributedDeviceManager.DeviceBasicInfo> = await dm.getAvailableDeviceList();
+    peers = list.length;
+    allowed = list.filter((d: distributedDeviceManager.DeviceBasicInfo): boolean =>
+      TRUSTED_DEVICE_NAMES.includes(d.deviceName)).length;
+  } catch (e) {
+    const be = e as BusinessError;
+    return `sync skipped (dm err=${be.code}), allowlist gate intact`;
+  }
+  return allowed > 0
+    ? `sync to ${allowed}/${peers} allowlisted devices only`
+    : `no trusted peer in ${peers} devices: sync skipped`;
 }
