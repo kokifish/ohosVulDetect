@@ -34,6 +34,8 @@
     "pages/api/RouteMapDemo",
     "pages/ui/StateV1Demo",
     "pages/ui/StateV2Demo",
+    "pages/ui/CompositeDemo",
+    "pages/ui/Ark26Demo",
     "pages/ui/ListDemo",
     "pages/ui/NavDemo",
     "pages/ui/AnimDemo",

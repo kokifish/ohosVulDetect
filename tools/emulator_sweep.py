@@ -268,6 +268,10 @@ def run_page_buttons(page_name, max_rounds=2):
         targets = sorted(targets, key=lambda b: 0 if 'selfcheck' in b.get('text', '') else 1)
         for b in targets:
             click(*center(b['bounds']), 3.0)
+            # 逐按钮即点即采：Runner 对异步用例完成后把 ✅/❌ 行"追加"到日志尾部，
+            # 日志 Scroll 不自动滚底——攒到整轮结束再采，先落的行已被顶出视口（实测
+            # cat-perm 大页固定漏 ~10 行）。单次 dump 代价小，漏采代价是整页基线失真。
+            collect_result_lines(dump(), seen)
             if not post_click(anchor):
                 # 部分漏洞用例会真实导航跳页（如 INJ-004 无白名单 pushUrl，漏洞语义本身）：
                 # 重回本页继续点剩余按钮，已出信号按集合去重不受影响
@@ -295,12 +299,15 @@ def run_page_buttons(page_name, max_rounds=2):
             click_verified(b)
             collect_with_settle(seen)
     stall = 0
-    for _ in range(8):
+    for _ in range(12):
         collect_result_lines(dump(), seen)
         n = len(seen)
         swipe_region(0.85, 0.45)
+        # 异步用例（userAuth/定位超时等）的 ✅/❌ 行在点击后 30-60s 才落地，沉降轮须给足窗口
+        time.sleep(2.0)
+        collect_result_lines(dump(), seen)
         stall = stall + 1 if len(seen) == n else 0
-        if stall >= 2:
+        if stall >= 3:
             break
     dismiss_dialog()
     results[page_name] = sorted(seen)

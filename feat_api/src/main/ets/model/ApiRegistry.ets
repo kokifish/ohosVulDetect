@@ -49,6 +49,8 @@ export const API_DEMOS: DemoItem[] = [
 export const UI_DEMOS: DemoItem[] = [
   new DemoItem('ui-state-v1', 'state mgmt V1 full set', 'pages/ui/StateV1Demo'),
   new DemoItem('ui-state-v2', 'state mgmt V2 full set', 'pages/ui/StateV2Demo'),
+  new DemoItem('ui-composite', 'composite containers wrap-up', 'pages/ui/CompositeDemo'),
+  new DemoItem('ui-ark26', 'arkui api-26 components', 'pages/ui/Ark26Demo'),
   new DemoItem('ui-list', 'LazyForEach/Repeat/Swiper/Tabs', 'pages/ui/ListDemo'),
   new DemoItem('ui-nav', 'Navigation + NavPathStack + router', 'pages/ui/NavDemo'),
   new DemoItem('ui-anim', 'animateTo/keyframe/transition', 'pages/ui/AnimDemo'),
