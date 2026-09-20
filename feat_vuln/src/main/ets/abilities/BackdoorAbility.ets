@@ -2,6 +2,9 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import { fileIo } from '@kit.CoreFileKit';
 import { Logger } from 'lib_common';
+import { ovdDlink001 } from '../vulns/deeplink/OVD-DLINK-001';
+import { ovdDlink002 } from '../vulns/deeplink/OVD-DLINK-002';
+import { ovdDlink003 } from '../vulns/deeplink/OVD-DLINK-003';
 
 // VULN: OVD-IPC-001 exported:true 且无 caller 校验（CWE-862，见 module.json5 skills ovd://backdoor）
 export default class BackdoorAbility extends UIAbility {
@@ -33,6 +36,13 @@ export default class BackdoorAbility extends UIAbility {
 
     // 供 Backdoor 页展示（OVD-WEB-006：deeplink URL 直灌 WebView）
     AppStorage.setOrCreate('last_want_uri', uri);
+
+    // OVD-DLINK 族：真实深链参数面走同一批处理函数（按钮本地构造见 DlinkVulnPage）
+    if (uri.startsWith('ovd://backdoor?')) {
+      ovdDlink001(this.context, uri).then((r: string) => AppStorage.setOrCreate('dlink_result_001', r)).catch(() => {});
+      ovdDlink002(this.context, uri).then((r: string) => AppStorage.setOrCreate('dlink_result_002', r)).catch(() => {});
+      AppStorage.setOrCreate('dlink_result_003', ovdDlink003(uri));
+    }
   }
 
   onDestroy(): void {

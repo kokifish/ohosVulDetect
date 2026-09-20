@@ -8,6 +8,10 @@ struct Backdoor {
   @State secret: string = '';
   @State leaked: string = '';
   @State uri: string = '';
+  // dlink 结果为深链触发后异步落AppStorage，须响应式绑定（@State+aboutToAppear 只读一次会错过）
+  @StorageProp('dlink_result_001') dlink1: string = '-';
+  @StorageProp('dlink_result_002') dlink2: string = '-';
+  @StorageProp('dlink_result_003') dlink3: string = '-';
   @State customUrl: string = 'http://httpbin.org/get';
   private controller: webview.WebviewController = new webview.WebviewController();
 
@@ -23,6 +27,9 @@ struct Backdoor {
       Text(`uri: ${this.uri}`).fontSize(12)
       Text(`secret: ${this.secret}`).fontSize(12).fontColor('#CC0000')
       Text(`file: ${this.leaked}`).fontSize(12)
+      Text(`dlink-cmd: ${this.dlink1}`).fontSize(12)
+      Text(`dlink-redirect: ${this.dlink2}`).fontSize(12)
+      Text(`dlink-token: ${this.dlink3}`).fontSize(12)
       // VULN: OVD-WEB-006 外部输入的 URL 未做白名单校验直接进入 Web 加载（CWE-601）
       TextInput({ text: this.customUrl })
         .onChange((v: string) => {

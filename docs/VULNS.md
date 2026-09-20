@@ -1,6 +1,6 @@
 # docs/VULNS.md — 漏洞语料说明（类型 / 成因 / 利用方式 / 危害）
 
-> 口径：与 groundtruth/manifest.json 一一对应的 80 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
+> 口径：与 groundtruth/manifest.json 一一对应的 87 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
 > 本文档回答四个问题：每条语料**是什么漏洞**、**代码里长什么样（成因）**、**攻击者怎么利用**、**造成什么危害**。
 > 所有 ID/常量均为基准虚构载荷（`vd-bench`/`AKIDBENCH`/`ovd://` 等），不含真实凭据；孪生实现见各分类 `Twins.ets`。
 > 静态 FP 自检：`python3 tools/check_twin_fp.py`（孪生 detection/函数体双面 × 漏洞规则常量子串感知扫描，FAIL=常量级重叠/函数缺失，WARN=设计内 call 级同形）。
@@ -33,6 +33,8 @@
 | SPEECH | 2 | 语音会话窃听/引擎滥用（CoreSpeechKit） | 200/359 |
 | A11Y | 2 | 无障碍态侦察/读屏情报收集（AccessibilityKit） | 200/359 |
 | BGTASK | 1 | 常驻后台任务掩护静默采集 | 359 |
+| DLINK | 3 | 深链参数无白名单执行/开放跳转/子串令牌放行 | 862/601/20 |
+| XMOD | 4 | 跨模块分布：HAR 硬编码主密钥·会话缓存链 / HSP 明文保险箱·恒真信任 | 321/312/285 |
 
 ---
 
@@ -399,6 +401,44 @@
   - 成因：`startBackgroundRunning(DATA_TRANSFER)` 连续任务 + `vd-collect.example/bg-telemetry` 周期外传。
   - 利用：借"合法后台传输"身份让采集在退到后台后持续运行，绕过进程冻结。
   - 危害：用户无感知的持续数据外传；连续任务权限被滥用为免杀护身符（孪生 001S 仅一次性短窗延迟、无外传）。
+
+## OVD-DLINK — 深链参数校验（CWE-862/601/20）
+
+入口：`BackdoorAbility`（exported，skill `ovd://backdoor`）onCreate 对真实深链调用本族处理函数；`cat-dlink` 页按钮本地构造同形深链直调（E2E 用 `hdc shell aa start -U` 触发）。
+
+- **OVD-DLINK-001 深链 cmd 无白名单直接执行**
+  - 成因：`ovd://backdoor?cmd=` 参数不校验直接执行，`purge-all-now` 触发清库并落 `last_cmd`。
+  - 利用：任意应用可拉起 exported Ability，构造破坏性指令参数。
+  - 危害：远端诱导即触发数据清除等破坏性动作（孪生 001S 白名单 status/info，其余拒绝）。
+- **OVD-DLINK-002 redirect 未校验直灌 openLink**
+  - 成因：`getQueryValue('redirect')` 取参后不经 scheme/host 校验直接 `ctx.openLink`。
+  - 利用：构造恶意 redirect 参数把用户带往任意目标（开放跳转/任意拉起）。
+  - 危害：钓鱼跳转、任意 Ability 拉起链（孪生 002S 校验 https + host 白名单后才跳，且刻意不用 getQueryValue 断 call 链）。
+- **OVD-DLINK-003 管理令牌子串匹配放行**
+  - 成因：`raw.includes('admin-token=true')` 子串判定特权模式，参数名伪造/编码绕过均可命中。
+  - 利用：在 uri 任意位置拼接令牌子串即提权。
+  - 危害：特权模式未授权开启（孪生 003S 按 `session=` 参数精确解析 + 等值比较）。
+
+## OVD-XMOD — 跨模块漏洞分布（CWE-321/312/285）
+
+主体不在 feature HAP：XMOD-001/002 在 lib_common（HAR，静态编入依赖方 HAP），XMOD-003/004 在 lib_shared（HSP，独立 abc）。检验评分链路对非 feature 模块源码路径 record 的可达性；`cat-xmod` 页负责触发运行路径（防 tree-shake）。
+
+- **OVD-XMOD-001 HAR 硬编码主密钥**
+  - 成因：`vd-har-master-key-01!!` 硬编码进共享库，派生 SHA256 + GCM 信道。
+  - 利用：反编译 HAR 即得密钥，全部依赖方 HAP 共享同一密钥。
+  - 危害：一处泄露处处泄露，密钥无法单独轮换（孪生 001S 密钥改运行期参数）。
+- **OVD-XMOD-002 HAR 会话收集链**
+  - 成因：`harCollectSessions` 把会话明文 `sess_bench_harvest_000001` 写共享 preferences。
+  - 利用：共享缓存跨页面/跨 HAP 可读。
+  - 危害：会话材料驻留共享存储（孪生 002S 只累计匿名页面计数）。
+- **OVD-XMOD-003 HSP 保险箱 token 明文缓存**
+  - 成因：`tok_vd_hsp_vault_9f27c0` 明文 putSync 进 `vd_hsp_vault`。
+  - 利用：读共享包缓存即得 token。
+  - 危害：明文凭据驻留独立共享包 abc（孪生 003S 只读+脱敏）。
+- **OVD-XMOD-004 HSP 信任判定恒真**
+  - 成因：`ovdXmod004` 不查任何名单直接 `return true`（predicate 规则 return-true）。
+  - 利用：任意 deviceId 视为可信 mesh 节点。
+  - 危害：未授权设备接入信任面（孪生 004S 名单精确匹配）。
 
 ## 检测口径备注（评分联动）
 

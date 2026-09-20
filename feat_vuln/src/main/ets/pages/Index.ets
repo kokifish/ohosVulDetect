@@ -23,6 +23,8 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-speech', '语音会话 (1+1S)', 'pages/SpeechVulnPage'),
   new DemoItem('cat-a11y', '无障碍侦察 (1+1S)', 'pages/A11yVulnPage'),
   new DemoItem('cat-bgtask', '后台任务滥用 (1+1S)', 'pages/BgtaskVulnPage'),
+  new DemoItem('cat-dlink', '深链参数校验 (3+3S)', 'pages/DlinkVulnPage'),
+  new DemoItem('cat-xmod', '跨模块分布 HAR/HSP (4+4S)', 'pages/XmodVulnPage'),
 ];
 
 @Entry

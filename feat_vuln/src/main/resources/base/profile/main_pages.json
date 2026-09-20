@@ -22,6 +22,8 @@
     "pages/DrmVulnPage",
     "pages/SpeechVulnPage",
     "pages/A11yVulnPage",
-    "pages/BgtaskVulnPage"
+    "pages/BgtaskVulnPage",
+    "pages/DlinkVulnPage",
+    "pages/XmodVulnPage"
   ]
 }

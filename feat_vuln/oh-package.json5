@@ -7,6 +7,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lib_common": "file:../lib_common",
+    "lib_shared": "file:../lib_shared",
     "libentry.so": "file:./src/main/cpp/types/libentry"
   }
 }

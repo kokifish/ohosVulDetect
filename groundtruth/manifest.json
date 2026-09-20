@@ -2808,6 +2808,254 @@
         ]
       },
       "twin_of": "OVD-BGTASK-001"
+    },
+    {
+      "id": "OVD-DLINK-001",
+      "title": "deeplink cmd executed without allowlist",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-862",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/OVD-DLINK-001.ets",
+      "function": "ovdDlink001",
+      "expected": true,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "purge-all-now"
+        ]
+      },
+      "twin": "OVD-DLINK-001S"
+    },
+    {
+      "id": "OVD-DLINK-001S",
+      "title": "twin: cmd 白名单校验后只读执行 (OVD-DLINK-001)",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-862",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/Twins.ets",
+      "function": "ovdDlink001S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "allowlist"
+        ]
+      },
+      "twin_of": "OVD-DLINK-001"
+    },
+    {
+      "id": "OVD-DLINK-002",
+      "title": "deeplink redirect forwarded to openLink unvalidated",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-601",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/OVD-DLINK-002.ets",
+      "function": "ovdDlink002",
+      "expected": true,
+      "detection": {
+        "type": "call-chain",
+        "call": [
+          "getQueryValue",
+          "openLink"
+        ]
+      },
+      "twin": "OVD-DLINK-002S"
+    },
+    {
+      "id": "OVD-DLINK-002S",
+      "title": "twin: redirect scheme+host 白名单后才跳转 (OVD-DLINK-002)",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-601",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/Twins.ets",
+      "function": "ovdDlink002S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "scheme+host allowlist"
+        ]
+      },
+      "twin_of": "OVD-DLINK-002"
+    },
+    {
+      "id": "OVD-DLINK-003",
+      "title": "admin token accepted by substring match",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-20",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/OVD-DLINK-003.ets",
+      "function": "ovdDlink003",
+      "expected": true,
+      "detection": {
+        "type": "string-op-flow",
+        "constants": [
+          "admin-token=true",
+          "includes"
+        ]
+      },
+      "twin": "OVD-DLINK-003S"
+    },
+    {
+      "id": "OVD-DLINK-003S",
+      "title": "twin: 会话令牌精确解析等值比较 (OVD-DLINK-003)",
+      "category": "deeplink-param-validation",
+      "cwe": "CWE-20",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/deeplink/Twins.ets",
+      "function": "ovdDlink003S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "strict parse"
+        ]
+      },
+      "twin_of": "OVD-DLINK-003"
+    },
+    {
+      "id": "OVD-XMOD-001",
+      "title": "hardcoded master key in shared HAR",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-321",
+      "module": "lib_common",
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdXmod001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "createCipher"
+        ],
+        "constants": [
+          "vd-har-master-key-01!!"
+        ]
+      },
+      "twin": "OVD-XMOD-001S"
+    },
+    {
+      "id": "OVD-XMOD-001S",
+      "title": "twin: 密钥由运行期参数提供 (OVD-XMOD-001)",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-321",
+      "module": "lib_common",
+      "source": "lib_common/src/main/ets/XmodTwins.ets",
+      "function": "ovdXmod001S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "runtime-provided"
+        ]
+      },
+      "twin_of": "OVD-XMOD-001"
+    },
+    {
+      "id": "OVD-XMOD-002",
+      "title": "session harvest chain writes shared cache from HAR",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-312",
+      "module": "lib_common",
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdXmod002",
+      "expected": true,
+      "detection": {
+        "type": "call-chain",
+        "call": [
+          "getPreferencesSync",
+          "putSync"
+        ],
+        "constants": [
+          "sess_bench_harvest_000001"
+        ]
+      },
+      "twin": "OVD-XMOD-002S"
+    },
+    {
+      "id": "OVD-XMOD-002S",
+      "title": "twin: 共享缓存只累计匿名计数 (OVD-XMOD-002)",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-312",
+      "module": "lib_common",
+      "source": "lib_common/src/main/ets/XmodTwins.ets",
+      "function": "ovdXmod002S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "anonymous page hits"
+        ]
+      },
+      "twin_of": "OVD-XMOD-002"
+    },
+    {
+      "id": "OVD-XMOD-003",
+      "title": "plaintext token cache in shared HSP vault",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-312",
+      "module": "lib_shared",
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdXmod003",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "putSync"
+        ],
+        "constants": [
+          "tok_vd_hsp_vault_9f27c0"
+        ]
+      },
+      "twin": "OVD-XMOD-003S"
+    },
+    {
+      "id": "OVD-XMOD-003S",
+      "title": "twin: 保险箱只读取不落新 token (OVD-XMOD-003)",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-312",
+      "module": "lib_shared",
+      "source": "lib_shared/src/main/ets/TargetTwins.ets",
+      "function": "ovdXmod003S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "masked"
+        ]
+      },
+      "twin_of": "OVD-XMOD-003"
+    },
+    {
+      "id": "OVD-XMOD-004",
+      "title": "mesh device trust predicate always true",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-285",
+      "module": "lib_shared",
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdXmod004",
+      "expected": true,
+      "detection": {
+        "type": "predicate",
+        "predicate": "return-true"
+      },
+      "twin": "OVD-XMOD-004S"
+    },
+    {
+      "id": "OVD-XMOD-004S",
+      "title": "twin: 信任判定按设备名单精确匹配 (OVD-XMOD-004)",
+      "category": "cross-module-distribution",
+      "cwe": "CWE-285",
+      "module": "lib_shared",
+      "source": "lib_shared/src/main/ets/TargetTwins.ets",
+      "function": "ovdXmod004S",
+      "expected": false,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "allowlist"
+        ]
+      },
+      "twin_of": "OVD-XMOD-004"
     }
   ]
 }
