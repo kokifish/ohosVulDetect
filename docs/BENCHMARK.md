@@ -8,12 +8,12 @@
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见各轮记录） | check_opcode_coverage.py |
-| 组件覆盖 | 104/137（其余 33 为 HMS 侧/需专用运行环境，本 SDK 声明面不可达） | check_corpus_coverage.py |
-| Kit 覆盖 | 35/103（历史轮"37"为计数口径漂移，以对账脚本为准） | check_corpus_coverage.py |
-| @ohos 直连 | 2/447（语料走 @kit 聚合 import） | check_corpus_coverage.py |
-| 漏洞/孪生 | 80 + 80（manifest 160 条，双向一致） | groundtruth/manifest.json |
-| 评分 | F1=1.000（80 对口径实测，TP=80 FN=0 FP=0 TN=80） | score_output.py |
-| feat_api 路由页 | 67（api 43 / ui 16 / lang 7 + Index） | main_pages.json |
+| 组件覆盖 | 100/137（其余 37：since-26 4 项待 API26 运行环境回补，其余为 HMS 侧/本 SDK 声明面不可达） | check_corpus_coverage.py |
+| Kit 覆盖 | 39/103（openharmony 侧 kit 全覆盖，剩余 64 全为 HMS 侧） | check_corpus_coverage.py |
+| @ohos 直连 | 3/447（语料走 @kit 聚合 import） | check_corpus_coverage.py |
+| 漏洞/孪生 | 87 + 87（manifest 174 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
+| 评分 | F1=1.000（87 对口径实测，TP=87 FN=0 FP=0 TN=87） | score_output.py |
+| feat_api 路由页 | 73（api 47 / ui 18 / lang 7 + Index） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
@@ -25,10 +25,10 @@
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 良性语料路由页 67（api 43 / ui 16 / lang 7 + Index，见基线速查表） |
-| feat_vuln | feature HAP | 漏洞分类页 23（21 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
-| lib_common | HAR | Logger / DemoItem / Runner |
-| lib_shared | HSP | 静态/动态 import 目标 |
+| feat_api | feature HAP | 良性语料路由页 73（api 47 / ui 18 / lang 7 + Index，见基线速查表） |
+| feat_vuln | feature HAP | 漏洞分类页 25（23 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
+| lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
+| lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
 
 每个模块编译为独立 `ets/modules.abc`；`.app` = 3 hap + 1 hsp + pack.info。
 
@@ -1177,6 +1177,28 @@ ui 自检页 **state-v1 5/5、state-v2 4/4**；lang 7 页 selfcheck 7/7（本会
 sync_pages OK（feat_vuln 23 + feat_api 69 路由页）；生成器确定性 7/7；组件 **104/137**、Kit 35/103；
 评分/覆盖/literal/hostile 四项见上。**待办**：since-26 组件语料回补（依赖 bench26）；API26 镜像
 双环境恢复（DevEco GUI 一次性启动）；工具链 Beta2→Release 升级欠账照旧。
+
+## 跨模块漏洞分布 + 深链参数校验 + Kit 批三轮（2026-09-20）
+
+**新漏洞族 2 个（+7 对，manifest 160 → 174）**：
+- **OVD-XMOD 跨模块分布（4+4S）**：漏洞主体首次落在 feature HAP 之外——XMOD-001（HAR 硬编码主密钥）/002（HAR 会话收集链）在 lib_common，003（HSP 明文保险箱）/004（HSP 信任判定恒真 predicate return-true）在 lib_shared。abc 探针实证：**HAR 常量同时编入 feat_api 与 feat_vuln 两个 modules.abc（静态 HAR 复制语义），HSP 常量只在 lib_shared 独立 abc**——评分链路对非 feature 模块源码路径 record 的可达性首次成立。feat_vuln 经 oh-package 加 lib_shared 依赖、cat-xmod 页触发运行路径（防 tree-shake）。
+- **OVD-DLINK 深链参数校验（3+3S）**：ovd://backdoor 的 URI 参数面（001 cmd 无白名单执行 / 002 redirect 未校验 openLink / 003 管理令牌子串放行）。双入口：BackdoorAbility.onCreate 处理真实深链（E2E 入口），cat-dlink 页按钮本地构造同形深链直调同一批函数。
+
+**openLink 接管窗口坑（API24 实测，本轮最重要运行时发现）**：前台页面里 `ctx.openLink(可跳转外链)` **~1s 内整屏切走、页面实例销毁**——信号行必丢（sweep 连按钮文本都采不到）。冷启动 onCreate 里调则不接管（页面留存）。处置：DLINK-002 页面路径用空 redirect 走同步 401 快速失败（确定性 ✅），真实派发面留给 Ability 深链 E2E；Backdoor 页 dlink 结果改 `@StorageProp` 响应式绑定（`@State`+aboutToAppear 只读一次会错过异步晚落的 AppStorage 值）。
+
+**Kit 批三（4 页，Kit 35 → 39/103）**：api-telecom（radio/sim，GET_NETWORK_INFO 沿用已有声明；`sim.getSimState` 注意大小写）/ api-ime（getSetting/getDefaultInputMethod/getCurrentInputMethod 全无权限公共面）/ api-conn（wifi isWifiActive/getIpInfo + bluetooth access.getState，新增 GET_WIFI_INFO system_grant）/ api-testkit（delegator registry 守卫式 + @ohos.UiTest 直连 MatchPattern 枚举面，不建 Driver 避免与外部 uitest 会话抢占）。**openharmony 侧 kits 已全覆盖，剩余 64 个未覆盖 Kit 全为 HMS 侧（模拟器不可跑口径筛除）**。
+
+**构建迭代（3 轮）**：① feat_api requestPermissions 重复 GET_NETWORK_INFO → 00303059 Configuration Error（注意 build.py 多变体串行，首失败后产物目录残留旧包，须看 FAILED 计数而非文件时间戳）；② feat_vuln 无 lib_shared 依赖 → Cannot find module + 级联隐式返回类型报错；③ `sim.getSIMState` 实际 API 名 `getSimState`。
+
+**门禁终态**：4 变体构建 OK；manifest **174**（87+87）双向一致；twin_fp FAIL=0（WARN 14→15，新增 CRYPTO-001S~XMOD-001 共享 createCipher，by design）；sync_pages OK（feat_vuln 25 + feat_api 73 路由页）；组件 **100/137**、Kit 39/103、@ohos 3/447、漂移 OK。
+**组件 104→100 归因更正**：上一轮 Ark26Demo 因 API24 jscrash 裁掉 since-26 组件（LazyColumnLayout/LazyVWaterFlowLayout/SelectionContainer/DynamicLayout）后未回填 quickref，104 为裁剪前旧数；4 项 since-26 待 bench26 回补。
+
+**评分（87 对全量）**：**F1=1.000，TP=87 FN=0 FP=0 TN=87**。新 14 条全部按设计：XMOD-002 call-chain 降 record 域（helper 函数链，预期口径）；DLINK-002S 孪生刻意不用 getQueryValue 断链（calls=1/2 不命中）；XMOD 四条在 HAR/HSP record 上全部可达。
+**指令覆盖 188/268 维持**（新语料零新增指令面、零回退）；**literal 门禁 207/207 + LITERALS OK** 维持。
+
+**模拟器实测（bench24，api24-release）**：6 新页定向 sweep **24✅/0❌**（cat-xmod 8✅ 含 HSP 读写链、cat-dlink 修复后 6✅、api 四页 9✅ 全 graceful——telephony 虚拟 modem reg=0/sim=1、radio power 8300003 内码进 ✅、bt=0/wifiActive=true 确定性）。深链 E2E：`aa start -b com.koki.VD -a BackdoorAbility -U 'ovd://backdoor?...'` 冷启动（**热启动走 onNewWant 不进 onCreate，每条深链前须 force-stop**）——cmd（purge-all-now → destructive 分支）/redirect（→ dispatched 行 + @StorageProp 响应式展示）/token 三 handler 全部落行。
+
+**待办**：since-26 4 组件语料回补（依赖 bench26）；API26 镜像双环境恢复（DevEco GUI 一次性启动）；工具链 Beta2→Release 升级欠账照旧。
 
 ## ❌ 最小化轮：12 项失败逐条归因与处置（2026-09-15）
 

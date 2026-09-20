@@ -44,6 +44,10 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-drm', 'DrmKit: media key system', 'pages/api/DrmDemo'),
   new DemoItem('api-speech', 'CoreSpeechKit: engine lifecycle', 'pages/api/SpeechDemo'),
   new DemoItem('api-inputmon', 'InputKit: keyPressed subscribe', 'pages/api/InputMonDemo'),
+  new DemoItem('api-telecom', 'TelephonyKit: radio/sim state', 'pages/api/TelecomDemo'),
+  new DemoItem('api-ime', 'IMEKit: setting/default/current ime', 'pages/api/ImeDemo'),
+  new DemoItem('api-conn', 'ConnectivityKit: wifi/bluetooth state', 'pages/api/ConnDemo'),
+  new DemoItem('api-testkit', 'TestKit: delegator registry + UiTest enum', 'pages/api/TestKitDemo'),
 ];
 
 export const UI_DEMOS: DemoItem[] = [

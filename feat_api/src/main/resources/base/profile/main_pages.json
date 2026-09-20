@@ -68,6 +68,10 @@
     "pages/api/A11yDemo",
     "pages/api/DrmDemo",
     "pages/api/SpeechDemo",
-    "pages/api/InputMonDemo"
+    "pages/api/InputMonDemo",
+    "pages/api/TelecomDemo",
+    "pages/api/ImeDemo",
+    "pages/api/ConnDemo",
+    "pages/api/TestKitDemo"
   ]
 }
