@@ -9,10 +9,10 @@
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见各轮记录） | check_opcode_coverage.py |
 | 组件覆盖 | 100/137（其余 37：since-26 4 项待 API26 运行环境回补，其余为 HMS 侧/本 SDK 声明面不可达） | check_corpus_coverage.py |
-| Kit 覆盖 | 39/103（openharmony 侧 kit 基本全覆盖，剩余 64 中经核实仅 IPCKit 为 openharmony Kit——其底层 @ohos.rpc 已直连覆盖，其余为 HMS 侧） | check_corpus_coverage.py |
+| Kit 覆盖 | 40/103（IPCKit 已显式 import；剩余 63 个按服务可用性判为 HMS/专用环境侧，静态面无法完全排除类似 IPCKit 的个案） | check_corpus_coverage.py |
 | @ohos 直连 | 27/447（Kit 聚合 import 之外的无归属/工具库/旧 API 直连面） | check_corpus_coverage.py |
-| 漏洞/孪生 | 88 + 88（manifest 176 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
-| 评分 | F1=1.000（88 对口径实测，TP=88 FN=0 FP=0 TN=88） | score_output.py |
+| 漏洞/孪生 | 91 + 91（manifest 182 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
+| 评分 | F1=1.000（91 对口径实测，TP=91 FN=0 FP=0 TN=91） | score_output.py |
 | feat_api 路由页 | 76（api 50 / ui 18 / lang 7 + Index） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
@@ -26,7 +26,7 @@
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
 | feat_api | feature HAP | 良性语料路由页 76（api 50 / ui 18 / lang 7 + Index，见基线速查表） |
-| feat_vuln | feature HAP | 漏洞分类页 25（23 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
+| feat_vuln | feature HAP | 漏洞分类页 28（26 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
 
@@ -1311,5 +1311,44 @@ sync_pages OK；生成器确定性 7/7；abc 探针全 HIT（9 新串）；组�
   `fileio unavailable={}`（API24 镜像旧 fileio 抛无信息 Error）与 `zlib code=900001`
   （compressFile 镜像不可用）按内码约定留行，API26 镜像恢复后可回验。
 
-**待办**：API26 镜像双环境恢复照旧（DevEco GUI 一次性启动）；工具链 Beta2→Release 升级欠账
-照旧。
+**待办**：API26 镜像双环境恢复——**2026-09-21 复核：`-imageList` 目录已无 7.0.0(26) 系镜像
+（最大 6.1.1(24)），bench26 实例亦已清理，恢复需从 DevEco SDK 管理器/Beta 渠道重下 API26
+镜像（可能需登录华为账号）**；工具链 Beta2→Release 升级欠账照旧。
+
+## 漏洞三新族 + IPCKit/IPC 本地面收尾轮（2026-09-21 第二轮）
+
+**新漏洞族 3 个（+6 条，manifest 176 → 182）**：
+- **OVD-NOTIF 通知内容泄露（1+1S）**：`notificationManager.publish` 明文携带
+  `pay code 774811 / tok_vd_notif_2f8a`（CWE-200，锁屏/通知中心/穿戴可读）；001S 只发聚合摘要
+  `'3 new messages (open app for details)'`。规则 api-call+constant（publish + OTP 常量）。
+  实测坑：`contentType` 字段类型是 `@ohos.notification` 的 ContentType 枚举，
+  `notificationManager.ContentType` 结构不同不能混用（3 变体构建时暴露）。
+- **OVD-IRED Intent 重定向（1+1S）**：外部投喂的 action/uri 原样构造 want 转投 `startAbility`
+  （CWE-940/862）；001S 动作白名单 `ovd.bench.view.local` 门控，不在名单即拒绝派发。
+  规则 api-call+constant（startAbility + `'ovd.ired.forward'`）。
+- **OVD-PWDIN 密码输入回显（1+1S，UI 属性面）**：placeholder 声明密码语义 + `InputType.Normal`
+  + `'plain-echo: '` 明文回显标记同记录共现（CWE-522）；001S `InputType.Password` 圆点掩码
+  只回显长度。**首个 UI-DSL 面规则**：string-literal 双常量（枚举引用不落 IR 字符串池，
+  不能作规则常量——`'plain-echo: '` 模板常量前缀才是可靠锚点）。孪生门禁要求孪生有真实
+  函数体，故 PWDIN-001S = 组件 + 语义函数 `ovdPwdin001S` 双形态。
+
+**小收尾**：
+- **IPCKit 显式 import**（`import { rpc as rpcKit } from '@kit.IPCKit'`，api-ipc 页 kit-desc
+  用例）：Kit 维度 39 → **40/103**。剩余 63 个未覆盖 Kit 的静态面无法完全排除类似 IPCKit
+  个案（多数 kit 导出面不落在 @ohos 直进口径），文档表述改为保守口径。
+- **cat-ipc sweep 采行盲区修复**：`001/004 deeplink`、`002 magic` 两按钮 startAbility 真实
+  导航跳走、页面 @State 日志销毁致行采集缺失——把 IPC-002 magic 门与 IPC-004 path 读取
+  原语抽为 BackdoorAbility 导出函数（onCreate 与页面共用，manifest 规则面不变），IpcPage
+  增 `002 local magic`、`004 local path-read` 两本地按钮（确定性 ✅，不导航）。
+- feat_vuln 分类页 23 → 26（+cat-notify/cat-ired/cat-pwdin），main_pages 25 → 28 条。
+
+**门禁与实测**：4 变体构建 OK（ContentType 类型冲突 1 轮修复）；manifest **182**（91+91）
+双向一致；twin_fp FAIL=0 / WARN=15；sync_pages OK；Kit **40/103**；漂移 OK。
+**评分（91 对全量）**：TP=91 FN=0 FP=0 TN=91，**F1=1.000**——PWDIN-001 双常量 2/2 命中、
+NOTIF/IRED 各 1/1，三孪生 consts=0 零 FP。**模拟器定向 sweep（bench24）**：cat-notify 2✅
+（通知真实发布 + 自动授权）、cat-ired 2✅（`ired-err=16000019` 无匹配组件确定性错误码进 ✅ 行、
+001S 白名单拒绝）、cat-pwdin 1✅（掩码判定；PWDIN-001 为 UI 组件面无信号行 by design，输入
+回显需人工输入验证）、cat-ipc 6✅（`002 local magic` 抽取函数返回
+`OVDBACKDOORSECRET123`、`004 local path-read` 穿越原语实读 27B）、api-ipc 3✅（kit-desc 经
+IPCKit 导入面）。
+**待办**：API26 镜像重下（见上）；工具链升级欠账照旧。

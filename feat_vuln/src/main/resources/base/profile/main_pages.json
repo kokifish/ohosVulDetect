@@ -24,6 +24,9 @@
     "pages/A11yVulnPage",
     "pages/BgtaskVulnPage",
     "pages/DlinkVulnPage",
-    "pages/XmodVulnPage"
+    "pages/XmodVulnPage",
+    "pages/NotifyVulnPage",
+    "pages/IredVulnPage",
+    "pages/PwdinVulnPage"
   ]
 }

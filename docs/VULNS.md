@@ -1,6 +1,6 @@
 # docs/VULNS.md — 漏洞语料说明（类型 / 成因 / 利用方式 / 危害）
 
-> 口径：与 groundtruth/manifest.json 一一对应的 88 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
+> 口径：与 groundtruth/manifest.json 一一对应的 91 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
 > 本文档回答四个问题：每条语料**是什么漏洞**、**代码里长什么样（成因）**、**攻击者怎么利用**、**造成什么危害**。
 > 所有 ID/常量均为基准虚构载荷（`vd-bench`/`AKIDBENCH`/`ovd://` 等），不含真实凭据；孪生实现见各分类 `Twins.ets`。
 > 静态 FP 自检：`python3 tools/check_twin_fp.py`（孪生 detection/函数体双面 × 漏洞规则常量子串感知扫描，FAIL=常量级重叠/函数缺失，WARN=设计内 call 级同形）。
@@ -36,6 +36,9 @@
 | DLINK | 3 | 深链参数无白名单执行/开放跳转/子串令牌放行 | 862/601/20 |
 | XMOD | 4 | 跨模块分布：HAR 硬编码主密钥·会话缓存链 / HSP 明文保险箱·恒真信任 | 321/312/285 |
 | CEVT | 1 | 公共事件明文广播会话令牌（无订阅方权限门） | 200 |
+| NOTIF | 1 | 通知栏明文携带验证码/会话令牌（锁屏可读） | 200 |
+| IRED | 1 | 不可信 want 字段原样转投 startAbility | 940/862 |
+| PWDIN | 1 | 密码语义输入框 Normal 明文回显（UI 属性面） | 522 |
 
 ---
 
@@ -453,3 +456,25 @@
 - 规则形态分布见 manifest `detection.type`：string-literal / api-call+constant / api-call+string-concat / call-chain / predicate / string-op-flow / enum-ref / manifest / native / constant-flag 等——**有意覆盖多形态**，检验检测器不只靠 grep 字符串。
 - 所有条目均有孪生 `*S`（expected:false）：检测器命中孪生即计 FP——防"宁可错杀"式规则。
 - `OVD-SECRET-005`（重组反扫描）与 `OVD-NATIVE-001`（密钥在 .so）是对检测器分层能力的两类对抗样本：前者考"非字面量拼接流"，后者考"abc 层负样本判定 + native 层正样本"。
+
+## OVD-NOTIF — 通知内容泄露（CWE-200）
+
+- **OVD-NOTIF-001 通知栏明文携带验证码与会话令牌**
+  - 成因：`notificationManager.publish` 的 `text` 直拼 `pay code 774811 / tok_vd_notif_2f8a`，无最小化处理。
+  - 利用：锁屏/通知中心/穿戴设备/任何通知读取面直接可见；旁观者一瞥即得。
+  - 危害：支付验证码 + 会话令牌经系统共享面泄露（孪生 001S 只发聚合摘要，敏感细节留在应用内）。
+
+## OVD-IRED — Intent 重定向（CWE-940/862）
+
+- **OVD-IRED-001 不可信 want 字段原样转投 startAbility**
+  - 成因：外部通道（deeplink/剪贴板/推送/共享）投喂的 `action`/`uri` 不经白名单直接构造 want 派发。
+  - 利用：驱动本应用身份拉起攻击者组件或携带任意 URI 的隐式跳转。
+  - 危害：借可信应用为跳板的重定向链（孪生 001S 动作白名单门控，不在名单即拒绝派发）。
+
+## OVD-PWDIN — 密码输入回显（CWE-522）
+
+- **OVD-PWDIN-001 密码语义输入框 Normal 模式明文回显**
+  - 成因：`TextInput` placeholder 声明密码语义，却用 `InputType.Normal` 且以明文 Text 渲染输入内容。
+  - 利用：旁观者直读、截屏/录屏/共享屏幕即得明文口令。
+  - 危害：凭据在展示层失守（孪生 001S 用 `InputType.Password` 圆点掩码并只回显长度）。
+  - 检测形态：**UI 属性面**——placeholder 字符串与明文回显标记 `'plain-echo: '` 同记录共现（string-literal 双常量），首个非源码调用面的规则样本。

@@ -25,6 +25,9 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-bgtask', '后台任务滥用 (1+1S)', 'pages/BgtaskVulnPage'),
   new DemoItem('cat-dlink', '深链参数校验 (3+3S)', 'pages/DlinkVulnPage'),
   new DemoItem('cat-xmod', '跨模块分布 HAR/HSP (4+4S)', 'pages/XmodVulnPage'),
+  new DemoItem('cat-notify', '通知敏感内容 (1+1S)', 'pages/NotifyVulnPage'),
+  new DemoItem('cat-ired', 'Intent 重定向 (1+1S)', 'pages/IredVulnPage'),
+  new DemoItem('cat-pwdin', '密码输入回显 (1+1S)', 'pages/PwdinVulnPage'),
 ];
 
 @Entry

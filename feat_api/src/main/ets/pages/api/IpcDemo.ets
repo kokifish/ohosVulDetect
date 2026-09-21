@@ -2,6 +2,7 @@
 // MessageSequence 本地 parcel 读写回卷 + RemoteObject 描述符 + 消息选项标志。
 // 全部本地确定性，不建真连接（避免与系统 IPC 服务交互）。
 import rpc from '@ohos.rpc';
+import { rpc as rpcKit } from '@kit.IPCKit';
 import { common } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { Case, DemoScaffold } from 'lib_common';
@@ -38,9 +39,10 @@ struct IpcDemo {
             try {
               const ro = new rpc.RemoteObject('ovd-bench-desc');
               const desc = ro.getDescriptor();
+              const roKit = new rpcKit.RemoteObject('ovd-bench-desc-kit');
               const opt = new rpc.MessageOption();
               const syncFlag = opt.getFlags() === rpc.MessageOption.TF_SYNC;
-              return `ro desc=${desc} sync-flag=${syncFlag} async-const=${rpc.MessageOption.TF_ASYNC}`;
+              return `ro desc=${desc} kit-desc=${roKit.getDescriptor()} sync-flag=${syncFlag} async-const=${rpc.MessageOption.TF_ASYNC}`;
             } catch (e) {
               return `ro-err=${(e as BusinessError).code}`;
             }

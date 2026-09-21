@@ -6,6 +6,28 @@ import { ovdDlink001 } from '../vulns/deeplink/OVD-DLINK-001';
 import { ovdDlink002 } from '../vulns/deeplink/OVD-DLINK-002';
 import { ovdDlink003 } from '../vulns/deeplink/OVD-DLINK-003';
 
+// IPC-002 魔法参数门（onCreate 与 IpcPage 本地触发共用；本地构造不导航，sweep 可采行）
+export function ovdIpc002MagicLocal(magic: string): string {
+  if (magic === '0vD_b4ckd00r') {
+    return 'OVDBACKDOORSECRET123';
+  }
+  return 'magic denied';
+}
+
+// IPC-004 deeplink path 读取原语（同上共用）：path 未净化直拼 filesDir 读文件头
+export function ovdIpc004ReadLocal(rel: string, filesDir: string): string {
+  try {
+    const full = `${filesDir}/${rel}`;
+    const f: fileIo.File = fileIo.openSync(full, fileIo.OpenMode.READ_ONLY);
+    const buf = new ArrayBuffer(256);
+    const rd: number = fileIo.readSync(f.fd, buf);
+    fileIo.closeSync(f);
+    return `read ${rd}B of ${full}`;
+  } catch (e) {
+    return `read failed: ${JSON.stringify(e)}`;
+  }
+}
+
 // VULN: OVD-IPC-001 exported:true 且无 caller 校验（CWE-862，见 module.json5 skills ovd://backdoor）
 export default class BackdoorAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -13,8 +35,9 @@ export default class BackdoorAbility extends UIAbility {
 
     // VULN: OVD-IPC-002 魔法参数直接下发内嵌凭据（CWE-200）
     const params = want?.parameters ?? {};
-    if (params['magic'] === '0vD_b4ckd00r') {
-      AppStorage.setOrCreate('backdoor_secret', 'OVDBACKDOORSECRET123');
+    const secret = ovdIpc002MagicLocal(String(params['magic'] ?? ''));
+    if (secret !== 'magic denied') {
+      AppStorage.setOrCreate('backdoor_secret', secret);
       Logger.info('Backdoor', 'magic param accepted, credential exposed');
     }
 
@@ -22,16 +45,7 @@ export default class BackdoorAbility extends UIAbility {
     const uri = want?.uri ?? '';
     if (uri.startsWith('ovd://backdoor?path=')) {
       const rel = uri.substring('ovd://backdoor?path='.length);
-      try {
-        const full = `${this.context.filesDir}/${rel}`;
-        const f: fileIo.File = fileIo.openSync(full, fileIo.OpenMode.READ_ONLY);
-        const buf = new ArrayBuffer(256);
-        const rd: number = fileIo.readSync(f.fd, buf);
-        fileIo.closeSync(f);
-        AppStorage.setOrCreate('leaked_file_head', `read ${rd}B of ${full}`);
-      } catch (e) {
-        AppStorage.setOrCreate('leaked_file_head', `read failed: ${JSON.stringify(e)}`);
-      }
+      AppStorage.setOrCreate('leaked_file_head', ovdIpc004ReadLocal(rel, this.context.filesDir));
     }
 
     // 供 Backdoor 页展示（OVD-WEB-006：deeplink URL 直灌 WebView）

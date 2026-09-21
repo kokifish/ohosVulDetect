@@ -1,9 +1,11 @@
 import { common, Want } from '@kit.AbilityKit';
+import { fileIo } from '@kit.CoreFileKit';
 import { emitter } from '@kit.BasicServicesKit';
 import { Case, DemoScaffold } from 'lib_common';
 import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S, ovdCevt001S } from '../vulns/ipc/Twins';
 import { ovdIpc003 } from '../vulns/ipc/OVD-IPC-003';
 import { ovdCevt001 } from '../vulns/ipc/OVD-CEVT-001';
+import { ovdIpc002MagicLocal, ovdIpc004ReadLocal } from '../abilities/BackdoorAbility';
 
 // IPC 面：001/002/003/004 事实源在 module.json5 / BackdoorAbility / DataShareExt；此处提供触发器。
 @Entry
@@ -54,6 +56,19 @@ struct IpcPage {
             ovdCevt001S((s: string) => {
               log(`ev ${s}`);
             })),
+          new Case('002 local magic', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
+            const secret = ovdIpc002MagicLocal('0vD_b4ckd00r');
+            return `local magic gate: ${secret}`;
+          }),
+          new Case('004 local path-read', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
+            const note = `${ctx.filesDir}/sandbox-note`;
+            const f: fileIo.File = fileIo.openSync(note, fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE | fileIo.OpenMode.TRUNC);
+            fileIo.writeSync(f.fd, 'ipc004-local-traversal-note');
+            fileIo.closeSync(f);
+            const head = ovdIpc004ReadLocal('../files/sandbox-note', ctx.filesDir);
+            fileIo.unlinkSync(note);
+            return head;
+          }),
           new Case('001S caller-check', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc001S('com.koki.VD')),
           new Case('002S verify', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc002S('com.koki.VD', true)),
           new Case('003S loopback-auth', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc003S(true)),

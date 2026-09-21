@@ -3092,6 +3092,110 @@
         "constants": []
       },
       "twin_of": "OVD-CEVT-001"
+    },
+    {
+      "id": "OVD-NOTIF-001",
+      "title": "notification plaintext carries OTP and session token",
+      "category": "notification-content",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/notify/OVD-NOTIF-001.ets",
+      "function": "ovdNotif001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "notificationManager",
+          "publish"
+        ],
+        "constants": [
+          "pay code 774811"
+        ]
+      },
+      "twin": "OVD-NOTIF-001S"
+    },
+    {
+      "id": "OVD-NOTIF-001S",
+      "title": "twin: 通知聚合摘要最小载荷 (OVD-NOTIF-001)",
+      "category": "notification-content",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/notify/Twins.ets",
+      "function": "ovdNotif001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-NOTIF-001"
+    },
+    {
+      "id": "OVD-IRED-001",
+      "title": "untrusted want fields forwarded verbatim to startAbility",
+      "category": "intent-redirection",
+      "cwe": "CWE-940",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ired/OVD-IRED-001.ets",
+      "function": "ovdIred001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "startAbility"
+        ],
+        "constants": [
+          "ovd.ired.forward"
+        ]
+      },
+      "twin": "OVD-IRED-001S"
+    },
+    {
+      "id": "OVD-IRED-001S",
+      "title": "twin: 转发前动作白名单门控 (OVD-IRED-001)",
+      "category": "intent-redirection",
+      "cwe": "CWE-940",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ired/Twins.ets",
+      "function": "ovdIred001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-IRED-001"
+    },
+    {
+      "id": "OVD-PWDIN-001",
+      "title": "password-semantics input in Normal mode with plaintext echo",
+      "category": "password-echo",
+      "cwe": "CWE-522",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/pwdin/OVD-PWDIN-001.ets",
+      "function": "-",
+      "expected": true,
+      "detection": {
+        "type": "string-literal",
+        "constants": [
+          "bench password field",
+          "plain-echo: "
+        ]
+      },
+      "twin": "OVD-PWDIN-001S"
+    },
+    {
+      "id": "OVD-PWDIN-001S",
+      "title": "twin: Password 掩码模式仅回显长度 (OVD-PWDIN-001)",
+      "category": "password-echo",
+      "cwe": "CWE-522",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/pwdin/Twins.ets",
+      "function": "ovdPwdin001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-PWDIN-001"
     }
   ]
 }
