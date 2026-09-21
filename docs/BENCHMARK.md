@@ -9,11 +9,11 @@
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见各轮记录） | check_opcode_coverage.py |
 | 组件覆盖 | 100/137（其余 37：since-26 4 项待 API26 运行环境回补，其余为 HMS 侧/本 SDK 声明面不可达） | check_corpus_coverage.py |
-| Kit 覆盖 | 39/103（openharmony 侧 kit 全覆盖，剩余 64 全为 HMS 侧） | check_corpus_coverage.py |
-| @ohos 直连 | 3/447（语料走 @kit 聚合 import） | check_corpus_coverage.py |
-| 漏洞/孪生 | 87 + 87（manifest 174 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
-| 评分 | F1=1.000（87 对口径实测，TP=87 FN=0 FP=0 TN=87） | score_output.py |
-| feat_api 路由页 | 73（api 47 / ui 18 / lang 7 + Index） | main_pages.json |
+| Kit 覆盖 | 39/103（openharmony 侧 kit 基本全覆盖，剩余 64 中经核实仅 IPCKit 为 openharmony Kit——其底层 @ohos.rpc 已直连覆盖，其余为 HMS 侧） | check_corpus_coverage.py |
+| @ohos 直连 | 27/447（Kit 聚合 import 之外的无归属/工具库/旧 API 直连面） | check_corpus_coverage.py |
+| 漏洞/孪生 | 88 + 88（manifest 176 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
+| 评分 | F1=1.000（88 对口径实测，TP=88 FN=0 FP=0 TN=88） | score_output.py |
+| feat_api 路由页 | 76（api 50 / ui 18 / lang 7 + Index） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
@@ -25,7 +25,7 @@
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 良性语料路由页 73（api 47 / ui 18 / lang 7 + Index，见基线速查表） |
+| feat_api | feature HAP | 良性语料路由页 76（api 50 / ui 18 / lang 7 + Index，见基线速查表） |
 | feat_vuln | feature HAP | 漏洞分类页 25（23 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
@@ -1234,3 +1234,82 @@ on emulator)`），裸 ❌ 语义保留给"用例代码真崩溃"。**feat_api �
 **构建陷阱备注**：build.py 在 hvigor 失败时仍可能继续跑完后续流程且 exit 0（本轮两次被
 `| tail` 吞掉编译错误、把旧产物当新产物安装）——**凡改语料的构建必须 grep BUILD FAILED 并
 解包 abc 验证新字符串**（本轮确立的 abc 探针法：zipfile 解 feat_api hap 找新增串）。
+
+## @ohos 直连/旧 API 面 + 指令候选探针收口 + CEVT 族 + 语言特性收尾轮（2026-09-21）
+
+**方向选择**：组件/Kit 缺口经 check_corpus_coverage 对账确认剩余多为 HMS 侧；改以脚本对账
+`check_corpus_coverage.py --json` × SDK kits d.ts 交叉，筛出「不被任何已覆盖 Kit 导出」的
+**@ohos 直连真缺口 66 个**，其中 openharmony 端侧可落地为：无 Kit 归属旧 API 面
+（fileio/statfs/data.storage/data.rdb/wantAgent/ability.wantConstant/ability.dataUriUtils/
+bytrace/hiAppEvent/commonEvent——除 ValuesBucket 具名类型导入外均为 default-import 形态 + deprecated 签名）、工具库直连面
+（uri/url/convertxml/xml/buffer/util.json/util.ArrayList·HashMap·Deque/systemDateTime/zlib）、
+rpc（IPCKit 底层模块——**更正前轮"剩余 Kit 全 HMS"结论：IPCKit 为 openharmony Kit**）。
+
+**feat_api 新页 3 个（@ohos 直连维度 3 → 27/447，+24 模块）**：
+- `api-legacy`（9 用例）：旧 API 默认导入面全链。实测签名坑：旧 wantAgent 无 build
+  （用 getWantAgent+getBundleName+equal）、旧 wantConstant 是 `Action` 不是 `Params`、
+  旧 commonEvent 不再导出 CommonEventData 类型（从 commonEventManager 借）；
+  **legacy fileio 在 API24 镜像运行时不可用**（openSync 抛非 BusinessError，行内记录）；
+- `api-stdlib`（8 用例）：纯本地确定性。实测坑：旧 url.URL 属性是 protocol（含冒号）/
+  pathname 而非 scheme/path；xml.ParseOptions 回调名是 tokenValueCallbackFunction 且第二参
+  为 ParseInfo（getDepth 计数）；CoreFileKit 导出名是 fileIo 非 fs；ArrayList 下标访问
+  `[i]`（API12）而非 .get；zlib compressFile 在 API24 镜像报 900001（行内记录，compress 面留
+  待 API26 镜像）；uri/util 容器/systemDateTime/buffer/util.json/convertxml 全通过；
+- `api-ipc`（3 用例）：rpc.MessageSequence 本地 parcel 读写回卷（token/int/string round-trip
+  全对）+ RemoteObject 描述符 + MessageOption 标志——全确定性 ✅，不建真连接。
+
+**指令候选探针收口（es2abc script+module 双模式，SDK 26.0.0.32）**：未用「其他 31」中剩余
+候选全部定性**结构性不可达**（归因逐条落 ohos.md §5.1）：ldnewtarget 走调用约定传参（lda a1）、
+ldthis 族 this 经参数寄存器、
+ldobjbyindex/stobjbyindex 一律 byvalue 降级、ldfunction=definefunc+modulevar、
+ldsymbol=tryldglobalbyname+ldobjbyname、throw.undefinedifhole 只发射 withname 变体、
+delete super.x=delobjprop。**callruntime.isfalse/istrue 前缀变体实际可达且早已计入 188**
+（布尔上下文动态值判定发射，compare_dis 多处命中）——候选清单中裸 isfalse/istrue 按前缀变体
+达成处理。**覆盖并集 188/268 维持**（新语料为 API 面扩展、零新指令，与归因一致）。
+
+**语言特性收尾（Sugars.ts +3 函数，SugarsDemo selfcheck 接线）**：WeakMap/WeakSet/WeakRef
+（sugarWeakColls）、Proxy get/set 拦截+Reflect.ownKeys/has/apply（sugarProxyReflect）、
+RegExp 具名捕获组/后行断言/先行断言/dotAll（sugarRegexAdv）。全部 try/catch 包裹（运行时
+不支持则 err 行不崩溃）；编译面 es2abc 探针先行实证通过。
+
+**新漏洞族 OVD-CEVT（公共事件广播，+1+1S，manifest 174 → 176）**：
+CEVT-001 `commonEventManager.publish('ovd.session.sync', {data: token})` 无 subscriberPermissions
+门，令牌明文上系内广播总线（CWE-200）；001S 最小载荷+订阅方权限门。坑：publish 无
+Promise 重载（只有 callback 形态），且 options 对象字面量必须显式 `CommonEventPublishData`
+注解否则 TS 解析到 AsyncCallback 重载报错。cat-ipc 页 6+6S。
+
+**门禁终态**：4 变体构建 OK（本轮 3 轮迭代修签名：publish 重载/wantAgent·wantConstant·url·
+xml·fileIo·ArrayList）；manifest **176**（88+88）双向一致；twin_fp FAIL=0 / WARN=15；
+sync_pages OK；生成器确定性 7/7；abc 探针全 HIT（9 新串）；组件 100/137、Kit 39/103、
+**@ohos 27/447**、漂移 OK；规则形态维持 api-call+constant 为主。
+**评分（88 对全量首次）**：逆向工具对终版 api26-release .app 产出 test.out（10.8MB，只读调用）→
+`score_output.py`：**TP=88 FN=0 FP=0 TN=88，F1=1.000**——CEVT-001 consts 1/1 calls 2/2 命中、
+001S 事件名隔离生效 consts 0/1。
+**字符串门禁**：207/207 + LITERALS OK（api26/api24 双面新鲜 dis）。
+
+**模拟器实测（bench24，api24-release）**：
+- 首窗（新页首验）：`api-legacy` 9✅、`api-stdlib` 8✅、`api-ipc` 3✅（rdb 重复点击 1 行计
+  双，共 22✅/0❌）——`url ok=false`（旧 URL `protocol` 含冒号）与 zlib/fileio 错误信息不明
+  两处即时修复后二窗复验：`api-legacy`+`api-stdlib` 19✅/0❌，`url ok=true` ✓；
+  `fileio unavailable={}`（API24 镜像旧 fileio 抛无信息 Error）与
+  `zlib code=900001`（compressFile 镜像不可用）按内码约定留行。legacy rdb/storage/wantAgent/
+  wantConstant/dataUriUtils/bytrace/hiAppEvent/commonEvent(cb 形态) 与 stdlib uri/xml/
+  convertxml/util 三容器/buffer/util.json/systemDateTime 及 rpc 三用例运行时全部真实通过；
+- **全量回归（宿主空闲后补跑完成）**：feat_api 47 页 + cat 相遍历 + lang 7 页——
+  **lang-sugars selfcheck 13/13**（WeakMap/WeakSet/WeakRef、Proxy get/set + Reflect 三件套、
+  RegExp 具名组/后行断言/dotAll 在方舟运行时全部真实可用，此前唯一未决项收敛）；lang 7/7、
+  **cat-ipc 6+6S 全绿**（CEVT-001 漏洞载荷真实上总线 `recv data=token=sess_vd_cevt_plaintext_5150`、
+  001S 门控广播 `recv data=local-note` 按设计落行）。首窗 177✅/12❌，❌ 全为环境类：
+  11 个 DNS/网络失败（http 2300006 / rcp 1007900006 dnsStatus=3 / tcp 2301115）经查为当日
+  guest 多次崩溃后 netsys 状态劣化（宿主网络同时段正常），**guest 重启后定向复验
+  http/rcp/socket/websocket 全绿（status=200 / recv=391B）**；asset/定位 201（cat-storage 001S、cat-perm PRIV-002）为 09-15 轮
+  已归档镜像权限限制；ui 页 0 信号行为 by design（仅 state-v1/v2 selfcheck 出行，均 1✅）；
+  ui-security/dialogs/offscreen 尾 3 页补遍历无崩溃；
+- **审计修复轮**（独立审计双报告：fileio fd/close+unlink finally、rdb rs.close finally、
+  commonEvent 订阅者失败退订、zlib 文件清理、CEVT import 合并、Sugars 尾空行 + 文档措辞）
+  后重建 4 变体、重装、复验 api-legacy 9✅ + api-stdlib 8✅ 维持全绿，评分复验 F1=1.000 不变；
+  `fileio unavailable={}`（API24 镜像旧 fileio 抛无信息 Error）与 `zlib code=900001`
+  （compressFile 镜像不可用）按内码约定留行，API26 镜像恢复后可回验。
+
+**待办**：API26 镜像双环境恢复照旧（DevEco GUI 一次性启动）；工具链 Beta2→Release 升级欠账
+照旧。

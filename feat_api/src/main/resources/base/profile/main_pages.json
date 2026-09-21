@@ -72,6 +72,9 @@
     "pages/api/TelecomDemo",
     "pages/api/ImeDemo",
     "pages/api/ConnDemo",
-    "pages/api/TestKitDemo"
+    "pages/api/TestKitDemo",
+    "pages/api/LegacyDemo",
+    "pages/api/StdlibDemo",
+    "pages/api/IpcDemo"
   ]
 }

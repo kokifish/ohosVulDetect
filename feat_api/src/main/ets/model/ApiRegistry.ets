@@ -48,6 +48,9 @@ export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-ime', 'IMEKit: setting/default/current ime', 'pages/api/ImeDemo'),
   new DemoItem('api-conn', 'ConnectivityKit: wifi/bluetooth state', 'pages/api/ConnDemo'),
   new DemoItem('api-testkit', 'TestKit: delegator registry + UiTest enum', 'pages/api/TestKitDemo'),
+  new DemoItem('api-legacy', 'legacy direct-import: fileio/statfs/storage/rdb/wantAgent/bytrace', 'pages/api/LegacyDemo'),
+  new DemoItem('api-stdlib', 'stdlib direct: uri/url/convertxml/xml/util/zlib', 'pages/api/StdlibDemo'),
+  new DemoItem('api-ipc', 'rpc direct: parcel/RemoteObject (IPCKit base)', 'pages/api/IpcDemo'),
 ];
 
 export const UI_DEMOS: DemoItem[] = [

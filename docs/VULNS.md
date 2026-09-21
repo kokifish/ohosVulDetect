@@ -1,6 +1,6 @@
 # docs/VULNS.md — 漏洞语料说明（类型 / 成因 / 利用方式 / 危害）
 
-> 口径：与 groundtruth/manifest.json 一一对应的 87 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
+> 口径：与 groundtruth/manifest.json 一一对应的 88 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
 > 本文档回答四个问题：每条语料**是什么漏洞**、**代码里长什么样（成因）**、**攻击者怎么利用**、**造成什么危害**。
 > 所有 ID/常量均为基准虚构载荷（`vd-bench`/`AKIDBENCH`/`ovd://` 等），不含真实凭据；孪生实现见各分类 `Twins.ets`。
 > 静态 FP 自检：`python3 tools/check_twin_fp.py`（孪生 detection/函数体双面 × 漏洞规则常量子串感知扫描，FAIL=常量级重叠/函数缺失，WARN=设计内 call 级同形）。
@@ -35,6 +35,7 @@
 | BGTASK | 1 | 常驻后台任务掩护静默采集 | 359 |
 | DLINK | 3 | 深链参数无白名单执行/开放跳转/子串令牌放行 | 862/601/20 |
 | XMOD | 4 | 跨模块分布：HAR 硬编码主密钥·会话缓存链 / HSP 明文保险箱·恒真信任 | 321/312/285 |
+| CEVT | 1 | 公共事件明文广播会话令牌（无订阅方权限门） | 200 |
 
 ---
 
@@ -418,6 +419,13 @@
   - 成因：`raw.includes('admin-token=true')` 子串判定特权模式，参数名伪造/编码绕过均可命中。
   - 利用：在 uri 任意位置拼接令牌子串即提权。
   - 危害：特权模式未授权开启（孪生 003S 按 `session=` 参数精确解析 + 等值比较）。
+
+## OVD-CEVT — 公共事件广播（CWE-200）
+
+- **OVD-CEVT-001 会话令牌明文上公共事件总线**
+  - 成因：`commonEventManager.publish('ovd.session.sync', {data: 'token=…'})` 无 subscriberPermissions 门，令牌随广播载荷落系统事件总线。
+  - 利用：同设备任意应用 `createSubscriber({events: ['ovd.session.sync']})` 注册同名事件即截获载荷。
+  - 危害：与 emitter 面（IPC-005）同级的系内广播泄露，但载荷为长效会话令牌；检测规则为 api-call+constant（publish + 事件名常量），孪生 001S 最小载荷 + 订阅方权限门。
 
 ## OVD-XMOD — 跨模块漏洞分布（CWE-321/312/285）
 

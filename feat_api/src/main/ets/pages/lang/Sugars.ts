@@ -145,3 +145,59 @@ export function sugarNumericKeys(): number {
   return (NumKeyStatic as ESObject)['9'] + (NumKeyStatic as ESObject)['22'];
 }
 
+// 弱引用容器族：WeakMap/WeakSet/WeakRef（键弱持有，deref 活对象判定）。
+// 全部 try/catch 包裹：弱引用/正则高级语义若运行时未实现则返回 err 标记而非崩溃。
+export function sugarWeakColls(k: number): string {
+  try {
+    const wm = new WeakMap<object, number>();
+    const k1: object = { id: k };
+    wm.set(k1, k);
+    const ws = new WeakSet<object>();
+    const k2: object = { id: k + 1 };
+    ws.add(k2);
+    const wr = new WeakRef(k2);
+    const deref = wr.deref();
+    const hit = deref === k2;
+    return `wm=${wm.get(k1)} ws=${ws.has(k2)} deref=${hit}`;
+  } catch (e) {
+    return `weak-err=${(e as Error).message?.length ?? -1}`;
+  }
+}
+
+// Proxy 拦截 get/set + Reflect.ownKeys/has/apply（元编程内置面）。
+export function sugarProxyReflect(x: number): string {
+  try {
+    const h: Record<string, number> = {};
+    const p = new Proxy(h, {
+      get(t: Record<string, number>, key: string | symbol): number {
+        const v = t[key as string];
+        return v === undefined ? -1 : v;
+      },
+      set(t: Record<string, number>, key: string | symbol, val: number): boolean {
+        t[key as string] = val + 1;
+        return true;
+      },
+    });
+    p['v'] = x;
+    const n = Reflect.ownKeys(h).length;
+    const has = Reflect.has(h, 'v');
+    const applied = Reflect.apply((a: number, b: number): number => a + b, null, [1, 2]);
+    return `px=${p['v']}/${n}/${has}/${applied}`;
+  } catch (e) {
+    return `proxy-err=${(e as Error).message?.length ?? -1}`;
+  }
+}
+
+// RegExp 高级形态：具名捕获组 / 后行断言 / 先行断言 / dotAll 标志。
+export function sugarRegexAdv(s: string): string {
+  try {
+    const named = /(?<y>\d{4})-(?<m>\d{2})/.exec(s);
+    const g = named?.groups as Record<string, string> | undefined;
+    const behind = /(?<=a)b/.test('xab');
+    const ahead = /a(?=b)/.test('ab');
+    const dotAll = /a.b/s.test('a\nb');
+    return `re=${g?.['y'] ?? 'none'}${g?.['m'] ?? 'none'} behind=${behind} ahead=${ahead} dotall=${dotAll}`;
+  } catch (e) {
+    return `regex-err=${(e as Error).message?.length ?? -1}`;
+  }
+}

@@ -109,6 +109,20 @@
 
 **候选待实证清单（P1）**：`isfalse/istrue`（布尔强制转换上下文）、`testin`（.ts 内 `in` 运算符）、`ldobjbyindex/stobjbyindex`（索引下标访问的替代发射路径，当前语料均未触发）、`ldfunction`（函数对象取值）、`ldnewtarget`（.ts 内 new.target）、`ldsymbol`（Symbol 作为值传递）、`ldthis/ldthisbyname/ldthisbyvalue/stthisbyname/stthisbyvalue`（顶层/独立 this 语义，arkts 禁 standalone-this，需 .ts 实证）、`supercallarrowrange`、`callruntime.definefieldbyindex / definefieldbyname`、`throw.constassignment / deletesuperproperty / undefinedifhole`（.ts 内 const 重赋值、delete super、TDZ 提前访问）、`callruntime.wideldlazymodulevar`（@Sendable 函数内 lazy import >127 个，扩生成器可达）、`wide.ldobjbyindex/stobjbyindex/stownbyindex`（索引号 >127 的下标访问）、`wide.getmodulenamespace`（import * as >127 个模块）；`wide.ldpatchvar/stpatchvar`（patch 动态更新机制）与 `wide.supercallarrowrange/supercallthisrange`（super 调用参数 >127）疑应用构建不可达，实证后归档。
 
+> **2026-09-21 探针收口（SDK 26.0.0.32 es2abc script+module 双模式，/tmp 探针实证）**：上列候选中剩余项全部定性为**当前发射器结构性不可达**，归因如下——
+> - `ldnewtarget`：new.target 改走调用约定传参（函数第 2 参数 `lda a1`），无专用取值指令；
+> - 箭头内 super **定参小元数**调用（如 2 参）降为 `ldsuperbyname` + `callthisN`；range 形态
+>   （≥4 实参直调 / 展开调用）仍发射 `supercallarrowrange` 族（ArrowSuper.js 新鲜产物实测 bare/wide
+>   各 4 处命中，与 BENCHMARK 第五轮记录一致，**非不可达、已覆盖**）；
+> - `ldthis` 族：方法 this 经参数寄存器（a2）传入，全部降为 `lda`/`ldobjbyname`；
+> - `ldobjbyindex/stobjbyindex`：数字键下标读写一律 `ldobjbyvalue/stobjbyvalue`（对象/数组/类型数组同）；
+> - `ldfunction`：函数声明作值 = `definefunc` + `ldglobalvar`（script）/`stmodulevar`+`ldlocalmodulevar`（module）；
+> - `ldsymbol`：well-known Symbol 取值 = `tryldglobalbyname "Symbol"` + `ldobjbyname "iterator"`；[Symbol.iterator] 计算键走 `callruntime.topropertykey`；
+> - `throw.undefinedifhole`：TDZ 只发射 `throw.undefinedifholewithname`（裸 hole 形态不发射）；
+> - `throw.deletesuperproperty`：`delete super.x` 编译为 `delobjprop`；
+> - 裸 `isfalse/istrue/definefieldbyname`（0x23/0x24 等）确认不发射；**但 `callruntime.isfalse/istrue` 前缀变体由布尔上下文（模板串/分支内动态值判定）正常发射且早已计入覆盖并集**（compare_dis 多处命中），候选清单中该两条按前缀变体已达成处理；
+> - script 模式专属指令（ldglobalvar/stglobalvar 等）再现于探针，与既有归因一致：仅 script 管线发射，应用 esm 管线不出现。
+
 ### 5.2 组件：已覆盖约 99 个 vs 公开约 156 个（2026-09-12 第九轮 +11：PatternLock/SaveButton/PasteButton/AlertDialog/ActionSheet/DatePickerDialog/TimePickerDialog/TextPickerDialog/CalendarPickerDialog/OffscreenCanvas/RichText/WithTheme）
 
 > 2026-09-14 起组件/Kit/API 差距以 `tools/check_corpus_coverage.py` 脚本对账为准（component_config.json / @kit 全集 / @ohos 三维，含清单漂移门禁）；下方人工清单为调研快照，仅存历史价值（例：脚本实测 Stack 已不在语料、RelativeContainer 第八轮已覆盖，快照均有出入）。
@@ -148,7 +162,7 @@
 ### 5.4 语言特性：已覆盖 ~30 形态，候选补充
 
 已覆盖：generator/yield*/resume-with-arg、for-of/for-in/close、spread/rest/new-spread、解构 rest、Symbol 键、tagged template（成员 tag）、私有字段全家族、super[k]/super 展开、计算键、globalThis 预置赋值、可选链调用、动态下标调用（Record 形态）、闭包/lexenv 压力、wide 家族、async/await 链、try/catch/finally、泛型/union/枚举位运算、类继承多态等。
-**候选**（先小规模编译实证是否出指令/可运行）：accessor get/set（可能与 definefieldbyname/stownbyname 相关）、for-await-of（async 迭代，关 closeiterator/getresumeoffset）、`new.target`、String.raw、标签 break/continue、BigInt、WeakMap/WeakSet/WeakRef、`satisfies`（仅类型层，预计无指令）、Proxy/Reflect（.ts 内实测 ArkTS 运行时支持度）、RegExp 具名组/后行断言。
+**2026-09-21 状态**：原候选全部落地或定性——BigInt/String.raw/标签 break/for-await-of/static 块/解构交换/逻辑赋值/accessor（Sugars.ts/TypesDemo，已落地）；本轮新增 WeakMap/WeakSet/WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll（Sugars.ts sugarWeakColls/sugarProxyReflect/sugarRegexAdv，运行时以模拟器 selfcheck 为准）；`new.target` 已落地（构造器内箭头捕获形态，见 sugarNewTarget；本 SDK 下编译为参数传递，见 §5.1 探针收口）；`satisfies` 仅类型层、无指令面，不作为语料目标。
 
 ## 6. 下一步改进建议（优先级）
 

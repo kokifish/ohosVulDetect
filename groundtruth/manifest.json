@@ -3056,6 +3056,42 @@
         ]
       },
       "twin_of": "OVD-XMOD-004"
+    },
+    {
+      "id": "OVD-CEVT-001",
+      "title": "commonEvent broadcast leaks session token to any subscriber",
+      "category": "common-event-broadcast",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ipc/OVD-CEVT-001.ets",
+      "function": "ovdCevt001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "commonEventManager",
+          "publish"
+        ],
+        "constants": [
+          "ovd.session.sync"
+        ]
+      },
+      "twin": "OVD-CEVT-001S"
+    },
+    {
+      "id": "OVD-CEVT-001S",
+      "title": "twin: 公共事件最小载荷+订阅方权限门 (OVD-CEVT-001)",
+      "category": "common-event-broadcast",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+      "function": "ovdCevt001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-CEVT-001"
     }
   ]
 }

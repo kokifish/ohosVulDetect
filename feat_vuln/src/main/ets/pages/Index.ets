@@ -10,7 +10,7 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-storage', '不安全存储 (4+1S)', 'pages/StoragePage'),
   new DemoItem('cat-form', 'FormKit 卡片注入 (2+2S)', 'pages/FormVulnPage'),
   new DemoItem('cat-log', '敏感日志 (2+1S)', 'pages/LogPage'),
-  new DemoItem('cat-ipc', 'IPC/导出面 (5)', 'pages/IpcPage'),
+  new DemoItem('cat-ipc', 'IPC/导出面 (6+6S)', 'pages/IpcPage'),
   new DemoItem('cat-perm', '权限/隐私/粘贴板 (8+8S)', 'pages/PermPage'),
   new DemoItem('cat-auth', '认证/会话/随机 (7+7S)', 'pages/AuthPage'),
   new DemoItem('cat-debug', '调试残留 (2)', 'pages/DebugPage'),

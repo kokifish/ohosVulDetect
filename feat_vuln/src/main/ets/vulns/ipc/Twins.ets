@@ -1,4 +1,5 @@
-// SAFE 孪生集合（ipc）：OVD-IPC-001S..005S，合并文件，勿手改。
+// SAFE 孪生集合（ipc）：OVD-IPC-001S..005S + OVD-CEVT-001S，合并文件。
+import { commonEventManager, BusinessError } from '@kit.BasicServicesKit';
 
 // SAFE: OVD-IPC-001S 跨进程入口校验调用方身份后才处理（CWE-862 加固）
 export function ovdIpc001S(callerBundle: string): string {
@@ -26,4 +27,25 @@ export function ovdIpc004S(action: string): string {
 // SAFE: OVD-IPC-005S emitter 事件带签名校验，不直接改写鉴权状态（CWE-345 加固）
 export function ovdIpc005S(payloadSigOk: boolean): string {
   return payloadSigOk ? 'event accepted (signature verified)' : 'event dropped (bad signature)';
+}
+
+// SAFE: OVD-CEVT-001S 公共事件最小载荷 + 订阅方权限门，不携带令牌（CWE-200 加固）
+export async function ovdCevt001S(log: (s: string) => void): Promise<string> {
+  const subInfo: commonEventManager.CommonEventSubscribeInfo = { events: ['ovd.sync.localnote'] };
+  const sub = await commonEventManager.createSubscriber(subInfo);
+  commonEventManager.subscribe(sub, (err: BusinessError, data: commonEventManager.CommonEventData) => {
+    log(`cevtS recv data=${data.data}`);
+    commonEventManager.unsubscribe(sub);
+  });
+  const payload: commonEventManager.CommonEventPublishData = {
+    code: 0,
+    data: 'local-note',
+    subscriberPermissions: ['ohos.permission.GET_BUNDLE_INFO_PRIVILEGED']
+  };
+  return new Promise<string>((resolve: (v: string) => void) => {
+    commonEventManager.publish('ovd.sync.localnote', payload, (err: BusinessError) => {
+      log(`cevtS publish err=${err ? err.code : 0}`);
+      resolve('cevtS gated broadcast sent (minimal payload + subscriber permission)');
+    });
+  });
 }

@@ -3,7 +3,8 @@
 // 反编译对照价值：复杂语法糖 → 通用指令的降级路径还原。
 import {
   sugarAccessors, sugarPrivLogic, sugarFlow, sugarNumbers, sugarStaticSuper,
-  sugarForAwait, sugarFunctional, sugarDestruct, sugarNewTarget, sugarNumericKeys
+  sugarForAwait, sugarFunctional, sugarDestruct, sugarNewTarget, sugarNumericKeys,
+  sugarWeakColls, sugarProxyReflect, sugarRegexAdv
 } from './Sugars';
 import { selfcheckLine } from './Selfcheck';
 
@@ -27,6 +28,9 @@ struct SugarsDemo {
           this.lines.push(sugarDestruct());
           this.lines.push(sugarNewTarget());
           this.lines.push(`nk=${sugarNumericKeys()}`);
+          this.lines.push(sugarWeakColls(42));
+          this.lines.push(sugarProxyReflect(9));
+          this.lines.push(sugarRegexAdv('2026-09'));
         })
       Button('run for-await sugar')
         .onClick(() => {
@@ -44,13 +48,17 @@ struct SugarsDemo {
           actual.push(sugarDestruct());
           actual.push(sugarNewTarget());
           actual.push(`nk=${sugarNumericKeys()}`);
+          actual.push(sugarWeakColls(42));
+          actual.push(sugarProxyReflect(9));
+          actual.push(sugarRegexAdv('2026-09'));
           sugarForAwait().then((r: string): void => {
             actual.push(r);
             this.lines.push(selfcheckLine('sugars',
               ['acc=8/4/11', 'priv=true1 f=true nz=2 oe=2', 'sw=2 do=3 lab=1,2 ter=mid comma=1',
                 'big=1 sep=1000000 exp=1000 pow=1024 rawlen=11', 'stat=3 sup=6',
                 'ent=2 back=1 arr=4,6 flat=6 at=30', 'c=7 d=8 rest=2 swap=21 obj=3', 'nt=1',
-                'nk=20', 'fa=3'],
+                'nk=20', 'wm=42 ws=true deref=true', 'px=10/1/true/3',
+                're=202609 behind=true ahead=true dotall=true', 'fa=3'],
               actual, []));
           });
         })

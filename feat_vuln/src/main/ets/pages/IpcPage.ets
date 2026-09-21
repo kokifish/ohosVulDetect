@@ -1,8 +1,9 @@
 import { common, Want } from '@kit.AbilityKit';
 import { emitter } from '@kit.BasicServicesKit';
 import { Case, DemoScaffold } from 'lib_common';
-import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S } from '../vulns/ipc/Twins';
+import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S, ovdCevt001S } from '../vulns/ipc/Twins';
 import { ovdIpc003 } from '../vulns/ipc/OVD-IPC-003';
+import { ovdCevt001 } from '../vulns/ipc/OVD-CEVT-001';
 
 // IPC 面：001/002/003/004 事实源在 module.json5 / BackdoorAbility / DataShareExt；此处提供触发器。
 @Entry
@@ -45,6 +46,14 @@ struct IpcPage {
             this.admin = AppStorage.get<string>('ovd_is_admin') ?? 'false';
             return `after emit: admin=${this.admin}`;
           }),
+          new Case('cevt-001 plain broadcast', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdCevt001((s: string) => {
+              log(`ev ${s}`);
+            })),
+          new Case('cevt-001S gated broadcast', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdCevt001S((s: string) => {
+              log(`ev ${s}`);
+            })),
           new Case('001S caller-check', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc001S('com.koki.VD')),
           new Case('002S verify', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc002S('com.koki.VD', true)),
           new Case('003S loopback-auth', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc003S(true)),
