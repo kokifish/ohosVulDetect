@@ -8,7 +8,7 @@
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见 docs/history/BENCHMARK_ROUNDS.md 各轮与 docs/ohos.md §5.1） | check_opcode_coverage.py |
-| 组件覆盖 | 100/137（其余 37：since-26 4 项待 API26 运行环境回补，其余为 HMS 侧/本 SDK 声明面不可达） | check_corpus_coverage.py |
+| 组件覆盖 | 107/137（2026-09-21 since-26 组件 7 项回补后；剩余 30 为 HMS 侧/专用环境/WithEnv 等 API26 独占运行时项） | check_corpus_coverage.py |
 | Kit 覆盖 | 40/103（IPCKit 已显式 import；剩余 63 个按服务可用性判为 HMS/专用环境侧，静态面无法完全排除类似 IPCKit 的个案） | check_corpus_coverage.py |
 | @ohos 直连 | 27/447（Kit 聚合 import 之外的无归属/工具库/旧 API 直连面） | check_corpus_coverage.py |
 | 漏洞/孪生 | 91 + 91（manifest 182 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
@@ -33,6 +33,11 @@
 每个模块编译为独立 `ets/modules.abc`；`.app` = 3 hap + 1 hsp + pack.info。
 
 ## 构建
+
+> **坑（2026-09-21）**：绕过 build.py 直调 `hvigorw` 时必须把 DevEco 自带 node 前置到 PATH
+> （`export PATH=/Applications/DevEco-Studio.app/Contents/tools/node/bin:$PATH`）——系统
+> homebrew node v26.5.0 已移除 `fs.rmdirSync(..., {recursive})`，hvigor 的
+> BuildNativeWithNinja 清理步骤会报 00308018 TypeError（build.py 不受影响，它自动前置）。
 
 **推荐：一键脚本（自动设置工具链环境）**
 
@@ -209,8 +214,10 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 | 事项 | 阻塞点 | 验收 |
 |---|---|---|
 | 工具链 Beta2 → Release 升级 | 用户决策（2026-09-08 暂缓） | 升级后重跑覆盖率归因 + 全量 sweep + 评分 |
-| API26 镜像双环境恢复 | `-imageList` 目录已无 7.0.0(26) 系镜像，需 DevEco SDK 管理器/Beta 渠道重下（可能需登录） | bench26 拉起 → since-26 组件 4 项回补 + fileio/zlib 在 API26 回验 |
 | ohre_dev 上层仓 snapshot+gitlink | 待 koki 提交 | 上层仓同步 |
+
+> API26 双环境已于 2026-09-21 恢复（用户经 DevEco GUI 重下镜像并启动 bench26），since-26 组件
+> 回补与 fileio/zlib 回验已完成（见 history 归档当轮记录）。
 
 ## 轮记录索引
 
@@ -256,3 +263,4 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 | 2026-09-20 | 跨模块漏洞分布 + 深链参数校验 + Kit 批三轮（2026-09-20） |
 | 2026-09-21 | @ohos 直连/旧 API 面 + 指令候选探针收口 + CEVT 族 + 语言特性收尾轮（2026-09-21） |
 | 2026-09-21 | 漏洞三新族 + IPCKit/IPC 本地面收尾轮（2026-09-21 第二轮） |
+| 2026-09-21 | API26 双环境恢复 + since-26 组件回补 + API26 运行时验证轮（2026-09-21 第二轮） |

@@ -1157,3 +1157,38 @@ NOTIF/IRED 各 1/1，三孪生 consts=0 零 FP。**模拟器定向 sweep（bench
 `OVDBACKDOORSECRET123`、`004 local path-read` 穿越原语实读 27B）、api-ipc 3✅（kit-desc 经
 IPCKit 导入面）。
 **待办**：API26 镜像重下（见上）；工具链升级欠账照旧。
+
+## API26 双环境恢复 + since-26 组件回补 + API26 运行时验证轮（2026-09-21 第二轮）
+
+**API26 恢复**：用户经 DevEco GUI 重下 7.0.0(26) 镜像并启动 bench26（CLI `-imageList` 目录
+此前已无该系镜像，bench26 实例亦被清理，CLI 侧无法自助恢复）。hdc 目标 127.0.0.1:5559，
+`param get const.ohos.apiversion`=26，分辨率 1320x2232（API24 为 1256x2760）。
+
+**fileio/zlib 回验（API26 镜像）**：`fileio unavailable={}` 与 `zlib code=900001` 与 API24
+**完全一致**——定性为**模拟器镜像级限制**而非 API24 特有；两条内码行保留。其余 legacy/stdlib
+用例（rdb/storage/wantAgent/wantConstant/dataUriUtils/bytrace/hiAppEvent/commonEvent/uri/
+url/convertxml/xml/util 容器/buffer/util.json/systemDateTime）在 API26 全绿；lang-sugars
+selfcheck **13/13**（WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll 在 API26 运行时
+同样可用）。
+
+**新漏洞族 API26 验证**：cat-notify 2✅（通知真实发布）、cat-ired 2✅（16000019 确定性
+错误码 + 白名单拒绝）、cat-pwdin 1✅、cat-ipc 6✅（CEVT 广播 + 本地 magic/path-read 原语）。
+
+**since-26 组件回补（组件 100 → 107/137）**：LazyColumnLayout/LazyVGridLayout/
+LazyVWaterFlowLayout/LazyDynamicLayout/DynamicLayout/SelectionContainer/ContainerReader
+七组件回补进 ui-ark26 页。编译适配三轮：① `LazyVGridLayout` 是全局声明组件（component/
+lazy_grid_layout.d.ts），放 @kit.ArkUI import 会毒化整个导入解析；② ets-loader 声明快照缺
+这些组件的 `*Attribute` 类型 → 链式属性（.width 等）编译不过，须**裸构造**；③ Lazy*Layout
+族语法上只能直接嵌在 WaterFlow/FlowItem/Scroll/List/LazyColumnLayout 下（且 Scroll/List
+单子组件/白名单约束）→ 最终形态 = **List 根容器 + Lazy* 直挂 + 其余组件包 ListItem**。
+API26 镜像截图实证：七组件全部真实渲染（lazy-grid/waterflow/dynamic/dynamic-stack/
+selection（带拖选句柄）/container-reader/lazy-column），无 jscrash。
+
+**连带影响（预期行为）**：ui-ark26 页自回补起仅 API26 镜像可达；**API24 镜像打开该页
+jscrash**（镜像 API 低于组件 @since，09-19 轮已实证）——API24 sweep 的该页 ❌ 按环境性
+归因处理，不算语料回退（AGENTS 优先级：构建链最新 > 兼容旧镜像）。
+
+**直调 hvigorw 坑**：系统 homebrew node v26.5.0 移除 `fs.rmdirSync(..., {recursive})`，
+hvigor BuildNativeWithNinja 清理步骤报 00308018——直调必须前置 DevEco 自带 node
+（v24.14.1）；build.py 已内置此前置，不受影响。
+
