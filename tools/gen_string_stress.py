@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """生成字符串边界压力源文件（feat_api/src/main/ets/pages/lang/StringStressLab.ts）。
 
-背景（SDK26 es2abc + ark_disasm 实证，探针见 docs/BENCHMARK.md 对应轮次）：
+背景（SDK26 es2abc + ark_disasm 实证，探针见 docs/history/BENCHMARK_ROUNDS.md〈字符串边界语料〉等轮）：
 ark_disasm 文本输出对字符串只做「部分转义」——反斜杠与 \x01-\x1f 中的多数控制字符、U+2028 等转成转义文本，
 但 **双引号、换行 \n、回车 \r、制表符 \t 原样裸输出**（\t 裸输出使字符串续行可与真指令行「\t+操作码」完全同形）；
 代理对按 MUTF-8(CESU-8) 裸字节写出，会使整个 .dis 文件不再是合法 UTF-8。

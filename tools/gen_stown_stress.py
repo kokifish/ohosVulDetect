@@ -4,7 +4,7 @@
 生成 feat_api/src/main/ets/pages/lang/WideStoreLab.ts：
 - N 个「函数调用派生值」元素的数组字面量 → 逐元素 stownbyindex imm1, v, imm2(=元素下标)。
   imm2 编码为有符号 16 位，下标 ≥32768（0x8000）即切换 wide.stownbyindex——阈值是 i16 档
-  32767，不是常见 wide 的 i8 档 127（探针实证见 docs/BENCHMARK.md 第五轮节）。
+  32767，不是常见 wide 的 i8 档 127（探针实证见 docs/history/BENCHMARK_ROUNDS.md〈第五轮〉）。
 - 元素必须是调用派生值：全常量字面量会被吸收进 createarraywithbuffer 的字面量缓冲，不发射逐元素存储。
 - 驱动用函数数组取出 + 循环两次调用（防 release 内联；直接调用会被内联）。
 用法：python3 tools/gen_stown_stress.py   （在 ohosVulDetect 仓库根目录执行）

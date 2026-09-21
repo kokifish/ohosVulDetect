@@ -18,7 +18,7 @@
 **构建链保持最新 > ArkTS 汇编指令覆盖 > 组件/API 覆盖。**
 
 - SDK/DevEco 有新版本即升级，语料回退时优先适配新构建链（改写/替换语料形态），不为保覆盖冻结版本、更不引入旧 SDK 构建链（如 api11 product / 旧版 es2abc 路线就此搁置）；
-- 仅旧工具链产物才含的指令（`definefieldbyname`/`isfalse`/`istrue` 等，target-api-version 11 门控，见 docs/BENCHMARK.md 第四轮节）按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；
+- 仅旧工具链产物才含的指令（`definefieldbyname`/`isfalse`/`istrue` 等，target-api-version 11 门控，见 docs/history/BENCHMARK_ROUNDS.md〈第四轮〉）按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；
 - 升级后丢失的覆盖须在 BENCHMARK.md 记录归因（编译器行为变化），不可静默缩水。
 
 ## Structure
@@ -30,8 +30,8 @@
 - feat_vuln：vulns/ 分类源文件 + web/（NativeBridge）；分类页（Index.ets 内联 cat- 清单）+ Backdoor 页/Ability(exported, ovd://backdoor) + cpp libentry.so。
 - groundtruth/：manifest.json（漏洞+安全孪生清单的唯一事实源）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、check_string_stress.py（字符串应力语料操作数面 round-trip 门禁）、extract_ir_records.py（test.out 按 record 切分）。
 - tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成）。
-- docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/不可达指令清单/部署坑），改语料前先读，一切数字以此为准。
-- docs/ohos.md = 鸿蒙能力全景调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）与本项目覆盖差距、改进优先级，语料扩展前先读。
+- docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/不可达指令清单/部署坑 + 现行待办），改语料前先读，一切数字以此为准；35+ 轮语料演进的完整过程记录归档于 docs/history/BENCHMARK_ROUNDS.md（只增不改）。
+- docs/ohos.md = 鸿蒙能力全集调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）、指令可达性归因结论与打包形态机制专题；动态差距以 check_corpus_coverage.py 对账为准，语料扩展前先读。
 
 ## 新增内容 checklist
 

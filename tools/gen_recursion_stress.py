@@ -19,7 +19,7 @@
    （递归 interface 类型，编译器放行任意长度）。FIELD 参数经拷贝传播逐级替换后
    ref_base 链深 ≈ NEST_DEPTH，触发参数图克隆（AsmArg.clone）的深递归
    （旧实现阈值约 2950 层）。运行时以参数守卫保证链不可达。
-   不可行形态归因（详见 docs/BENCHMARK.md 递归压力节）：
+   不可行形态归因（详见 docs/history/BENCHMARK_ROUNDS.md〈递归深度压力语料〉）：
    - Record/递归 interface 嵌套对象字面量：arkts-no-untyped-obj-literals / 类型
      比较器约 12 层即"Excessive stack depth"；
    - 嵌套数组字面量（含逐级变量链）：es2abc 切成约 11 层块用存储指令链接，

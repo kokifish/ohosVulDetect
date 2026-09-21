@@ -22,7 +22,7 @@ jobs:
           for gen in tools/gen_string_stress.py tools/gen_lexwide_stress.py \
                      tools/gen_sendable_stress.py tools/gen_wide_stress.py \
                      tools/gen_stown_stress.py tools/gen_methname_stress.py \
-                     tools/gen_recursion_stress.py; do
+                     tools/gen_recursion_stress.py tools/gen_vulns_overview.py; do
             echo "--- $gen ---"
             python3 "$gen"
           done

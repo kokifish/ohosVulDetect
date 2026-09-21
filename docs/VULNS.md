@@ -7,38 +7,44 @@
 
 ## 总览
 
+<!-- 本表由 tools/gen_vulns_overview.py 从 groundtruth/manifest.json 生成，勿手改（跑脚本重新生成） -->
+
+<!-- VULNS-OVERVIEW:BEGIN -->
 | 族 | 条数 | 漏洞主题 | 主要 CWE |
 |---|---|---|---|
 | SECRET | 5 | 硬编码秘密/密钥（含反扫描重组变体） | 798/321 |
-| CRYPTO | 7 | 弱算法/弱模式/短密钥/固定 IV·nonce | 327/328/329/326/1204 |
-| NET | 6 | 明文传输/证书校验绕过（含存储凭据回传链） | 319/295/522 |
+| CRYPTO | 7 | 弱算法/弱模式/短密钥/固定 IV·nonce | 327/328/329/321/326/1204 |
+| NET | 6 | 明文传输/证书校验绕过（含存储凭据回传链） | 319/295 |
 | WEB | 7 | WebView 调试/桥暴露/XSS/混合内容/文件访问/开放跳转/无来源校验桥 | 489/749/94/311/79/601 |
 | INJ | 4 | SQL 注入/路径穿越/不安全反序列化导航 | 89/22/20 |
 | STOR | 4 | 明文存储/低安全级数据库/PII 缓存 | 312/668/359 |
 | LOG | 2 | 日志泄露令牌/口令 | 532 |
 | IPC | 5 | exported 面/魔杖参数/TCP 后门/deeplink 穿越/事件提权 | 862/200/306/22/345 |
 | PERM | 1 | 权限申请-不用 | 732 |
-| PASTE | 4 | 剪贴板敏感数据（跨设备/常驻监听） | 200/359 |
-| PRIV | 3 | 设备指纹/持续定位外传（含读→传链） | 359/200 |
+| PASTE | 4 | 剪贴板敏感数据（跨设备/常驻监听） | 200 |
+| PRIV | 3 | 设备指纹/持续定位外传（含读→传链） | 359 |
 | AUTH | 7 | 客户端鉴权/可预测令牌/userAuth 误用/跨设备信任 | 798/693/338/602/308/330/306 |
 | DEBUG | 2 | 调试开关残留/后门 PIN | 489/912 |
 | CONF | 2 | 内网端点硬编码 | 200 |
 | NATIVE | 2 | .so 内嵌密钥/原生缓冲区溢出 | 798/120 |
 | BACK | 1 | 备份开启 × 明文令牌 | 530 |
 | FORM | 2 | 卡片路由开放跳转/消息未校验（鸿蒙特色） | 601/20 |
-| CERT | 3 | 自签证书/恒真门/pin 失效放行（DeviceCertificateKit） | 295/343 |
-| MEDIA | 3 | 相册枚举外传/静默写入/元数据拼接外传（MediaLibraryKit） | 359/200 |
-| KEYLOG | 3 | 全局热键监听/聚合落盘/join 批量外传（InputKit） | 200/1176 |
-| DRM | 2 | 保护级别不校验/统计越权（DrmKit） | 757/693 |
-| SPEECH | 2 | 语音会话窃听/引擎滥用（CoreSpeechKit） | 200/359 |
-| A11Y | 2 | 无障碍态侦察/读屏情报收集（AccessibilityKit） | 200/359 |
+| CERT | 3 | 自签证书/恒真门/pin 失效放行（DeviceCertificateKit） | 295/298 |
+| MEDIA | 3 | 相册枚举外传/静默写入/元数据拼接外传（MediaLibraryKit） | 359/668 |
+| KEYLOG | 3 | 全局热键监听/聚合落盘/join 批量外传（InputKit） | 200 |
+| DRM | 2 | 保护级别不校验/统计越权（DrmKit） | 757/200 |
+| SPEECH | 2 | 语音会话窃听/引擎滥用（CoreSpeechKit） | 359 |
+| A11Y | 2 | 无障碍态侦察/读屏情报收集（AccessibilityKit） | 200 |
 | BGTASK | 1 | 常驻后台任务掩护静默采集 | 359 |
 | DLINK | 3 | 深链参数无白名单执行/开放跳转/子串令牌放行 | 862/601/20 |
 | XMOD | 4 | 跨模块分布：HAR 硬编码主密钥·会话缓存链 / HSP 明文保险箱·恒真信任 | 321/312/285 |
 | CEVT | 1 | 公共事件明文广播会话令牌（无订阅方权限门） | 200 |
 | NOTIF | 1 | 通知栏明文携带验证码/会话令牌（锁屏可读） | 200 |
-| IRED | 1 | 不可信 want 字段原样转投 startAbility | 940/862 |
+| IRED | 1 | 不可信 want 字段原样转投 startAbility | 940 |
 | PWDIN | 1 | 密码语义输入框 Normal 明文回显（UI 属性面） | 522 |
+
+共 30 族 91 条（另有同数安全孪生，manifest 总条目 182）。
+<!-- VULNS-OVERVIEW:END -->
 
 ---
 
@@ -335,69 +341,69 @@
 - **OVD-CERT-001 自签证书直接信任**
   - 成因：内置 `vd-vuln-selfsigned` PEM 直接 `createX509Cert` 并采信。
   - 危害：生产信任锚被顶替，中间人证书可被接受。
-- **OVD-CERT-001S 可信 CA 签发语义**：非自签载荷走系统信任锚语义。
+  - 孪生 001S：非自签载荷走系统信任锚语义（可信 CA）。
 - **OVD-CERT-002 证书校验门恒真（predicate 变体）**
   - 成因：`createX509Cert` 后校验函数恒 `return true`（同步函数体，predicate 面）。
   - 危害：校验门形同虚设。
-- **OVD-CERT-002S 真实过期比较**：`getNotAfterTime()` 逐项校验。
+  - 孪生 002S：`getNotAfterTime()` 逐项真实过期比较。
 - **OVD-CERT-003 pin 不匹配仍放行（api-call+const-array 变体）**
   - 成因：`TRUSTED_PINS` 常量数组 + `createX509Cert` 解析对端证书，指纹不在 pin 集合仍继续连接。
   - 利用：攻击者证书指纹不在 pin 列表 → 本应中止却照常建连。
   - 危害：pinning 防线存在但判断结果被忽略——"有锁不用"形态；考核 const-array 与调用面的联合判定。
-- **OVD-CERT-003S pin 不匹配即中止**：同形解析，mismatch 即 ABORT。
+  - 孪生 003S：同形解析，mismatch 即 ABORT。
 
 ## OVD-MEDIA — 媒体库隐私（MediaLibraryKit，CWE-359/200）
 
 - **OVD-MEDIA-001 全相册枚举外传（flow 变体）**
   - 成因：`getAssets` 计数 + `vd-collect.example/album` POST 外传。
   - 危害：相册规模/内容画像泄露。
-- **OVD-MEDIA-001S 本地计数不上传**：同 API、无外传步骤。
+  - 孪生 001S：同 API、本地计数不上传。
 - **OVD-MEDIA-002 相册静默写入（flow 变体）**
   - 成因：`createAsset` 无用户交互落盘。
   - 危害：伪造媒体植入/藏匿载荷。
-- **OVD-MEDIA-002S 用户主动保存**：写入由用户动作触发。
+  - 孪生 002S：写入由用户动作主动触发。
 - **OVD-MEDIA-003 相册元数据拼接外传（string-op-flow 变体）**
   - 成因：`displayName` 经 `concat` 拼进 `vd-collect.example/media-meta` 查询串外传。
   - 危害：照片名含人名/地点/会议等高敏语义；考核"字符串算子+端点"联合判定。
-- **OVD-MEDIA-003S 元数据仅本地展示**：无拼接 URL、无外传。
+  - 孪生 003S：元数据仅本地展示，无拼接 URL、无外传。
 
 ## OVD-KEYLOG — 输入监听（InputKit，CWE-200/1176）
 
 - **OVD-KEYLOG-001 全局热键监听回传（flow 变体）**
   - 成因：`inputConsumer.on('hotkeyChange')` + `vd-collect.example/keys`。
   - 危害：隐蔽输入侧信道。
-- **OVD-KEYLOG-001S 本地输入框内处理**：无全局订阅。
+  - 孪生 001S：本地输入框内处理，无全局订阅。
 - **OVD-KEYLOG-002 热键事件聚合落盘**
   - 成因：事件聚合写 `vd-hotkeys.log`。
   - 危害：输入历史持久化可被后续窃取。
-- **OVD-KEYLOG-002S 页内处理不聚合**。
+  - 孪生 002S：页内处理不聚合。
 - **OVD-KEYLOG-003 按键缓冲 join 后批量外传（string-op-flow 变体）**
   - 成因：`strokeBuf.join('')` 聚合 + `vd-collect.example/keystrokes` 批量上传。
   - 危害：批量聚合规避逐条上传审计；考核"字符串算子（join）+端点"联合判定。
-- **OVD-KEYLOG-003S 逐键即时处理**：无聚合缓冲、无端点。
+  - 孪生 003S：逐键即时处理，无聚合缓冲、无端点。
 
 ## OVD-DRM — DRM 保护（DrmKit，CWE-757/693）
 
 - **OVD-DRM-001 保护级别不校验即播放（predicate 变体）**
   - 成因：`getMaxContentProtectionLevel()` 结果不比较，`if (level >= 0 || true)` 放行。
   - 危害：弱保护内容当强保护放行，版权约束失效。
-- **OVD-DRM-001S 级别门控**：比较后才允许播放。
+  - 孪生 001S：级别比较门控后才允许播放。
 - **OVD-DRM-002 统计越权（flow 变体）**：`getStatistics` 越权读取。
-- **OVD-DRM-002S 授权范围内统计**。
+  - 孪生 002S：授权范围内统计。
 
 ## OVD-SPEECH — 语音会话（CoreSpeechKit，CWE-200/359）
 
 - **OVD-SPEECH-001 语音会话窃听（flow 变体）**：`startListening` 无提示采集。
-- **OVD-SPEECH-001S 显式授权后启动**。
+  - 孪生 001S：显式授权后才启动。
 - **OVD-SPEECH-002 引擎滥用（flow 变体）**：`createEngine` 未约束使用场景。
-- **OVD-SPEECH-002S 场景内使用**。
+  - 孪生 002S：约束场景内使用。
 
 ## OVD-A11Y — 无障碍侦察（AccessibilityKit，CWE-200/359）
 
 - **OVD-A11Y-001 读屏态侦察（flow 变体）**：`isScreenReaderOpenSync` 探测辅助功能状态。
-- **OVD-A11Y-001S 按需本地查询**。
+  - 孪生 001S：按需本地查询。
 - **OVD-A11Y-002 无障碍开关情报（flow 变体）**：`isOpenAccessibilitySync` 收集。
-- **OVD-A11Y-002S 不做画像**。
+  - 孪生 002S：不做画像。
 
 ## OVD-BGTASK — 后台任务滥用（CWE-359）
 
@@ -451,12 +457,6 @@
   - 利用：任意 deviceId 视为可信 mesh 节点。
   - 危害：未授权设备接入信任面（孪生 004S 名单精确匹配）。
 
-## 检测口径备注（评分联动）
-
-- 规则形态分布见 manifest `detection.type`：string-literal / api-call+constant / api-call+string-concat / call-chain / predicate / string-op-flow / enum-ref / manifest / native / constant-flag 等——**有意覆盖多形态**，检验检测器不只靠 grep 字符串。
-- 所有条目均有孪生 `*S`（expected:false）：检测器命中孪生即计 FP——防"宁可错杀"式规则。
-- `OVD-SECRET-005`（重组反扫描）与 `OVD-NATIVE-001`（密钥在 .so）是对检测器分层能力的两类对抗样本：前者考"非字面量拼接流"，后者考"abc 层负样本判定 + native 层正样本"。
-
 ## OVD-NOTIF — 通知内容泄露（CWE-200）
 
 - **OVD-NOTIF-001 通知栏明文携带验证码与会话令牌**
@@ -478,3 +478,9 @@
   - 利用：旁观者直读、截屏/录屏/共享屏幕即得明文口令。
   - 危害：凭据在展示层失守（孪生 001S 用 `InputType.Password` 圆点掩码并只回显长度）。
   - 检测形态：**UI 属性面**——placeholder 字符串与明文回显标记 `'plain-echo: '` 同记录共现（string-literal 双常量），首个非源码调用面的规则样本。
+
+## 检测口径备注（评分联动）
+
+- 规则形态分布见 manifest `detection.type`：string-literal / api-call+constant / api-call+string-concat / call-chain / predicate / string-op-flow / enum-ref / manifest / native / constant-flag 等——**有意覆盖多形态**，检验检测器不只靠 grep 字符串。
+- 所有条目均有孪生 `*S`（expected:false）：检测器命中孪生即计 FP——防"宁可错杀"式规则。
+- `OVD-SECRET-005`（重组反扫描）与 `OVD-NATIVE-001`（密钥在 .so）是对检测器分层能力的两类对抗样本：前者考"非字面量拼接流"，后者考"abc 层负样本判定 + native 层正样本"。

@@ -1,8 +1,9 @@
 # ohos.md — 鸿蒙能力全景调研与本项目覆盖差距
 
 > 调研口径：2026-09-04；华为官方文档（developer.huawei.com）+ OpenHarmony 仓库/文档（gitee.com/openharmony）交叉核对，Kit 清单取自本地 HarmonyOS 6.0.1 SDK `@kit.*.d.ts` 实测枚举。
-> 用途：ohosVulDetect 语料扩展的事实底座——全集是什么、本项目覆盖到哪、差距在哪、下一步做什么。
-> 数字约定：指令全集以 `ISA_YAML` 指向的 isa.yaml（API26 工具链快照，267 条）为准；覆盖率以 `tools/check_opcode_coverage.py` 输出为准，基线记录在 docs/BENCHMARK.md。
+> 用途：全集调研快照（组件/Kit/指令集/ArkTS 约束的官方口径与链接）+ 机制专题（打包形态）+ 指令可达性归因结论。
+> 动态差距与覆盖率**一律以脚本对账为准**：`python3 tools/check_corpus_coverage.py` 与 `tools/check_opcode_coverage.py`，
+> 基线记录在 docs/BENCHMARK.md，轮次过程在 docs/history/BENCHMARK_ROUNDS.md。本文与脚本数字冲突时以后者为准。
 
 ## 1. ArkTS 字节码指令集（ISA）
 
@@ -19,14 +20,14 @@
 
 - isa.yaml 结构：chapters（设计章节）→ prefixes → **19 个指令组**（常量加载 / 迭代器 / 对象创建 / 二元 / 一元 / 比较 / callruntime / throw / 调用 / 定义 / 属性读写 / 字符串常量加载 / 跳转 / 动态 move-load-store / 动态立即数 / 动态返回 / nop）→ exceptions；每条指令一个 `sig` 条目。
 - **4 个前缀**（8 位前缀 + 8 位操作码 = 16 位小端编码）：`throw.`(0xfe) 抛异常类、`wide.`(0xfd) 宽编码、`deprecated.`(0xfc) 弃用兼容、`callruntime.`(0xfb) 运行时调用。不存在 experimental. 前缀。
-- **wide 语义**：立即数/字面量 id/寄存器与槽位索引超出 8 位即改用 wide 变体（u16）。官方未写明边界数值；本项目实证：立即数为**有符号 int8，取值 > 127 即触发**（见 BENCHMARK.md「wide 阈值是 127 不是 255」）。
+- **wide 语义**：立即数/字面量 id/寄存器与槽位索引超出 8 位即改用 wide 变体（u16）。官方未写明边界数值；本项目实证：立即数为**有符号 int8，取值 > 127 即触发**（探针实证见 docs/history/BENCHMARK_ROUNDS.md〈第五轮〉）。
 - `deprecated.*`：编译器不再生成、仅为旧字节码运行兼容保留——对语料属结构性放弃。
 
 ### 1.3 数量（本项目快照 vs 上游 master）
 
 | | 本项目 ISA_YAML（API26 工具链） | 上游 master（13.0.1.0） |
 |---|---|---|
-| sig 总数 | **267** | 262 |
+| sig 总数 | **268** | 262 |
 | deprecated.* | 45 | 45 |
 | wide.* | 20 | 20 |
 | callruntime.* | 26 | 26 |
@@ -90,25 +91,18 @@
 
 ## 5. 与本项目覆盖对比（差距分析）
 
-### 5.1 指令：已用 183/267，未用 84（P1→P5 逐轮增补，动态基线以 docs/BENCHMARK.md 为准）
+### 5.1 指令可达性归因（结构性不可达清单）
 
-> **P1 执行结果（2026-09-04）**：候选清单实证完毕——4 条新覆盖（`throw.constassignment`、`wide.supercallthisrange`、`callruntime.wideldlazymodulevar`、`wide.getmodulenamespace`）。
-> **第二轮深挖（2026-09-06）**：`testin` 经私有品牌检查 `#priv in obj` 覆盖（公有 `k in o` 才是 `isin`）。
-> **第四轮 es2abc 旗标+源码归因（2026-09-06）**：`callruntime.definefieldbyindex` 经数字字符串键静态字段覆盖（target 24 默认管线）——release 176、快照并集 **180/267**。
-> **P5 wide 专项（2026-09-07）**：+3（`supercallarrowrange`/`wide.supercallarrowrange` = .js 箭头 super、`wide.stownbyindex` = 巨数组字面量，见 BENCHMARK 第五轮节）——并集 **183/267**。
-> 剩余未用 84 条中，`definefieldbyname`/`isfalse`/`istrue` 三条已**源码级定性为 target-api-version 11 门控**（上游 pandagen.cpp 按 <12/≥12 二选一；本机 es2abc 支持 `--target-api-version 11`）。依 AGENTS.md 优先级（构建链最新 > 指令覆盖），旧 SDK 路线搁置，这 3 条按「真实野生产物存在、语料不可达、工具必须支持」处理，不作为语料目标；wide 剩余 4 条终局归因（`wide.ldobjbyindex`/`wide.stobjbyindex` 基础形态零发射、`wide.ldpatchvar`/`wide.stpatchvar` patch 管线专属——两遍编译+符号表机制可生成但不属于 app 产物）；其余（deprecated 45 + 其他）为 es2abc 确定性发射策略，多轮实证不可达。逐条归因见 docs/BENCHMARK.md 各归因小节。
-
-| 未用类别 | 数量 | 处置 |
-|---|---|---|
-| deprecated.* | 45 | 结构性放弃（编译器不再生成） |
-| 比较跳转族 jeq/jne/jstricteq×null/undefined/z 等 | 14 | 已实证不可达：es2abc 一律拆为 eq/ne + jeqz/jnez |
-| script 模式专属（ldglobalvar/stglobalvar/st(const/to)globalrecord） | 4 | 结构性放弃：应用管线 esm\|cjs 不发射 |
-| 已实证不可达（createregexpwithliteral、closeiterator、getresumeoffset） | 3 | 正则字面量降级 new RegExp；迭代器关闭/getresumeoffset 不发射 |
-| **候选待实证** | 20 | 见下，按触发形态小规模编译实证（AGENTS 约定流程） |
-| wide 未用 | 8 | 其中 5 条并入候选（见下） |
-
-**候选待实证清单（P1）**：`isfalse/istrue`（布尔强制转换上下文）、`testin`（.ts 内 `in` 运算符）、`ldobjbyindex/stobjbyindex`（索引下标访问的替代发射路径，当前语料均未触发）、`ldfunction`（函数对象取值）、`ldnewtarget`（.ts 内 new.target）、`ldsymbol`（Symbol 作为值传递）、`ldthis/ldthisbyname/ldthisbyvalue/stthisbyname/stthisbyvalue`（顶层/独立 this 语义，arkts 禁 standalone-this，需 .ts 实证）、`supercallarrowrange`、`callruntime.definefieldbyindex / definefieldbyname`、`throw.constassignment / deletesuperproperty / undefinedifhole`（.ts 内 const 重赋值、delete super、TDZ 提前访问）、`callruntime.wideldlazymodulevar`（@Sendable 函数内 lazy import >127 个，扩生成器可达）、`wide.ldobjbyindex/stobjbyindex/stownbyindex`（索引号 >127 的下标访问）、`wide.getmodulenamespace`（import * as >127 个模块）；`wide.ldpatchvar/stpatchvar`（patch 动态更新机制）与 `wide.supercallarrowrange/supercallthisrange`（super 调用参数 >127）疑应用构建不可达，实证后归档。
-
+> 动态数字（当前 188/268）以 tools/check_opcode_coverage.py 为准；逐轮归因证据链见 docs/history/BENCHMARK_ROUNDS.md。
+> 结论口径：
+> - `deprecated.*` 45 条：编译器不再生成，结构性放弃。
+> - 比较跳转族（jeq/jne/jstricteq×null/undefined/z 等 14 条）：es2abc 一律拆为 eq/ne + jeqz/jnez，不可达。
+> - script 模式专属（ldglobalvar/stglobalvar/st(const/to)globalrecord）：应用管线 esm|cjs 不发射。
+> - 裸 `definefieldbyname`/`isfalse`/`istrue`：target-api-version 11 门控（上游 pandagen.cpp 按 <12/≥12 二选一）；依 AGENTS 优先级（构建链最新 > 指令覆盖）搁置旧 SDK 路线，按「真实野生产物存在、语料不可达、工具必须支持」处理。
+> - wide 终局归因：`wide.ldobjbyindex`/`wide.stobjbyindex` 基础形态零发射；`wide.ldpatchvar`/`wide.stpatchvar` patch 管线专属（两遍编译+符号表机制可生成，非 app 产物）。
+> - **callruntime.isfalse/istrue 前缀变体可达且已计入并集**（布尔上下文动态值判定发射）；`supercallarrowrange`/`wide.supercallarrowrange` range 形态可达（ArrowSuper.js：≥4 实参直调/展开调用）。
+> - 其余未用条目为 es2abc 确定性发射策略，多轮探针实证不可达（createregexpwithliteral 降级 new RegExp；closeiterator/getresumeoffset 不发射等）。
+>
 > **2026-09-21 探针收口（SDK 26.0.0.32 es2abc script+module 双模式，/tmp 探针实证）**：上列候选中剩余项全部定性为**当前发射器结构性不可达**，归因如下——
 > - `ldnewtarget`：new.target 改走调用约定传参（函数第 2 参数 `lda a1`），无专用取值指令；
 > - 箭头内 super **定参小元数**调用（如 2 参）降为 `ldsuperbyname` + `callthisN`；range 形态
@@ -123,58 +117,18 @@
 > - 裸 `isfalse/istrue/definefieldbyname`（0x23/0x24 等）确认不发射；**但 `callruntime.isfalse/istrue` 前缀变体由布尔上下文（模板串/分支内动态值判定）正常发射且早已计入覆盖并集**（compare_dis 多处命中），候选清单中该两条按前缀变体已达成处理；
 > - script 模式专属指令（ldglobalvar/stglobalvar 等）再现于探针，与既有归因一致：仅 script 管线发射，应用 esm 管线不出现。
 
-### 5.2 组件：已覆盖约 99 个 vs 公开约 156 个（2026-09-12 第九轮 +11：PatternLock/SaveButton/PasteButton/AlertDialog/ActionSheet/DatePickerDialog/TimePickerDialog/TextPickerDialog/CalendarPickerDialog/OffscreenCanvas/RichText/WithTheme）
+### 5.2 组件（全集 = `ets/component/component_config.json` 137 个）
 
-> 2026-09-14 起组件/Kit/API 差距以 `tools/check_corpus_coverage.py` 脚本对账为准（component_config.json / @kit 全集 / @ohos 三维，含清单漂移门禁）；下方人工清单为调研快照，仅存历史价值（例：脚本实测 Stack 已不在语料、RelativeContainer 第八轮已覆盖，快照均有出入）。
+动态差距以 `python3 tools/check_corpus_coverage.py` 输出为准；文档树口径（~170 条目，含子组件/专用形态）的调研快照见 §2。历史缺口清单与覆盖过程见 docs/history/BENCHMARK_ROUNDS.md。
 
-已覆盖集中在 ComponentsDemo（约 53）+ 其他 ui 页（Navigation/NavDestination/Tabs/TabContent/Swiper/Stack/Flex/Canvas/LazyForEach/Repeat/Web）+ 零散（Stepper/StepperItem/RowSplit/NodeContainer/CustomDialog/CheckboxGroup/CalendarPicker/bindSheet/bindMenu/bindContextMenu）。
+### 5.3 Kit（全集 = `ets/kits/@kit.*.d.ts`）
 
-**缺口（公开可用、普通 App 可落地，按价值排序）**：
-1. 布局/容器：**RelativeContainer**（官方主推相对布局，未覆盖）、ColumnSplit、ListItemGroup、Counter、Scrollbar、Blank、Hyperlink
-2. 文本族：Span、ImageSpan、ContainerSpan、SymbolGlyph、SymbolSpan、RichText、**Image（独立图片组件，全库未用）**
-3. 输入：PatternLock（图案锁——安全语料价值高）
-4. 绘制：OffscreenCanvas、Component3D（3D 资源加载，API12）
-5. 新布局（API19+）：LazyColumnLayout/LazyVGridLayout/LazyVWaterFlowLayout
-6. 弹窗：AlertDialog/ActionSheet（全局方法）、各 *PickerDialog
-7. 安全控件：SaveButton/PasteButton（免权限安全操作——漏洞语料的「正确写法」孪生素材）
-8. 高级组件库抽样：Chip、SegmentButton、ToolBar、TreeView、ComposeTitleBar 等（`@kit.ArkUI` 导入，与普通组件 import 路径不同，值得覆盖）
-9. 主题/占位：WithTheme（API12）、ContentSlot（API12）
-10. 放弃项：[系] 14 个（仅系统应用）、[停] 5 个、[卡]/[元]/[穿] 专用、API26 独占（WithEnv 等，模拟器镜像可试）
+同上以脚本对账为准；端侧/云侧（★）分类见 §3。
 
-### 5.3 Kit：已覆盖约 22 个端侧 Kit vs 端侧共 47 个（2026-09-12 第十轮 +UserAuthenticationKit）
-
-已覆盖域（feat_api 29 个 demo）：ArkTS、AbilityKit、ArkUI、ArkWeb、ArkData（prefs/rdb/kv）、CoreFileKit、AssetStoreKit、CryptoArchitectureKit、UniversalKeystoreKit、NetworkKit（http/rcp/socket/ws/netConn）、MediaKit、SensorServiceKit、LocationKit、BasicServicesKit（notify/paste/request）、BackgroundTasksKit、PerformanceAnalysisKit（hilog）、LocalizationKit（i18n/intl）；taskpool/sendable/worker 属 ArkTS 并发。
-
-**缺口（端侧可做，按逆向/漏洞语料价值排序）**：
-1. **UserAuthenticationKit**（指纹/人脸/PIN——认证绕过类漏洞正面素材）
-2. **ConnectivityKit**（蓝牙 BLE/NFC/Wi-Fi——近场通信攻击面）
-3. **TelephonyKit**（短信/SIM——隐私与注入面）
-4. **FormKit**（静态/动态卡片——FormLink/卡片通信是新攻击面）
-5. **MediaLibraryKit + CameraKit**（相册/相机隐私权）
-6. **DistributedServiceKit**（软总线/跨设备——鸿蒙特色攻击面）
-7. **ContactsKit / CalendarKit**（敏感数据读写）
-8. **DataProtectionKit / DataLossPreventionKit**（数据分级/防泄漏）
-9. **ScanKit**（端侧扫码）、**ShareKit**（系统分享）
-10. **MindSporeLiteKit / CoreVisionKit / CoreSpeechKit**（端侧 AI 模型加载——新型资产与漏洞面）
-11. ImageKit、PDFKit、AudioKit 深化、AVSessionKit、IMEKit/InputKit、AccessibilityKit、IPCKit 显式用例
-12. 云依赖 16 个（★）维持 v1 排除决策（需 AGC，无法本地验证）
-
-### 5.4 语言特性：已覆盖 ~30 形态，候选补充
+### 5.4 语言特性（原候选已全部落地或定性）
 
 已覆盖：generator/yield*/resume-with-arg、for-of/for-in/close、spread/rest/new-spread、解构 rest、Symbol 键、tagged template（成员 tag）、私有字段全家族、super[k]/super 展开、计算键、globalThis 预置赋值、可选链调用、动态下标调用（Record 形态）、闭包/lexenv 压力、wide 家族、async/await 链、try/catch/finally、泛型/union/枚举位运算、类继承多态等。
 **2026-09-21 状态**：原候选全部落地或定性——BigInt/String.raw/标签 break/for-await-of/static 块/解构交换/逻辑赋值/accessor（Sugars.ts/TypesDemo，已落地）；本轮新增 WeakMap/WeakSet/WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll（Sugars.ts sugarWeakColls/sugarProxyReflect/sugarRegexAdv，运行时以模拟器 selfcheck 为准）；`new.target` 已落地（构造器内箭头捕获形态，见 sugarNewTarget；本 SDK 下编译为参数传递，见 §5.1 探针收口）；`satisfies` 仅类型层、无指令面，不作为语料目标。
-
-## 6. 下一步改进建议（优先级）
-
-| 优先级 | 内容 | 验收 |
-|---|---|---|
-| P1 指令收口 | **已完成（三轮，2026-09-04/06）**：累计 +5 指令（throw.constassignment / wide.supercallthisrange / callruntime.wideldlazymodulevar / wide.getmodulenamespace / testin），release 176、并集 179/267；未用 88 条全部三轮归因，**源码级可达覆盖已穷尽**（含 closeiterator 降级铁证）；模拟器全面回归通过（feat_api 62✅/9❌、feat_vuln 37✅/4❌、新页数值正确，见 BENCHMARK 第三轮节） | ✅ |
-| P2 组件补齐 | 新建 1–2 个 ui 页集中补 5.2 缺口第 1–7 项（约 25 个组件）；PatternLock/SaveButton/PasteButton 同步在 feat_vuln 造孪生素材 | sweep 全绿；组件计数更新进 BENCHMARK |
-| P3 API 域扩展 | 5.3 缺口前 8 名逐个建页（每域 3–6 个代表调用，延续调用方式矩阵轮换）；每域考虑配漏洞孪生 | sweep 通过；ApiRegistry/main_pages 双注册 |
-| P4 语言特性 | 5.4 候选实证后落 lang 页 | 新增指令计入覆盖并集 |
-| P5 清单固化 | 本文档「结构性放弃」各表（deprecated/script-only/[系]/[停]/云依赖）作为长期「不可达/不做」单一事实源，与 check_opcode_coverage 未用清单互相对账 | BENCHMARK.md 链接本文档 |
-
-> 维护约定：本文档记录「全集与差距」快照，覆盖率等动态基线仍以 docs/BENCHMARK.md 为准；两者数字冲突时以后者实测为准。
 
 ## 7. 打包形态专题调研：多 abc / HSP / HAR / 覆盖率提升（2026-09-07）
 
@@ -201,7 +155,7 @@
 
 **HSP（动态共享包，module.json5 type=shared）**：
 - 可导出 ArkUI 组件/类/native so/资源；不能做 entry；禁止循环依赖、**不支持依赖传递**；应用内 HSP 限同 bundleName/签名。
-- Navigation 跨包路由：HSP 侧 `route_map.json` + module.json5 `routerMap` 字段声明 NavDestination 页面 ❌（本项目未用 route_map）。
+- Navigation 跨包路由：HSP 侧 `route_map.json` + module.json5 `routerMap` 字段声明 NavDestination 页面 ✅（第六轮已落地 api-route-map）。
 - API14+ HSP 可声明 UIAbility；API18+ 可声明 ExtensionAbility ❌。
 - **集成态 HSP**：模块级 `buildOption.arkOptions.integratedHsp: true` + 工程级 `useNormalizedOHMUrl: true` → 产物 .tgz（HAR 式），消费方放 `libs/` 以 `file:./libs/xxx.tgz` 依赖，可跨 bundleName 复用（注意：该开关应配在 HAR 消费方，配在 HAP 上 hvigor 会告警不生效——`pre-build.js` 有专门提示）。
 
@@ -220,9 +174,7 @@
 **权威机器可核对清单（本地 SDK 26.0.0.32 实测，比文档树口径更准）**：
 - 组件：`ets/component/component_config.json` = **137 个**（ArkUI 组件名单一事实源；本文 §2 的 ~156/170 为文档树口径含子组件/专用形态）。
 - API 模块：`ets/api/` 顶层 `@ohos.*.d.ts` = **447 个** + `@system.*.d.ts` = 20 个（FA 遗留）；另有 207 个子目录辅助类型 d.ts（ability/arkui/global 等，非独立 API）。
-- Kit：`ets/kits/@kit.*.d.ts` = **47 个**（端侧/云侧合计）。
-
-**建议**：把 §5.2/5.3 的人工对比升级为脚本对账（component_config.json 组件名 vs 语料用到的组件；@ohos d.ts 列表 vs 语料 import 列表），升级工具链后一键重算差距，避免人工清单漂移。
+- Kit：`ets/kits/@kit.*.d.ts` = **103 个**（当前 SDK 26 口径；6.0.1 SDK 时代为 47）。
 
 **语料/模式来源（开源生态）**：
 - 官方示例：`gitee.com/harmonyos_samples`（官方 Sample 组织，每例独立工程）、`gitee.com/scenario-samples`（场景化合集）、`github.com/openharmony/applications_app_samples`（OpenHarmony 按 API 维度示例）——补组件/API 用法的现成参考。
