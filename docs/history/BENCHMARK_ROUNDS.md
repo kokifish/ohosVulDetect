@@ -1192,3 +1192,30 @@ jscrash**（镜像 API 低于组件 @since，09-19 轮已实证）——API24 sw
 hvigor BuildNativeWithNinja 清理步骤报 00308018——直调必须前置 DevEco 自带 node
 （v24.14.1）；build.py 已内置此前置，不受影响。
 
+## 组件缺口试探 + @ohos 直连第二批轮（2026-09-21 第三轮）
+
+**组件缺口试探（API26 解锁后批次二，组件 107 → 112/137）**：新增 `ui-ark26b` 试探页
+（Ark26MoreDemo），把剩余 30 个未覆盖组件按「SDK 声明面存在性」终筛后落页试探：
+- **计入 5 项且 API26 截图实证渲染**：WithEnv（@since 26，customEnv 键为品牌化
+  CustomEnvKey 类型、字符串字面量不可赋，本轮用裸构造）、ArcAlphabetIndexer（弧形索引器
+  完整渲染）、UIPickerComponent（picker 滚轮形态正确）、Component3D（空场景不崩溃）、
+  ToolBarItem；
+- **编译筛掉（config 占位但 SDK 无 d.ts，结构性不可达 13 项定谳）**：ColorPicker/
+  ColorPickerDialog/DotMatrix/GeometryView/MediaCachedImage/Piece/LocationButton/Sheet/
+  Section/EffectComponent/SpringProp/ScrollMotion/FrictionMotion——component_config.json
+  有 attrs 元数据但 ets/component 与 ets-loader declarations 均无声明；
+- **暂缓**：Particle（可编译但需 Particles<> 重型泛型配置：emitter/color/updater 全家桶，
+  留作后续专项）；Camera（旧组件无声明）；其余 DynamicComponent/IsolatedComponent/
+  EmbeddedComponent/SecurityUIExtensionComponent/XComponentNode/ContentSlot/Option/Common
+  需专用宿主或为元条目，维持不做。
+
+**@ohos 直连第二批（27 → 38/447）**：新增 `api-ohos2` 页（OhosDirect2Demo）11 用例全绿
+（API26）：deviceInfo（productModel=emulator）/batteryInfo/thermal.getLevel/
+screenLock.isScreenLocked/display.getAllDisplays/curves.springMotion/matrix4.identity/
+measure.measureText/animator.create+cancel/promptAction.showToast/process.uid。
+实测坑：MeasureOptions 需从 @ohos.measure 具名导入（非全局类型）；animator 的
+AnimatorOptions 必填 delay 字段；measure.measureText 是 default 导出类的静态方法
+（非 MeasureText 命名空间）。
+
+**页面规模**：feat_api 路由页 76 → 78（api-ohos2 + ui-ark26b）。
+

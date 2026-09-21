@@ -75,6 +75,8 @@
     "pages/api/TestKitDemo",
     "pages/api/LegacyDemo",
     "pages/api/StdlibDemo",
-    "pages/api/IpcDemo"
+    "pages/api/IpcDemo",
+    "pages/api/OhosDirect2Demo",
+    "pages/ui/Ark26MoreDemo"
   ]
 }
