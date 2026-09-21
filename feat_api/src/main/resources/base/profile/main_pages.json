@@ -77,6 +77,8 @@
     "pages/api/StdlibDemo",
     "pages/api/IpcDemo",
     "pages/api/OhosDirect2Demo",
-    "pages/ui/Ark26MoreDemo"
+    "pages/ui/Ark26MoreDemo",
+    "pages/api/OhosDirect3Demo",
+    "pages/ui/Ark26SlotDemo"
   ]
 }

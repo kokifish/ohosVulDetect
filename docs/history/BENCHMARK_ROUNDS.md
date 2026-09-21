@@ -1219,3 +1219,28 @@ AnimatorOptions 必填 delay 字段；measure.measureText 是 default 导出类�
 
 **页面规模**：feat_api 路由页 76 → 78（api-ohos2 + ui-ark26b）。
 
+## ContentSlot/XComponentNode/Particle + @ohos 直连第三批轮（2026-09-21 第四轮）
+
+**组件 +3（115/137）**：新增 `ui-ark26c` 页（Ark26SlotDemo）：
+- **ContentSlot**（@since 12）：`ContentSlot(new NodeContent())` 空槽挂载即达意——其内容
+  设计上来自 native C-API 侧（OH_ArkUI_ContentSlot_Init），ArkTS 侧空槽不崩溃即完成挂载面；
+- **XComponentNode**（@since 26）：NODE 型经 `NodeController.makeNode` 挂载。**jscrash 一次
+  并修复**：constructor 内部读 `options.selfIdealSize.width` 无守卫，空 `RenderOptions {}`
+  即 "Cannot read property width of undefined"（faultlogger 实证）——必须传
+  `{ selfIdealSize: { width, height } }`（d.ts 标 optional 但实现必读，Beta2 实现缺陷）；
+- **Particle**（@since 10）：最小合法配置只必填
+  `particles[].emitter.particle`（type/config/count/lifetime——注意是 lifetime 不是 life）；
+  `position` 是 `ParticleTuple<Dimension,Dimension>` **元组数组** `[60, 30]` 而非 {x,y}。
+
+**@ohos 直连第三批（38 → 45/447）**：新增 `api-ohos3` 页（OhosDirect3Demo）7 用例全绿
+（API26）：bundleManager.getBundleInfoForSelfSync（default 导入，非具名）/
+inputDevice.getDeviceList（9 设备）/power.isScreenOn+isActive/mediaquery.matchMediaSync/
+hidebug.getCpuUsage/faultLogger.querySelfFaultLog（FaultType.CPP_CRASH，枚举成员无
+FAULT_TYPE_ 前缀）/hichecker.contains。**appRecovery 有意不落**：enableAppRecovery 会把
+崩溃改为自动重启，恰好掩盖基准依赖的 jscrash 证据。
+
+**其他**：`@ohos.app.ability.configurationConstant` 直连在 ets-loader 模块表中不可解析
+（Cannot find module，经 @kit.AbilityKit 使用即可）；探针页移到 ApiRegistry 队首
+（列表底部行 sweep 定位易失败——直调 hvigorw 的产物不进 build/out，须走 build.py 收集）。
+**API26 验证**：ui-ark26c 打开无崩溃（空槽/空帧为预期形态）、api-ohos3 7✅/0❌。
+
