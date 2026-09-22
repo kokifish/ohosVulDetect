@@ -16,7 +16,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 DEMO_ITEM = re.compile(r"new DemoItem\('[^']*',\s*'[^']*',\s*'([^']+)'\)")
 # 不出现在 DemoItem 清单、但必须注册的页面（壳/深链入口，非遍历目标）
 ALLOWLIST = {
-    "feat_api": ["pages/Index"],
+    # pages/Index 是壳入口；EmbeddedProviderPage 由 EmbeddedUIExtensionAbility
+    # 经 session.loadContent 装载（EmbeddedComponent 提供方，无 DemoItem）。
+    "feat_api": ["pages/Index", "pages/EmbeddedProviderPage"],
     "feat_vuln": ["pages/Index", "pages/Backdoor"],
 }
 SOURCES = {

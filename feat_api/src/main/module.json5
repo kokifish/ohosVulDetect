@@ -144,6 +144,12 @@
     ],
     "extensionAbilities": [
       {
+        "name": "EmbeddedProviderAbility",
+        "srcEntry": "./ets/abilities/EmbeddedProviderAbility.ets",
+        "type": "embeddedUI",
+        "exported": true
+      },
+      {
         "name": "ApiFormAbility",
         "srcEntry": "./ets/form/ApiFormAbility.ets",
         "label": "$string:ApiWidgetCard_label",

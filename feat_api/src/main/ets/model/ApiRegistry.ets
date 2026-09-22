@@ -1,6 +1,7 @@
 import { DemoItem } from 'lib_common';
 
 export const API_DEMOS: DemoItem[] = [
+  new DemoItem('api-ohos4', '@ohos direct #4: predicates/dataAbility/errorManager/hiTraceMeter/usb/window', 'pages/api/OhosDirect4Demo'),
   new DemoItem('api-ohos3', '@ohos direct #3: bundle/inputDevice/power/mediaquery/hidebug/faultLogger', 'pages/api/OhosDirect3Demo'),
   new DemoItem('api-http', 'http: cb/promise/stream/enum', 'pages/api/HttpDemo'),
   new DemoItem('api-rcp', 'rcp: Session get/post', 'pages/api/RcpDemo'),
@@ -56,6 +57,7 @@ export const API_DEMOS: DemoItem[] = [
 ];
 
 export const UI_DEMOS: DemoItem[] = [
+  new DemoItem('ui-ark26d', 'EmbeddedComponent probe (embeddedUI)', 'pages/ui/Ark26EmbedDemo'),
   new DemoItem('ui-ark26c', 'arkui api-26 slot/xcomponent/particle probe', 'pages/ui/Ark26SlotDemo'),
   new DemoItem('ui-state-v1', 'state mgmt V1 full set', 'pages/ui/StateV1Demo'),
   new DemoItem('ui-state-v2', 'state mgmt V2 full set', 'pages/ui/StateV2Demo'),

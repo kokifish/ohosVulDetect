@@ -1244,3 +1244,26 @@ FAULT_TYPE_ 前缀）/hichecker.contains。**appRecovery 有意不落**：enable
 （列表底部行 sweep 定位易失败——直调 hvigorw 的产物不进 build/out，须走 build.py 收集）。
 **API26 验证**：ui-ark26c 打开无崩溃（空槽/空帧为预期形态）、api-ohos3 7✅/0❌。
 
+## EmbeddedComponent 嵌入面 + @ohos 直连第四批轮（2026-09-21 第五轮）
+
+**组件 +1（115 → 116/137）**：新增 `ui-ark26d` 页（Ark26EmbedDemo）落 **EmbeddedComponent**
+（@since 12，进程内嵌 UI 面）——配套提供方 `EmbeddedProviderAbility`（embeddedUI 类型
+UIExtensionAbility，onSessionCreate 经 session.loadContent 装载提供方页）+ module.json5
+extensionAbilities 注册。**API26 手机镜像实证**：onError 回调确定性触发
+（"Start ui extension ability failed"——d.ts 明示该扩展点仅 2-in-1/平板可用，错误内码进 ✅
+行，graceful 语料成立；平板/2-in-1 真机上应真实渲染提供方页）。
+
+**@ohos 直连第四批（38 → 51/447 中第四批 +6）**：新增 `api-ohos4` 页 6 用例全绿（API26）：
+dataSharePredicates（equalTo+limit 链式构造）/dataAbility.createRdbPredicates（命名空间内
+DataAbilityPredicates 类，非 DataSharePredicates）/errorManager.on-off（ErrorObserver 对象
+观察器 + 新事件名）/hiTraceMeter.startTrace·traceByValue·finishTrace（是 startTrace 不是
+beginTrace）/usbManager.getDevices（模拟器 0 设备）/window.getLastWindow（id=54）。
+
+**配套**：EmbeddedProviderPage 经 sync_pages allowlist 登记（loadContent 装载、无 DemoItem
+的合法例外，注释说明）；`@ohos.app.ability.configurationConstant` 直连不可解析（模块表
+缺失，经 @kit.AbilityKit 即可）。
+
+**剩余 21 个未覆盖组件归因收敛**：13 项声明面缺失（结构性不可达）、Camera 无声明、Common
+元条目、Particle 已覆盖后余 DynamicComponent/IsolatedComponent/EmbeddedComponent 已覆盖/
+SecurityUIExtensionComponent 需专用宿主或系统能力——组件维度实际可落地覆盖至此全部完成。
+

@@ -10,10 +10,10 @@
 | 指令覆盖 | 188/268（未用 80 条全归因，见 docs/history/BENCHMARK_ROUNDS.md 各轮与 docs/ohos.md §5.1） | check_opcode_coverage.py |
 | 组件覆盖 | 112/137（2026-09-21 since-26 回补 7 项 + API26 试探页 5 项；剩余 25 见 history 当轮归因） | check_corpus_coverage.py |
 | Kit 覆盖 | 40/103（IPCKit 已显式 import；剩余 63 个按服务可用性判为 HMS/专用环境侧，静态面无法完全排除类似 IPCKit 的个案） | check_corpus_coverage.py |
-| @ohos 直连 | 45/447（直连三批：legacy 旧 API/工具库/设备状态 + bundle·输入设备·可观测性） | check_corpus_coverage.py |
+| @ohos 直连 | 51/447（直连四批：legacy/工具库/设备状态/bundle·可观测性/数据谓词·USB·窗口） | check_corpus_coverage.py |
 | 漏洞/孪生 | 91 + 91（manifest 182 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
 | 评分 | F1=1.000（91 对口径实测，TP=91 FN=0 FP=0 TN=91） | score_output.py |
-| feat_api 路由页 | 80（api 52 / ui 21 / lang 7 + Index） | main_pages.json |
+| feat_api 路由页 | 82（api 53 / ui 22 / lang 7 + Index，含提供方页 1） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
@@ -25,7 +25,7 @@
 | 模块 | 类型 | 内容 |
 |---|---|---|
 | entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 良性语料路由页 80（api 52 / ui 21 / lang 7 + Index，见基线速查表） |
+| feat_api | feature HAP | 良性语料路由页 82（api 53 / ui 22 / lang 7 + Index + EmbeddedProviderPage，见基线速查表） |
 | feat_vuln | feature HAP | 漏洞分类页 28（26 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
@@ -266,3 +266,4 @@ lang-runtime 页（RuntimeHelpers.ts + LexWideLab.ets）追加 20 条，均为�
 | 2026-09-21 | API26 双环境恢复 + since-26 组件回补 + API26 运行时验证轮（2026-09-21 第二轮） |
 | 2026-09-21 | 组件缺口试探 + @ohos 直连第二批（2026-09-21 第三轮） |
 | 2026-09-21 | ContentSlot/XComponentNode/Particle + @ohos 直连第三批（2026-09-21 第四轮） |
+| 2026-09-21 | EmbeddedComponent 嵌入面 + @ohos 直连第四批（2026-09-21 第五轮） |
