@@ -101,7 +101,7 @@ export function tsComputedClassKey(k: string): string {
 }
 
 // stownbynamewithnameset：非计算键同时含 "." 与 "\" 且值为匿名函数（es2panda IsLegalNameFormat
-// 的历史行为，源码级实证；见 docs/BENCHMARK.md）。不动态取值，用 Object.keys 验证。
+// 的实际行为，源码级实证；见 docs/BENCHMARK.md）。不动态取值，用 Object.keys 验证。
 export function tsNameSet(): string {
   const o = { 'a.b\\c': function (): number {
     return 1;

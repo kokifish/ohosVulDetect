@@ -16,7 +16,7 @@
     （启动 EntryAbility → 点 "API Coverage"/"Vuln Challenges" 按钮）；
   - 分辨率按 `hidumper -s RenderService` 实测值做比例坐标滑动（新镜像 1320x2232，旧 1260x2720）。
 
-按钮遍历按文本去重后全量点击（此前上限 8 个，大页尾部案例漏遍历），每轮点击后即采集
+按钮遍历按文本去重后全量点击（不设上限；设上限会导致大页尾部案例漏遍历），每轮点击后即采集
 结果行并在日志区翻屏合并——DemoScaffold 结果区是 layoutWeight 滚动区，案例多时尾部
 ✅/❌ 行在首屏外。
 
