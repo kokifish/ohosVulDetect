@@ -19,7 +19,7 @@
    （递归 interface 类型，编译器放行任意长度）。FIELD 参数经拷贝传播逐级替换后
    ref_base 链深 ≈ NEST_DEPTH，触发参数图克隆（AsmArg.clone）的深递归
    （旧实现阈值约 2950 层）。运行时以参数守卫保证链不可达。
-   不可行形态归因（详见 docs/history/BENCHMARK_ROUNDS.md〈递归深度压力语料〉）：
+   不可行形态归因（本文档字符串）：
    - Record/递归 interface 嵌套对象字面量：arkts-no-untyped-obj-literals / 类型
      比较器约 12 层即"Excessive stack depth"；
    - 嵌套数组字面量（含逐级变量链）：es2abc 切成约 11 层块用存储指令链接，
@@ -46,7 +46,7 @@ def gen_chain_lab(chain_statements: int, chain_terms_per_statement: int) -> str:
     # - 每条链仅 2 个常量交替：大量去重常量会让 DCE 的 use-vars 逐块并集退化；
     # - 单条链上限约 700-800 项（900 触发编译器 Unknown Error 00308018）。
     # 历史代价备注：CopyPropagation.invalidate_propagated_reads 曾按全表扫描实现，
-    # 大方法呈平方级（基线实验证明主因是 ovd 既有语料而非本链）；2026-09-09 已改
+    # 大方法呈平方级（基线实验证明主因是既有语料而非本链）；已改
     # _read_value_keys 索引化（行为等价），含本链的完整 app 主流程 93.2 -> 15.7 分钟。
     total_terms = chain_statements * chain_terms_per_statement
     lines = [

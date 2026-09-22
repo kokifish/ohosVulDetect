@@ -1,7 +1,7 @@
 // 本文件由 tools/gen_methname_stress.py 生成，勿手改。
 // 方法名注入语料：对象字面量字符串键方法/存取器——键内容成为 abc 方法名本体
 // （.function any #*#<键>(...)），对下游 .function 行解析构成注入面。命中模式与
-// 归因见 tools/gen_methname_stress.py 文档字符串与 docs/history/BENCHMARK_ROUNDS.md〈红队第二轮〉。
+// 归因见 tools/gen_methname_stress.py 文档字符串。
 // 运行时无风险：全部为合法 TS 对象字面量语义。
 // nl_method: R1 换行键方法：.function 行断行无括号 → 整 chunk 方法丢失
 export const mn0_nl_method = { "n\nl"(): number { return 0; } };

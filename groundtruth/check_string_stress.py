@@ -7,9 +7,9 @@
   ② 残留行带未闭合引号 → 幽灵指令操作数失衡吸收，一口气吞噬后续数十行真实指令；
   ③ 裸 "}" 残留行 → 方法体整体截断。
 字符串池（STRING 段）round-trip 已有既往红队覆盖，但 AsmMethod 指令操作数值从未被断言——
-2026-09-14 前各轮「全过」结论均未触达该面，本门禁补上。
+此前各「全过」结论均未触达该面，本门禁补上。
 
-数据流（2026-09-15 TAC 面适配）：逆向工具的引号感知解析修复落地后，stringStressAt 能完整
+数据流（TAC 面适配）：逆向工具的引号感知解析修复落地后，stringStressAt 能完整
 解析并提升，test.out 的 AsmMethod dump 不再含有 `N    lda.str <raw>` 的原始 NAC 行（未提升
 方法的兜底 dump 面），本门禁改为从提升后 IR 重建操作数：TAC debug 对 STR 字面量零转义渲染
 （`N    return "<raw>"`，跨物理行、内容裸出）。重建规则与 NAC 面同构：`return "` 起始、
@@ -20,7 +20,7 @@ stringStressFields 的静态值做引号包裹子串核对（次级）。任何�
 用法：python3 groundtruth/check_string_stress.py <test.out> [--dis feat_api.dis] [--root ohosVulDetect根目录]
 退出码：0 = 全部 round-trip；1 = 存在白名单外缺失/多出。
 
---dis（2026-09-15 P2）：literal 缓冲面全量核对。TAC 面看不到 literal 值（createarraywithbuffer
+--dis：literal 缓冲面全量核对。TAC 面看不到 literal 值（createarraywithbuffer
 只渲染偏移），本模式对 ark_disasm 的 LITERALS 节做 oracle 走查——按 build_cases 顺序逐项断言
 `string:"<raw>", ` 片段（literal 值零转义裸出，与期望字节直比，无需转义表）：
   ① 数组缓冲（count 字段 == 用例数）：全用例按序走查；
@@ -45,12 +45,12 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 FIELDS_VALUES = ["v\"x", "v\\y", "v\nz", "tab-key", "brace-key", "pool",
                  "comma-key", "quad-key", "label-key", "catchall-key"]
 
-# 文本级根本歧义行为锁（2026-09-15 closer-guard 轮）：当字符串内容自身在某物理行行尾产生引号、
+# 文本级根本歧义行为锁：当字符串内容自身在某物理行行尾产生引号、
 # 且紧随行是指令形态时，该场景与「操作数已正常闭合 + 后跟真指令」逐字节同形，解析器取
 # 「已闭合」解释——操作数被截短、真闭引号行以 skip payload residue line 日志被跳过。
 # 键 = 语料完整内容，值 = 当前实际恢复出的截短值；比对改为精确断言该截短行为，
 # 任何方向偏离（更短或恢复完整）都 FAIL 并提示更新锁。与 KNOWN_LOSSES「宽容缺失」不同。
-# 歧义矩阵实测（2026-09-15 P1 轮，stringStressMatrix 函数内 14 组合，bench24/api26 双口径一致）：
+# 歧义矩阵实测（stringStressMatrix 函数内 14 组合，bench24/api26 双口径一致）：
 # 根因 = 解析器对「首物理行行尾引号」取已闭合解释——case0/1 截短为 'p'（TAC render 面）；
 # case5 的内容行 `}` 在已闭合状态下被当成方法尾，case5 尾部起整个方法截断（case6-13 与
 # matrix-fallback 整体缺失）；仅 .catchall / return 跟随行因闭行扫描接受而完整恢复。
@@ -136,7 +136,7 @@ def extract_return_operands(block: str) -> list[str]:
 def literal_presence_check(dis_path: pathlib.Path, cases: list[tuple[str, str]]) -> list[str]:
     """LITERALS 面存在性断言：全部用例 + 恶劣键/值以 `string:"<mutf8>"` 形态存在于 .dis。
 
-    2026-09-15 实测：es2abc 对大 literal 数组分块（chunk）且不保源码序（歧义矩阵 14 项
+    实测：es2abc 对大 literal 数组分块（chunk）且不保源码序（歧义矩阵 14 项
     被拆至独立 chunk 落于文件尾）——有序/单缓冲走查模型不成立；跨 chunk 的多重集合比对
     受值内子串碰撞限制退化为存在性断言（方法面全量多重集合由 TAC 门禁覆盖）。
     孤立代理经 surrogatepass 出 CESU-8 字节；NUL 为 C0 80；其余直比。

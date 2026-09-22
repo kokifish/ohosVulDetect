@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """生成字符串边界压力源文件（feat_api/src/main/ets/pages/lang/StringStressLab.ts）。
 
-背景（SDK26 es2abc + ark_disasm 实证，探针见 docs/history/BENCHMARK_ROUNDS.md〈字符串边界语料〉等轮）：
+背景（SDK26 es2abc + ark_disasm 探针实证）：
 ark_disasm 文本输出对字符串只做「部分转义」——反斜杠与 \x01-\x1f 中的多数控制字符、U+2028 等转成转义文本，
 但 **双引号、换行 \n、回车 \r、制表符 \t 原样裸输出**（\t 裸输出使字符串续行可与真指令行「\t+操作码」完全同形）；
 代理对按 MUTF-8(CESU-8) 裸字节写出，会使整个 .dis 文件不再是合法 UTF-8。
@@ -252,7 +252,7 @@ def build_cases() -> list[tuple[str, str]]:
     add('x\n  string:"fake", i32:42, ]}\ny', "inst-mimic")       # literal 元素行（LITERALS 面伪装）
     add('a\n\tsta v0\n\tlda v0\n\tjnez jump_label_9\njump_label_9:\n\treturnundefined\nz', "inst-mimic")
 
-    # ---- tab 前缀续行截断族（真实缺陷复现组，2026-09-14 A1 用例扩展）----
+    # ---- tab 前缀续行截断族（真实缺陷复现组）----
     # 机理：下游 find_line_end 类「下一条指令开始」启发式把「\t 开头 + 首词 [a-zA-Z0-9.]*」的
     # 续行误判为指令行，lda.str 操作数在首个此类续行处被截断；截断后 rfind('"') 回落到
     # 开引号（操作数变空串）或内容内引号（操作数=错误前缀），残留行再被当作指令解析——
@@ -273,7 +273,7 @@ def build_cases() -> list[tuple[str, str]]:
     add('head\n\tlda.str ""\n\treturnundefined\n', "tab-break")
     add('\n\tTabs lead\t\n\tand trail\n', "tab-break")
 
-    # ---- closer-guard：闭行判据修复面 + 文本级歧义行为锁（2026-09-15）----
+    # ---- closer-guard：闭行判据修复面 + 文本级歧义行为锁----
     # 预期形态（闭引号行后紧邻 .catchall/.catch）需 es2abc 生成异常区域指令，实测本 SDK 对
     # 不可失败 try/catch 消除区域（stringStressAt 内 0 条 .catch 指令）、可保留场景区域指令
     # 固定落位方法尾（handler 后）——紧邻形态在本工具链不可达，归因记录；本用例退化为
@@ -284,7 +284,7 @@ def build_cases() -> list[tuple[str, str]]:
     # residue line。行为由门禁 KNOWN_LIMITATIONS 精确锁定（双向漂移均红灯）。
     add('p"\n\tsta v0\nq', "closer-guard")
 
-    # ---- 歧义矩阵：内容首段行尾形态 × 紧随行形态 系统化（2026-09-15 P1）----
+    # ---- 歧义矩阵：内容首段行尾形态 × 紧随行形态 系统化----
     # 模板 f'{A}\n{B}\ntail'：A 行尾形态决定解析器是否提前闭合（引号行尾 = 歧义触发），
     # B 行形态决定提前闭合后的残留走向（真指令/标签/异常区域/方法尾/段标记）。
     # 首轮无锁入语料，门禁 MISSING/EXTRA 实证各组合真实行为后，截短者入 KNOWN_LIMITATIONS。
@@ -337,7 +337,7 @@ def gen(out: pathlib.Path) -> int:
     keys = pick_keys(cases)
     n = len(cases)
     # 歧义矩阵用例拆独立函数：stringStressAt 的 if-chain CFG 随用例数线性增长，
-    # 越过工具链 lift 容量阈值后 TAC dump 从中间截断（2026-09-15 实测 216 用例止于 351 块）；
+    # 越过工具链 lift 容量阈值后 TAC dump 从中间截断（实测）；
     # 拆函数把每函数 CFG 规模压回安全区。
     main_cases = [(c, g) for c, g in cases if g != "ambiguity-matrix"]
     mat_cases = [(c, g) for c, g in cases if g == "ambiguity-matrix"]

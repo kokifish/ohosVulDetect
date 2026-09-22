@@ -1,9 +1,9 @@
 # ohos.md — 鸿蒙能力全景调研与本项目覆盖差距
 
-> 调研口径：2026-09-04；华为官方文档（developer.huawei.com）+ OpenHarmony 仓库/文档（gitee.com/openharmony）交叉核对，Kit 清单取自本地 HarmonyOS 6.0.1 SDK `@kit.*.d.ts` 实测枚举。
+> 调研口径：华为官方文档（developer.huawei.com）+ OpenHarmony 仓库/文档（gitee.com/openharmony）交叉核对，Kit 清单取自本地 HarmonyOS 6.0.1 SDK `@kit.*.d.ts` 实测枚举。
 > 用途：全集调研快照（组件/Kit/指令集/ArkTS 约束的官方口径与链接）+ 机制专题（打包形态）+ 指令可达性归因结论。
 > 动态差距与覆盖率**一律以脚本对账为准**：`python3 tools/check_corpus_coverage.py` 与 `tools/check_opcode_coverage.py`，
-> 基线记录在 docs/BENCHMARK.md，轮次过程在 docs/history/BENCHMARK_ROUNDS.md。本文与脚本数字冲突时以后者为准。
+> 基线记录在 docs/BENCHMARK.md。本文与脚本数字冲突时以后者为准。
 
 ## 1. ArkTS 字节码指令集（ISA）
 
@@ -20,7 +20,7 @@
 
 - isa.yaml 结构：chapters（设计章节）→ prefixes → **19 个指令组**（常量加载 / 迭代器 / 对象创建 / 二元 / 一元 / 比较 / callruntime / throw / 调用 / 定义 / 属性读写 / 字符串常量加载 / 跳转 / 动态 move-load-store / 动态立即数 / 动态返回 / nop）→ exceptions；每条指令一个 `sig` 条目。
 - **4 个前缀**（8 位前缀 + 8 位操作码 = 16 位小端编码）：`throw.`(0xfe) 抛异常类、`wide.`(0xfd) 宽编码、`deprecated.`(0xfc) 弃用兼容、`callruntime.`(0xfb) 运行时调用。不存在 experimental. 前缀。
-- **wide 语义**：立即数/字面量 id/寄存器与槽位索引超出 8 位即改用 wide 变体（u16）。官方未写明边界数值；本项目实证：立即数为**有符号 int8，取值 > 127 即触发**（探针实证见 docs/history/BENCHMARK_ROUNDS.md〈第五轮〉）。
+- **wide 语义**：立即数/字面量 id/寄存器与槽位索引超出 8 位即改用 wide 变体（u16）。官方未写明边界数值；本项目实证：立即数为**有符号 int8，取值 > 127 即触发**。
 - `deprecated.*`：编译器不再生成、仅为旧字节码运行兼容保留——对语料属结构性放弃。
 
 ### 1.3 数量（本项目快照 vs 上游 master）
@@ -93,7 +93,7 @@
 
 ### 5.1 指令可达性归因（结构性不可达清单）
 
-> 动态数字（当前 188/268）以 tools/check_opcode_coverage.py 为准；逐轮归因证据链见 docs/history/BENCHMARK_ROUNDS.md。
+> 动态数字（当前 188/268）以 tools/check_opcode_coverage.py 为准。
 > 结论口径：
 > - `deprecated.*` 45 条：编译器不再生成，结构性放弃。
 > - 比较跳转族（jeq/jne/jstricteq×null/undefined/z 等 14 条）：es2abc 一律拆为 eq/ne + jeqz/jnez，不可达。
@@ -103,11 +103,11 @@
 > - **callruntime.isfalse/istrue 前缀变体可达且已计入并集**（布尔上下文动态值判定发射）；`supercallarrowrange`/`wide.supercallarrowrange` range 形态可达（ArrowSuper.js：≥4 实参直调/展开调用）。
 > - 其余未用条目为 es2abc 确定性发射策略，多轮探针实证不可达（createregexpwithliteral 降级 new RegExp；closeiterator/getresumeoffset 不发射等）。
 >
-> **2026-09-21 探针收口（SDK 26.0.0.32 es2abc script+module 双模式，/tmp 探针实证）**：上列候选中剩余项全部定性为**当前发射器结构性不可达**，归因如下——
+> **探针收口（es2abc script+module 双模式，最小模块探针实证）**：上列候选中剩余项全部定性为**当前发射器结构性不可达**，归因如下——
 > - `ldnewtarget`：new.target 改走调用约定传参（函数第 2 参数 `lda a1`），无专用取值指令；
 > - 箭头内 super **定参小元数**调用（如 2 参）降为 `ldsuperbyname` + `callthisN`；range 形态
->   （≥4 实参直调 / 展开调用）仍发射 `supercallarrowrange` 族（ArrowSuper.js 新鲜产物实测 bare/wide
->   各 4 处命中，与 BENCHMARK 第五轮记录一致，**非不可达、已覆盖**）；
+>   （≥4 实参直调 / 展开调用）仍发射 `supercallarrowrange` 族（ArrowSuper.js 实测 bare/wide
+>   各 4 处命中，**非不可达、已覆盖**）；
 > - `ldthis` 族：方法 this 经参数寄存器（a2）传入，全部降为 `lda`/`ldobjbyname`；
 > - `ldobjbyindex/stobjbyindex`：数字键下标读写一律 `ldobjbyvalue/stobjbyvalue`（对象/数组/类型数组同）；
 > - `ldfunction`：函数声明作值 = `definefunc` + `ldglobalvar`（script）/`stmodulevar`+`ldlocalmodulevar`（module）；
@@ -119,7 +119,13 @@
 
 ### 5.2 组件（全集 = `ets/component/component_config.json` 137 个）
 
-动态差距以 `python3 tools/check_corpus_coverage.py` 输出为准；文档树口径（~170 条目，含子组件/专用形态）的调研快照见 §2。历史缺口清单与覆盖过程见 docs/history/BENCHMARK_ROUNDS.md。
+动态差距以 `python3 tools/check_corpus_coverage.py` 输出为准；文档树口径（~170 条目，含子组件/专用形态）的调研快照见 §2。
+
+剩余未覆盖项归因（结构性结论，非待办）：约 21 项中 13 项无 SDK 声明面（ColorPicker 族/
+DotMatrix/Piece/Sheet/DepthComponent/GeometryView/FrictionMotion/SpringMotion/SpringProp/
+ScrollMotion/MediaCachedImage 等，component_config 占位但 d.ts 缺失，结构性不可达）；
+Camera 无声明；Common 为元条目；DynamicComponent/IsolatedComponent/SecurityUIExtensionComponent/
+LocationButton 等需专用宿主（卡片/嵌入/系统应用）或系统能力。
 
 ### 5.3 Kit（全集 = `ets/kits/@kit.*.d.ts`）
 
@@ -128,9 +134,9 @@
 ### 5.4 语言特性（原候选已全部落地或定性）
 
 已覆盖：generator/yield*/resume-with-arg、for-of/for-in/close、spread/rest/new-spread、解构 rest、Symbol 键、tagged template（成员 tag）、私有字段全家族、super[k]/super 展开、计算键、globalThis 预置赋值、可选链调用、动态下标调用（Record 形态）、闭包/lexenv 压力、wide 家族、async/await 链、try/catch/finally、泛型/union/枚举位运算、类继承多态等。
-**2026-09-21 状态**：原候选全部落地或定性——BigInt/String.raw/标签 break/for-await-of/static 块/解构交换/逻辑赋值/accessor（Sugars.ts/TypesDemo，已落地）；本轮新增 WeakMap/WeakSet/WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll（Sugars.ts sugarWeakColls/sugarProxyReflect/sugarRegexAdv，运行时以模拟器 selfcheck 为准）；`new.target` 已落地（构造器内箭头捕获形态，见 sugarNewTarget；本 SDK 下编译为参数传递，见 §5.1 探针收口）；`satisfies` 仅类型层、无指令面，不作为语料目标。
+**现状**：原候选全部落地或定性——BigInt/String.raw/标签 break/for-await-of/static 块/解构交换/逻辑赋值/accessor、WeakMap/WeakSet/WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll（Sugars.ts/TypesDemo，运行时以模拟器 selfcheck 为准）；`new.target` 已落地（构造器内箭头捕获形态，见 sugarNewTarget；本 SDK 下编译为参数传递，见 §5.1 探针收口）；`satisfies` 仅类型层、无指令面，不作为语料目标。
 
-## 7. 打包形态专题调研：多 abc / HSP / HAR / 覆盖率提升（2026-09-07）
+## 7. 打包形态专题：多 abc / HSP / HAR / 覆盖率提升
 
 > 背景调研：如何构造「一个 HAP 内多个 abc」、HSP/HAR 还有哪些未覆盖形态、以及组件/API 覆盖率如何系统性提升。
 > 证据来源 = 本地工具链源码级核实（SDK 26.0.0.32 Beta2 / hvigor-ohos-plugin 6.26.2 / ets-loader）+ 华为官方文档（下附链接）+ 本仓库 build/out 产物实测 + ohpm 实测。
@@ -143,19 +149,19 @@
 
 | # | 途径 | abc 落位 | 证据 | 本项目状态 |
 |---|---|---|---|---|
-| 1 | **ArkTS 卡片**（FormExtensionAbility + WidgetCard，共包方式） | 同一 HAP 内额外产出 **`ets/widgets.abc`** 与 modules.abc 并存 | ets-loader `ark_define.js` 的 `WIDGETS_ABC="widgets.abc"` + `module_mode.js` 按 `widgetCompile` 切换产物名；官方「创建ArkTS卡片」：共包方式卡片 UI 与应用代码同 module 同 HAP | ✅ 已落地（2026-09-07 第六轮，feat_api 卡片 ApiWidgetCard + FormDemo 页） |
+| 1 | **ArkTS 卡片**（FormExtensionAbility + WidgetCard，共包方式） | 同一 HAP 内额外产出 **`ets/widgets.abc`** 与 modules.abc 并存 | ets-loader `ark_define.js` 的 `WIDGETS_ABC="widgets.abc"` + `module_mode.js` 按 `widgetCompile` 切换产物名；官方「创建ArkTS卡片」：共包方式卡片 UI 与应用代码同 module 同 HAP | ✅ 已落地（feat_api 卡片 ApiWidgetCard + FormDemo 页） |
 | 2 | **rawfile 放 .abc 数据文件** | `resources/rawfile/*.abc`，任意数量 | 官方 FAQ（faqs-ndk-65）：`napi_run_script_path` **仅接受 rawfile 下的 abc**，自动拼沙箱路径 `/data/storage/el1/bundle/<hap>/resources/rawfile/x.abc`，每次执行新建独立 JS 上下文 | ✅ 已落地（feat_vuln bench_script.abc + NativePage，**完成值恒 undefined、以脚本内自校验闭环**，+4 指令） |
 | 3 | 多包 App | 每 HAP/HSP 各 1 个 modules.abc | 本仓库 4 包 4 abc | ✅ 已有 |
-| 4 | **字节码 HAR 依赖** | tgz 内含独立 `ets/modules.abc`；但宿主构建以 `--enable-abc-input --remove-redundant-file` **原样并入宿主 modules.abc**（不做语法检查/重编译），宿主包内 abc 数不变 | hvigor `byte-code-har-utils.js`、ets-loader `module_mode.js` abcPaths 合并逻辑；官方「构建HAR」文档 | 已实证（2026-09-07 /tmp 探针：HAR tgz 内确有 `package/ets/modules.abc` + `.d.ets` 桩；宿主消费后仍 1 个 abc，`&lib_common.*&1.0.0` record 原样并入）。**"abc 原样合并"机制正是第五轮搁置的 patch 对指令注入通道**（手造 abc 伪装字节码 HAR 即可入包；注入通道已实证，缺的只是能产出 patch 指令的 abc 载荷） |
+| 4 | **字节码 HAR 依赖** | tgz 内含独立 `ets/modules.abc`；但宿主构建以 `--enable-abc-input --remove-redundant-file` **原样并入宿主 modules.abc**（不做语法检查/重编译），宿主包内 abc 数不变 | hvigor `byte-code-har-utils.js`、ets-loader `module_mode.js` abcPaths 合并逻辑；官方「构建HAR」文档 | 已实证（/tmp 探针：HAR tgz 内确有 `package/ets/modules.abc` + `.d.ets` 桩；宿主消费后仍 1 个 abc，`&lib_common.*&1.0.0` record 原样并入）。**"abc 原样合并"机制即 patch 对指令的注入通道**（手造 abc 伪装字节码 HAR 即可入包；注入通道已实证，缺的只是能产出 patch 指令的 abc 载荷） |
 | 5 | 独立卡片包（API 20+） | 卡片 UI 独立 library 模块 → 独立卡片包（formWidgetModule/formExtensionModule 互相关联） | 官方「创建ArkTS卡片」方式二 | ❌ 未覆盖（与 #1 二选一即可） |
 | 6 | 集成态 HSP | HSP 静态打进消费方，不增加 abc 数 | hvigor `package-shared-tgz.js` integratedHsp 分支 | ❌ 未覆盖（形态补全用） |
-| 7 | patch.abc（热修）/ 加密 abc（官方应用加密 code-protect） | 运行时/发布态形态，非正常构建产物 | 第五轮已归因；加密 abc 是逆向工具"野外"形态 | 观察项（不做语料目标） |
+| 7 | patch.abc（热修）/ 加密 abc（官方应用加密 code-protect） | 运行时/发布态形态，非正常构建产物 | 加密 abc 是逆向工具"野外"形态 | 观察项（不做语料目标） |
 
 ### 7.2 HSP / HAR 开发形态全景（官方文档要点 + hvigor 选项核实）
 
 **HSP（动态共享包，module.json5 type=shared）**：
 - 可导出 ArkUI 组件/类/native so/资源；不能做 entry；禁止循环依赖、**不支持依赖传递**；应用内 HSP 限同 bundleName/签名。
-- Navigation 跨包路由：HSP 侧 `route_map.json` + module.json5 `routerMap` 字段声明 NavDestination 页面 ✅（第六轮已落地 api-route-map）。
+- Navigation 跨包路由：HSP 侧 `route_map.json` + module.json5 `routerMap` 字段声明 NavDestination 页面 ✅（已落地 api-route-map）。
 - API14+ HSP 可声明 UIAbility；API18+ 可声明 ExtensionAbility ❌。
 - **集成态 HSP**：模块级 `buildOption.arkOptions.integratedHsp: true` + 工程级 `useNormalizedOHMUrl: true` → 产物 .tgz（HAR 式），消费方放 `libs/` 以 `file:./libs/xxx.tgz` 依赖，可跨 bundleName 复用（注意：该开关应配在 HAR 消费方，配在 HAP 上 hvigor 会告警不生效——`pre-build.js` 有专门提示）。
 
@@ -167,7 +173,7 @@
 
 **混淆（ArkGuard）**：release 经 `arkOptions.obfuscation.ruleOptions`；本项目已开 `-enable-property-obfuscation -enable-toplevel-obfuscation`（filename/export 混淆实测跨包 HAP/HSP 加载崩溃，注释在 obfuscation-rules.txt）；**官方另有 API26 应用加密（code-protect，内核级 abc 加密）与 ohpm 三方加固（Virbox/爱加密等）**——加密 abc 是逆向工具野外兼容项，不入语料。
 
-**本项目形态对照**：✅ 应用内 HSP（静态+动态 import）、源码 HAR、多 HAP（entry+2 feature）、native so（libs/arm64-v8a）、release 混淆、**ArkTS 卡片 widgets.abc（第六轮）**、**rawfile abc + napi 执行（第六轮）**、**route_map 跨包 Navigation（第六轮）**；❌ HSP 内 UIAbility/ExtensionAbility、字节码 HAR 工程内依赖（机制已探针实证）、集成态 HSP、独立卡片包。
+**本项目形态对照**：✅ 应用内 HSP（静态+动态 import）、源码 HAR、多 HAP（entry+2 feature）、native so（libs/arm64-v8a）、release 混淆、**ArkTS 卡片 widgets.abc**、**rawfile abc + napi 执行**、**route_map 跨包 Navigation**；❌ HSP 内 UIAbility/ExtensionAbility、字节码 HAR 工程内依赖（机制已探针实证）、集成态 HSP、独立卡片包。
 
 ### 7.3 组件/API 覆盖率：权威清单与提升路径
 
@@ -181,7 +187,7 @@
 - `ohpm.openharmony.cn`：真实三方库（大量**字节码 HAR**，含真实第三方 abc + 混淆变体）→ 作逆向工具**鲁棒性测试集**（非语料源；实测 @ohos/lottie 2.0.33 为源码 HAR，需挑选真正的字节码包）。
 - OpenHarmony-TPC、awesome-harmony 系列作补充。
 
-### 7.4 对本项目的落地建议（1–3 已于 2026-09-07 第六轮落地；其余排在工具链升级 26.0.0 Release 之后）
+### 7.4 对本项目的落地建议（1–3 已落地；其余排在工具链升级 26.0.0 Release 之后）
 
 1. ✅ **ArkTS 卡片页**：feat_api FormExtensionAbility（ApiFormAbility）+ 动态卡片（ApiWidgetCard）→ `ets/widgets.abc` 第二 abc 形态 + FormKit API 域（formProvider/formInfo/formBindingData/postCardAction）+ 卡片受限组件集（SDK `ets/component/form_config.json` 即卡片组件白名单，38 个）。
 2. ✅ **rawfile abc + napi_run_script_path**：es2abc 脚本模式 abc 入 rawfile，feat_vuln cpp 执行——script 模式全局变量指令族（ldglobalvar/stglobalvar/stconsttoglobalrecord/sttoglobalrecord）+4 条，模块模式产物不含。

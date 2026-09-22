@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """生成方法名注入压力源文件（entry/src/main/ets/methname/MethNameStressLab.ts）。
 
-红队实证（2026-09-11，逐探针最小模块归因）：对象字面量的字符串键方法/存取器是
+红队实证（逐探针最小模块归因）：对象字面量的字符串键方法/存取器是
 「合法 TS、es2abc 可编译、运行时正常」的形态，但键内容会成为 abc 里的**方法名本体**
 （`.function any #*#<键>(...)`，ark_disasm 零转义打印），构成对下游 .function 行解析的
-直接注入面。命中模式（详见 docs/history/BENCHMARK_ROUNDS.md〈红队第二轮〉）：
+直接注入面。命中模式见本文档字符串与生成物内注释：
   R1 键含换行   → .function 行断行无括号 → _process_method_1st_line IndexError →
                   methods 任务 chunk 整体报废（整模块方法丢失，最致命）
   R2 键含 (     → 方法名截断 + 参数错位 → methods/literals 双丢
@@ -74,7 +74,7 @@ def main() -> int:
         HEADER,
         "// 方法名注入语料：对象字面量字符串键方法/存取器——键内容成为 abc 方法名本体",
         "// （.function any #*#<键>(...)），对下游 .function 行解析构成注入面。命中模式与",
-        "// 归因见 tools/gen_methname_stress.py 文档字符串与 docs/history/BENCHMARK_ROUNDS.md〈红队第二轮〉。",
+        "// 归因见 tools/gen_methname_stress.py 文档字符串。",
         "// 运行时无风险：全部为合法 TS 对象字面量语义。",
     ]
     for i, (slug, key, note) in enumerate(KEYS):

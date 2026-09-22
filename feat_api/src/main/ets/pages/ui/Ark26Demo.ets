@@ -1,6 +1,6 @@
 // 组件收尾页二：Arc 族 + since-26 组件（@kit.ArkUI，对账缺口收口，0 信号页约定）。
-// since-26 组件（Lazy*Layout/SelectionContainer/DynamicLayout/ContainerReader）曾因 API24
-// 镜像无模块导出被裁，2026-09-21 bench26 恢复后回补（运行时可达性以 API26 镜像为准）。
+// 注意：since-26 组件（Lazy*Layout/SelectionContainer/DynamicLayout/ContainerReader）在
+// API24 镜像无模块导出、运行时不可达——运行时可达性以 API26 镜像为准。
 import {
   ArcList, ArcListItem, ArcScrollBar, ArcSwiper,
   LazyColumnLayout, LazyVWaterFlowLayout, SelectionContainer,

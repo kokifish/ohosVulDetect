@@ -26,8 +26,8 @@ CATALOG = pathlib.Path(__file__).resolve().parent / 'heavy_api_catalog.json'
 MANIFEST = ROOT / 'groundtruth' / 'manifest.json'
 
 # ---- 规模旋钮（P0 实测密度后标定，目标 release ≥5.0M 指令 / ~60k 函数）----
-BIZ_FILES = 90           # 业务文件数（P0 实测 56.4k inst/file 标定，目标 release ≥5M）
-BIZ_FUNCS = 43           # 每文件命名函数数（P0 标定：全量 ≈59.6k 函数 / 5.9M 指令）
+BIZ_FILES = 90           # 业务文件数（指令密度实测标定，目标 release ≥5M）
+BIZ_FUNCS = 43           # 每文件命名函数数（密度标定：全量 ≈59.6k 函数 / 5.9M 指令）
 BIZ_STMTS = 52           # 每函数模板语句数（指令密度主旋钮）
 BIZ_ASYNC_EVERY = 10     # 每 N 个函数产 1 个 async 孪生
 API_FNS_CAP = 8          # 每模块零参调用函数上限
@@ -240,7 +240,7 @@ def t_tags(rng, f, u):
             f'  buf += t0{u};']
 
 
-# 模板池不含 t_sort：数组 sort 闭包密度过高（P0 实测函数数超标），已移出
+# 模板池不含 t_sort：数组 sort 闭包密度过高致函数数超标，已移出
 TEMPLATES = [t_arith, t_arith2, t_concat, t_templ, t_push, t_mapset, t_mapget,
              t_ifelse, t_switch, t_for, t_while, t_try, t_class, t_closure, t_strops,
              t_literal, t_ternary, t_arrmap, t_tags]

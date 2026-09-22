@@ -6,7 +6,7 @@
   典型用法：release 构建后 `--dump-dir compare_dis` 落快照 → debug 构建后再跑本脚本（自动并入），
   得到 release∪debug 并集（debug 贡献 debugger/newlexenvwithname/wide.newlexenvwithname）。
 - 全集 = 逆向工具链仓库 isa.yaml 的 sig 列表（--isa-yaml 或环境变量 ISA_YAML 指定路径）。
-- 差集分类：deprecated/experimental、wide、其他（结构性不可达归因见 docs/history/BENCHMARK_ROUNDS.md 与 docs/ohos.md §5.1）。
+- 差集分类：deprecated/experimental、wide、其他（结构性不可达归因见 docs/ohos.md §5.1）。
 
 用法（在 ohosVulDetect 仓库根目录）：
   python3 tools/check_opcode_coverage.py --dump-dir compare_dis
