@@ -3196,6 +3196,42 @@
         "constants": []
       },
       "twin_of": "OVD-PWDIN-001"
+    },
+    {
+      "id": "OVD-DKV-001",
+      "title": "session token plaintext in auto-sync distributed KV store",
+      "category": "distributed-sync",
+      "cwe": "CWE-312",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/dkv/OVD-DKV-001.ets",
+      "function": "ovdDkv001",
+      "expected": true,
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "distributedKVStore",
+          "put"
+        ],
+        "constants": [
+          "tok_vd_dkv_sync_9c31"
+        ]
+      },
+      "twin": "OVD-DKV-001S"
+    },
+    {
+      "id": "OVD-DKV-001S",
+      "title": "twin: 加密 S3 本地库不自动同步 (OVD-DKV-001)",
+      "category": "distributed-sync",
+      "cwe": "CWE-312",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/dkv/Twins.ets",
+      "function": "ovdDkv001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-DKV-001"
     }
   ]
 }

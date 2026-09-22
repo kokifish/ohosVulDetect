@@ -44,6 +44,7 @@ FAMILY_DESC = OrderedDict([
     ('NOTIF', '通知栏明文携带验证码/会话令牌（锁屏可读）'),
     ('IRED', '不可信 want 字段原样转投 startAbility'),
     ('PWDIN', '密码语义输入框 Normal 明文回显（UI 属性面）'),
+    ('DKV', '分布式 KV 明文令牌自动组网同步'),
 ])
 
 BEGIN = '<!-- VULNS-OVERVIEW:BEGIN -->'

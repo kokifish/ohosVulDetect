@@ -1,6 +1,6 @@
 # docs/VULNS.md — 漏洞语料说明（类型 / 成因 / 利用方式 / 危害）
 
-> 口径：与 groundtruth/manifest.json 一一对应的 91 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
+> 口径：与 groundtruth/manifest.json 一一对应的 92 条预埋漏洞（每条配有同形安全孪生 `*S`，检测规则形态见 manifest `detection` 字段）。
 > 本文档回答四个问题：每条语料**是什么漏洞**、**代码里长什么样（成因）**、**攻击者怎么利用**、**造成什么危害**。
 > 所有 ID/常量均为基准虚构载荷（`vd-bench`/`AKIDBENCH`/`ovd://` 等），不含真实凭据；孪生实现见各分类 `Twins.ets`。
 > 静态 FP 自检：`python3 tools/check_twin_fp.py`（孪生 detection/函数体双面 × 漏洞规则常量子串感知扫描，FAIL=常量级重叠/函数缺失，WARN=设计内 call 级同形）。
@@ -42,8 +42,9 @@
 | NOTIF | 1 | 通知栏明文携带验证码/会话令牌（锁屏可读） | 200 |
 | IRED | 1 | 不可信 want 字段原样转投 startAbility | 940 |
 | PWDIN | 1 | 密码语义输入框 Normal 明文回显（UI 属性面） | 522 |
+| DKV | 1 | 分布式 KV 明文令牌自动组网同步 | 312 |
 
-共 30 族 91 条（另有同数安全孪生，manifest 总条目 182）。
+共 31 族 92 条（另有同数安全孪生，manifest 总条目 184）。
 <!-- VULNS-OVERVIEW:END -->
 
 ---
@@ -470,6 +471,13 @@
   - 成因：外部通道（deeplink/剪贴板/推送/共享）投喂的 `action`/`uri` 不经白名单直接构造 want 派发。
   - 利用：驱动本应用身份拉起攻击者组件或携带任意 URI 的隐式跳转。
   - 危害：借可信应用为跳板的重定向链（孪生 001S 动作白名单门控，不在名单即拒绝派发）。
+
+## OVD-DKV — 分布式 KV 同步泄露（CWE-312/200）
+
+- **OVD-DKV-001 会话令牌明文入库并组网自动同步**
+  - 成因：`distributedKVStore` 库配置 `encrypt:false` + `autoLaunchSync:true` + S1，令牌明文 `put` 进同步库。
+  - 利用：同账号组网（SuperDevice）下任意设备自动拉取该库——明文落盘且跨设备扩散。
+  - 危害：单设备存储违规升级为组网级持续泄露（孪生 001S：encrypt+S3+不自动同步、只存聚合计数）。
 
 ## OVD-PWDIN — 密码输入回显（CWE-522）
 

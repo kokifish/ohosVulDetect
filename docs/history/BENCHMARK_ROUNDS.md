@@ -1267,3 +1267,21 @@ beginTrace）/usbManager.getDevices（模拟器 0 设备）/window.getLastWindow
 元条目、Particle 已覆盖后余 DynamicComponent/IsolatedComponent/EmbeddedComponent 已覆盖/
 SecurityUIExtensionComponent 需专用宿主或系统能力——组件维度实际可落地覆盖至此全部完成。
 
+## 分布式 KV 同步泄露族 DKV 轮（2026-09-21 第六轮）
+
+**新漏洞族 OVD-DKV（+1+1S，manifest 182 → 184）**：
+- **OVD-DKV-001 会话令牌明文入库并放行组网同步**：`distributedKVStore` 库配置
+  `encrypt:false` + S1 + `setSyncRange(['ovd_local'], ['ovd_remote_any'])`，令牌
+  `tok_vd_dkv_sync_9c31` 明文 `put` 进同步库（CWE-312/200）。孪生 001S 加密 + S3 +
+  无同步配置、只存聚合计数。规则 api-call+constant（distributedKVStore.put + 令牌常量）。
+- **编译坑**：本 SDK（26.0.0.32）`Options` 无 `autoLaunchSync` 字段（文档有、实现无）——
+  组网同步语义改用 `setSyncRange(local, remote)` 标签放行表达（since 9），漏洞语义不变。
+- **评分（92 对全量）**：TP=92 FN=0 FP=0 TN=92，**F1=1.000**——DKV-001 consts 1/1
+  calls 2/2 命中、001S consts 0/1 隔离生效。
+- **模拟器（bench26）**：cat-dkv 2✅/0❌——令牌明文入库（put→delete 演示后清理）与
+  加密对照库均确定性落行。页面规模：feat_vuln 路由页 29（27 个 cat- 页 + Index + Backdoor）。
+
+**门禁终态**：4 变体构建 OK（2 轮：autoLaunchSync 字段缺失改 setSyncRange 语义）；
+manifest **184**（92+92）双向一致；twin_fp FAIL=0 / WARN=15；sync_pages OK；
+字符串门禁 207/207 + LITERALS OK；abc 探针全 HIT（令牌/库/同步标签常量）。
+

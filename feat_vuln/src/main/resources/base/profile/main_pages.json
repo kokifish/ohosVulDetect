@@ -27,6 +27,7 @@
     "pages/XmodVulnPage",
     "pages/NotifyVulnPage",
     "pages/IredVulnPage",
-    "pages/PwdinVulnPage"
+    "pages/PwdinVulnPage",
+    "pages/DkvVulnPage"
   ]
 }

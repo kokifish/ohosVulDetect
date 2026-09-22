@@ -28,6 +28,7 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-notify', '通知敏感内容', 'pages/NotifyVulnPage'),
   new DemoItem('cat-ired', 'Intent 重定向', 'pages/IredVulnPage'),
   new DemoItem('cat-pwdin', '密码输入回显', 'pages/PwdinVulnPage'),
+  new DemoItem('cat-dkv', '分布式 KV 同步泄露', 'pages/DkvVulnPage'),
 ];
 
 @Entry
