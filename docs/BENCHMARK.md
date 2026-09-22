@@ -8,11 +8,12 @@
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 188/268（未用 80 条全归因，见 docs/history/BENCHMARK_ROUNDS.md 各轮与 docs/ohos.md §5.1） | check_opcode_coverage.py |
-| 组件覆盖 | 112/137（2026-09-21 since-26 回补 7 项 + API26 试探页 5 项；剩余 25 见 history 当轮归因） | check_corpus_coverage.py |
-| Kit 覆盖 | 40/103（IPCKit 已显式 import；剩余 63 个按服务可用性判为 HMS/专用环境侧，静态面无法完全排除类似 IPCKit 的个案） | check_corpus_coverage.py |
-| @ohos 直连 | 51/447（直连四批：legacy/工具库/设备状态/bundle·可观测性/数据谓词·USB·窗口） | check_corpus_coverage.py |
+| 模块指令份额 | feat_heavy 5,945,198 指令 / 59,332 函数（release 口径，占全 app 93.3%；目标 ≥5M / ≈60k） | check_module_share.py |
+| 组件覆盖 | 116/137（剩余 21 见 history 当轮归因：13 无 SDK 声明等） | check_corpus_coverage.py |
+| Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
+| @ohos 直连 | 363/447（直连四批 51 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；44 个 FA-only/规则信号/安全敏感模块排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 92 + 92（manifest 184 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
-| 评分 | F1=1.000（92 对口径实测，TP=92 FN=0 FP=0 TN=92） | score_output.py |
+| 评分 | F1=1.000（92 对口径实测 TP=92 FN=0 FP=0 TN=92；2026-09-22 在 5.9M 指令语料上复测不变） | score_output.py |
 | feat_api 路由页 | 82（api 53 / ui 22 / lang 7 + Index，含提供方页 1） | main_pages.json |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
@@ -24,13 +25,14 @@
 
 | 模块 | 类型 | 内容 |
 |---|---|---|
-| entry | entry HAP | 壳：拉起两个 feature（跨 HAP startAbility） |
+| entry | entry HAP | 壳：拉起三个 feature（跨 HAP startAbility） |
 | feat_api | feature HAP | 良性语料路由页 82（api 53 / ui 22 / lang 7 + Index + EmbeddedProviderPage，见基线速查表） |
 | feat_vuln | feature HAP | 漏洞分类页 28（26 个 cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
+| feat_heavy | feature HAP（仅 default 产品） | 极端大模块指令农场：≥5M 指令 / ≈60k 函数（生成语料，勿手改），HeavyFarmPage 抽样 smoke，不进 sweep |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
 
-每个模块编译为独立 `ets/modules.abc`；`.app` = 3 hap + 1 hsp + pack.info。
+每个模块编译为独立 `ets/modules.abc`；default 产品 `.app` = 4 hap + 1 hsp + pack.info（api24 产品无 feat_heavy）。
 
 ## 构建
 
@@ -69,6 +71,29 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
 产物统一收集到 `build/out/`，文件名区分 SDK 与模式：`ohosVulDetect-<sdk>-<mode>-unsigned.app` 与
 各模块 `<模块>-<sdk>-<mode>-unsigned.{hap|hsp}`；hvigor 原始产物在 `build/outputs/<product>/` 与
 `*/build/<product>/outputs/default/`（.har/.tgz 中间产物不收集）。
+
+### feat_heavy 指令农场（2026-09-22）
+
+极端大单模块压力样本（逆向工具链超大 abc 输入用）：**≥500 万指令 / ≈6 万函数（release 口径）**，
+占全 app 指令 93%。仅进 default（api26）产品（`targets.applyToProducts`），api24 旧模拟器构建不含。
+
+- 生成器：`tools/gen_heavy_farm.py`（规模旋钮在文件头，勿手改生成物）。原料
+  `tools/heavy_api_catalog.json` 由 `tools/gen_heavy_catalog.py` 从本地 SDK d.ts 提取
+  （SDK 升级后本地重跑，不进 CI，同 gen_rawfile_abc 先例）。四个原型：
+  **biz**（纯计算业务函数）/ **api**（@ohos 零参 get/is/query 调用包装）/ **kit**（openharmony
+  静态 import + hms 动态 import）/ **ui**（安全组件业务组合 struct）；`farm/index.ts` 懒构建
+  注册表 + 抽样器；页面 `HeavyFarmPage` 六按钮抽样 smoke（counts/biz/api/apidyn/kit/kitdyn）。
+- 门禁：`python3 tools/check_module_share.py`（release 构建后跑；`--no-gate` 查看其他变体）。
+- FP 隔离：生成器读 manifest.json 提取 detection 常量与调用 token，命中即拒绝生成；FA-only
+  （`@famodelonly`）、安全敏感（crypto/huks/net.http 等 UNSAFE_MODULES）模块整体排除。
+- 运行时边界：smoke 只跑**白名单抽样**（hilog/systemTime/i18n/hichecker 共 3 个包装）——
+  实测部分同步系统 API 在主线程可阻塞 >6s 触发 appfreeze；其余 207 个 api 包装只在 abc 中存在。
+  动态 import 抽样各 4 个（apidyn ok=4 err=0：205 个 @ohos 命名空间模块在模拟器全部可加载）。
+- 生成代码编译坑（逐个实证）：`.ts` 不能 import `.d.ets` 标识符（错误 10311005，@arkts.* 系列
+  声明在 ets/arkts/）；namespace 型 default 导出不能 `typeof`/类型位引用（Cannot use namespace
+  as a value/type）；catch 里 `(err as BusinessError).code).toString()` 对无 code 的普通
+  TypeError（如 JSON.stringify 遇 BigInt）二次崩溃，须用 `String(...)`；泛型类实例化/类型位
+  引用必须按声明元数补参（1 元 `<string>`，2 元 `<string, number>`）。
 
 ### ArkGuard 混淆（release 默认开启）
 

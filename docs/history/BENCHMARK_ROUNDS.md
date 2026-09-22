@@ -1285,3 +1285,39 @@ SecurityUIExtensionComponent 需专用宿主或系统能力——组件维度实
 manifest **184**（92+92）双向一致；twin_fp FAIL=0 / WARN=15；sync_pages OK；
 字符串门禁 207/207 + LITERALS OK；abc 探针全 HIT（令牌/库/同步标签常量）。
 
+
+## 极端大模块指令农场 feat_heavy 轮（2026-09-22）
+
+**目标达成（release 口径，api26）**：feat_heavy 单模块 **5,945,198 指令 / 59,332 函数**，
+占全 app 指令 93.3%（check_module_share gate OK）。目的：逆向工具链超大单 abc 输入压力样本
+（工具链实测：5.9M 指令 / 20.5MB modules.abc 完整解析 **17.98 分钟**跑完，NOT ANALYZED 无异常）。
+
+**生成器体系**：`tools/gen_heavy_farm.py`（规模旋钮文件头标定：BIZ_FILES=90 × BIZ_FUNCS=43 ×
+BIZ_STMTS=52，P0 实测 56.4k inst/file 线性标定）+ `tools/gen_heavy_catalog.py`（SDK d.ts →
+提交进仓的重型 API 目录，CI 无 SDK 可复现）。四原型：biz 纯计算业务函数 / api @ohos 零参
+调用包装 / kit 静态+动态 import / ui 组件业务组合 struct；farm/index.ts 懒注册表 + 抽样器；
+HeavyFarmPage 六按钮 smoke（heavy 前缀不进 sweep）。
+
+**覆盖副产物**：Kit 40→**103/103 满**；@ohos 直连 51→**363/447**（117 模块零参调用 +
+202 命名空间模块动态 import + class/type 静态引用）；组件 116/137 维持。指令覆盖 188/268
+维持（业务原型全走已覆盖普通指令面）。
+
+**FP 隔离闭环**：生成器读 manifest detection（62 call token + 120 常量）做生成黑名单 +
+排除 44 个 FA-only/规则信号/安全敏感模块；**评分在 5.9M 语料上复测 F1=1.000（FP=0）**。
+
+**编译实证坑（逐个踩掉）**：① `.ts` 不能 import `.d.ets` 标识符（10311005；@arkts.* 在
+ets/arkts/ 不在 ets/api/，dets 探测须覆盖两目录）；② FA-only API Stage 模型编译报错
+（`@famodelonly` 小写标签排除）；③ namespace 型 default 导出不能 `typeof`/类型位引用
+（这批 202 模块全部改走动态 import）；④ 泛型类引用必须按声明元数补参（TreeSet<T> 裸用
+报 TS2314）；⑤ kit 具名导出按 value_kinds 过滤（interface 名 typeof 崩）。
+
+**运行时坑（模拟器实证）**：① 60 个同步系统 API 包装在主线程全量抽样 → 主线程内核态
+阻塞 >6s → appfreeze THREAD_BLOCK_6S 被看门狗杀——改为 SAFE 白名单抽样（hilog/
+systemTime/i18n/hichecker）；② `hichecker.getRule()` 返回 BigInt，JSON.stringify 抛
+TypeError，catch 里 `.code.toString()` 对无 code 错误二次崩溃 jscrash——全部 catch 改
+`String((err as BusinessError).code)`。
+
+**门禁终态**：api26/api24 × release/debug 4 变体构建 OK；module_share gate OK；
+manifest 184 双向一致；twin_fp FAIL=0；sync_pages OK（feat_heavy 以页面单源登记）；
+生成器确定性（重生成 md5 一致）；opcode 188/268 维持；评分 F1=1.000；
+模拟器 bench26：HeavyFarmPage 六按钮 + UI 采样器（240 struct 切换 + Run 回连 biz）全通过。

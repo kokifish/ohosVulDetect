@@ -19,7 +19,7 @@ import subprocess
 import sys
 import tempfile
 
-MODULES = ["entry", "feat_api", "feat_vuln", "lib_shared"]
+MODULES = ["entry", "feat_api", "feat_vuln", "feat_heavy", "lib_shared"]
 PRODUCTS = ["api26", "api24"]
 # hvigor 强制要求名为 "default" 的 product 存在，default 即 api26
 PRODUCT_OF = {"api26": "default", "api24": "api24"}

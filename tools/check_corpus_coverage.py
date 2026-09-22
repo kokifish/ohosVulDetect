@@ -24,7 +24,7 @@ import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODULES = ['entry', 'feat_api', 'feat_vuln', 'lib_common', 'lib_shared']
+MODULES = ['entry', 'feat_api', 'feat_vuln', 'feat_heavy', 'lib_common', 'lib_shared']
 DEFAULT_SDK = os.environ.get(
     'DEVECO_SDK_HOME', '/Applications/DevEco-Studio.app/Contents/sdk')
 

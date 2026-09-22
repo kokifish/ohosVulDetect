@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "extreme large single-module instruction farm"
+    },
+    {
+      "name": "HeavyAbility_desc",
+      "value": "heavy farm"
+    },
+    {
+      "name": "HeavyAbility_label",
+      "value": "ovd-heavy"
+    }
+  ]
+}

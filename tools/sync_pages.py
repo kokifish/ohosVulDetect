@@ -20,12 +20,16 @@ ALLOWLIST = {
     # 经 session.loadContent 装载（EmbeddedComponent 提供方，无 DemoItem）。
     "feat_api": ["pages/Index", "pages/EmbeddedProviderPage"],
     "feat_vuln": ["pages/Index", "pages/Backdoor"],
+    # feat_heavy 无 DemoItem 体系：唯一页面 HeavyFarmPage 即注册单源（生成语料不进 sweep）。
+    "feat_heavy": ["pages/HeavyFarmPage"],
 }
 SOURCES = {
     "feat_api": ("feat_api/src/main/ets/model/ApiRegistry.ets",
                  "feat_api/src/main/resources/base/profile/main_pages.json"),
     "feat_vuln": ("feat_vuln/src/main/ets/pages/Index.ets",
                   "feat_vuln/src/main/resources/base/profile/main_pages.json"),
+    "feat_heavy": ("feat_heavy/src/main/ets/pages/HeavyFarmPage.ets",
+                   "feat_heavy/src/main/resources/base/profile/main_pages.json"),
 }
 
 

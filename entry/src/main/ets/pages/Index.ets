@@ -48,6 +48,9 @@ struct Index {
       Button('Vuln Challenges (feat_vuln)')
         .width('90%')
         .onClick(() => this.startFeature('VulnAbility'))
+      Button('Heavy Farm (feat_heavy)')
+        .width('90%')
+        .onClick(() => this.startFeature('HeavyAbility'))
     }
     .width('100%')
     .height('100%')

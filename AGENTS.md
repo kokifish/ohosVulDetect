@@ -28,8 +28,9 @@
 - entry（entry HAP 壳：Index 两按钮跨 HAP 拉起 feature）→ feat_api / feat_vuln（feature HAP，各编译独立 modules.abc）→ lib_common（HAR：DemoScaffold/Logger/DemoItem/Runner/Constants）→ lib_shared（HSP：静态/动态 import 目标）。
 - feat_api：路由页 pages/api、pages/ui、pages/lang（页清单 = main_pages.json 注册项 + ApiRegistry.ets DemoItem，sweep 按 id 前缀 api-/ui-/lang- 遍历）；受限特性（generator/for-in/Symbol 等，arkts-* 严格 lint 只查 .ets）放 pages/lang 下 .ts/.js（TsFeatures.ts、RuntimeHelpers.ts、WideForms*.ts、GlobalAssign.js）仍编译进同一 abc；concurrent/ 与 workers/ 为非页源码。
 - feat_vuln：vulns/ 分类源文件 + web/（NativeBridge）；分类页（Index.ets 内联 cat- 清单）+ Backdoor 页/Ability(exported, ovd://backdoor) + cpp libentry.so。
+- feat_heavy：极端大模块指令农场（生成语料，勿手改，改 tools/gen_heavy_farm.py 再重新生成）；仅 default（api26）产品；HeavyFarmPage 抽样 smoke，heavy- 前缀不进 sweep；份额门禁 check_module_share.py。
 - groundtruth/：manifest.json（漏洞+安全孪生清单的唯一事实源）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、check_string_stress.py（字符串应力语料操作数面 round-trip 门禁）、extract_ir_records.py（test.out 按 record 切分）。
-- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成）。
+- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成））；gen_heavy_farm.py（feat_heavy 指令农场，原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取）+ check_module_share.py（模块指令份额门禁）。
 - docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/不可达指令清单/部署坑 + 现行待办），改语料前先读，一切数字以此为准；35+ 轮语料演进的完整过程记录归档于 docs/history/BENCHMARK_ROUNDS.md（只增不改）。
 - docs/ohos.md = 鸿蒙能力全集调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）、指令可达性归因结论与打包形态机制专题；动态差距以 check_corpus_coverage.py 对账为准，语料扩展前先读。
 
@@ -45,6 +46,7 @@
 python3 build.py                        # 全量 4 变体：api26/api24 × release/debug（api26=SDK26 正式语料，api24=6.1.1(24) 旧模拟器兼容）
 python3 groundtruth/check_manifest.py   # groundtruth 双向一致，必须 OK
 python3 tools/check_twin_fp.py          # 孪生 FP 静态自检，必须 OK（FAIL=0）
+python3 tools/check_module_share.py     # feat_heavy ≥5M 指令 / ≈60k 函数（release 构建后）
 ```
 
 产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。

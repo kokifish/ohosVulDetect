@@ -1,0 +1,74 @@
+// UicompSet042.ets — feat_heavy 生成组件组合语料（勿手改）
+
+import { biz_0084_41 } from '../biz/Biz0084';
+import { biz_0085_42 } from '../biz/Biz0085';
+
+@Component
+export struct Uicomp0084 {
+  @State private idx: number = 87;
+  @State private log: string = 'idle';
+
+  private run(shift: number): void {
+    this.log = biz_0084_41(this.idx + shift, 'ui');
+  }
+
+  private rows(): string[] {
+    const out: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      out.push('row ' + ((this.idx + i) % 50).toString());
+    }
+    return out;
+  }
+
+  build() {
+    Column({ space: 8 }) {
+      Text('Panel 84').fontSize(16).fontWeight(FontWeight.Medium)
+      Text(this.log).fontSize(12).fontColor('#336699')
+      Button('Run ' + this.idx.toString()).onClick(() => this.run(1))
+      Row({ space: 6 }) {
+        Text('A').fontColor('#2288CC')
+        Blank()
+        Text('B').fontColor('#CC8822')
+      }.width('92%')
+      Progress({ value: this.idx % 100, total: 100 })
+      LoadingProgress().width(32).height(32)
+    }
+    .padding(12)
+    .width('100%')
+  }
+}
+
+@Component
+export struct Uicomp0085 {
+  @State private idx: number = 88;
+  @State private log: string = 'idle';
+
+  private run(shift: number): void {
+    this.log = biz_0085_42(this.idx + shift, 'ui');
+  }
+
+  private rows(): string[] {
+    const out: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      out.push('row ' + ((this.idx + i) % 50).toString());
+    }
+    return out;
+  }
+
+  build() {
+    Column({ space: 8 }) {
+      Text('Panel 85').fontSize(16).fontWeight(FontWeight.Medium)
+      Text(this.log).fontSize(12).fontColor('#336699')
+      Button('Run ' + this.idx.toString()).onClick(() => this.run(1))
+      Stack({ alignContent: Alignment.Center }) {
+        Text('stacked').fontColor('#557799')
+      }.height(40)
+      Toggle({ type: ToggleType.Checkbox, isOn: true })
+      Divider().strokeWidth(1).color('#DDDDDD')
+      Image($r('app.media.startIcon')).width(28).height(28)
+    }
+    .padding(12)
+    .width('100%')
+  }
+}
+

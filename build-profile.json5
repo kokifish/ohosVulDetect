@@ -82,6 +82,18 @@
       ]
     },
     {
+      "name": "feat_heavy",
+      "srcPath": "./feat_heavy",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
       "name": "lib_common",
       "srcPath": "./lib_common",
       "targets": [
