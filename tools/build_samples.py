@@ -2,9 +2,11 @@
 """样本矩阵构建器：用 gen_heavy_farm.py 的环境变量旋钮产出三档指令压力梯度的
 api26-release .app 到 build/samples/，供父项目按档位选样本。
 
-  small  — 极小农场（biz=1 / UI=24 / API cap=2）：单模块份额 ~30% 档
-  medium — 定点 40–50% 单模块份额档（biz=1，全量 api/kit/ui 固定面）
-  heavy  — 极端档（默认提交规模，≥5M 指令 / ≈60k 函数，~93%）
+  small  — 极小农场（biz=1 文件 43 函数 / UI=24 / API cap=2）：单模块份额 ~20% 档
+  medium — 定点 ~40% 单模块份额档（biz=1 文件 43 函数，全量 api/kit/ui 固定面）
+  heavy  — 极端档（默认提交规模：单 record 巨模块，≥5M 指令 / ≈60k 函数，~93%）
+
+小档必须 pin OVD_HEAVY_BIZ_FUNCS：默认已是 3870（单 record 巨模块），不 pin 会继承成 heavy 规模。
 
 流程：设环境变量重生成 farm → 构建 api26-release → 收集副本 → 还原默认 farm。
 结束后工作区与进入前一致（farm 以默认参数重生成）。构建走 build.py（含 ohpm/hvigor）。
@@ -22,8 +24,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
 PROFILES: dict[str, dict[str, str] | None] = {
-    "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
-    "medium": {"OVD_HEAVY_BIZ_FILES": "1"},
+    "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
+              "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
+    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43"},
     "heavy": None,
 }
 

@@ -29,8 +29,11 @@ MANIFEST = ROOT / 'groundtruth' / 'manifest.json'
 # ---- 规模旋钮（指令密度实测标定，目标 release ≥5M 指令 / ~60k 函数）----
 # 环境变量可覆盖（OVD_HEAVY_*，供 tools/build_samples.py 产出样本矩阵）；
 # 默认值即提交语料的规模，CI 确定性门禁在无环境变量下运行。
-BIZ_FILES = int(os.environ.get('OVD_HEAVY_BIZ_FILES', '90'))
-BIZ_FUNCS = int(os.environ.get('OVD_HEAVY_BIZ_FUNCS', '43'))
+# 默认 BIZ_FILES=1：全部 biz 指令集中进单一编译单元（record），即「极端大单模块」
+# 语义在 record 级成立（BIZ_FUNCS=3870=43×90，es2abc 单文件 19MB 实测可编译，
+# 峰值 ~1.3GB）；BIZ_FILES>1 用于样本档拆分。
+BIZ_FILES = int(os.environ.get('OVD_HEAVY_BIZ_FILES', '1'))
+BIZ_FUNCS = int(os.environ.get('OVD_HEAVY_BIZ_FUNCS', '3870'))
 BIZ_STMTS = int(os.environ.get('OVD_HEAVY_BIZ_STMTS', '52'))
 BIZ_ASYNC_EVERY = 10     # 每 N 个函数产 1 个 async 孪生
 API_FNS_CAP = int(os.environ.get('OVD_HEAVY_API_CAP', '8'))

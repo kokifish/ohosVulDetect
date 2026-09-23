@@ -1,7 +1,7 @@
 // UicompSet091.ets — feat_heavy 生成组件组合语料（勿手改）
 
-import { biz_0002_10 } from '../biz/Biz0002';
-import { biz_0003_11 } from '../biz/Biz0003';
+import { biz_0000_182 } from '../biz/Biz0000';
+import { biz_0000_183 } from '../biz/Biz0000';
 
 @Component
 export struct Uicomp0182 {
@@ -9,7 +9,7 @@ export struct Uicomp0182 {
   @State private log: string = 'idle';
 
   private run(shift: number): void {
-    this.log = biz_0002_10(this.idx + shift, 'ui');
+    this.log = biz_0000_182(this.idx + shift, 'ui');
   }
 
   private rows(): string[] {
@@ -46,7 +46,7 @@ export struct Uicomp0183 {
   @State private log: string = 'idle';
 
   private run(shift: number): void {
-    this.log = biz_0003_11(this.idx + shift, 'ui');
+    this.log = biz_0000_183(this.idx + shift, 'ui');
   }
 
   private rows(): string[] {

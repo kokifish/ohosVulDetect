@@ -45,10 +45,12 @@ PRODUCT_OF = {"api26": "default", "api24": "api24"}
 BUILD_OUT = ROOT / "build" / "out"
 SAMPLES_DIR = ROOT / "build" / "samples"
 
-# 三档样本的 farm 规模旋钮（heavy=None 即默认规模）；详见 tools/gen_component_api_farm.py
+# 三档样本的 farm 规模旋钮（heavy=None 即默认规模=单 record 巨模块）；详见 tools/build_samples.py。
+# small/medium 为单文件小农场：须同时 pin BIZ_FUNCS，否则会继承默认 3870 变成 heavy 规模
 TIER_ENVS = {
-    "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
-    "medium": {"OVD_HEAVY_BIZ_FILES": "1"},
+    "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
+              "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
+    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43"},
     "heavy": None,
 }
 

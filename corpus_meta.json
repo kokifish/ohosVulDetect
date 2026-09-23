@@ -22,45 +22,45 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 11845636,
+   "app_bytes": 11818176,
    "app_file": "build/samples/ohosVulDetect-sample-heavy.app",
    "bundle": "com.koki.VD",
    "modules": [
     {
-     "abc_bytes": 22636500,
-     "bytes": 22753249,
-     "functions": 59329,
-     "inst_share": 0.9304,
-     "instructions": 5946045,
+     "abc_bytes": 23364248,
+     "bytes": 23480997,
+     "functions": 58689,
+     "inst_share": 0.9302,
+     "instructions": 5929967,
      "name": "feat_heavy",
      "records": {
-      "count": 225,
+      "count": 136,
       "top1": {
-       "functions": 590,
-       "instructions": 65082,
-       "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+       "functions": 50062,
+       "instructions": 5706092,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
       },
-      "top1_share": 0.0109,
+      "top1_share": 0.9622,
       "top5": [
        {
-        "instructions": 65082,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+        "instructions": 5706092,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
        },
        {
-        "instructions": 64939,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0083"
+        "instructions": 17531,
+        "name": "feat_heavy.src.main.ets.farm.ui.UiStage"
        },
        {
-        "instructions": 64726,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0080"
+        "instructions": 14767,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.OvwDyn"
        },
        {
-        "instructions": 64710,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0011"
+        "instructions": 10231,
+        "name": "feat_heavy.src.main.ets.farm.kitwrap.KtwDyn"
        },
        {
-        "instructions": 64481,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0051"
+        "instructions": 2695,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.Ovw03"
        }
       ]
      },
@@ -70,7 +70,7 @@
      "abc_bytes": 1985608,
      "bytes": 2108860,
      "functions": 3399,
-     "inst_share": 0.0613,
+     "inst_share": 0.0615,
      "instructions": 391821,
      "name": "feat_api",
      "type": "feature"
@@ -113,10 +113,10 @@
     }
    ],
    "same_build_as": "api26-release",
-   "total_functions": 65066,
-   "total_instructions": 6390942,
-   "zip_raw_bytes": 27094589,
-   "zip_stored_bytes": 11844622
+   "total_functions": 64426,
+   "total_instructions": 6374864,
+   "zip_raw_bytes": 27822337,
+   "zip_stored_bytes": 11817162
   },
   "medium": {
    "api_version": {
@@ -124,7 +124,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2200557,
+   "app_bytes": 2200552,
    "app_file": "build/samples/ohosVulDetect-sample-medium.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -217,7 +217,7 @@
    "total_functions": 14940,
    "total_instructions": 732464,
    "zip_raw_bytes": 5975461,
-   "zip_stored_bytes": 2199543
+   "zip_stored_bytes": 2199538
   },
   "small": {
    "api_version": {
@@ -225,7 +225,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2044294,
+   "app_bytes": 2044297,
    "app_file": "build/samples/ohosVulDetect-sample-small.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -318,7 +318,7 @@
    "total_functions": 7754,
    "total_instructions": 564650,
    "zip_raw_bytes": 5051521,
-   "zip_stored_bytes": 2043280
+   "zip_stored_bytes": 2043283
   }
  },
  "schema_version": "1.0",
@@ -389,7 +389,7 @@
     "release_type": "Beta2",
     "target": 24
    },
-   "app_bytes": 1605723,
+   "app_bytes": 1605725,
    "app_file": "build/out/ohosVulDetect-api24-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -433,7 +433,7 @@
    "total_functions": 5011,
    "total_instructions": 434117,
    "zip_raw_bytes": 4145276,
-   "zip_stored_bytes": 1604987
+   "zip_stored_bytes": 1604989
   },
   "api26-debug": {
    "api_version": {
@@ -441,16 +441,16 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 86730072,
+   "app_bytes": 86948766,
    "app_file": "build/out/ohosVulDetect-api26-debug-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
     {
-     "abc_bytes": 43477656,
-     "bytes": 79390706,
-     "functions": 59329,
-     "inst_share": 0.9377,
-     "instructions": 7548889,
+     "abc_bytes": 43877532,
+     "bytes": 79609400,
+     "functions": 58689,
+     "inst_share": 0.9376,
+     "instructions": 7527201,
      "name": "feat_heavy",
      "type": "feature"
     },
@@ -458,7 +458,7 @@
      "abc_bytes": 2915676,
      "bytes": 4564500,
      "functions": 3399,
-     "inst_share": 0.0533,
+     "inst_share": 0.0534,
      "instructions": 428799,
      "name": "feat_api",
      "type": "feature"
@@ -500,10 +500,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 65066,
-   "total_instructions": 8050101,
-   "zip_raw_bytes": 86729154,
-   "zip_stored_bytes": 86729154
+   "total_functions": 64426,
+   "total_instructions": 8028413,
+   "zip_raw_bytes": 86947848,
+   "zip_stored_bytes": 86947848
   },
   "api26-release": {
    "api_version": {
@@ -511,45 +511,45 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 11845636,
+   "app_bytes": 11818176,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
     {
-     "abc_bytes": 22636500,
-     "bytes": 22753249,
-     "functions": 59329,
-     "inst_share": 0.9304,
-     "instructions": 5946045,
+     "abc_bytes": 23364248,
+     "bytes": 23480997,
+     "functions": 58689,
+     "inst_share": 0.9302,
+     "instructions": 5929967,
      "name": "feat_heavy",
      "records": {
-      "count": 225,
+      "count": 136,
       "top1": {
-       "functions": 590,
-       "instructions": 65082,
-       "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+       "functions": 50062,
+       "instructions": 5706092,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
       },
-      "top1_share": 0.0109,
+      "top1_share": 0.9622,
       "top5": [
        {
-        "instructions": 65082,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+        "instructions": 5706092,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
        },
        {
-        "instructions": 64939,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0083"
+        "instructions": 17531,
+        "name": "feat_heavy.src.main.ets.farm.ui.UiStage"
        },
        {
-        "instructions": 64726,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0080"
+        "instructions": 14767,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.OvwDyn"
        },
        {
-        "instructions": 64710,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0011"
+        "instructions": 10231,
+        "name": "feat_heavy.src.main.ets.farm.kitwrap.KtwDyn"
        },
        {
-        "instructions": 64481,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0051"
+        "instructions": 2695,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.Ovw03"
        }
       ]
      },
@@ -559,7 +559,7 @@
      "abc_bytes": 1985608,
      "bytes": 2108860,
      "functions": 3399,
-     "inst_share": 0.0613,
+     "inst_share": 0.0615,
      "instructions": 391821,
      "name": "feat_api",
      "type": "feature"
@@ -601,10 +601,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 65066,
-   "total_instructions": 6390942,
-   "zip_raw_bytes": 27094589,
-   "zip_stored_bytes": 11844622
+   "total_functions": 64426,
+   "total_instructions": 6374864,
+   "zip_raw_bytes": 27822337,
+   "zip_stored_bytes": 11817162
   }
  }
 }

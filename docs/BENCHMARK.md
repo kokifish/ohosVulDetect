@@ -2,14 +2,14 @@
 
 多模块 HarmonyOS 基准应用：① 广覆盖 API/ArkUI/语言特性，作为逆向工具反编译准确性语料；
 ② 预埋带标签漏洞 + 安全孪生（groundtruth/manifest.json），作为检测基准；
-③ feat_heavy 极端大单模块指令农场，作为超大 abc 输入压力样本。
+③ feat_heavy 极端大单模块指令农场（biz 指令集中于单一 record，record 级不均衡样本），作为超大 abc 输入压力样本。
 
 ## 当前基线速查（数字随语料演进，一律以本表与脚本实测为准）
 
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 217/268（patch 注入 +29 见「patch abc 注入语料」节；其余 51 条归因见 docs/ohos.md §5.1） | check_opcode_coverage.py |
-| 模块指令份额 | feat_heavy 5,945,198 指令 / 59,332 函数（release 口径，占全 app 93.3%；目标 ≥5M / ≈60k） | check_module_share.py |
+| 模块指令份额 | feat_heavy 5,929,967 指令 / 58,689 函数（release 口径，占全 app 93.0%；目标 ≥5M / ≈55k）；biz 集中单 record：Biz0000 5,706,092 指令 = 96.2%（record 分布见 corpus_meta.json） | check_module_share.py + gen_corpus_meta.py |
 | 语料画像（机器可读） | 各变体模块构成/指令·函数/份额、feat_heavy record 级分布、压缩画像；外部消费者入口 README.md → corpus_meta.json | gen_corpus_meta.py --check |
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
@@ -32,7 +32,7 @@
 | entry | entry HAP | 壳：拉起三个 feature（跨 HAP startAbility） |
 | feat_api | feature HAP | 良性语料路由页 82（api 53 / ui 22 / lang 7 + Index + EmbeddedProviderPage，见基线速查表） |
 | feat_vuln | feature HAP | 漏洞分类页（cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
-| feat_heavy | feature HAP（仅 default 产品） | 极端大模块指令农场：≥5M 指令 / ≈60k 函数（生成语料，勿手改），HeavyFarmPage 抽样 smoke，不进 sweep |
+| feat_heavy | feature HAP（仅 default 产品） | 极端大单 record 指令农场：≥5M 指令 / ≈60k 函数，biz 集中单一编译单元（生成语料，勿手改），HeavyFarmPage 抽样 smoke，不进 sweep |
 | feat_compfarm | feature HAP（仅 default 产品） | 组件 API 缺口补齐农场（生成语料，勿手改），ComponentApiFarmPage 选择渲染，compfarm- 前缀不进 sweep |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
@@ -94,7 +94,13 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
 
 极端大单模块压力样本（逆向工具链超大 abc 输入用）：**≥500 万指令 / ≈6 万函数（release 口径）**，
 占全 app 指令 93%。仅进 default（api26）产品（`targets.applyToProducts`），api24 旧模拟器构建不含。
-实测：5.9M 指令 / 20.5MB modules.abc，逆向工具链可完整解析（分钟级），应用安装/启动/抽样正常。
+**「单模块」在 record（编译单元）级成立**：默认 `BIZ_FILES=1 / BIZ_FUNCS=3870`（=43×90），全部 biz
+指令集中于单一 record——实测 Biz0000 5,706,092 指令 = feat_heavy 的 96.2%（全 abc 136 record，
+旧 90 文件形态 top1 仅 1.1%）；es2abc 单文件 19MB / 47.8 万行实测可编译（峰值 ~1.3GB）。
+`BIZ_FILES>1` 为样本档拆分旋钮，small/medium 档 pin 43 函数/文件（档位画像见 corpus_meta.json
+sample_tiers）。实测：5.93M 指令 / 23.4MB modules.abc，逆向工具链可完整解析（分钟级）；
+运行时安装/启动/抽样在旧 90 文件形态实测正常，单 record 形态待 API26 模拟器镜像恢复后复测
+（当前模拟器镜像目录无 API26 镜像，环境性受限）。
 
 - 生成器：`tools/gen_heavy_farm.py`（规模旋钮在文件头，按指令密度实测标定，勿手改生成物）。原料
   `tools/heavy_api_catalog.json` 由 `tools/gen_heavy_catalog.py` 从本地 SDK d.ts 提取
