@@ -82,6 +82,7 @@
     "pages/ui/Ark26SlotDemo",
     "pages/api/OhosDirect4Demo",
     "pages/ui/Ark26EmbedDemo",
-    "pages/EmbeddedProviderPage"
+    "pages/EmbeddedProviderPage",
+    "pages/api/SecurityBaitDemo"
   ]
 }

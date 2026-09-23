@@ -81,3 +81,21 @@ export async function ovdCrypto007S(): Promise<string> {
   const out = await cipher.doFinal({ data: new Uint8Array([4, 5, 6]) });
   return `gcm random-nonce ct-len=${out.data.length}`;
 }
+
+// SAFE: OVD-CRYPTO-008S SHA256 + 随机盐派生（无盐 MD5 当密钥的加固）。
+export function ovdCrypto008S(password: string): string {
+  const salt: cryptoFramework.DataBlob = cryptoFramework.createRandom().generateRandomSync(16);
+  const md: cryptoFramework.Md = cryptoFramework.createMd('SHA256');
+  const bytes = new Uint8Array(salt.data.length + password.length);
+  bytes.set(salt.data, 0);
+  for (let i = 0; i < password.length; i += 1) {
+    bytes[salt.data.length + i] = password.charCodeAt(i);
+  }
+  md.updateSync({ data: bytes });
+  const digest: cryptoFramework.DataBlob = md.digestSync();
+  let hex = '';
+  for (const b of digest.data) {
+    hex += b.toString(16).padStart(2, '0');
+  }
+  return `kdfS salted-sha256 key=${hex.slice(0, 16)}`;
+}

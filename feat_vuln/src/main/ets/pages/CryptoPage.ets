@@ -1,5 +1,5 @@
 import { Case, DemoScaffold } from 'lib_common';
-import { ovdCrypto002S, ovdCrypto003S, ovdCrypto004S, ovdCrypto005S, ovdCrypto006S, ovdCrypto007S } from '../vulns/crypto/Twins';
+import { ovdCrypto002S, ovdCrypto003S, ovdCrypto004S, ovdCrypto005S, ovdCrypto006S, ovdCrypto007S, ovdCrypto008S } from '../vulns/crypto/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdCrypto001 } from '../vulns/crypto/OVD-CRYPTO-001';
 import { ovdCrypto001S } from '../vulns/crypto/Twins';
@@ -9,6 +9,7 @@ import { ovdCrypto004 } from '../vulns/crypto/OVD-CRYPTO-004';
 import { ovdCrypto005 } from '../vulns/crypto/OVD-CRYPTO-005';
 import { ovdCrypto006 } from '../vulns/crypto/OVD-CRYPTO-006';
 import { ovdCrypto007 } from '../vulns/crypto/OVD-CRYPTO-007';
+import { ovdCrypto008 } from '../vulns/crypto/OVD-CRYPTO-008';
 
 @Entry
 @Component
@@ -31,7 +32,9 @@ struct CryptoPage {
           new Case('004S gcm-randiv', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto004S()),
           new Case('005S huks-gen', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto005S()),
           new Case('006S rsa3072', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto006S()),
-          new Case('007S gcm-randnonce', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto007S())
+          new Case('007S gcm-randnonce', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto007S()),
+          new Case('008 weak-kdf', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto008('bench-pass')),
+          new Case('008S salted-kdf', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdCrypto008S('bench-pass'))
         ]
       })
 

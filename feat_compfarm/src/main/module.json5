@@ -1,0 +1,26 @@
+{
+  "module": {
+    "name": "feat_compfarm",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "CompFarmAbility",
+    "deviceTypes": [
+      "phone"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "CompFarmAbility",
+        "srcEntry": "./ets/entryability/CompFarmAbility.ets",
+        "description": "$string:CompFarmAbility_desc",
+        "icon": "$media:startIcon",
+        "label": "$string:CompFarmAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": false
+      }
+    ]
+  }
+}

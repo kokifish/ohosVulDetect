@@ -8,15 +8,17 @@
 
 | 维度 | 基线 | 事实源 |
 |---|---|---|
-| 指令覆盖 | 188/268（未用 80 条全归因，见 docs/ohos.md §5.1） | check_opcode_coverage.py |
+| 指令覆盖 | 217/268（patch 注入 +29 见「patch abc 注入语料」节；其余 51 条归因见 docs/ohos.md §5.1） | check_opcode_coverage.py |
 | 模块指令份额 | feat_heavy 5,945,198 指令 / 59,332 函数（release 口径，占全 app 93.3%；目标 ≥5M / ≈60k） | check_module_share.py |
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 363/447（feat_api 直连四批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；44 个 FA-only/规则信号/安全敏感模块排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 92 + 92（manifest 184 条，双向一致；含跨模块 XMOD 4 对） | groundtruth/manifest.json |
-| 评分 | F1=1.000（92 对口径，TP=92 FN=0 FP=0 TN=92；在 5.9M 指令语料上复测不变） | score_output.py |
-| feat_api 路由页 | 82（api 53 / ui 22 / lang 7 + Index，含提供方页 1） | main_pages.json |
+| 漏洞/孪生 | 97 + 97（manifest 194 条，双向一致；含跨模块 XMOD 4 对、interproc 污点链 1 对） | groundtruth/manifest.json |
+| 评分 | F1=1.000（97 对口径 TP=97 FN=0 FP=0 TN=97，6.1M 指令语料实测） | score_output.py |
+| feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
+| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 8 文件 / 48 组件 / 192 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
+| 组件内 API | 566/1296（43.7%，feat_compfarm 农场补齐 + options 字面量/枚举默认值生成；66 个组件无法安全自动生成已排除归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
 
@@ -30,6 +32,7 @@
 | feat_api | feature HAP | 良性语料路由页 82（api 53 / ui 22 / lang 7 + Index + EmbeddedProviderPage，见基线速查表） |
 | feat_vuln | feature HAP | 漏洞分类页（cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | feat_heavy | feature HAP（仅 default 产品） | 极端大模块指令农场：≥5M 指令 / ≈60k 函数（生成语料，勿手改），HeavyFarmPage 抽样 smoke，不进 sweep |
+| feat_compfarm | feature HAP（仅 default 产品） | 组件 API 缺口补齐农场（生成语料，勿手改），ComponentApiFarmPage 选择渲染，compfarm- 前缀不进 sweep |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
 
@@ -126,6 +129,8 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
   26.0.0 Release（SDK 26.0.0.105）——按 AGENTS 优先级，升级是**待办决策项**（当前明确暂缓，
   语料增量在 Beta2 推进）。升级后必须重跑：全量构建 + 覆盖率归因（es2abc 行为差异可能增减
   指令，变化须归因）+ sweep 回归 + 评分复测。
+- HSP 内 UIAbility（API14+ 形态）：编译/安装通过；API24 模拟器上应用内 startAbility
+  拉起后立即回桌面（启动链路未通，疑似镜像侧限制），待 API26 镜像恢复后复验；
 - `backgroundModes` 已从 module.json5 schema 移除（SDK 26），后台任务 demo 运行时 401；
 - DataShareExtensionAbility 在 26.0.0 Beta SDK 未公开，IPC-003 为 TCP 后门无认证用例。
 - SDK 26 API 面变化清单（本项目适配记录）：CoreFileKit 导出 `fileIo`（非 fs）、`rcp.createSession`
@@ -153,6 +158,17 @@ lang 页覆盖 generator、词法环境、私有字段、super 形态等大量�
   会被 tree-shake，新文件必须接入页面。
 - 词法环境 wide 压力三条件：① 单一作用域 >127 个被捕获变量（仅声明不捕获不占槽位）；
   ② 值从参数派生（防折叠）；③ 箭头经数组/循环间接调用（防内联）。
+
+### patch abc 注入语料（手造指令面）
+
+「es2abc 不发射、但真实野生产物存在、工具必须支持」的指令（裸 isfalse/istrue、比较跳转族、
+ldthis 族、definefieldbyname、closeiterator、createregexpwithliteral 等）经
+`tools/gen_patch_abc.py` 以二进制改写方式注入 29 个独立 abc（`feat_vuln rawfile/patch_cooked_*.abc`）：
+es2abc(script 模式) 编译内嵌探针 → 按 isa.yaml 自算的目标指令编码定点改写字节
+（ark_disasm 实测不校验校验和）→ 逐文件反汇编终验。样本运行期不执行，仅作为解析面；
+每目标独立 abc，避免多改写在同一指令流上相互去同步。前缀形态（deprecated.*、
+wide.ldpatchvar/stpatchvar、throw.*）的 yaml 编码规则待续补。
+`gen_heavy_farm.py`/`gen_string_stress.py` 等生成器的 FP 黑名单会自动吸收 manifest 新增规则。
 
 ### Sendable 指令覆盖实验室
 

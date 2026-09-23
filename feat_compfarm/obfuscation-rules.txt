@@ -1,0 +1,7 @@
+# feat_heavy 混淆规则：与其余 feature 模块保持一致（property+toplevel 开，
+# filename/export 关——见 BENCHMARK.md 已知的跨包崩溃归因）。
+
+-enable-property-obfuscation
+-enable-toplevel-obfuscation
+# -enable-filename-obfuscation  # 实测导致跨包(HAP/HSP)模块加载 SyntaxError 崩溃，默认关闭
+# -enable-export-obfuscation  # 实测 HSP 跨包导出名解析失败(SyntaxError: 'b1')，默认关闭

@@ -28,6 +28,8 @@
     "pages/NotifyVulnPage",
     "pages/IredVulnPage",
     "pages/PwdinVulnPage",
-    "pages/DkvVulnPage"
+    "pages/DkvVulnPage",
+    "pages/MiccVulnPage",
+    "pages/TaintVulnPage"
   ]
 }

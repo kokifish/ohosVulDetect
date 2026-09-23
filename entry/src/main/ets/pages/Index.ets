@@ -51,6 +51,12 @@ struct Index {
       Button('Heavy Farm (feat_heavy)')
         .width('90%')
         .onClick(() => this.startFeature('HeavyAbility'))
+      Button('Shared Ability (lib_shared)')
+        .width('90%')
+        .onClick(() => this.startFeature('OvdSharedAbility'))
+      Button('Component API Farm (feat_compfarm)')
+        .width('90%')
+        .onClick(() => this.startFeature('CompFarmAbility'))
     }
     .width('100%')
     .height('100%')

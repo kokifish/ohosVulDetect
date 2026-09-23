@@ -1,0 +1,12 @@
+{
+  "string": [
+    {
+      "name": "OvdSharedAbility_desc",
+      "value": "shared HSP ability form corpus"
+    },
+    {
+      "name": "OvdSharedAbility_label",
+      "value": "ovd-shared"
+    }
+  ]
+}

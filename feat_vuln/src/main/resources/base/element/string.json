@@ -23,6 +23,10 @@
     {
       "name": "perm_location_reason",
       "value": "benchmark location demo"
+    }    ,
+    {
+      "name": "ovd_res_api_key",
+      "value": "rsec_k3y_ovd_a77b9c2e"
     }
   ]
 }

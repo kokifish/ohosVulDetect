@@ -826,7 +826,7 @@
     },
     {
       "id": "OVD-PERM-001",
-      "title": "CAMERA/MICROPHONE declared but never used",
+      "title": "CAMERA declared but never used (mic capture moved to OVD-MICC-001)",
       "category": "permission-misuse",
       "cwe": "CWE-732",
       "module": "feat_vuln",
@@ -1193,6 +1193,46 @@
       }
     },
     {
+      "id": "OVD-RSEC-001",
+      "title": "secret value stored in string.json/rawfile, read via resourceManager",
+      "category": "hardcoded-secret",
+      "cwe": "CWE-798",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ressec/OVD-RSEC-001.ets",
+      "function": "ovdRsec001",
+      "expected": true,
+      "twin": "OVD-RSEC-001S",
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "resourceManager",
+          "getStringByNameSync"
+        ],
+        "constants": [
+          "ovd_res_api_key"
+        ]
+      },
+      "resource_values": [
+        "rsec_k3y_ovd_a77b9c2e",
+        "rsec_raw_k3y_ovd_c31d08f4"
+      ]
+    },
+    {
+      "id": "OVD-RSEC-001S",
+      "title": "twin: 密钥运行时注入、零资源读取 (OVD-RSEC-001)",
+      "category": "hardcoded-secret",
+      "cwe": "CWE-798",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/ressec/Twins.ets",
+      "function": "ovdRsec001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-RSEC-001"
+    },
+    {
       "id": "OVD-CRYPTO-002S",
       "title": "twin: SHA-256+盐 (OVD-CRYPTO-002)",
       "category": "weak-crypto",
@@ -1280,6 +1320,42 @@
       "detection": {
         "type": "safe-twin",
         "constants": []
+      }
+    },
+    {
+      "id": "OVD-CRYPTO-008S",
+      "title": "twin: SHA256+随机盐派生 (OVD-CRYPTO-008)",
+      "category": "weak-crypto",
+      "cwe": "CWE-916",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/crypto/Twins.ets",
+      "function": "ovdCrypto008S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-CRYPTO-008"
+    },
+    {
+      "id": "OVD-CRYPTO-008",
+      "title": "unsalted MD5 digest used directly as key material",
+      "category": "weak-crypto",
+      "cwe": "CWE-916",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/crypto/OVD-CRYPTO-008.ets",
+      "function": "ovdCrypto008",
+      "expected": true,
+      "twin": "OVD-CRYPTO-008S",
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "cryptoFramework",
+          "createMd"
+        ],
+        "constants": [
+          "ovd-kdf-unsalted-md5"
+        ]
       }
     },
     {
@@ -2051,6 +2127,84 @@
       }
     },
     {
+      "id": "OVD-WEB-008S",
+      "title": "twin: 无条件显式关闭调试 (OVD-WEB-008)",
+      "category": "webview",
+      "cwe": "CWE-489",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/web/OVD-WEB-008S.ets",
+      "function": "ovdWeb008S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-WEB-008"
+    },
+    {
+      "id": "OVD-WEB-008",
+      "title": "web debug enabled unless hardcoded build tag matches (inverted gate)",
+      "category": "webview",
+      "cwe": "CWE-489",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/web/OVD-WEB-008.ets",
+      "function": "ovdWeb008",
+      "expected": true,
+      "twin": "OVD-WEB-008S",
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "setWebDebuggingAccess"
+        ],
+        "constants": [
+          "ovd-release-tag-4c2e"
+        ]
+      }
+    },
+    {
+      "id": "OVD-TNT-001",
+      "title": "token constant in source fn flows to http sink in another fn (interproc)",
+      "category": "taint-chain",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-001.ets",
+      "function": "ovdTntSink",
+      "expected": true,
+      "twin": "OVD-TNT-001S",
+      "detection": {
+        "type": "interproc-chain",
+        "hops": [
+          {
+            "function": "ovdTntSource",
+            "constants": [
+              "tnt_tok_ovd_e5a91b7f"
+            ]
+          },
+          {
+            "function": "ovdTntSink",
+            "call": [
+              "request"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "OVD-TNT-001S",
+      "title": "twin: 聚合值跨函数链，无令牌 (OVD-TNT-001)",
+      "category": "taint-chain",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+      "function": "ovdTntSink",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-TNT-001"
+    },
+    {
       "id": "OVD-PASTE-003S",
       "title": "twin: 敏感数据拒绝跨设备",
       "category": "pasteboard-misuse",
@@ -2808,6 +2962,42 @@
         ]
       },
       "twin_of": "OVD-BGTASK-001"
+    },
+    {
+      "id": "OVD-MICC-001",
+      "title": "microphone capture started without user gesture or indicator",
+      "category": "silent-capture",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/micc/OVD-MICC-001.ets",
+      "function": "ovdMicc001",
+      "expected": true,
+      "twin": "OVD-MICC-001S",
+      "detection": {
+        "type": "api-call+constant",
+        "call": [
+          "audio",
+          "createAudioCapturer"
+        ],
+        "constants": [
+          "ovd-mic-capture-9d41"
+        ]
+      }
+    },
+    {
+      "id": "OVD-MICC-001S",
+      "title": "twin: 无采集路径，仅本地摘要 (OVD-MICC-001)",
+      "category": "silent-capture",
+      "cwe": "CWE-200",
+      "module": "feat_vuln",
+      "source": "feat_vuln/src/main/ets/vulns/micc/Twins.ets",
+      "function": "ovdMicc001S",
+      "expected": false,
+      "detection": {
+        "type": "safe-twin",
+        "constants": []
+      },
+      "twin_of": "OVD-MICC-001"
     },
     {
       "id": "OVD-DLINK-001",

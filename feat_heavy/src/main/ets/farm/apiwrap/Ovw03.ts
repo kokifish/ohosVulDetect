@@ -345,92 +345,104 @@ export function ovw_intelligentScene_00(seed: number): string {
   }
   return out;
 }
-import ovw0016 from '@ohos.multimedia.audio';
-
-export function ovw_multimedia_audio_00(seed: number): string {
-  let out: string = 'val|multimedia.audio|' + ((seed * 7 + 3724) % 9973).toString();
-  try {
-    out += '|getAudioManager=' + JSON.stringify(ovw0016.getAudioManager());
-  } catch (err) {
-    out += '|!e' + String((err as BusinessError).code);
-  }
-  return out;
-}
-import ovw0017 from '@ohos.multimedia.audioHaptic';
-
-export function ovw_multimedia_audioHaptic_00(seed: number): string {
-  let out: string = 'val|multimedia.audioHaptic|' + ((seed * 7 + 3725) % 9973).toString();
-  try {
-    out += '|getAudioHapticManager=' + JSON.stringify(ovw0017.getAudioHapticManager());
-  } catch (err) {
-    out += '|!e' + String((err as BusinessError).code);
-  }
-  return out;
-}
-import ovw0018 from '@ohos.multimedia.avsession';
+import ovw0016 from '@ohos.multimedia.avsession';
 
 export function ovw_multimedia_avsession_00(seed: number): string {
-  let out: string = 'val|multimedia.avsession|' + ((seed * 7 + 3726) % 9973).toString();
+  let out: string = 'val|multimedia.avsession|' + ((seed * 7 + 3724) % 9973).toString();
   try {
-    out += '|getAllSessionDescriptors=' + JSON.stringify(ovw0018.getAllSessionDescriptors());
-    out += '|isDesktopLyricSupported=' + JSON.stringify(ovw0018.isDesktopLyricSupported());
+    out += '|getAllSessionDescriptors=' + JSON.stringify(ovw0016.getAllSessionDescriptors());
+    out += '|isDesktopLyricSupported=' + JSON.stringify(ovw0016.isDesktopLyricSupported());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
   return out;
 }
-import ovw0019 from '@ohos.multimedia.drm';
+import ovw0017 from '@ohos.multimedia.drm';
 
 export function ovw_multimedia_drm_00(seed: number): string {
-  let out: string = 'val|multimedia.drm|' + ((seed * 7 + 3727) % 9973).toString();
+  let out: string = 'val|multimedia.drm|' + ((seed * 7 + 3725) % 9973).toString();
   try {
-    out += '|getMediaKeySystems=' + JSON.stringify(ovw0019.getMediaKeySystems());
+    out += '|getMediaKeySystems=' + JSON.stringify(ovw0017.getMediaKeySystems());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
   return out;
 }
-import ovw0020 from '@ohos.multimedia.image';
+import ovw0018 from '@ohos.multimedia.image';
 
 export function ovw_multimedia_image_00(seed: number): string {
-  let out: string = 'val|multimedia.image|' + ((seed * 7 + 3728) % 9973).toString();
+  let out: string = 'val|multimedia.image|' + ((seed * 7 + 3726) % 9973).toString();
   try {
-    out += '|getImagePackerSupportedFormats=' + JSON.stringify(ovw0020.getImagePackerSupportedFormats());
-    out += '|getImageSourceSupportedFormats=' + JSON.stringify(ovw0020.getImageSourceSupportedFormats());
+    out += '|getImagePackerSupportedFormats=' + JSON.stringify(ovw0018.getImagePackerSupportedFormats());
+    out += '|getImageSourceSupportedFormats=' + JSON.stringify(ovw0018.getImageSourceSupportedFormats());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
   return out;
 }
-import ovw0021 from '@ohos.multimodalAwareness.motion';
+import ovw0019 from '@ohos.multimodalAwareness.motion';
 
 export function ovw_multimodalAwareness_motion_00(seed: number): string {
-  let out: string = 'val|multimodalAwareness.motion|' + ((seed * 7 + 3729) % 9973).toString();
+  let out: string = 'val|multimodalAwareness.motion|' + ((seed * 7 + 3727) % 9973).toString();
   try {
-    out += '|getRecentOperatingHandStatus=' + JSON.stringify(ovw0021.getRecentOperatingHandStatus());
+    out += '|getRecentOperatingHandStatus=' + JSON.stringify(ovw0019.getRecentOperatingHandStatus());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
   return out;
 }
-import ovw0022 from '@ohos.multimodalInput.infraredEmitter';
+import ovw0020 from '@ohos.multimodalInput.infraredEmitter';
 
 export function ovw_multimodalInput_infraredEmitter_00(seed: number): string {
-  let out: string = 'val|multimodalInput.infraredEmitter|' + ((seed * 7 + 3730) % 9973).toString();
+  let out: string = 'val|multimodalInput.infraredEmitter|' + ((seed * 7 + 3728) % 9973).toString();
   try {
-    out += '|getInfraredFrequencies=' + JSON.stringify(ovw0022.getInfraredFrequencies());
-    out += '|hasIrEmitter=' + JSON.stringify(ovw0022.hasIrEmitter());
+    out += '|getInfraredFrequencies=' + JSON.stringify(ovw0020.getInfraredFrequencies());
+    out += '|hasIrEmitter=' + JSON.stringify(ovw0020.hasIrEmitter());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
   return out;
 }
-import ovw0023 from '@ohos.multimodalInput.inputConsumer';
+import ovw0021 from '@ohos.multimodalInput.inputConsumer';
 
 export function ovw_multimodalInput_inputConsumer_00(seed: number): string {
-  let out: string = 'val|multimodalInput.inputConsumer|' + ((seed * 7 + 3731) % 9973).toString();
+  let out: string = 'val|multimodalInput.inputConsumer|' + ((seed * 7 + 3729) % 9973).toString();
   try {
-    out += '|getAllSystemHotkeys=' + JSON.stringify(ovw0023.getAllSystemHotkeys());
+    out += '|getAllSystemHotkeys=' + JSON.stringify(ovw0021.getAllSystemHotkeys());
+  } catch (err) {
+    out += '|!e' + String((err as BusinessError).code);
+  }
+  return out;
+}
+import ovw0022 from '@ohos.multimodalInput.inputDevice';
+
+export function ovw_multimodalInput_inputDevice_00(seed: number): string {
+  let out: string = 'val|multimodalInput.inputDevice|' + ((seed * 7 + 3730) % 9973).toString();
+  try {
+    out += '|getDeviceIds=' + JSON.stringify(ovw0022.getDeviceIds());
+    out += '|getDeviceList=' + JSON.stringify(ovw0022.getDeviceList());
+  } catch (err) {
+    out += '|!e' + String((err as BusinessError).code);
+  }
+  return out;
+}
+
+export function ovw_multimodalInput_inputDevice_01(seed: number): string {
+  let out: string = 'val|multimodalInput.inputDevice|' + ((seed * 7 + 3730) % 9973).toString();
+  try {
+    out += '|getIntervalSinceLastInput=' + JSON.stringify(ovw0022.getIntervalSinceLastInput());
+  } catch (err) {
+    out += '|!e' + String((err as BusinessError).code);
+  }
+  return out;
+}
+import ovw0023 from '@ohos.multimodalInput.pointer';
+
+export function ovw_multimodalInput_pointer_00(seed: number): string {
+  let out: string = 'val|multimodalInput.pointer|' + ((seed * 7 + 3731) % 9973).toString();
+  try {
+    out += '|isPointerVisible=' + JSON.stringify(ovw0023.isPointerVisible());
+    out += '|isPointerVisibleSync=' + JSON.stringify(ovw0023.isPointerVisibleSync());
   } catch (err) {
     out += '|!e' + String((err as BusinessError).code);
   }
@@ -440,7 +452,7 @@ export function ovw_multimodalInput_inputConsumer_00(seed: number): string {
 export type ApiFn = (seed: number) => string;
 
 export function areg_03(): ApiFn[] {
-  return [ovw_file_environment_00, ovw_file_environment_01, ovw_file_storageStatistics_00, ovw_file_storageStatistics_01, ovw_file_storageStatistics_02, ovw_file_storageStatistics_03, ovw_font_00, ovw_geoLocationManager_00, ovw_geoLocationManager_01, ovw_geoLocationManager_02, ovw_geoLocationManager_03, ovw_geolocation_00, ovw_geolocation_01, ovw_hiTraceChain_00, ovw_hiTraceMeter_00, ovw_hichecker_00, ovw_hiviewdfx_FaultLogExtensionAbility_00, ovw_hiviewdfx_hiRetrieval_00, ovw_hiviewdfx_hiRetrieval_01, ovw_hiviewdfx_jsLeakWatcher_00, ovw_i18n_00, ovw_i18n_01, ovw_i18n_02, ovw_identifier_oaid_00, ovw_inputMethod_00, ovw_inputMethod_01, ovw_inputMethod_02, ovw_inputMethod_03, ovw_inputMethodEngine_00, ovw_inputMethodEngine_01, ovw_intelligentScene_00, ovw_multimedia_audio_00, ovw_multimedia_audioHaptic_00, ovw_multimedia_avsession_00, ovw_multimedia_drm_00, ovw_multimedia_image_00, ovw_multimodalAwareness_motion_00, ovw_multimodalInput_infraredEmitter_00, ovw_multimodalInput_inputConsumer_00];
+  return [ovw_file_environment_00, ovw_file_environment_01, ovw_file_storageStatistics_00, ovw_file_storageStatistics_01, ovw_file_storageStatistics_02, ovw_file_storageStatistics_03, ovw_font_00, ovw_geoLocationManager_00, ovw_geoLocationManager_01, ovw_geoLocationManager_02, ovw_geoLocationManager_03, ovw_geolocation_00, ovw_geolocation_01, ovw_hiTraceChain_00, ovw_hiTraceMeter_00, ovw_hichecker_00, ovw_hiviewdfx_FaultLogExtensionAbility_00, ovw_hiviewdfx_hiRetrieval_00, ovw_hiviewdfx_hiRetrieval_01, ovw_hiviewdfx_jsLeakWatcher_00, ovw_i18n_00, ovw_i18n_01, ovw_i18n_02, ovw_identifier_oaid_00, ovw_inputMethod_00, ovw_inputMethod_01, ovw_inputMethod_02, ovw_inputMethod_03, ovw_inputMethodEngine_00, ovw_inputMethodEngine_01, ovw_intelligentScene_00, ovw_multimedia_avsession_00, ovw_multimedia_drm_00, ovw_multimedia_image_00, ovw_multimodalAwareness_motion_00, ovw_multimodalInput_infraredEmitter_00, ovw_multimodalInput_inputConsumer_00, ovw_multimodalInput_inputDevice_00, ovw_multimodalInput_inputDevice_01, ovw_multimodalInput_pointer_00];
 }
 
 export function asafe_03(): ApiFn[] {

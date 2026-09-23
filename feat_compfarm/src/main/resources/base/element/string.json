@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "component api gap farm"
+    },
+    {
+      "name": "CompFarmAbility_desc",
+      "value": "component api farm"
+    },
+    {
+      "name": "CompFarmAbility_label",
+      "value": "ovd-compfarm"
+    }
+  ]
+}

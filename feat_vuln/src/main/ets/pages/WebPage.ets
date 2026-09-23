@@ -1,6 +1,8 @@
 import { webview } from '@kit.ArkWeb';
 import { ovdWeb007 } from '../vulns/web/OVD-WEB-007';
+import { ovdWeb008 } from '../vulns/web/OVD-WEB-008';
 import { ovdWeb001S, ovdWeb002S, ovdWeb003S, ovdWeb004S, ovdWeb005S, ovdWeb006S, ovdWeb007S } from '../vulns/web/Twins';
+import { ovdWeb008S } from '../vulns/web/OVD-WEB-008S';
 import { common } from '@kit.AbilityKit';
 import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
@@ -60,6 +62,8 @@ struct WebPage {
       })
       Button('WEB-007 bridge-no-origin').margin(4).onClick(() => {
         this.runner.run('web-007', () => ovdWeb007(this.controller, 'stealToken'));
+        this.runner.run('web-008', () => ovdWeb008(this.controller, 'dev-tag-1'));
+        this.runner.run('web-008S', () => ovdWeb008S(this.controller, 'ovd-release-tag-4c2e'));
       })
       Button('web-007S origin-check').margin(4).onClick(() => {
         this.runner.run('web-007S', () => ovdWeb007S(this.controller, 'getVersion'));

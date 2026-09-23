@@ -45,6 +45,9 @@ FAMILY_DESC = OrderedDict([
     ('IRED', '不可信 want 字段原样转投 startAbility'),
     ('PWDIN', '密码语义输入框 Normal 明文回显（UI 属性面）'),
     ('DKV', '分布式 KV 明文令牌自动组网同步'),
+    ('RSEC', '资源文件面硬编码秘密（string.json/rawfile，值不可见、访问面可检）'),
+    ('MICC', '麦克风静默采集（无手势即录）'),
+    ('TNT', '跨函数污点链（source/sink 分置，interproc 规则）'),
 ])
 
 BEGIN = '<!-- VULNS-OVERVIEW:BEGIN -->'

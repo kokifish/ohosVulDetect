@@ -29,6 +29,8 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-ired', 'Intent 重定向', 'pages/IredVulnPage'),
   new DemoItem('cat-pwdin', '密码输入回显', 'pages/PwdinVulnPage'),
   new DemoItem('cat-dkv', '分布式 KV 同步泄露', 'pages/DkvVulnPage'),
+  new DemoItem('cat-micc', '麦克风静默采集', 'pages/MiccVulnPage'),
+  new DemoItem('cat-taint', '跨函数污点链', 'pages/TaintVulnPage'),
 ];
 
 @Entry

@@ -94,6 +94,18 @@
       ]
     },
     {
+      "name": "feat_compfarm",
+      "srcPath": "./feat_compfarm",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
       "name": "lib_common",
       "srcPath": "./lib_common",
       "targets": [

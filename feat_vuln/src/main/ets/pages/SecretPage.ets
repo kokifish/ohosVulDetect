@@ -7,6 +7,8 @@ import { ovdSecret002 } from '../vulns/secret/OVD-SECRET-002';
 import { ovdSecret003 } from '../vulns/secret/OVD-SECRET-003';
 import { ovdSecret004 } from '../vulns/secret/OVD-SECRET-004';
 import { ovdSecret005 } from '../vulns/secret/OVD-SECRET-005';
+import { ovdRsec001 } from '../vulns/ressec/OVD-RSEC-001';
+import { ovdRsec001S } from '../vulns/ressec/Twins';
 
 @Entry
 @Component
@@ -25,7 +27,9 @@ struct SecretPage {
           new Case('002S runtime-key', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret002S('runtime-injected')),
           new Case('003S kms-alias', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret003S('bench_signing')),
           new Case('004S kms-dsn', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret004S()),
-          new Case('005S alias-fetch', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret005S('cloud_sk'))
+          new Case('005S alias-fetch', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdSecret005S('cloud_sk')),
+          new Case('006 resource-face', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdRsec001(ctx)),
+          new Case('006S runtime-key', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdRsec001S(ctx, 'runtime-injected'))
         ]
       })
 

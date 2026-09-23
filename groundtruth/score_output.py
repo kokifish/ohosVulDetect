@@ -6,6 +6,8 @@
   布尔/数字按逆向工具 IR 文本形态归一化（true→TRUE，int→"n" 与 "n.0" 皆可命中）；
 - call：全部 token 在函数块（无则 record 域）命中，token 裸形态或 "引号" 形态均可；
 - predicate：IR 谓词（return-true / empty-array / fixed-nonce）在函数块判定；
+- interproc-chain：hops 逐跳在各 hop 指定函数块（无则 record 域）判定，全中才命中——
+  单函数内 call+constant 不可 AND 的跨函数污点链用；
 - skip：标记为 skip 的条目不计入 TP/FN（难度用例，另行列出）；
 - native 条目在 .so 字符串匹配；manifest 条目在 module.json 匹配；
 - 孪生（expected=false）：用其 twin_of 条目的规则在孪生 record 上判定，命中即 FP。
@@ -94,6 +96,23 @@ def main() -> int:
     if not module_json:
         sys.exit("ERROR: app 内未找到 feat_vuln module.json")
 
+    def extract_resource_text(app_path: str) -> str:
+        """feat_vuln 资源面文本（string.json + rawfile），供 resource-face 核验。"""
+        got = ""
+        with tempfile.TemporaryDirectory() as td:
+            with zipfile.ZipFile(app_path) as z:
+                hap = next((n for n in z.namelist() if n.endswith("feat_vuln-default.hap")), None)
+                if not hap:
+                    return got
+                z.extract(hap, td)
+                with zipfile.ZipFile(pathlib.Path(td) / hap) as h:
+                    for m in h.namelist():
+                        if m == "resources.index" or (m.startswith("resources/") and (m.endswith(".json") or "/rawfile/" in m)):
+                            got += h.read(m).decode("utf-8", "ignore")
+        return got
+
+    resource_text = extract_resource_text(app_path)
+
     manifest = json.loads(pathlib.Path(manifest_path).read_text())
     by_id = {v["id"]: v for v in manifest["vulns"]}
 
@@ -101,6 +120,18 @@ def main() -> int:
         rec = record_text(blocks, source)
         if not rec:
             return False, "block-not-found"
+        if det.get("type") == "interproc-chain":
+            hops = det.get("hops", [])
+            oks = 0
+            for h in hops:
+                blk = function_block(blocks, source, h.get("function", "-"))
+                scope = blk if blk is not None else rec
+                c_ok = all(any(f in scope for f in forms)
+                           for _, forms in norm_constants(h.get("constants", [])))
+                k_ok = all(tok in scope or f'"{tok}"' in scope for tok in h.get("call", []))
+                oks += 1 if (c_ok and k_ok) else 0
+            hit = oks == len(hops)
+            return hit, f"interproc {oks}/{len(hops)}"
         fn = function_block(blocks, source, function)
         # a twin is judged by its own record only: a global-scope rule would find
         # the vulnerable twin's constant elsewhere in the app and false-positive
@@ -157,6 +188,17 @@ def main() -> int:
         print(f"{rid:22} {str(e):5} {str(h):4} {d}{'' if e == h else ('  <-- FN' if e else '  <-- FP(twin)')}")
     if skipped:
         print(f"skip（不计分）: {', '.join(skipped)}")
+    rv_total = rv_found = 0
+    rv_miss = []
+    for v in manifest["vulns"]:
+        for val in v.get("resource_values", []):
+            rv_total += 1
+            if val in resource_text:
+                rv_found += 1
+            else:
+                rv_miss.append(f"{v['id']}:{val}")
+    print(f"resource-face（打包产物资源值核验）: {rv_found}/{rv_total}"
+          + (f" 缺失: {', '.join(rv_miss)}" if rv_miss else ""))
     print(f"\nTP={tp} FN={fn} FP={fp} TN={tn}")
     print(f"precision={prec:.3f} recall={rec:.3f} F1={f1:.3f} Youden={rec - fpr:.3f}")
     return 0

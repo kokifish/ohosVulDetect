@@ -1,0 +1,11 @@
+{
+  "name": "feat_compfarm",
+  "version": "1.0.0",
+  "description": "component api gap farm module",
+  "main": "",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lib_common": "file:../lib_common"
+  }
+}

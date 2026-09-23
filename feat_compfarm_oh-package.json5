@@ -1,0 +1,10 @@
+{
+  "name": "feat_heavy",
+  "version": "1.0.0",
+  "description": "extreme large single-module instruction farm",
+  "main": "",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+  }
+}

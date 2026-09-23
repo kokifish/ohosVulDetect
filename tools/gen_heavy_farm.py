@@ -16,6 +16,7 @@
 FP 隔离：读 groundtruth/manifest.json 提取 detection 常量与调用 token，命中即拒绝生成。
 """
 import json
+import os
 import pathlib
 import re
 import sys
@@ -25,16 +26,18 @@ ETS = ROOT / 'feat_heavy' / 'src' / 'main' / 'ets'
 CATALOG = pathlib.Path(__file__).resolve().parent / 'heavy_api_catalog.json'
 MANIFEST = ROOT / 'groundtruth' / 'manifest.json'
 
-# ---- 规模旋钮（P0 实测密度后标定，目标 release ≥5.0M 指令 / ~60k 函数）----
-BIZ_FILES = 90           # 业务文件数（指令密度实测标定，目标 release ≥5M）
-BIZ_FUNCS = 43           # 每文件命名函数数（密度标定：全量 ≈59.6k 函数 / 5.9M 指令）
-BIZ_STMTS = 52           # 每函数模板语句数（指令密度主旋钮）
+# ---- 规模旋钮（指令密度实测标定，目标 release ≥5M 指令 / ~60k 函数）----
+# 环境变量可覆盖（OVD_HEAVY_*，供 tools/build_samples.py 产出样本矩阵）；
+# 默认值即提交语料的规模，CI 确定性门禁在无环境变量下运行。
+BIZ_FILES = int(os.environ.get('OVD_HEAVY_BIZ_FILES', '90'))
+BIZ_FUNCS = int(os.environ.get('OVD_HEAVY_BIZ_FUNCS', '43'))
+BIZ_STMTS = int(os.environ.get('OVD_HEAVY_BIZ_STMTS', '52'))
 BIZ_ASYNC_EVERY = 10     # 每 N 个函数产 1 个 async 孪生
-API_FNS_CAP = 8          # 每模块零参调用函数上限
+API_FNS_CAP = int(os.environ.get('OVD_HEAVY_API_CAP', '8'))
 API_PER_FILE = 24        # apiwrap 每文件模块数
 KIT_STATIC_FNS = 4       # 每 openharmony Kit 静态包装数
 KIT_HMS_DYN = 2          # 每 hms Kit 动态 import 包装数
-UI_STRUCTS = 240         # 组件 struct 数
+UI_STRUCTS = int(os.environ.get('OVD_HEAVY_UI_STRUCTS', '240'))
 UI_PER_FILE = 2          # 每文件 struct 数
 
 ALWAYS_BANNED = ['http://', 'https://', 'password', 'passwd', 'secret', 'token',
