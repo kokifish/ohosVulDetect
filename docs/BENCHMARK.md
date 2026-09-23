@@ -10,6 +10,7 @@
 |---|---|---|
 | 指令覆盖 | 217/268（patch 注入 +29 见「patch abc 注入语料」节；其余 51 条归因见 docs/ohos.md §5.1） | check_opcode_coverage.py |
 | 模块指令份额 | feat_heavy 5,945,198 指令 / 59,332 函数（release 口径，占全 app 93.3%；目标 ≥5M / ≈60k） | check_module_share.py |
+| 语料画像（机器可读） | 各变体模块构成/指令·函数/份额、feat_heavy record 级分布、压缩画像；外部消费者入口 README.md → corpus_meta.json | gen_corpus_meta.py --check |
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 363/447（feat_api 直连四批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；44 个 FA-only/规则信号/安全敏感模块排除） | check_corpus_coverage.py |

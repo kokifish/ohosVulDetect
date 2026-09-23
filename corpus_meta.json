@@ -1,0 +1,610 @@
+{
+ "generator": "tools/gen_corpus_meta.py",
+ "module_tags": {
+  "entry": "HAP 壳：Index 两按钮跨 HAP 拉起 feature",
+  "feat_api": "反编译语料主模块：api-/ui-/lang- 路由页 + 受限语言特性（.ts/.js）+ concurrent/workers",
+  "feat_compfarm": "组件 API 农场：组件 API 缺口补齐语料",
+  "feat_heavy": "指令农场：超大 abc 输入压力样本（模块内不均衡度看 records.top1_share）",
+  "feat_vuln": "漏洞语料：带标签漏洞 + 安全孪生，groundtruth/manifest.json 锚定评分",
+  "lib_common": "HAR：DemoScaffold/Logger/DemoItem/Runner/Constants（无独立产物，编译进各 HAP 的 abc）",
+  "lib_shared": "HSP：静态/动态 import 目标"
+ },
+ "notes": [
+  "lib_common 为 HAR，无独立包，编译进各依赖方 HAP 的 modules.abc",
+  "feat_heavy / feat_compfarm 仅存在于 api26（product=default）变体，api24 变体没有",
+  "指令口径：ark_disasm 反汇编文本指令实例数（非去重），同 check_module_share.py",
+  "record = 编译单元（源文件级），对应反编译工具看到的模块；HAP/module 与 record 是两个层级"
+ ],
+ "sample_tiers": {
+  "heavy": {
+   "api_version": {
+    "compatible": 26,
+    "release_type": "Beta2",
+    "target": 26
+   },
+   "app_bytes": 11845636,
+   "app_file": "build/samples/ohosVulDetect-sample-heavy.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 22636500,
+     "bytes": 22753249,
+     "functions": 59329,
+     "inst_share": 0.9304,
+     "instructions": 5946045,
+     "name": "feat_heavy",
+     "records": {
+      "count": 225,
+      "top1": {
+       "functions": 590,
+       "instructions": 65082,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+      },
+      "top1_share": 0.0109,
+      "top5": [
+       {
+        "instructions": 65082,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+       },
+       {
+        "instructions": 64939,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0083"
+       },
+       {
+        "instructions": 64726,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0080"
+       },
+       {
+        "instructions": 64710,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0011"
+       },
+       {
+        "instructions": 64481,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0051"
+       }
+      ]
+     },
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 1985608,
+     "bytes": 2108860,
+     "functions": 3399,
+     "inst_share": 0.0613,
+     "instructions": 391821,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 350620,
+     "bytes": 1745919,
+     "functions": 1546,
+     "inst_share": 0.0061,
+     "instructions": 38716,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 86876,
+     "bytes": 203819,
+     "functions": 597,
+     "inst_share": 0.0016,
+     "instructions": 10459,
+     "name": "feat_compfarm",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 28804,
+     "bytes": 146565,
+     "functions": 129,
+     "inst_share": 0.0004,
+     "instructions": 2795,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 14768,
+     "bytes": 131860,
+     "functions": 66,
+     "inst_share": 0.0002,
+     "instructions": 1106,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "same_build_as": "api26-release",
+   "total_functions": 65066,
+   "total_instructions": 6390942,
+   "zip_raw_bytes": 27094589,
+   "zip_stored_bytes": 11844622
+  },
+  "medium": {
+   "api_version": {
+    "compatible": 26,
+    "release_type": "Beta2",
+    "target": 26
+   },
+   "app_bytes": 2200557,
+   "app_file": "build/samples/ohosVulDetect-sample-medium.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 1985608,
+     "bytes": 2108860,
+     "functions": 3399,
+     "inst_share": 0.5349,
+     "instructions": 391821,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 1517372,
+     "bytes": 1634121,
+     "functions": 9203,
+     "inst_share": 0.3926,
+     "instructions": 287567,
+     "name": "feat_heavy",
+     "records": {
+      "count": 136,
+      "top1": {
+       "functions": 576,
+       "instructions": 63692,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
+      },
+      "top1_share": 0.2215,
+      "top5": [
+       {
+        "instructions": 63692,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
+       },
+       {
+        "instructions": 17531,
+        "name": "feat_heavy.src.main.ets.farm.ui.UiStage"
+       },
+       {
+        "instructions": 14767,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.OvwDyn"
+       },
+       {
+        "instructions": 10231,
+        "name": "feat_heavy.src.main.ets.farm.kitwrap.KtwDyn"
+       },
+       {
+        "instructions": 2695,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.Ovw03"
+       }
+      ]
+     },
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 350620,
+     "bytes": 1745919,
+     "functions": 1546,
+     "inst_share": 0.0529,
+     "instructions": 38716,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 86876,
+     "bytes": 203819,
+     "functions": 597,
+     "inst_share": 0.0143,
+     "instructions": 10459,
+     "name": "feat_compfarm",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 28804,
+     "bytes": 146565,
+     "functions": 129,
+     "inst_share": 0.0038,
+     "instructions": 2795,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 14768,
+     "bytes": 131860,
+     "functions": 66,
+     "inst_share": 0.0015,
+     "instructions": 1106,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 14940,
+   "total_instructions": 732464,
+   "zip_raw_bytes": 5975461,
+   "zip_stored_bytes": 2199543
+  },
+  "small": {
+   "api_version": {
+    "compatible": 26,
+    "release_type": "Beta2",
+    "target": 26
+   },
+   "app_bytes": 2044294,
+   "app_file": "build/samples/ohosVulDetect-sample-small.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 1985608,
+     "bytes": 2108860,
+     "functions": 3399,
+     "inst_share": 0.6939,
+     "instructions": 391821,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 593432,
+     "bytes": 710181,
+     "functions": 2017,
+     "inst_share": 0.2121,
+     "instructions": 119753,
+     "name": "feat_heavy",
+     "records": {
+      "count": 28,
+      "top1": {
+       "functions": 576,
+       "instructions": 63692,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
+      },
+      "top1_share": 0.5319,
+      "top5": [
+       {
+        "instructions": 63692,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
+       },
+       {
+        "instructions": 14767,
+        "name": "feat_heavy.src.main.ets.farm.apiwrap.OvwDyn"
+       },
+       {
+        "instructions": 10231,
+        "name": "feat_heavy.src.main.ets.farm.kitwrap.KtwDyn"
+       },
+       {
+        "instructions": 1979,
+        "name": "feat_heavy.src.main.ets.farm.ui.UiStage"
+       },
+       {
+        "instructions": 1737,
+        "name": "feat_heavy.src.main.ets.farm.index"
+       }
+      ]
+     },
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 350620,
+     "bytes": 1745919,
+     "functions": 1546,
+     "inst_share": 0.0686,
+     "instructions": 38716,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 86876,
+     "bytes": 203819,
+     "functions": 597,
+     "inst_share": 0.0185,
+     "instructions": 10459,
+     "name": "feat_compfarm",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 28804,
+     "bytes": 146565,
+     "functions": 129,
+     "inst_share": 0.0049,
+     "instructions": 2795,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 14768,
+     "bytes": 131860,
+     "functions": 66,
+     "inst_share": 0.002,
+     "instructions": 1106,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 7754,
+   "total_instructions": 564650,
+   "zip_raw_bytes": 5051521,
+   "zip_stored_bytes": 2043280
+  }
+ },
+ "schema_version": "1.0",
+ "usage": {
+  "decompile_and_coverage": "api26-release（全模块 + 农场，正式语料）",
+  "imbalance_stress": "api26-release：feat_heavy 为 app 内主导模块；模块内不均衡度看 records.top1_share",
+  "small_package": "api24-release（无农场模块，包最小）",
+  "storage_bloat": "api26-debug 体积大 = debug abc 更大 + .app 外层条目零压缩存储（zip_raw≈zip_stored），指令量与 release 相同，非更高分析工作量",
+  "tiered_sampling": "build/samples 三档均 api26-release 口径；heavy 与标准 api26-release 为同一构建的副本",
+  "vuln_scoring": "4 个标准变体均含 feat_vuln；评分：python3 groundtruth/score_output.py <test.out> <.app>"
+ },
+ "variants": {
+  "api24-debug": {
+   "api_version": {
+    "compatible": 24,
+    "release_type": "Beta2",
+    "target": 24
+   },
+   "app_bytes": 7023093,
+   "app_file": "build/out/ohosVulDetect-api24-debug-unsigned.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 2913792,
+     "bytes": 4561408,
+     "functions": 3308,
+     "inst_share": 0.885,
+     "instructions": 428078,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 526648,
+     "bytes": 2133565,
+     "functions": 1512,
+     "inst_share": 0.1032,
+     "instructions": 49914,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 45224,
+     "bytes": 179406,
+     "functions": 127,
+     "inst_share": 0.0084,
+     "instructions": 4061,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 21924,
+     "bytes": 144910,
+     "functions": 64,
+     "inst_share": 0.0034,
+     "instructions": 1643,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 5011,
+   "total_instructions": 483696,
+   "zip_raw_bytes": 7022421,
+   "zip_stored_bytes": 7022421
+  },
+  "api24-release": {
+   "api_version": {
+    "compatible": 24,
+    "release_type": "Beta2",
+    "target": 24
+   },
+   "app_bytes": 1605723,
+   "app_file": "build/out/ohosVulDetect-api24-release-unsigned.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 1995324,
+     "bytes": 2117389,
+     "functions": 3308,
+     "inst_share": 0.902,
+     "instructions": 391586,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 354608,
+     "bytes": 1748720,
+     "functions": 1512,
+     "inst_share": 0.089,
+     "instructions": 38643,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 28868,
+     "bytes": 145442,
+     "functions": 127,
+     "inst_share": 0.0064,
+     "instructions": 2787,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 14688,
+     "bytes": 130593,
+     "functions": 64,
+     "inst_share": 0.0025,
+     "instructions": 1101,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 5011,
+   "total_instructions": 434117,
+   "zip_raw_bytes": 4145276,
+   "zip_stored_bytes": 1604987
+  },
+  "api26-debug": {
+   "api_version": {
+    "compatible": 26,
+    "release_type": "Beta2",
+    "target": 26
+   },
+   "app_bytes": 86730072,
+   "app_file": "build/out/ohosVulDetect-api26-debug-unsigned.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 43477656,
+     "bytes": 79390706,
+     "functions": 59329,
+     "inst_share": 0.9377,
+     "instructions": 7548889,
+     "name": "feat_heavy",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 2915676,
+     "bytes": 4564500,
+     "functions": 3399,
+     "inst_share": 0.0533,
+     "instructions": 428799,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 526392,
+     "bytes": 2134502,
+     "functions": 1546,
+     "inst_share": 0.0062,
+     "instructions": 50172,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 166948,
+     "bytes": 308157,
+     "functions": 597,
+     "inst_share": 0.0021,
+     "instructions": 16504,
+     "name": "feat_compfarm",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 45300,
+     "bytes": 180673,
+     "functions": 129,
+     "inst_share": 0.0005,
+     "instructions": 4079,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 22120,
+     "bytes": 146299,
+     "functions": 66,
+     "inst_share": 0.0002,
+     "instructions": 1658,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 65066,
+   "total_instructions": 8050101,
+   "zip_raw_bytes": 86729154,
+   "zip_stored_bytes": 86729154
+  },
+  "api26-release": {
+   "api_version": {
+    "compatible": 26,
+    "release_type": "Beta2",
+    "target": 26
+   },
+   "app_bytes": 11845636,
+   "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
+   "bundle": "com.koki.VD",
+   "modules": [
+    {
+     "abc_bytes": 22636500,
+     "bytes": 22753249,
+     "functions": 59329,
+     "inst_share": 0.9304,
+     "instructions": 5946045,
+     "name": "feat_heavy",
+     "records": {
+      "count": 225,
+      "top1": {
+       "functions": 590,
+       "instructions": 65082,
+       "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+      },
+      "top1_share": 0.0109,
+      "top5": [
+       {
+        "instructions": 65082,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0065"
+       },
+       {
+        "instructions": 64939,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0083"
+       },
+       {
+        "instructions": 64726,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0080"
+       },
+       {
+        "instructions": 64710,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0011"
+       },
+       {
+        "instructions": 64481,
+        "name": "feat_heavy.src.main.ets.farm.biz.Biz0051"
+       }
+      ]
+     },
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 1985608,
+     "bytes": 2108860,
+     "functions": 3399,
+     "inst_share": 0.0613,
+     "instructions": 391821,
+     "name": "feat_api",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 350620,
+     "bytes": 1745919,
+     "functions": 1546,
+     "inst_share": 0.0061,
+     "instructions": 38716,
+     "name": "feat_vuln",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 86876,
+     "bytes": 203819,
+     "functions": 597,
+     "inst_share": 0.0016,
+     "instructions": 10459,
+     "name": "feat_compfarm",
+     "type": "feature"
+    },
+    {
+     "abc_bytes": 28804,
+     "bytes": 146565,
+     "functions": 129,
+     "inst_share": 0.0004,
+     "instructions": 2795,
+     "name": "entry",
+     "type": "entry"
+    },
+    {
+     "abc_bytes": 14768,
+     "bytes": 131860,
+     "functions": 66,
+     "inst_share": 0.0002,
+     "instructions": 1106,
+     "name": "lib_shared",
+     "type": "shared"
+    }
+   ],
+   "total_functions": 65066,
+   "total_instructions": 6390942,
+   "zip_raw_bytes": 27094589,
+   "zip_stored_bytes": 11844622
+  }
+ }
+}
