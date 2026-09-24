@@ -1,26 +1,22 @@
 // Farm_06.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmRectComp {
+export struct FarmLoadingProgressComp {
   build() {
     Column() {
-      Rect()
-        .radius(1)
-        .radiusHeight(1)
-        .radiusWidth(1)
+      LoadingProgress()
+        .enableLoading(true)
     }
   }
 }
 
 @Component
-export struct FarmRefreshComp {
+export struct FarmMarqueeComp {
   build() {
     Column() {
-      Refresh({ refreshing: true })
-        .maxPullDownDistance(1)
-        .pullToRefresh(true)
-        .pullUpToCancelRefresh(true)
-        .refreshOffset(1)
+      Marquee({ start: true, src: 'ovd' })
+        .allowScale(true)
+        .onStop((v: void): void => {})
     }
   }
 }

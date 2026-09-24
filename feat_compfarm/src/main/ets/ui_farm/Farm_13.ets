@@ -1,25 +1,39 @@
 // Farm_13.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmTextPickerComp {
+export struct FarmSideBarContainerComp {
   build() {
     Column() {
-      TextPicker()
-        .canLoop(true)
-        .defaultPickerItemHeight(1)
-        .disableTextStyleAnimation(true)
-        .selectedIndex(1)
+      SideBarContainer()
+        .autoHide(true)
+        .maxSideBarWidth(1)
+        .minSideBarWidth(1)
+        .showControlButton(true)
+        .showSideBar(true)
+        .showSideBarWithGesture(true)
     }
   }
 }
 
 @Component
-export struct FarmTextClockComp {
+export struct FarmSliderComp {
   build() {
     Column() {
-      TextClock()
-        .fontFeature('ovd')
-        .textShadow([])
+      Slider()
+        .blockBorderColor(Color.Red)
+        .blockBorderWidth(1)
+        .blockColor(Color.Red)
+        .enableHapticFeedback(true)
+        .maxLabel('ovd')
+        .minLabel('ovd')
+        .minResponsiveDistance(1)
+        .showSteps(true)
+        .showTips(true)
+        .stepColor(Color.Red)
+        .stepSize(1)
+        .trackBorderRadius(1)
+        .trackColor(Color.Red)
+        .trackThickness(1)
     }
   }
 }

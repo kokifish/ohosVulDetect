@@ -1,33 +1,15 @@
-// Farm_11.ets — 组件 API 缺口补齐语料（生成，勿手改）
+// Farm_19.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmScrollComp {
+export struct FarmTextInputComp {
   build() {
     Column() {
-      Scroll()
-        .enableBouncesZoom(true)
-        .enablePaging(true)
-        .enableScrollInteraction(true)
-        .friction(1)
-        .maxZoomScale(1)
-        .minZoomScale(1)
-        .onScrollStart((): void => {})
-        .onScrollStop((): void => {})
-        .onZoomStart((): void => {})
-        .onZoomStop((): void => {})
-        .scrollBarColor(Color.Red)
-        .scrollBarWidth(1)
-        .zoomScale(1)
-    }
-  }
-}
-
-@Component
-export struct FarmSearchComp {
-  build() {
-    Column() {
-      Search()
+      TextInput()
+        .caretColor(Color.Red)
+        .caretPosition(1)
         .compressLeadingPunctuation(true)
+        .enableAutoFill(true)
+        .enableAutoFillAnimation(true)
         .enableAutoSpacing(true)
         .enableHapticFeedback(true)
         .enableKeyboardOnFocus(true)
@@ -48,13 +30,33 @@ export struct FarmSearchComp {
         .onDidDelete((v: DeleteValue): void => {})
         .onDidInsert((v: InsertValue): void => {})
         .onEditChange((v: boolean): void => {})
+        .onSecurityStateChange((v: boolean): void => {})
         .onWillAttachIME((v: IMEClient): void => {})
+        .orphanCharOptimization(true)
+        .passwordRules('ovd')
         .placeholderColor(Color.Red)
-        .searchButton('ovd')
+        .punctuationOverflow(true)
+        .selectAll(true)
         .selectedBackgroundColor(Color.Red)
         .selectionMenuHidden(true)
+        .showCounter(true)
+        .showError('ovd')
+        .showPassword(true)
+        .showPasswordIcon(true)
+        .showUnderline(true)
         .stopBackPress(true)
         .strokeColor(Color.Red)
+        .underlineColor(Color.Red)
+    }
+  }
+}
+
+@Component
+export struct FarmTextTimerComp {
+  build() {
+    Column() {
+      TextTimer()
+        .textShadow([])
     }
   }
 }

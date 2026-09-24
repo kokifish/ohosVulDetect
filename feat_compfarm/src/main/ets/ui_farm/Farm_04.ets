@@ -1,29 +1,27 @@
 // Farm_04.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmMenuItemComp {
+export struct FarmImageAnimatorComp {
   build() {
     Column() {
-      MenuItem()
-        .contentFontColor(Color.Red)
-        .labelFontColor(Color.Red)
-        .selectIcon(true)
+      ImageAnimator()
+        .fixedSize(true)
+        .iterations(1)
+        .monitorInvisibleArea(true)
+        .preDecode(1)
+        .reverse(true)
     }
   }
 }
 
 @Component
-export struct FarmNavDestinationComp {
+export struct FarmImageSpanComp {
   build() {
     Column() {
-      NavDestination()
-        .backButtonIcon('ovd')
-        .bindToNestedScrollable([])
-        .bindToScrollable([])
-        .hideToolBar(true)
-        .ignoreLayoutSafeArea([])
-        .menus([])
-        .toolbarConfiguration([])
+      Text() {
+        ImageSpan($r('app.media.startIcon'))
+          .supportSvg2(true)
+      }
     }
   }
 }

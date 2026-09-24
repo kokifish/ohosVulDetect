@@ -127,6 +127,13 @@ ScrollMotion/MediaCachedImage 等，component_config 占位但 d.ts 缺失，结
 Camera 无声明；Common 为元条目；DynamicComponent/IsolatedComponent/SecurityUIExtensionComponent/
 LocationButton 等需专用宿主（卡片/嵌入/系统应用）或系统能力。
 
+> 2026-09 组件内 API 缺口专项：compfarm 农场放出曾整组件排除的 Component3D/Counter/
+> FolderStack/GridCol/StepperItem（Particle 因构造需复杂 ParticleOptions 维持排除），
+> default_for 新增 Optional 解包 / VoidCallback·Callback<T>/内联箭头 → 空实现、
+> Alignment 类型提示，HOST_OF 宿主包装（GridCol→GridRow、StepperItem→Stepper、
+> ImageSpan→Text、TabContent→Tabs）、CTOR_HINTS（ImageSpan 必参）；同轮
+> OhosDirect5Demo 清掉 @ohos 直连 51 个非排除缺口（418/447，剩余全部策略排除）。
+
 ### 5.3 Kit（全集 = `ets/kits/@kit.*.d.ts`）
 
 同上以脚本对账为准；端侧/云侧（★）分类见 §3。

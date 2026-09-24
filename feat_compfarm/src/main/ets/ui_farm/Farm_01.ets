@@ -1,38 +1,24 @@
 // Farm_01.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmGridComp {
+export struct FarmColumnComp {
   build() {
     Column() {
-      Grid()
-        .cellLength(1)
-        .editMode(true)
-        .enableEditMode(true)
-        .enableScrollInteraction(true)
-        .friction(1)
-        .maxCount(1)
-        .minCount(1)
-        .multiSelectable(true)
-        .rowsTemplate('ovd')
-        .scrollBarColor(Color.Red)
-        .scrollBarWidth(1)
-        .supportAnimation(true)
-        .supportEmptyBranchInLazyLoading(true)
-        .syncLoad(true)
+      Column()
+        .reverse(true)
     }
   }
 }
 
 @Component
-export struct FarmImageAnimatorComp {
+export struct FarmComponent3DComp {
   build() {
     Column() {
-      ImageAnimator()
-        .fixedSize(true)
-        .iterations(1)
-        .monitorInvisibleArea(true)
-        .preDecode(1)
-        .reverse(true)
+      Component3D()
+        .environment('ovd')
+        .shader('ovd')
+        .shaderImageTexture('ovd')
+        .shaderInputBuffer([])
     }
   }
 }

@@ -1,40 +1,35 @@
 // Farm_08.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmSearchComp {
+export struct FarmNavigationComp {
   build() {
     Column() {
-      Search()
-        .enableHapticFeedback(true)
-        .enableKeyboardOnFocus(true)
-        .enablePreviewText(true)
-        .enableSelectedDataDetector(true)
-        .fontFeature('ovd')
-        .inputFilter('ovd')
-        .maxFontSize(1)
-        .maxLength(1)
-        .minFontSize(1)
-        .placeholderColor(Color.Red)
-        .searchButton('ovd')
-        .selectedBackgroundColor(Color.Red)
-        .selectionMenuHidden(true)
+      Navigation()
+        .backButtonIcon('ovd')
+        .enableDragBar(true)
+        .enableModeChangeAnimation(true)
+        .enableToolBarAdaptation(true)
+        .enableVisibilityLifecycleWithContentCover(true)
+        .hideBackButton(true)
+        .hideNavBar(true)
+        .hideToolBar(true)
+        .ignoreLayoutSafeArea([])
+        .menus([])
+        .navBarWidth(1)
+        .recoverable(true)
+        .subTitle('ovd')
+        .toolbarConfiguration([])
     }
   }
 }
 
 @Component
-export struct FarmSelectComp {
+export struct FarmRatingComp {
   build() {
     Column() {
-      Select([])
-        .menuBackgroundColor(Color.Red)
-        .optionBgColor(Color.Red)
-        .optionFontColor(Color.Red)
-        .selectedOptionBgColor(Color.Red)
-        .selectedOptionFontColor(Color.Red)
-        .showDefaultSelectedIcon(true)
-        .space(1)
-        .value('ovd')
+      Rating()
+        .stars(1)
+        .stepSize(1)
     }
   }
 }

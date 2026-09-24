@@ -1,33 +1,24 @@
-// Farm_11.ets — 组件 API 缺口补齐语料（生成，勿手改）
+// Farm_18.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmScrollComp {
+export struct FarmTextClockComp {
   build() {
     Column() {
-      Scroll()
-        .enableBouncesZoom(true)
-        .enablePaging(true)
-        .enableScrollInteraction(true)
-        .friction(1)
-        .maxZoomScale(1)
-        .minZoomScale(1)
-        .onScrollStart((): void => {})
-        .onScrollStop((): void => {})
-        .onZoomStart((): void => {})
-        .onZoomStop((): void => {})
-        .scrollBarColor(Color.Red)
-        .scrollBarWidth(1)
-        .zoomScale(1)
+      TextClock()
+        .fontFeature('ovd')
+        .textShadow([])
     }
   }
 }
 
 @Component
-export struct FarmSearchComp {
+export struct FarmTextAreaComp {
   build() {
     Column() {
-      Search()
+      TextArea()
+        .caretColor(Color.Red)
         .compressLeadingPunctuation(true)
+        .enableAutoFill(true)
         .enableAutoSpacing(true)
         .enableHapticFeedback(true)
         .enableKeyboardOnFocus(true)
@@ -36,23 +27,23 @@ export struct FarmSearchComp {
         .fallbackLineSpacing(true)
         .fontFeature('ovd')
         .halfLeading(true)
+        .horizontalScrolling(true)
         .includeFontPadding(true)
-        .inputFilter('ovd')
         .maxFontScale(1)
         .maxFontSize(1)
         .maxLength(1)
         .minFontScale(1)
         .minFontSize(1)
-        .onCopy((v: string): void => {})
-        .onCut((v: string): void => {})
+        .minLines(1)
         .onDidDelete((v: DeleteValue): void => {})
         .onDidInsert((v: InsertValue): void => {})
-        .onEditChange((v: boolean): void => {})
         .onWillAttachIME((v: IMEClient): void => {})
+        .orphanCharOptimization(true)
         .placeholderColor(Color.Red)
-        .searchButton('ovd')
+        .punctuationOverflow(true)
         .selectedBackgroundColor(Color.Red)
         .selectionMenuHidden(true)
+        .showCounter(true)
         .stopBackPress(true)
         .strokeColor(Color.Red)
     }

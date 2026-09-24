@@ -2,16 +2,16 @@
 
 import { FarmButtonComp } from './Farm_00';
 import { FarmCheckboxComp } from './Farm_00';
-import { FarmGridComp } from './Farm_01';
-import { FarmImageAnimatorComp } from './Farm_01';
-import { FarmIndicatorComponentComp } from './Farm_02';
-import { FarmListComp } from './Farm_02';
-import { FarmLoadingProgressComp } from './Farm_03';
-import { FarmMarqueeComp } from './Farm_03';
-import { FarmMenuItemComp } from './Farm_04';
-import { FarmNavDestinationComp } from './Farm_04';
-import { FarmNavigationComp } from './Farm_05';
-import { FarmRatingComp } from './Farm_05';
+import { FarmColumnComp } from './Farm_01';
+import { FarmComponent3DComp } from './Farm_01';
+import { FarmCounterComp } from './Farm_02';
+import { FarmFolderStackComp } from './Farm_02';
+import { FarmGridColComp } from './Farm_03';
+import { FarmGridComp } from './Farm_03';
+import { FarmImageAnimatorComp } from './Farm_04';
+import { FarmImageSpanComp } from './Farm_04';
+import { FarmIndicatorComponentComp } from './Farm_05';
+import { FarmListComp } from './Farm_05';
 
 @Builder
 export function farmCombo1() {
@@ -19,8 +19,8 @@ export function farmCombo1() {
     Text('combo layer').fontSize(12)
     FarmButtonComp()
     FarmCheckboxComp()
-    FarmGridComp()
-    FarmImageAnimatorComp()
+    FarmColumnComp()
+    FarmComponent3DComp()
   }
   .padding(8)
   }
@@ -29,10 +29,10 @@ export function farmCombo1() {
 export function farmCombo2() {
   Row({ space: 6 }) {
     Text('combo layer').fontSize(12)
-    FarmIndicatorComponentComp()
-    FarmListComp()
-    FarmLoadingProgressComp()
-    FarmMarqueeComp()
+    FarmCounterComp()
+    FarmFolderStackComp()
+    FarmGridComp()
+    FarmGridColComp()
   }
   .padding(8)
   }
@@ -41,10 +41,10 @@ export function farmCombo2() {
 export function farmCombo3() {
   Stack({ alignContent: Alignment.Center }) {
     Text('combo layer').fontSize(12)
-    FarmMenuItemComp()
-    FarmNavDestinationComp()
-    FarmNavigationComp()
-    FarmRatingComp()
+    FarmImageAnimatorComp()
+    FarmImageSpanComp()
+    FarmIndicatorComponentComp()
+    FarmListComp()
   }
   .padding(8)
   }

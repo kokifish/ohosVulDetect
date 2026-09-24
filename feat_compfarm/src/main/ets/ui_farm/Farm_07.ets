@@ -1,30 +1,42 @@
 // Farm_07.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmRelativeContainerComp {
+export struct FarmMenuItemComp {
   build() {
     Column() {
-      RelativeContainer()
-        .barrier([])
-        .guideLine([])
+      MenuItem()
+        .contentFontColor(Color.Red)
+        .labelFontColor(Color.Red)
+        .selectIcon(true)
     }
   }
 }
 
 @Component
-export struct FarmScrollComp {
+export struct FarmNavDestinationComp {
   build() {
     Column() {
-      Scroll()
-        .enableBouncesZoom(true)
-        .enablePaging(true)
-        .enableScrollInteraction(true)
-        .friction(1)
-        .maxZoomScale(1)
-        .minZoomScale(1)
-        .scrollBarColor(Color.Red)
-        .scrollBarWidth(1)
-        .zoomScale(1)
+      NavDestination()
+        .backButtonIcon('ovd')
+        .bindToNestedScrollable([])
+        .bindToScrollable([])
+        .enableNavigationIndicator(true)
+        .enableStatusBar(true)
+        .fullScreenOverlay(true)
+        .hideBackButton(true)
+        .hideToolBar(true)
+        .ignoreLayoutSafeArea([])
+        .menus([])
+        .onActive((v: NavDestinationActiveReason): void => {})
+        .onHidden((v: VisibilityChangeReason): void => {})
+        .onInactive((v: NavDestinationActiveReason): void => {})
+        .onNewParam((v: ESObject): void => {})
+        .onResult((v: ESObject): void => {})
+        .onWillDisappear((v: void): void => {})
+        .onWillHide((v: void): void => {})
+        .onWillShow((v: void): void => {})
+        .recoverable(true)
+        .toolbarConfiguration([])
     }
   }
 }

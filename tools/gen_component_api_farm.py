@@ -31,8 +31,16 @@ SKIP_METHODS = {"constructor"}
 # 特殊宿主组件（attribute 语义非通用链式），不进农场
 
 # 方法级排除（编译报错的方法，由 auto-iter 累积）：key = "组件.方法"
-EXCLUDE_METHODS = set([("Counter", "customRender"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender")])
-EXCLUDE_COMPONENTS = {"AlphabetIndexer", "CalendarPicker", "Canvas", "CheckboxGroup", "Component3D", "Counter", "DataPanel", "DatePicker", "Divider", "FolderStack", "Gauge", "GridCol", "GridItem", "Image", "ListItem", "Navigator", "Panel", "Particle", "PatternLock", "Progress", "QRCode", "Repeat", "SaveButton", "Span", "StepperItem"}
+EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRender"), ("EmbeddedComponent", "onDrawReady"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender")])
+# 曾全组件排除的 0 覆盖组件（Component3D/Counter/FolderStack/GridCol/StepperItem）
+# 已放回农场（2026-09 缺口专项）；编译报错方法由 auto-iter 继续累积进 EXCLUDE_METHODS。
+# Particle 构造需要复杂 ParticleOptions（emitter 必填嵌套），生成器无法保守映射，维持排除。
+EXCLUDE_COMPONENTS = {"AlphabetIndexer", "CalendarPicker", "Canvas", "CheckboxGroup", "DataPanel", "DatePicker", "Divider", "Gauge", "GridItem", "Image", "ListItem", "Navigator", "Panel", "Particle", "PatternLock", "Progress", "QRCode", "Repeat", "SaveButton", "Span"}
+# 宿主约束组件：只能嵌在特定父组件内（GridCol→GridRow / StepperItem→Stepper /
+# ImageSpan→Text / TabContent→Tabs），生成时包一层
+HOST_OF = {"GridCol": "GridRow", "StepperItem": "Stepper", "ImageSpan": "Text", "TabContent": "Tabs"}
+# 必参构造提示（ctor_args 解析不出但 SDK 有必填参数）
+CTOR_HINTS = {"ImageSpan": "$r('app.media.startIcon')"}
 
 
 def snake(name: str):
@@ -177,6 +185,9 @@ def default_for(type_text: str, dts_text: str | None = None):
     t = (type_text or "").strip()
     if not t:
         return None  # 空类型文本=签名解析失败，宁可跳过
+    m = re.fullmatch(r"Optional<(.+)>", t)
+    if m:
+        return default_for(m.group(1), dts_text)  # Optional<T> 解包（如 ScrollBar.enableNestedScroll）
     for part in [x.strip() for x in t.split("|")]:
         if re.fullmatch(r"[A-Z][A-Za-z0-9]*\.[A-Z][A-Za-z0-9]*", part):
             return part  # 全局枚举成员 X.Y
@@ -192,17 +203,27 @@ def default_for(type_text: str, dts_text: str | None = None):
             return "$r('app.media.startIcon')"
         if part.startswith("Array<") or part.endswith("[]"):
             return "[]"
+        if part == "VoidCallback" or "=>" in part:
+            return "(): void => {}"  # 无参空实现：实参可少于签名形参（TS 可赋值性）
+        if part.startswith("Callback<") and part.endswith(">"):
+            return f"(v: {part[len('Callback<'):-1]}): void => {{}}"
         if "Callback" in part:
-            return None  # 类型化 Callback 需精确参数签名，跳过
-    # 单一大写名：全局枚举取首成员（100% 可编译）；interface 对象字面量的
-    # 类型匹配不可靠（多轮编译实测连锁失败），统一跳过
+            return None  # 其余未知 Callback 形态跳过
+    # 单一大写名：全局枚举取首成员（100% 可编译）；TYPE_HINTS 为无 declare enum 的
+    # 全局常量对象成员；interface 对象字面量的类型匹配不可靠（多轮编译实测连锁失败），跳过
     if re.fullmatch(r"[A-Z][A-Za-z0-9]*", t):
+        if t in TYPE_HINTS:
+            return TYPE_HINTS[t]
         if dts_text is not None:
             m = re.search(rf"declare enum {t}\b[^{{]*\{{\s*([A-Z_0-9a-z]+)\s*=\s*", dts_text)
             if m:
                 return f"{t}.{m.group(1)}"
         return None
     return None
+
+
+# 无 declare enum 的全局常量类型 → 可验证成员；猜错由编译 auto-iter 排除兜底
+TYPE_HINTS = {"Alignment": "Alignment.Center"}
 
 
 def main() -> int:
@@ -259,6 +280,8 @@ def main() -> int:
         if ctor is None:
             skipped_all.append(f"{name}.<ctor>")
             continue
+        if not (ctor or "").strip() and name in CTOR_HINTS:
+            ctor = CTOR_HINTS[name]
         farms.append((name, missing, ctor))
         farm_comps.append(name)
 
@@ -277,16 +300,25 @@ def main() -> int:
         group = farms[fi:fi + COMPONENTS_PER_FILE]
         lines = [f"// Farm_{fi // COMPONENTS_PER_FILE:02d}.ets — 组件 API 缺口补齐语料（生成，勿手改）", ""]
         for name, calls, ctor in group:
+            host = HOST_OF.get(name)
             lines.append("@Component")
             lines.append(f"export struct Farm{name}Comp {{")
             lines.append("  build() {")
             lines.append(f"    Column() {{")
-            lines.append(f"      {name}({ctor})")
+            if host:
+                lines.append(f"      {host}() {{")
+                lines.append(f"        {name}({ctor})")
+                chain_indent = "          "
+            else:
+                lines.append(f"      {name}({ctor})")
+                chain_indent = "        "
             for mname, dflt in calls:
                 if dflt:
-                    lines.append(f"        .{mname}({dflt})")
+                    lines.append(f"{chain_indent}.{mname}({dflt})")
                 else:
-                    lines.append(f"        .{mname}()")
+                    lines.append(f"{chain_indent}.{mname}()")
+            if host:
+                lines.append("      }")
             lines.append("    }")
             lines.append("  }")
             lines.append("}")

@@ -13,13 +13,13 @@
 | 语料画像（机器可读） | 各变体模块构成/指令·函数/份额、feat_heavy record 级分布、压缩画像；外部消费者入口 README.md → corpus_meta.json | gen_corpus_meta.py --check |
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
-| @ohos 直连 | 363/447（feat_api 直连四批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；44 个 FA-only/规则信号/安全敏感模块排除） | check_corpus_coverage.py |
+| @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 97 + 97（manifest 194 条，双向一致；含跨模块 XMOD 4 对、interproc 污点链 1 对） | groundtruth/manifest.json |
 | 评分 | F1=1.000（97 对口径 TP=97 FN=0 FP=0 TN=97，6.1M 指令语料实测） | score_output.py |
 | feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
-| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 8 文件 / 48 组件 / 192 调用（生成） | farm_build 实测 |
+| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 22 文件 / 44 组件 / 348 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
-| 组件内 API | 566/1296（43.7%，feat_compfarm 农场补齐 + options 字面量/枚举默认值生成；66 个组件无法安全自动生成已排除归因） | check_component_api_coverage.py |
+| 组件内 API | 700/1296（54.0%，feat_compfarm 农场 44 组件；Optional/VoidCallback/Callback 参数映射 + GridCol/StepperItem/ImageSpan/TabContent 宿主包装；no-decl 36 + 组件级排除 19 + 参数复杂跳过 360 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 | .github/workflows/gates.yml |
 

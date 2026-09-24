@@ -2,6 +2,7 @@ import { DemoItem } from 'lib_common';
 
 export const API_DEMOS: DemoItem[] = [
   new DemoItem('api-ohos4', '@ohos direct #4: predicates/dataAbility/errorManager/hiTraceMeter/usb/window', 'pages/api/OhosDirect4Demo'),
+  new DemoItem('api-ohos5', '@ohos direct #5: gap-filler hilog/emitter/settings/resourceManager/audioHaptic/perfTest + enum/type faces', 'pages/api/OhosDirect5Demo'),
   new DemoItem('api-bait', 'FP-bait look-alikes', 'pages/api/SecurityBaitDemo'),
   new DemoItem('api-ohos3', '@ohos direct #3: bundle/inputDevice/power/mediaquery/hidebug/faultLogger', 'pages/api/OhosDirect3Demo'),
   new DemoItem('api-http', 'http: cb/promise/stream/enum', 'pages/api/HttpDemo'),
