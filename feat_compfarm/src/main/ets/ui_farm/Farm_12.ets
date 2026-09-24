@@ -1,34 +1,24 @@
 // Farm_12.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmSelectComp {
+export struct FarmMarqueeComp {
   build() {
     Column() {
-      Select([])
-        .menuBackgroundColor(Color.Red)
-        .optionBgColor(Color.Red)
-        .optionFontColor(Color.Red)
-        .selectedOptionBgColor(Color.Red)
-        .selectedOptionFontColor(Color.Red)
-        .showDefaultSelectedIcon(true)
-        .showInSubWindow(true)
-        .space(1)
-        .value('ovd')
+      Marquee({ start: true, src: 'ovd' })
+        .allowScale(true)
+        .onStop((v: void): void => {})
     }
   }
 }
 
 @Component
-export struct FarmShapeComp {
+export struct FarmMenuItemComp {
   build() {
     Column() {
-      Shape()
-        .antiAlias(true)
-        .fillOpacity(1)
-        .strokeDashArray([])
-        .strokeDashOffset(1)
-        .strokeMiterLimit(1)
-        .strokeOpacity(1)
+      MenuItem()
+        .contentFontColor(Color.Red)
+        .labelFontColor(Color.Red)
+        .selectIcon(true)
     }
   }
 }

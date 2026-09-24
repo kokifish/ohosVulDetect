@@ -6,6 +6,8 @@ import { ovdPriv001 } from '../vulns/perm/OVD-PRIV-001';
 import { ovdPriv002 } from '../vulns/perm/OVD-PRIV-002';
 import { ovdPriv003 } from '../vulns/perm/OVD-PRIV-003';
 import { ovdPaste004 } from '../vulns/perm/OVD-PASTE-004';
+import { ovdPaste005 } from '../vulns/perm/OVD-PASTE-005';
+import { ovdPaste005S } from '../vulns/perm/Twins';
 import { ovdPaste003 } from '../vulns/perm/OVD-PASTE-003';
 import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S, ovdPriv003S, ovdPaste004S } from '../vulns/perm/Twins';
 
@@ -41,6 +43,8 @@ struct PermPage {
         Button('priv-002 locate').margin(4).onClick(() => this.runner.run('PRIV-002', () => ovdPriv002()))
         Button('priv-003 fp-chain').margin(4).onClick(() => this.runner.run('PRIV-003', () => ovdPriv003()))
         Button('paste-004 listener').margin(4).onClick(() => this.runner.run('PASTE-004', () => ovdPaste004()))
+        Button('paste-005 clip-token').margin(4).onClick(() => this.runner.run('PASTE-005', () => ovdPaste005('sess_ovd_clip_0007')))
+        Button('PASTE-005S refuse').margin(4).onClick(() => this.runner.run('PASTE-005S', () => ovdPaste005S('sess_ovd_clip_0007')))
       }
       Flex({ wrap: FlexWrap.Wrap }) {
         Button('PASTE-001S refuse').margin(4).onClick(() => this.runner.run('PASTE-001S', () => ovdPaste001S(true)))

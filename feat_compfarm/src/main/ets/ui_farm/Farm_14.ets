@@ -1,25 +1,26 @@
 // Farm_14.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmStackComp {
+export struct FarmNavigatorComp {
   build() {
     Column() {
-      Stack()
-        .alignContent(Alignment.Center)
-        .syncLoad(true)
+      Navigator()
+        .active(true)
+        .target('ovd')
     }
   }
 }
 
 @Component
-export struct FarmStepperItemComp {
+export struct FarmPanelComp {
   build() {
     Column() {
-      Stepper() {
-        StepperItem()
-          .nextLabel('ovd')
-          .prevLabel('ovd')
-      }
+      Panel(true)
+        .backgroundMask(Color.Red)
+        .fullHeight(1)
+        .halfHeight(1)
+        .miniHeight(1)
+        .showCloseIcon(true)
     }
   }
 }

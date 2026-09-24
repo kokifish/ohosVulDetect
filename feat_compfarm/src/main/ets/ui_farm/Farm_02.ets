@@ -1,26 +1,22 @@
 // Farm_02.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmCounterComp {
+export struct FarmCheckboxComp {
   build() {
     Column() {
-      Counter()
-        .enableDec(true)
-        .enableInc(true)
-        .onDec((): void => {})
-        .onInc((): void => {})
+      Checkbox()
+        .unselectedColor(Color.Red)
     }
   }
 }
 
 @Component
-export struct FarmFolderStackComp {
+export struct FarmCheckboxGroupComp {
   build() {
     Column() {
-      FolderStack()
-        .alignContent(Alignment.Center)
-        .autoHalfFold(true)
-        .enableAnimation(true)
+      CheckboxGroup()
+        .selectAll(true)
+        .unselectedColor(Color.Red)
     }
   }
 }

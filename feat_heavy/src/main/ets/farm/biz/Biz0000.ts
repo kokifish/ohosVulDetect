@@ -478368,8 +478368,20913 @@ export async function biz_0000_3869a(seed: number, raw: string): Promise<string>
   return head + '@' + tick.toString();
 }
 
+export function giant_000(seed: number, raw: string): string {
+  let acc: number = (seed * 31 + raw.length + 2703) % 100003;
+  let buf: string = raw.length.toString(16) + ':';
+  const tags: string[] = raw.split('-');
+  const m01: Map<string, number> = new Map<string, number>();
+  const arr: number[] = [];
+  const u: Unit0 = new Unit0(acc);
+  acc = (acc * 31 + 5253) % 65521;
+  const rc1: Rec0 = { id: acc % 1000, tag: 't1', score: acc % 100 };
+  acc = (acc + rc1.score) % 65521;
+  buf += rc1.tag;
+  buf += 'shelf2-' + acc.toString();
+  arr.push(acc % 1000);
+  if (m01.has('k4')) {
+    const gv4: number = m01.get('k4') as number;
+    acc = (acc + gv4) % 10007;
+  }
+  let w5: number = acc % 23;
+  while (w5 > 4) { w5 = Math.floor(w5 / 2); }
+  acc += w5;
+  acc = acc + 383 - (acc % 36);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 2) { throw new Error('synthetic-8'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf9: Array<(x: number) => number> = [];
+  cf9.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9.push((x: number): number => (x + 29) % 10007);
+  acc = cf9[acc & 1](acc % 9973);
+  const cf10: Array<(x: number) => number> = [];
+  cf10.push((x: number): number => (x * 3 + acc) % 65521);
+  cf10.push((x: number): number => (x + 173) % 10007);
+  acc = cf10[acc & 1](acc % 9973);
+  buf += `q11:${acc % 97}`;
+  buf += (acc > 500 ? 'hi12' : 'lo') + acc.toString(16);
+  acc = acc + 780 - (acc % 37);
+  const t014: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t014;
+  buf += `q15:${acc % 97}`;
+  if (acc % 29 === 0) { buf += 'even16'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi17' : 'lo') + acc.toString(16);
+  let w18: number = acc % 23;
+  while (w18 > 4) { w18 = Math.floor(w18 / 2); }
+  acc += w18;
+  for (let i19 = 0; i19 < 3; i19++) {
+    acc = (acc + i19 * 13 + 444) % 100003;
+  }
+  acc = acc + 74 - (acc % 27);
+  const t021: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t021;
+  const t022: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t022;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x23');
+  const t024: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t024;
+  if (m01.has('k25')) {
+    const gv25: number = m01.get('k25') as number;
+    acc = (acc + gv25) % 10007;
+  }
+  acc = (acc * 31 + 4820) % 65521;
+  buf += (acc > 500 ? 'hi27' : 'lo') + acc.toString(16);
+  acc = acc + 997 - (acc % 51);
+  acc = (acc * 31 + 6971) % 65521;
+  const ix30: number = buf.indexOf('p0');
+  if (ix30 > 12) { buf = buf.substring(0, 32); } else if (ix30 >= 0) { buf += 'i'; }
+  let w31: number = acc % 23;
+  while (w31 > 4) { w31 = Math.floor(w31 / 2); }
+  acc += w31;
+  buf += `q32:${acc % 97}`;
+  const t033: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t033;
+  let w34: number = acc % 23;
+  while (w34 > 4) { w34 = Math.floor(w34 / 2); }
+  acc += w34;
+  const rc35: Rec0 = { id: acc % 1000, tag: 't35', score: acc % 100 };
+  acc = (acc + rc35.score) % 65521;
+  buf += rc35.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x36');
+  for (let i37 = 0; i37 < 11; i37++) {
+    acc = (acc + i37 * 13 + 223) % 100003;
+  }
+  acc = (acc * 31 + 376) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's039'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  const db40: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db40.length) % 65521;
+  for (let i41 = 0; i41 < 9; i41++) {
+    acc = (acc + i41 * 13 + 439) % 100003;
+  }
+  const ix42: number = buf.indexOf('p0');
+  if (ix42 > 12) { buf = buf.substring(0, 32); } else if (ix42 >= 0) { buf += 'i'; }
+  if (m01.has('k43')) {
+    const gv43: number = m01.get('k43') as number;
+    acc = (acc + gv43) % 10007;
+  }
+  let w44: number = acc % 23;
+  while (w44 > 4) { w44 = Math.floor(w44 / 2); }
+  acc += w44;
+  const ix45: number = buf.indexOf('p0');
+  if (ix45 > 12) { buf = buf.substring(0, 32); } else if (ix45 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi46' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 6751) % 65521;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-49'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix50: number = buf.indexOf('p0');
+  if (ix50 > 12) { buf = buf.substring(0, 32); } else if (ix50 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi51' : 'lo') + acc.toString(16);
+  buf += `q52:${acc % 97}`;
+  const rc53: Rec0 = { id: acc % 1000, tag: 't53', score: acc % 100 };
+  acc = (acc + rc53.score) % 65521;
+  buf += rc53.tag;
+  m01.set('k54', acc % 997);
+  const rc55: Rec0 = { id: acc % 1000, tag: 't55', score: acc % 100 };
+  acc = (acc + rc55.score) % 65521;
+  buf += rc55.tag;
+  if (m01.has('k56')) {
+    const gv56: number = m01.get('k56') as number;
+    acc = (acc + gv56) % 10007;
+  }
+  buf += 'pallet57-' + acc.toString();
+  buf += 'payout58-' + acc.toString();
+  for (let i59 = 0; i59 < 9; i59++) {
+    acc = (acc + i59 * 13 + 768) % 100003;
+  }
+  m01.set('k60', acc % 997);
+  acc = (acc * 31 + 7246) % 65521;
+  acc = acc + 537 - (acc % 65);
+  arr.push(acc % 1000);
+  let w64: number = acc % 23;
+  while (w64 > 4) { w64 = Math.floor(w64 / 2); }
+  acc += w64;
+  buf += `q65:${acc % 97}`;
+  if (m01.has('k66')) {
+    const gv66: number = m01.get('k66') as number;
+    acc = (acc + gv66) % 10007;
+  }
+  let w67: number = acc % 23;
+  while (w67 > 4) { w67 = Math.floor(w67 / 2); }
+  acc += w67;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-68'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q69:${acc % 97}`;
+  const t070: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t070;
+  const cf71: Array<(x: number) => number> = [];
+  cf71.push((x: number): number => (x * 3 + acc) % 65521);
+  cf71.push((x: number): number => (x + 38) % 10007);
+  acc = cf71[acc & 1](acc % 9973);
+  const db72: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db72.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's073'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k74')) {
+    const gv74: number = m01.get('k74') as number;
+    acc = (acc + gv74) % 10007;
+  }
+  if (m01.has('k75')) {
+    const gv75: number = m01.get('k75') as number;
+    acc = (acc + gv75) % 10007;
+  }
+  for (let i76 = 0; i76 < 10; i76++) {
+    acc = (acc + i76 * 13 + 20) % 100003;
+  }
+  try { if (acc % 29 === 15) { throw new Error('synthetic-77'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'pickup78-' + acc.toString();
+  buf += `q79:${acc % 97}`;
+  acc = acc + 322 - (acc % 43);
+  acc = acc + 516 - (acc % 64);
+  const cf82: Array<(x: number) => number> = [];
+  cf82.push((x: number): number => (x * 3 + acc) % 65521);
+  cf82.push((x: number): number => (x + 132) % 10007);
+  acc = cf82[acc & 1](acc % 9973);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-83'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix84: number = buf.indexOf('p0');
+  if (ix84 > 12) { buf = buf.substring(0, 32); } else if (ix84 >= 0) { buf += 'i'; }
+  buf += 'region85-' + acc.toString();
+  let w86: number = acc % 23;
+  while (w86 > 4) { w86 = Math.floor(w86 / 2); }
+  acc += w86;
+  buf += (acc > 500 ? 'hi87' : 'lo') + acc.toString(16);
+  if (acc % 12 === 0) { buf += 'even88'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-89'); } acc += 6; } catch (e) { acc = (acc + 17) % 65521; }
+  const t090: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t090;
+  if (acc % 10 === 0) { buf += 'even91'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's092'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-93'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's094'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-95'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix96: number = buf.indexOf('p0');
+  if (ix96 > 12) { buf = buf.substring(0, 32); } else if (ix96 >= 0) { buf += 'i'; }
+  if (m01.has('k97')) {
+    const gv97: number = m01.get('k97') as number;
+    acc = (acc + gv97) % 10007;
+  }
+  const rc98: Rec0 = { id: acc % 1000, tag: 't98', score: acc % 100 };
+  acc = (acc + rc98.score) % 65521;
+  buf += rc98.tag;
+  buf += (acc > 500 ? 'hi99' : 'lo') + acc.toString(16);
+  let w100: number = acc % 23;
+  while (w100 > 4) { w100 = Math.floor(w100 / 2); }
+  acc += w100;
+  buf += (acc > 500 ? 'hi101' : 'lo') + acc.toString(16);
+  if (acc % 17 === 0) { buf += 'even102'; } else { buf += 'odd'; }
+  const rc103: Rec0 = { id: acc % 1000, tag: 't103', score: acc % 100 };
+  acc = (acc + rc103.score) % 65521;
+  buf += rc103.tag;
+  buf += `q104:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0105'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 5702) % 65521;
+  acc = (acc * 31 + 3105) % 65521;
+  buf += (acc > 500 ? 'hi108' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 7113) % 65521;
+  const rc110: Rec0 = { id: acc % 1000, tag: 't110', score: acc % 100 };
+  acc = (acc + rc110.score) % 65521;
+  buf += rc110.tag;
+  acc = (acc * 31 + 7084) % 65521;
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi113' : 'lo') + acc.toString(16);
+  buf += 'portal114-' + acc.toString();
+  acc = acc + 611 - (acc % 59);
+  acc = acc + 812 - (acc % 30);
+  m01.set('k117', acc % 997);
+  for (let i118 = 0; i118 < 9; i118++) {
+    acc = (acc + i118 * 13 + 720) % 100003;
+  }
+  const rc119: Rec0 = { id: acc % 1000, tag: 't119', score: acc % 100 };
+  acc = (acc + rc119.score) % 65521;
+  buf += rc119.tag;
+  buf += 'shelf120-' + acc.toString();
+  const ix121: number = buf.indexOf('p0');
+  if (ix121 > 12) { buf = buf.substring(0, 32); } else if (ix121 >= 0) { buf += 'i'; }
+  const cf122: Array<(x: number) => number> = [];
+  cf122.push((x: number): number => (x * 3 + acc) % 65521);
+  cf122.push((x: number): number => (x + 28) % 10007);
+  acc = cf122[acc & 1](acc % 9973);
+  const t0123: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0123;
+  m01.set('k124', acc % 997);
+  const rc125: Rec0 = { id: acc % 1000, tag: 't125', score: acc % 100 };
+  acc = (acc + rc125.score) % 65521;
+  buf += rc125.tag;
+  if (acc % 31 === 0) { buf += 'even126'; } else { buf += 'odd'; }
+  let w127: number = acc % 23;
+  while (w127 > 4) { w127 = Math.floor(w127 / 2); }
+  acc += w127;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-128'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  let w129: number = acc % 23;
+  while (w129 > 4) { w129 = Math.floor(w129 / 2); }
+  acc += w129;
+  buf += 'waybill130-' + acc.toString();
+  const ix131: number = buf.indexOf('p0');
+  if (ix131 > 12) { buf = buf.substring(0, 32); } else if (ix131 >= 0) { buf += 'i'; }
+  const db132: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db132.length) % 65521;
+  const cf133: Array<(x: number) => number> = [];
+  cf133.push((x: number): number => (x * 3 + acc) % 65521);
+  cf133.push((x: number): number => (x + 183) % 10007);
+  acc = cf133[acc & 1](acc % 9973);
+  acc = acc + 247 - (acc % 24);
+  acc = (acc * 31 + 5355) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 18 === 0) { buf += 'even137'; } else { buf += 'odd'; }
+  const rc138: Rec0 = { id: acc % 1000, tag: 't138', score: acc % 100 };
+  acc = (acc + rc138.score) % 65521;
+  buf += rc138.tag;
+  let w139: number = acc % 23;
+  while (w139 > 4) { w139 = Math.floor(w139 / 2); }
+  acc += w139;
+  const cf140: Array<(x: number) => number> = [];
+  cf140.push((x: number): number => (x * 3 + acc) % 65521);
+  cf140.push((x: number): number => (x + 162) % 10007);
+  acc = cf140[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi141' : 'lo') + acc.toString(16);
+  const db142: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db142.length) % 65521;
+  const t0143: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0143;
+  let w144: number = acc % 23;
+  while (w144 > 4) { w144 = Math.floor(w144 / 2); }
+  acc += w144;
+  acc = (acc * 31 + 676) % 65521;
+  acc = (acc * 31 + 1180) % 65521;
+  const ix147: number = buf.indexOf('p0');
+  if (ix147 > 12) { buf = buf.substring(0, 32); } else if (ix147 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi148' : 'lo') + acc.toString(16);
+  for (let i149 = 0; i149 < 3; i149++) {
+    acc = (acc + i149 * 13 + 760) % 100003;
+  }
+  let w150: number = acc % 23;
+  while (w150 > 4) { w150 = Math.floor(w150 / 2); }
+  acc += w150;
+  const db151: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db151.length) % 65521;
+  buf += `q152:${acc % 97}`;
+  m01.set('k153', acc % 997);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi155' : 'lo') + acc.toString(16);
+  const db156: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db156.length) % 65521;
+  for (let i157 = 0; i157 < 7; i157++) {
+    acc = (acc + i157 * 13 + 934) % 100003;
+  }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-158'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x159');
+  if (acc % 14 === 0) { buf += 'even160'; } else { buf += 'odd'; }
+  const rc161: Rec0 = { id: acc % 1000, tag: 't161', score: acc % 100 };
+  acc = (acc + rc161.score) % 65521;
+  buf += rc161.tag;
+  const db162: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db162.length) % 65521;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-163'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix164: number = buf.indexOf('p0');
+  if (ix164 > 12) { buf = buf.substring(0, 32); } else if (ix164 >= 0) { buf += 'i'; }
+  m01.set('k165', acc % 997);
+  acc = acc + 482 - (acc % 70);
+  const ix167: number = buf.indexOf('p0');
+  if (ix167 > 12) { buf = buf.substring(0, 32); } else if (ix167 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's0168'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0169'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x170');
+  acc = acc + 435 - (acc % 45);
+  acc = acc + 61 - (acc % 57);
+  const t0173: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0173;
+  acc = (acc * 31 + 2074) % 65521;
+  acc = (acc * 31 + 7504) % 65521;
+  const rc176: Rec0 = { id: acc % 1000, tag: 't176', score: acc % 100 };
+  acc = (acc + rc176.score) % 65521;
+  buf += rc176.tag;
+  m01.set('k177', acc % 997);
+  const rc178: Rec0 = { id: acc % 1000, tag: 't178', score: acc % 100 };
+  acc = (acc + rc178.score) % 65521;
+  buf += rc178.tag;
+  const rc179: Rec0 = { id: acc % 1000, tag: 't179', score: acc % 100 };
+  acc = (acc + rc179.score) % 65521;
+  buf += rc179.tag;
+  if (acc % 10 === 0) { buf += 'even180'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's0181'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-182'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-183'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  let w184: number = acc % 23;
+  while (w184 > 4) { w184 = Math.floor(w184 / 2); }
+  acc += w184;
+  switch (acc & 3) {
+    case 0: buf += 's0185'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += `q186:${acc % 97}`;
+  const db187: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db187.length) % 65521;
+  buf += `q188:${acc % 97}`;
+  arr.push(acc % 1000);
+  const ix190: number = buf.indexOf('p0');
+  if (ix190 > 12) { buf = buf.substring(0, 32); } else if (ix190 >= 0) { buf += 'i'; }
+  let w191: number = acc % 23;
+  while (w191 > 4) { w191 = Math.floor(w191 / 2); }
+  acc += w191;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x192');
+  const rc193: Rec0 = { id: acc % 1000, tag: 't193', score: acc % 100 };
+  acc = (acc + rc193.score) % 65521;
+  buf += rc193.tag;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-194'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  const t0195: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0195;
+  acc = (acc * 31 + 5236) % 65521;
+  const t0197: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0197;
+  for (let i198 = 0; i198 < 9; i198++) {
+    acc = (acc + i198 * 13 + 888) % 100003;
+  }
+  let w199: number = acc % 23;
+  while (w199 > 4) { w199 = Math.floor(w199 / 2); }
+  acc += w199;
+  buf += 'journey200-' + acc.toString();
+  buf += (acc > 500 ? 'hi201' : 'lo') + acc.toString(16);
+  if (m01.has('k202')) {
+    const gv202: number = m01.get('k202') as number;
+    acc = (acc + gv202) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x203');
+  m01.set('k204', acc % 997);
+  const db205: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db205.length) % 65521;
+  buf += `q206:${acc % 97}`;
+  for (let i207 = 0; i207 < 8; i207++) {
+    acc = (acc + i207 * 13 + 305) % 100003;
+  }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-208'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix209: number = buf.indexOf('p0');
+  if (ix209 > 12) { buf = buf.substring(0, 32); } else if (ix209 >= 0) { buf += 'i'; }
+  if (acc % 24 === 0) { buf += 'even210'; } else { buf += 'odd'; }
+  const ix211: number = buf.indexOf('p0');
+  if (ix211 > 12) { buf = buf.substring(0, 32); } else if (ix211 >= 0) { buf += 'i'; }
+  if (m01.has('k212')) {
+    const gv212: number = m01.get('k212') as number;
+    acc = (acc + gv212) % 10007;
+  }
+  for (let i213 = 0; i213 < 4; i213++) {
+    acc = (acc + i213 * 13 + 767) % 100003;
+  }
+  try { if (acc % 29 === 8) { throw new Error('synthetic-214'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i215 = 0; i215 < 6; i215++) {
+    acc = (acc + i215 * 13 + 653) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x216');
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's0218'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-220'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  const db221: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db221.length) % 65521;
+  const db222: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db222.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x223');
+  const ix224: number = buf.indexOf('p0');
+  if (ix224 > 12) { buf = buf.substring(0, 32); } else if (ix224 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  if (acc % 26 === 0) { buf += 'even226'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's0227'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const db228: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db228.length) % 65521;
+  const db229: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db229.length) % 65521;
+  buf += (acc > 500 ? 'hi230' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-231'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 4138) % 65521;
+  buf += (acc > 500 ? 'hi233' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi235' : 'lo') + acc.toString(16);
+  acc = acc + 765 - (acc % 49);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-237'); } acc += 59; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf238: Array<(x: number) => number> = [];
+  cf238.push((x: number): number => (x * 3 + acc) % 65521);
+  cf238.push((x: number): number => (x + 100) % 10007);
+  acc = cf238[acc & 1](acc % 9973);
+  const rc239: Rec0 = { id: acc % 1000, tag: 't239', score: acc % 100 };
+  acc = (acc + rc239.score) % 65521;
+  buf += rc239.tag;
+  buf += `q240:${acc % 97}`;
+  const cf241: Array<(x: number) => number> = [];
+  cf241.push((x: number): number => (x * 3 + acc) % 65521);
+  cf241.push((x: number): number => (x + 143) % 10007);
+  acc = cf241[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's0242'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 2950) % 65521;
+  const cf244: Array<(x: number) => number> = [];
+  cf244.push((x: number): number => (x * 3 + acc) % 65521);
+  cf244.push((x: number): number => (x + 182) % 10007);
+  acc = cf244[acc & 1](acc % 9973);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-245'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 2433) % 65521;
+  const ix247: number = buf.indexOf('p0');
+  if (ix247 > 12) { buf = buf.substring(0, 32); } else if (ix247 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-248'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i249 = 0; i249 < 6; i249++) {
+    acc = (acc + i249 * 13 + 299) % 100003;
+  }
+  acc = acc + 57 - (acc % 23);
+  const cf251: Array<(x: number) => number> = [];
+  cf251.push((x: number): number => (x * 3 + acc) % 65521);
+  cf251.push((x: number): number => (x + 94) % 10007);
+  acc = cf251[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi252' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 286) % 65521;
+  buf += `q254:${acc % 97}`;
+  try { if (acc % 29 === 18) { throw new Error('synthetic-255'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc256: Rec0 = { id: acc % 1000, tag: 't256', score: acc % 100 };
+  acc = (acc + rc256.score) % 65521;
+  buf += rc256.tag;
+  const cf257: Array<(x: number) => number> = [];
+  cf257.push((x: number): number => (x * 3 + acc) % 65521);
+  cf257.push((x: number): number => (x + 137) % 10007);
+  acc = cf257[acc & 1](acc % 9973);
+  buf += `q258:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0259'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  buf += 'pickup260-' + acc.toString();
+  const t0261: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0261;
+  m01.set('k262', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's0263'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += 'invoice264-' + acc.toString();
+  acc = (acc * 31 + 5146) % 65521;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-266'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'pickup267-' + acc.toString();
+  buf += (acc > 500 ? 'hi268' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi269' : 'lo') + acc.toString(16);
+  buf += 'tariff270-' + acc.toString();
+  if (acc % 20 === 0) { buf += 'even271'; } else { buf += 'odd'; }
+  const t0272: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0272;
+  if (acc % 16 === 0) { buf += 'even273'; } else { buf += 'odd'; }
+  for (let i274 = 0; i274 < 9; i274++) {
+    acc = (acc + i274 * 13 + 545) % 100003;
+  }
+  buf += (acc > 500 ? 'hi275' : 'lo') + acc.toString(16);
+  const db276: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db276.length) % 65521;
+  buf += (acc > 500 ? 'hi277' : 'lo') + acc.toString(16);
+  const rc278: Rec0 = { id: acc % 1000, tag: 't278', score: acc % 100 };
+  acc = (acc + rc278.score) % 65521;
+  buf += rc278.tag;
+  const db279: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db279.length) % 65521;
+  acc = acc + 305 - (acc % 7);
+  arr.push(acc % 1000);
+  let w282: number = acc % 23;
+  while (w282 > 4) { w282 = Math.floor(w282 / 2); }
+  acc += w282;
+  const t0283: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0283;
+  switch (acc & 3) {
+    case 0: buf += 's0284'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-285'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's0286'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const t0287: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0287;
+  const db288: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db288.length) % 65521;
+  const db289: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db289.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x290');
+  let w291: number = acc % 23;
+  while (w291 > 4) { w291 = Math.floor(w291 / 2); }
+  acc += w291;
+  const t0292: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0292;
+  for (let i293 = 0; i293 < 5; i293++) {
+    acc = (acc + i293 * 13 + 144) % 100003;
+  }
+  const t0294: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0294;
+  if (acc % 5 === 0) { buf += 'even295'; } else { buf += 'odd'; }
+  acc = acc + 659 - (acc % 43);
+  arr.push(acc % 1000);
+  if (acc % 15 === 0) { buf += 'even298'; } else { buf += 'odd'; }
+  const rc299: Rec0 = { id: acc % 1000, tag: 't299', score: acc % 100 };
+  acc = (acc + rc299.score) % 65521;
+  buf += rc299.tag;
+  const t0300: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0300;
+  switch (acc & 3) {
+    case 0: buf += 's0301'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-302'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k303', acc % 997);
+  if (acc % 30 === 0) { buf += 'even304'; } else { buf += 'odd'; }
+  const t0305: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0305;
+  buf += (acc > 500 ? 'hi306' : 'lo') + acc.toString(16);
+  if (acc % 11 === 0) { buf += 'even307'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-308'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q309:${acc % 97}`;
+  buf += (acc > 500 ? 'hi310' : 'lo') + acc.toString(16);
+  if (acc % 24 === 0) { buf += 'even311'; } else { buf += 'odd'; }
+  acc = acc + 459 - (acc % 31);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x314');
+  acc = (acc * 31 + 9836) % 65521;
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 4918) % 65521;
+  for (let i318 = 0; i318 < 12; i318++) {
+    acc = (acc + i318 * 13 + 669) % 100003;
+  }
+  arr.push(acc % 1000);
+  buf += 'warehouse320-' + acc.toString();
+  let w321: number = acc % 23;
+  while (w321 > 4) { w321 = Math.floor(w321 / 2); }
+  acc += w321;
+  buf += `q322:${acc % 97}`;
+  m01.set('k323', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's0324'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  m01.set('k325', acc % 997);
+  let w326: number = acc % 23;
+  while (w326 > 4) { w326 = Math.floor(w326 / 2); }
+  acc += w326;
+  const db327: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db327.length) % 65521;
+  m01.set('k328', acc % 997);
+  let w329: number = acc % 23;
+  while (w329 > 4) { w329 = Math.floor(w329 / 2); }
+  acc += w329;
+  acc = acc + 434 - (acc % 60);
+  buf += `q331:${acc % 97}`;
+  const db332: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db332.length) % 65521;
+  for (let i333 = 0; i333 < 5; i333++) {
+    acc = (acc + i333 * 13 + 982) % 100003;
+  }
+  const cf334: Array<(x: number) => number> = [];
+  cf334.push((x: number): number => (x * 3 + acc) % 65521);
+  cf334.push((x: number): number => (x + 112) % 10007);
+  acc = cf334[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi335' : 'lo') + acc.toString(16);
+  m01.set('k336', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x337');
+  acc = (acc * 31 + 9055) % 65521;
+  buf += (acc > 500 ? 'hi339' : 'lo') + acc.toString(16);
+  buf += 'transit340-' + acc.toString();
+  const cf341: Array<(x: number) => number> = [];
+  cf341.push((x: number): number => (x * 3 + acc) % 65521);
+  cf341.push((x: number): number => (x + 37) % 10007);
+  acc = cf341[acc & 1](acc % 9973);
+  if (acc % 26 === 0) { buf += 'even342'; } else { buf += 'odd'; }
+  buf += 'region343-' + acc.toString();
+  const ix344: number = buf.indexOf('p0');
+  if (ix344 > 12) { buf = buf.substring(0, 32); } else if (ix344 >= 0) { buf += 'i'; }
+  buf += `q345:${acc % 97}`;
+  m01.set('k346', acc % 997);
+  acc = (acc * 31 + 8834) % 65521;
+  if (m01.has('k348')) {
+    const gv348: number = m01.get('k348') as number;
+    acc = (acc + gv348) % 10007;
+  }
+  buf += `q349:${acc % 97}`;
+  const db350: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db350.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's0351'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const db352: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db352.length) % 65521;
+  let w353: number = acc % 23;
+  while (w353 > 4) { w353 = Math.floor(w353 / 2); }
+  acc += w353;
+  buf += 'warehouse354-' + acc.toString();
+  const db355: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db355.length) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 13 === 0) { buf += 'even357'; } else { buf += 'odd'; }
+  const t0358: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0358;
+  buf += `q359:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0360'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const db361: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db361.length) % 65521;
+  m01.set('k362', acc % 997);
+  for (let i363 = 0; i363 < 5; i363++) {
+    acc = (acc + i363 * 13 + 934) % 100003;
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-364'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'depot365-' + acc.toString();
+  acc = (acc * 31 + 2898) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's0367'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += `q368:${acc % 97}`;
+  const rc369: Rec0 = { id: acc % 1000, tag: 't369', score: acc % 100 };
+  acc = (acc + rc369.score) % 65521;
+  buf += rc369.tag;
+  for (let i370 = 0; i370 < 10; i370++) {
+    acc = (acc + i370 * 13 + 527) % 100003;
+  }
+  buf += (acc > 500 ? 'hi371' : 'lo') + acc.toString(16);
+  if (acc % 16 === 0) { buf += 'even372'; } else { buf += 'odd'; }
+  for (let i373 = 0; i373 < 9; i373++) {
+    acc = (acc + i373 * 13 + 708) % 100003;
+  }
+  const rc374: Rec0 = { id: acc % 1000, tag: 't374', score: acc % 100 };
+  acc = (acc + rc374.score) % 65521;
+  buf += rc374.tag;
+  acc = (acc * 31 + 3447) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x376');
+  acc = acc + 501 - (acc % 15);
+  let w378: number = acc % 23;
+  while (w378 > 4) { w378 = Math.floor(w378 / 2); }
+  acc += w378;
+  const rc379: Rec0 = { id: acc % 1000, tag: 't379', score: acc % 100 };
+  acc = (acc + rc379.score) % 65521;
+  buf += rc379.tag;
+  const t0380: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0380;
+  const cf381: Array<(x: number) => number> = [];
+  cf381.push((x: number): number => (x * 3 + acc) % 65521);
+  cf381.push((x: number): number => (x + 126) % 10007);
+  acc = cf381[acc & 1](acc % 9973);
+  let w382: number = acc % 23;
+  while (w382 > 4) { w382 = Math.floor(w382 / 2); }
+  acc += w382;
+  buf += (acc > 500 ? 'hi383' : 'lo') + acc.toString(16);
+  const cf384: Array<(x: number) => number> = [];
+  cf384.push((x: number): number => (x * 3 + acc) % 65521);
+  cf384.push((x: number): number => (x + 156) % 10007);
+  acc = cf384[acc & 1](acc % 9973);
+  buf += `q385:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0386'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += `q387:${acc % 97}`;
+  for (let i388 = 0; i388 < 7; i388++) {
+    acc = (acc + i388 * 13 + 594) % 100003;
+  }
+  if (m01.has('k389')) {
+    const gv389: number = m01.get('k389') as number;
+    acc = (acc + gv389) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0390'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 664 - (acc % 83);
+  m01.set('k392', acc % 997);
+  if (acc % 10 === 0) { buf += 'even393'; } else { buf += 'odd'; }
+  const ix394: number = buf.indexOf('p0');
+  if (ix394 > 12) { buf = buf.substring(0, 32); } else if (ix394 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  for (let i396 = 0; i396 < 6; i396++) {
+    acc = (acc + i396 * 13 + 932) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0397'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi398' : 'lo') + acc.toString(16);
+  buf += 'carrier399-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x400');
+  switch (acc & 3) {
+    case 0: buf += 's0401'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const cf402: Array<(x: number) => number> = [];
+  cf402.push((x: number): number => (x * 3 + acc) % 65521);
+  cf402.push((x: number): number => (x + 158) % 10007);
+  acc = cf402[acc & 1](acc % 9973);
+  const db403: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db403.length) % 65521;
+  arr.push(acc % 1000);
+  buf += 'ticket405-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's0406'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  const cf407: Array<(x: number) => number> = [];
+  cf407.push((x: number): number => (x * 3 + acc) % 65521);
+  cf407.push((x: number): number => (x + 105) % 10007);
+  acc = cf407[acc & 1](acc % 9973);
+  const ix408: number = buf.indexOf('p0');
+  if (ix408 > 12) { buf = buf.substring(0, 32); } else if (ix408 >= 0) { buf += 'i'; }
+  const t0409: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0409;
+  let w410: number = acc % 23;
+  while (w410 > 4) { w410 = Math.floor(w410 / 2); }
+  acc += w410;
+  const ix411: number = buf.indexOf('p0');
+  if (ix411 > 12) { buf = buf.substring(0, 32); } else if (ix411 >= 0) { buf += 'i'; }
+  if (acc % 8 === 0) { buf += 'even412'; } else { buf += 'odd'; }
+  const db413: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db413.length) % 65521;
+  buf += 'refund414-' + acc.toString();
+  const t0415: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0415;
+  const ix416: number = buf.indexOf('p0');
+  if (ix416 > 12) { buf = buf.substring(0, 32); } else if (ix416 >= 0) { buf += 'i'; }
+  acc = acc + 191 - (acc % 69);
+  const ix418: number = buf.indexOf('p0');
+  if (ix418 > 12) { buf = buf.substring(0, 32); } else if (ix418 >= 0) { buf += 'i'; }
+  const ix419: number = buf.indexOf('p0');
+  if (ix419 > 12) { buf = buf.substring(0, 32); } else if (ix419 >= 0) { buf += 'i'; }
+  buf += 'carrier420-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 9514) % 65521;
+  const ix423: number = buf.indexOf('p0');
+  if (ix423 > 12) { buf = buf.substring(0, 32); } else if (ix423 >= 0) { buf += 'i'; }
+  buf += `q424:${acc % 97}`;
+  arr.push(acc % 1000);
+  if (acc % 28 === 0) { buf += 'even426'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi427' : 'lo') + acc.toString(16);
+  buf += `q428:${acc % 97}`;
+  if (acc % 28 === 0) { buf += 'even429'; } else { buf += 'odd'; }
+  for (let i430 = 0; i430 < 6; i430++) {
+    acc = (acc + i430 * 13 + 827) % 100003;
+  }
+  let w431: number = acc % 23;
+  while (w431 > 4) { w431 = Math.floor(w431 / 2); }
+  acc += w431;
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 1595) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x434');
+  buf += (acc > 500 ? 'hi435' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const rc437: Rec0 = { id: acc % 1000, tag: 't437', score: acc % 100 };
+  acc = (acc + rc437.score) % 65521;
+  buf += rc437.tag;
+  const db438: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db438.length) % 65521;
+  buf += 'ledger439-' + acc.toString();
+  const t0440: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0440;
+  m01.set('k441', acc % 997);
+  const cf442: Array<(x: number) => number> = [];
+  cf442.push((x: number): number => (x * 3 + acc) % 65521);
+  cf442.push((x: number): number => (x + 141) % 10007);
+  acc = cf442[acc & 1](acc % 9973);
+  const t0443: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0443;
+  acc = (acc * 31 + 9765) % 65521;
+  arr.push(acc % 1000);
+  const ix446: number = buf.indexOf('p0');
+  if (ix446 > 12) { buf = buf.substring(0, 32); } else if (ix446 >= 0) { buf += 'i'; }
+  const rc447: Rec0 = { id: acc % 1000, tag: 't447', score: acc % 100 };
+  acc = (acc + rc447.score) % 65521;
+  buf += rc447.tag;
+  switch (acc & 3) {
+    case 0: buf += 's0448'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const ix449: number = buf.indexOf('p0');
+  if (ix449 > 12) { buf = buf.substring(0, 32); } else if (ix449 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3615) % 65521;
+  m01.set('k451', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x452');
+  switch (acc & 3) {
+    case 0: buf += 's0453'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0454'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const cf455: Array<(x: number) => number> = [];
+  cf455.push((x: number): number => (x * 3 + acc) % 65521);
+  cf455.push((x: number): number => (x + 183) % 10007);
+  acc = cf455[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  acc = acc + 259 - (acc % 53);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const t0460: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0460;
+  let w461: number = acc % 23;
+  while (w461 > 4) { w461 = Math.floor(w461 / 2); }
+  acc += w461;
+  buf += `q462:${acc % 97}`;
+  const t0463: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0463;
+  acc = (acc * 31 + 464) % 65521;
+  acc = acc + 276 - (acc % 92);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi467' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi468' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 9318) % 65521;
+  buf += (acc > 500 ? 'hi470' : 'lo') + acc.toString(16);
+  if (m01.has('k471')) {
+    const gv471: number = m01.get('k471') as number;
+    acc = (acc + gv471) % 10007;
+  }
+  let w472: number = acc % 23;
+  while (w472 > 4) { w472 = Math.floor(w472 / 2); }
+  acc += w472;
+  acc = acc + 935 - (acc % 88);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x474');
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's0476'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k477')) {
+    const gv477: number = m01.get('k477') as number;
+    acc = (acc + gv477) % 10007;
+  }
+  buf += 'sku478-' + acc.toString();
+  for (let i479 = 0; i479 < 10; i479++) {
+    acc = (acc + i479 * 13 + 933) % 100003;
+  }
+  arr.push(acc % 1000);
+  m01.set('k481', acc % 997);
+  acc = acc + 701 - (acc % 62);
+  m01.set('k483', acc % 997);
+  const t0484: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0484;
+  if (acc % 14 === 0) { buf += 'even485'; } else { buf += 'odd'; }
+  m01.set('k486', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's0487'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x489');
+  const t0490: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0490;
+  buf += 'pickup491-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's0492'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const cf493: Array<(x: number) => number> = [];
+  cf493.push((x: number): number => (x * 3 + acc) % 65521);
+  cf493.push((x: number): number => (x + 49) % 10007);
+  acc = cf493[acc & 1](acc % 9973);
+  if (m01.has('k494')) {
+    const gv494: number = m01.get('k494') as number;
+    acc = (acc + gv494) % 10007;
+  }
+  for (let i495 = 0; i495 < 7; i495++) {
+    acc = (acc + i495 * 13 + 881) % 100003;
+  }
+  buf += 'routeplan496-' + acc.toString();
+  acc = acc + 947 - (acc % 14);
+  switch (acc & 3) {
+    case 0: buf += 's0498'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  if (acc % 16 === 0) { buf += 'even499'; } else { buf += 'odd'; }
+  if (acc % 6 === 0) { buf += 'even500'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x501');
+  let w502: number = acc % 23;
+  while (w502 > 4) { w502 = Math.floor(w502 / 2); }
+  acc += w502;
+  acc = acc + 420 - (acc % 77);
+  buf += `q504:${acc % 97}`;
+  acc = acc + 654 - (acc % 7);
+  const db506: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db506.length) % 65521;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-507'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i508 = 0; i508 < 7; i508++) {
+    acc = (acc + i508 * 13 + 191) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0509'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  for (let i510 = 0; i510 < 8; i510++) {
+    acc = (acc + i510 * 13 + 220) % 100003;
+  }
+  let w511: number = acc % 23;
+  while (w511 > 4) { w511 = Math.floor(w511 / 2); }
+  acc += w511;
+  const t0512: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0512;
+  buf += (acc > 500 ? 'hi513' : 'lo') + acc.toString(16);
+  const db514: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db514.length) % 65521;
+  const ix515: number = buf.indexOf('p0');
+  if (ix515 > 12) { buf = buf.substring(0, 32); } else if (ix515 >= 0) { buf += 'i'; }
+  if (acc % 7 === 0) { buf += 'even516'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's0517'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += 'invoice518-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's0519'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x521');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x522');
+  const t0523: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0523;
+  arr.push(acc % 1000);
+  const cf525: Array<(x: number) => number> = [];
+  cf525.push((x: number): number => (x * 3 + acc) % 65521);
+  cf525.push((x: number): number => (x + 157) % 10007);
+  acc = cf525[acc & 1](acc % 9973);
+  if (acc % 16 === 0) { buf += 'even526'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-527'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q528:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0529'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const t0530: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0530;
+  buf += `q531:${acc % 97}`;
+  buf += (acc > 500 ? 'hi532' : 'lo') + acc.toString(16);
+  buf += 'refund533-' + acc.toString();
+  const rc534: Rec0 = { id: acc % 1000, tag: 't534', score: acc % 100 };
+  acc = (acc + rc534.score) % 65521;
+  buf += rc534.tag;
+  m01.set('k535', acc % 997);
+  let w536: number = acc % 23;
+  while (w536 > 4) { w536 = Math.floor(w536 / 2); }
+  acc += w536;
+  try { if (acc % 29 === 9) { throw new Error('synthetic-537'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i538 = 0; i538 < 10; i538++) {
+    acc = (acc + i538 * 13 + 101) % 100003;
+  }
+  if (m01.has('k539')) {
+    const gv539: number = m01.get('k539') as number;
+    acc = (acc + gv539) % 10007;
+  }
+  buf += 'vendor540-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's0541'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k542')) {
+    const gv542: number = m01.get('k542') as number;
+    acc = (acc + gv542) % 10007;
+  }
+  if (m01.has('k543')) {
+    const gv543: number = m01.get('k543') as number;
+    acc = (acc + gv543) % 10007;
+  }
+  const rc544: Rec0 = { id: acc % 1000, tag: 't544', score: acc % 100 };
+  acc = (acc + rc544.score) % 65521;
+  buf += rc544.tag;
+  if (acc % 31 === 0) { buf += 'even545'; } else { buf += 'odd'; }
+  if (m01.has('k546')) {
+    const gv546: number = m01.get('k546') as number;
+    acc = (acc + gv546) % 10007;
+  }
+  const cf547: Array<(x: number) => number> = [];
+  cf547.push((x: number): number => (x * 3 + acc) % 65521);
+  cf547.push((x: number): number => (x + 115) % 10007);
+  acc = cf547[acc & 1](acc % 9973);
+  for (let i548 = 0; i548 < 7; i548++) {
+    acc = (acc + i548 * 13 + 159) % 100003;
+  }
+  let w549: number = acc % 23;
+  while (w549 > 4) { w549 = Math.floor(w549 / 2); }
+  acc += w549;
+  for (let i550 = 0; i550 < 8; i550++) {
+    acc = (acc + i550 * 13 + 460) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0551'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  buf += 'carrier552-' + acc.toString();
+  const ix553: number = buf.indexOf('p0');
+  if (ix553 > 12) { buf = buf.substring(0, 32); } else if (ix553 >= 0) { buf += 'i'; }
+  const cf554: Array<(x: number) => number> = [];
+  cf554.push((x: number): number => (x * 3 + acc) % 65521);
+  cf554.push((x: number): number => (x + 102) % 10007);
+  acc = cf554[acc & 1](acc % 9973);
+  acc = acc + 698 - (acc % 30);
+  const db556: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db556.length) % 65521;
+  buf += 'ledger557-' + acc.toString();
+  const rc558: Rec0 = { id: acc % 1000, tag: 't558', score: acc % 100 };
+  acc = (acc + rc558.score) % 65521;
+  buf += rc558.tag;
+  for (let i559 = 0; i559 < 10; i559++) {
+    acc = (acc + i559 * 13 + 412) % 100003;
+  }
+  acc = (acc * 31 + 2055) % 65521;
+  if (acc % 20 === 0) { buf += 'even561'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x562');
+  buf += `q563:${acc % 97}`;
+  if (m01.has('k564')) {
+    const gv564: number = m01.get('k564') as number;
+    acc = (acc + gv564) % 10007;
+  }
+  arr.push(acc % 1000);
+  buf += 'portal566-' + acc.toString();
+  const t0567: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0567;
+  acc = (acc * 31 + 5020) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's0569'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const cf570: Array<(x: number) => number> = [];
+  cf570.push((x: number): number => (x * 3 + acc) % 65521);
+  cf570.push((x: number): number => (x + 95) % 10007);
+  acc = cf570[acc & 1](acc % 9973);
+  buf += `q571:${acc % 97}`;
+  acc = (acc * 31 + 1035) % 65521;
+  if (acc % 23 === 0) { buf += 'even573'; } else { buf += 'odd'; }
+  if (m01.has('k574')) {
+    const gv574: number = m01.get('k574') as number;
+    acc = (acc + gv574) % 10007;
+  }
+  buf += `q575:${acc % 97}`;
+  acc = (acc * 31 + 5220) % 65521;
+  const ix577: number = buf.indexOf('p0');
+  if (ix577 > 12) { buf = buf.substring(0, 32); } else if (ix577 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x578');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x579');
+  const t0580: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0580;
+  m01.set('k581', acc % 997);
+  acc = (acc * 31 + 3406) % 65521;
+  buf += 'warehouse583-' + acc.toString();
+  const t0584: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0584;
+  acc = acc + 711 - (acc % 37);
+  const t0586: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0586;
+  buf += (acc > 500 ? 'hi587' : 'lo') + acc.toString(16);
+  const db588: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db588.length) % 65521;
+  const cf589: Array<(x: number) => number> = [];
+  cf589.push((x: number): number => (x * 3 + acc) % 65521);
+  cf589.push((x: number): number => (x + 108) % 10007);
+  acc = cf589[acc & 1](acc % 9973);
+  const ix590: number = buf.indexOf('p0');
+  if (ix590 > 12) { buf = buf.substring(0, 32); } else if (ix590 >= 0) { buf += 'i'; }
+  const t0591: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0591;
+  switch (acc & 3) {
+    case 0: buf += 's0592'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x593');
+  const cf594: Array<(x: number) => number> = [];
+  cf594.push((x: number): number => (x * 3 + acc) % 65521);
+  cf594.push((x: number): number => (x + 97) % 10007);
+  acc = cf594[acc & 1](acc % 9973);
+  if (m01.has('k595')) {
+    const gv595: number = m01.get('k595') as number;
+    acc = (acc + gv595) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0596'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0597'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const db598: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db598.length) % 65521;
+  const cf599: Array<(x: number) => number> = [];
+  cf599.push((x: number): number => (x * 3 + acc) % 65521);
+  cf599.push((x: number): number => (x + 157) % 10007);
+  acc = cf599[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's0600'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  if (acc % 27 === 0) { buf += 'even601'; } else { buf += 'odd'; }
+  if (acc % 26 === 0) { buf += 'even602'; } else { buf += 'odd'; }
+  acc = acc + 100 - (acc % 58);
+  buf += (acc > 500 ? 'hi604' : 'lo') + acc.toString(16);
+  buf += 'vendor605-' + acc.toString();
+  try { if (acc % 29 === 3) { throw new Error('synthetic-606'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf607: Array<(x: number) => number> = [];
+  cf607.push((x: number): number => (x * 3 + acc) % 65521);
+  cf607.push((x: number): number => (x + 61) % 10007);
+  acc = cf607[acc & 1](acc % 9973);
+  const cf608: Array<(x: number) => number> = [];
+  cf608.push((x: number): number => (x * 3 + acc) % 65521);
+  cf608.push((x: number): number => (x + 131) % 10007);
+  acc = cf608[acc & 1](acc % 9973);
+  const rc609: Rec0 = { id: acc % 1000, tag: 't609', score: acc % 100 };
+  acc = (acc + rc609.score) % 65521;
+  buf += rc609.tag;
+  let w610: number = acc % 23;
+  while (w610 > 4) { w610 = Math.floor(w610 / 2); }
+  acc += w610;
+  acc = acc + 484 - (acc % 25);
+  buf += 'region612-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's0613'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  for (let i614 = 0; i614 < 6; i614++) {
+    acc = (acc + i614 * 13 + 562) % 100003;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-615'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's0616'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k617')) {
+    const gv617: number = m01.get('k617') as number;
+    acc = (acc + gv617) % 10007;
+  }
+  for (let i618 = 0; i618 < 3; i618++) {
+    acc = (acc + i618 * 13 + 869) % 100003;
+  }
+  acc = acc + 198 - (acc % 26);
+  buf += `q620:${acc % 97}`;
+  buf += `q621:${acc % 97}`;
+  const ix622: number = buf.indexOf('p0');
+  if (ix622 > 12) { buf = buf.substring(0, 32); } else if (ix622 >= 0) { buf += 'i'; }
+  const rc623: Rec0 = { id: acc % 1000, tag: 't623', score: acc % 100 };
+  acc = (acc + rc623.score) % 65521;
+  buf += rc623.tag;
+  arr.push(acc % 1000);
+  const t0625: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0625;
+  buf += `q626:${acc % 97}`;
+  buf += (acc > 500 ? 'hi627' : 'lo') + acc.toString(16);
+  buf += `q628:${acc % 97}`;
+  const ix629: number = buf.indexOf('p0');
+  if (ix629 > 12) { buf = buf.substring(0, 32); } else if (ix629 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-630'); } acc += 47; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x631');
+  if (acc % 14 === 0) { buf += 'even632'; } else { buf += 'odd'; }
+  if (acc % 8 === 0) { buf += 'even633'; } else { buf += 'odd'; }
+  if (acc % 8 === 0) { buf += 'even634'; } else { buf += 'odd'; }
+  m01.set('k635', acc % 997);
+  buf += 'pallet636-' + acc.toString();
+  buf += 'stocktake637-' + acc.toString();
+  buf += `q638:${acc % 97}`;
+  const ix639: number = buf.indexOf('p0');
+  if (ix639 > 12) { buf = buf.substring(0, 32); } else if (ix639 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's0640'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  m01.set('k641', acc % 997);
+  const cf642: Array<(x: number) => number> = [];
+  cf642.push((x: number): number => (x * 3 + acc) % 65521);
+  cf642.push((x: number): number => (x + 196) % 10007);
+  acc = cf642[acc & 1](acc % 9973);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-643'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 58 - (acc % 71);
+  buf += 'depot645-' + acc.toString();
+  let w646: number = acc % 23;
+  while (w646 > 4) { w646 = Math.floor(w646 / 2); }
+  acc += w646;
+  buf += 'waybill647-' + acc.toString();
+  const t0648: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0648;
+  for (let i649 = 0; i649 < 6; i649++) {
+    acc = (acc + i649 * 13 + 943) % 100003;
+  }
+  const ix650: number = buf.indexOf('p0');
+  if (ix650 > 12) { buf = buf.substring(0, 32); } else if (ix650 >= 0) { buf += 'i'; }
+  buf += 'order651-' + acc.toString();
+  buf += `q652:${acc % 97}`;
+  m01.set('k653', acc % 997);
+  for (let i654 = 0; i654 < 6; i654++) {
+    acc = (acc + i654 * 13 + 140) % 100003;
+  }
+  const db655: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db655.length) % 65521;
+  acc = acc + 616 - (acc % 88);
+  acc = acc + 171 - (acc % 88);
+  const db658: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db658.length) % 65521;
+  const rc659: Rec0 = { id: acc % 1000, tag: 't659', score: acc % 100 };
+  acc = (acc + rc659.score) % 65521;
+  buf += rc659.tag;
+  m01.set('k660', acc % 997);
+  const rc661: Rec0 = { id: acc % 1000, tag: 't661', score: acc % 100 };
+  acc = (acc + rc661.score) % 65521;
+  buf += rc661.tag;
+  m01.set('k662', acc % 997);
+  buf += (acc > 500 ? 'hi663' : 'lo') + acc.toString(16);
+  const db664: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db664.length) % 65521;
+  const ix665: number = buf.indexOf('p0');
+  if (ix665 > 12) { buf = buf.substring(0, 32); } else if (ix665 >= 0) { buf += 'i'; }
+  const cf666: Array<(x: number) => number> = [];
+  cf666.push((x: number): number => (x * 3 + acc) % 65521);
+  cf666.push((x: number): number => (x + 126) % 10007);
+  acc = cf666[acc & 1](acc % 9973);
+  if (acc % 18 === 0) { buf += 'even667'; } else { buf += 'odd'; }
+  if (acc % 22 === 0) { buf += 'even668'; } else { buf += 'odd'; }
+  acc = acc + 599 - (acc % 48);
+  if (acc % 7 === 0) { buf += 'even670'; } else { buf += 'odd'; }
+  const db671: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db671.length) % 65521;
+  if (acc % 25 === 0) { buf += 'even672'; } else { buf += 'odd'; }
+  const t0673: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0673;
+  let w674: number = acc % 23;
+  while (w674 > 4) { w674 = Math.floor(w674 / 2); }
+  acc += w674;
+  acc = (acc * 31 + 7428) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's0676'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 317 - (acc % 61);
+  buf += `q678:${acc % 97}`;
+  let w679: number = acc % 23;
+  while (w679 > 4) { w679 = Math.floor(w679 / 2); }
+  acc += w679;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-680'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi681' : 'lo') + acc.toString(16);
+  const db682: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db682.length) % 65521;
+  const db683: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db683.length) % 65521;
+  m01.set('k684', acc % 997);
+  const t0685: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0685;
+  acc = acc + 774 - (acc % 81);
+  const t0687: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0687;
+  if (acc % 15 === 0) { buf += 'even688'; } else { buf += 'odd'; }
+  for (let i689 = 0; i689 < 6; i689++) {
+    acc = (acc + i689 * 13 + 882) % 100003;
+  }
+  m01.set('k690', acc % 997);
+  const ix691: number = buf.indexOf('p0');
+  if (ix691 > 12) { buf = buf.substring(0, 32); } else if (ix691 >= 0) { buf += 'i'; }
+  const rc692: Rec0 = { id: acc % 1000, tag: 't692', score: acc % 100 };
+  acc = (acc + rc692.score) % 65521;
+  buf += rc692.tag;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-694'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  const t0695: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0695;
+  acc = (acc * 31 + 1287) % 65521;
+  buf += `q697:${acc % 97}`;
+  const ix698: number = buf.indexOf('p0');
+  if (ix698 > 12) { buf = buf.substring(0, 32); } else if (ix698 >= 0) { buf += 'i'; }
+  m01.set('k699', acc % 997);
+  const cf700: Array<(x: number) => number> = [];
+  cf700.push((x: number): number => (x * 3 + acc) % 65521);
+  cf700.push((x: number): number => (x + 67) % 10007);
+  acc = cf700[acc & 1](acc % 9973);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-701'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  let w702: number = acc % 23;
+  while (w702 > 4) { w702 = Math.floor(w702 / 2); }
+  acc += w702;
+  const ix703: number = buf.indexOf('p0');
+  if (ix703 > 12) { buf = buf.substring(0, 32); } else if (ix703 >= 0) { buf += 'i'; }
+  if (acc % 16 === 0) { buf += 'even704'; } else { buf += 'odd'; }
+  buf += 'client705-' + acc.toString();
+  const ix706: number = buf.indexOf('p0');
+  if (ix706 > 12) { buf = buf.substring(0, 32); } else if (ix706 >= 0) { buf += 'i'; }
+  if (m01.has('k707')) {
+    const gv707: number = m01.get('k707') as number;
+    acc = (acc + gv707) % 10007;
+  }
+  arr.push(acc % 1000);
+  let w709: number = acc % 23;
+  while (w709 > 4) { w709 = Math.floor(w709 / 2); }
+  acc += w709;
+  let w710: number = acc % 23;
+  while (w710 > 4) { w710 = Math.floor(w710 / 2); }
+  acc += w710;
+  m01.set('k711', acc % 997);
+  let w712: number = acc % 23;
+  while (w712 > 4) { w712 = Math.floor(w712 / 2); }
+  acc += w712;
+  buf += `q713:${acc % 97}`;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-714'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q715:${acc % 97}`;
+  const db716: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db716.length) % 65521;
+  buf += 'payout717-' + acc.toString();
+  const rc718: Rec0 = { id: acc % 1000, tag: 't718', score: acc % 100 };
+  acc = (acc + rc718.score) % 65521;
+  buf += rc718.tag;
+  acc = (acc * 31 + 7015) % 65521;
+  acc = acc + 131 - (acc % 44);
+  buf += 'shelf721-' + acc.toString();
+  for (let i722 = 0; i722 < 10; i722++) {
+    acc = (acc + i722 * 13 + 491) % 100003;
+  }
+  if (acc % 23 === 0) { buf += 'even723'; } else { buf += 'odd'; }
+  const ix724: number = buf.indexOf('p0');
+  if (ix724 > 12) { buf = buf.substring(0, 32); } else if (ix724 >= 0) { buf += 'i'; }
+  const db725: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db725.length) % 65521;
+  buf += (acc > 500 ? 'hi726' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 232) % 65521;
+  const cf728: Array<(x: number) => number> = [];
+  cf728.push((x: number): number => (x * 3 + acc) % 65521);
+  cf728.push((x: number): number => (x + 56) % 10007);
+  acc = cf728[acc & 1](acc % 9973);
+  if (m01.has('k729')) {
+    const gv729: number = m01.get('k729') as number;
+    acc = (acc + gv729) % 10007;
+  }
+  buf += 'order730-' + acc.toString();
+  const ix731: number = buf.indexOf('p0');
+  if (ix731 > 12) { buf = buf.substring(0, 32); } else if (ix731 >= 0) { buf += 'i'; }
+  buf += `q732:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0733'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  buf += 'tariff734-' + acc.toString();
+  if (acc % 12 === 0) { buf += 'even735'; } else { buf += 'odd'; }
+  let w736: number = acc % 23;
+  while (w736 > 4) { w736 = Math.floor(w736 / 2); }
+  acc += w736;
+  switch (acc & 3) {
+    case 0: buf += 's0737'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const t0738: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0738;
+  if (m01.has('k739')) {
+    const gv739: number = m01.get('k739') as number;
+    acc = (acc + gv739) % 10007;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-740'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix741: number = buf.indexOf('p0');
+  if (ix741 > 12) { buf = buf.substring(0, 32); } else if (ix741 >= 0) { buf += 'i'; }
+  acc = acc + 676 - (acc % 85);
+  acc = (acc * 31 + 8017) % 65521;
+  const cf744: Array<(x: number) => number> = [];
+  cf744.push((x: number): number => (x * 3 + acc) % 65521);
+  cf744.push((x: number): number => (x + 44) % 10007);
+  acc = cf744[acc & 1](acc % 9973);
+  acc = (acc * 31 + 3605) % 65521;
+  const ix746: number = buf.indexOf('p0');
+  if (ix746 > 12) { buf = buf.substring(0, 32); } else if (ix746 >= 0) { buf += 'i'; }
+  acc = acc + 375 - (acc % 50);
+  m01.set('k748', acc % 997);
+  acc = (acc * 31 + 8920) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x750');
+  let w751: number = acc % 23;
+  while (w751 > 4) { w751 = Math.floor(w751 / 2); }
+  acc += w751;
+  if (m01.has('k752')) {
+    const gv752: number = m01.get('k752') as number;
+    acc = (acc + gv752) % 10007;
+  }
+  buf += (acc > 500 ? 'hi753' : 'lo') + acc.toString(16);
+  let w754: number = acc % 23;
+  while (w754 > 4) { w754 = Math.floor(w754 / 2); }
+  acc += w754;
+  m01.set('k755', acc % 997);
+  buf += `q756:${acc % 97}`;
+  for (let i757 = 0; i757 < 12; i757++) {
+    acc = (acc + i757 * 13 + 199) % 100003;
+  }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-758'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 8373) % 65521;
+  let w760: number = acc % 23;
+  while (w760 > 4) { w760 = Math.floor(w760 / 2); }
+  acc += w760;
+  const ix761: number = buf.indexOf('p0');
+  if (ix761 > 12) { buf = buf.substring(0, 32); } else if (ix761 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi762' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi763' : 'lo') + acc.toString(16);
+  acc = acc + 129 - (acc % 82);
+  buf += `q765:${acc % 97}`;
+  if (acc % 30 === 0) { buf += 'even766'; } else { buf += 'odd'; }
+  const cf767: Array<(x: number) => number> = [];
+  cf767.push((x: number): number => (x * 3 + acc) % 65521);
+  cf767.push((x: number): number => (x + 118) % 10007);
+  acc = cf767[acc & 1](acc % 9973);
+  const ix768: number = buf.indexOf('p0');
+  if (ix768 > 12) { buf = buf.substring(0, 32); } else if (ix768 >= 0) { buf += 'i'; }
+  buf += `q769:${acc % 97}`;
+  acc = acc + 962 - (acc % 10);
+  buf += (acc > 500 ? 'hi771' : 'lo') + acc.toString(16);
+  for (let i772 = 0; i772 < 4; i772++) {
+    acc = (acc + i772 * 13 + 73) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0773'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const rc774: Rec0 = { id: acc % 1000, tag: 't774', score: acc % 100 };
+  acc = (acc + rc774.score) % 65521;
+  buf += rc774.tag;
+  const cf775: Array<(x: number) => number> = [];
+  cf775.push((x: number): number => (x * 3 + acc) % 65521);
+  cf775.push((x: number): number => (x + 70) % 10007);
+  acc = cf775[acc & 1](acc % 9973);
+  acc = (acc * 31 + 8878) % 65521;
+  const rc777: Rec0 = { id: acc % 1000, tag: 't777', score: acc % 100 };
+  acc = (acc + rc777.score) % 65521;
+  buf += rc777.tag;
+  arr.push(acc % 1000);
+  buf += 'client779-' + acc.toString();
+  const rc780: Rec0 = { id: acc % 1000, tag: 't780', score: acc % 100 };
+  acc = (acc + rc780.score) % 65521;
+  buf += rc780.tag;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-781'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  let w782: number = acc % 23;
+  while (w782 > 4) { w782 = Math.floor(w782 / 2); }
+  acc += w782;
+  buf += (acc > 500 ? 'hi783' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x784');
+  try { if (acc % 29 === 16) { throw new Error('synthetic-785'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's0786'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 4851) % 65521;
+  const rc788: Rec0 = { id: acc % 1000, tag: 't788', score: acc % 100 };
+  acc = (acc + rc788.score) % 65521;
+  buf += rc788.tag;
+  acc = acc + 471 - (acc % 80);
+  if (acc % 12 === 0) { buf += 'even790'; } else { buf += 'odd'; }
+  acc = acc + 975 - (acc % 15);
+  const t0792: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0792;
+  acc = acc + 525 - (acc % 78);
+  switch (acc & 3) {
+    case 0: buf += 's0794'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const db795: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db795.length) % 65521;
+  if (m01.has('k796')) {
+    const gv796: number = m01.get('k796') as number;
+    acc = (acc + gv796) % 10007;
+  }
+  buf += (acc > 500 ? 'hi797' : 'lo') + acc.toString(16);
+  buf += `q798:${acc % 97}`;
+  arr.push(acc % 1000);
+  buf += 'quota800-' + acc.toString();
+  const cf801: Array<(x: number) => number> = [];
+  cf801.push((x: number): number => (x * 3 + acc) % 65521);
+  cf801.push((x: number): number => (x + 183) % 10007);
+  acc = cf801[acc & 1](acc % 9973);
+  const ix802: number = buf.indexOf('p0');
+  if (ix802 > 12) { buf = buf.substring(0, 32); } else if (ix802 >= 0) { buf += 'i'; }
+  const db803: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db803.length) % 65521;
+  m01.set('k804', acc % 997);
+  m01.set('k805', acc % 997);
+  const db806: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db806.length) % 65521;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-807'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  let w808: number = acc % 23;
+  while (w808 > 4) { w808 = Math.floor(w808 / 2); }
+  acc += w808;
+  const ix809: number = buf.indexOf('p0');
+  if (ix809 > 12) { buf = buf.substring(0, 32); } else if (ix809 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  if (m01.has('k811')) {
+    const gv811: number = m01.get('k811') as number;
+    acc = (acc + gv811) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0812'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const t0813: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0813;
+  const rc814: Rec0 = { id: acc % 1000, tag: 't814', score: acc % 100 };
+  acc = (acc + rc814.score) % 65521;
+  buf += rc814.tag;
+  for (let i815 = 0; i815 < 6; i815++) {
+    acc = (acc + i815 * 13 + 684) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0816'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += 'customs817-' + acc.toString();
+  buf += (acc > 500 ? 'hi818' : 'lo') + acc.toString(16);
+  const t0819: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0819;
+  buf += (acc > 500 ? 'hi820' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's0821'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  for (let i822 = 0; i822 < 11; i822++) {
+    acc = (acc + i822 * 13 + 997) % 100003;
+  }
+  let w823: number = acc % 23;
+  while (w823 > 4) { w823 = Math.floor(w823 / 2); }
+  acc += w823;
+  arr.push(acc % 1000);
+  if (m01.has('k825')) {
+    const gv825: number = m01.get('k825') as number;
+    acc = (acc + gv825) % 10007;
+  }
+  arr.push(acc % 1000);
+  let w827: number = acc % 23;
+  while (w827 > 4) { w827 = Math.floor(w827 / 2); }
+  acc += w827;
+  const t0828: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0828;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-829'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi830' : 'lo') + acc.toString(16);
+  acc = acc + 204 - (acc % 21);
+  buf += 'invoice832-' + acc.toString();
+  buf += (acc > 500 ? 'hi833' : 'lo') + acc.toString(16);
+  const rc834: Rec0 = { id: acc % 1000, tag: 't834', score: acc % 100 };
+  acc = (acc + rc834.score) % 65521;
+  buf += rc834.tag;
+  buf += 'order835-' + acc.toString();
+  const t0836: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0836;
+  if (acc % 14 === 0) { buf += 'even837'; } else { buf += 'odd'; }
+  if (acc % 25 === 0) { buf += 'even838'; } else { buf += 'odd'; }
+  const ix839: number = buf.indexOf('p0');
+  if (ix839 > 12) { buf = buf.substring(0, 32); } else if (ix839 >= 0) { buf += 'i'; }
+  const cf840: Array<(x: number) => number> = [];
+  cf840.push((x: number): number => (x * 3 + acc) % 65521);
+  cf840.push((x: number): number => (x + 158) % 10007);
+  acc = cf840[acc & 1](acc % 9973);
+  if (acc % 5 === 0) { buf += 'even841'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 5221) % 65521;
+  buf += 'parcel844-' + acc.toString();
+  const cf845: Array<(x: number) => number> = [];
+  cf845.push((x: number): number => (x * 3 + acc) % 65521);
+  cf845.push((x: number): number => (x + 194) % 10007);
+  acc = cf845[acc & 1](acc % 9973);
+  buf += 'batch846-' + acc.toString();
+  let w847: number = acc % 23;
+  while (w847 > 4) { w847 = Math.floor(w847 / 2); }
+  acc += w847;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x848');
+  for (let i849 = 0; i849 < 10; i849++) {
+    acc = (acc + i849 * 13 + 419) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = acc + 745 - (acc % 38);
+  switch (acc & 3) {
+    case 0: buf += 's0852'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's0853'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const db854: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db854.length) % 65521;
+  buf += `q855:${acc % 97}`;
+  if (m01.has('k856')) {
+    const gv856: number = m01.get('k856') as number;
+    acc = (acc + gv856) % 10007;
+  }
+  arr.push(acc % 1000);
+  buf += `q858:${acc % 97}`;
+  if (m01.has('k859')) {
+    const gv859: number = m01.get('k859') as number;
+    acc = (acc + gv859) % 10007;
+  }
+  try { if (acc % 29 === 19) { throw new Error('synthetic-860'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  const t0861: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0861;
+  buf += `q862:${acc % 97}`;
+  buf += 'transit863-' + acc.toString();
+  buf += (acc > 500 ? 'hi864' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x865');
+  const db866: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db866.length) % 65521;
+  const cf867: Array<(x: number) => number> = [];
+  cf867.push((x: number): number => (x * 3 + acc) % 65521);
+  cf867.push((x: number): number => (x + 143) % 10007);
+  acc = cf867[acc & 1](acc % 9973);
+  if (m01.has('k868')) {
+    const gv868: number = m01.get('k868') as number;
+    acc = (acc + gv868) % 10007;
+  }
+  m01.set('k869', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's0870'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  m01.set('k871', acc % 997);
+  m01.set('k872', acc % 997);
+  for (let i873 = 0; i873 < 9; i873++) {
+    acc = (acc + i873 * 13 + 381) % 100003;
+  }
+  buf += 'sku874-' + acc.toString();
+  const cf875: Array<(x: number) => number> = [];
+  cf875.push((x: number): number => (x * 3 + acc) % 65521);
+  cf875.push((x: number): number => (x + 183) % 10007);
+  acc = cf875[acc & 1](acc % 9973);
+  if (m01.has('k876')) {
+    const gv876: number = m01.get('k876') as number;
+    acc = (acc + gv876) % 10007;
+  }
+  let w877: number = acc % 23;
+  while (w877 > 4) { w877 = Math.floor(w877 / 2); }
+  acc += w877;
+  buf += 'pickup878-' + acc.toString();
+  m01.set('k879', acc % 997);
+  arr.push(acc % 1000);
+  for (let i881 = 0; i881 < 11; i881++) {
+    acc = (acc + i881 * 13 + 397) % 100003;
+  }
+  const rc882: Rec0 = { id: acc % 1000, tag: 't882', score: acc % 100 };
+  acc = (acc + rc882.score) % 65521;
+  buf += rc882.tag;
+  const t0883: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0883;
+  switch (acc & 3) {
+    case 0: buf += 's0884'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-885'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const t0886: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0886;
+  m01.set('k887', acc % 997);
+  const db888: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db888.length) % 65521;
+  const db889: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db889.length) % 65521;
+  m01.set('k890', acc % 997);
+  acc = (acc * 31 + 493) % 65521;
+  const ix892: number = buf.indexOf('p0');
+  if (ix892 > 12) { buf = buf.substring(0, 32); } else if (ix892 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-893'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k894', acc % 997);
+  buf += `q895:${acc % 97}`;
+  arr.push(acc % 1000);
+  const cf897: Array<(x: number) => number> = [];
+  cf897.push((x: number): number => (x * 3 + acc) % 65521);
+  cf897.push((x: number): number => (x + 190) % 10007);
+  acc = cf897[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's0898'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  buf += `q899:${acc % 97}`;
+  arr.push(acc % 1000);
+  const db901: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db901.length) % 65521;
+  const t0902: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0902;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x903');
+  try { if (acc % 29 === 13) { throw new Error('synthetic-904'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q905:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0906'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const ix907: number = buf.indexOf('p0');
+  if (ix907 > 12) { buf = buf.substring(0, 32); } else if (ix907 >= 0) { buf += 'i'; }
+  const rc908: Rec0 = { id: acc % 1000, tag: 't908', score: acc % 100 };
+  acc = (acc + rc908.score) % 65521;
+  buf += rc908.tag;
+  acc = acc + 406 - (acc % 41);
+  m01.set('k910', acc % 997);
+  const db911: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db911.length) % 65521;
+  let w912: number = acc % 23;
+  while (w912 > 4) { w912 = Math.floor(w912 / 2); }
+  acc += w912;
+  buf += `q913:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's0914'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  let w915: number = acc % 23;
+  while (w915 > 4) { w915 = Math.floor(w915 / 2); }
+  acc += w915;
+  let w916: number = acc % 23;
+  while (w916 > 4) { w916 = Math.floor(w916 / 2); }
+  acc += w916;
+  m01.set('k917', acc % 997);
+  m01.set('k918', acc % 997);
+  if (acc % 17 === 0) { buf += 'even919'; } else { buf += 'odd'; }
+  let w920: number = acc % 23;
+  while (w920 > 4) { w920 = Math.floor(w920 / 2); }
+  acc += w920;
+  for (let i921 = 0; i921 < 11; i921++) {
+    acc = (acc + i921 * 13 + 290) % 100003;
+  }
+  m01.set('k922', acc % 997);
+  const db923: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db923.length) % 65521;
+  const ix924: number = buf.indexOf('p0');
+  if (ix924 > 12) { buf = buf.substring(0, 32); } else if (ix924 >= 0) { buf += 'i'; }
+  if (acc % 14 === 0) { buf += 'even925'; } else { buf += 'odd'; }
+  const cf926: Array<(x: number) => number> = [];
+  cf926.push((x: number): number => (x * 3 + acc) % 65521);
+  cf926.push((x: number): number => (x + 142) % 10007);
+  acc = cf926[acc & 1](acc % 9973);
+  const t0927: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0927;
+  let w928: number = acc % 23;
+  while (w928 > 4) { w928 = Math.floor(w928 / 2); }
+  acc += w928;
+  buf += 'ticket929-' + acc.toString();
+  acc = acc + 268 - (acc % 93);
+  m01.set('k931', acc % 997);
+  const rc932: Rec0 = { id: acc % 1000, tag: 't932', score: acc % 100 };
+  acc = (acc + rc932.score) % 65521;
+  buf += rc932.tag;
+  buf += `q933:${acc % 97}`;
+  buf += 'bay934-' + acc.toString();
+  const db935: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db935.length) % 65521;
+  buf += `q936:${acc % 97}`;
+  const db937: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db937.length) % 65521;
+  const rc938: Rec0 = { id: acc % 1000, tag: 't938', score: acc % 100 };
+  acc = (acc + rc938.score) % 65521;
+  buf += rc938.tag;
+  buf += (acc > 500 ? 'hi939' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi940' : 'lo') + acc.toString(16);
+  const db941: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db941.length) % 65521;
+  arr.push(acc % 1000);
+  const cf943: Array<(x: number) => number> = [];
+  cf943.push((x: number): number => (x * 3 + acc) % 65521);
+  cf943.push((x: number): number => (x + 65) % 10007);
+  acc = cf943[acc & 1](acc % 9973);
+  const rc944: Rec0 = { id: acc % 1000, tag: 't944', score: acc % 100 };
+  acc = (acc + rc944.score) % 65521;
+  buf += rc944.tag;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x946');
+  const cf947: Array<(x: number) => number> = [];
+  cf947.push((x: number): number => (x * 3 + acc) % 65521);
+  cf947.push((x: number): number => (x + 189) % 10007);
+  acc = cf947[acc & 1](acc % 9973);
+  buf += 'warehouse948-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x949');
+  try { if (acc % 29 === 22) { throw new Error('synthetic-950'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 548 - (acc % 37);
+  if (acc % 15 === 0) { buf += 'even952'; } else { buf += 'odd'; }
+  for (let i953 = 0; i953 < 11; i953++) {
+    acc = (acc + i953 * 13 + 720) % 100003;
+  }
+  const ix954: number = buf.indexOf('p0');
+  if (ix954 > 12) { buf = buf.substring(0, 32); } else if (ix954 >= 0) { buf += 'i'; }
+  for (let i955 = 0; i955 < 6; i955++) {
+    acc = (acc + i955 * 13 + 892) % 100003;
+  }
+  for (let i956 = 0; i956 < 4; i956++) {
+    acc = (acc + i956 * 13 + 742) % 100003;
+  }
+  buf += 'client957-' + acc.toString();
+  acc = acc + 107 - (acc % 25);
+  buf += 'carrier959-' + acc.toString();
+  const db960: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db960.length) % 65521;
+  acc = acc + 992 - (acc % 19);
+  buf += 'audit962-' + acc.toString();
+  buf += (acc > 500 ? 'hi963' : 'lo') + acc.toString(16);
+  buf += `q964:${acc % 97}`;
+  buf += `q965:${acc % 97}`;
+  buf += (acc > 500 ? 'hi966' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  acc = acc + 573 - (acc % 14);
+  if (acc % 30 === 0) { buf += 'even969'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 1589) % 65521;
+  const db971: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db971.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x972');
+  acc = (acc * 31 + 748) % 65521;
+  const ix974: number = buf.indexOf('p0');
+  if (ix974 > 12) { buf = buf.substring(0, 32); } else if (ix974 >= 0) { buf += 'i'; }
+  for (let i975 = 0; i975 < 3; i975++) {
+    acc = (acc + i975 * 13 + 66) % 100003;
+  }
+  arr.push(acc % 1000);
+  if (m01.has('k977')) {
+    const gv977: number = m01.get('k977') as number;
+    acc = (acc + gv977) % 10007;
+  }
+  if (acc % 25 === 0) { buf += 'even978'; } else { buf += 'odd'; }
+  const cf979: Array<(x: number) => number> = [];
+  cf979.push((x: number): number => (x * 3 + acc) % 65521);
+  cf979.push((x: number): number => (x + 128) % 10007);
+  acc = cf979[acc & 1](acc % 9973);
+  const cf980: Array<(x: number) => number> = [];
+  cf980.push((x: number): number => (x * 3 + acc) % 65521);
+  cf980.push((x: number): number => (x + 179) % 10007);
+  acc = cf980[acc & 1](acc % 9973);
+  const ix981: number = buf.indexOf('p0');
+  if (ix981 > 12) { buf = buf.substring(0, 32); } else if (ix981 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's0983'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  for (let i985 = 0; i985 < 6; i985++) {
+    acc = (acc + i985 * 13 + 706) % 100003;
+  }
+  acc = acc + 140 - (acc % 24);
+  buf += 'carrier987-' + acc.toString();
+  let w988: number = acc % 23;
+  while (w988 > 4) { w988 = Math.floor(w988 / 2); }
+  acc += w988;
+  if (acc % 29 === 0) { buf += 'even989'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x990');
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi992' : 'lo') + acc.toString(16);
+  const db993: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db993.length) % 65521;
+  let w994: number = acc % 23;
+  while (w994 > 4) { w994 = Math.floor(w994 / 2); }
+  acc += w994;
+  acc = acc + 41 - (acc % 25);
+  acc = (acc * 31 + 8933) % 65521;
+  const t0997: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t0997;
+  acc = (acc * 31 + 6167) % 65521;
+  arr.push(acc % 1000);
+  buf += `q1000:${acc % 97}`;
+  buf += `q1001:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1002');
+  buf += 'parcel1003-' + acc.toString();
+  buf += `q1004:${acc % 97}`;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-1005'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1006: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1006.length) % 65521;
+  acc = acc + 682 - (acc % 26);
+  buf += 'crate1008-' + acc.toString();
+  for (let i1009 = 0; i1009 < 12; i1009++) {
+    acc = (acc + i1009 * 13 + 21) % 100003;
+  }
+  const db1010: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1010.length) % 65521;
+  arr.push(acc % 1000);
+  const rc1012: Rec0 = { id: acc % 1000, tag: 't1012', score: acc % 100 };
+  acc = (acc + rc1012.score) % 65521;
+  buf += rc1012.tag;
+  for (let i1013 = 0; i1013 < 8; i1013++) {
+    acc = (acc + i1013 * 13 + 739) % 100003;
+  }
+  let w1014: number = acc % 23;
+  while (w1014 > 4) { w1014 = Math.floor(w1014 / 2); }
+  acc += w1014;
+  m01.set('k1015', acc % 997);
+  const ix1016: number = buf.indexOf('p0');
+  if (ix1016 > 12) { buf = buf.substring(0, 32); } else if (ix1016 >= 0) { buf += 'i'; }
+  if (acc % 22 === 0) { buf += 'even1017'; } else { buf += 'odd'; }
+  for (let i1018 = 0; i1018 < 8; i1018++) {
+    acc = (acc + i1018 * 13 + 734) % 100003;
+  }
+  let w1019: number = acc % 23;
+  while (w1019 > 4) { w1019 = Math.floor(w1019 / 2); }
+  acc += w1019;
+  switch (acc & 3) {
+    case 0: buf += 's01020'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += 'region1021-' + acc.toString();
+  const db1022: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1022.length) % 65521;
+  buf += `q1023:${acc % 97}`;
+  buf += (acc > 500 ? 'hi1024' : 'lo') + acc.toString(16);
+  let w1025: number = acc % 23;
+  while (w1025 > 4) { w1025 = Math.floor(w1025 / 2); }
+  acc += w1025;
+  acc = acc + 528 - (acc % 50);
+  let w1027: number = acc % 23;
+  while (w1027 > 4) { w1027 = Math.floor(w1027 / 2); }
+  acc += w1027;
+  if (m01.has('k1028')) {
+    const gv1028: number = m01.get('k1028') as number;
+    acc = (acc + gv1028) % 10007;
+  }
+  buf += (acc > 500 ? 'hi1029' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi1030' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 9059) % 65521;
+  for (let i1032 = 0; i1032 < 8; i1032++) {
+    acc = (acc + i1032 * 13 + 24) % 100003;
+  }
+  buf += 'pickup1033-' + acc.toString();
+  acc = (acc * 31 + 6423) % 65521;
+  const rc1035: Rec0 = { id: acc % 1000, tag: 't1035', score: acc % 100 };
+  acc = (acc + rc1035.score) % 65521;
+  buf += rc1035.tag;
+  const rc1036: Rec0 = { id: acc % 1000, tag: 't1036', score: acc % 100 };
+  acc = (acc + rc1036.score) % 65521;
+  buf += rc1036.tag;
+  if (m01.has('k1037')) {
+    const gv1037: number = m01.get('k1037') as number;
+    acc = (acc + gv1037) % 10007;
+  }
+  const db1038: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1038.length) % 65521;
+  acc = (acc * 31 + 8601) % 65521;
+  buf += `q1040:${acc % 97}`;
+  const db1041: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1041.length) % 65521;
+  for (let i1042 = 0; i1042 < 6; i1042++) {
+    acc = (acc + i1042 * 13 + 90) % 100003;
+  }
+  const cf1043: Array<(x: number) => number> = [];
+  cf1043.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1043.push((x: number): number => (x + 130) % 10007);
+  acc = cf1043[acc & 1](acc % 9973);
+  if (m01.has('k1044')) {
+    const gv1044: number = m01.get('k1044') as number;
+    acc = (acc + gv1044) % 10007;
+  }
+  buf += `q1045:${acc % 97}`;
+  buf += 'batch1046-' + acc.toString();
+  buf += 'ledger1047-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = acc + 810 - (acc % 92);
+  for (let i1050 = 0; i1050 < 12; i1050++) {
+    acc = (acc + i1050 * 13 + 350) % 100003;
+  }
+  const cf1051: Array<(x: number) => number> = [];
+  cf1051.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1051.push((x: number): number => (x + 21) % 10007);
+  acc = cf1051[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1052');
+  acc = acc + 815 - (acc % 35);
+  const ix1054: number = buf.indexOf('p0');
+  if (ix1054 > 12) { buf = buf.substring(0, 32); } else if (ix1054 >= 0) { buf += 'i'; }
+  if (acc % 8 === 0) { buf += 'even1055'; } else { buf += 'odd'; }
+  let w1056: number = acc % 23;
+  while (w1056 > 4) { w1056 = Math.floor(w1056 / 2); }
+  acc += w1056;
+  switch (acc & 3) {
+    case 0: buf += 's01057'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  m01.set('k1058', acc % 997);
+  let w1059: number = acc % 23;
+  while (w1059 > 4) { w1059 = Math.floor(w1059 / 2); }
+  acc += w1059;
+  m01.set('k1060', acc % 997);
+  m01.set('k1061', acc % 997);
+  if (m01.has('k1062')) {
+    const gv1062: number = m01.get('k1062') as number;
+    acc = (acc + gv1062) % 10007;
+  }
+  acc = acc + 762 - (acc % 69);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-1064'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'ledger1065-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1067');
+  try { if (acc % 29 === 8) { throw new Error('synthetic-1068'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 9069) % 65521;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-1070'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  const t01071: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01071;
+  acc = (acc * 31 + 3672) % 65521;
+  const db1073: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1073.length) % 65521;
+  const t01074: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01074;
+  const cf1075: Array<(x: number) => number> = [];
+  cf1075.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1075.push((x: number): number => (x + 27) % 10007);
+  acc = cf1075[acc & 1](acc % 9973);
+  const t01076: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01076;
+  switch (acc & 3) {
+    case 0: buf += 's01077'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const ix1078: number = buf.indexOf('p0');
+  if (ix1078 > 12) { buf = buf.substring(0, 32); } else if (ix1078 >= 0) { buf += 'i'; }
+  const db1079: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1079.length) % 65521;
+  const rc1080: Rec0 = { id: acc % 1000, tag: 't1080', score: acc % 100 };
+  acc = (acc + rc1080.score) % 65521;
+  buf += rc1080.tag;
+  buf += (acc > 500 ? 'hi1081' : 'lo') + acc.toString(16);
+  let w1082: number = acc % 23;
+  while (w1082 > 4) { w1082 = Math.floor(w1082 / 2); }
+  acc += w1082;
+  const ix1083: number = buf.indexOf('p0');
+  if (ix1083 > 12) { buf = buf.substring(0, 32); } else if (ix1083 >= 0) { buf += 'i'; }
+  const rc1084: Rec0 = { id: acc % 1000, tag: 't1084', score: acc % 100 };
+  acc = (acc + rc1084.score) % 65521;
+  buf += rc1084.tag;
+  arr.push(acc % 1000);
+  acc = acc + 671 - (acc % 30);
+  switch (acc & 3) {
+    case 0: buf += 's01087'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  for (let i1088 = 0; i1088 < 6; i1088++) {
+    acc = (acc + i1088 * 13 + 853) % 100003;
+  }
+  const db1089: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1089.length) % 65521;
+  let w1090: number = acc % 23;
+  while (w1090 > 4) { w1090 = Math.floor(w1090 / 2); }
+  acc += w1090;
+  const cf1091: Array<(x: number) => number> = [];
+  cf1091.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1091.push((x: number): number => (x + 116) % 10007);
+  acc = cf1091[acc & 1](acc % 9973);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-1092'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc1093: Rec0 = { id: acc % 1000, tag: 't1093', score: acc % 100 };
+  acc = (acc + rc1093.score) % 65521;
+  buf += rc1093.tag;
+  buf += `q1094:${acc % 97}`;
+  const db1095: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1095.length) % 65521;
+  acc = acc + 544 - (acc % 86);
+  buf += `q1097:${acc % 97}`;
+  buf += `q1098:${acc % 97}`;
+  const rc1099: Rec0 = { id: acc % 1000, tag: 't1099', score: acc % 100 };
+  acc = (acc + rc1099.score) % 65521;
+  buf += rc1099.tag;
+  if (acc % 19 === 0) { buf += 'even1100'; } else { buf += 'odd'; }
+  const rc1101: Rec0 = { id: acc % 1000, tag: 't1101', score: acc % 100 };
+  acc = (acc + rc1101.score) % 65521;
+  buf += rc1101.tag;
+  buf += (acc > 500 ? 'hi1102' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi1103' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1104');
+  buf += 'warehouse1105-' + acc.toString();
+  acc = (acc * 31 + 1781) % 65521;
+  const cf1107: Array<(x: number) => number> = [];
+  cf1107.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1107.push((x: number): number => (x + 20) % 10007);
+  acc = cf1107[acc & 1](acc % 9973);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-1108'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1109: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1109.length) % 65521;
+  buf += 'payout1110-' + acc.toString();
+  buf += (acc > 500 ? 'hi1111' : 'lo') + acc.toString(16);
+  m01.set('k1112', acc % 997);
+  const rc1113: Rec0 = { id: acc % 1000, tag: 't1113', score: acc % 100 };
+  acc = (acc + rc1113.score) % 65521;
+  buf += rc1113.tag;
+  arr.push(acc % 1000);
+  buf += 'invoice1115-' + acc.toString();
+  acc = acc + 345 - (acc % 96);
+  const db1117: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1117.length) % 65521;
+  if (acc % 21 === 0) { buf += 'even1118'; } else { buf += 'odd'; }
+  acc = acc + 145 - (acc % 41);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1120');
+  acc = (acc * 31 + 7595) % 65521;
+  if (acc % 18 === 0) { buf += 'even1122'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 3769) % 65521;
+  acc = acc + 514 - (acc % 96);
+  const t01125: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01125;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-1126'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  const t01127: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01127;
+  const rc1128: Rec0 = { id: acc % 1000, tag: 't1128', score: acc % 100 };
+  acc = (acc + rc1128.score) % 65521;
+  buf += rc1128.tag;
+  const ix1129: number = buf.indexOf('p0');
+  if (ix1129 > 12) { buf = buf.substring(0, 32); } else if (ix1129 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1130');
+  m01.set('k1131', acc % 997);
+  acc = (acc * 31 + 8770) % 65521;
+  buf += 'rebate1133-' + acc.toString();
+  buf += 'client1134-' + acc.toString();
+  arr.push(acc % 1000);
+  m01.set('k1136', acc % 997);
+  buf += (acc > 500 ? 'hi1137' : 'lo') + acc.toString(16);
+  acc = acc + 806 - (acc % 90);
+  arr.push(acc % 1000);
+  const cf1140: Array<(x: number) => number> = [];
+  cf1140.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1140.push((x: number): number => (x + 31) % 10007);
+  acc = cf1140[acc & 1](acc % 9973);
+  acc = acc + 200 - (acc % 65);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1142');
+  let w1143: number = acc % 23;
+  while (w1143 > 4) { w1143 = Math.floor(w1143 / 2); }
+  acc += w1143;
+  const ix1144: number = buf.indexOf('p0');
+  if (ix1144 > 12) { buf = buf.substring(0, 32); } else if (ix1144 >= 0) { buf += 'i'; }
+  const ix1145: number = buf.indexOf('p0');
+  if (ix1145 > 12) { buf = buf.substring(0, 32); } else if (ix1145 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 8) { throw new Error('synthetic-1146'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += `q1148:${acc % 97}`;
+  buf += (acc > 500 ? 'hi1149' : 'lo') + acc.toString(16);
+  const db1150: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1150.length) % 65521;
+  const ix1151: number = buf.indexOf('p0');
+  if (ix1151 > 12) { buf = buf.substring(0, 32); } else if (ix1151 >= 0) { buf += 'i'; }
+  let w1152: number = acc % 23;
+  while (w1152 > 4) { w1152 = Math.floor(w1152 / 2); }
+  acc += w1152;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1153');
+  buf += 'customs1154-' + acc.toString();
+  buf += 'depot1155-' + acc.toString();
+  m01.set('k1156', acc % 997);
+  if (acc % 31 === 0) { buf += 'even1157'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 8) { throw new Error('synthetic-1158'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k1159', acc % 997);
+  if (m01.has('k1160')) {
+    const gv1160: number = m01.get('k1160') as number;
+    acc = (acc + gv1160) % 10007;
+  }
+  if (m01.has('k1161')) {
+    const gv1161: number = m01.get('k1161') as number;
+    acc = (acc + gv1161) % 10007;
+  }
+  let w1162: number = acc % 23;
+  while (w1162 > 4) { w1162 = Math.floor(w1162 / 2); }
+  acc += w1162;
+  if (m01.has('k1163')) {
+    const gv1163: number = m01.get('k1163') as number;
+    acc = (acc + gv1163) % 10007;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-1164'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc1165: Rec0 = { id: acc % 1000, tag: 't1165', score: acc % 100 };
+  acc = (acc + rc1165.score) % 65521;
+  buf += rc1165.tag;
+  const cf1166: Array<(x: number) => number> = [];
+  cf1166.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1166.push((x: number): number => (x + 174) % 10007);
+  acc = cf1166[acc & 1](acc % 9973);
+  buf += `q1167:${acc % 97}`;
+  buf += 'crate1168-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1169');
+  buf += 'bay1170-' + acc.toString();
+  const t01171: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01171;
+  const cf1172: Array<(x: number) => number> = [];
+  cf1172.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1172.push((x: number): number => (x + 115) % 10007);
+  acc = cf1172[acc & 1](acc % 9973);
+  m01.set('k1173', acc % 997);
+  const cf1174: Array<(x: number) => number> = [];
+  cf1174.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1174.push((x: number): number => (x + 34) % 10007);
+  acc = cf1174[acc & 1](acc % 9973);
+  buf += `q1175:${acc % 97}`;
+  const ix1176: number = buf.indexOf('p0');
+  if (ix1176 > 12) { buf = buf.substring(0, 32); } else if (ix1176 >= 0) { buf += 'i'; }
+  const ix1177: number = buf.indexOf('p0');
+  if (ix1177 > 12) { buf = buf.substring(0, 32); } else if (ix1177 >= 0) { buf += 'i'; }
+  const cf1178: Array<(x: number) => number> = [];
+  cf1178.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1178.push((x: number): number => (x + 49) % 10007);
+  acc = cf1178[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  const cf1180: Array<(x: number) => number> = [];
+  cf1180.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1180.push((x: number): number => (x + 179) % 10007);
+  acc = cf1180[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1181');
+  acc = (acc * 31 + 3588) % 65521;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-1183'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  const t01184: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01184;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1185');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1186');
+  const t01187: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01187;
+  for (let i1188 = 0; i1188 < 11; i1188++) {
+    acc = (acc + i1188 * 13 + 598) % 100003;
+  }
+  for (let i1189 = 0; i1189 < 6; i1189++) {
+    acc = (acc + i1189 * 13 + 277) % 100003;
+  }
+  const t01190: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01190;
+  acc = acc + 21 - (acc % 81);
+  acc = (acc * 31 + 8266) % 65521;
+  const db1193: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1193.length) % 65521;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1195');
+  const db1196: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1196.length) % 65521;
+  buf += `q1197:${acc % 97}`;
+  if (m01.has('k1198')) {
+    const gv1198: number = m01.get('k1198') as number;
+    acc = (acc + gv1198) % 10007;
+  }
+  buf += (acc > 500 ? 'hi1199' : 'lo') + acc.toString(16);
+  acc = acc + 879 - (acc % 80);
+  buf += (acc > 500 ? 'hi1201' : 'lo') + acc.toString(16);
+  let w1202: number = acc % 23;
+  while (w1202 > 4) { w1202 = Math.floor(w1202 / 2); }
+  acc += w1202;
+  m01.set('k1203', acc % 997);
+  const db1204: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1204.length) % 65521;
+  let w1205: number = acc % 23;
+  while (w1205 > 4) { w1205 = Math.floor(w1205 / 2); }
+  acc += w1205;
+  for (let i1206 = 0; i1206 < 10; i1206++) {
+    acc = (acc + i1206 * 13 + 70) % 100003;
+  }
+  let w1207: number = acc % 23;
+  while (w1207 > 4) { w1207 = Math.floor(w1207 / 2); }
+  acc += w1207;
+  buf += (acc > 500 ? 'hi1208' : 'lo') + acc.toString(16);
+  const rc1209: Rec0 = { id: acc % 1000, tag: 't1209', score: acc % 100 };
+  acc = (acc + rc1209.score) % 65521;
+  buf += rc1209.tag;
+  if (acc % 26 === 0) { buf += 'even1210'; } else { buf += 'odd'; }
+  acc = acc + 766 - (acc % 49);
+  for (let i1212 = 0; i1212 < 10; i1212++) {
+    acc = (acc + i1212 * 13 + 646) % 100003;
+  }
+  buf += (acc > 500 ? 'hi1213' : 'lo') + acc.toString(16);
+  const rc1214: Rec0 = { id: acc % 1000, tag: 't1214', score: acc % 100 };
+  acc = (acc + rc1214.score) % 65521;
+  buf += rc1214.tag;
+  for (let i1215 = 0; i1215 < 9; i1215++) {
+    acc = (acc + i1215 * 13 + 641) % 100003;
+  }
+  buf += (acc > 500 ? 'hi1216' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 5066) % 65521;
+  const db1218: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1218.length) % 65521;
+  const cf1219: Array<(x: number) => number> = [];
+  cf1219.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1219.push((x: number): number => (x + 173) % 10007);
+  acc = cf1219[acc & 1](acc % 9973);
+  const cf1220: Array<(x: number) => number> = [];
+  cf1220.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1220.push((x: number): number => (x + 152) % 10007);
+  acc = cf1220[acc & 1](acc % 9973);
+  const rc1221: Rec0 = { id: acc % 1000, tag: 't1221', score: acc % 100 };
+  acc = (acc + rc1221.score) % 65521;
+  buf += rc1221.tag;
+  const cf1222: Array<(x: number) => number> = [];
+  cf1222.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1222.push((x: number): number => (x + 103) % 10007);
+  acc = cf1222[acc & 1](acc % 9973);
+  m01.set('k1223', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's01224'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const db1225: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1225.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's01226'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  buf += `q1227:${acc % 97}`;
+  let w1228: number = acc % 23;
+  while (w1228 > 4) { w1228 = Math.floor(w1228 / 2); }
+  acc += w1228;
+  m01.set('k1229', acc % 997);
+  const ix1230: number = buf.indexOf('p0');
+  if (ix1230 > 12) { buf = buf.substring(0, 32); } else if (ix1230 >= 0) { buf += 'i'; }
+  let w1231: number = acc % 23;
+  while (w1231 > 4) { w1231 = Math.floor(w1231 / 2); }
+  acc += w1231;
+  arr.push(acc % 1000);
+  buf += 'pickup1233-' + acc.toString();
+  const db1234: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1234.length) % 65521;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1235'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's01236'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const db1237: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1237.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1238');
+  const t01239: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01239;
+  let w1240: number = acc % 23;
+  while (w1240 > 4) { w1240 = Math.floor(w1240 / 2); }
+  acc += w1240;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-1241'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 8915) % 65521;
+  acc = (acc * 31 + 7515) % 65521;
+  const db1244: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1244.length) % 65521;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-1245'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k1246')) {
+    const gv1246: number = m01.get('k1246') as number;
+    acc = (acc + gv1246) % 10007;
+  }
+  const ix1247: number = buf.indexOf('p0');
+  if (ix1247 > 12) { buf = buf.substring(0, 32); } else if (ix1247 >= 0) { buf += 'i'; }
+  const db1248: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1248.length) % 65521;
+  arr.push(acc % 1000);
+  const rc1250: Rec0 = { id: acc % 1000, tag: 't1250', score: acc % 100 };
+  acc = (acc + rc1250.score) % 65521;
+  buf += rc1250.tag;
+  const cf1251: Array<(x: number) => number> = [];
+  cf1251.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1251.push((x: number): number => (x + 47) % 10007);
+  acc = cf1251[acc & 1](acc % 9973);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-1252'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k1253')) {
+    const gv1253: number = m01.get('k1253') as number;
+    acc = (acc + gv1253) % 10007;
+  }
+  for (let i1254 = 0; i1254 < 3; i1254++) {
+    acc = (acc + i1254 * 13 + 933) % 100003;
+  }
+  const rc1255: Rec0 = { id: acc % 1000, tag: 't1255', score: acc % 100 };
+  acc = (acc + rc1255.score) % 65521;
+  buf += rc1255.tag;
+  const db1256: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1256.length) % 65521;
+  acc = (acc * 31 + 7713) % 65521;
+  m01.set('k1258', acc % 997);
+  buf += 'vendor1259-' + acc.toString();
+  m01.set('k1260', acc % 997);
+  if (m01.has('k1261')) {
+    const gv1261: number = m01.get('k1261') as number;
+    acc = (acc + gv1261) % 10007;
+  }
+  const rc1262: Rec0 = { id: acc % 1000, tag: 't1262', score: acc % 100 };
+  acc = (acc + rc1262.score) % 65521;
+  buf += rc1262.tag;
+  const rc1263: Rec0 = { id: acc % 1000, tag: 't1263', score: acc % 100 };
+  acc = (acc + rc1263.score) % 65521;
+  buf += rc1263.tag;
+  const ix1264: number = buf.indexOf('p0');
+  if (ix1264 > 12) { buf = buf.substring(0, 32); } else if (ix1264 >= 0) { buf += 'i'; }
+  buf += `q1265:${acc % 97}`;
+  if (acc % 29 === 0) { buf += 'even1266'; } else { buf += 'odd'; }
+  const ix1267: number = buf.indexOf('p0');
+  if (ix1267 > 12) { buf = buf.substring(0, 32); } else if (ix1267 >= 0) { buf += 'i'; }
+  m01.set('k1268', acc % 997);
+  acc = acc + 268 - (acc % 7);
+  if (m01.has('k1270')) {
+    const gv1270: number = m01.get('k1270') as number;
+    acc = (acc + gv1270) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1271');
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1272'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'parcel1273-' + acc.toString();
+  m01.set('k1274', acc % 997);
+  let w1275: number = acc % 23;
+  while (w1275 > 4) { w1275 = Math.floor(w1275 / 2); }
+  acc += w1275;
+  acc = (acc * 31 + 4003) % 65521;
+  acc = (acc * 31 + 7506) % 65521;
+  if (m01.has('k1278')) {
+    const gv1278: number = m01.get('k1278') as number;
+    acc = (acc + gv1278) % 10007;
+  }
+  const t01279: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01279;
+  const ix1280: number = buf.indexOf('p0');
+  if (ix1280 > 12) { buf = buf.substring(0, 32); } else if (ix1280 >= 0) { buf += 'i'; }
+  for (let i1281 = 0; i1281 < 10; i1281++) {
+    acc = (acc + i1281 * 13 + 276) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's01282'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi1283' : 'lo') + acc.toString(16);
+  if (m01.has('k1284')) {
+    const gv1284: number = m01.get('k1284') as number;
+    acc = (acc + gv1284) % 10007;
+  }
+  arr.push(acc % 1000);
+  const ix1286: number = buf.indexOf('p0');
+  if (ix1286 > 12) { buf = buf.substring(0, 32); } else if (ix1286 >= 0) { buf += 'i'; }
+  if (acc % 17 === 0) { buf += 'even1287'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's01288'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 303 - (acc % 71);
+  let w1290: number = acc % 23;
+  while (w1290 > 4) { w1290 = Math.floor(w1290 / 2); }
+  acc += w1290;
+  acc = (acc * 31 + 3031) % 65521;
+  m01.set('k1292', acc % 997);
+  if (acc % 14 === 0) { buf += 'even1293'; } else { buf += 'odd'; }
+  const cf1294: Array<(x: number) => number> = [];
+  cf1294.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1294.push((x: number): number => (x + 144) % 10007);
+  acc = cf1294[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1559) % 65521;
+  buf += `q1296:${acc % 97}`;
+  for (let i1297 = 0; i1297 < 6; i1297++) {
+    acc = (acc + i1297 * 13 + 938) % 100003;
+  }
+  buf += (acc > 500 ? 'hi1298' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-1299'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix1300: number = buf.indexOf('p0');
+  if (ix1300 > 12) { buf = buf.substring(0, 32); } else if (ix1300 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  if (m01.has('k1302')) {
+    const gv1302: number = m01.get('k1302') as number;
+    acc = (acc + gv1302) % 10007;
+  }
+  const t01303: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01303;
+  if (acc % 24 === 0) { buf += 'even1304'; } else { buf += 'odd'; }
+  acc = acc + 877 - (acc % 63);
+  acc = acc + 985 - (acc % 43);
+  acc = (acc * 31 + 2756) % 65521;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1308'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 13 === 0) { buf += 'even1309'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  for (let i1311 = 0; i1311 < 5; i1311++) {
+    acc = (acc + i1311 * 13 + 544) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's01312'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += 'stocktake1314-' + acc.toString();
+  m01.set('k1315', acc % 997);
+  for (let i1316 = 0; i1316 < 5; i1316++) {
+    acc = (acc + i1316 * 13 + 627) % 100003;
+  }
+  const ix1317: number = buf.indexOf('p0');
+  if (ix1317 > 12) { buf = buf.substring(0, 32); } else if (ix1317 >= 0) { buf += 'i'; }
+  const t01318: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01318;
+  const ix1319: number = buf.indexOf('p0');
+  if (ix1319 > 12) { buf = buf.substring(0, 32); } else if (ix1319 >= 0) { buf += 'i'; }
+  const ix1320: number = buf.indexOf('p0');
+  if (ix1320 > 12) { buf = buf.substring(0, 32); } else if (ix1320 >= 0) { buf += 'i'; }
+  acc = acc + 699 - (acc % 81);
+  buf += (acc > 500 ? 'hi1322' : 'lo') + acc.toString(16);
+  if (acc % 26 === 0) { buf += 'even1323'; } else { buf += 'odd'; }
+  buf += 'depot1324-' + acc.toString();
+  const cf1325: Array<(x: number) => number> = [];
+  cf1325.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1325.push((x: number): number => (x + 146) % 10007);
+  acc = cf1325[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi1326' : 'lo') + acc.toString(16);
+  buf += `q1327:${acc % 97}`;
+  if (m01.has('k1328')) {
+    const gv1328: number = m01.get('k1328') as number;
+    acc = (acc + gv1328) % 10007;
+  }
+  const t01329: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01329;
+  if (m01.has('k1330')) {
+    const gv1330: number = m01.get('k1330') as number;
+    acc = (acc + gv1330) % 10007;
+  }
+  arr.push(acc % 1000);
+  acc = acc + 506 - (acc % 49);
+  if (m01.has('k1333')) {
+    const gv1333: number = m01.get('k1333') as number;
+    acc = (acc + gv1333) % 10007;
+  }
+  buf += 'sku1334-' + acc.toString();
+  if (acc % 18 === 0) { buf += 'even1335'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-1336'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix1337: number = buf.indexOf('p0');
+  if (ix1337 > 12) { buf = buf.substring(0, 32); } else if (ix1337 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 2292) % 65521;
+  buf += (acc > 500 ? 'hi1339' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1340');
+  arr.push(acc % 1000);
+  acc = acc + 357 - (acc % 67);
+  m01.set('k1343', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1344');
+  const t01345: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01345;
+  buf += (acc > 500 ? 'hi1346' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-1348'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 6 === 0) { buf += 'even1349'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1350');
+  m01.set('k1351', acc % 997);
+  let w1352: number = acc % 23;
+  while (w1352 > 4) { w1352 = Math.floor(w1352 / 2); }
+  acc += w1352;
+  for (let i1353 = 0; i1353 < 10; i1353++) {
+    acc = (acc + i1353 * 13 + 651) % 100003;
+  }
+  acc = acc + 782 - (acc % 8);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1357');
+  const ix1358: number = buf.indexOf('p0');
+  if (ix1358 > 12) { buf = buf.substring(0, 32); } else if (ix1358 >= 0) { buf += 'i'; }
+  const ix1359: number = buf.indexOf('p0');
+  if (ix1359 > 12) { buf = buf.substring(0, 32); } else if (ix1359 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1360');
+  acc = acc + 456 - (acc % 19);
+  m01.set('k1362', acc % 997);
+  const t01363: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01363;
+  const t01364: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01364;
+  buf += 'routeplan1365-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's01366'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  for (let i1367 = 0; i1367 < 5; i1367++) {
+    acc = (acc + i1367 * 13 + 523) % 100003;
+  }
+  const ix1368: number = buf.indexOf('p0');
+  if (ix1368 > 12) { buf = buf.substring(0, 32); } else if (ix1368 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's01370'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  let w1371: number = acc % 23;
+  while (w1371 > 4) { w1371 = Math.floor(w1371 / 2); }
+  acc += w1371;
+  buf += `q1372:${acc % 97}`;
+  let w1373: number = acc % 23;
+  while (w1373 > 4) { w1373 = Math.floor(w1373 / 2); }
+  acc += w1373;
+  const rc1374: Rec0 = { id: acc % 1000, tag: 't1374', score: acc % 100 };
+  acc = (acc + rc1374.score) % 65521;
+  buf += rc1374.tag;
+  m01.set('k1375', acc % 997);
+  const ix1376: number = buf.indexOf('p0');
+  if (ix1376 > 12) { buf = buf.substring(0, 32); } else if (ix1376 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1377'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1378'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 1669) % 65521;
+  const rc1381: Rec0 = { id: acc % 1000, tag: 't1381', score: acc % 100 };
+  acc = (acc + rc1381.score) % 65521;
+  buf += rc1381.tag;
+  const cf1382: Array<(x: number) => number> = [];
+  cf1382.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1382.push((x: number): number => (x + 130) % 10007);
+  acc = cf1382[acc & 1](acc % 9973);
+  buf += 'quota1383-' + acc.toString();
+  if (m01.has('k1384')) {
+    const gv1384: number = m01.get('k1384') as number;
+    acc = (acc + gv1384) % 10007;
+  }
+  const rc1385: Rec0 = { id: acc % 1000, tag: 't1385', score: acc % 100 };
+  acc = (acc + rc1385.score) % 65521;
+  buf += rc1385.tag;
+  buf += 'region1386-' + acc.toString();
+  buf += 'refund1387-' + acc.toString();
+  acc = (acc * 31 + 994) % 65521;
+  let w1389: number = acc % 23;
+  while (w1389 > 4) { w1389 = Math.floor(w1389 / 2); }
+  acc += w1389;
+  if (acc % 30 === 0) { buf += 'even1390'; } else { buf += 'odd'; }
+  acc = acc + 676 - (acc % 77);
+  arr.push(acc % 1000);
+  if (acc % 9 === 0) { buf += 'even1393'; } else { buf += 'odd'; }
+  m01.set('k1394', acc % 997);
+  buf += (acc > 500 ? 'hi1395' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's01397'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const db1398: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1398.length) % 65521;
+  const rc1399: Rec0 = { id: acc % 1000, tag: 't1399', score: acc % 100 };
+  acc = (acc + rc1399.score) % 65521;
+  buf += rc1399.tag;
+  const db1400: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1400.length) % 65521;
+  acc = acc + 648 - (acc % 96);
+  switch (acc & 3) {
+    case 0: buf += 's01402'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-1403'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'client1404-' + acc.toString();
+  m01.set('k1405', acc % 997);
+  const db1406: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1406.length) % 65521;
+  const cf1407: Array<(x: number) => number> = [];
+  cf1407.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1407.push((x: number): number => (x + 44) % 10007);
+  acc = cf1407[acc & 1](acc % 9973);
+  const db1408: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1408.length) % 65521;
+  if (m01.has('k1409')) {
+    const gv1409: number = m01.get('k1409') as number;
+    acc = (acc + gv1409) % 10007;
+  }
+  if (acc % 21 === 0) { buf += 'even1410'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-1411'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1412: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1412.length) % 65521;
+  acc = acc + 39 - (acc % 58);
+  acc = (acc * 31 + 2785) % 65521;
+  acc = (acc * 31 + 3755) % 65521;
+  buf += (acc > 500 ? 'hi1416' : 'lo') + acc.toString(16);
+  m01.set('k1417', acc % 997);
+  for (let i1418 = 0; i1418 < 3; i1418++) {
+    acc = (acc + i1418 * 13 + 305) % 100003;
+  }
+  acc = (acc * 31 + 4969) % 65521;
+  buf += 'payout1420-' + acc.toString();
+  try { if (acc % 29 === 23) { throw new Error('synthetic-1421'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi1423' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8724) % 65521;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-1425'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's01426'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  const t01427: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01427;
+  arr.push(acc % 1000);
+  let w1429: number = acc % 23;
+  while (w1429 > 4) { w1429 = Math.floor(w1429 / 2); }
+  acc += w1429;
+  const db1430: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1430.length) % 65521;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-1431'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  let w1432: number = acc % 23;
+  while (w1432 > 4) { w1432 = Math.floor(w1432 / 2); }
+  acc += w1432;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1433');
+  buf += 'region1434-' + acc.toString();
+  if (acc % 5 === 0) { buf += 'even1435'; } else { buf += 'odd'; }
+  const rc1436: Rec0 = { id: acc % 1000, tag: 't1436', score: acc % 100 };
+  acc = (acc + rc1436.score) % 65521;
+  buf += rc1436.tag;
+  arr.push(acc % 1000);
+  let w1438: number = acc % 23;
+  while (w1438 > 4) { w1438 = Math.floor(w1438 / 2); }
+  acc += w1438;
+  acc = acc + 427 - (acc % 25);
+  acc = (acc * 31 + 9600) % 65521;
+  const db1441: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1441.length) % 65521;
+  acc = acc + 959 - (acc % 17);
+  m01.set('k1443', acc % 997);
+  const db1444: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1444.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1445');
+  acc = (acc * 31 + 9504) % 65521;
+  const ix1447: number = buf.indexOf('p0');
+  if (ix1447 > 12) { buf = buf.substring(0, 32); } else if (ix1447 >= 0) { buf += 'i'; }
+  buf += 'ledger1448-' + acc.toString();
+  const cf1449: Array<(x: number) => number> = [];
+  cf1449.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1449.push((x: number): number => (x + 145) % 10007);
+  acc = cf1449[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's01450'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 9619) % 65521;
+  let w1452: number = acc % 23;
+  while (w1452 > 4) { w1452 = Math.floor(w1452 / 2); }
+  acc += w1452;
+  const t01453: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01453;
+  switch (acc & 3) {
+    case 0: buf += 's01454'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-1455'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'vendor1456-' + acc.toString();
+  acc = (acc * 31 + 2711) % 65521;
+  acc = (acc * 31 + 3958) % 65521;
+  const t01459: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01459;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-1460'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1461');
+  for (let i1462 = 0; i1462 < 3; i1462++) {
+    acc = (acc + i1462 * 13 + 814) % 100003;
+  }
+  acc = acc + 638 - (acc % 26);
+  if (acc % 20 === 0) { buf += 'even1464'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-1465'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1466: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1466.length) % 65521;
+  const cf1467: Array<(x: number) => number> = [];
+  cf1467.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1467.push((x: number): number => (x + 43) % 10007);
+  acc = cf1467[acc & 1](acc % 9973);
+  for (let i1468 = 0; i1468 < 7; i1468++) {
+    acc = (acc + i1468 * 13 + 101) % 100003;
+  }
+  const db1469: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1469.length) % 65521;
+  buf += 'pickup1470-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += 'shelf1472-' + acc.toString();
+  const db1473: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1473.length) % 65521;
+  buf += 'ticket1474-' + acc.toString();
+  const cf1475: Array<(x: number) => number> = [];
+  cf1475.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1475.push((x: number): number => (x + 152) % 10007);
+  acc = cf1475[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1476');
+  if (acc % 11 === 0) { buf += 'even1477'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's01478'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi1479' : 'lo') + acc.toString(16);
+  buf += `q1480:${acc % 97}`;
+  buf += 'refund1481-' + acc.toString();
+  for (let i1482 = 0; i1482 < 4; i1482++) {
+    acc = (acc + i1482 * 13 + 8) % 100003;
+  }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-1483'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q1484:${acc % 97}`;
+  let w1485: number = acc % 23;
+  while (w1485 > 4) { w1485 = Math.floor(w1485 / 2); }
+  acc += w1485;
+  for (let i1486 = 0; i1486 < 12; i1486++) {
+    acc = (acc + i1486 * 13 + 588) % 100003;
+  }
+  buf += (acc > 500 ? 'hi1487' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-1488'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc1489: Rec0 = { id: acc % 1000, tag: 't1489', score: acc % 100 };
+  acc = (acc + rc1489.score) % 65521;
+  buf += rc1489.tag;
+  let w1490: number = acc % 23;
+  while (w1490 > 4) { w1490 = Math.floor(w1490 / 2); }
+  acc += w1490;
+  if (m01.has('k1491')) {
+    const gv1491: number = m01.get('k1491') as number;
+    acc = (acc + gv1491) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's01492'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const rc1493: Rec0 = { id: acc % 1000, tag: 't1493', score: acc % 100 };
+  acc = (acc + rc1493.score) % 65521;
+  buf += rc1493.tag;
+  if (acc % 24 === 0) { buf += 'even1494'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-1495'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1496: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1496.length) % 65521;
+  const t01497: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01497;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1498');
+  buf += 'pallet1499-' + acc.toString();
+  buf += (acc > 500 ? 'hi1500' : 'lo') + acc.toString(16);
+  for (let i1501 = 0; i1501 < 4; i1501++) {
+    acc = (acc + i1501 * 13 + 726) % 100003;
+  }
+  const t01502: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01502;
+  const db1503: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1503.length) % 65521;
+  acc = (acc * 31 + 2506) % 65521;
+  const cf1505: Array<(x: number) => number> = [];
+  cf1505.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1505.push((x: number): number => (x + 77) % 10007);
+  acc = cf1505[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi1506' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-1507'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const ix1509: number = buf.indexOf('p0');
+  if (ix1509 > 12) { buf = buf.substring(0, 32); } else if (ix1509 >= 0) { buf += 'i'; }
+  buf += 'carrier1510-' + acc.toString();
+  if (acc % 28 === 0) { buf += 'even1511'; } else { buf += 'odd'; }
+  let w1512: number = acc % 23;
+  while (w1512 > 4) { w1512 = Math.floor(w1512 / 2); }
+  acc += w1512;
+  const ix1513: number = buf.indexOf('p0');
+  if (ix1513 > 12) { buf = buf.substring(0, 32); } else if (ix1513 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1515');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1516');
+  m01.set('k1517', acc % 997);
+  buf += (acc > 500 ? 'hi1518' : 'lo') + acc.toString(16);
+  const rc1519: Rec0 = { id: acc % 1000, tag: 't1519', score: acc % 100 };
+  acc = (acc + rc1519.score) % 65521;
+  buf += rc1519.tag;
+  buf += 'pallet1520-' + acc.toString();
+  const cf1521: Array<(x: number) => number> = [];
+  cf1521.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1521.push((x: number): number => (x + 28) % 10007);
+  acc = cf1521[acc & 1](acc % 9973);
+  m01.set('k1522', acc % 997);
+  m01.set('k1523', acc % 997);
+  if (m01.has('k1524')) {
+    const gv1524: number = m01.get('k1524') as number;
+    acc = (acc + gv1524) % 10007;
+  }
+  const t01525: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01525;
+  arr.push(acc % 1000);
+  const ix1527: number = buf.indexOf('p0');
+  if (ix1527 > 12) { buf = buf.substring(0, 32); } else if (ix1527 >= 0) { buf += 'i'; }
+  const t01528: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01528;
+  buf += 'shelf1529-' + acc.toString();
+  acc = (acc * 31 + 8651) % 65521;
+  const db1531: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1531.length) % 65521;
+  const rc1532: Rec0 = { id: acc % 1000, tag: 't1532', score: acc % 100 };
+  acc = (acc + rc1532.score) % 65521;
+  buf += rc1532.tag;
+  const t01533: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01533;
+  let w1534: number = acc % 23;
+  while (w1534 > 4) { w1534 = Math.floor(w1534 / 2); }
+  acc += w1534;
+  const t01535: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01535;
+  switch (acc & 3) {
+    case 0: buf += 's01536'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  const rc1537: Rec0 = { id: acc % 1000, tag: 't1537', score: acc % 100 };
+  acc = (acc + rc1537.score) % 65521;
+  buf += rc1537.tag;
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi1539' : 'lo') + acc.toString(16);
+  const ix1540: number = buf.indexOf('p0');
+  if (ix1540 > 12) { buf = buf.substring(0, 32); } else if (ix1540 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi1541' : 'lo') + acc.toString(16);
+  let w1542: number = acc % 23;
+  while (w1542 > 4) { w1542 = Math.floor(w1542 / 2); }
+  acc += w1542;
+  for (let i1543 = 0; i1543 < 7; i1543++) {
+    acc = (acc + i1543 * 13 + 514) % 100003;
+  }
+  let w1544: number = acc % 23;
+  while (w1544 > 4) { w1544 = Math.floor(w1544 / 2); }
+  acc += w1544;
+  let w1545: number = acc % 23;
+  while (w1545 > 4) { w1545 = Math.floor(w1545 / 2); }
+  acc += w1545;
+  acc = acc + 533 - (acc % 61);
+  m01.set('k1547', acc % 997);
+  try { if (acc % 29 === 22) { throw new Error('synthetic-1548'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 647 - (acc % 92);
+  const ix1550: number = buf.indexOf('p0');
+  if (ix1550 > 12) { buf = buf.substring(0, 32); } else if (ix1550 >= 0) { buf += 'i'; }
+  m01.set('k1551', acc % 997);
+  const db1552: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1552.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1553');
+  const rc1554: Rec0 = { id: acc % 1000, tag: 't1554', score: acc % 100 };
+  acc = (acc + rc1554.score) % 65521;
+  buf += rc1554.tag;
+  buf += (acc > 500 ? 'hi1555' : 'lo') + acc.toString(16);
+  for (let i1556 = 0; i1556 < 11; i1556++) {
+    acc = (acc + i1556 * 13 + 630) % 100003;
+  }
+  arr.push(acc % 1000);
+  const db1558: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1558.length) % 65521;
+  buf += (acc > 500 ? 'hi1559' : 'lo') + acc.toString(16);
+  if (acc % 19 === 0) { buf += 'even1560'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-1561'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3045) % 65521;
+  const t01563: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01563;
+  const ix1564: number = buf.indexOf('p0');
+  if (ix1564 > 12) { buf = buf.substring(0, 32); } else if (ix1564 >= 0) { buf += 'i'; }
+  m01.set('k1565', acc % 997);
+  arr.push(acc % 1000);
+  m01.set('k1567', acc % 997);
+  let w1568: number = acc % 23;
+  while (w1568 > 4) { w1568 = Math.floor(w1568 / 2); }
+  acc += w1568;
+  const ix1569: number = buf.indexOf('p0');
+  if (ix1569 > 12) { buf = buf.substring(0, 32); } else if (ix1569 >= 0) { buf += 'i'; }
+  const rc1570: Rec0 = { id: acc % 1000, tag: 't1570', score: acc % 100 };
+  acc = (acc + rc1570.score) % 65521;
+  buf += rc1570.tag;
+  let w1571: number = acc % 23;
+  while (w1571 > 4) { w1571 = Math.floor(w1571 / 2); }
+  acc += w1571;
+  arr.push(acc % 1000);
+  if (acc % 23 === 0) { buf += 'even1573'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-1574'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix1575: number = buf.indexOf('p0');
+  if (ix1575 > 12) { buf = buf.substring(0, 32); } else if (ix1575 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-1576'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k1577')) {
+    const gv1577: number = m01.get('k1577') as number;
+    acc = (acc + gv1577) % 10007;
+  }
+  for (let i1578 = 0; i1578 < 7; i1578++) {
+    acc = (acc + i1578 * 13 + 505) % 100003;
+  }
+  const rc1579: Rec0 = { id: acc % 1000, tag: 't1579', score: acc % 100 };
+  acc = (acc + rc1579.score) % 65521;
+  buf += rc1579.tag;
+  buf += 'carrier1580-' + acc.toString();
+  const rc1581: Rec0 = { id: acc % 1000, tag: 't1581', score: acc % 100 };
+  acc = (acc + rc1581.score) % 65521;
+  buf += rc1581.tag;
+  buf += 'freight1582-' + acc.toString();
+  arr.push(acc % 1000);
+  const rc1584: Rec0 = { id: acc % 1000, tag: 't1584', score: acc % 100 };
+  acc = (acc + rc1584.score) % 65521;
+  buf += rc1584.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1585');
+  if (m01.has('k1586')) {
+    const gv1586: number = m01.get('k1586') as number;
+    acc = (acc + gv1586) % 10007;
+  }
+  if (m01.has('k1587')) {
+    const gv1587: number = m01.get('k1587') as number;
+    acc = (acc + gv1587) % 10007;
+  }
+  buf += (acc > 500 ? 'hi1588' : 'lo') + acc.toString(16);
+  const cf1589: Array<(x: number) => number> = [];
+  cf1589.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1589.push((x: number): number => (x + 158) % 10007);
+  acc = cf1589[acc & 1](acc % 9973);
+  buf += `q1590:${acc % 97}`;
+  const db1591: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1591.length) % 65521;
+  if (acc % 10 === 0) { buf += 'even1592'; } else { buf += 'odd'; }
+  const rc1593: Rec0 = { id: acc % 1000, tag: 't1593', score: acc % 100 };
+  acc = (acc + rc1593.score) % 65521;
+  buf += rc1593.tag;
+  switch (acc & 3) {
+    case 0: buf += 's01594'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 282 - (acc % 17);
+  acc = (acc * 31 + 4212) % 65521;
+  m01.set('k1597', acc % 997);
+  for (let i1598 = 0; i1598 < 3; i1598++) {
+    acc = (acc + i1598 * 13 + 645) % 100003;
+  }
+  acc = (acc * 31 + 3803) % 65521;
+  let w1600: number = acc % 23;
+  while (w1600 > 4) { w1600 = Math.floor(w1600 / 2); }
+  acc += w1600;
+  buf += (acc > 500 ? 'hi1601' : 'lo') + acc.toString(16);
+  const cf1602: Array<(x: number) => number> = [];
+  cf1602.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1602.push((x: number): number => (x + 122) % 10007);
+  acc = cf1602[acc & 1](acc % 9973);
+  let w1603: number = acc % 23;
+  while (w1603 > 4) { w1603 = Math.floor(w1603 / 2); }
+  acc += w1603;
+  switch (acc & 3) {
+    case 0: buf += 's01604'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's01605'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const cf1606: Array<(x: number) => number> = [];
+  cf1606.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1606.push((x: number): number => (x + 84) % 10007);
+  acc = cf1606[acc & 1](acc % 9973);
+  const ix1607: number = buf.indexOf('p0');
+  if (ix1607 > 12) { buf = buf.substring(0, 32); } else if (ix1607 >= 0) { buf += 'i'; }
+  buf += 'settle1608-' + acc.toString();
+  acc = acc + 99 - (acc % 50);
+  if (m01.has('k1610')) {
+    const gv1610: number = m01.get('k1610') as number;
+    acc = (acc + gv1610) % 10007;
+  }
+  buf += 'freight1611-' + acc.toString();
+  const rc1612: Rec0 = { id: acc % 1000, tag: 't1612', score: acc % 100 };
+  acc = (acc + rc1612.score) % 65521;
+  buf += rc1612.tag;
+  arr.push(acc % 1000);
+  const rc1614: Rec0 = { id: acc % 1000, tag: 't1614', score: acc % 100 };
+  acc = (acc + rc1614.score) % 65521;
+  buf += rc1614.tag;
+  switch (acc & 3) {
+    case 0: buf += 's01615'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k1616')) {
+    const gv1616: number = m01.get('k1616') as number;
+    acc = (acc + gv1616) % 10007;
+  }
+  for (let i1617 = 0; i1617 < 6; i1617++) {
+    acc = (acc + i1617 * 13 + 961) % 100003;
+  }
+  let w1618: number = acc % 23;
+  while (w1618 > 4) { w1618 = Math.floor(w1618 / 2); }
+  acc += w1618;
+  buf += (acc > 500 ? 'hi1619' : 'lo') + acc.toString(16);
+  const db1620: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1620.length) % 65521;
+  let w1621: number = acc % 23;
+  while (w1621 > 4) { w1621 = Math.floor(w1621 / 2); }
+  acc += w1621;
+  let w1622: number = acc % 23;
+  while (w1622 > 4) { w1622 = Math.floor(w1622 / 2); }
+  acc += w1622;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-1623'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  let w1624: number = acc % 23;
+  while (w1624 > 4) { w1624 = Math.floor(w1624 / 2); }
+  acc += w1624;
+  const t01625: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01625;
+  switch (acc & 3) {
+    case 0: buf += 's01626'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  m01.set('k1627', acc % 997);
+  if (m01.has('k1628')) {
+    const gv1628: number = m01.get('k1628') as number;
+    acc = (acc + gv1628) % 10007;
+  }
+  m01.set('k1629', acc % 997);
+  if (acc % 21 === 0) { buf += 'even1630'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's01631'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi1632' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's01633'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  m01.set('k1634', acc % 997);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-1635'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q1636:${acc % 97}`;
+  arr.push(acc % 1000);
+  buf += `q1638:${acc % 97}`;
+  if (acc % 17 === 0) { buf += 'even1639'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1640');
+  m01.set('k1641', acc % 997);
+  const rc1642: Rec0 = { id: acc % 1000, tag: 't1642', score: acc % 100 };
+  acc = (acc + rc1642.score) % 65521;
+  buf += rc1642.tag;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-1643'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix1644: number = buf.indexOf('p0');
+  if (ix1644 > 12) { buf = buf.substring(0, 32); } else if (ix1644 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi1645' : 'lo') + acc.toString(16);
+  buf += 'stocktake1646-' + acc.toString();
+  buf += `q1647:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1648');
+  buf += (acc > 500 ? 'hi1649' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-1650'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi1651' : 'lo') + acc.toString(16);
+  if (acc % 7 === 0) { buf += 'even1652'; } else { buf += 'odd'; }
+  let w1653: number = acc % 23;
+  while (w1653 > 4) { w1653 = Math.floor(w1653 / 2); }
+  acc += w1653;
+  const db1654: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1654.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1655');
+  buf += `q1656:${acc % 97}`;
+  const rc1657: Rec0 = { id: acc % 1000, tag: 't1657', score: acc % 100 };
+  acc = (acc + rc1657.score) % 65521;
+  buf += rc1657.tag;
+  const t01658: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01658;
+  if (m01.has('k1659')) {
+    const gv1659: number = m01.get('k1659') as number;
+    acc = (acc + gv1659) % 10007;
+  }
+  buf += 'customs1660-' + acc.toString();
+  const rc1661: Rec0 = { id: acc % 1000, tag: 't1661', score: acc % 100 };
+  acc = (acc + rc1661.score) % 65521;
+  buf += rc1661.tag;
+  let w1662: number = acc % 23;
+  while (w1662 > 4) { w1662 = Math.floor(w1662 / 2); }
+  acc += w1662;
+  switch (acc & 3) {
+    case 0: buf += 's01663'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  m01.set('k1664', acc % 997);
+  if (acc % 10 === 0) { buf += 'even1665'; } else { buf += 'odd'; }
+  buf += `q1666:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1667');
+  const rc1668: Rec0 = { id: acc % 1000, tag: 't1668', score: acc % 100 };
+  acc = (acc + rc1668.score) % 65521;
+  buf += rc1668.tag;
+  acc = (acc * 31 + 2375) % 65521;
+  m01.set('k1670', acc % 997);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-1671'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  const t01672: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01672;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1673');
+  arr.push(acc % 1000);
+  if (acc % 5 === 0) { buf += 'even1675'; } else { buf += 'odd'; }
+  const rc1676: Rec0 = { id: acc % 1000, tag: 't1676', score: acc % 100 };
+  acc = (acc + rc1676.score) % 65521;
+  buf += rc1676.tag;
+  buf += 'warehouse1677-' + acc.toString();
+  acc = (acc * 31 + 6762) % 65521;
+  acc = (acc * 31 + 1698) % 65521;
+  const rc1680: Rec0 = { id: acc % 1000, tag: 't1680', score: acc % 100 };
+  acc = (acc + rc1680.score) % 65521;
+  buf += rc1680.tag;
+  buf += 'bay1681-' + acc.toString();
+  const db1682: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1682.length) % 65521;
+  const rc1683: Rec0 = { id: acc % 1000, tag: 't1683', score: acc % 100 };
+  acc = (acc + rc1683.score) % 65521;
+  buf += rc1683.tag;
+  arr.push(acc % 1000);
+  let w1685: number = acc % 23;
+  while (w1685 > 4) { w1685 = Math.floor(w1685 / 2); }
+  acc += w1685;
+  buf += (acc > 500 ? 'hi1686' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8770) % 65521;
+  acc = (acc * 31 + 3422) % 65521;
+  buf += `q1689:${acc % 97}`;
+  const cf1690: Array<(x: number) => number> = [];
+  cf1690.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1690.push((x: number): number => (x + 30) % 10007);
+  acc = cf1690[acc & 1](acc % 9973);
+  const cf1691: Array<(x: number) => number> = [];
+  cf1691.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1691.push((x: number): number => (x + 44) % 10007);
+  acc = cf1691[acc & 1](acc % 9973);
+  acc = (acc * 31 + 6831) % 65521;
+  buf += `q1693:${acc % 97}`;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-1694'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi1695' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  if (acc % 27 === 0) { buf += 'even1697'; } else { buf += 'odd'; }
+  if (acc % 26 === 0) { buf += 'even1698'; } else { buf += 'odd'; }
+  const t01699: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01699;
+  const rc1700: Rec0 = { id: acc % 1000, tag: 't1700', score: acc % 100 };
+  acc = (acc + rc1700.score) % 65521;
+  buf += rc1700.tag;
+  const cf1701: Array<(x: number) => number> = [];
+  cf1701.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1701.push((x: number): number => (x + 43) % 10007);
+  acc = cf1701[acc & 1](acc % 9973);
+  if (m01.has('k1702')) {
+    const gv1702: number = m01.get('k1702') as number;
+    acc = (acc + gv1702) % 10007;
+  }
+  if (m01.has('k1703')) {
+    const gv1703: number = m01.get('k1703') as number;
+    acc = (acc + gv1703) % 10007;
+  }
+  const db1704: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1704.length) % 65521;
+  buf += 'sku1705-' + acc.toString();
+  const t01706: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01706;
+  const db1707: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1707.length) % 65521;
+  if (acc % 12 === 0) { buf += 'even1708'; } else { buf += 'odd'; }
+  buf += `q1709:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's01710'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const rc1711: Rec0 = { id: acc % 1000, tag: 't1711', score: acc % 100 };
+  acc = (acc + rc1711.score) % 65521;
+  buf += rc1711.tag;
+  for (let i1712 = 0; i1712 < 7; i1712++) {
+    acc = (acc + i1712 * 13 + 603) % 100003;
+  }
+  m01.set('k1713', acc % 997);
+  buf += 'journey1714-' + acc.toString();
+  acc = acc + 388 - (acc % 81);
+  buf += (acc > 500 ? 'hi1716' : 'lo') + acc.toString(16);
+  if (m01.has('k1717')) {
+    const gv1717: number = m01.get('k1717') as number;
+    acc = (acc + gv1717) % 10007;
+  }
+  const db1718: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1718.length) % 65521;
+  acc = (acc * 31 + 8108) % 65521;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-1720'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  let w1721: number = acc % 23;
+  while (w1721 > 4) { w1721 = Math.floor(w1721 / 2); }
+  acc += w1721;
+  let w1722: number = acc % 23;
+  while (w1722 > 4) { w1722 = Math.floor(w1722 / 2); }
+  acc += w1722;
+  const t01723: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01723;
+  if (m01.has('k1724')) {
+    const gv1724: number = m01.get('k1724') as number;
+    acc = (acc + gv1724) % 10007;
+  }
+  const db1725: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1725.length) % 65521;
+  acc = (acc * 31 + 8711) % 65521;
+  const ix1727: number = buf.indexOf('p0');
+  if (ix1727 > 12) { buf = buf.substring(0, 32); } else if (ix1727 >= 0) { buf += 'i'; }
+  for (let i1728 = 0; i1728 < 5; i1728++) {
+    acc = (acc + i1728 * 13 + 897) % 100003;
+  }
+  buf += `q1729:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's01730'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 26 - (acc % 39);
+  const rc1732: Rec0 = { id: acc % 1000, tag: 't1732', score: acc % 100 };
+  acc = (acc + rc1732.score) % 65521;
+  buf += rc1732.tag;
+  for (let i1733 = 0; i1733 < 12; i1733++) {
+    acc = (acc + i1733 * 13 + 842) % 100003;
+  }
+  m01.set('k1734', acc % 997);
+  m01.set('k1735', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1736');
+  acc = acc + 524 - (acc % 47);
+  m01.set('k1738', acc % 997);
+  const rc1739: Rec0 = { id: acc % 1000, tag: 't1739', score: acc % 100 };
+  acc = (acc + rc1739.score) % 65521;
+  buf += rc1739.tag;
+  acc = acc + 17 - (acc % 9);
+  for (let i1741 = 0; i1741 < 3; i1741++) {
+    acc = (acc + i1741 * 13 + 139) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's01742'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 6479) % 65521;
+  for (let i1744 = 0; i1744 < 6; i1744++) {
+    acc = (acc + i1744 * 13 + 83) % 100003;
+  }
+  acc = (acc * 31 + 2605) % 65521;
+  if (acc % 22 === 0) { buf += 'even1746'; } else { buf += 'odd'; }
+  const cf1747: Array<(x: number) => number> = [];
+  cf1747.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1747.push((x: number): number => (x + 86) % 10007);
+  acc = cf1747[acc & 1](acc % 9973);
+  const cf1748: Array<(x: number) => number> = [];
+  cf1748.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1748.push((x: number): number => (x + 17) % 10007);
+  acc = cf1748[acc & 1](acc % 9973);
+  if (m01.has('k1749')) {
+    const gv1749: number = m01.get('k1749') as number;
+    acc = (acc + gv1749) % 10007;
+  }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-1750'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi1752' : 'lo') + acc.toString(16);
+  const t01753: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01753;
+  const rc1754: Rec0 = { id: acc % 1000, tag: 't1754', score: acc % 100 };
+  acc = (acc + rc1754.score) % 65521;
+  buf += rc1754.tag;
+  acc = acc + 874 - (acc % 57);
+  const t01756: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01756;
+  const cf1757: Array<(x: number) => number> = [];
+  cf1757.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1757.push((x: number): number => (x + 180) % 10007);
+  acc = cf1757[acc & 1](acc % 9973);
+  if (acc % 14 === 0) { buf += 'even1758'; } else { buf += 'odd'; }
+  const db1759: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1759.length) % 65521;
+  arr.push(acc % 1000);
+  const ix1761: number = buf.indexOf('p0');
+  if (ix1761 > 12) { buf = buf.substring(0, 32); } else if (ix1761 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 1400) % 65521;
+  const rc1763: Rec0 = { id: acc % 1000, tag: 't1763', score: acc % 100 };
+  acc = (acc + rc1763.score) % 65521;
+  buf += rc1763.tag;
+  if (m01.has('k1764')) {
+    const gv1764: number = m01.get('k1764') as number;
+    acc = (acc + gv1764) % 10007;
+  }
+  if (m01.has('k1765')) {
+    const gv1765: number = m01.get('k1765') as number;
+    acc = (acc + gv1765) % 10007;
+  }
+  acc = acc + 110 - (acc % 22);
+  buf += `q1767:${acc % 97}`;
+  if (m01.has('k1768')) {
+    const gv1768: number = m01.get('k1768') as number;
+    acc = (acc + gv1768) % 10007;
+  }
+  acc = acc + 379 - (acc % 15);
+  buf += 'customs1770-' + acc.toString();
+  const t01771: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01771;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-1772'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q1773:${acc % 97}`;
+  arr.push(acc % 1000);
+  acc = acc + 509 - (acc % 69);
+  const cf1776: Array<(x: number) => number> = [];
+  cf1776.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1776.push((x: number): number => (x + 100) % 10007);
+  acc = cf1776[acc & 1](acc % 9973);
+  const ix1777: number = buf.indexOf('p0');
+  if (ix1777 > 12) { buf = buf.substring(0, 32); } else if (ix1777 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-1778'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'quota1779-' + acc.toString();
+  const rc1780: Rec0 = { id: acc % 1000, tag: 't1780', score: acc % 100 };
+  acc = (acc + rc1780.score) % 65521;
+  buf += rc1780.tag;
+  const cf1781: Array<(x: number) => number> = [];
+  cf1781.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1781.push((x: number): number => (x + 17) % 10007);
+  acc = cf1781[acc & 1](acc % 9973);
+  const cf1782: Array<(x: number) => number> = [];
+  cf1782.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1782.push((x: number): number => (x + 195) % 10007);
+  acc = cf1782[acc & 1](acc % 9973);
+  let w1783: number = acc % 23;
+  while (w1783 > 4) { w1783 = Math.floor(w1783 / 2); }
+  acc += w1783;
+  buf += (acc > 500 ? 'hi1784' : 'lo') + acc.toString(16);
+  for (let i1785 = 0; i1785 < 11; i1785++) {
+    acc = (acc + i1785 * 13 + 755) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1786');
+  const ix1787: number = buf.indexOf('p0');
+  if (ix1787 > 12) { buf = buf.substring(0, 32); } else if (ix1787 >= 0) { buf += 'i'; }
+  if (acc % 10 === 0) { buf += 'even1788'; } else { buf += 'odd'; }
+  if (m01.has('k1789')) {
+    const gv1789: number = m01.get('k1789') as number;
+    acc = (acc + gv1789) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1790');
+  if (m01.has('k1791')) {
+    const gv1791: number = m01.get('k1791') as number;
+    acc = (acc + gv1791) % 10007;
+  }
+  buf += 'transit1792-' + acc.toString();
+  if (acc % 18 === 0) { buf += 'even1793'; } else { buf += 'odd'; }
+  m01.set('k1794', acc % 997);
+  if (m01.has('k1795')) {
+    const gv1795: number = m01.get('k1795') as number;
+    acc = (acc + gv1795) % 10007;
+  }
+  if (acc % 24 === 0) { buf += 'even1796'; } else { buf += 'odd'; }
+  if (m01.has('k1797')) {
+    const gv1797: number = m01.get('k1797') as number;
+    acc = (acc + gv1797) % 10007;
+  }
+  acc = (acc * 31 + 4581) % 65521;
+  acc = acc + 426 - (acc % 41);
+  switch (acc & 3) {
+    case 0: buf += 's01800'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  let w1801: number = acc % 23;
+  while (w1801 > 4) { w1801 = Math.floor(w1801 / 2); }
+  acc += w1801;
+  const db1802: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1802.length) % 65521;
+  const t01803: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01803;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1804');
+  let w1805: number = acc % 23;
+  while (w1805 > 4) { w1805 = Math.floor(w1805 / 2); }
+  acc += w1805;
+  const db1806: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1806.length) % 65521;
+  const db1807: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1807.length) % 65521;
+  acc = acc + 580 - (acc % 47);
+  m01.set('k1809', acc % 997);
+  acc = acc + 424 - (acc % 38);
+  for (let i1811 = 0; i1811 < 10; i1811++) {
+    acc = (acc + i1811 * 13 + 524) % 100003;
+  }
+  for (let i1812 = 0; i1812 < 11; i1812++) {
+    acc = (acc + i1812 * 13 + 633) % 100003;
+  }
+  m01.set('k1813', acc % 997);
+  acc = acc + 231 - (acc % 75);
+  acc = acc + 42 - (acc % 37);
+  const cf1816: Array<(x: number) => number> = [];
+  cf1816.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1816.push((x: number): number => (x + 61) % 10007);
+  acc = cf1816[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1817');
+  buf += `q1818:${acc % 97}`;
+  acc = (acc * 31 + 1597) % 65521;
+  m01.set('k1820', acc % 997);
+  buf += (acc > 500 ? 'hi1821' : 'lo') + acc.toString(16);
+  buf += 'transit1822-' + acc.toString();
+  if (acc % 31 === 0) { buf += 'even1823'; } else { buf += 'odd'; }
+  const db1824: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1824.length) % 65521;
+  if (acc % 27 === 0) { buf += 'even1825'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1826');
+  buf += 'dispatch1827-' + acc.toString();
+  acc = acc + 558 - (acc % 93);
+  if (m01.has('k1829')) {
+    const gv1829: number = m01.get('k1829') as number;
+    acc = (acc + gv1829) % 10007;
+  }
+  acc = acc + 335 - (acc % 43);
+  try { if (acc % 29 === 12) { throw new Error('synthetic-1831'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 998 - (acc % 20);
+  const db1833: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1833.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's01834'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const t01835: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01835;
+  buf += (acc > 500 ? 'hi1836' : 'lo') + acc.toString(16);
+  const rc1837: Rec0 = { id: acc % 1000, tag: 't1837', score: acc % 100 };
+  acc = (acc + rc1837.score) % 65521;
+  buf += rc1837.tag;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-1838'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k1839', acc % 997);
+  const ix1840: number = buf.indexOf('p0');
+  if (ix1840 > 12) { buf = buf.substring(0, 32); } else if (ix1840 >= 0) { buf += 'i'; }
+  const rc1841: Rec0 = { id: acc % 1000, tag: 't1841', score: acc % 100 };
+  acc = (acc + rc1841.score) % 65521;
+  buf += rc1841.tag;
+  buf += 'client1842-' + acc.toString();
+  arr.push(acc % 1000);
+  const ix1844: number = buf.indexOf('p0');
+  if (ix1844 > 12) { buf = buf.substring(0, 32); } else if (ix1844 >= 0) { buf += 'i'; }
+  const rc1845: Rec0 = { id: acc % 1000, tag: 't1845', score: acc % 100 };
+  acc = (acc + rc1845.score) % 65521;
+  buf += rc1845.tag;
+  buf += 'routeplan1846-' + acc.toString();
+  buf += 'dock1847-' + acc.toString();
+  let w1848: number = acc % 23;
+  while (w1848 > 4) { w1848 = Math.floor(w1848 / 2); }
+  acc += w1848;
+  switch (acc & 3) {
+    case 0: buf += 's01849'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  let w1850: number = acc % 23;
+  while (w1850 > 4) { w1850 = Math.floor(w1850 / 2); }
+  acc += w1850;
+  let w1851: number = acc % 23;
+  while (w1851 > 4) { w1851 = Math.floor(w1851 / 2); }
+  acc += w1851;
+  buf += (acc > 500 ? 'hi1852' : 'lo') + acc.toString(16);
+  const rc1853: Rec0 = { id: acc % 1000, tag: 't1853', score: acc % 100 };
+  acc = (acc + rc1853.score) % 65521;
+  buf += rc1853.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1854');
+  arr.push(acc % 1000);
+  const cf1856: Array<(x: number) => number> = [];
+  cf1856.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1856.push((x: number): number => (x + 167) % 10007);
+  acc = cf1856[acc & 1](acc % 9973);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-1857'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1858');
+  acc = acc + 667 - (acc % 71);
+  const cf1860: Array<(x: number) => number> = [];
+  cf1860.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1860.push((x: number): number => (x + 18) % 10007);
+  acc = cf1860[acc & 1](acc % 9973);
+  const ix1861: number = buf.indexOf('p0');
+  if (ix1861 > 12) { buf = buf.substring(0, 32); } else if (ix1861 >= 0) { buf += 'i'; }
+  const rc1862: Rec0 = { id: acc % 1000, tag: 't1862', score: acc % 100 };
+  acc = (acc + rc1862.score) % 65521;
+  buf += rc1862.tag;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-1863'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k1864')) {
+    const gv1864: number = m01.get('k1864') as number;
+    acc = (acc + gv1864) % 10007;
+  }
+  buf += `q1865:${acc % 97}`;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-1866'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  const db1867: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1867.length) % 65521;
+  acc = (acc * 31 + 473) % 65521;
+  const ix1869: number = buf.indexOf('p0');
+  if (ix1869 > 12) { buf = buf.substring(0, 32); } else if (ix1869 >= 0) { buf += 'i'; }
+  buf += 'refund1870-' + acc.toString();
+  try { if (acc % 29 === 18) { throw new Error('synthetic-1871'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  let w1872: number = acc % 23;
+  while (w1872 > 4) { w1872 = Math.floor(w1872 / 2); }
+  acc += w1872;
+  arr.push(acc % 1000);
+  const t01874: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01874;
+  switch (acc & 3) {
+    case 0: buf += 's01875'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi1876' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  if (acc % 6 === 0) { buf += 'even1878'; } else { buf += 'odd'; }
+  for (let i1879 = 0; i1879 < 9; i1879++) {
+    acc = (acc + i1879 * 13 + 10) % 100003;
+  }
+  const cf1880: Array<(x: number) => number> = [];
+  cf1880.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1880.push((x: number): number => (x + 28) % 10007);
+  acc = cf1880[acc & 1](acc % 9973);
+  const db1881: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1881.length) % 65521;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-1882'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const cf1884: Array<(x: number) => number> = [];
+  cf1884.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1884.push((x: number): number => (x + 187) % 10007);
+  acc = cf1884[acc & 1](acc % 9973);
+  acc = acc + 790 - (acc % 10);
+  if (m01.has('k1886')) {
+    const gv1886: number = m01.get('k1886') as number;
+    acc = (acc + gv1886) % 10007;
+  }
+  buf += (acc > 500 ? 'hi1887' : 'lo') + acc.toString(16);
+  m01.set('k1888', acc % 997);
+  if (m01.has('k1889')) {
+    const gv1889: number = m01.get('k1889') as number;
+    acc = (acc + gv1889) % 10007;
+  }
+  const ix1890: number = buf.indexOf('p0');
+  if (ix1890 > 12) { buf = buf.substring(0, 32); } else if (ix1890 >= 0) { buf += 'i'; }
+  const db1891: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1891.length) % 65521;
+  acc = (acc * 31 + 1978) % 65521;
+  acc = acc + 351 - (acc % 72);
+  let w1894: number = acc % 23;
+  while (w1894 > 4) { w1894 = Math.floor(w1894 / 2); }
+  acc += w1894;
+  buf += 'parcel1895-' + acc.toString();
+  const rc1896: Rec0 = { id: acc % 1000, tag: 't1896', score: acc % 100 };
+  acc = (acc + rc1896.score) % 65521;
+  buf += rc1896.tag;
+  const t01897: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01897;
+  if (acc % 17 === 0) { buf += 'even1898'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 10) { throw new Error('synthetic-1899'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf1900: Array<(x: number) => number> = [];
+  cf1900.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1900.push((x: number): number => (x + 16) % 10007);
+  acc = cf1900[acc & 1](acc % 9973);
+  buf += `q1901:${acc % 97}`;
+  buf += (acc > 500 ? 'hi1902' : 'lo') + acc.toString(16);
+  acc = acc + 161 - (acc % 13);
+  acc = acc + 431 - (acc % 85);
+  const cf1905: Array<(x: number) => number> = [];
+  cf1905.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1905.push((x: number): number => (x + 28) % 10007);
+  acc = cf1905[acc & 1](acc % 9973);
+  acc = acc + 158 - (acc % 52);
+  if (m01.has('k1907')) {
+    const gv1907: number = m01.get('k1907') as number;
+    acc = (acc + gv1907) % 10007;
+  }
+  const ix1908: number = buf.indexOf('p0');
+  if (ix1908 > 12) { buf = buf.substring(0, 32); } else if (ix1908 >= 0) { buf += 'i'; }
+  for (let i1909 = 0; i1909 < 3; i1909++) {
+    acc = (acc + i1909 * 13 + 717) % 100003;
+  }
+  const cf1910: Array<(x: number) => number> = [];
+  cf1910.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1910.push((x: number): number => (x + 72) % 10007);
+  acc = cf1910[acc & 1](acc % 9973);
+  buf += `q1911:${acc % 97}`;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-1912'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1913');
+  if (m01.has('k1914')) {
+    const gv1914: number = m01.get('k1914') as number;
+    acc = (acc + gv1914) % 10007;
+  }
+  for (let i1915 = 0; i1915 < 6; i1915++) {
+    acc = (acc + i1915 * 13 + 855) % 100003;
+  }
+  m01.set('k1916', acc % 997);
+  m01.set('k1917', acc % 997);
+  if (m01.has('k1918')) {
+    const gv1918: number = m01.get('k1918') as number;
+    acc = (acc + gv1918) % 10007;
+  }
+  acc = (acc * 31 + 9835) % 65521;
+  const t01920: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01920;
+  const rc1921: Rec0 = { id: acc % 1000, tag: 't1921', score: acc % 100 };
+  acc = (acc + rc1921.score) % 65521;
+  buf += rc1921.tag;
+  buf += (acc > 500 ? 'hi1922' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-1923'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix1924: number = buf.indexOf('p0');
+  if (ix1924 > 12) { buf = buf.substring(0, 32); } else if (ix1924 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  const ix1926: number = buf.indexOf('p0');
+  if (ix1926 > 12) { buf = buf.substring(0, 32); } else if (ix1926 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3558) % 65521;
+  buf += (acc > 500 ? 'hi1928' : 'lo') + acc.toString(16);
+  for (let i1929 = 0; i1929 < 8; i1929++) {
+    acc = (acc + i1929 * 13 + 706) % 100003;
+  }
+  acc = acc + 713 - (acc % 31);
+  if (acc % 20 === 0) { buf += 'even1931'; } else { buf += 'odd'; }
+  const db1932: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1932.length) % 65521;
+  m01.set('k1933', acc % 997);
+  acc = (acc * 31 + 3009) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1935');
+  m01.set('k1936', acc % 997);
+  acc = acc + 472 - (acc % 46);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1938');
+  try { if (acc % 29 === 21) { throw new Error('synthetic-1939'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf1940: Array<(x: number) => number> = [];
+  cf1940.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1940.push((x: number): number => (x + 169) % 10007);
+  acc = cf1940[acc & 1](acc % 9973);
+  if (acc % 29 === 0) { buf += 'even1941'; } else { buf += 'odd'; }
+  const rc1942: Rec0 = { id: acc % 1000, tag: 't1942', score: acc % 100 };
+  acc = (acc + rc1942.score) % 65521;
+  buf += rc1942.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1943');
+  if (m01.has('k1944')) {
+    const gv1944: number = m01.get('k1944') as number;
+    acc = (acc + gv1944) % 10007;
+  }
+  const rc1945: Rec0 = { id: acc % 1000, tag: 't1945', score: acc % 100 };
+  acc = (acc + rc1945.score) % 65521;
+  buf += rc1945.tag;
+  acc = (acc * 31 + 3469) % 65521;
+  const cf1947: Array<(x: number) => number> = [];
+  cf1947.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1947.push((x: number): number => (x + 78) % 10007);
+  acc = cf1947[acc & 1](acc % 9973);
+  m01.set('k1948', acc % 997);
+  acc = acc + 734 - (acc % 13);
+  for (let i1950 = 0; i1950 < 8; i1950++) {
+    acc = (acc + i1950 * 13 + 380) % 100003;
+  }
+  arr.push(acc % 1000);
+  for (let i1952 = 0; i1952 < 7; i1952++) {
+    acc = (acc + i1952 * 13 + 341) % 100003;
+  }
+  const db1953: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1953.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's01954'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  if (acc % 21 === 0) { buf += 'even1955'; } else { buf += 'odd'; }
+  if (acc % 23 === 0) { buf += 'even1956'; } else { buf += 'odd'; }
+  const db1957: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1957.length) % 65521;
+  buf += (acc > 500 ? 'hi1958' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's01959'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  m01.set('k1960', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's01961'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const rc1962: Rec0 = { id: acc % 1000, tag: 't1962', score: acc % 100 };
+  acc = (acc + rc1962.score) % 65521;
+  buf += rc1962.tag;
+  const t01963: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01963;
+  buf += 'coupon1964-' + acc.toString();
+  if (m01.has('k1965')) {
+    const gv1965: number = m01.get('k1965') as number;
+    acc = (acc + gv1965) % 10007;
+  }
+  const ix1966: number = buf.indexOf('p0');
+  if (ix1966 > 12) { buf = buf.substring(0, 32); } else if (ix1966 >= 0) { buf += 'i'; }
+  if (acc % 21 === 0) { buf += 'even1967'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 4246) % 65521;
+  const cf1969: Array<(x: number) => number> = [];
+  cf1969.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1969.push((x: number): number => (x + 24) % 10007);
+  acc = cf1969[acc & 1](acc % 9973);
+  m01.set('k1970', acc % 997);
+  let w1971: number = acc % 23;
+  while (w1971 > 4) { w1971 = Math.floor(w1971 / 2); }
+  acc += w1971;
+  let w1972: number = acc % 23;
+  while (w1972 > 4) { w1972 = Math.floor(w1972 / 2); }
+  acc += w1972;
+  arr.push(acc % 1000);
+  if (m01.has('k1974')) {
+    const gv1974: number = m01.get('k1974') as number;
+    acc = (acc + gv1974) % 10007;
+  }
+  const db1975: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1975.length) % 65521;
+  acc = (acc * 31 + 4051) % 65521;
+  m01.set('k1977', acc % 997);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-1978'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  const t01979: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t01979;
+  const cf1980: Array<(x: number) => number> = [];
+  cf1980.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1980.push((x: number): number => (x + 130) % 10007);
+  acc = cf1980[acc & 1](acc % 9973);
+  if (acc % 27 === 0) { buf += 'even1981'; } else { buf += 'odd'; }
+  buf += `q1982:${acc % 97}`;
+  const db1983: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1983.length) % 65521;
+  if (m01.has('k1984')) {
+    const gv1984: number = m01.get('k1984') as number;
+    acc = (acc + gv1984) % 10007;
+  }
+  if (acc % 23 === 0) { buf += 'even1985'; } else { buf += 'odd'; }
+  const db1986: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1986.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x1987');
+  buf += `q1988:${acc % 97}`;
+  acc = acc + 426 - (acc % 12);
+  const db1990: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1990.length) % 65521;
+  acc = (acc * 31 + 8555) % 65521;
+  if (m01.has('k1992')) {
+    const gv1992: number = m01.get('k1992') as number;
+    acc = (acc + gv1992) % 10007;
+  }
+  const db1993: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db1993.length) % 65521;
+  m01.set('k1994', acc % 997);
+  if (m01.has('k1995')) {
+    const gv1995: number = m01.get('k1995') as number;
+    acc = (acc + gv1995) % 10007;
+  }
+  if (m01.has('k1996')) {
+    const gv1996: number = m01.get('k1996') as number;
+    acc = (acc + gv1996) % 10007;
+  }
+  if (acc % 24 === 0) { buf += 'even1997'; } else { buf += 'odd'; }
+  const cf1998: Array<(x: number) => number> = [];
+  cf1998.push((x: number): number => (x * 3 + acc) % 65521);
+  cf1998.push((x: number): number => (x + 154) % 10007);
+  acc = cf1998[acc & 1](acc % 9973);
+  const ix1999: number = buf.indexOf('p0');
+  if (ix1999 > 12) { buf = buf.substring(0, 32); } else if (ix1999 >= 0) { buf += 'i'; }
+  const t02000: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02000;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2002');
+  acc = acc + 36 - (acc % 15);
+  arr.push(acc % 1000);
+  if (m01.has('k2005')) {
+    const gv2005: number = m01.get('k2005') as number;
+    acc = (acc + gv2005) % 10007;
+  }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-2006'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i2007 = 0; i2007 < 12; i2007++) {
+    acc = (acc + i2007 * 13 + 584) % 100003;
+  }
+  for (let i2008 = 0; i2008 < 9; i2008++) {
+    acc = (acc + i2008 * 13 + 756) % 100003;
+  }
+  buf += `q2009:${acc % 97}`;
+  acc = (acc * 31 + 1860) % 65521;
+  let w2011: number = acc % 23;
+  while (w2011 > 4) { w2011 = Math.floor(w2011 / 2); }
+  acc += w2011;
+  const cf2012: Array<(x: number) => number> = [];
+  cf2012.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2012.push((x: number): number => (x + 163) % 10007);
+  acc = cf2012[acc & 1](acc % 9973);
+  acc = acc + 174 - (acc % 31);
+  const t02014: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02014;
+  buf += (acc > 500 ? 'hi2015' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi2016' : 'lo') + acc.toString(16);
+  buf += `q2017:${acc % 97}`;
+  const cf2018: Array<(x: number) => number> = [];
+  cf2018.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2018.push((x: number): number => (x + 87) % 10007);
+  acc = cf2018[acc & 1](acc % 9973);
+  const cf2019: Array<(x: number) => number> = [];
+  cf2019.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2019.push((x: number): number => (x + 122) % 10007);
+  acc = cf2019[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2020');
+  const db2021: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2021.length) % 65521;
+  if (acc % 12 === 0) { buf += 'even2022'; } else { buf += 'odd'; }
+  const cf2023: Array<(x: number) => number> = [];
+  cf2023.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2023.push((x: number): number => (x + 156) % 10007);
+  acc = cf2023[acc & 1](acc % 9973);
+  const ix2024: number = buf.indexOf('p0');
+  if (ix2024 > 12) { buf = buf.substring(0, 32); } else if (ix2024 >= 0) { buf += 'i'; }
+  const db2025: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2025.length) % 65521;
+  buf += (acc > 500 ? 'hi2026' : 'lo') + acc.toString(16);
+  m01.set('k2027', acc % 997);
+  if (acc % 28 === 0) { buf += 'even2028'; } else { buf += 'odd'; }
+  buf += 'shelf2029-' + acc.toString();
+  buf += (acc > 500 ? 'hi2030' : 'lo') + acc.toString(16);
+  buf += 'transit2031-' + acc.toString();
+  if (m01.has('k2032')) {
+    const gv2032: number = m01.get('k2032') as number;
+    acc = (acc + gv2032) % 10007;
+  }
+  acc = (acc * 31 + 9000) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02034'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  if (acc % 29 === 0) { buf += 'even2035'; } else { buf += 'odd'; }
+  const cf2036: Array<(x: number) => number> = [];
+  cf2036.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2036.push((x: number): number => (x + 132) % 10007);
+  acc = cf2036[acc & 1](acc % 9973);
+  const rc2037: Rec0 = { id: acc % 1000, tag: 't2037', score: acc % 100 };
+  acc = (acc + rc2037.score) % 65521;
+  buf += rc2037.tag;
+  buf += 'dock2038-' + acc.toString();
+  const rc2039: Rec0 = { id: acc % 1000, tag: 't2039', score: acc % 100 };
+  acc = (acc + rc2039.score) % 65521;
+  buf += rc2039.tag;
+  const rc2040: Rec0 = { id: acc % 1000, tag: 't2040', score: acc % 100 };
+  acc = (acc + rc2040.score) % 65521;
+  buf += rc2040.tag;
+  const rc2041: Rec0 = { id: acc % 1000, tag: 't2041', score: acc % 100 };
+  acc = (acc + rc2041.score) % 65521;
+  buf += rc2041.tag;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-2042'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 12 === 0) { buf += 'even2043'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-2044'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2045', acc % 997);
+  buf += (acc > 500 ? 'hi2046' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-2047'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 7513) % 65521;
+  const rc2049: Rec0 = { id: acc % 1000, tag: 't2049', score: acc % 100 };
+  acc = (acc + rc2049.score) % 65521;
+  buf += rc2049.tag;
+  const rc2050: Rec0 = { id: acc % 1000, tag: 't2050', score: acc % 100 };
+  acc = (acc + rc2050.score) % 65521;
+  buf += rc2050.tag;
+  const rc2051: Rec0 = { id: acc % 1000, tag: 't2051', score: acc % 100 };
+  acc = (acc + rc2051.score) % 65521;
+  buf += rc2051.tag;
+  acc = (acc * 31 + 4831) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02053'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2054');
+  m01.set('k2055', acc % 997);
+  const cf2056: Array<(x: number) => number> = [];
+  cf2056.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2056.push((x: number): number => (x + 114) % 10007);
+  acc = cf2056[acc & 1](acc % 9973);
+  let w2057: number = acc % 23;
+  while (w2057 > 4) { w2057 = Math.floor(w2057 / 2); }
+  acc += w2057;
+  if (m01.has('k2058')) {
+    const gv2058: number = m01.get('k2058') as number;
+    acc = (acc + gv2058) % 10007;
+  }
+  const ix2059: number = buf.indexOf('p0');
+  if (ix2059 > 12) { buf = buf.substring(0, 32); } else if (ix2059 >= 0) { buf += 'i'; }
+  const ix2060: number = buf.indexOf('p0');
+  if (ix2060 > 12) { buf = buf.substring(0, 32); } else if (ix2060 >= 0) { buf += 'i'; }
+  const t02061: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02061;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-2062'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  const db2063: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2063.length) % 65521;
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2065' : 'lo') + acc.toString(16);
+  const db2066: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2066.length) % 65521;
+  buf += (acc > 500 ? 'hi2067' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's02068'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  if (acc % 9 === 0) { buf += 'even2070'; } else { buf += 'odd'; }
+  let w2071: number = acc % 23;
+  while (w2071 > 4) { w2071 = Math.floor(w2071 / 2); }
+  acc += w2071;
+  const ix2072: number = buf.indexOf('p0');
+  if (ix2072 > 12) { buf = buf.substring(0, 32); } else if (ix2072 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 5886) % 65521;
+  const cf2074: Array<(x: number) => number> = [];
+  cf2074.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2074.push((x: number): number => (x + 96) % 10007);
+  acc = cf2074[acc & 1](acc % 9973);
+  if (m01.has('k2075')) {
+    const gv2075: number = m01.get('k2075') as number;
+    acc = (acc + gv2075) % 10007;
+  }
+  let w2076: number = acc % 23;
+  while (w2076 > 4) { w2076 = Math.floor(w2076 / 2); }
+  acc += w2076;
+  const db2077: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2077.length) % 65521;
+  for (let i2078 = 0; i2078 < 6; i2078++) {
+    acc = (acc + i2078 * 13 + 395) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2079');
+  if (m01.has('k2080')) {
+    const gv2080: number = m01.get('k2080') as number;
+    acc = (acc + gv2080) % 10007;
+  }
+  buf += `q2081:${acc % 97}`;
+  acc = (acc * 31 + 4034) % 65521;
+  try { if (acc % 29 === 12) { throw new Error('synthetic-2083'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's02084'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 8604) % 65521;
+  if (acc % 19 === 0) { buf += 'even2086'; } else { buf += 'odd'; }
+  let w2087: number = acc % 23;
+  while (w2087 > 4) { w2087 = Math.floor(w2087 / 2); }
+  acc += w2087;
+  buf += 'audit2088-' + acc.toString();
+  const rc2089: Rec0 = { id: acc % 1000, tag: 't2089', score: acc % 100 };
+  acc = (acc + rc2089.score) % 65521;
+  buf += rc2089.tag;
+  const t02090: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02090;
+  const cf2091: Array<(x: number) => number> = [];
+  cf2091.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2091.push((x: number): number => (x + 188) % 10007);
+  acc = cf2091[acc & 1](acc % 9973);
+  const t02092: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02092;
+  const db2093: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2093.length) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 5 === 0) { buf += 'even2095'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's02096'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-2097'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 4804) % 65521;
+  if (acc % 5 === 0) { buf += 'even2099'; } else { buf += 'odd'; }
+  const t02100: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02100;
+  buf += 'policy2101-' + acc.toString();
+  buf += (acc > 500 ? 'hi2102' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2104' : 'lo') + acc.toString(16);
+  if (acc % 16 === 0) { buf += 'even2105'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  buf += `q2107:${acc % 97}`;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2109');
+  const t02110: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02110;
+  const t02111: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02111;
+  const db2112: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2112.length) % 65521;
+  const cf2113: Array<(x: number) => number> = [];
+  cf2113.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2113.push((x: number): number => (x + 161) % 10007);
+  acc = cf2113[acc & 1](acc % 9973);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-2114'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'crate2115-' + acc.toString();
+  const db2116: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2116.length) % 65521;
+  buf += 'pallet2117-' + acc.toString();
+  if (acc % 28 === 0) { buf += 'even2118'; } else { buf += 'odd'; }
+  buf += `q2119:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02120'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k2121')) {
+    const gv2121: number = m01.get('k2121') as number;
+    acc = (acc + gv2121) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2122');
+  const rc2123: Rec0 = { id: acc % 1000, tag: 't2123', score: acc % 100 };
+  acc = (acc + rc2123.score) % 65521;
+  buf += rc2123.tag;
+  const rc2124: Rec0 = { id: acc % 1000, tag: 't2124', score: acc % 100 };
+  acc = (acc + rc2124.score) % 65521;
+  buf += rc2124.tag;
+  const cf2125: Array<(x: number) => number> = [];
+  cf2125.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2125.push((x: number): number => (x + 104) % 10007);
+  acc = cf2125[acc & 1](acc % 9973);
+  const ix2126: number = buf.indexOf('p0');
+  if (ix2126 > 12) { buf = buf.substring(0, 32); } else if (ix2126 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi2127' : 'lo') + acc.toString(16);
+  const rc2128: Rec0 = { id: acc % 1000, tag: 't2128', score: acc % 100 };
+  acc = (acc + rc2128.score) % 65521;
+  buf += rc2128.tag;
+  buf += 'quota2129-' + acc.toString();
+  for (let i2130 = 0; i2130 < 3; i2130++) {
+    acc = (acc + i2130 * 13 + 43) % 100003;
+  }
+  buf += (acc > 500 ? 'hi2131' : 'lo') + acc.toString(16);
+  buf += 'portal2132-' + acc.toString();
+  const rc2133: Rec0 = { id: acc % 1000, tag: 't2133', score: acc % 100 };
+  acc = (acc + rc2133.score) % 65521;
+  buf += rc2133.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2134');
+  switch (acc & 3) {
+    case 0: buf += 's02135'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi2136' : 'lo') + acc.toString(16);
+  m01.set('k2137', acc % 997);
+  const t02138: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02138;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2139');
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2141' : 'lo') + acc.toString(16);
+  if (acc % 11 === 0) { buf += 'even2142'; } else { buf += 'odd'; }
+  for (let i2143 = 0; i2143 < 5; i2143++) {
+    acc = (acc + i2143 * 13 + 454) % 100003;
+  }
+  buf += 'batch2144-' + acc.toString();
+  const rc2145: Rec0 = { id: acc % 1000, tag: 't2145', score: acc % 100 };
+  acc = (acc + rc2145.score) % 65521;
+  buf += rc2145.tag;
+  const rc2146: Rec0 = { id: acc % 1000, tag: 't2146', score: acc % 100 };
+  acc = (acc + rc2146.score) % 65521;
+  buf += rc2146.tag;
+  const ix2147: number = buf.indexOf('p0');
+  if (ix2147 > 12) { buf = buf.substring(0, 32); } else if (ix2147 >= 0) { buf += 'i'; }
+  buf += `q2148:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2149');
+  for (let i2150 = 0; i2150 < 12; i2150++) {
+    acc = (acc + i2150 * 13 + 41) % 100003;
+  }
+  const t02151: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02151;
+  for (let i2152 = 0; i2152 < 10; i2152++) {
+    acc = (acc + i2152 * 13 + 571) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2153');
+  const db2154: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2154.length) % 65521;
+  if (acc % 8 === 0) { buf += 'even2155'; } else { buf += 'odd'; }
+  let w2156: number = acc % 23;
+  while (w2156 > 4) { w2156 = Math.floor(w2156 / 2); }
+  acc += w2156;
+  const db2157: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2157.length) % 65521;
+  const ix2158: number = buf.indexOf('p0');
+  if (ix2158 > 12) { buf = buf.substring(0, 32); } else if (ix2158 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-2160'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2161');
+  m01.set('k2162', acc % 997);
+  buf += 'pallet2163-' + acc.toString();
+  for (let i2164 = 0; i2164 < 7; i2164++) {
+    acc = (acc + i2164 * 13 + 133) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2165');
+  const t02166: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02166;
+  m01.set('k2167', acc % 997);
+  try { if (acc % 29 === 22) { throw new Error('synthetic-2168'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 5625) % 65521;
+  for (let i2170 = 0; i2170 < 7; i2170++) {
+    acc = (acc + i2170 * 13 + 679) % 100003;
+  }
+  buf += (acc > 500 ? 'hi2171' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  if (acc % 28 === 0) { buf += 'even2173'; } else { buf += 'odd'; }
+  buf += 'refund2174-' + acc.toString();
+  if (m01.has('k2175')) {
+    const gv2175: number = m01.get('k2175') as number;
+    acc = (acc + gv2175) % 10007;
+  }
+  const ix2176: number = buf.indexOf('p0');
+  if (ix2176 > 12) { buf = buf.substring(0, 32); } else if (ix2176 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's02177'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const db2178: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2178.length) % 65521;
+  const rc2179: Rec0 = { id: acc % 1000, tag: 't2179', score: acc % 100 };
+  acc = (acc + rc2179.score) % 65521;
+  buf += rc2179.tag;
+  buf += 'stocktake2180-' + acc.toString();
+  const t02181: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02181;
+  let w2182: number = acc % 23;
+  while (w2182 > 4) { w2182 = Math.floor(w2182 / 2); }
+  acc += w2182;
+  let w2183: number = acc % 23;
+  while (w2183 > 4) { w2183 = Math.floor(w2183 / 2); }
+  acc += w2183;
+  for (let i2184 = 0; i2184 < 6; i2184++) {
+    acc = (acc + i2184 * 13 + 671) % 100003;
+  }
+  if (acc % 10 === 0) { buf += 'even2185'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi2186' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 1609) % 65521;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-2188'); } acc += 47; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k2189')) {
+    const gv2189: number = m01.get('k2189') as number;
+    acc = (acc + gv2189) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2190');
+  arr.push(acc % 1000);
+  for (let i2192 = 0; i2192 < 4; i2192++) {
+    acc = (acc + i2192 * 13 + 134) % 100003;
+  }
+  const db2193: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2193.length) % 65521;
+  m01.set('k2194', acc % 997);
+  for (let i2195 = 0; i2195 < 5; i2195++) {
+    acc = (acc + i2195 * 13 + 347) % 100003;
+  }
+  for (let i2196 = 0; i2196 < 7; i2196++) {
+    acc = (acc + i2196 * 13 + 862) % 100003;
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-2198'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i2199 = 0; i2199 < 6; i2199++) {
+    acc = (acc + i2199 * 13 + 644) % 100003;
+  }
+  if (acc % 22 === 0) { buf += 'even2200'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  for (let i2202 = 0; i2202 < 3; i2202++) {
+    acc = (acc + i2202 * 13 + 566) % 100003;
+  }
+  let w2203: number = acc % 23;
+  while (w2203 > 4) { w2203 = Math.floor(w2203 / 2); }
+  acc += w2203;
+  buf += `q2204:${acc % 97}`;
+  if (acc % 28 === 0) { buf += 'even2205'; } else { buf += 'odd'; }
+  const cf2206: Array<(x: number) => number> = [];
+  cf2206.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2206.push((x: number): number => (x + 56) % 10007);
+  acc = cf2206[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const cf2209: Array<(x: number) => number> = [];
+  cf2209.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2209.push((x: number): number => (x + 167) % 10007);
+  acc = cf2209[acc & 1](acc % 9973);
+  buf += `q2210:${acc % 97}`;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-2211'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3079) % 65521;
+  const t02213: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02213;
+  switch (acc & 3) {
+    case 0: buf += 's02214'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  buf += 'crate2215-' + acc.toString();
+  const cf2216: Array<(x: number) => number> = [];
+  cf2216.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2216.push((x: number): number => (x + 179) % 10007);
+  acc = cf2216[acc & 1](acc % 9973);
+  const rc2217: Rec0 = { id: acc % 1000, tag: 't2217', score: acc % 100 };
+  acc = (acc + rc2217.score) % 65521;
+  buf += rc2217.tag;
+  buf += 'dispatch2218-' + acc.toString();
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const t02221: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02221;
+  buf += (acc > 500 ? 'hi2222' : 'lo') + acc.toString(16);
+  const rc2223: Rec0 = { id: acc % 1000, tag: 't2223', score: acc % 100 };
+  acc = (acc + rc2223.score) % 65521;
+  buf += rc2223.tag;
+  if (m01.has('k2224')) {
+    const gv2224: number = m01.get('k2224') as number;
+    acc = (acc + gv2224) % 10007;
+  }
+  const cf2225: Array<(x: number) => number> = [];
+  cf2225.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2225.push((x: number): number => (x + 181) % 10007);
+  acc = cf2225[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2226');
+  const ix2227: number = buf.indexOf('p0');
+  if (ix2227 > 12) { buf = buf.substring(0, 32); } else if (ix2227 >= 0) { buf += 'i'; }
+  buf += 'coupon2228-' + acc.toString();
+  acc = acc + 85 - (acc % 49);
+  acc = acc + 574 - (acc % 50);
+  const db2231: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2231.length) % 65521;
+  const t02232: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02232;
+  if (acc % 25 === 0) { buf += 'even2233'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2234');
+  buf += (acc > 500 ? 'hi2235' : 'lo') + acc.toString(16);
+  buf += 'pallet2236-' + acc.toString();
+  buf += 'vendor2237-' + acc.toString();
+  buf += `q2238:${acc % 97}`;
+  const db2239: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2239.length) % 65521;
+  const cf2240: Array<(x: number) => number> = [];
+  cf2240.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2240.push((x: number): number => (x + 89) % 10007);
+  acc = cf2240[acc & 1](acc % 9973);
+  const ix2241: number = buf.indexOf('p0');
+  if (ix2241 > 12) { buf = buf.substring(0, 32); } else if (ix2241 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2242');
+  for (let i2243 = 0; i2243 < 12; i2243++) {
+    acc = (acc + i2243 * 13 + 567) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2244');
+  switch (acc & 3) {
+    case 0: buf += 's02245'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  m01.set('k2246', acc % 997);
+  if (acc % 24 === 0) { buf += 'even2247'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's02248'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const db2249: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2249.length) % 65521;
+  acc = acc + 732 - (acc % 78);
+  buf += 'refund2251-' + acc.toString();
+  const rc2252: Rec0 = { id: acc % 1000, tag: 't2252', score: acc % 100 };
+  acc = (acc + rc2252.score) % 65521;
+  buf += rc2252.tag;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-2253'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's02255'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02256'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 6565) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2258');
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2260' : 'lo') + acc.toString(16);
+  if (acc % 17 === 0) { buf += 'even2261'; } else { buf += 'odd'; }
+  const cf2262: Array<(x: number) => number> = [];
+  cf2262.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2262.push((x: number): number => (x + 103) % 10007);
+  acc = cf2262[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi2263' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-2264'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 15 === 0) { buf += 'even2265'; } else { buf += 'odd'; }
+  m01.set('k2266', acc % 997);
+  for (let i2267 = 0; i2267 < 9; i2267++) {
+    acc = (acc + i2267 * 13 + 828) % 100003;
+  }
+  buf += `q2268:${acc % 97}`;
+  acc = (acc * 31 + 6143) % 65521;
+  const rc2270: Rec0 = { id: acc % 1000, tag: 't2270', score: acc % 100 };
+  acc = (acc + rc2270.score) % 65521;
+  buf += rc2270.tag;
+  for (let i2271 = 0; i2271 < 9; i2271++) {
+    acc = (acc + i2271 * 13 + 776) % 100003;
+  }
+  for (let i2272 = 0; i2272 < 4; i2272++) {
+    acc = (acc + i2272 * 13 + 30) % 100003;
+  }
+  buf += (acc > 500 ? 'hi2273' : 'lo') + acc.toString(16);
+  buf += `q2274:${acc % 97}`;
+  const ix2275: number = buf.indexOf('p0');
+  if (ix2275 > 12) { buf = buf.substring(0, 32); } else if (ix2275 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-2276'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-2277'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's02278'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  if (acc % 18 === 0) { buf += 'even2279'; } else { buf += 'odd'; }
+  const cf2280: Array<(x: number) => number> = [];
+  cf2280.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2280.push((x: number): number => (x + 123) % 10007);
+  acc = cf2280[acc & 1](acc % 9973);
+  buf += `q2281:${acc % 97}`;
+  try { if (acc % 29 === 16) { throw new Error('synthetic-2282'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's02283'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  m01.set('k2284', acc % 997);
+  const rc2285: Rec0 = { id: acc % 1000, tag: 't2285', score: acc % 100 };
+  acc = (acc + rc2285.score) % 65521;
+  buf += rc2285.tag;
+  const db2286: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2286.length) % 65521;
+  if (acc % 6 === 0) { buf += 'even2287'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 6089) % 65521;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-2289'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2290');
+  const db2291: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2291.length) % 65521;
+  if (m01.has('k2292')) {
+    const gv2292: number = m01.get('k2292') as number;
+    acc = (acc + gv2292) % 10007;
+  }
+  acc = acc + 729 - (acc % 67);
+  const db2294: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2294.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02295'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-2296'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2297', acc % 997);
+  const rc2298: Rec0 = { id: acc % 1000, tag: 't2298', score: acc % 100 };
+  acc = (acc + rc2298.score) % 65521;
+  buf += rc2298.tag;
+  if (acc % 12 === 0) { buf += 'even2299'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi2300' : 'lo') + acc.toString(16);
+  if (acc % 6 === 0) { buf += 'even2301'; } else { buf += 'odd'; }
+  const rc2302: Rec0 = { id: acc % 1000, tag: 't2302', score: acc % 100 };
+  acc = (acc + rc2302.score) % 65521;
+  buf += rc2302.tag;
+  let w2303: number = acc % 23;
+  while (w2303 > 4) { w2303 = Math.floor(w2303 / 2); }
+  acc += w2303;
+  acc = acc + 293 - (acc % 82);
+  if (m01.has('k2305')) {
+    const gv2305: number = m01.get('k2305') as number;
+    acc = (acc + gv2305) % 10007;
+  }
+  if (acc % 14 === 0) { buf += 'even2306'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-2307'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix2308: number = buf.indexOf('p0');
+  if (ix2308 > 12) { buf = buf.substring(0, 32); } else if (ix2308 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 4785) % 65521;
+  acc = acc + 120 - (acc % 12);
+  buf += (acc > 500 ? 'hi2311' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2312');
+  arr.push(acc % 1000);
+  const rc2314: Rec0 = { id: acc % 1000, tag: 't2314', score: acc % 100 };
+  acc = (acc + rc2314.score) % 65521;
+  buf += rc2314.tag;
+  if (acc % 13 === 0) { buf += 'even2315'; } else { buf += 'odd'; }
+  const rc2316: Rec0 = { id: acc % 1000, tag: 't2316', score: acc % 100 };
+  acc = (acc + rc2316.score) % 65521;
+  buf += rc2316.tag;
+  const cf2317: Array<(x: number) => number> = [];
+  cf2317.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2317.push((x: number): number => (x + 116) % 10007);
+  acc = cf2317[acc & 1](acc % 9973);
+  m01.set('k2318', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's02319'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  buf += `q2320:${acc % 97}`;
+  acc = (acc * 31 + 405) % 65521;
+  const db2322: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2322.length) % 65521;
+  acc = (acc * 31 + 2070) % 65521;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's02325'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02326'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const db2327: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2327.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2328');
+  const ix2329: number = buf.indexOf('p0');
+  if (ix2329 > 12) { buf = buf.substring(0, 32); } else if (ix2329 >= 0) { buf += 'i'; }
+  buf += `q2330:${acc % 97}`;
+  buf += (acc > 500 ? 'hi2331' : 'lo') + acc.toString(16);
+  const t02332: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02332;
+  for (let i2333 = 0; i2333 < 7; i2333++) {
+    acc = (acc + i2333 * 13 + 938) % 100003;
+  }
+  arr.push(acc % 1000);
+  for (let i2335 = 0; i2335 < 10; i2335++) {
+    acc = (acc + i2335 * 13 + 740) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02336'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const rc2337: Rec0 = { id: acc % 1000, tag: 't2337', score: acc % 100 };
+  acc = (acc + rc2337.score) % 65521;
+  buf += rc2337.tag;
+  let w2338: number = acc % 23;
+  while (w2338 > 4) { w2338 = Math.floor(w2338 / 2); }
+  acc += w2338;
+  if (m01.has('k2339')) {
+    const gv2339: number = m01.get('k2339') as number;
+    acc = (acc + gv2339) % 10007;
+  }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-2340'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-2341'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 7481) % 65521;
+  const rc2343: Rec0 = { id: acc % 1000, tag: 't2343', score: acc % 100 };
+  acc = (acc + rc2343.score) % 65521;
+  buf += rc2343.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2344');
+  buf += `q2345:${acc % 97}`;
+  if (m01.has('k2346')) {
+    const gv2346: number = m01.get('k2346') as number;
+    acc = (acc + gv2346) % 10007;
+  }
+  const cf2347: Array<(x: number) => number> = [];
+  cf2347.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2347.push((x: number): number => (x + 38) % 10007);
+  acc = cf2347[acc & 1](acc % 9973);
+  const cf2348: Array<(x: number) => number> = [];
+  cf2348.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2348.push((x: number): number => (x + 12) % 10007);
+  acc = cf2348[acc & 1](acc % 9973);
+  buf += 'audit2349-' + acc.toString();
+  acc = (acc * 31 + 2760) % 65521;
+  const ix2351: number = buf.indexOf('p0');
+  if (ix2351 > 12) { buf = buf.substring(0, 32); } else if (ix2351 >= 0) { buf += 'i'; }
+  if (acc % 15 === 0) { buf += 'even2352'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2353');
+  acc = acc + 157 - (acc % 18);
+  buf += (acc > 500 ? 'hi2355' : 'lo') + acc.toString(16);
+  acc = acc + 82 - (acc % 7);
+  const rc2357: Rec0 = { id: acc % 1000, tag: 't2357', score: acc % 100 };
+  acc = (acc + rc2357.score) % 65521;
+  buf += rc2357.tag;
+  arr.push(acc % 1000);
+  if (m01.has('k2359')) {
+    const gv2359: number = m01.get('k2359') as number;
+    acc = (acc + gv2359) % 10007;
+  }
+  buf += (acc > 500 ? 'hi2360' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 4969) % 65521;
+  arr.push(acc % 1000);
+  buf += `q2363:${acc % 97}`;
+  let w2364: number = acc % 23;
+  while (w2364 > 4) { w2364 = Math.floor(w2364 / 2); }
+  acc += w2364;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2365');
+  const t02366: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02366;
+  buf += (acc > 500 ? 'hi2367' : 'lo') + acc.toString(16);
+  const ix2368: number = buf.indexOf('p0');
+  if (ix2368 > 12) { buf = buf.substring(0, 32); } else if (ix2368 >= 0) { buf += 'i'; }
+  acc = acc + 260 - (acc % 33);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2371');
+  let w2372: number = acc % 23;
+  while (w2372 > 4) { w2372 = Math.floor(w2372 / 2); }
+  acc += w2372;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2373');
+  for (let i2374 = 0; i2374 < 7; i2374++) {
+    acc = (acc + i2374 * 13 + 96) % 100003;
+  }
+  acc = (acc * 31 + 4625) % 65521;
+  const t02376: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02376;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2377');
+  buf += `q2378:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02379'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 981 - (acc % 76);
+  if (m01.has('k2381')) {
+    const gv2381: number = m01.get('k2381') as number;
+    acc = (acc + gv2381) % 10007;
+  }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-2382'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q2383:${acc % 97}`;
+  m01.set('k2384', acc % 997);
+  m01.set('k2385', acc % 997);
+  for (let i2386 = 0; i2386 < 3; i2386++) {
+    acc = (acc + i2386 * 13 + 49) % 100003;
+  }
+  const ix2387: number = buf.indexOf('p0');
+  if (ix2387 > 12) { buf = buf.substring(0, 32); } else if (ix2387 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's02388'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2389');
+  const cf2390: Array<(x: number) => number> = [];
+  cf2390.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2390.push((x: number): number => (x + 82) % 10007);
+  acc = cf2390[acc & 1](acc % 9973);
+  let w2391: number = acc % 23;
+  while (w2391 > 4) { w2391 = Math.floor(w2391 / 2); }
+  acc += w2391;
+  buf += (acc > 500 ? 'hi2392' : 'lo') + acc.toString(16);
+  const t02393: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02393;
+  if (acc % 12 === 0) { buf += 'even2394'; } else { buf += 'odd'; }
+  const cf2395: Array<(x: number) => number> = [];
+  cf2395.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2395.push((x: number): number => (x + 47) % 10007);
+  acc = cf2395[acc & 1](acc % 9973);
+  const rc2396: Rec0 = { id: acc % 1000, tag: 't2396', score: acc % 100 };
+  acc = (acc + rc2396.score) % 65521;
+  buf += rc2396.tag;
+  const db2397: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2397.length) % 65521;
+  const t02398: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02398;
+  m01.set('k2399', acc % 997);
+  if (acc % 5 === 0) { buf += 'even2400'; } else { buf += 'odd'; }
+  acc = acc + 310 - (acc % 36);
+  const ix2402: number = buf.indexOf('p0');
+  if (ix2402 > 12) { buf = buf.substring(0, 32); } else if (ix2402 >= 0) { buf += 'i'; }
+  const ix2403: number = buf.indexOf('p0');
+  if (ix2403 > 12) { buf = buf.substring(0, 32); } else if (ix2403 >= 0) { buf += 'i'; }
+  for (let i2404 = 0; i2404 < 7; i2404++) {
+    acc = (acc + i2404 * 13 + 626) % 100003;
+  }
+  for (let i2405 = 0; i2405 < 7; i2405++) {
+    acc = (acc + i2405 * 13 + 916) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02406'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  m01.set('k2407', acc % 997);
+  buf += 'payout2408-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2409');
+  buf += 'journey2410-' + acc.toString();
+  arr.push(acc % 1000);
+  const cf2412: Array<(x: number) => number> = [];
+  cf2412.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2412.push((x: number): number => (x + 166) % 10007);
+  acc = cf2412[acc & 1](acc % 9973);
+  if (m01.has('k2413')) {
+    const gv2413: number = m01.get('k2413') as number;
+    acc = (acc + gv2413) % 10007;
+  }
+  buf += `q2414:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2415');
+  if (m01.has('k2416')) {
+    const gv2416: number = m01.get('k2416') as number;
+    acc = (acc + gv2416) % 10007;
+  }
+  const t02417: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02417;
+  const db2418: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2418.length) % 65521;
+  arr.push(acc % 1000);
+  for (let i2420 = 0; i2420 < 9; i2420++) {
+    acc = (acc + i2420 * 13 + 625) % 100003;
+  }
+  const cf2421: Array<(x: number) => number> = [];
+  cf2421.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2421.push((x: number): number => (x + 153) % 10007);
+  acc = cf2421[acc & 1](acc % 9973);
+  const db2422: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2422.length) % 65521;
+  m01.set('k2423', acc % 997);
+  if (m01.has('k2424')) {
+    const gv2424: number = m01.get('k2424') as number;
+    acc = (acc + gv2424) % 10007;
+  }
+  buf += 'bay2425-' + acc.toString();
+  acc = acc + 724 - (acc % 89);
+  acc = (acc * 31 + 569) % 65521;
+  const db2428: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2428.length) % 65521;
+  let w2429: number = acc % 23;
+  while (w2429 > 4) { w2429 = Math.floor(w2429 / 2); }
+  acc += w2429;
+  buf += (acc > 500 ? 'hi2430' : 'lo') + acc.toString(16);
+  const cf2431: Array<(x: number) => number> = [];
+  cf2431.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2431.push((x: number): number => (x + 47) % 10007);
+  acc = cf2431[acc & 1](acc % 9973);
+  m01.set('k2432', acc % 997);
+  const db2433: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2433.length) % 65521;
+  let w2434: number = acc % 23;
+  while (w2434 > 4) { w2434 = Math.floor(w2434 / 2); }
+  acc += w2434;
+  if (m01.has('k2435')) {
+    const gv2435: number = m01.get('k2435') as number;
+    acc = (acc + gv2435) % 10007;
+  }
+  const db2436: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2436.length) % 65521;
+  arr.push(acc % 1000);
+  const cf2438: Array<(x: number) => number> = [];
+  cf2438.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2438.push((x: number): number => (x + 187) % 10007);
+  acc = cf2438[acc & 1](acc % 9973);
+  buf += 'dock2439-' + acc.toString();
+  const cf2440: Array<(x: number) => number> = [];
+  cf2440.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2440.push((x: number): number => (x + 99) % 10007);
+  acc = cf2440[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1529) % 65521;
+  const ix2442: number = buf.indexOf('p0');
+  if (ix2442 > 12) { buf = buf.substring(0, 32); } else if (ix2442 >= 0) { buf += 'i'; }
+  const ix2443: number = buf.indexOf('p0');
+  if (ix2443 > 12) { buf = buf.substring(0, 32); } else if (ix2443 >= 0) { buf += 'i'; }
+  const cf2444: Array<(x: number) => number> = [];
+  cf2444.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2444.push((x: number): number => (x + 169) % 10007);
+  acc = cf2444[acc & 1](acc % 9973);
+  buf += `q2445:${acc % 97}`;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-2446'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's02447'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const rc2448: Rec0 = { id: acc % 1000, tag: 't2448', score: acc % 100 };
+  acc = (acc + rc2448.score) % 65521;
+  buf += rc2448.tag;
+  const rc2449: Rec0 = { id: acc % 1000, tag: 't2449', score: acc % 100 };
+  acc = (acc + rc2449.score) % 65521;
+  buf += rc2449.tag;
+  buf += `q2450:${acc % 97}`;
+  let w2451: number = acc % 23;
+  while (w2451 > 4) { w2451 = Math.floor(w2451 / 2); }
+  acc += w2451;
+  acc = (acc * 31 + 8108) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02453'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  buf += `q2454:${acc % 97}`;
+  acc = (acc * 31 + 9401) % 65521;
+  for (let i2456 = 0; i2456 < 7; i2456++) {
+    acc = (acc + i2456 * 13 + 304) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02457'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  buf += 'waybill2458-' + acc.toString();
+  acc = acc + 323 - (acc % 54);
+  arr.push(acc % 1000);
+  const t02461: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02461;
+  buf += `q2462:${acc % 97}`;
+  buf += (acc > 500 ? 'hi2463' : 'lo') + acc.toString(16);
+  let w2464: number = acc % 23;
+  while (w2464 > 4) { w2464 = Math.floor(w2464 / 2); }
+  acc += w2464;
+  acc = acc + 566 - (acc % 19);
+  if (acc % 28 === 0) { buf += 'even2466'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's02467'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const rc2468: Rec0 = { id: acc % 1000, tag: 't2468', score: acc % 100 };
+  acc = (acc + rc2468.score) % 65521;
+  buf += rc2468.tag;
+  acc = (acc * 31 + 3341) % 65521;
+  let w2470: number = acc % 23;
+  while (w2470 > 4) { w2470 = Math.floor(w2470 / 2); }
+  acc += w2470;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2471');
+  let w2472: number = acc % 23;
+  while (w2472 > 4) { w2472 = Math.floor(w2472 / 2); }
+  acc += w2472;
+  buf += `q2473:${acc % 97}`;
+  const db2474: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2474.length) % 65521;
+  m01.set('k2475', acc % 997);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const t02478: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02478;
+  const ix2479: number = buf.indexOf('p0');
+  if (ix2479 > 12) { buf = buf.substring(0, 32); } else if (ix2479 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  let w2481: number = acc % 23;
+  while (w2481 > 4) { w2481 = Math.floor(w2481 / 2); }
+  acc += w2481;
+  acc = acc + 817 - (acc % 88);
+  const rc2483: Rec0 = { id: acc % 1000, tag: 't2483', score: acc % 100 };
+  acc = (acc + rc2483.score) % 65521;
+  buf += rc2483.tag;
+  const t02484: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02484;
+  if (m01.has('k2485')) {
+    const gv2485: number = m01.get('k2485') as number;
+    acc = (acc + gv2485) % 10007;
+  }
+  if (m01.has('k2486')) {
+    const gv2486: number = m01.get('k2486') as number;
+    acc = (acc + gv2486) % 10007;
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 12) { throw new Error('synthetic-2488'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-2489'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q2490:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02491'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2493' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi2494' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  let w2496: number = acc % 23;
+  while (w2496 > 4) { w2496 = Math.floor(w2496 / 2); }
+  acc += w2496;
+  const rc2497: Rec0 = { id: acc % 1000, tag: 't2497', score: acc % 100 };
+  acc = (acc + rc2497.score) % 65521;
+  buf += rc2497.tag;
+  buf += 'invoice2498-' + acc.toString();
+  let w2499: number = acc % 23;
+  while (w2499 > 4) { w2499 = Math.floor(w2499 / 2); }
+  acc += w2499;
+  arr.push(acc % 1000);
+  acc = acc + 792 - (acc % 41);
+  buf += (acc > 500 ? 'hi2502' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-2503'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2504');
+  let w2505: number = acc % 23;
+  while (w2505 > 4) { w2505 = Math.floor(w2505 / 2); }
+  acc += w2505;
+  arr.push(acc % 1000);
+  const cf2507: Array<(x: number) => number> = [];
+  cf2507.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2507.push((x: number): number => (x + 19) % 10007);
+  acc = cf2507[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2508');
+  const t02509: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02509;
+  if (acc % 20 === 0) { buf += 'even2510'; } else { buf += 'odd'; }
+  buf += `q2511:${acc % 97}`;
+  for (let i2512 = 0; i2512 < 6; i2512++) {
+    acc = (acc + i2512 * 13 + 351) % 100003;
+  }
+  const rc2513: Rec0 = { id: acc % 1000, tag: 't2513', score: acc % 100 };
+  acc = (acc + rc2513.score) % 65521;
+  buf += rc2513.tag;
+  switch (acc & 3) {
+    case 0: buf += 's02514'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  const db2515: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2515.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02516'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  buf += `q2517:${acc % 97}`;
+  m01.set('k2518', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2519');
+  let w2520: number = acc % 23;
+  while (w2520 > 4) { w2520 = Math.floor(w2520 / 2); }
+  acc += w2520;
+  if (m01.has('k2521')) {
+    const gv2521: number = m01.get('k2521') as number;
+    acc = (acc + gv2521) % 10007;
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-2522'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'audit2523-' + acc.toString();
+  if (acc % 11 === 0) { buf += 'even2524'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi2525' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const rc2527: Rec0 = { id: acc % 1000, tag: 't2527', score: acc % 100 };
+  acc = (acc + rc2527.score) % 65521;
+  buf += rc2527.tag;
+  for (let i2528 = 0; i2528 < 4; i2528++) {
+    acc = (acc + i2528 * 13 + 234) % 100003;
+  }
+  const db2529: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2529.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2530');
+  for (let i2531 = 0; i2531 < 9; i2531++) {
+    acc = (acc + i2531 * 13 + 753) % 100003;
+  }
+  acc = (acc * 31 + 3490) % 65521;
+  for (let i2533 = 0; i2533 < 6; i2533++) {
+    acc = (acc + i2533 * 13 + 60) % 100003;
+  }
+  acc = acc + 701 - (acc % 90);
+  m01.set('k2535', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's02536'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const cf2537: Array<(x: number) => number> = [];
+  cf2537.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2537.push((x: number): number => (x + 64) % 10007);
+  acc = cf2537[acc & 1](acc % 9973);
+  const t02538: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02538;
+  if (m01.has('k2539')) {
+    const gv2539: number = m01.get('k2539') as number;
+    acc = (acc + gv2539) % 10007;
+  }
+  if (acc % 27 === 0) { buf += 'even2540'; } else { buf += 'odd'; }
+  let w2541: number = acc % 23;
+  while (w2541 > 4) { w2541 = Math.floor(w2541 / 2); }
+  acc += w2541;
+  for (let i2542 = 0; i2542 < 6; i2542++) {
+    acc = (acc + i2542 * 13 + 415) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02543'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const t02544: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02544;
+  for (let i2545 = 0; i2545 < 10; i2545++) {
+    acc = (acc + i2545 * 13 + 218) % 100003;
+  }
+  if (m01.has('k2546')) {
+    const gv2546: number = m01.get('k2546') as number;
+    acc = (acc + gv2546) % 10007;
+  }
+  buf += 'bay2547-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2548');
+  const t02549: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02549;
+  const rc2550: Rec0 = { id: acc % 1000, tag: 't2550', score: acc % 100 };
+  acc = (acc + rc2550.score) % 65521;
+  buf += rc2550.tag;
+  acc = (acc * 31 + 7015) % 65521;
+  const cf2552: Array<(x: number) => number> = [];
+  cf2552.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2552.push((x: number): number => (x + 29) % 10007);
+  acc = cf2552[acc & 1](acc % 9973);
+  buf += 'refund2553-' + acc.toString();
+  for (let i2554 = 0; i2554 < 4; i2554++) {
+    acc = (acc + i2554 * 13 + 535) % 100003;
+  }
+  const t02555: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02555;
+  if (acc % 12 === 0) { buf += 'even2556'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const cf2558: Array<(x: number) => number> = [];
+  cf2558.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2558.push((x: number): number => (x + 81) % 10007);
+  acc = cf2558[acc & 1](acc % 9973);
+  acc = (acc * 31 + 5555) % 65521;
+  for (let i2560 = 0; i2560 < 5; i2560++) {
+    acc = (acc + i2560 * 13 + 891) % 100003;
+  }
+  if (acc % 14 === 0) { buf += 'even2561'; } else { buf += 'odd'; }
+  for (let i2562 = 0; i2562 < 3; i2562++) {
+    acc = (acc + i2562 * 13 + 806) % 100003;
+  }
+  const db2563: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2563.length) % 65521;
+  acc = acc + 328 - (acc % 80);
+  for (let i2565 = 0; i2565 < 9; i2565++) {
+    acc = (acc + i2565 * 13 + 937) % 100003;
+  }
+  acc = acc + 403 - (acc % 47);
+  buf += `q2567:${acc % 97}`;
+  buf += `q2568:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2569');
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-2571'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-2572'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf2573: Array<(x: number) => number> = [];
+  cf2573.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2573.push((x: number): number => (x + 177) % 10007);
+  acc = cf2573[acc & 1](acc % 9973);
+  const cf2574: Array<(x: number) => number> = [];
+  cf2574.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2574.push((x: number): number => (x + 154) % 10007);
+  acc = cf2574[acc & 1](acc % 9973);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-2575'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's02576'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  buf += 'waybill2577-' + acc.toString();
+  acc = acc + 473 - (acc % 36);
+  const ix2579: number = buf.indexOf('p0');
+  if (ix2579 > 12) { buf = buf.substring(0, 32); } else if (ix2579 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's02580'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  let w2581: number = acc % 23;
+  while (w2581 > 4) { w2581 = Math.floor(w2581 / 2); }
+  acc += w2581;
+  acc = (acc * 31 + 1691) % 65521;
+  acc = (acc * 31 + 6219) % 65521;
+  const ix2584: number = buf.indexOf('p0');
+  if (ix2584 > 12) { buf = buf.substring(0, 32); } else if (ix2584 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  m01.set('k2586', acc % 997);
+  acc = acc + 866 - (acc % 31);
+  buf += (acc > 500 ? 'hi2588' : 'lo') + acc.toString(16);
+  let w2589: number = acc % 23;
+  while (w2589 > 4) { w2589 = Math.floor(w2589 / 2); }
+  acc += w2589;
+  buf += `q2590:${acc % 97}`;
+  const cf2591: Array<(x: number) => number> = [];
+  cf2591.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2591.push((x: number): number => (x + 91) % 10007);
+  acc = cf2591[acc & 1](acc % 9973);
+  for (let i2592 = 0; i2592 < 7; i2592++) {
+    acc = (acc + i2592 * 13 + 28) % 100003;
+  }
+  const db2593: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2593.length) % 65521;
+  buf += 'pallet2594-' + acc.toString();
+  buf += (acc > 500 ? 'hi2595' : 'lo') + acc.toString(16);
+  const ix2596: number = buf.indexOf('p0');
+  if (ix2596 > 12) { buf = buf.substring(0, 32); } else if (ix2596 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2597');
+  buf += 'policy2598-' + acc.toString();
+  try { if (acc % 29 === 8) { throw new Error('synthetic-2599'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 679 - (acc % 48);
+  let w2601: number = acc % 23;
+  while (w2601 > 4) { w2601 = Math.floor(w2601 / 2); }
+  acc += w2601;
+  acc = acc + 542 - (acc % 80);
+  m01.set('k2603', acc % 997);
+  if (m01.has('k2604')) {
+    const gv2604: number = m01.get('k2604') as number;
+    acc = (acc + gv2604) % 10007;
+  }
+  buf += 'waybill2605-' + acc.toString();
+  let w2606: number = acc % 23;
+  while (w2606 > 4) { w2606 = Math.floor(w2606 / 2); }
+  acc += w2606;
+  for (let i2607 = 0; i2607 < 5; i2607++) {
+    acc = (acc + i2607 * 13 + 798) % 100003;
+  }
+  buf += 'sku2608-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi2610' : 'lo') + acc.toString(16);
+  const ix2611: number = buf.indexOf('p0');
+  if (ix2611 > 12) { buf = buf.substring(0, 32); } else if (ix2611 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  m01.set('k2613', acc % 997);
+  m01.set('k2614', acc % 997);
+  acc = acc + 666 - (acc % 14);
+  for (let i2616 = 0; i2616 < 12; i2616++) {
+    acc = (acc + i2616 * 13 + 660) % 100003;
+  }
+  buf += `q2617:${acc % 97}`;
+  m01.set('k2618', acc % 997);
+  const ix2619: number = buf.indexOf('p0');
+  if (ix2619 > 12) { buf = buf.substring(0, 32); } else if (ix2619 >= 0) { buf += 'i'; }
+  const cf2620: Array<(x: number) => number> = [];
+  cf2620.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2620.push((x: number): number => (x + 25) % 10007);
+  acc = cf2620[acc & 1](acc % 9973);
+  const ix2621: number = buf.indexOf('p0');
+  if (ix2621 > 12) { buf = buf.substring(0, 32); } else if (ix2621 >= 0) { buf += 'i'; }
+  let w2622: number = acc % 23;
+  while (w2622 > 4) { w2622 = Math.floor(w2622 / 2); }
+  acc += w2622;
+  switch (acc & 3) {
+    case 0: buf += 's02623'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const cf2624: Array<(x: number) => number> = [];
+  cf2624.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2624.push((x: number): number => (x + 130) % 10007);
+  acc = cf2624[acc & 1](acc % 9973);
+  let w2625: number = acc % 23;
+  while (w2625 > 4) { w2625 = Math.floor(w2625 / 2); }
+  acc += w2625;
+  m01.set('k2626', acc % 997);
+  acc = acc + 155 - (acc % 11);
+  const ix2628: number = buf.indexOf('p0');
+  if (ix2628 > 12) { buf = buf.substring(0, 32); } else if (ix2628 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3439) % 65521;
+  const ix2630: number = buf.indexOf('p0');
+  if (ix2630 > 12) { buf = buf.substring(0, 32); } else if (ix2630 >= 0) { buf += 'i'; }
+  buf += 'shelf2631-' + acc.toString();
+  if (acc % 25 === 0) { buf += 'even2632'; } else { buf += 'odd'; }
+  if (m01.has('k2633')) {
+    const gv2633: number = m01.get('k2633') as number;
+    acc = (acc + gv2633) % 10007;
+  }
+  let w2634: number = acc % 23;
+  while (w2634 > 4) { w2634 = Math.floor(w2634 / 2); }
+  acc += w2634;
+  switch (acc & 3) {
+    case 0: buf += 's02635'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 9569) % 65521;
+  m01.set('k2637', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's02638'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2639');
+  buf += 'policy2640-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's02641'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const cf2642: Array<(x: number) => number> = [];
+  cf2642.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2642.push((x: number): number => (x + 120) % 10007);
+  acc = cf2642[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi2643' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-2644'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q2645:${acc % 97}`;
+  buf += `q2646:${acc % 97}`;
+  buf += (acc > 500 ? 'hi2647' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's02648'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += `q2649:${acc % 97}`;
+  let w2650: number = acc % 23;
+  while (w2650 > 4) { w2650 = Math.floor(w2650 / 2); }
+  acc += w2650;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2651');
+  buf += (acc > 500 ? 'hi2652' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 7142) % 65521;
+  const cf2654: Array<(x: number) => number> = [];
+  cf2654.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2654.push((x: number): number => (x + 24) % 10007);
+  acc = cf2654[acc & 1](acc % 9973);
+  const rc2655: Rec0 = { id: acc % 1000, tag: 't2655', score: acc % 100 };
+  acc = (acc + rc2655.score) % 65521;
+  buf += rc2655.tag;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2657');
+  const rc2658: Rec0 = { id: acc % 1000, tag: 't2658', score: acc % 100 };
+  acc = (acc + rc2658.score) % 65521;
+  buf += rc2658.tag;
+  switch (acc & 3) {
+    case 0: buf += 's02659'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const db2660: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2660.length) % 65521;
+  for (let i2661 = 0; i2661 < 6; i2661++) {
+    acc = (acc + i2661 * 13 + 474) % 100003;
+  }
+  buf += (acc > 500 ? 'hi2662' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const db2664: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2664.length) % 65521;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-2665'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 21 === 0) { buf += 'even2666'; } else { buf += 'odd'; }
+  for (let i2667 = 0; i2667 < 12; i2667++) {
+    acc = (acc + i2667 * 13 + 34) % 100003;
+  }
+  if (m01.has('k2668')) {
+    const gv2668: number = m01.get('k2668') as number;
+    acc = (acc + gv2668) % 10007;
+  }
+  buf += (acc > 500 ? 'hi2669' : 'lo') + acc.toString(16);
+  buf += 'quota2670-' + acc.toString();
+  const cf2671: Array<(x: number) => number> = [];
+  cf2671.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2671.push((x: number): number => (x + 110) % 10007);
+  acc = cf2671[acc & 1](acc % 9973);
+  acc = acc + 103 - (acc % 96);
+  try { if (acc % 29 === 9) { throw new Error('synthetic-2673'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-2674'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 17 === 0) { buf += 'even2675'; } else { buf += 'odd'; }
+  acc = acc + 63 - (acc % 78);
+  let w2677: number = acc % 23;
+  while (w2677 > 4) { w2677 = Math.floor(w2677 / 2); }
+  acc += w2677;
+  if (m01.has('k2678')) {
+    const gv2678: number = m01.get('k2678') as number;
+    acc = (acc + gv2678) % 10007;
+  }
+  const rc2679: Rec0 = { id: acc % 1000, tag: 't2679', score: acc % 100 };
+  acc = (acc + rc2679.score) % 65521;
+  buf += rc2679.tag;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-2681'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q2682:${acc % 97}`;
+  const db2683: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2683.length) % 65521;
+  buf += `q2684:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02685'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02686'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 8472) % 65521;
+  const ix2688: number = buf.indexOf('p0');
+  if (ix2688 > 12) { buf = buf.substring(0, 32); } else if (ix2688 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-2689'); } acc += 6; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2690', acc % 997);
+  const t02691: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02691;
+  for (let i2692 = 0; i2692 < 6; i2692++) {
+    acc = (acc + i2692 * 13 + 806) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's02693'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  m01.set('k2694', acc % 997);
+  const cf2695: Array<(x: number) => number> = [];
+  cf2695.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2695.push((x: number): number => (x + 69) % 10007);
+  acc = cf2695[acc & 1](acc % 9973);
+  acc = acc + 894 - (acc % 9);
+  buf += (acc > 500 ? 'hi2697' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2698');
+  if (acc % 12 === 0) { buf += 'even2699'; } else { buf += 'odd'; }
+  const rc2700: Rec0 = { id: acc % 1000, tag: 't2700', score: acc % 100 };
+  acc = (acc + rc2700.score) % 65521;
+  buf += rc2700.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2701');
+  for (let i2702 = 0; i2702 < 5; i2702++) {
+    acc = (acc + i2702 * 13 + 691) % 100003;
+  }
+  buf += `q2703:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2704');
+  let w2705: number = acc % 23;
+  while (w2705 > 4) { w2705 = Math.floor(w2705 / 2); }
+  acc += w2705;
+  if (m01.has('k2706')) {
+    const gv2706: number = m01.get('k2706') as number;
+    acc = (acc + gv2706) % 10007;
+  }
+  if (acc % 14 === 0) { buf += 'even2707'; } else { buf += 'odd'; }
+  if (m01.has('k2708')) {
+    const gv2708: number = m01.get('k2708') as number;
+    acc = (acc + gv2708) % 10007;
+  }
+  const ix2709: number = buf.indexOf('p0');
+  if (ix2709 > 12) { buf = buf.substring(0, 32); } else if (ix2709 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi2710' : 'lo') + acc.toString(16);
+  const cf2711: Array<(x: number) => number> = [];
+  cf2711.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2711.push((x: number): number => (x + 186) % 10007);
+  acc = cf2711[acc & 1](acc % 9973);
+  if (m01.has('k2712')) {
+    const gv2712: number = m01.get('k2712') as number;
+    acc = (acc + gv2712) % 10007;
+  }
+  const ix2713: number = buf.indexOf('p0');
+  if (ix2713 > 12) { buf = buf.substring(0, 32); } else if (ix2713 >= 0) { buf += 'i'; }
+  m01.set('k2714', acc % 997);
+  buf += `q2715:${acc % 97}`;
+  let w2716: number = acc % 23;
+  while (w2716 > 4) { w2716 = Math.floor(w2716 / 2); }
+  acc += w2716;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2718');
+  for (let i2719 = 0; i2719 < 5; i2719++) {
+    acc = (acc + i2719 * 13 + 690) % 100003;
+  }
+  if (acc % 26 === 0) { buf += 'even2720'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-2721'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2722', acc % 997);
+  const t02723: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02723;
+  if (m01.has('k2724')) {
+    const gv2724: number = m01.get('k2724') as number;
+    acc = (acc + gv2724) % 10007;
+  }
+  buf += 'coupon2725-' + acc.toString();
+  const rc2726: Rec0 = { id: acc % 1000, tag: 't2726', score: acc % 100 };
+  acc = (acc + rc2726.score) % 65521;
+  buf += rc2726.tag;
+  if (m01.has('k2727')) {
+    const gv2727: number = m01.get('k2727') as number;
+    acc = (acc + gv2727) % 10007;
+  }
+  let w2728: number = acc % 23;
+  while (w2728 > 4) { w2728 = Math.floor(w2728 / 2); }
+  acc += w2728;
+  switch (acc & 3) {
+    case 0: buf += 's02729'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const rc2730: Rec0 = { id: acc % 1000, tag: 't2730', score: acc % 100 };
+  acc = (acc + rc2730.score) % 65521;
+  buf += rc2730.tag;
+  const cf2731: Array<(x: number) => number> = [];
+  cf2731.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2731.push((x: number): number => (x + 71) % 10007);
+  acc = cf2731[acc & 1](acc % 9973);
+  buf += 'policy2732-' + acc.toString();
+  if (m01.has('k2733')) {
+    const gv2733: number = m01.get('k2733') as number;
+    acc = (acc + gv2733) % 10007;
+  }
+  for (let i2734 = 0; i2734 < 9; i2734++) {
+    acc = (acc + i2734 * 13 + 933) % 100003;
+  }
+  if (acc % 11 === 0) { buf += 'even2735'; } else { buf += 'odd'; }
+  const cf2736: Array<(x: number) => number> = [];
+  cf2736.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2736.push((x: number): number => (x + 112) % 10007);
+  acc = cf2736[acc & 1](acc % 9973);
+  acc = (acc * 31 + 3405) % 65521;
+  m01.set('k2738', acc % 997);
+  const ix2739: number = buf.indexOf('p0');
+  if (ix2739 > 12) { buf = buf.substring(0, 32); } else if (ix2739 >= 0) { buf += 'i'; }
+  const rc2740: Rec0 = { id: acc % 1000, tag: 't2740', score: acc % 100 };
+  acc = (acc + rc2740.score) % 65521;
+  buf += rc2740.tag;
+  if (acc % 23 === 0) { buf += 'even2741'; } else { buf += 'odd'; }
+  const cf2742: Array<(x: number) => number> = [];
+  cf2742.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2742.push((x: number): number => (x + 44) % 10007);
+  acc = cf2742[acc & 1](acc % 9973);
+  const db2743: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2743.length) % 65521;
+  const t02744: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02744;
+  acc = (acc * 31 + 1115) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's02746'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 7730) % 65521;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-2749'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  const db2750: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2750.length) % 65521;
+  const cf2751: Array<(x: number) => number> = [];
+  cf2751.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2751.push((x: number): number => (x + 86) % 10007);
+  acc = cf2751[acc & 1](acc % 9973);
+  buf += 'warehouse2752-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2753');
+  if (m01.has('k2754')) {
+    const gv2754: number = m01.get('k2754') as number;
+    acc = (acc + gv2754) % 10007;
+  }
+  buf += 'rebate2755-' + acc.toString();
+  buf += (acc > 500 ? 'hi2756' : 'lo') + acc.toString(16);
+  const rc2757: Rec0 = { id: acc % 1000, tag: 't2757', score: acc % 100 };
+  acc = (acc + rc2757.score) % 65521;
+  buf += rc2757.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2758');
+  const rc2759: Rec0 = { id: acc % 1000, tag: 't2759', score: acc % 100 };
+  acc = (acc + rc2759.score) % 65521;
+  buf += rc2759.tag;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-2760'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 409 - (acc % 45);
+  const t02762: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02762;
+  buf += 'stocktake2763-' + acc.toString();
+  acc = acc + 523 - (acc % 23);
+  try { if (acc % 29 === 5) { throw new Error('synthetic-2765'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 2787) % 65521;
+  let w2767: number = acc % 23;
+  while (w2767 > 4) { w2767 = Math.floor(w2767 / 2); }
+  acc += w2767;
+  if (m01.has('k2768')) {
+    const gv2768: number = m01.get('k2768') as number;
+    acc = (acc + gv2768) % 10007;
+  }
+  for (let i2769 = 0; i2769 < 7; i2769++) {
+    acc = (acc + i2769 * 13 + 635) % 100003;
+  }
+  if (m01.has('k2770')) {
+    const gv2770: number = m01.get('k2770') as number;
+    acc = (acc + gv2770) % 10007;
+  }
+  m01.set('k2771', acc % 997);
+  buf += 'batch2772-' + acc.toString();
+  let w2773: number = acc % 23;
+  while (w2773 > 4) { w2773 = Math.floor(w2773 / 2); }
+  acc += w2773;
+  if (m01.has('k2774')) {
+    const gv2774: number = m01.get('k2774') as number;
+    acc = (acc + gv2774) % 10007;
+  }
+  if (m01.has('k2775')) {
+    const gv2775: number = m01.get('k2775') as number;
+    acc = (acc + gv2775) % 10007;
+  }
+  acc = acc + 444 - (acc % 81);
+  m01.set('k2777', acc % 997);
+  if (m01.has('k2778')) {
+    const gv2778: number = m01.get('k2778') as number;
+    acc = (acc + gv2778) % 10007;
+  }
+  buf += (acc > 500 ? 'hi2779' : 'lo') + acc.toString(16);
+  const ix2780: number = buf.indexOf('p0');
+  if (ix2780 > 12) { buf = buf.substring(0, 32); } else if (ix2780 >= 0) { buf += 'i'; }
+  m01.set('k2781', acc % 997);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-2782'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc2783: Rec0 = { id: acc % 1000, tag: 't2783', score: acc % 100 };
+  acc = (acc + rc2783.score) % 65521;
+  buf += rc2783.tag;
+  buf += 'vendor2784-' + acc.toString();
+  buf += `q2785:${acc % 97}`;
+  if (m01.has('k2786')) {
+    const gv2786: number = m01.get('k2786') as number;
+    acc = (acc + gv2786) % 10007;
+  }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-2787'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc2788: Rec0 = { id: acc % 1000, tag: 't2788', score: acc % 100 };
+  acc = (acc + rc2788.score) % 65521;
+  buf += rc2788.tag;
+  try { if (acc % 29 === 18) { throw new Error('synthetic-2789'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i2790 = 0; i2790 < 7; i2790++) {
+    acc = (acc + i2790 * 13 + 300) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2791');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2792');
+  buf += 'shelf2793-' + acc.toString();
+  for (let i2794 = 0; i2794 < 9; i2794++) {
+    acc = (acc + i2794 * 13 + 944) % 100003;
+  }
+  acc = acc + 693 - (acc % 26);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-2796'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2797', acc % 997);
+  const ix2798: number = buf.indexOf('p0');
+  if (ix2798 > 12) { buf = buf.substring(0, 32); } else if (ix2798 >= 0) { buf += 'i'; }
+  const cf2799: Array<(x: number) => number> = [];
+  cf2799.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2799.push((x: number): number => (x + 103) % 10007);
+  acc = cf2799[acc & 1](acc % 9973);
+  buf += `q2800:${acc % 97}`;
+  acc = (acc * 31 + 3505) % 65521;
+  if (m01.has('k2802')) {
+    const gv2802: number = m01.get('k2802') as number;
+    acc = (acc + gv2802) % 10007;
+  }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-2803'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2804');
+  const ix2805: number = buf.indexOf('p0');
+  if (ix2805 > 12) { buf = buf.substring(0, 32); } else if (ix2805 >= 0) { buf += 'i'; }
+  buf += 'bay2806-' + acc.toString();
+  m01.set('k2807', acc % 997);
+  acc = (acc * 31 + 4105) % 65521;
+  arr.push(acc % 1000);
+  acc = acc + 904 - (acc % 61);
+  const t02811: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02811;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2812');
+  const db2813: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2813.length) % 65521;
+  buf += `q2814:${acc % 97}`;
+  const rc2815: Rec0 = { id: acc % 1000, tag: 't2815', score: acc % 100 };
+  acc = (acc + rc2815.score) % 65521;
+  buf += rc2815.tag;
+  acc = acc + 828 - (acc % 45);
+  acc = (acc * 31 + 3926) % 65521;
+  let w2818: number = acc % 23;
+  while (w2818 > 4) { w2818 = Math.floor(w2818 / 2); }
+  acc += w2818;
+  const cf2819: Array<(x: number) => number> = [];
+  cf2819.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2819.push((x: number): number => (x + 191) % 10007);
+  acc = cf2819[acc & 1](acc % 9973);
+  if (m01.has('k2820')) {
+    const gv2820: number = m01.get('k2820') as number;
+    acc = (acc + gv2820) % 10007;
+  }
+  const cf2821: Array<(x: number) => number> = [];
+  cf2821.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2821.push((x: number): number => (x + 130) % 10007);
+  acc = cf2821[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2822');
+  buf += 'bay2823-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's02824'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  for (let i2825 = 0; i2825 < 6; i2825++) {
+    acc = (acc + i2825 * 13 + 72) % 100003;
+  }
+  if (m01.has('k2826')) {
+    const gv2826: number = m01.get('k2826') as number;
+    acc = (acc + gv2826) % 10007;
+  }
+  const ix2827: number = buf.indexOf('p0');
+  if (ix2827 > 12) { buf = buf.substring(0, 32); } else if (ix2827 >= 0) { buf += 'i'; }
+  const rc2828: Rec0 = { id: acc % 1000, tag: 't2828', score: acc % 100 };
+  acc = (acc + rc2828.score) % 65521;
+  buf += rc2828.tag;
+  acc = (acc * 31 + 8968) % 65521;
+  const cf2830: Array<(x: number) => number> = [];
+  cf2830.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2830.push((x: number): number => (x + 45) % 10007);
+  acc = cf2830[acc & 1](acc % 9973);
+  let w2831: number = acc % 23;
+  while (w2831 > 4) { w2831 = Math.floor(w2831 / 2); }
+  acc += w2831;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2832');
+  buf += `q2833:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02834'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k2835')) {
+    const gv2835: number = m01.get('k2835') as number;
+    acc = (acc + gv2835) % 10007;
+  }
+  const t02836: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02836;
+  if (m01.has('k2837')) {
+    const gv2837: number = m01.get('k2837') as number;
+    acc = (acc + gv2837) % 10007;
+  }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-2838'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k2839')) {
+    const gv2839: number = m01.get('k2839') as number;
+    acc = (acc + gv2839) % 10007;
+  }
+  m01.set('k2840', acc % 997);
+  if (m01.has('k2841')) {
+    const gv2841: number = m01.get('k2841') as number;
+    acc = (acc + gv2841) % 10007;
+  }
+  m01.set('k2842', acc % 997);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-2843'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi2844' : 'lo') + acc.toString(16);
+  buf += 'routeplan2845-' + acc.toString();
+  acc = acc + 957 - (acc % 39);
+  buf += (acc > 500 ? 'hi2847' : 'lo') + acc.toString(16);
+  buf += 'pickup2848-' + acc.toString();
+  const t02849: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02849;
+  buf += 'settle2850-' + acc.toString();
+  let w2851: number = acc % 23;
+  while (w2851 > 4) { w2851 = Math.floor(w2851 / 2); }
+  acc += w2851;
+  let w2852: number = acc % 23;
+  while (w2852 > 4) { w2852 = Math.floor(w2852 / 2); }
+  acc += w2852;
+  if (acc % 5 === 0) { buf += 'even2853'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 3732) % 65521;
+  acc = (acc * 31 + 9991) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2856');
+  for (let i2857 = 0; i2857 < 6; i2857++) {
+    acc = (acc + i2857 * 13 + 248) % 100003;
+  }
+  const cf2858: Array<(x: number) => number> = [];
+  cf2858.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2858.push((x: number): number => (x + 136) % 10007);
+  acc = cf2858[acc & 1](acc % 9973);
+  let w2859: number = acc % 23;
+  while (w2859 > 4) { w2859 = Math.floor(w2859 / 2); }
+  acc += w2859;
+  m01.set('k2860', acc % 997);
+  const rc2861: Rec0 = { id: acc % 1000, tag: 't2861', score: acc % 100 };
+  acc = (acc + rc2861.score) % 65521;
+  buf += rc2861.tag;
+  switch (acc & 3) {
+    case 0: buf += 's02862'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const t02863: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02863;
+  acc = acc + 271 - (acc % 61);
+  buf += 'depot2865-' + acc.toString();
+  acc = (acc * 31 + 9384) % 65521;
+  buf += `q2867:${acc % 97}`;
+  for (let i2868 = 0; i2868 < 12; i2868++) {
+    acc = (acc + i2868 * 13 + 446) % 100003;
+  }
+  const ix2869: number = buf.indexOf('p0');
+  if (ix2869 > 12) { buf = buf.substring(0, 32); } else if (ix2869 >= 0) { buf += 'i'; }
+  if (m01.has('k2870')) {
+    const gv2870: number = m01.get('k2870') as number;
+    acc = (acc + gv2870) % 10007;
+  }
+  let w2871: number = acc % 23;
+  while (w2871 > 4) { w2871 = Math.floor(w2871 / 2); }
+  acc += w2871;
+  const cf2872: Array<(x: number) => number> = [];
+  cf2872.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2872.push((x: number): number => (x + 39) % 10007);
+  acc = cf2872[acc & 1](acc % 9973);
+  const cf2873: Array<(x: number) => number> = [];
+  cf2873.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2873.push((x: number): number => (x + 135) % 10007);
+  acc = cf2873[acc & 1](acc % 9973);
+  const ix2874: number = buf.indexOf('p0');
+  if (ix2874 > 12) { buf = buf.substring(0, 32); } else if (ix2874 >= 0) { buf += 'i'; }
+  let w2875: number = acc % 23;
+  while (w2875 > 4) { w2875 = Math.floor(w2875 / 2); }
+  acc += w2875;
+  switch (acc & 3) {
+    case 0: buf += 's02876'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const ix2877: number = buf.indexOf('p0');
+  if (ix2877 > 12) { buf = buf.substring(0, 32); } else if (ix2877 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-2878'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k2879', acc % 997);
+  acc = acc + 729 - (acc % 19);
+  buf += 'client2881-' + acc.toString();
+  const ix2882: number = buf.indexOf('p0');
+  if (ix2882 > 12) { buf = buf.substring(0, 32); } else if (ix2882 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2883');
+  acc = acc + 411 - (acc % 33);
+  const t02885: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02885;
+  switch (acc & 3) {
+    case 0: buf += 's02886'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  const db2888: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2888.length) % 65521;
+  arr.push(acc % 1000);
+  acc = acc + 178 - (acc % 12);
+  if (acc % 14 === 0) { buf += 'even2891'; } else { buf += 'odd'; }
+  const t02892: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02892;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-2893'); } acc += 42; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k2894')) {
+    const gv2894: number = m01.get('k2894') as number;
+    acc = (acc + gv2894) % 10007;
+  }
+  const ix2895: number = buf.indexOf('p0');
+  if (ix2895 > 12) { buf = buf.substring(0, 32); } else if (ix2895 >= 0) { buf += 'i'; }
+  for (let i2896 = 0; i2896 < 3; i2896++) {
+    acc = (acc + i2896 * 13 + 825) % 100003;
+  }
+  if (m01.has('k2897')) {
+    const gv2897: number = m01.get('k2897') as number;
+    acc = (acc + gv2897) % 10007;
+  }
+  acc = acc + 897 - (acc % 26);
+  let w2899: number = acc % 23;
+  while (w2899 > 4) { w2899 = Math.floor(w2899 / 2); }
+  acc += w2899;
+  if (m01.has('k2900')) {
+    const gv2900: number = m01.get('k2900') as number;
+    acc = (acc + gv2900) % 10007;
+  }
+  acc = acc + 509 - (acc % 43);
+  if (acc % 28 === 0) { buf += 'even2902'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2903');
+  let w2904: number = acc % 23;
+  while (w2904 > 4) { w2904 = Math.floor(w2904 / 2); }
+  acc += w2904;
+  buf += `q2905:${acc % 97}`;
+  const ix2906: number = buf.indexOf('p0');
+  if (ix2906 > 12) { buf = buf.substring(0, 32); } else if (ix2906 >= 0) { buf += 'i'; }
+  let w2907: number = acc % 23;
+  while (w2907 > 4) { w2907 = Math.floor(w2907 / 2); }
+  acc += w2907;
+  if (m01.has('k2908')) {
+    const gv2908: number = m01.get('k2908') as number;
+    acc = (acc + gv2908) % 10007;
+  }
+  m01.set('k2909', acc % 997);
+  const db2910: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2910.length) % 65521;
+  acc = (acc * 31 + 4526) % 65521;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-2912'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  const t02913: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02913;
+  for (let i2914 = 0; i2914 < 10; i2914++) {
+    acc = (acc + i2914 * 13 + 292) % 100003;
+  }
+  const ix2915: number = buf.indexOf('p0');
+  if (ix2915 > 12) { buf = buf.substring(0, 32); } else if (ix2915 >= 0) { buf += 'i'; }
+  const db2916: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2916.length) % 65521;
+  acc = acc + 156 - (acc % 70);
+  const t02918: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02918;
+  for (let i2919 = 0; i2919 < 10; i2919++) {
+    acc = (acc + i2919 * 13 + 620) % 100003;
+  }
+  const t02920: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02920;
+  const db2921: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2921.length) % 65521;
+  acc = (acc * 31 + 8635) % 65521;
+  const t02923: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02923;
+  const cf2924: Array<(x: number) => number> = [];
+  cf2924.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2924.push((x: number): number => (x + 102) % 10007);
+  acc = cf2924[acc & 1](acc % 9973);
+  acc = acc + 131 - (acc % 25);
+  let w2926: number = acc % 23;
+  while (w2926 > 4) { w2926 = Math.floor(w2926 / 2); }
+  acc += w2926;
+  acc = acc + 613 - (acc % 47);
+  try { if (acc % 29 === 9) { throw new Error('synthetic-2928'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 27 === 0) { buf += 'even2929'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 270) % 65521;
+  acc = acc + 240 - (acc % 28);
+  buf += 'shelf2932-' + acc.toString();
+  m01.set('k2933', acc % 997);
+  acc = acc + 51 - (acc % 74);
+  buf += `q2935:${acc % 97}`;
+  let w2936: number = acc % 23;
+  while (w2936 > 4) { w2936 = Math.floor(w2936 / 2); }
+  acc += w2936;
+  m01.set('k2937', acc % 997);
+  const cf2938: Array<(x: number) => number> = [];
+  cf2938.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2938.push((x: number): number => (x + 94) % 10007);
+  acc = cf2938[acc & 1](acc % 9973);
+  for (let i2939 = 0; i2939 < 4; i2939++) {
+    acc = (acc + i2939 * 13 + 982) % 100003;
+  }
+  buf += 'warehouse2940-' + acc.toString();
+  buf += 'freight2941-' + acc.toString();
+  let w2942: number = acc % 23;
+  while (w2942 > 4) { w2942 = Math.floor(w2942 / 2); }
+  acc += w2942;
+  acc = acc + 116 - (acc % 73);
+  arr.push(acc % 1000);
+  const t02945: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02945;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-2946'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-2947'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i2948 = 0; i2948 < 5; i2948++) {
+    acc = (acc + i2948 * 13 + 472) % 100003;
+  }
+  for (let i2949 = 0; i2949 < 8; i2949++) {
+    acc = (acc + i2949 * 13 + 355) % 100003;
+  }
+  acc = (acc * 31 + 5954) % 65521;
+  buf += 'customs2951-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's02952'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  buf += `q2953:${acc % 97}`;
+  const t02954: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02954;
+  buf += `q2955:${acc % 97}`;
+  const t02956: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02956;
+  m01.set('k2957', acc % 997);
+  const t02958: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02958;
+  const t02959: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02959;
+  const cf2960: Array<(x: number) => number> = [];
+  cf2960.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2960.push((x: number): number => (x + 154) % 10007);
+  acc = cf2960[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1295) % 65521;
+  let w2962: number = acc % 23;
+  while (w2962 > 4) { w2962 = Math.floor(w2962 / 2); }
+  acc += w2962;
+  switch (acc & 3) {
+    case 0: buf += 's02963'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  if (acc % 5 === 0) { buf += 'even2964'; } else { buf += 'odd'; }
+  let w2965: number = acc % 23;
+  while (w2965 > 4) { w2965 = Math.floor(w2965 / 2); }
+  acc += w2965;
+  buf += (acc > 500 ? 'hi2966' : 'lo') + acc.toString(16);
+  let w2967: number = acc % 23;
+  while (w2967 > 4) { w2967 = Math.floor(w2967 / 2); }
+  acc += w2967;
+  m01.set('k2968', acc % 997);
+  let w2969: number = acc % 23;
+  while (w2969 > 4) { w2969 = Math.floor(w2969 / 2); }
+  acc += w2969;
+  m01.set('k2970', acc % 997);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-2971'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  let w2972: number = acc % 23;
+  while (w2972 > 4) { w2972 = Math.floor(w2972 / 2); }
+  acc += w2972;
+  if (acc % 12 === 0) { buf += 'even2973'; } else { buf += 'odd'; }
+  buf += 'payout2974-' + acc.toString();
+  for (let i2975 = 0; i2975 < 6; i2975++) {
+    acc = (acc + i2975 * 13 + 13) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x2976');
+  acc = (acc * 31 + 5179) % 65521;
+  m01.set('k2978', acc % 997);
+  acc = acc + 686 - (acc % 62);
+  for (let i2980 = 0; i2980 < 9; i2980++) {
+    acc = (acc + i2980 * 13 + 824) % 100003;
+  }
+  const t02981: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t02981;
+  switch (acc & 3) {
+    case 0: buf += 's02982'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  let w2983: number = acc % 23;
+  while (w2983 > 4) { w2983 = Math.floor(w2983 / 2); }
+  acc += w2983;
+  if (acc % 8 === 0) { buf += 'even2984'; } else { buf += 'odd'; }
+  buf += `q2985:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's02986'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 6508) % 65521;
+  const ix2988: number = buf.indexOf('p0');
+  if (ix2988 > 12) { buf = buf.substring(0, 32); } else if (ix2988 >= 0) { buf += 'i'; }
+  const ix2989: number = buf.indexOf('p0');
+  if (ix2989 > 12) { buf = buf.substring(0, 32); } else if (ix2989 >= 0) { buf += 'i'; }
+  buf += 'coupon2990-' + acc.toString();
+  const db2991: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db2991.length) % 65521;
+  acc = acc + 272 - (acc % 54);
+  buf += `q2993:${acc % 97}`;
+  const rc2994: Rec0 = { id: acc % 1000, tag: 't2994', score: acc % 100 };
+  acc = (acc + rc2994.score) % 65521;
+  buf += rc2994.tag;
+  m01.set('k2995', acc % 997);
+  arr.push(acc % 1000);
+  let w2997: number = acc % 23;
+  while (w2997 > 4) { w2997 = Math.floor(w2997 / 2); }
+  acc += w2997;
+  const cf2998: Array<(x: number) => number> = [];
+  cf2998.push((x: number): number => (x * 3 + acc) % 65521);
+  cf2998.push((x: number): number => (x + 110) % 10007);
+  acc = cf2998[acc & 1](acc % 9973);
+  let w2999: number = acc % 23;
+  while (w2999 > 4) { w2999 = Math.floor(w2999 / 2); }
+  acc += w2999;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3000'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'audit3001-' + acc.toString();
+  buf += `q3002:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3003' : 'lo') + acc.toString(16);
+  const cf3004: Array<(x: number) => number> = [];
+  cf3004.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3004.push((x: number): number => (x + 198) % 10007);
+  acc = cf3004[acc & 1](acc % 9973);
+  buf += `q3005:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3006');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3007');
+  const t03008: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03008;
+  const db3009: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3009.length) % 65521;
+  const db3010: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3010.length) % 65521;
+  if (acc % 30 === 0) { buf += 'even3011'; } else { buf += 'odd'; }
+  buf += 'quota3012-' + acc.toString();
+  buf += `q3013:${acc % 97}`;
+  const t03014: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03014;
+  const db3015: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3015.length) % 65521;
+  let w3016: number = acc % 23;
+  while (w3016 > 4) { w3016 = Math.floor(w3016 / 2); }
+  acc += w3016;
+  const cf3017: Array<(x: number) => number> = [];
+  cf3017.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3017.push((x: number): number => (x + 183) % 10007);
+  acc = cf3017[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += `q3019:${acc % 97}`;
+  if (acc % 30 === 0) { buf += 'even3020'; } else { buf += 'odd'; }
+  if (m01.has('k3021')) {
+    const gv3021: number = m01.get('k3021') as number;
+    acc = (acc + gv3021) % 10007;
+  }
+  const db3022: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3022.length) % 65521;
+  acc = (acc * 31 + 2184) % 65521;
+  if (acc % 29 === 0) { buf += 'even3024'; } else { buf += 'odd'; }
+  let w3025: number = acc % 23;
+  while (w3025 > 4) { w3025 = Math.floor(w3025 / 2); }
+  acc += w3025;
+  acc = (acc * 31 + 6249) % 65521;
+  for (let i3027 = 0; i3027 < 5; i3027++) {
+    acc = (acc + i3027 * 13 + 869) % 100003;
+  }
+  if (m01.has('k3028')) {
+    const gv3028: number = m01.get('k3028') as number;
+    acc = (acc + gv3028) % 10007;
+  }
+  const db3029: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3029.length) % 65521;
+  if (m01.has('k3030')) {
+    const gv3030: number = m01.get('k3030') as number;
+    acc = (acc + gv3030) % 10007;
+  }
+  buf += `q3031:${acc % 97}`;
+  buf += 'stocktake3032-' + acc.toString();
+  try { if (acc % 29 === 4) { throw new Error('synthetic-3033'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 141 - (acc % 28);
+  acc = acc + 819 - (acc % 96);
+  acc = (acc * 31 + 2912) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03037'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03038'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3039')) {
+    const gv3039: number = m01.get('k3039') as number;
+    acc = (acc + gv3039) % 10007;
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-3040'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k3041', acc % 997);
+  let w3042: number = acc % 23;
+  while (w3042 > 4) { w3042 = Math.floor(w3042 / 2); }
+  acc += w3042;
+  arr.push(acc % 1000);
+  if (acc % 7 === 0) { buf += 'even3044'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi3045' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3046');
+  const t03047: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03047;
+  switch (acc & 3) {
+    case 0: buf += 's03048'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3049')) {
+    const gv3049: number = m01.get('k3049') as number;
+    acc = (acc + gv3049) % 10007;
+  }
+  acc = (acc * 31 + 5984) % 65521;
+  const t03051: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03051;
+  m01.set('k3052', acc % 997);
+  const t03053: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03053;
+  const rc3054: Rec0 = { id: acc % 1000, tag: 't3054', score: acc % 100 };
+  acc = (acc + rc3054.score) % 65521;
+  buf += rc3054.tag;
+  const rc3055: Rec0 = { id: acc % 1000, tag: 't3055', score: acc % 100 };
+  acc = (acc + rc3055.score) % 65521;
+  buf += rc3055.tag;
+  for (let i3056 = 0; i3056 < 12; i3056++) {
+    acc = (acc + i3056 * 13 + 572) % 100003;
+  }
+  const t03057: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03057;
+  if (m01.has('k3058')) {
+    const gv3058: number = m01.get('k3058') as number;
+    acc = (acc + gv3058) % 10007;
+  }
+  const db3059: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3059.length) % 65521;
+  acc = (acc * 31 + 3349) % 65521;
+  const db3061: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3061.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3062');
+  const rc3063: Rec0 = { id: acc % 1000, tag: 't3063', score: acc % 100 };
+  acc = (acc + rc3063.score) % 65521;
+  buf += rc3063.tag;
+  const cf3064: Array<(x: number) => number> = [];
+  cf3064.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3064.push((x: number): number => (x + 30) % 10007);
+  acc = cf3064[acc & 1](acc % 9973);
+  for (let i3065 = 0; i3065 < 12; i3065++) {
+    acc = (acc + i3065 * 13 + 909) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03066'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3067')) {
+    const gv3067: number = m01.get('k3067') as number;
+    acc = (acc + gv3067) % 10007;
+  }
+  for (let i3068 = 0; i3068 < 4; i3068++) {
+    acc = (acc + i3068 * 13 + 934) % 100003;
+  }
+  const cf3069: Array<(x: number) => number> = [];
+  cf3069.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3069.push((x: number): number => (x + 190) % 10007);
+  acc = cf3069[acc & 1](acc % 9973);
+  if (m01.has('k3070')) {
+    const gv3070: number = m01.get('k3070') as number;
+    acc = (acc + gv3070) % 10007;
+  }
+  if (m01.has('k3071')) {
+    const gv3071: number = m01.get('k3071') as number;
+    acc = (acc + gv3071) % 10007;
+  }
+  buf += 'refund3072-' + acc.toString();
+  const rc3073: Rec0 = { id: acc % 1000, tag: 't3073', score: acc % 100 };
+  acc = (acc + rc3073.score) % 65521;
+  buf += rc3073.tag;
+  for (let i3074 = 0; i3074 < 10; i3074++) {
+    acc = (acc + i3074 * 13 + 927) % 100003;
+  }
+  m01.set('k3075', acc % 997);
+  let w3076: number = acc % 23;
+  while (w3076 > 4) { w3076 = Math.floor(w3076 / 2); }
+  acc += w3076;
+  if (acc % 20 === 0) { buf += 'even3077'; } else { buf += 'odd'; }
+  const rc3078: Rec0 = { id: acc % 1000, tag: 't3078', score: acc % 100 };
+  acc = (acc + rc3078.score) % 65521;
+  buf += rc3078.tag;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's03080'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 569 - (acc % 61);
+  buf += `q3082:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3083' : 'lo') + acc.toString(16);
+  if (acc % 26 === 0) { buf += 'even3084'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-3085'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k3086')) {
+    const gv3086: number = m01.get('k3086') as number;
+    acc = (acc + gv3086) % 10007;
+  }
+  for (let i3087 = 0; i3087 < 11; i3087++) {
+    acc = (acc + i3087 * 13 + 736) % 100003;
+  }
+  let w3088: number = acc % 23;
+  while (w3088 > 4) { w3088 = Math.floor(w3088 / 2); }
+  acc += w3088;
+  acc = (acc * 31 + 1645) % 65521;
+  acc = acc + 473 - (acc % 33);
+  const ix3091: number = buf.indexOf('p0');
+  if (ix3091 > 12) { buf = buf.substring(0, 32); } else if (ix3091 >= 0) { buf += 'i'; }
+  buf += `q3092:${acc % 97}`;
+  acc = (acc * 31 + 2721) % 65521;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3094'); } acc += 59; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 22 === 0) { buf += 'even3095'; } else { buf += 'odd'; }
+  buf += 'policy3096-' + acc.toString();
+  acc = acc + 194 - (acc % 37);
+  acc = acc + 981 - (acc % 47);
+  m01.set('k3099', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3100');
+  for (let i3101 = 0; i3101 < 4; i3101++) {
+    acc = (acc + i3101 * 13 + 424) % 100003;
+  }
+  const ix3102: number = buf.indexOf('p0');
+  if (ix3102 > 12) { buf = buf.substring(0, 32); } else if (ix3102 >= 0) { buf += 'i'; }
+  m01.set('k3103', acc % 997);
+  const db3104: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3104.length) % 65521;
+  acc = (acc * 31 + 8960) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03106'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  m01.set('k3107', acc % 997);
+  if (acc % 16 === 0) { buf += 'even3108'; } else { buf += 'odd'; }
+  for (let i3109 = 0; i3109 < 9; i3109++) {
+    acc = (acc + i3109 * 13 + 187) % 100003;
+  }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-3110'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k3111')) {
+    const gv3111: number = m01.get('k3111') as number;
+    acc = (acc + gv3111) % 10007;
+  }
+  acc = (acc * 31 + 6555) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3113');
+  const db3114: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3114.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3115');
+  buf += `q3116:${acc % 97}`;
+  if (acc % 5 === 0) { buf += 'even3117'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const rc3119: Rec0 = { id: acc % 1000, tag: 't3119', score: acc % 100 };
+  acc = (acc + rc3119.score) % 65521;
+  buf += rc3119.tag;
+  const rc3120: Rec0 = { id: acc % 1000, tag: 't3120', score: acc % 100 };
+  acc = (acc + rc3120.score) % 65521;
+  buf += rc3120.tag;
+  const rc3121: Rec0 = { id: acc % 1000, tag: 't3121', score: acc % 100 };
+  acc = (acc + rc3121.score) % 65521;
+  buf += rc3121.tag;
+  if (m01.has('k3122')) {
+    const gv3122: number = m01.get('k3122') as number;
+    acc = (acc + gv3122) % 10007;
+  }
+  const t03123: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03123;
+  buf += (acc > 500 ? 'hi3124' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi3125' : 'lo') + acc.toString(16);
+  const t03126: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03126;
+  acc = (acc * 31 + 5085) % 65521;
+  const db3128: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3128.length) % 65521;
+  const cf3129: Array<(x: number) => number> = [];
+  cf3129.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3129.push((x: number): number => (x + 96) % 10007);
+  acc = cf3129[acc & 1](acc % 9973);
+  m01.set('k3130', acc % 997);
+  const db3131: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3131.length) % 65521;
+  acc = (acc * 31 + 9825) % 65521;
+  acc = (acc * 31 + 5489) % 65521;
+  if (m01.has('k3134')) {
+    const gv3134: number = m01.get('k3134') as number;
+    acc = (acc + gv3134) % 10007;
+  }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 23) { throw new Error('synthetic-3137'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3138');
+  buf += (acc > 500 ? 'hi3139' : 'lo') + acc.toString(16);
+  acc = acc + 11 - (acc % 11);
+  let w3141: number = acc % 23;
+  while (w3141 > 4) { w3141 = Math.floor(w3141 / 2); }
+  acc += w3141;
+  arr.push(acc % 1000);
+  const ix3143: number = buf.indexOf('p0');
+  if (ix3143 > 12) { buf = buf.substring(0, 32); } else if (ix3143 >= 0) { buf += 'i'; }
+  if (m01.has('k3144')) {
+    const gv3144: number = m01.get('k3144') as number;
+    acc = (acc + gv3144) % 10007;
+  }
+  m01.set('k3145', acc % 997);
+  buf += (acc > 500 ? 'hi3146' : 'lo') + acc.toString(16);
+  if (acc % 28 === 0) { buf += 'even3147'; } else { buf += 'odd'; }
+  let w3148: number = acc % 23;
+  while (w3148 > 4) { w3148 = Math.floor(w3148 / 2); }
+  acc += w3148;
+  acc = acc + 589 - (acc % 20);
+  const db3150: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3150.length) % 65521;
+  acc = (acc * 31 + 9593) % 65521;
+  const db3152: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3152.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even3153'; } else { buf += 'odd'; }
+  buf += `q3154:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's03155'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  for (let i3156 = 0; i3156 < 7; i3156++) {
+    acc = (acc + i3156 * 13 + 796) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3157');
+  let w3158: number = acc % 23;
+  while (w3158 > 4) { w3158 = Math.floor(w3158 / 2); }
+  acc += w3158;
+  const ix3159: number = buf.indexOf('p0');
+  if (ix3159 > 12) { buf = buf.substring(0, 32); } else if (ix3159 >= 0) { buf += 'i'; }
+  const cf3160: Array<(x: number) => number> = [];
+  cf3160.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3160.push((x: number): number => (x + 48) % 10007);
+  acc = cf3160[acc & 1](acc % 9973);
+  acc = (acc * 31 + 4683) % 65521;
+  m01.set('k3162', acc % 997);
+  buf += 'waybill3163-' + acc.toString();
+  if (acc % 16 === 0) { buf += 'even3164'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-3165'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'carrier3166-' + acc.toString();
+  for (let i3167 = 0; i3167 < 7; i3167++) {
+    acc = (acc + i3167 * 13 + 352) % 100003;
+  }
+  const ix3168: number = buf.indexOf('p0');
+  if (ix3168 > 12) { buf = buf.substring(0, 32); } else if (ix3168 >= 0) { buf += 'i'; }
+  const cf3169: Array<(x: number) => number> = [];
+  cf3169.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3169.push((x: number): number => (x + 89) % 10007);
+  acc = cf3169[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += `q3171:${acc % 97}`;
+  const t03172: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03172;
+  if (m01.has('k3173')) {
+    const gv3173: number = m01.get('k3173') as number;
+    acc = (acc + gv3173) % 10007;
+  }
+  for (let i3174 = 0; i3174 < 10; i3174++) {
+    acc = (acc + i3174 * 13 + 66) % 100003;
+  }
+  const db3175: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3175.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03176'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi3177' : 'lo') + acc.toString(16);
+  if (acc % 23 === 0) { buf += 'even3178'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 4666) % 65521;
+  const rc3180: Rec0 = { id: acc % 1000, tag: 't3180', score: acc % 100 };
+  acc = (acc + rc3180.score) % 65521;
+  buf += rc3180.tag;
+  switch (acc & 3) {
+    case 0: buf += 's03181'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const db3182: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3182.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3183');
+  const ix3184: number = buf.indexOf('p0');
+  if (ix3184 > 12) { buf = buf.substring(0, 32); } else if (ix3184 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's03185'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const ix3186: number = buf.indexOf('p0');
+  if (ix3186 > 12) { buf = buf.substring(0, 32); } else if (ix3186 >= 0) { buf += 'i'; }
+  buf += `q3187:${acc % 97}`;
+  arr.push(acc % 1000);
+  let w3189: number = acc % 23;
+  while (w3189 > 4) { w3189 = Math.floor(w3189 / 2); }
+  acc += w3189;
+  const db3190: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3190.length) % 65521;
+  buf += `q3191:${acc % 97}`;
+  for (let i3192 = 0; i3192 < 11; i3192++) {
+    acc = (acc + i3192 * 13 + 263) % 100003;
+  }
+  buf += `q3193:${acc % 97}`;
+  buf += `q3194:${acc % 97}`;
+  m01.set('k3195', acc % 997);
+  acc = (acc * 31 + 6834) % 65521;
+  const t03197: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03197;
+  for (let i3198 = 0; i3198 < 3; i3198++) {
+    acc = (acc + i3198 * 13 + 60) % 100003;
+  }
+  arr.push(acc % 1000);
+  const rc3200: Rec0 = { id: acc % 1000, tag: 't3200', score: acc % 100 };
+  acc = (acc + rc3200.score) % 65521;
+  buf += rc3200.tag;
+  if (m01.has('k3201')) {
+    const gv3201: number = m01.get('k3201') as number;
+    acc = (acc + gv3201) % 10007;
+  }
+  buf += (acc > 500 ? 'hi3202' : 'lo') + acc.toString(16);
+  buf += 'policy3203-' + acc.toString();
+  const ix3204: number = buf.indexOf('p0');
+  if (ix3204 > 12) { buf = buf.substring(0, 32); } else if (ix3204 >= 0) { buf += 'i'; }
+  buf += `q3205:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3206');
+  buf += 'order3207-' + acc.toString();
+  const db3208: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3208.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3209');
+  acc = acc + 778 - (acc % 54);
+  m01.set('k3211', acc % 997);
+  const db3212: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3212.length) % 65521;
+  if (acc % 13 === 0) { buf += 'even3213'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const db3216: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3216.length) % 65521;
+  const db3217: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3217.length) % 65521;
+  const db3218: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3218.length) % 65521;
+  if (m01.has('k3219')) {
+    const gv3219: number = m01.get('k3219') as number;
+    acc = (acc + gv3219) % 10007;
+  }
+  if (acc % 8 === 0) { buf += 'even3220'; } else { buf += 'odd'; }
+  const rc3221: Rec0 = { id: acc % 1000, tag: 't3221', score: acc % 100 };
+  acc = (acc + rc3221.score) % 65521;
+  buf += rc3221.tag;
+  if (acc % 13 === 0) { buf += 'even3222'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3223');
+  try { if (acc % 29 === 23) { throw new Error('synthetic-3224'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's03225'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  acc = acc + 964 - (acc % 60);
+  if (m01.has('k3228')) {
+    const gv3228: number = m01.get('k3228') as number;
+    acc = (acc + gv3228) % 10007;
+  }
+  const t03229: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03229;
+  const t03230: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03230;
+  buf += 'depot3231-' + acc.toString();
+  m01.set('k3232', acc % 997);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 7250) % 65521;
+  acc = acc + 238 - (acc % 15);
+  try { if (acc % 29 === 22) { throw new Error('synthetic-3236'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi3237' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-3238'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 21 === 0) { buf += 'even3239'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3240');
+  m01.set('k3241', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3242');
+  try { if (acc % 29 === 13) { throw new Error('synthetic-3243'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k3244')) {
+    const gv3244: number = m01.get('k3244') as number;
+    acc = (acc + gv3244) % 10007;
+  }
+  buf += 'payout3245-' + acc.toString();
+  buf += (acc > 500 ? 'hi3246' : 'lo') + acc.toString(16);
+  const t03247: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03247;
+  m01.set('k3248', acc % 997);
+  const t03249: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03249;
+  const t03250: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03250;
+  for (let i3251 = 0; i3251 < 3; i3251++) {
+    acc = (acc + i3251 * 13 + 971) % 100003;
+  }
+  acc = (acc * 31 + 5649) % 65521;
+  if (m01.has('k3253')) {
+    const gv3253: number = m01.get('k3253') as number;
+    acc = (acc + gv3253) % 10007;
+  }
+  const db3254: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3254.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03255'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi3256' : 'lo') + acc.toString(16);
+  if (acc % 26 === 0) { buf += 'even3257'; } else { buf += 'odd'; }
+  const ix3258: number = buf.indexOf('p0');
+  if (ix3258 > 12) { buf = buf.substring(0, 32); } else if (ix3258 >= 0) { buf += 'i'; }
+  acc = acc + 621 - (acc % 22);
+  buf += (acc > 500 ? 'hi3260' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 7704) % 65521;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-3263'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 19 === 0) { buf += 'even3264'; } else { buf += 'odd'; }
+  buf += 'freight3265-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = acc + 639 - (acc % 56);
+  m01.set('k3268', acc % 997);
+  m01.set('k3269', acc % 997);
+  buf += `q3270:${acc % 97}`;
+  const db3271: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3271.length) % 65521;
+  buf += (acc > 500 ? 'hi3272' : 'lo') + acc.toString(16);
+  for (let i3273 = 0; i3273 < 11; i3273++) {
+    acc = (acc + i3273 * 13 + 142) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03274'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3275'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc3276: Rec0 = { id: acc % 1000, tag: 't3276', score: acc % 100 };
+  acc = (acc + rc3276.score) % 65521;
+  buf += rc3276.tag;
+  for (let i3277 = 0; i3277 < 9; i3277++) {
+    acc = (acc + i3277 * 13 + 825) % 100003;
+  }
+  m01.set('k3278', acc % 997);
+  const ix3279: number = buf.indexOf('p0');
+  if (ix3279 > 12) { buf = buf.substring(0, 32); } else if (ix3279 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's03280'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3281');
+  const rc3282: Rec0 = { id: acc % 1000, tag: 't3282', score: acc % 100 };
+  acc = (acc + rc3282.score) % 65521;
+  buf += rc3282.tag;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const t03285: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03285;
+  if (acc % 9 === 0) { buf += 'even3286'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's03287'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  let w3288: number = acc % 23;
+  while (w3288 > 4) { w3288 = Math.floor(w3288 / 2); }
+  acc += w3288;
+  if (acc % 27 === 0) { buf += 'even3289'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's03290'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  const cf3291: Array<(x: number) => number> = [];
+  cf3291.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3291.push((x: number): number => (x + 20) % 10007);
+  acc = cf3291[acc & 1](acc % 9973);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-3292'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i3293 = 0; i3293 < 12; i3293++) {
+    acc = (acc + i3293 * 13 + 245) % 100003;
+  }
+  acc = acc + 37 - (acc % 35);
+  if (acc % 7 === 0) { buf += 'even3295'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 7006) % 65521;
+  for (let i3297 = 0; i3297 < 5; i3297++) {
+    acc = (acc + i3297 * 13 + 521) % 100003;
+  }
+  for (let i3298 = 0; i3298 < 11; i3298++) {
+    acc = (acc + i3298 * 13 + 626) % 100003;
+  }
+  buf += 'transit3299-' + acc.toString();
+  const cf3300: Array<(x: number) => number> = [];
+  cf3300.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3300.push((x: number): number => (x + 143) % 10007);
+  acc = cf3300[acc & 1](acc % 9973);
+  buf += `q3301:${acc % 97}`;
+  const rc3302: Rec0 = { id: acc % 1000, tag: 't3302', score: acc % 100 };
+  acc = (acc + rc3302.score) % 65521;
+  buf += rc3302.tag;
+  if (acc % 26 === 0) { buf += 'even3303'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3304');
+  buf += 'portal3305-' + acc.toString();
+  arr.push(acc % 1000);
+  const db3307: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3307.length) % 65521;
+  buf += `q3308:${acc % 97}`;
+  m01.set('k3309', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3310');
+  const cf3311: Array<(x: number) => number> = [];
+  cf3311.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3311.push((x: number): number => (x + 64) % 10007);
+  acc = cf3311[acc & 1](acc % 9973);
+  for (let i3312 = 0; i3312 < 8; i3312++) {
+    acc = (acc + i3312 * 13 + 555) % 100003;
+  }
+  const rc3313: Rec0 = { id: acc % 1000, tag: 't3313', score: acc % 100 };
+  acc = (acc + rc3313.score) % 65521;
+  buf += rc3313.tag;
+  switch (acc & 3) {
+    case 0: buf += 's03314'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  for (let i3315 = 0; i3315 < 9; i3315++) {
+    acc = (acc + i3315 * 13 + 341) % 100003;
+  }
+  buf += `q3316:${acc % 97}`;
+  buf += `q3317:${acc % 97}`;
+  const rc3318: Rec0 = { id: acc % 1000, tag: 't3318', score: acc % 100 };
+  acc = (acc + rc3318.score) % 65521;
+  buf += rc3318.tag;
+  const db3319: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3319.length) % 65521;
+  buf += 'order3320-' + acc.toString();
+  for (let i3321 = 0; i3321 < 9; i3321++) {
+    acc = (acc + i3321 * 13 + 864) % 100003;
+  }
+  acc = acc + 899 - (acc % 62);
+  if (acc % 12 === 0) { buf += 'even3323'; } else { buf += 'odd'; }
+  if (m01.has('k3324')) {
+    const gv3324: number = m01.get('k3324') as number;
+    acc = (acc + gv3324) % 10007;
+  }
+  if (m01.has('k3325')) {
+    const gv3325: number = m01.get('k3325') as number;
+    acc = (acc + gv3325) % 10007;
+  }
+  buf += 'customs3326-' + acc.toString();
+  const t03327: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03327;
+  const t03328: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03328;
+  const t03329: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03329;
+  acc = (acc * 31 + 3501) % 65521;
+  buf += (acc > 500 ? 'hi3331' : 'lo') + acc.toString(16);
+  for (let i3332 = 0; i3332 < 11; i3332++) {
+    acc = (acc + i3332 * 13 + 997) % 100003;
+  }
+  const cf3333: Array<(x: number) => number> = [];
+  cf3333.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3333.push((x: number): number => (x + 33) % 10007);
+  acc = cf3333[acc & 1](acc % 9973);
+  const t03334: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03334;
+  buf += `q3335:${acc % 97}`;
+  for (let i3336 = 0; i3336 < 11; i3336++) {
+    acc = (acc + i3336 * 13 + 380) % 100003;
+  }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-3337'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 6285) % 65521;
+  arr.push(acc % 1000);
+  buf += `q3340:${acc % 97}`;
+  acc = acc + 321 - (acc % 45);
+  const ix3342: number = buf.indexOf('p0');
+  if (ix3342 > 12) { buf = buf.substring(0, 32); } else if (ix3342 >= 0) { buf += 'i'; }
+  m01.set('k3343', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's03344'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const rc3345: Rec0 = { id: acc % 1000, tag: 't3345', score: acc % 100 };
+  acc = (acc + rc3345.score) % 65521;
+  buf += rc3345.tag;
+  switch (acc & 3) {
+    case 0: buf += 's03346'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  let w3349: number = acc % 23;
+  while (w3349 > 4) { w3349 = Math.floor(w3349 / 2); }
+  acc += w3349;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3350');
+  const rc3351: Rec0 = { id: acc % 1000, tag: 't3351', score: acc % 100 };
+  acc = (acc + rc3351.score) % 65521;
+  buf += rc3351.tag;
+  buf += (acc > 500 ? 'hi3352' : 'lo') + acc.toString(16);
+  const db3353: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3353.length) % 65521;
+  for (let i3354 = 0; i3354 < 6; i3354++) {
+    acc = (acc + i3354 * 13 + 280) % 100003;
+  }
+  const cf3355: Array<(x: number) => number> = [];
+  cf3355.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3355.push((x: number): number => (x + 117) % 10007);
+  acc = cf3355[acc & 1](acc % 9973);
+  acc = acc + 36 - (acc % 42);
+  const ix3357: number = buf.indexOf('p0');
+  if (ix3357 > 12) { buf = buf.substring(0, 32); } else if (ix3357 >= 0) { buf += 'i'; }
+  acc = acc + 459 - (acc % 41);
+  const t03359: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03359;
+  buf += 'balance3360-' + acc.toString();
+  acc = acc + 175 - (acc % 19);
+  const t03362: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03362;
+  let w3363: number = acc % 23;
+  while (w3363 > 4) { w3363 = Math.floor(w3363 / 2); }
+  acc += w3363;
+  switch (acc & 3) {
+    case 0: buf += 's03364'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const db3365: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3365.length) % 65521;
+  let w3366: number = acc % 23;
+  while (w3366 > 4) { w3366 = Math.floor(w3366 / 2); }
+  acc += w3366;
+  acc = (acc * 31 + 8971) % 65521;
+  const t03368: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03368;
+  arr.push(acc % 1000);
+  const db3370: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3370.length) % 65521;
+  for (let i3371 = 0; i3371 < 9; i3371++) {
+    acc = (acc + i3371 * 13 + 153) % 100003;
+  }
+  buf += `q3372:${acc % 97}`;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-3373'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix3374: number = buf.indexOf('p0');
+  if (ix3374 > 12) { buf = buf.substring(0, 32); } else if (ix3374 >= 0) { buf += 'i'; }
+  const rc3375: Rec0 = { id: acc % 1000, tag: 't3375', score: acc % 100 };
+  acc = (acc + rc3375.score) % 65521;
+  buf += rc3375.tag;
+  buf += (acc > 500 ? 'hi3376' : 'lo') + acc.toString(16);
+  buf += `q3377:${acc % 97}`;
+  if (acc % 17 === 0) { buf += 'even3378'; } else { buf += 'odd'; }
+  const cf3379: Array<(x: number) => number> = [];
+  cf3379.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3379.push((x: number): number => (x + 187) % 10007);
+  acc = cf3379[acc & 1](acc % 9973);
+  buf += 'waybill3380-' + acc.toString();
+  const cf3381: Array<(x: number) => number> = [];
+  cf3381.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3381.push((x: number): number => (x + 46) % 10007);
+  acc = cf3381[acc & 1](acc % 9973);
+  for (let i3382 = 0; i3382 < 4; i3382++) {
+    acc = (acc + i3382 * 13 + 83) % 100003;
+  }
+  buf += 'depot3383-' + acc.toString();
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3384'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k3385', acc % 997);
+  const cf3386: Array<(x: number) => number> = [];
+  cf3386.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3386.push((x: number): number => (x + 97) % 10007);
+  acc = cf3386[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi3387' : 'lo') + acc.toString(16);
+  const db3388: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3388.length) % 65521;
+  const rc3389: Rec0 = { id: acc % 1000, tag: 't3389', score: acc % 100 };
+  acc = (acc + rc3389.score) % 65521;
+  buf += rc3389.tag;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  let w3393: number = acc % 23;
+  while (w3393 > 4) { w3393 = Math.floor(w3393 / 2); }
+  acc += w3393;
+  arr.push(acc % 1000);
+  acc = acc + 128 - (acc % 72);
+  const ix3396: number = buf.indexOf('p0');
+  if (ix3396 > 12) { buf = buf.substring(0, 32); } else if (ix3396 >= 0) { buf += 'i'; }
+  const db3397: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3397.length) % 65521;
+  acc = (acc * 31 + 6364) % 65521;
+  arr.push(acc % 1000);
+  let w3400: number = acc % 23;
+  while (w3400 > 4) { w3400 = Math.floor(w3400 / 2); }
+  acc += w3400;
+  if (m01.has('k3401')) {
+    const gv3401: number = m01.get('k3401') as number;
+    acc = (acc + gv3401) % 10007;
+  }
+  const cf3402: Array<(x: number) => number> = [];
+  cf3402.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3402.push((x: number): number => (x + 185) % 10007);
+  acc = cf3402[acc & 1](acc % 9973);
+  const db3403: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3403.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3404');
+  const ix3405: number = buf.indexOf('p0');
+  if (ix3405 > 12) { buf = buf.substring(0, 32); } else if (ix3405 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-3406'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += `q3408:${acc % 97}`;
+  if (acc % 28 === 0) { buf += 'even3409'; } else { buf += 'odd'; }
+  buf += `q3410:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3411' : 'lo') + acc.toString(16);
+  const rc3412: Rec0 = { id: acc % 1000, tag: 't3412', score: acc % 100 };
+  acc = (acc + rc3412.score) % 65521;
+  buf += rc3412.tag;
+  const ix3413: number = buf.indexOf('p0');
+  if (ix3413 > 12) { buf = buf.substring(0, 32); } else if (ix3413 >= 0) { buf += 'i'; }
+  const t03414: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03414;
+  switch (acc & 3) {
+    case 0: buf += 's03415'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const db3416: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3416.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3417');
+  buf += (acc > 500 ? 'hi3418' : 'lo') + acc.toString(16);
+  m01.set('k3419', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's03420'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03421'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  let w3422: number = acc % 23;
+  while (w3422 > 4) { w3422 = Math.floor(w3422 / 2); }
+  acc += w3422;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3423');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3424');
+  let w3425: number = acc % 23;
+  while (w3425 > 4) { w3425 = Math.floor(w3425 / 2); }
+  acc += w3425;
+  let w3426: number = acc % 23;
+  while (w3426 > 4) { w3426 = Math.floor(w3426 / 2); }
+  acc += w3426;
+  buf += 'vendor3427-' + acc.toString();
+  arr.push(acc % 1000);
+  const rc3429: Rec0 = { id: acc % 1000, tag: 't3429', score: acc % 100 };
+  acc = (acc + rc3429.score) % 65521;
+  buf += rc3429.tag;
+  const cf3430: Array<(x: number) => number> = [];
+  cf3430.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3430.push((x: number): number => (x + 94) % 10007);
+  acc = cf3430[acc & 1](acc % 9973);
+  for (let i3431 = 0; i3431 < 3; i3431++) {
+    acc = (acc + i3431 * 13 + 154) % 100003;
+  }
+  buf += `q3432:${acc % 97}`;
+  if (m01.has('k3433')) {
+    const gv3433: number = m01.get('k3433') as number;
+    acc = (acc + gv3433) % 10007;
+  }
+  const rc3434: Rec0 = { id: acc % 1000, tag: 't3434', score: acc % 100 };
+  acc = (acc + rc3434.score) % 65521;
+  buf += rc3434.tag;
+  const rc3435: Rec0 = { id: acc % 1000, tag: 't3435', score: acc % 100 };
+  acc = (acc + rc3435.score) % 65521;
+  buf += rc3435.tag;
+  let w3436: number = acc % 23;
+  while (w3436 > 4) { w3436 = Math.floor(w3436 / 2); }
+  acc += w3436;
+  switch (acc & 3) {
+    case 0: buf += 's03437'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const cf3438: Array<(x: number) => number> = [];
+  cf3438.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3438.push((x: number): number => (x + 137) % 10007);
+  acc = cf3438[acc & 1](acc % 9973);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-3439'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 7 === 0) { buf += 'even3440'; } else { buf += 'odd'; }
+  const t03441: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03441;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-3442'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'pickup3443-' + acc.toString();
+  let w3444: number = acc % 23;
+  while (w3444 > 4) { w3444 = Math.floor(w3444 / 2); }
+  acc += w3444;
+  acc = acc + 139 - (acc % 10);
+  arr.push(acc % 1000);
+  buf += `q3447:${acc % 97}`;
+  const db3448: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3448.length) % 65521;
+  const rc3449: Rec0 = { id: acc % 1000, tag: 't3449', score: acc % 100 };
+  acc = (acc + rc3449.score) % 65521;
+  buf += rc3449.tag;
+  const cf3450: Array<(x: number) => number> = [];
+  cf3450.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3450.push((x: number): number => (x + 88) % 10007);
+  acc = cf3450[acc & 1](acc % 9973);
+  const cf3451: Array<(x: number) => number> = [];
+  cf3451.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3451.push((x: number): number => (x + 187) % 10007);
+  acc = cf3451[acc & 1](acc % 9973);
+  let w3452: number = acc % 23;
+  while (w3452 > 4) { w3452 = Math.floor(w3452 / 2); }
+  acc += w3452;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-3453'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  const db3454: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3454.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even3455'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi3456' : 'lo') + acc.toString(16);
+  const ix3457: number = buf.indexOf('p0');
+  if (ix3457 > 12) { buf = buf.substring(0, 32); } else if (ix3457 >= 0) { buf += 'i'; }
+  let w3458: number = acc % 23;
+  while (w3458 > 4) { w3458 = Math.floor(w3458 / 2); }
+  acc += w3458;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-3459'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const cf3461: Array<(x: number) => number> = [];
+  cf3461.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3461.push((x: number): number => (x + 197) % 10007);
+  acc = cf3461[acc & 1](acc % 9973);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-3462'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi3463' : 'lo') + acc.toString(16);
+  if (m01.has('k3464')) {
+    const gv3464: number = m01.get('k3464') as number;
+    acc = (acc + gv3464) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03465'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const ix3466: number = buf.indexOf('p0');
+  if (ix3466 > 12) { buf = buf.substring(0, 32); } else if (ix3466 >= 0) { buf += 'i'; }
+  buf += `q3467:${acc % 97}`;
+  const ix3468: number = buf.indexOf('p0');
+  if (ix3468 > 12) { buf = buf.substring(0, 32); } else if (ix3468 >= 0) { buf += 'i'; }
+  const ix3469: number = buf.indexOf('p0');
+  if (ix3469 > 12) { buf = buf.substring(0, 32); } else if (ix3469 >= 0) { buf += 'i'; }
+  buf += `q3470:${acc % 97}`;
+  const rc3471: Rec0 = { id: acc % 1000, tag: 't3471', score: acc % 100 };
+  acc = (acc + rc3471.score) % 65521;
+  buf += rc3471.tag;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-3472'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 593 - (acc % 55);
+  buf += (acc > 500 ? 'hi3474' : 'lo') + acc.toString(16);
+  const cf3475: Array<(x: number) => number> = [];
+  cf3475.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3475.push((x: number): number => (x + 128) % 10007);
+  acc = cf3475[acc & 1](acc % 9973);
+  if (acc % 24 === 0) { buf += 'even3476'; } else { buf += 'odd'; }
+  if (acc % 5 === 0) { buf += 'even3477'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const t03479: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03479;
+  const ix3480: number = buf.indexOf('p0');
+  if (ix3480 > 12) { buf = buf.substring(0, 32); } else if (ix3480 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-3481'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  const db3482: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3482.length) % 65521;
+  if (acc % 11 === 0) { buf += 'even3483'; } else { buf += 'odd'; }
+  m01.set('k3484', acc % 997);
+  buf += (acc > 500 ? 'hi3485' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-3486'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i3487 = 0; i3487 < 12; i3487++) {
+    acc = (acc + i3487 * 13 + 332) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3488');
+  const db3489: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3489.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3490');
+  const rc3491: Rec0 = { id: acc % 1000, tag: 't3491', score: acc % 100 };
+  acc = (acc + rc3491.score) % 65521;
+  buf += rc3491.tag;
+  const t03492: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03492;
+  buf += 'shelf3493-' + acc.toString();
+  buf += 'pallet3494-' + acc.toString();
+  m01.set('k3495', acc % 997);
+  const db3496: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3496.length) % 65521;
+  const db3497: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3497.length) % 65521;
+  const t03498: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03498;
+  acc = (acc * 31 + 5994) % 65521;
+  for (let i3500 = 0; i3500 < 3; i3500++) {
+    acc = (acc + i3500 * 13 + 622) % 100003;
+  }
+  const rc3501: Rec0 = { id: acc % 1000, tag: 't3501', score: acc % 100 };
+  acc = (acc + rc3501.score) % 65521;
+  buf += rc3501.tag;
+  if (acc % 21 === 0) { buf += 'even3502'; } else { buf += 'odd'; }
+  m01.set('k3503', acc % 997);
+  const db3504: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3504.length) % 65521;
+  const db3505: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3505.length) % 65521;
+  acc = (acc * 31 + 7998) % 65521;
+  let w3507: number = acc % 23;
+  while (w3507 > 4) { w3507 = Math.floor(w3507 / 2); }
+  acc += w3507;
+  const ix3508: number = buf.indexOf('p0');
+  if (ix3508 > 12) { buf = buf.substring(0, 32); } else if (ix3508 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3509');
+  const cf3510: Array<(x: number) => number> = [];
+  cf3510.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3510.push((x: number): number => (x + 59) % 10007);
+  acc = cf3510[acc & 1](acc % 9973);
+  buf += `q3511:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's03512'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3513')) {
+    const gv3513: number = m01.get('k3513') as number;
+    acc = (acc + gv3513) % 10007;
+  }
+  for (let i3514 = 0; i3514 < 6; i3514++) {
+    acc = (acc + i3514 * 13 + 257) % 100003;
+  }
+  const rc3515: Rec0 = { id: acc % 1000, tag: 't3515', score: acc % 100 };
+  acc = (acc + rc3515.score) % 65521;
+  buf += rc3515.tag;
+  arr.push(acc % 1000);
+  acc = acc + 68 - (acc % 51);
+  buf += (acc > 500 ? 'hi3518' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-3519'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3520');
+  buf += (acc > 500 ? 'hi3521' : 'lo') + acc.toString(16);
+  acc = acc + 139 - (acc % 74);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-3523'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 828 - (acc % 51);
+  buf += `q3525:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3526');
+  m01.set('k3527', acc % 997);
+  acc = (acc * 31 + 2497) % 65521;
+  if (acc % 25 === 0) { buf += 'even3529'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 9792) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3532');
+  const t03533: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03533;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-3534'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf3535: Array<(x: number) => number> = [];
+  cf3535.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3535.push((x: number): number => (x + 91) % 10007);
+  acc = cf3535[acc & 1](acc % 9973);
+  buf += 'customs3536-' + acc.toString();
+  acc = (acc * 31 + 4006) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03538'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  for (let i3539 = 0; i3539 < 6; i3539++) {
+    acc = (acc + i3539 * 13 + 591) % 100003;
+  }
+  buf += `q3540:${acc % 97}`;
+  m01.set('k3541', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's03542'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += `q3543:${acc % 97}`;
+  const rc3544: Rec0 = { id: acc % 1000, tag: 't3544', score: acc % 100 };
+  acc = (acc + rc3544.score) % 65521;
+  buf += rc3544.tag;
+  if (acc % 18 === 0) { buf += 'even3545'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 1266) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3548');
+  acc = (acc * 31 + 8851) % 65521;
+  const db3550: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3550.length) % 65521;
+  if (m01.has('k3551')) {
+    const gv3551: number = m01.get('k3551') as number;
+    acc = (acc + gv3551) % 10007;
+  }
+  const ix3552: number = buf.indexOf('p0');
+  if (ix3552 > 12) { buf = buf.substring(0, 32); } else if (ix3552 >= 0) { buf += 'i'; }
+  const cf3553: Array<(x: number) => number> = [];
+  cf3553.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3553.push((x: number): number => (x + 124) % 10007);
+  acc = cf3553[acc & 1](acc % 9973);
+  const rc3554: Rec0 = { id: acc % 1000, tag: 't3554', score: acc % 100 };
+  acc = (acc + rc3554.score) % 65521;
+  buf += rc3554.tag;
+  if (m01.has('k3555')) {
+    const gv3555: number = m01.get('k3555') as number;
+    acc = (acc + gv3555) % 10007;
+  }
+  if (acc % 28 === 0) { buf += 'even3556'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi3557' : 'lo') + acc.toString(16);
+  const rc3558: Rec0 = { id: acc % 1000, tag: 't3558', score: acc % 100 };
+  acc = (acc + rc3558.score) % 65521;
+  buf += rc3558.tag;
+  buf += `q3559:${acc % 97}`;
+  acc = (acc * 31 + 5308) % 65521;
+  const db3561: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3561.length) % 65521;
+  const db3562: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3562.length) % 65521;
+  if (m01.has('k3563')) {
+    const gv3563: number = m01.get('k3563') as number;
+    acc = (acc + gv3563) % 10007;
+  }
+  arr.push(acc % 1000);
+  const t03565: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03565;
+  acc = acc + 588 - (acc % 18);
+  m01.set('k3567', acc % 997);
+  buf += (acc > 500 ? 'hi3568' : 'lo') + acc.toString(16);
+  if (m01.has('k3569')) {
+    const gv3569: number = m01.get('k3569') as number;
+    acc = (acc + gv3569) % 10007;
+  }
+  let w3570: number = acc % 23;
+  while (w3570 > 4) { w3570 = Math.floor(w3570 / 2); }
+  acc += w3570;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3571');
+  if (m01.has('k3572')) {
+    const gv3572: number = m01.get('k3572') as number;
+    acc = (acc + gv3572) % 10007;
+  }
+  let w3573: number = acc % 23;
+  while (w3573 > 4) { w3573 = Math.floor(w3573 / 2); }
+  acc += w3573;
+  arr.push(acc % 1000);
+  acc = acc + 606 - (acc % 90);
+  const rc3576: Rec0 = { id: acc % 1000, tag: 't3576', score: acc % 100 };
+  acc = (acc + rc3576.score) % 65521;
+  buf += rc3576.tag;
+  const ix3577: number = buf.indexOf('p0');
+  if (ix3577 > 12) { buf = buf.substring(0, 32); } else if (ix3577 >= 0) { buf += 'i'; }
+  if (acc % 27 === 0) { buf += 'even3578'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-3579'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k3580')) {
+    const gv3580: number = m01.get('k3580') as number;
+    acc = (acc + gv3580) % 10007;
+  }
+  const ix3581: number = buf.indexOf('p0');
+  if (ix3581 > 12) { buf = buf.substring(0, 32); } else if (ix3581 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's03582'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  buf += 'waybill3583-' + acc.toString();
+  if (m01.has('k3584')) {
+    const gv3584: number = m01.get('k3584') as number;
+    acc = (acc + gv3584) % 10007;
+  }
+  acc = (acc * 31 + 9048) % 65521;
+  const cf3586: Array<(x: number) => number> = [];
+  cf3586.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3586.push((x: number): number => (x + 61) % 10007);
+  acc = cf3586[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi3587' : 'lo') + acc.toString(16);
+  for (let i3588 = 0; i3588 < 5; i3588++) {
+    acc = (acc + i3588 * 13 + 419) % 100003;
+  }
+  buf += `q3589:${acc % 97}`;
+  const t03590: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03590;
+  buf += 'client3591-' + acc.toString();
+  acc = (acc * 31 + 5114) % 65521;
+  const rc3593: Rec0 = { id: acc % 1000, tag: 't3593', score: acc % 100 };
+  acc = (acc + rc3593.score) % 65521;
+  buf += rc3593.tag;
+  if (acc % 14 === 0) { buf += 'even3594'; } else { buf += 'odd'; }
+  let w3595: number = acc % 23;
+  while (w3595 > 4) { w3595 = Math.floor(w3595 / 2); }
+  acc += w3595;
+  for (let i3596 = 0; i3596 < 6; i3596++) {
+    acc = (acc + i3596 * 13 + 830) % 100003;
+  }
+  buf += `q3597:${acc % 97}`;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-3598'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 428 - (acc % 64);
+  m01.set('k3600', acc % 997);
+  const rc3601: Rec0 = { id: acc % 1000, tag: 't3601', score: acc % 100 };
+  acc = (acc + rc3601.score) % 65521;
+  buf += rc3601.tag;
+  for (let i3602 = 0; i3602 < 8; i3602++) {
+    acc = (acc + i3602 * 13 + 243) % 100003;
+  }
+  acc = acc + 406 - (acc % 17);
+  const cf3604: Array<(x: number) => number> = [];
+  cf3604.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3604.push((x: number): number => (x + 173) % 10007);
+  acc = cf3604[acc & 1](acc % 9973);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-3605'); } acc += 47; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i3606 = 0; i3606 < 12; i3606++) {
+    acc = (acc + i3606 * 13 + 437) % 100003;
+  }
+  const rc3607: Rec0 = { id: acc % 1000, tag: 't3607', score: acc % 100 };
+  acc = (acc + rc3607.score) % 65521;
+  buf += rc3607.tag;
+  acc = acc + 725 - (acc % 46);
+  const rc3609: Rec0 = { id: acc % 1000, tag: 't3609', score: acc % 100 };
+  acc = (acc + rc3609.score) % 65521;
+  buf += rc3609.tag;
+  for (let i3610 = 0; i3610 < 7; i3610++) {
+    acc = (acc + i3610 * 13 + 337) % 100003;
+  }
+  buf += (acc > 500 ? 'hi3611' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  let w3613: number = acc % 23;
+  while (w3613 > 4) { w3613 = Math.floor(w3613 / 2); }
+  acc += w3613;
+  if (acc % 14 === 0) { buf += 'even3614'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's03615'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const ix3616: number = buf.indexOf('p0');
+  if (ix3616 > 12) { buf = buf.substring(0, 32); } else if (ix3616 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  buf += `q3618:${acc % 97}`;
+  buf += `q3619:${acc % 97}`;
+  const ix3620: number = buf.indexOf('p0');
+  if (ix3620 > 12) { buf = buf.substring(0, 32); } else if (ix3620 >= 0) { buf += 'i'; }
+  buf += `q3621:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3622' : 'lo') + acc.toString(16);
+  if (acc % 31 === 0) { buf += 'even3623'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's03624'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const db3625: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3625.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3626');
+  const ix3627: number = buf.indexOf('p0');
+  if (ix3627 > 12) { buf = buf.substring(0, 32); } else if (ix3627 >= 0) { buf += 'i'; }
+  buf += `q3628:${acc % 97}`;
+  const db3629: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3629.length) % 65521;
+  const ix3630: number = buf.indexOf('p0');
+  if (ix3630 > 12) { buf = buf.substring(0, 32); } else if (ix3630 >= 0) { buf += 'i'; }
+  acc = acc + 377 - (acc % 56);
+  buf += (acc > 500 ? 'hi3632' : 'lo') + acc.toString(16);
+  const t03633: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03633;
+  m01.set('k3634', acc % 997);
+  const ix3635: number = buf.indexOf('p0');
+  if (ix3635 > 12) { buf = buf.substring(0, 32); } else if (ix3635 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3636');
+  buf += `q3637:${acc % 97}`;
+  for (let i3638 = 0; i3638 < 6; i3638++) {
+    acc = (acc + i3638 * 13 + 325) % 100003;
+  }
+  for (let i3639 = 0; i3639 < 12; i3639++) {
+    acc = (acc + i3639 * 13 + 463) % 100003;
+  }
+  acc = (acc * 31 + 5062) % 65521;
+  let w3641: number = acc % 23;
+  while (w3641 > 4) { w3641 = Math.floor(w3641 / 2); }
+  acc += w3641;
+  const ix3642: number = buf.indexOf('p0');
+  if (ix3642 > 12) { buf = buf.substring(0, 32); } else if (ix3642 >= 0) { buf += 'i'; }
+  const ix3643: number = buf.indexOf('p0');
+  if (ix3643 > 12) { buf = buf.substring(0, 32); } else if (ix3643 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's03644'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3645'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  const db3646: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3646.length) % 65521;
+  buf += (acc > 500 ? 'hi3647' : 'lo') + acc.toString(16);
+  buf += `q3648:${acc % 97}`;
+  const cf3649: Array<(x: number) => number> = [];
+  cf3649.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3649.push((x: number): number => (x + 187) % 10007);
+  acc = cf3649[acc & 1](acc % 9973);
+  acc = acc + 704 - (acc % 17);
+  if (acc % 13 === 0) { buf += 'even3651'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-3652'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k3653', acc % 997);
+  acc = acc + 518 - (acc % 16);
+  const cf3655: Array<(x: number) => number> = [];
+  cf3655.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3655.push((x: number): number => (x + 87) % 10007);
+  acc = cf3655[acc & 1](acc % 9973);
+  const rc3656: Rec0 = { id: acc % 1000, tag: 't3656', score: acc % 100 };
+  acc = (acc + rc3656.score) % 65521;
+  buf += rc3656.tag;
+  const rc3657: Rec0 = { id: acc % 1000, tag: 't3657', score: acc % 100 };
+  acc = (acc + rc3657.score) % 65521;
+  buf += rc3657.tag;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-3658'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 100 - (acc % 94);
+  if (m01.has('k3660')) {
+    const gv3660: number = m01.get('k3660') as number;
+    acc = (acc + gv3660) % 10007;
+  }
+  const rc3661: Rec0 = { id: acc % 1000, tag: 't3661', score: acc % 100 };
+  acc = (acc + rc3661.score) % 65521;
+  buf += rc3661.tag;
+  acc = acc + 393 - (acc % 90);
+  try { if (acc % 29 === 12) { throw new Error('synthetic-3663'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 29 === 0) { buf += 'even3664'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's03666'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3667')) {
+    const gv3667: number = m01.get('k3667') as number;
+    acc = (acc + gv3667) % 10007;
+  }
+  try { if (acc % 29 === 10) { throw new Error('synthetic-3668'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  let w3669: number = acc % 23;
+  while (w3669 > 4) { w3669 = Math.floor(w3669 / 2); }
+  acc += w3669;
+  buf += 'coupon3670-' + acc.toString();
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's03672'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  buf += `q3673:${acc % 97}`;
+  if (acc % 22 === 0) { buf += 'even3674'; } else { buf += 'odd'; }
+  m01.set('k3675', acc % 997);
+  const t03676: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03676;
+  m01.set('k3677', acc % 997);
+  acc = (acc * 31 + 9566) % 65521;
+  buf += 'policy3679-' + acc.toString();
+  if (m01.has('k3680')) {
+    const gv3680: number = m01.get('k3680') as number;
+    acc = (acc + gv3680) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03681'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const db3682: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3682.length) % 65521;
+  acc = (acc * 31 + 6348) % 65521;
+  buf += (acc > 500 ? 'hi3684' : 'lo') + acc.toString(16);
+  const ix3685: number = buf.indexOf('p0');
+  if (ix3685 > 12) { buf = buf.substring(0, 32); } else if (ix3685 >= 0) { buf += 'i'; }
+  const t03686: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03686;
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi3688' : 'lo') + acc.toString(16);
+  const t03689: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03689;
+  m01.set('k3690', acc % 997);
+  const rc3691: Rec0 = { id: acc % 1000, tag: 't3691', score: acc % 100 };
+  acc = (acc + rc3691.score) % 65521;
+  buf += rc3691.tag;
+  const ix3692: number = buf.indexOf('p0');
+  if (ix3692 > 12) { buf = buf.substring(0, 32); } else if (ix3692 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3693'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  const db3694: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3694.length) % 65521;
+  let w3695: number = acc % 23;
+  while (w3695 > 4) { w3695 = Math.floor(w3695 / 2); }
+  acc += w3695;
+  const rc3696: Rec0 = { id: acc % 1000, tag: 't3696', score: acc % 100 };
+  acc = (acc + rc3696.score) % 65521;
+  buf += rc3696.tag;
+  if (m01.has('k3697')) {
+    const gv3697: number = m01.get('k3697') as number;
+    acc = (acc + gv3697) % 10007;
+  }
+  const rc3698: Rec0 = { id: acc % 1000, tag: 't3698', score: acc % 100 };
+  acc = (acc + rc3698.score) % 65521;
+  buf += rc3698.tag;
+  buf += `q3699:${acc % 97}`;
+  if (acc % 15 === 0) { buf += 'even3700'; } else { buf += 'odd'; }
+  m01.set('k3701', acc % 997);
+  arr.push(acc % 1000);
+  for (let i3703 = 0; i3703 < 10; i3703++) {
+    acc = (acc + i3703 * 13 + 533) % 100003;
+  }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-3704'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3705');
+  buf += `q3706:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3707' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's03708'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  if (acc % 28 === 0) { buf += 'even3709'; } else { buf += 'odd'; }
+  if (acc % 20 === 0) { buf += 'even3710'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const rc3712: Rec0 = { id: acc % 1000, tag: 't3712', score: acc % 100 };
+  acc = (acc + rc3712.score) % 65521;
+  buf += rc3712.tag;
+  if (m01.has('k3713')) {
+    const gv3713: number = m01.get('k3713') as number;
+    acc = (acc + gv3713) % 10007;
+  }
+  if (acc % 11 === 0) { buf += 'even3714'; } else { buf += 'odd'; }
+  for (let i3715 = 0; i3715 < 5; i3715++) {
+    acc = (acc + i3715 * 13 + 801) % 100003;
+  }
+  acc = (acc * 31 + 8584) % 65521;
+  acc = (acc * 31 + 152) % 65521;
+  m01.set('k3718', acc % 997);
+  if (acc % 18 === 0) { buf += 'even3719'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 8528) % 65521;
+  let w3721: number = acc % 23;
+  while (w3721 > 4) { w3721 = Math.floor(w3721 / 2); }
+  acc += w3721;
+  for (let i3722 = 0; i3722 < 3; i3722++) {
+    acc = (acc + i3722 * 13 + 666) % 100003;
+  }
+  m01.set('k3723', acc % 997);
+  acc = acc + 163 - (acc % 64);
+  const db3725: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3725.length) % 65521;
+  const cf3726: Array<(x: number) => number> = [];
+  cf3726.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3726.push((x: number): number => (x + 75) % 10007);
+  acc = cf3726[acc & 1](acc % 9973);
+  const cf3727: Array<(x: number) => number> = [];
+  cf3727.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3727.push((x: number): number => (x + 133) % 10007);
+  acc = cf3727[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3728');
+  acc = acc + 347 - (acc % 77);
+  acc = acc + 548 - (acc % 26);
+  m01.set('k3731', acc % 997);
+  m01.set('k3732', acc % 997);
+  try { if (acc % 29 === 16) { throw new Error('synthetic-3733'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const db3735: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3735.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3736');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3737');
+  arr.push(acc % 1000);
+  buf += `q3739:${acc % 97}`;
+  if (acc % 18 === 0) { buf += 'even3740'; } else { buf += 'odd'; }
+  const db3741: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3741.length) % 65521;
+  let w3742: number = acc % 23;
+  while (w3742 > 4) { w3742 = Math.floor(w3742 / 2); }
+  acc += w3742;
+  switch (acc & 3) {
+    case 0: buf += 's03743'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi3744' : 'lo') + acc.toString(16);
+  buf += 'settle3745-' + acc.toString();
+  acc = acc + 632 - (acc % 33);
+  buf += (acc > 500 ? 'hi3747' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 5236) % 65521;
+  const t03750: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03750;
+  const rc3751: Rec0 = { id: acc % 1000, tag: 't3751', score: acc % 100 };
+  acc = (acc + rc3751.score) % 65521;
+  buf += rc3751.tag;
+  arr.push(acc % 1000);
+  if (m01.has('k3753')) {
+    const gv3753: number = m01.get('k3753') as number;
+    acc = (acc + gv3753) % 10007;
+  }
+  for (let i3754 = 0; i3754 < 4; i3754++) {
+    acc = (acc + i3754 * 13 + 330) % 100003;
+  }
+  const cf3755: Array<(x: number) => number> = [];
+  cf3755.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3755.push((x: number): number => (x + 71) % 10007);
+  acc = cf3755[acc & 1](acc % 9973);
+  const cf3756: Array<(x: number) => number> = [];
+  cf3756.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3756.push((x: number): number => (x + 143) % 10007);
+  acc = cf3756[acc & 1](acc % 9973);
+  acc = (acc * 31 + 6826) % 65521;
+  arr.push(acc % 1000);
+  const cf3759: Array<(x: number) => number> = [];
+  cf3759.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3759.push((x: number): number => (x + 73) % 10007);
+  acc = cf3759[acc & 1](acc % 9973);
+  const t03760: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03760;
+  switch (acc & 3) {
+    case 0: buf += 's03761'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 552 - (acc % 61);
+  const cf3763: Array<(x: number) => number> = [];
+  cf3763.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3763.push((x: number): number => (x + 33) % 10007);
+  acc = cf3763[acc & 1](acc % 9973);
+  const cf3764: Array<(x: number) => number> = [];
+  cf3764.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3764.push((x: number): number => (x + 131) % 10007);
+  acc = cf3764[acc & 1](acc % 9973);
+  const t03765: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03765;
+  switch (acc & 3) {
+    case 0: buf += 's03766'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi3767' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8408) % 65521;
+  const db3769: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3769.length) % 65521;
+  if (m01.has('k3770')) {
+    const gv3770: number = m01.get('k3770') as number;
+    acc = (acc + gv3770) % 10007;
+  }
+  const db3771: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3771.length) % 65521;
+  if (acc % 21 === 0) { buf += 'even3772'; } else { buf += 'odd'; }
+  buf += 'routeplan3773-' + acc.toString();
+  const cf3774: Array<(x: number) => number> = [];
+  cf3774.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3774.push((x: number): number => (x + 91) % 10007);
+  acc = cf3774[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1190) % 65521;
+  const ix3776: number = buf.indexOf('p0');
+  if (ix3776 > 12) { buf = buf.substring(0, 32); } else if (ix3776 >= 0) { buf += 'i'; }
+  buf += `q3777:${acc % 97}`;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  acc = acc + 741 - (acc % 43);
+  const db3781: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3781.length) % 65521;
+  m01.set('k3782', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's03783'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  m01.set('k3784', acc % 997);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-3785'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf3786: Array<(x: number) => number> = [];
+  cf3786.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3786.push((x: number): number => (x + 16) % 10007);
+  acc = cf3786[acc & 1](acc % 9973);
+  const t03787: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03787;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-3788'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc3789: Rec0 = { id: acc % 1000, tag: 't3789', score: acc % 100 };
+  acc = (acc + rc3789.score) % 65521;
+  buf += rc3789.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3790');
+  if (acc % 7 === 0) { buf += 'even3791'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3792');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3793');
+  if (m01.has('k3794')) {
+    const gv3794: number = m01.get('k3794') as number;
+    acc = (acc + gv3794) % 10007;
+  }
+  const t03795: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03795;
+  arr.push(acc % 1000);
+  let w3797: number = acc % 23;
+  while (w3797 > 4) { w3797 = Math.floor(w3797 / 2); }
+  acc += w3797;
+  if (acc % 7 === 0) { buf += 'even3798'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3799');
+  const rc3800: Rec0 = { id: acc % 1000, tag: 't3800', score: acc % 100 };
+  acc = (acc + rc3800.score) % 65521;
+  buf += rc3800.tag;
+  const db3801: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3801.length) % 65521;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3802'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi3803' : 'lo') + acc.toString(16);
+  const cf3804: Array<(x: number) => number> = [];
+  cf3804.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3804.push((x: number): number => (x + 101) % 10007);
+  acc = cf3804[acc & 1](acc % 9973);
+  if (acc % 26 === 0) { buf += 'even3805'; } else { buf += 'odd'; }
+  acc = acc + 466 - (acc % 55);
+  if (acc % 11 === 0) { buf += 'even3807'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi3808' : 'lo') + acc.toString(16);
+  m01.set('k3809', acc % 997);
+  if (acc % 13 === 0) { buf += 'even3810'; } else { buf += 'odd'; }
+  const db3811: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3811.length) % 65521;
+  acc = acc + 37 - (acc % 57);
+  if (acc % 19 === 0) { buf += 'even3813'; } else { buf += 'odd'; }
+  const t03814: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03814;
+  let w3815: number = acc % 23;
+  while (w3815 > 4) { w3815 = Math.floor(w3815 / 2); }
+  acc += w3815;
+  buf += (acc > 500 ? 'hi3816' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3817');
+  if (acc % 27 === 0) { buf += 'even3818'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 1905) % 65521;
+  const db3820: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3820.length) % 65521;
+  m01.set('k3821', acc % 997);
+  acc = acc + 276 - (acc % 70);
+  arr.push(acc % 1000);
+  acc = acc + 956 - (acc % 42);
+  m01.set('k3825', acc % 997);
+  let w3826: number = acc % 23;
+  while (w3826 > 4) { w3826 = Math.floor(w3826 / 2); }
+  acc += w3826;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-3827'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  const t03828: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03828;
+  buf += 'warehouse3829-' + acc.toString();
+  if (acc % 25 === 0) { buf += 'even3830'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's03831'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3832')) {
+    const gv3832: number = m01.get('k3832') as number;
+    acc = (acc + gv3832) % 10007;
+  }
+  const rc3833: Rec0 = { id: acc % 1000, tag: 't3833', score: acc % 100 };
+  acc = (acc + rc3833.score) % 65521;
+  buf += rc3833.tag;
+  for (let i3834 = 0; i3834 < 7; i3834++) {
+    acc = (acc + i3834 * 13 + 686) % 100003;
+  }
+  buf += 'settle3835-' + acc.toString();
+  buf += 'bay3836-' + acc.toString();
+  buf += `q3837:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3838' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-3839'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k3840', acc % 997);
+  acc = (acc * 31 + 6807) % 65521;
+  for (let i3842 = 0; i3842 < 5; i3842++) {
+    acc = (acc + i3842 * 13 + 235) % 100003;
+  }
+  m01.set('k3843', acc % 997);
+  if (m01.has('k3844')) {
+    const gv3844: number = m01.get('k3844') as number;
+    acc = (acc + gv3844) % 10007;
+  }
+  acc = (acc * 31 + 3069) % 65521;
+  m01.set('k3846', acc % 997);
+  acc = acc + 29 - (acc % 55);
+  const cf3848: Array<(x: number) => number> = [];
+  cf3848.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3848.push((x: number): number => (x + 148) % 10007);
+  acc = cf3848[acc & 1](acc % 9973);
+  const ix3849: number = buf.indexOf('p0');
+  if (ix3849 > 12) { buf = buf.substring(0, 32); } else if (ix3849 >= 0) { buf += 'i'; }
+  const ix3850: number = buf.indexOf('p0');
+  if (ix3850 > 12) { buf = buf.substring(0, 32); } else if (ix3850 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's03851'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k3852')) {
+    const gv3852: number = m01.get('k3852') as number;
+    acc = (acc + gv3852) % 10007;
+  }
+  buf += 'settle3853-' + acc.toString();
+  const ix3854: number = buf.indexOf('p0');
+  if (ix3854 > 12) { buf = buf.substring(0, 32); } else if (ix3854 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3855');
+  buf += `q3856:${acc % 97}`;
+  const ix3857: number = buf.indexOf('p0');
+  if (ix3857 > 12) { buf = buf.substring(0, 32); } else if (ix3857 >= 0) { buf += 'i'; }
+  const cf3858: Array<(x: number) => number> = [];
+  cf3858.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3858.push((x: number): number => (x + 193) % 10007);
+  acc = cf3858[acc & 1](acc % 9973);
+  if (acc % 24 === 0) { buf += 'even3859'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  m01.set('k3861', acc % 997);
+  for (let i3862 = 0; i3862 < 4; i3862++) {
+    acc = (acc + i3862 * 13 + 836) % 100003;
+  }
+  const db3863: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3863.length) % 65521;
+  buf += `q3864:${acc % 97}`;
+  const db3865: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3865.length) % 65521;
+  buf += `q3866:${acc % 97}`;
+  if (acc % 26 === 0) { buf += 'even3867'; } else { buf += 'odd'; }
+  const t03868: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03868;
+  buf += `q3869:${acc % 97}`;
+  const cf3870: Array<(x: number) => number> = [];
+  cf3870.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3870.push((x: number): number => (x + 184) % 10007);
+  acc = cf3870[acc & 1](acc % 9973);
+  const t03871: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03871;
+  arr.push(acc % 1000);
+  acc = acc + 684 - (acc % 55);
+  switch (acc & 3) {
+    case 0: buf += 's03874'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 5777) % 65521;
+  let w3876: number = acc % 23;
+  while (w3876 > 4) { w3876 = Math.floor(w3876 / 2); }
+  acc += w3876;
+  const rc3877: Rec0 = { id: acc % 1000, tag: 't3877', score: acc % 100 };
+  acc = (acc + rc3877.score) % 65521;
+  buf += rc3877.tag;
+  acc = (acc * 31 + 8125) % 65521;
+  buf += `q3879:${acc % 97}`;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-3880'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'routeplan3881-' + acc.toString();
+  buf += (acc > 500 ? 'hi3882' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3883');
+  const ix3884: number = buf.indexOf('p0');
+  if (ix3884 > 12) { buf = buf.substring(0, 32); } else if (ix3884 >= 0) { buf += 'i'; }
+  acc = acc + 39 - (acc % 49);
+  switch (acc & 3) {
+    case 0: buf += 's03886'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const rc3887: Rec0 = { id: acc % 1000, tag: 't3887', score: acc % 100 };
+  acc = (acc + rc3887.score) % 65521;
+  buf += rc3887.tag;
+  arr.push(acc % 1000);
+  acc = acc + 756 - (acc % 69);
+  buf += (acc > 500 ? 'hi3890' : 'lo') + acc.toString(16);
+  acc = acc + 517 - (acc % 62);
+  const db3892: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3892.length) % 65521;
+  const t03893: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03893;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-3894'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q3895:${acc % 97}`;
+  let w3896: number = acc % 23;
+  while (w3896 > 4) { w3896 = Math.floor(w3896 / 2); }
+  acc += w3896;
+  buf += 'transit3897-' + acc.toString();
+  const db3898: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3898.length) % 65521;
+  const t03899: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03899;
+  acc = (acc * 31 + 6486) % 65521;
+  if (m01.has('k3901')) {
+    const gv3901: number = m01.get('k3901') as number;
+    acc = (acc + gv3901) % 10007;
+  }
+  m01.set('k3902', acc % 997);
+  const cf3903: Array<(x: number) => number> = [];
+  cf3903.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3903.push((x: number): number => (x + 26) % 10007);
+  acc = cf3903[acc & 1](acc % 9973);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-3904'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k3905', acc % 997);
+  if (m01.has('k3906')) {
+    const gv3906: number = m01.get('k3906') as number;
+    acc = (acc + gv3906) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3907');
+  for (let i3908 = 0; i3908 < 10; i3908++) {
+    acc = (acc + i3908 * 13 + 396) % 100003;
+  }
+  if (acc % 19 === 0) { buf += 'even3909'; } else { buf += 'odd'; }
+  const cf3910: Array<(x: number) => number> = [];
+  cf3910.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3910.push((x: number): number => (x + 113) % 10007);
+  acc = cf3910[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3912');
+  buf += `q3913:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3914');
+  acc = acc + 624 - (acc % 10);
+  const cf3916: Array<(x: number) => number> = [];
+  cf3916.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3916.push((x: number): number => (x + 31) % 10007);
+  acc = cf3916[acc & 1](acc % 9973);
+  acc = acc + 975 - (acc % 67);
+  acc = acc + 86 - (acc % 7);
+  const rc3919: Rec0 = { id: acc % 1000, tag: 't3919', score: acc % 100 };
+  acc = (acc + rc3919.score) % 65521;
+  buf += rc3919.tag;
+  buf += (acc > 500 ? 'hi3920' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's03921'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const ix3922: number = buf.indexOf('p0');
+  if (ix3922 > 12) { buf = buf.substring(0, 32); } else if (ix3922 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 4439) % 65521;
+  buf += (acc > 500 ? 'hi3924' : 'lo') + acc.toString(16);
+  const ix3925: number = buf.indexOf('p0');
+  if (ix3925 > 12) { buf = buf.substring(0, 32); } else if (ix3925 >= 0) { buf += 'i'; }
+  m01.set('k3926', acc % 997);
+  try { if (acc % 29 === 2) { throw new Error('synthetic-3927'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  const db3928: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3928.length) % 65521;
+  const rc3929: Rec0 = { id: acc % 1000, tag: 't3929', score: acc % 100 };
+  acc = (acc + rc3929.score) % 65521;
+  buf += rc3929.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3930');
+  m01.set('k3931', acc % 997);
+  const t03932: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03932;
+  const t03933: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03933;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-3934'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi3935' : 'lo') + acc.toString(16);
+  buf += 'coupon3936-' + acc.toString();
+  const cf3937: Array<(x: number) => number> = [];
+  cf3937.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3937.push((x: number): number => (x + 101) % 10007);
+  acc = cf3937[acc & 1](acc % 9973);
+  const t03938: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03938;
+  const rc3939: Rec0 = { id: acc % 1000, tag: 't3939', score: acc % 100 };
+  acc = (acc + rc3939.score) % 65521;
+  buf += rc3939.tag;
+  const t03940: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03940;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3941');
+  for (let i3942 = 0; i3942 < 11; i3942++) {
+    acc = (acc + i3942 * 13 + 80) % 100003;
+  }
+  for (let i3943 = 0; i3943 < 9; i3943++) {
+    acc = (acc + i3943 * 13 + 500) % 100003;
+  }
+  const rc3944: Rec0 = { id: acc % 1000, tag: 't3944', score: acc % 100 };
+  acc = (acc + rc3944.score) % 65521;
+  buf += rc3944.tag;
+  for (let i3945 = 0; i3945 < 12; i3945++) {
+    acc = (acc + i3945 * 13 + 437) % 100003;
+  }
+  if (m01.has('k3946')) {
+    const gv3946: number = m01.get('k3946') as number;
+    acc = (acc + gv3946) % 10007;
+  }
+  acc = (acc * 31 + 3656) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 26 === 0) { buf += 'even3949'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3950');
+  try { if (acc % 29 === 3) { throw new Error('synthetic-3951'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3952');
+  acc = (acc * 31 + 3626) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3954');
+  buf += `q3955:${acc % 97}`;
+  acc = (acc * 31 + 5973) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03957'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03958'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  if (acc % 16 === 0) { buf += 'even3959'; } else { buf += 'odd'; }
+  const ix3960: number = buf.indexOf('p0');
+  if (ix3960 > 12) { buf = buf.substring(0, 32); } else if (ix3960 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-3961'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's03962'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const cf3963: Array<(x: number) => number> = [];
+  cf3963.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3963.push((x: number): number => (x + 150) % 10007);
+  acc = cf3963[acc & 1](acc % 9973);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-3964'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q3965:${acc % 97}`;
+  const db3966: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3966.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's03967'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += 'stocktake3968-' + acc.toString();
+  const cf3969: Array<(x: number) => number> = [];
+  cf3969.push((x: number): number => (x * 3 + acc) % 65521);
+  cf3969.push((x: number): number => (x + 164) % 10007);
+  acc = cf3969[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's03970'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03971'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const db3972: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3972.length) % 65521;
+  buf += (acc > 500 ? 'hi3973' : 'lo') + acc.toString(16);
+  if (acc % 16 === 0) { buf += 'even3974'; } else { buf += 'odd'; }
+  buf += 'payout3975-' + acc.toString();
+  try { if (acc % 29 === 3) { throw new Error('synthetic-3976'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x3977');
+  const t03978: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t03978;
+  let w3979: number = acc % 23;
+  while (w3979 > 4) { w3979 = Math.floor(w3979 / 2); }
+  acc += w3979;
+  let w3980: number = acc % 23;
+  while (w3980 > 4) { w3980 = Math.floor(w3980 / 2); }
+  acc += w3980;
+  buf += 'journey3981-' + acc.toString();
+  m01.set('k3982', acc % 997);
+  buf += 'quota3983-' + acc.toString();
+  for (let i3984 = 0; i3984 < 12; i3984++) {
+    acc = (acc + i3984 * 13 + 66) % 100003;
+  }
+  for (let i3985 = 0; i3985 < 4; i3985++) {
+    acc = (acc + i3985 * 13 + 125) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03986'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += 'refund3988-' + acc.toString();
+  m01.set('k3989', acc % 997);
+  if (m01.has('k3990')) {
+    const gv3990: number = m01.get('k3990') as number;
+    acc = (acc + gv3990) % 10007;
+  }
+  let w3991: number = acc % 23;
+  while (w3991 > 4) { w3991 = Math.floor(w3991 / 2); }
+  acc += w3991;
+  buf += `q3992:${acc % 97}`;
+  buf += (acc > 500 ? 'hi3993' : 'lo') + acc.toString(16);
+  const db3994: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db3994.length) % 65521;
+  let w3995: number = acc % 23;
+  while (w3995 > 4) { w3995 = Math.floor(w3995 / 2); }
+  acc += w3995;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-3996'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k3997')) {
+    const gv3997: number = m01.get('k3997') as number;
+    acc = (acc + gv3997) % 10007;
+  }
+  if (m01.has('k3998')) {
+    const gv3998: number = m01.get('k3998') as number;
+    acc = (acc + gv3998) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's03999'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  let w4000: number = acc % 23;
+  while (w4000 > 4) { w4000 = Math.floor(w4000 / 2); }
+  acc += w4000;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-4001'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf4002: Array<(x: number) => number> = [];
+  cf4002.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4002.push((x: number): number => (x + 199) % 10007);
+  acc = cf4002[acc & 1](acc % 9973);
+  acc = (acc * 31 + 3610) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4004');
+  try { if (acc % 29 === 5) { throw new Error('synthetic-4005'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf4006: Array<(x: number) => number> = [];
+  cf4006.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4006.push((x: number): number => (x + 96) % 10007);
+  acc = cf4006[acc & 1](acc % 9973);
+  acc = (acc * 31 + 6599) % 65521;
+  acc = (acc * 31 + 3508) % 65521;
+  if (acc % 28 === 0) { buf += 'even4009'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4010' : 'lo') + acc.toString(16);
+  const db4011: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4011.length) % 65521;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-4012'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  const db4013: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4013.length) % 65521;
+  acc = acc + 66 - (acc % 13);
+  m01.set('k4015', acc % 997);
+  acc = (acc * 31 + 6217) % 65521;
+  m01.set('k4017', acc % 997);
+  const db4018: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4018.length) % 65521;
+  const rc4019: Rec0 = { id: acc % 1000, tag: 't4019', score: acc % 100 };
+  acc = (acc + rc4019.score) % 65521;
+  buf += rc4019.tag;
+  arr.push(acc % 1000);
+  const t04021: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04021;
+  buf += `q4022:${acc % 97}`;
+  const db4023: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4023.length) % 65521;
+  arr.push(acc % 1000);
+  let w4025: number = acc % 23;
+  while (w4025 > 4) { w4025 = Math.floor(w4025 / 2); }
+  acc += w4025;
+  let w4026: number = acc % 23;
+  while (w4026 > 4) { w4026 = Math.floor(w4026 / 2); }
+  acc += w4026;
+  buf += 'sku4027-' + acc.toString();
+  const rc4028: Rec0 = { id: acc % 1000, tag: 't4028', score: acc % 100 };
+  acc = (acc + rc4028.score) % 65521;
+  buf += rc4028.tag;
+  acc = acc + 169 - (acc % 9);
+  buf += 'coupon4030-' + acc.toString();
+  const ix4031: number = buf.indexOf('p0');
+  if (ix4031 > 12) { buf = buf.substring(0, 32); } else if (ix4031 >= 0) { buf += 'i'; }
+  buf += `q4032:${acc % 97}`;
+  buf += `q4033:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4034');
+  let w4035: number = acc % 23;
+  while (w4035 > 4) { w4035 = Math.floor(w4035 / 2); }
+  acc += w4035;
+  arr.push(acc % 1000);
+  acc = acc + 304 - (acc % 10);
+  arr.push(acc % 1000);
+  buf += 'batch4039-' + acc.toString();
+  buf += 'freight4040-' + acc.toString();
+  const ix4041: number = buf.indexOf('p0');
+  if (ix4041 > 12) { buf = buf.substring(0, 32); } else if (ix4041 >= 0) { buf += 'i'; }
+  buf += `q4042:${acc % 97}`;
+  m01.set('k4043', acc % 997);
+  buf += (acc > 500 ? 'hi4044' : 'lo') + acc.toString(16);
+  let w4045: number = acc % 23;
+  while (w4045 > 4) { w4045 = Math.floor(w4045 / 2); }
+  acc += w4045;
+  arr.push(acc % 1000);
+  buf += `q4047:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's04048'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  for (let i4049 = 0; i4049 < 7; i4049++) {
+    acc = (acc + i4049 * 13 + 779) % 100003;
+  }
+  const rc4050: Rec0 = { id: acc % 1000, tag: 't4050', score: acc % 100 };
+  acc = (acc + rc4050.score) % 65521;
+  buf += rc4050.tag;
+  acc = acc + 165 - (acc % 73);
+  buf += 'payout4052-' + acc.toString();
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  buf += 'sku4055-' + acc.toString();
+  const cf4056: Array<(x: number) => number> = [];
+  cf4056.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4056.push((x: number): number => (x + 147) % 10007);
+  acc = cf4056[acc & 1](acc % 9973);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-4057'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4058');
+  const ix4059: number = buf.indexOf('p0');
+  if (ix4059 > 12) { buf = buf.substring(0, 32); } else if (ix4059 >= 0) { buf += 'i'; }
+  for (let i4060 = 0; i4060 < 7; i4060++) {
+    acc = (acc + i4060 * 13 + 401) % 100003;
+  }
+  const rc4061: Rec0 = { id: acc % 1000, tag: 't4061', score: acc % 100 };
+  acc = (acc + rc4061.score) % 65521;
+  buf += rc4061.tag;
+  acc = acc + 251 - (acc % 60);
+  const rc4063: Rec0 = { id: acc % 1000, tag: 't4063', score: acc % 100 };
+  acc = (acc + rc4063.score) % 65521;
+  buf += rc4063.tag;
+  const rc4064: Rec0 = { id: acc % 1000, tag: 't4064', score: acc % 100 };
+  acc = (acc + rc4064.score) % 65521;
+  buf += rc4064.tag;
+  const t04065: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04065;
+  const ix4066: number = buf.indexOf('p0');
+  if (ix4066 > 12) { buf = buf.substring(0, 32); } else if (ix4066 >= 0) { buf += 'i'; }
+  const db4067: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4067.length) % 65521;
+  buf += (acc > 500 ? 'hi4068' : 'lo') + acc.toString(16);
+  acc = acc + 361 - (acc % 95);
+  if (acc % 18 === 0) { buf += 'even4070'; } else { buf += 'odd'; }
+  const rc4071: Rec0 = { id: acc % 1000, tag: 't4071', score: acc % 100 };
+  acc = (acc + rc4071.score) % 65521;
+  buf += rc4071.tag;
+  for (let i4072 = 0; i4072 < 10; i4072++) {
+    acc = (acc + i4072 * 13 + 900) % 100003;
+  }
+  let w4073: number = acc % 23;
+  while (w4073 > 4) { w4073 = Math.floor(w4073 / 2); }
+  acc += w4073;
+  for (let i4074 = 0; i4074 < 3; i4074++) {
+    acc = (acc + i4074 * 13 + 971) % 100003;
+  }
+  for (let i4075 = 0; i4075 < 10; i4075++) {
+    acc = (acc + i4075 * 13 + 885) % 100003;
+  }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4076'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'customs4077-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4078');
+  if (m01.has('k4079')) {
+    const gv4079: number = m01.get('k4079') as number;
+    acc = (acc + gv4079) % 10007;
+  }
+  buf += 'quota4080-' + acc.toString();
+  const ix4081: number = buf.indexOf('p0');
+  if (ix4081 > 12) { buf = buf.substring(0, 32); } else if (ix4081 >= 0) { buf += 'i'; }
+  buf += `q4082:${acc % 97}`;
+  buf += `q4083:${acc % 97}`;
+  m01.set('k4084', acc % 997);
+  buf += 'policy4085-' + acc.toString();
+  const rc4086: Rec0 = { id: acc % 1000, tag: 't4086', score: acc % 100 };
+  acc = (acc + rc4086.score) % 65521;
+  buf += rc4086.tag;
+  const rc4087: Rec0 = { id: acc % 1000, tag: 't4087', score: acc % 100 };
+  acc = (acc + rc4087.score) % 65521;
+  buf += rc4087.tag;
+  acc = acc + 611 - (acc % 16);
+  acc = (acc * 31 + 9507) % 65521;
+  acc = (acc * 31 + 8778) % 65521;
+  m01.set('k4091', acc % 997);
+  for (let i4092 = 0; i4092 < 5; i4092++) {
+    acc = (acc + i4092 * 13 + 837) % 100003;
+  }
+  let w4093: number = acc % 23;
+  while (w4093 > 4) { w4093 = Math.floor(w4093 / 2); }
+  acc += w4093;
+  buf += `q4094:${acc % 97}`;
+  const ix4095: number = buf.indexOf('p0');
+  if (ix4095 > 12) { buf = buf.substring(0, 32); } else if (ix4095 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  buf += 'carrier4097-' + acc.toString();
+  for (let i4098 = 0; i4098 < 11; i4098++) {
+    acc = (acc + i4098 * 13 + 613) % 100003;
+  }
+  if (acc % 27 === 0) { buf += 'even4099'; } else { buf += 'odd'; }
+  buf += `q4100:${acc % 97}`;
+  const db4101: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4101.length) % 65521;
+  const t04102: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04102;
+  arr.push(acc % 1000);
+  if (acc % 26 === 0) { buf += 'even4104'; } else { buf += 'odd'; }
+  buf += `q4105:${acc % 97}`;
+  buf += `q4106:${acc % 97}`;
+  acc = acc + 729 - (acc % 55);
+  const ix4108: number = buf.indexOf('p0');
+  if (ix4108 > 12) { buf = buf.substring(0, 32); } else if (ix4108 >= 0) { buf += 'i'; }
+  let w4109: number = acc % 23;
+  while (w4109 > 4) { w4109 = Math.floor(w4109 / 2); }
+  acc += w4109;
+  for (let i4110 = 0; i4110 < 10; i4110++) {
+    acc = (acc + i4110 * 13 + 972) % 100003;
+  }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4111'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  const t04112: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04112;
+  acc = acc + 722 - (acc % 10);
+  if (acc % 10 === 0) { buf += 'even4114'; } else { buf += 'odd'; }
+  for (let i4115 = 0; i4115 < 6; i4115++) {
+    acc = (acc + i4115 * 13 + 119) % 100003;
+  }
+  if (acc % 12 === 0) { buf += 'even4116'; } else { buf += 'odd'; }
+  buf += `q4117:${acc % 97}`;
+  for (let i4118 = 0; i4118 < 12; i4118++) {
+    acc = (acc + i4118 * 13 + 745) % 100003;
+  }
+  const rc4119: Rec0 = { id: acc % 1000, tag: 't4119', score: acc % 100 };
+  acc = (acc + rc4119.score) % 65521;
+  buf += rc4119.tag;
+  for (let i4120 = 0; i4120 < 5; i4120++) {
+    acc = (acc + i4120 * 13 + 338) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4121');
+  const rc4122: Rec0 = { id: acc % 1000, tag: 't4122', score: acc % 100 };
+  acc = (acc + rc4122.score) % 65521;
+  buf += rc4122.tag;
+  let w4123: number = acc % 23;
+  while (w4123 > 4) { w4123 = Math.floor(w4123 / 2); }
+  acc += w4123;
+  acc = acc + 199 - (acc % 11);
+  acc = (acc * 31 + 4662) % 65521;
+  const rc4126: Rec0 = { id: acc % 1000, tag: 't4126', score: acc % 100 };
+  acc = (acc + rc4126.score) % 65521;
+  buf += rc4126.tag;
+  arr.push(acc % 1000);
+  if (m01.has('k4128')) {
+    const gv4128: number = m01.get('k4128') as number;
+    acc = (acc + gv4128) % 10007;
+  }
+  const t04129: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04129;
+  const rc4130: Rec0 = { id: acc % 1000, tag: 't4130', score: acc % 100 };
+  acc = (acc + rc4130.score) % 65521;
+  buf += rc4130.tag;
+  const db4131: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4131.length) % 65521;
+  let w4132: number = acc % 23;
+  while (w4132 > 4) { w4132 = Math.floor(w4132 / 2); }
+  acc += w4132;
+  for (let i4133 = 0; i4133 < 8; i4133++) {
+    acc = (acc + i4133 * 13 + 265) % 100003;
+  }
+  const rc4134: Rec0 = { id: acc % 1000, tag: 't4134', score: acc % 100 };
+  acc = (acc + rc4134.score) % 65521;
+  buf += rc4134.tag;
+  acc = (acc * 31 + 7222) % 65521;
+  const db4136: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4136.length) % 65521;
+  const cf4137: Array<(x: number) => number> = [];
+  cf4137.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4137.push((x: number): number => (x + 49) % 10007);
+  acc = cf4137[acc & 1](acc % 9973);
+  if (acc % 14 === 0) { buf += 'even4138'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's04139'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  if (acc % 28 === 0) { buf += 'even4140'; } else { buf += 'odd'; }
+  acc = acc + 658 - (acc % 17);
+  switch (acc & 3) {
+    case 0: buf += 's04142'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi4143' : 'lo') + acc.toString(16);
+  const ix4144: number = buf.indexOf('p0');
+  if (ix4144 > 12) { buf = buf.substring(0, 32); } else if (ix4144 >= 0) { buf += 'i'; }
+  buf += 'crate4145-' + acc.toString();
+  const ix4146: number = buf.indexOf('p0');
+  if (ix4146 > 12) { buf = buf.substring(0, 32); } else if (ix4146 >= 0) { buf += 'i'; }
+  if (acc % 18 === 0) { buf += 'even4147'; } else { buf += 'odd'; }
+  const t04148: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04148;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-4149'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i4150 = 0; i4150 < 8; i4150++) {
+    acc = (acc + i4150 * 13 + 260) % 100003;
+  }
+  arr.push(acc % 1000);
+  const db4152: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4152.length) % 65521;
+  const db4153: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4153.length) % 65521;
+  try { if (acc % 29 === 12) { throw new Error('synthetic-4154'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  let w4155: number = acc % 23;
+  while (w4155 > 4) { w4155 = Math.floor(w4155 / 2); }
+  acc += w4155;
+  buf += (acc > 500 ? 'hi4156' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 6052) % 65521;
+  arr.push(acc % 1000);
+  for (let i4159 = 0; i4159 < 12; i4159++) {
+    acc = (acc + i4159 * 13 + 709) % 100003;
+  }
+  for (let i4160 = 0; i4160 < 11; i4160++) {
+    acc = (acc + i4160 * 13 + 421) % 100003;
+  }
+  const ix4161: number = buf.indexOf('p0');
+  if (ix4161 > 12) { buf = buf.substring(0, 32); } else if (ix4161 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi4162' : 'lo') + acc.toString(16);
+  for (let i4163 = 0; i4163 < 5; i4163++) {
+    acc = (acc + i4163 * 13 + 365) % 100003;
+  }
+  acc = acc + 421 - (acc % 60);
+  arr.push(acc % 1000);
+  buf += 'audit4166-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += `q4168:${acc % 97}`;
+  buf += 'dock4169-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4170');
+  if (m01.has('k4171')) {
+    const gv4171: number = m01.get('k4171') as number;
+    acc = (acc + gv4171) % 10007;
+  }
+  arr.push(acc % 1000);
+  let w4173: number = acc % 23;
+  while (w4173 > 4) { w4173 = Math.floor(w4173 / 2); }
+  acc += w4173;
+  buf += `q4174:${acc % 97}`;
+  acc = acc + 309 - (acc % 58);
+  switch (acc & 3) {
+    case 0: buf += 's04176'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const t04177: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04177;
+  acc = (acc * 31 + 4739) % 65521;
+  let w4179: number = acc % 23;
+  while (w4179 > 4) { w4179 = Math.floor(w4179 / 2); }
+  acc += w4179;
+  buf += (acc > 500 ? 'hi4180' : 'lo') + acc.toString(16);
+  buf += 'warehouse4181-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4182');
+  let w4183: number = acc % 23;
+  while (w4183 > 4) { w4183 = Math.floor(w4183 / 2); }
+  acc += w4183;
+  m01.set('k4184', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's04185'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const cf4186: Array<(x: number) => number> = [];
+  cf4186.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4186.push((x: number): number => (x + 19) % 10007);
+  acc = cf4186[acc & 1](acc % 9973);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-4187'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 612 - (acc % 51);
+  acc = (acc * 31 + 9427) % 65521;
+  acc = acc + 873 - (acc % 94);
+  acc = acc + 446 - (acc % 62);
+  let w4192: number = acc % 23;
+  while (w4192 > 4) { w4192 = Math.floor(w4192 / 2); }
+  acc += w4192;
+  buf += 'ticket4193-' + acc.toString();
+  let w4194: number = acc % 23;
+  while (w4194 > 4) { w4194 = Math.floor(w4194 / 2); }
+  acc += w4194;
+  acc = acc + 794 - (acc % 67);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4196');
+  for (let i4197 = 0; i4197 < 10; i4197++) {
+    acc = (acc + i4197 * 13 + 127) % 100003;
+  }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-4198'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q4199:${acc % 97}`;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-4200'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 829 - (acc % 12);
+  acc = (acc * 31 + 4041) % 65521;
+  arr.push(acc % 1000);
+  const ix4204: number = buf.indexOf('p0');
+  if (ix4204 > 12) { buf = buf.substring(0, 32); } else if (ix4204 >= 0) { buf += 'i'; }
+  const ix4205: number = buf.indexOf('p0');
+  if (ix4205 > 12) { buf = buf.substring(0, 32); } else if (ix4205 >= 0) { buf += 'i'; }
+  if (m01.has('k4206')) {
+    const gv4206: number = m01.get('k4206') as number;
+    acc = (acc + gv4206) % 10007;
+  }
+  if (acc % 28 === 0) { buf += 'even4207'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 3715) % 65521;
+  acc = (acc * 31 + 8756) % 65521;
+  const rc4211: Rec0 = { id: acc % 1000, tag: 't4211', score: acc % 100 };
+  acc = (acc + rc4211.score) % 65521;
+  buf += rc4211.tag;
+  acc = (acc * 31 + 7042) % 65521;
+  let w4213: number = acc % 23;
+  while (w4213 > 4) { w4213 = Math.floor(w4213 / 2); }
+  acc += w4213;
+  const ix4214: number = buf.indexOf('p0');
+  if (ix4214 > 12) { buf = buf.substring(0, 32); } else if (ix4214 >= 0) { buf += 'i'; }
+  for (let i4215 = 0; i4215 < 10; i4215++) {
+    acc = (acc + i4215 * 13 + 131) % 100003;
+  }
+  buf += 'carrier4216-' + acc.toString();
+  const rc4217: Rec0 = { id: acc % 1000, tag: 't4217', score: acc % 100 };
+  acc = (acc + rc4217.score) % 65521;
+  buf += rc4217.tag;
+  acc = acc + 414 - (acc % 83);
+  acc = acc + 314 - (acc % 49);
+  buf += (acc > 500 ? 'hi4220' : 'lo') + acc.toString(16);
+  const rc4221: Rec0 = { id: acc % 1000, tag: 't4221', score: acc % 100 };
+  acc = (acc + rc4221.score) % 65521;
+  buf += rc4221.tag;
+  buf += `q4222:${acc % 97}`;
+  buf += (acc > 500 ? 'hi4223' : 'lo') + acc.toString(16);
+  m01.set('k4224', acc % 997);
+  if (acc % 29 === 0) { buf += 'even4225'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's04226'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  for (let i4227 = 0; i4227 < 8; i4227++) {
+    acc = (acc + i4227 * 13 + 615) % 100003;
+  }
+  const t04228: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04228;
+  buf += (acc > 500 ? 'hi4229' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's04230'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 318 - (acc % 31);
+  try { if (acc % 29 === 18) { throw new Error('synthetic-4232'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi4233' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4234');
+  switch (acc & 3) {
+    case 0: buf += 's04235'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const t04236: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04236;
+  buf += `q4237:${acc % 97}`;
+  if (m01.has('k4238')) {
+    const gv4238: number = m01.get('k4238') as number;
+    acc = (acc + gv4238) % 10007;
+  }
+  acc = acc + 566 - (acc % 56);
+  buf += `q4240:${acc % 97}`;
+  m01.set('k4241', acc % 997);
+  m01.set('k4242', acc % 997);
+  if (m01.has('k4243')) {
+    const gv4243: number = m01.get('k4243') as number;
+    acc = (acc + gv4243) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04244'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  buf += 'policy4245-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 2191) % 65521;
+  const cf4248: Array<(x: number) => number> = [];
+  cf4248.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4248.push((x: number): number => (x + 28) % 10007);
+  acc = cf4248[acc & 1](acc % 9973);
+  if (acc % 20 === 0) { buf += 'even4249'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4250' : 'lo') + acc.toString(16);
+  const rc4251: Rec0 = { id: acc % 1000, tag: 't4251', score: acc % 100 };
+  acc = (acc + rc4251.score) % 65521;
+  buf += rc4251.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4252');
+  const db4253: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4253.length) % 65521;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's04255'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const cf4256: Array<(x: number) => number> = [];
+  cf4256.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4256.push((x: number): number => (x + 81) % 10007);
+  acc = cf4256[acc & 1](acc % 9973);
+  const db4257: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4257.length) % 65521;
+  buf += `q4258:${acc % 97}`;
+  const rc4259: Rec0 = { id: acc % 1000, tag: 't4259', score: acc % 100 };
+  acc = (acc + rc4259.score) % 65521;
+  buf += rc4259.tag;
+  const t04260: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04260;
+  if (m01.has('k4261')) {
+    const gv4261: number = m01.get('k4261') as number;
+    acc = (acc + gv4261) % 10007;
+  }
+  buf += 'invoice4262-' + acc.toString();
+  const cf4263: Array<(x: number) => number> = [];
+  cf4263.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4263.push((x: number): number => (x + 147) % 10007);
+  acc = cf4263[acc & 1](acc % 9973);
+  buf += 'refund4264-' + acc.toString();
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4265'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'customs4266-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's04267'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi4268' : 'lo') + acc.toString(16);
+  if (m01.has('k4269')) {
+    const gv4269: number = m01.get('k4269') as number;
+    acc = (acc + gv4269) % 10007;
+  }
+  buf += (acc > 500 ? 'hi4270' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4271');
+  arr.push(acc % 1000);
+  if (m01.has('k4273')) {
+    const gv4273: number = m01.get('k4273') as number;
+    acc = (acc + gv4273) % 10007;
+  }
+  const rc4274: Rec0 = { id: acc % 1000, tag: 't4274', score: acc % 100 };
+  acc = (acc + rc4274.score) % 65521;
+  buf += rc4274.tag;
+  acc = (acc * 31 + 7526) % 65521;
+  m01.set('k4276', acc % 997);
+  if (m01.has('k4277')) {
+    const gv4277: number = m01.get('k4277') as number;
+    acc = (acc + gv4277) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4278');
+  m01.set('k4279', acc % 997);
+  buf += `q4280:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's04281'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const t04282: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04282;
+  const t04283: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04283;
+  const db4284: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4284.length) % 65521;
+  const db4285: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4285.length) % 65521;
+  buf += (acc > 500 ? 'hi4286' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4287');
+  try { if (acc % 29 === 16) { throw new Error('synthetic-4288'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix4289: number = buf.indexOf('p0');
+  if (ix4289 > 12) { buf = buf.substring(0, 32); } else if (ix4289 >= 0) { buf += 'i'; }
+  m01.set('k4290', acc % 997);
+  const rc4291: Rec0 = { id: acc % 1000, tag: 't4291', score: acc % 100 };
+  acc = (acc + rc4291.score) % 65521;
+  buf += rc4291.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4292');
+  arr.push(acc % 1000);
+  const rc4294: Rec0 = { id: acc % 1000, tag: 't4294', score: acc % 100 };
+  acc = (acc + rc4294.score) % 65521;
+  buf += rc4294.tag;
+  buf += 'waybill4295-' + acc.toString();
+  try { if (acc % 29 === 12) { throw new Error('synthetic-4296'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i4297 = 0; i4297 < 3; i4297++) {
+    acc = (acc + i4297 * 13 + 485) % 100003;
+  }
+  acc = acc + 610 - (acc % 58);
+  buf += (acc > 500 ? 'hi4299' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-4300'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 15 === 0) { buf += 'even4301'; } else { buf += 'odd'; }
+  if (m01.has('k4302')) {
+    const gv4302: number = m01.get('k4302') as number;
+    acc = (acc + gv4302) % 10007;
+  }
+  if (m01.has('k4303')) {
+    const gv4303: number = m01.get('k4303') as number;
+    acc = (acc + gv4303) % 10007;
+  }
+  if (acc % 10 === 0) { buf += 'even4304'; } else { buf += 'odd'; }
+  const cf4305: Array<(x: number) => number> = [];
+  cf4305.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4305.push((x: number): number => (x + 112) % 10007);
+  acc = cf4305[acc & 1](acc % 9973);
+  const t04306: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04306;
+  switch (acc & 3) {
+    case 0: buf += 's04307'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const ix4308: number = buf.indexOf('p0');
+  if (ix4308 > 12) { buf = buf.substring(0, 32); } else if (ix4308 >= 0) { buf += 'i'; }
+  if (m01.has('k4309')) {
+    const gv4309: number = m01.get('k4309') as number;
+    acc = (acc + gv4309) % 10007;
+  }
+  acc = acc + 458 - (acc % 70);
+  arr.push(acc % 1000);
+  const t04312: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04312;
+  const ix4313: number = buf.indexOf('p0');
+  if (ix4313 > 12) { buf = buf.substring(0, 32); } else if (ix4313 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4314');
+  acc = (acc * 31 + 9628) % 65521;
+  const db4316: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4316.length) % 65521;
+  const t04317: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04317;
+  const db4318: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4318.length) % 65521;
+  arr.push(acc % 1000);
+  const cf4320: Array<(x: number) => number> = [];
+  cf4320.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4320.push((x: number): number => (x + 130) % 10007);
+  acc = cf4320[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi4322' : 'lo') + acc.toString(16);
+  buf += 'batch4323-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's04324'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const rc4325: Rec0 = { id: acc % 1000, tag: 't4325', score: acc % 100 };
+  acc = (acc + rc4325.score) % 65521;
+  buf += rc4325.tag;
+  buf += (acc > 500 ? 'hi4326' : 'lo') + acc.toString(16);
+  buf += `q4327:${acc % 97}`;
+  if (acc % 22 === 0) { buf += 'even4328'; } else { buf += 'odd'; }
+  for (let i4329 = 0; i4329 < 5; i4329++) {
+    acc = (acc + i4329 * 13 + 894) % 100003;
+  }
+  const t04330: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04330;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4331');
+  let w4332: number = acc % 23;
+  while (w4332 > 4) { w4332 = Math.floor(w4332 / 2); }
+  acc += w4332;
+  acc = acc + 178 - (acc % 47);
+  acc = (acc * 31 + 2594) % 65521;
+  if (acc % 9 === 0) { buf += 'even4335'; } else { buf += 'odd'; }
+  const ix4336: number = buf.indexOf('p0');
+  if (ix4336 > 12) { buf = buf.substring(0, 32); } else if (ix4336 >= 0) { buf += 'i'; }
+  for (let i4337 = 0; i4337 < 6; i4337++) {
+    acc = (acc + i4337 * 13 + 366) % 100003;
+  }
+  if (acc % 5 === 0) { buf += 'even4338'; } else { buf += 'odd'; }
+  buf += 'pallet4339-' + acc.toString();
+  try { if (acc % 29 === 16) { throw new Error('synthetic-4340'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  let w4341: number = acc % 23;
+  while (w4341 > 4) { w4341 = Math.floor(w4341 / 2); }
+  acc += w4341;
+  const db4342: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4342.length) % 65521;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-4343'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q4344:${acc % 97}`;
+  const db4345: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4345.length) % 65521;
+  arr.push(acc % 1000);
+  buf += 'carrier4347-' + acc.toString();
+  const rc4348: Rec0 = { id: acc % 1000, tag: 't4348', score: acc % 100 };
+  acc = (acc + rc4348.score) % 65521;
+  buf += rc4348.tag;
+  const db4349: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4349.length) % 65521;
+  const ix4350: number = buf.indexOf('p0');
+  if (ix4350 > 12) { buf = buf.substring(0, 32); } else if (ix4350 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's04351'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += 'dock4352-' + acc.toString();
+  let w4353: number = acc % 23;
+  while (w4353 > 4) { w4353 = Math.floor(w4353 / 2); }
+  acc += w4353;
+  const t04354: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04354;
+  const cf4355: Array<(x: number) => number> = [];
+  cf4355.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4355.push((x: number): number => (x + 93) % 10007);
+  acc = cf4355[acc & 1](acc % 9973);
+  buf += `q4356:${acc % 97}`;
+  arr.push(acc % 1000);
+  for (let i4358 = 0; i4358 < 9; i4358++) {
+    acc = (acc + i4358 * 13 + 360) % 100003;
+  }
+  if (acc % 26 === 0) { buf += 'even4359'; } else { buf += 'odd'; }
+  if (acc % 21 === 0) { buf += 'even4360'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's04361'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const t04362: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04362;
+  const cf4363: Array<(x: number) => number> = [];
+  cf4363.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4363.push((x: number): number => (x + 36) % 10007);
+  acc = cf4363[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4364');
+  const db4365: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4365.length) % 65521;
+  buf += (acc > 500 ? 'hi4366' : 'lo') + acc.toString(16);
+  let w4367: number = acc % 23;
+  while (w4367 > 4) { w4367 = Math.floor(w4367 / 2); }
+  acc += w4367;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-4368'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  let w4369: number = acc % 23;
+  while (w4369 > 4) { w4369 = Math.floor(w4369 / 2); }
+  acc += w4369;
+  acc = (acc * 31 + 5896) % 65521;
+  const cf4371: Array<(x: number) => number> = [];
+  cf4371.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4371.push((x: number): number => (x + 88) % 10007);
+  acc = cf4371[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's04372'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const db4373: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4373.length) % 65521;
+  const db4374: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4374.length) % 65521;
+  buf += (acc > 500 ? 'hi4375' : 'lo') + acc.toString(16);
+  m01.set('k4376', acc % 997);
+  buf += `q4377:${acc % 97}`;
+  m01.set('k4378', acc % 997);
+  acc = (acc * 31 + 9824) % 65521;
+  const db4380: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4380.length) % 65521;
+  const ix4381: number = buf.indexOf('p0');
+  if (ix4381 > 12) { buf = buf.substring(0, 32); } else if (ix4381 >= 0) { buf += 'i'; }
+  const rc4382: Rec0 = { id: acc % 1000, tag: 't4382', score: acc % 100 };
+  acc = (acc + rc4382.score) % 65521;
+  buf += rc4382.tag;
+  const db4383: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4383.length) % 65521;
+  buf += 'payout4384-' + acc.toString();
+  try { if (acc % 29 === 3) { throw new Error('synthetic-4385'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 30 === 0) { buf += 'even4386'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4387' : 'lo') + acc.toString(16);
+  if (acc % 26 === 0) { buf += 'even4388'; } else { buf += 'odd'; }
+  const ix4389: number = buf.indexOf('p0');
+  if (ix4389 > 12) { buf = buf.substring(0, 32); } else if (ix4389 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 7918) % 65521;
+  const ix4391: number = buf.indexOf('p0');
+  if (ix4391 > 12) { buf = buf.substring(0, 32); } else if (ix4391 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's04392'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  buf += 'settle4393-' + acc.toString();
+  const cf4394: Array<(x: number) => number> = [];
+  cf4394.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4394.push((x: number): number => (x + 32) % 10007);
+  acc = cf4394[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi4395' : 'lo') + acc.toString(16);
+  m01.set('k4396', acc % 997);
+  acc = (acc * 31 + 5109) % 65521;
+  const ix4398: number = buf.indexOf('p0');
+  if (ix4398 > 12) { buf = buf.substring(0, 32); } else if (ix4398 >= 0) { buf += 'i'; }
+  m01.set('k4399', acc % 997);
+  const cf4400: Array<(x: number) => number> = [];
+  cf4400.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4400.push((x: number): number => (x + 161) % 10007);
+  acc = cf4400[acc & 1](acc % 9973);
+  const db4401: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4401.length) % 65521;
+  buf += `q4402:${acc % 97}`;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4403'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf4404: Array<(x: number) => number> = [];
+  cf4404.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4404.push((x: number): number => (x + 76) % 10007);
+  acc = cf4404[acc & 1](acc % 9973);
+  acc = (acc * 31 + 4423) % 65521;
+  const ix4406: number = buf.indexOf('p0');
+  if (ix4406 > 12) { buf = buf.substring(0, 32); } else if (ix4406 >= 0) { buf += 'i'; }
+  if (m01.has('k4407')) {
+    const gv4407: number = m01.get('k4407') as number;
+    acc = (acc + gv4407) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04408'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const ix4409: number = buf.indexOf('p0');
+  if (ix4409 > 12) { buf = buf.substring(0, 32); } else if (ix4409 >= 0) { buf += 'i'; }
+  const db4410: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4410.length) % 65521;
+  let w4411: number = acc % 23;
+  while (w4411 > 4) { w4411 = Math.floor(w4411 / 2); }
+  acc += w4411;
+  const ix4412: number = buf.indexOf('p0');
+  if (ix4412 > 12) { buf = buf.substring(0, 32); } else if (ix4412 >= 0) { buf += 'i'; }
+  for (let i4413 = 0; i4413 < 11; i4413++) {
+    acc = (acc + i4413 * 13 + 519) % 100003;
+  }
+  if (m01.has('k4414')) {
+    const gv4414: number = m01.get('k4414') as number;
+    acc = (acc + gv4414) % 10007;
+  }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-4415'); } acc += 59; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi4416' : 'lo') + acc.toString(16);
+  acc = acc + 471 - (acc % 38);
+  const t04418: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04418;
+  const ix4419: number = buf.indexOf('p0');
+  if (ix4419 > 12) { buf = buf.substring(0, 32); } else if (ix4419 >= 0) { buf += 'i'; }
+  const db4420: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4420.length) % 65521;
+  const t04421: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04421;
+  for (let i4422 = 0; i4422 < 5; i4422++) {
+    acc = (acc + i4422 * 13 + 367) % 100003;
+  }
+  const cf4423: Array<(x: number) => number> = [];
+  cf4423.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4423.push((x: number): number => (x + 59) % 10007);
+  acc = cf4423[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4424');
+  const rc4425: Rec0 = { id: acc % 1000, tag: 't4425', score: acc % 100 };
+  acc = (acc + rc4425.score) % 65521;
+  buf += rc4425.tag;
+  arr.push(acc % 1000);
+  m01.set('k4427', acc % 997);
+  buf += 'batch4428-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += `q4430:${acc % 97}`;
+  buf += `q4431:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4432');
+  for (let i4433 = 0; i4433 < 7; i4433++) {
+    acc = (acc + i4433 * 13 + 196) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4434');
+  buf += 'audit4435-' + acc.toString();
+  buf += 'order4436-' + acc.toString();
+  const cf4437: Array<(x: number) => number> = [];
+  cf4437.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4437.push((x: number): number => (x + 11) % 10007);
+  acc = cf4437[acc & 1](acc % 9973);
+  buf += `q4438:${acc % 97}`;
+  buf += 'ticket4439-' + acc.toString();
+  m01.set('k4440', acc % 997);
+  buf += `q4441:${acc % 97}`;
+  const db4442: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4442.length) % 65521;
+  acc = (acc * 31 + 3145) % 65521;
+  acc = acc + 581 - (acc % 40);
+  arr.push(acc % 1000);
+  if (acc % 25 === 0) { buf += 'even4446'; } else { buf += 'odd'; }
+  let w4447: number = acc % 23;
+  while (w4447 > 4) { w4447 = Math.floor(w4447 / 2); }
+  acc += w4447;
+  acc = acc + 578 - (acc % 38);
+  switch (acc & 3) {
+    case 0: buf += 's04449'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  acc = acc + 526 - (acc % 29);
+  m01.set('k4453', acc % 997);
+  buf += (acc > 500 ? 'hi4454' : 'lo') + acc.toString(16);
+  const ix4455: number = buf.indexOf('p0');
+  if (ix4455 > 12) { buf = buf.substring(0, 32); } else if (ix4455 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's04456'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  if (acc % 30 === 0) { buf += 'even4457'; } else { buf += 'odd'; }
+  for (let i4458 = 0; i4458 < 8; i4458++) {
+    acc = (acc + i4458 * 13 + 577) % 100003;
+  }
+  const cf4459: Array<(x: number) => number> = [];
+  cf4459.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4459.push((x: number): number => (x + 136) % 10007);
+  acc = cf4459[acc & 1](acc % 9973);
+  acc = (acc * 31 + 8721) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4461');
+  let w4462: number = acc % 23;
+  while (w4462 > 4) { w4462 = Math.floor(w4462 / 2); }
+  acc += w4462;
+  buf += (acc > 500 ? 'hi4463' : 'lo') + acc.toString(16);
+  buf += `q4464:${acc % 97}`;
+  for (let i4465 = 0; i4465 < 10; i4465++) {
+    acc = (acc + i4465 * 13 + 817) % 100003;
+  }
+  buf += 'bay4466-' + acc.toString();
+  for (let i4467 = 0; i4467 < 3; i4467++) {
+    acc = (acc + i4467 * 13 + 53) % 100003;
+  }
+  m01.set('k4468', acc % 997);
+  acc = acc + 506 - (acc % 52);
+  buf += 'pallet4470-' + acc.toString();
+  const t04471: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04471;
+  const rc4472: Rec0 = { id: acc % 1000, tag: 't4472', score: acc % 100 };
+  acc = (acc + rc4472.score) % 65521;
+  buf += rc4472.tag;
+  acc = (acc * 31 + 1581) % 65521;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-4474'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi4475' : 'lo') + acc.toString(16);
+  let w4476: number = acc % 23;
+  while (w4476 > 4) { w4476 = Math.floor(w4476 / 2); }
+  acc += w4476;
+  switch (acc & 3) {
+    case 0: buf += 's04477'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  const cf4478: Array<(x: number) => number> = [];
+  cf4478.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4478.push((x: number): number => (x + 143) % 10007);
+  acc = cf4478[acc & 1](acc % 9973);
+  let w4479: number = acc % 23;
+  while (w4479 > 4) { w4479 = Math.floor(w4479 / 2); }
+  acc += w4479;
+  const ix4480: number = buf.indexOf('p0');
+  if (ix4480 > 12) { buf = buf.substring(0, 32); } else if (ix4480 >= 0) { buf += 'i'; }
+  buf += `q4481:${acc % 97}`;
+  const cf4482: Array<(x: number) => number> = [];
+  cf4482.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4482.push((x: number): number => (x + 129) % 10007);
+  acc = cf4482[acc & 1](acc % 9973);
+  acc = acc + 214 - (acc % 12);
+  buf += 'payout4484-' + acc.toString();
+  buf += 'journey4485-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4486');
+  buf += 'dock4487-' + acc.toString();
+  try { if (acc % 29 === 23) { throw new Error('synthetic-4488'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix4489: number = buf.indexOf('p0');
+  if (ix4489 > 12) { buf = buf.substring(0, 32); } else if (ix4489 >= 0) { buf += 'i'; }
+  m01.set('k4490', acc % 997);
+  acc = (acc * 31 + 2118) % 65521;
+  acc = (acc * 31 + 2877) % 65521;
+  buf += 'pallet4493-' + acc.toString();
+  let w4494: number = acc % 23;
+  while (w4494 > 4) { w4494 = Math.floor(w4494 / 2); }
+  acc += w4494;
+  acc = (acc * 31 + 7346) % 65521;
+  const db4496: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4496.length) % 65521;
+  let w4497: number = acc % 23;
+  while (w4497 > 4) { w4497 = Math.floor(w4497 / 2); }
+  acc += w4497;
+  buf += (acc > 500 ? 'hi4498' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi4499' : 'lo') + acc.toString(16);
+  const ix4500: number = buf.indexOf('p0');
+  if (ix4500 > 12) { buf = buf.substring(0, 32); } else if (ix4500 >= 0) { buf += 'i'; }
+  const t04501: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04501;
+  m01.set('k4502', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's04503'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  if (acc % 10 === 0) { buf += 'even4504'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's04505'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4506');
+  buf += (acc > 500 ? 'hi4507' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8760) % 65521;
+  arr.push(acc % 1000);
+  const cf4510: Array<(x: number) => number> = [];
+  cf4510.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4510.push((x: number): number => (x + 106) % 10007);
+  acc = cf4510[acc & 1](acc % 9973);
+  const db4511: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4511.length) % 65521;
+  acc = acc + 132 - (acc % 67);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  if (acc % 22 === 0) { buf += 'even4515'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 152) % 65521;
+  m01.set('k4517', acc % 997);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi4519' : 'lo') + acc.toString(16);
+  for (let i4520 = 0; i4520 < 9; i4520++) {
+    acc = (acc + i4520 * 13 + 904) % 100003;
+  }
+  buf += (acc > 500 ? 'hi4521' : 'lo') + acc.toString(16);
+  const rc4522: Rec0 = { id: acc % 1000, tag: 't4522', score: acc % 100 };
+  acc = (acc + rc4522.score) % 65521;
+  buf += rc4522.tag;
+  buf += (acc > 500 ? 'hi4523' : 'lo') + acc.toString(16);
+  const db4524: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4524.length) % 65521;
+  const db4525: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4525.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's04526'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4527');
+  acc = (acc * 31 + 3121) % 65521;
+  const ix4529: number = buf.indexOf('p0');
+  if (ix4529 > 12) { buf = buf.substring(0, 32); } else if (ix4529 >= 0) { buf += 'i'; }
+  acc = acc + 679 - (acc % 79);
+  acc = acc + 672 - (acc % 19);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-4532'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix4533: number = buf.indexOf('p0');
+  if (ix4533 > 12) { buf = buf.substring(0, 32); } else if (ix4533 >= 0) { buf += 'i'; }
+  let w4534: number = acc % 23;
+  while (w4534 > 4) { w4534 = Math.floor(w4534 / 2); }
+  acc += w4534;
+  acc = acc + 474 - (acc % 64);
+  const db4536: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4536.length) % 65521;
+  const cf4537: Array<(x: number) => number> = [];
+  cf4537.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4537.push((x: number): number => (x + 141) % 10007);
+  acc = cf4537[acc & 1](acc % 9973);
+  buf += 'parcel4538-' + acc.toString();
+  buf += 'batch4539-' + acc.toString();
+  let w4540: number = acc % 23;
+  while (w4540 > 4) { w4540 = Math.floor(w4540 / 2); }
+  acc += w4540;
+  for (let i4541 = 0; i4541 < 6; i4541++) {
+    acc = (acc + i4541 * 13 + 800) % 100003;
+  }
+  const cf4542: Array<(x: number) => number> = [];
+  cf4542.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4542.push((x: number): number => (x + 28) % 10007);
+  acc = cf4542[acc & 1](acc % 9973);
+  m01.set('k4543', acc % 997);
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's04545'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 968 - (acc % 61);
+  for (let i4547 = 0; i4547 < 3; i4547++) {
+    acc = (acc + i4547 * 13 + 975) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4548');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4549');
+  m01.set('k4550', acc % 997);
+  const db4551: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4551.length) % 65521;
+  for (let i4552 = 0; i4552 < 7; i4552++) {
+    acc = (acc + i4552 * 13 + 744) % 100003;
+  }
+  const cf4553: Array<(x: number) => number> = [];
+  cf4553.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4553.push((x: number): number => (x + 121) % 10007);
+  acc = cf4553[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += `q4555:${acc % 97}`;
+  buf += (acc > 500 ? 'hi4556' : 'lo') + acc.toString(16);
+  const cf4557: Array<(x: number) => number> = [];
+  cf4557.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4557.push((x: number): number => (x + 116) % 10007);
+  acc = cf4557[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1869) % 65521;
+  m01.set('k4559', acc % 997);
+  acc = acc + 173 - (acc % 72);
+  for (let i4561 = 0; i4561 < 9; i4561++) {
+    acc = (acc + i4561 * 13 + 755) % 100003;
+  }
+  const ix4562: number = buf.indexOf('p0');
+  if (ix4562 > 12) { buf = buf.substring(0, 32); } else if (ix4562 >= 0) { buf += 'i'; }
+  if (acc % 6 === 0) { buf += 'even4563'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = acc + 108 - (acc % 40);
+  acc = (acc * 31 + 4057) % 65521;
+  if (m01.has('k4567')) {
+    const gv4567: number = m01.get('k4567') as number;
+    acc = (acc + gv4567) % 10007;
+  }
+  m01.set('k4568', acc % 997);
+  acc = (acc * 31 + 2860) % 65521;
+  m01.set('k4570', acc % 997);
+  m01.set('k4571', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's04572'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 742 - (acc % 72);
+  const ix4574: number = buf.indexOf('p0');
+  if (ix4574 > 12) { buf = buf.substring(0, 32); } else if (ix4574 >= 0) { buf += 'i'; }
+  m01.set('k4575', acc % 997);
+  const db4576: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4576.length) % 65521;
+  m01.set('k4577', acc % 997);
+  buf += 'freight4578-' + acc.toString();
+  buf += `q4579:${acc % 97}`;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-4580'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix4581: number = buf.indexOf('p0');
+  if (ix4581 > 12) { buf = buf.substring(0, 32); } else if (ix4581 >= 0) { buf += 'i'; }
+  for (let i4582 = 0; i4582 < 6; i4582++) {
+    acc = (acc + i4582 * 13 + 32) % 100003;
+  }
+  m01.set('k4583', acc % 997);
+  for (let i4584 = 0; i4584 < 4; i4584++) {
+    acc = (acc + i4584 * 13 + 250) % 100003;
+  }
+  buf += (acc > 500 ? 'hi4585' : 'lo') + acc.toString(16);
+  const rc4586: Rec0 = { id: acc % 1000, tag: 't4586', score: acc % 100 };
+  acc = (acc + rc4586.score) % 65521;
+  buf += rc4586.tag;
+  arr.push(acc % 1000);
+  buf += 'ticket4588-' + acc.toString();
+  const cf4589: Array<(x: number) => number> = [];
+  cf4589.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4589.push((x: number): number => (x + 97) % 10007);
+  acc = cf4589[acc & 1](acc % 9973);
+  const t04590: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04590;
+  switch (acc & 3) {
+    case 0: buf += 's04591'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 3376) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4593');
+  const cf4594: Array<(x: number) => number> = [];
+  cf4594.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4594.push((x: number): number => (x + 184) % 10007);
+  acc = cf4594[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4595');
+  acc = (acc * 31 + 2810) % 65521;
+  buf += `q4597:${acc % 97}`;
+  const cf4598: Array<(x: number) => number> = [];
+  cf4598.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4598.push((x: number): number => (x + 171) % 10007);
+  acc = cf4598[acc & 1](acc % 9973);
+  for (let i4599 = 0; i4599 < 12; i4599++) {
+    acc = (acc + i4599 * 13 + 264) % 100003;
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4601'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 904 - (acc % 80);
+  const db4603: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4603.length) % 65521;
+  if (acc % 23 === 0) { buf += 'even4604'; } else { buf += 'odd'; }
+  const cf4605: Array<(x: number) => number> = [];
+  cf4605.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4605.push((x: number): number => (x + 143) % 10007);
+  acc = cf4605[acc & 1](acc % 9973);
+  m01.set('k4606', acc % 997);
+  if (m01.has('k4607')) {
+    const gv4607: number = m01.get('k4607') as number;
+    acc = (acc + gv4607) % 10007;
+  }
+  const t04608: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04608;
+  const cf4609: Array<(x: number) => number> = [];
+  cf4609.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4609.push((x: number): number => (x + 146) % 10007);
+  acc = cf4609[acc & 1](acc % 9973);
+  if (m01.has('k4610')) {
+    const gv4610: number = m01.get('k4610') as number;
+    acc = (acc + gv4610) % 10007;
+  }
+  acc = (acc * 31 + 2251) % 65521;
+  const ix4612: number = buf.indexOf('p0');
+  if (ix4612 > 12) { buf = buf.substring(0, 32); } else if (ix4612 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4613');
+  const rc4614: Rec0 = { id: acc % 1000, tag: 't4614', score: acc % 100 };
+  acc = (acc + rc4614.score) % 65521;
+  buf += rc4614.tag;
+  const cf4615: Array<(x: number) => number> = [];
+  cf4615.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4615.push((x: number): number => (x + 91) % 10007);
+  acc = cf4615[acc & 1](acc % 9973);
+  m01.set('k4616', acc % 997);
+  const rc4617: Rec0 = { id: acc % 1000, tag: 't4617', score: acc % 100 };
+  acc = (acc + rc4617.score) % 65521;
+  buf += rc4617.tag;
+  buf += (acc > 500 ? 'hi4618' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's04619'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += 'balance4620-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4621');
+  buf += 'depot4622-' + acc.toString();
+  buf += 'dispatch4623-' + acc.toString();
+  const cf4624: Array<(x: number) => number> = [];
+  cf4624.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4624.push((x: number): number => (x + 118) % 10007);
+  acc = cf4624[acc & 1](acc % 9973);
+  const rc4625: Rec0 = { id: acc % 1000, tag: 't4625', score: acc % 100 };
+  acc = (acc + rc4625.score) % 65521;
+  buf += rc4625.tag;
+  arr.push(acc % 1000);
+  const cf4627: Array<(x: number) => number> = [];
+  cf4627.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4627.push((x: number): number => (x + 119) % 10007);
+  acc = cf4627[acc & 1](acc % 9973);
+  const ix4628: number = buf.indexOf('p0');
+  if (ix4628 > 12) { buf = buf.substring(0, 32); } else if (ix4628 >= 0) { buf += 'i'; }
+  buf += `q4629:${acc % 97}`;
+  buf += 'ticket4630-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4631');
+  for (let i4632 = 0; i4632 < 7; i4632++) {
+    acc = (acc + i4632 * 13 + 508) % 100003;
+  }
+  arr.push(acc % 1000);
+  const t04634: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04634;
+  for (let i4635 = 0; i4635 < 9; i4635++) {
+    acc = (acc + i4635 * 13 + 447) % 100003;
+  }
+  const cf4636: Array<(x: number) => number> = [];
+  cf4636.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4636.push((x: number): number => (x + 48) % 10007);
+  acc = cf4636[acc & 1](acc % 9973);
+  const t04637: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04637;
+  for (let i4638 = 0; i4638 < 12; i4638++) {
+    acc = (acc + i4638 * 13 + 92) % 100003;
+  }
+  acc = (acc * 31 + 8863) % 65521;
+  const cf4640: Array<(x: number) => number> = [];
+  cf4640.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4640.push((x: number): number => (x + 48) % 10007);
+  acc = cf4640[acc & 1](acc % 9973);
+  buf += 'portal4641-' + acc.toString();
+  const rc4642: Rec0 = { id: acc % 1000, tag: 't4642', score: acc % 100 };
+  acc = (acc + rc4642.score) % 65521;
+  buf += rc4642.tag;
+  switch (acc & 3) {
+    case 0: buf += 's04643'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += 'refund4644-' + acc.toString();
+  buf += 'dispatch4645-' + acc.toString();
+  const rc4646: Rec0 = { id: acc % 1000, tag: 't4646', score: acc % 100 };
+  acc = (acc + rc4646.score) % 65521;
+  buf += rc4646.tag;
+  for (let i4647 = 0; i4647 < 4; i4647++) {
+    acc = (acc + i4647 * 13 + 45) % 100003;
+  }
+  if (m01.has('k4648')) {
+    const gv4648: number = m01.get('k4648') as number;
+    acc = (acc + gv4648) % 10007;
+  }
+  let w4649: number = acc % 23;
+  while (w4649 > 4) { w4649 = Math.floor(w4649 / 2); }
+  acc += w4649;
+  try { if (acc % 29 === 18) { throw new Error('synthetic-4650'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const rc4652: Rec0 = { id: acc % 1000, tag: 't4652', score: acc % 100 };
+  acc = (acc + rc4652.score) % 65521;
+  buf += rc4652.tag;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's04654'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  buf += `q4655:${acc % 97}`;
+  if (acc % 29 === 0) { buf += 'even4656'; } else { buf += 'odd'; }
+  buf += 'journey4657-' + acc.toString();
+  if (acc % 18 === 0) { buf += 'even4658'; } else { buf += 'odd'; }
+  const ix4659: number = buf.indexOf('p0');
+  if (ix4659 > 12) { buf = buf.substring(0, 32); } else if (ix4659 >= 0) { buf += 'i'; }
+  m01.set('k4660', acc % 997);
+  let w4661: number = acc % 23;
+  while (w4661 > 4) { w4661 = Math.floor(w4661 / 2); }
+  acc += w4661;
+  acc = acc + 457 - (acc % 27);
+  buf += `q4663:${acc % 97}`;
+  buf += (acc > 500 ? 'hi4664' : 'lo') + acc.toString(16);
+  if (m01.has('k4665')) {
+    const gv4665: number = m01.get('k4665') as number;
+    acc = (acc + gv4665) % 10007;
+  }
+  if (m01.has('k4666')) {
+    const gv4666: number = m01.get('k4666') as number;
+    acc = (acc + gv4666) % 10007;
+  }
+  m01.set('k4667', acc % 997);
+  m01.set('k4668', acc % 997);
+  const ix4669: number = buf.indexOf('p0');
+  if (ix4669 > 12) { buf = buf.substring(0, 32); } else if (ix4669 >= 0) { buf += 'i'; }
+  for (let i4670 = 0; i4670 < 4; i4670++) {
+    acc = (acc + i4670 * 13 + 62) % 100003;
+  }
+  const cf4671: Array<(x: number) => number> = [];
+  cf4671.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4671.push((x: number): number => (x + 16) % 10007);
+  acc = cf4671[acc & 1](acc % 9973);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-4672'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's04674'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const t04675: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04675;
+  try { if (acc % 29 === 9) { throw new Error('synthetic-4676'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3439) % 65521;
+  if (m01.has('k4678')) {
+    const gv4678: number = m01.get('k4678') as number;
+    acc = (acc + gv4678) % 10007;
+  }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 5322) % 65521;
+  const rc4681: Rec0 = { id: acc % 1000, tag: 't4681', score: acc % 100 };
+  acc = (acc + rc4681.score) % 65521;
+  buf += rc4681.tag;
+  buf += (acc > 500 ? 'hi4682' : 'lo') + acc.toString(16);
+  if (m01.has('k4683')) {
+    const gv4683: number = m01.get('k4683') as number;
+    acc = (acc + gv4683) % 10007;
+  }
+  buf += 'ledger4684-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4685');
+  if (acc % 20 === 0) { buf += 'even4686'; } else { buf += 'odd'; }
+  const ix4687: number = buf.indexOf('p0');
+  if (ix4687 > 12) { buf = buf.substring(0, 32); } else if (ix4687 >= 0) { buf += 'i'; }
+  const db4688: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4688.length) % 65521;
+  for (let i4689 = 0; i4689 < 3; i4689++) {
+    acc = (acc + i4689 * 13 + 776) % 100003;
+  }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-4690'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4691'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const db4693: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4693.length) % 65521;
+  buf += `q4694:${acc % 97}`;
+  try { if (acc % 29 === 16) { throw new Error('synthetic-4695'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi4696' : 'lo') + acc.toString(16);
+  for (let i4697 = 0; i4697 < 5; i4697++) {
+    acc = (acc + i4697 * 13 + 848) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04698'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 646 - (acc % 92);
+  m01.set('k4700', acc % 997);
+  buf += (acc > 500 ? 'hi4701' : 'lo') + acc.toString(16);
+  const db4702: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4702.length) % 65521;
+  let w4703: number = acc % 23;
+  while (w4703 > 4) { w4703 = Math.floor(w4703 / 2); }
+  acc += w4703;
+  if (m01.has('k4704')) {
+    const gv4704: number = m01.get('k4704') as number;
+    acc = (acc + gv4704) % 10007;
+  }
+  const t04705: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04705;
+  m01.set('k4706', acc % 997);
+  acc = (acc * 31 + 6137) % 65521;
+  acc = acc + 146 - (acc % 30);
+  let w4709: number = acc % 23;
+  while (w4709 > 4) { w4709 = Math.floor(w4709 / 2); }
+  acc += w4709;
+  const db4710: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4710.length) % 65521;
+  const ix4711: number = buf.indexOf('p0');
+  if (ix4711 > 12) { buf = buf.substring(0, 32); } else if (ix4711 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi4712' : 'lo') + acc.toString(16);
+  let w4713: number = acc % 23;
+  while (w4713 > 4) { w4713 = Math.floor(w4713 / 2); }
+  acc += w4713;
+  buf += (acc > 500 ? 'hi4714' : 'lo') + acc.toString(16);
+  const t04715: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04715;
+  const t04716: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04716;
+  for (let i4717 = 0; i4717 < 8; i4717++) {
+    acc = (acc + i4717 * 13 + 39) % 100003;
+  }
+  const ix4718: number = buf.indexOf('p0');
+  if (ix4718 > 12) { buf = buf.substring(0, 32); } else if (ix4718 >= 0) { buf += 'i'; }
+  if (acc % 18 === 0) { buf += 'even4719'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  m01.set('k4721', acc % 997);
+  if (acc % 9 === 0) { buf += 'even4722'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4723' : 'lo') + acc.toString(16);
+  m01.set('k4724', acc % 997);
+  for (let i4725 = 0; i4725 < 8; i4725++) {
+    acc = (acc + i4725 * 13 + 313) % 100003;
+  }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-4726'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  const db4727: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4727.length) % 65521;
+  if (acc % 20 === 0) { buf += 'even4728'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4729' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4730');
+  const rc4731: Rec0 = { id: acc % 1000, tag: 't4731', score: acc % 100 };
+  acc = (acc + rc4731.score) % 65521;
+  buf += rc4731.tag;
+  acc = (acc * 31 + 2189) % 65521;
+  let w4733: number = acc % 23;
+  while (w4733 > 4) { w4733 = Math.floor(w4733 / 2); }
+  acc += w4733;
+  const cf4734: Array<(x: number) => number> = [];
+  cf4734.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4734.push((x: number): number => (x + 175) % 10007);
+  acc = cf4734[acc & 1](acc % 9973);
+  buf += 'coupon4735-' + acc.toString();
+  const t04736: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04736;
+  if (acc % 28 === 0) { buf += 'even4737'; } else { buf += 'odd'; }
+  const t04738: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04738;
+  if (m01.has('k4739')) {
+    const gv4739: number = m01.get('k4739') as number;
+    acc = (acc + gv4739) % 10007;
+  }
+  buf += `q4740:${acc % 97}`;
+  let w4741: number = acc % 23;
+  while (w4741 > 4) { w4741 = Math.floor(w4741 / 2); }
+  acc += w4741;
+  const cf4742: Array<(x: number) => number> = [];
+  cf4742.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4742.push((x: number): number => (x + 60) % 10007);
+  acc = cf4742[acc & 1](acc % 9973);
+  let w4743: number = acc % 23;
+  while (w4743 > 4) { w4743 = Math.floor(w4743 / 2); }
+  acc += w4743;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-4744'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q4745:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's04746'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const rc4747: Rec0 = { id: acc % 1000, tag: 't4747', score: acc % 100 };
+  acc = (acc + rc4747.score) % 65521;
+  buf += rc4747.tag;
+  buf += (acc > 500 ? 'hi4748' : 'lo') + acc.toString(16);
+  buf += 'quota4749-' + acc.toString();
+  const ix4750: number = buf.indexOf('p0');
+  if (ix4750 > 12) { buf = buf.substring(0, 32); } else if (ix4750 >= 0) { buf += 'i'; }
+  if (m01.has('k4751')) {
+    const gv4751: number = m01.get('k4751') as number;
+    acc = (acc + gv4751) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04752'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const ix4753: number = buf.indexOf('p0');
+  if (ix4753 > 12) { buf = buf.substring(0, 32); } else if (ix4753 >= 0) { buf += 'i'; }
+  const cf4754: Array<(x: number) => number> = [];
+  cf4754.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4754.push((x: number): number => (x + 72) % 10007);
+  acc = cf4754[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi4755' : 'lo') + acc.toString(16);
+  buf += `q4756:${acc % 97}`;
+  m01.set('k4757', acc % 997);
+  if (m01.has('k4758')) {
+    const gv4758: number = m01.get('k4758') as number;
+    acc = (acc + gv4758) % 10007;
+  }
+  const rc4759: Rec0 = { id: acc % 1000, tag: 't4759', score: acc % 100 };
+  acc = (acc + rc4759.score) % 65521;
+  buf += rc4759.tag;
+  if (acc % 7 === 0) { buf += 'even4760'; } else { buf += 'odd'; }
+  if (m01.has('k4761')) {
+    const gv4761: number = m01.get('k4761') as number;
+    acc = (acc + gv4761) % 10007;
+  }
+  if (m01.has('k4762')) {
+    const gv4762: number = m01.get('k4762') as number;
+    acc = (acc + gv4762) % 10007;
+  }
+  const ix4763: number = buf.indexOf('p0');
+  if (ix4763 > 12) { buf = buf.substring(0, 32); } else if (ix4763 >= 0) { buf += 'i'; }
+  buf += 'customs4764-' + acc.toString();
+  const t04765: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04765;
+  buf += (acc > 500 ? 'hi4766' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's04767'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  if (acc % 15 === 0) { buf += 'even4768'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-4769'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix4770: number = buf.indexOf('p0');
+  if (ix4770 > 12) { buf = buf.substring(0, 32); } else if (ix4770 >= 0) { buf += 'i'; }
+  const ix4771: number = buf.indexOf('p0');
+  if (ix4771 > 12) { buf = buf.substring(0, 32); } else if (ix4771 >= 0) { buf += 'i'; }
+  buf += 'dock4772-' + acc.toString();
+  const t04773: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04773;
+  for (let i4774 = 0; i4774 < 6; i4774++) {
+    acc = (acc + i4774 * 13 + 508) % 100003;
+  }
+  buf += (acc > 500 ? 'hi4775' : 'lo') + acc.toString(16);
+  if (acc % 16 === 0) { buf += 'even4776'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-4777'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 382 - (acc % 22);
+  const t04779: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04779;
+  const ix4780: number = buf.indexOf('p0');
+  if (ix4780 > 12) { buf = buf.substring(0, 32); } else if (ix4780 >= 0) { buf += 'i'; }
+  for (let i4781 = 0; i4781 < 8; i4781++) {
+    acc = (acc + i4781 * 13 + 847) % 100003;
+  }
+  buf += 'policy4782-' + acc.toString();
+  acc = (acc * 31 + 980) % 65521;
+  let w4784: number = acc % 23;
+  while (w4784 > 4) { w4784 = Math.floor(w4784 / 2); }
+  acc += w4784;
+  const ix4785: number = buf.indexOf('p0');
+  if (ix4785 > 12) { buf = buf.substring(0, 32); } else if (ix4785 >= 0) { buf += 'i'; }
+  m01.set('k4786', acc % 997);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 5) { throw new Error('synthetic-4789'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  const t04790: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04790;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4791');
+  const rc4792: Rec0 = { id: acc % 1000, tag: 't4792', score: acc % 100 };
+  acc = (acc + rc4792.score) % 65521;
+  buf += rc4792.tag;
+  for (let i4793 = 0; i4793 < 8; i4793++) {
+    acc = (acc + i4793 * 13 + 608) % 100003;
+  }
+  for (let i4794 = 0; i4794 < 11; i4794++) {
+    acc = (acc + i4794 * 13 + 853) % 100003;
+  }
+  buf += (acc > 500 ? 'hi4795' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi4796' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 3836) % 65521;
+  let w4798: number = acc % 23;
+  while (w4798 > 4) { w4798 = Math.floor(w4798 / 2); }
+  acc += w4798;
+  for (let i4799 = 0; i4799 < 6; i4799++) {
+    acc = (acc + i4799 * 13 + 963) % 100003;
+  }
+  buf += 'region4800-' + acc.toString();
+  const db4801: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4801.length) % 65521;
+  acc = (acc * 31 + 806) % 65521;
+  try { if (acc % 29 === 9) { throw new Error('synthetic-4803'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  const t04804: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04804;
+  buf += 'audit4805-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4807');
+  arr.push(acc % 1000);
+  const ix4809: number = buf.indexOf('p0');
+  if (ix4809 > 12) { buf = buf.substring(0, 32); } else if (ix4809 >= 0) { buf += 'i'; }
+  if (m01.has('k4810')) {
+    const gv4810: number = m01.get('k4810') as number;
+    acc = (acc + gv4810) % 10007;
+  }
+  const db4811: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4811.length) % 65521;
+  const rc4812: Rec0 = { id: acc % 1000, tag: 't4812', score: acc % 100 };
+  acc = (acc + rc4812.score) % 65521;
+  buf += rc4812.tag;
+  const cf4813: Array<(x: number) => number> = [];
+  cf4813.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4813.push((x: number): number => (x + 113) % 10007);
+  acc = cf4813[acc & 1](acc % 9973);
+  acc = acc + 400 - (acc % 40);
+  let w4815: number = acc % 23;
+  while (w4815 > 4) { w4815 = Math.floor(w4815 / 2); }
+  acc += w4815;
+  acc = acc + 482 - (acc % 97);
+  const db4817: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4817.length) % 65521;
+  if (m01.has('k4818')) {
+    const gv4818: number = m01.get('k4818') as number;
+    acc = (acc + gv4818) % 10007;
+  }
+  buf += `q4819:${acc % 97}`;
+  let w4820: number = acc % 23;
+  while (w4820 > 4) { w4820 = Math.floor(w4820 / 2); }
+  acc += w4820;
+  buf += 'portal4821-' + acc.toString();
+  if (m01.has('k4822')) {
+    const gv4822: number = m01.get('k4822') as number;
+    acc = (acc + gv4822) % 10007;
+  }
+  m01.set('k4823', acc % 997);
+  acc = (acc * 31 + 4689) % 65521;
+  let w4825: number = acc % 23;
+  while (w4825 > 4) { w4825 = Math.floor(w4825 / 2); }
+  acc += w4825;
+  const cf4826: Array<(x: number) => number> = [];
+  cf4826.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4826.push((x: number): number => (x + 161) % 10007);
+  acc = cf4826[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4827');
+  switch (acc & 3) {
+    case 0: buf += 's04828'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const cf4829: Array<(x: number) => number> = [];
+  cf4829.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4829.push((x: number): number => (x + 83) % 10007);
+  acc = cf4829[acc & 1](acc % 9973);
+  const rc4830: Rec0 = { id: acc % 1000, tag: 't4830', score: acc % 100 };
+  acc = (acc + rc4830.score) % 65521;
+  buf += rc4830.tag;
+  buf += `q4831:${acc % 97}`;
+  let w4832: number = acc % 23;
+  while (w4832 > 4) { w4832 = Math.floor(w4832 / 2); }
+  acc += w4832;
+  buf += (acc > 500 ? 'hi4833' : 'lo') + acc.toString(16);
+  const db4834: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4834.length) % 65521;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-4835'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k4836', acc % 997);
+  const t04837: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04837;
+  for (let i4838 = 0; i4838 < 3; i4838++) {
+    acc = (acc + i4838 * 13 + 760) % 100003;
+  }
+  m01.set('k4839', acc % 997);
+  const rc4840: Rec0 = { id: acc % 1000, tag: 't4840', score: acc % 100 };
+  acc = (acc + rc4840.score) % 65521;
+  buf += rc4840.tag;
+  switch (acc & 3) {
+    case 0: buf += 's04841'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04842'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  const cf4843: Array<(x: number) => number> = [];
+  cf4843.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4843.push((x: number): number => (x + 102) % 10007);
+  acc = cf4843[acc & 1](acc % 9973);
+  buf += 'crate4844-' + acc.toString();
+  buf += (acc > 500 ? 'hi4845' : 'lo') + acc.toString(16);
+  const db4846: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4846.length) % 65521;
+  buf += 'coupon4847-' + acc.toString();
+  m01.set('k4848', acc % 997);
+  const db4849: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4849.length) % 65521;
+  buf += 'warehouse4850-' + acc.toString();
+  const db4851: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4851.length) % 65521;
+  arr.push(acc % 1000);
+  let w4853: number = acc % 23;
+  while (w4853 > 4) { w4853 = Math.floor(w4853 / 2); }
+  acc += w4853;
+  acc = acc + 813 - (acc % 28);
+  buf += (acc > 500 ? 'hi4855' : 'lo') + acc.toString(16);
+  m01.set('k4856', acc % 997);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-4857'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k4858', acc % 997);
+  if (acc % 22 === 0) { buf += 'even4859'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4860' : 'lo') + acc.toString(16);
+  const cf4861: Array<(x: number) => number> = [];
+  cf4861.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4861.push((x: number): number => (x + 79) % 10007);
+  acc = cf4861[acc & 1](acc % 9973);
+  const db4862: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4862.length) % 65521;
+  let w4863: number = acc % 23;
+  while (w4863 > 4) { w4863 = Math.floor(w4863 / 2); }
+  acc += w4863;
+  const t04864: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04864;
+  m01.set('k4865', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4866');
+  switch (acc & 3) {
+    case 0: buf += 's04867'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  m01.set('k4868', acc % 997);
+  if (m01.has('k4869')) {
+    const gv4869: number = m01.get('k4869') as number;
+    acc = (acc + gv4869) % 10007;
+  }
+  buf += 'tariff4870-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4871');
+  acc = acc + 796 - (acc % 57);
+  const ix4873: number = buf.indexOf('p0');
+  if (ix4873 > 12) { buf = buf.substring(0, 32); } else if (ix4873 >= 0) { buf += 'i'; }
+  const ix4874: number = buf.indexOf('p0');
+  if (ix4874 > 12) { buf = buf.substring(0, 32); } else if (ix4874 >= 0) { buf += 'i'; }
+  buf += `q4875:${acc % 97}`;
+  acc = (acc * 31 + 9919) % 65521;
+  const cf4877: Array<(x: number) => number> = [];
+  cf4877.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4877.push((x: number): number => (x + 172) % 10007);
+  acc = cf4877[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4879');
+  for (let i4880 = 0; i4880 < 10; i4880++) {
+    acc = (acc + i4880 * 13 + 77) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 8714) % 65521;
+  acc = (acc * 31 + 956) % 65521;
+  if (acc % 19 === 0) { buf += 'even4884'; } else { buf += 'odd'; }
+  acc = acc + 585 - (acc % 81);
+  arr.push(acc % 1000);
+  buf += 'shelf4887-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4889');
+  if (acc % 25 === 0) { buf += 'even4890'; } else { buf += 'odd'; }
+  for (let i4891 = 0; i4891 < 7; i4891++) {
+    acc = (acc + i4891 * 13 + 722) % 100003;
+  }
+  const db4892: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4892.length) % 65521;
+  if (acc % 31 === 0) { buf += 'even4893'; } else { buf += 'odd'; }
+  if (m01.has('k4894')) {
+    const gv4894: number = m01.get('k4894') as number;
+    acc = (acc + gv4894) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's04895'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += 'crate4896-' + acc.toString();
+  let w4897: number = acc % 23;
+  while (w4897 > 4) { w4897 = Math.floor(w4897 / 2); }
+  acc += w4897;
+  buf += `q4898:${acc % 97}`;
+  acc = acc + 92 - (acc % 42);
+  const ix4900: number = buf.indexOf('p0');
+  if (ix4900 > 12) { buf = buf.substring(0, 32); } else if (ix4900 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  for (let i4902 = 0; i4902 < 12; i4902++) {
+    acc = (acc + i4902 * 13 + 105) % 100003;
+  }
+  arr.push(acc % 1000);
+  if (m01.has('k4904')) {
+    const gv4904: number = m01.get('k4904') as number;
+    acc = (acc + gv4904) % 10007;
+  }
+  if (acc % 14 === 0) { buf += 'even4905'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi4906' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  if (acc % 27 === 0) { buf += 'even4908'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 5929) % 65521;
+  let w4910: number = acc % 23;
+  while (w4910 > 4) { w4910 = Math.floor(w4910 / 2); }
+  acc += w4910;
+  for (let i4911 = 0; i4911 < 5; i4911++) {
+    acc = (acc + i4911 * 13 + 212) % 100003;
+  }
+  acc = acc + 472 - (acc % 71);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4913');
+  let w4914: number = acc % 23;
+  while (w4914 > 4) { w4914 = Math.floor(w4914 / 2); }
+  acc += w4914;
+  buf += 'waybill4915-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4916');
+  try { if (acc % 29 === 15) { throw new Error('synthetic-4917'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 9463) % 65521;
+  buf += 'dispatch4919-' + acc.toString();
+  const db4920: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4920.length) % 65521;
+  const ix4921: number = buf.indexOf('p0');
+  if (ix4921 > 12) { buf = buf.substring(0, 32); } else if (ix4921 >= 0) { buf += 'i'; }
+  if (acc % 22 === 0) { buf += 'even4922'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 542) % 65521;
+  const cf4924: Array<(x: number) => number> = [];
+  cf4924.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4924.push((x: number): number => (x + 34) % 10007);
+  acc = cf4924[acc & 1](acc % 9973);
+  let w4925: number = acc % 23;
+  while (w4925 > 4) { w4925 = Math.floor(w4925 / 2); }
+  acc += w4925;
+  for (let i4926 = 0; i4926 < 5; i4926++) {
+    acc = (acc + i4926 * 13 + 80) % 100003;
+  }
+  acc = acc + 632 - (acc % 23);
+  const cf4928: Array<(x: number) => number> = [];
+  cf4928.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4928.push((x: number): number => (x + 28) % 10007);
+  acc = cf4928[acc & 1](acc % 9973);
+  const cf4929: Array<(x: number) => number> = [];
+  cf4929.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4929.push((x: number): number => (x + 12) % 10007);
+  acc = cf4929[acc & 1](acc % 9973);
+  for (let i4930 = 0; i4930 < 3; i4930++) {
+    acc = (acc + i4930 * 13 + 970) % 100003;
+  }
+  if (acc % 19 === 0) { buf += 'even4931'; } else { buf += 'odd'; }
+  m01.set('k4932', acc % 997);
+  if (m01.has('k4933')) {
+    const gv4933: number = m01.get('k4933') as number;
+    acc = (acc + gv4933) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4934');
+  m01.set('k4935', acc % 997);
+  const t04936: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04936;
+  const rc4937: Rec0 = { id: acc % 1000, tag: 't4937', score: acc % 100 };
+  acc = (acc + rc4937.score) % 65521;
+  buf += rc4937.tag;
+  switch (acc & 3) {
+    case 0: buf += 's04938'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const ix4939: number = buf.indexOf('p0');
+  if (ix4939 > 12) { buf = buf.substring(0, 32); } else if (ix4939 >= 0) { buf += 'i'; }
+  const rc4940: Rec0 = { id: acc % 1000, tag: 't4940', score: acc % 100 };
+  acc = (acc + rc4940.score) % 65521;
+  buf += rc4940.tag;
+  if (m01.has('k4941')) {
+    const gv4941: number = m01.get('k4941') as number;
+    acc = (acc + gv4941) % 10007;
+  }
+  let w4942: number = acc % 23;
+  while (w4942 > 4) { w4942 = Math.floor(w4942 / 2); }
+  acc += w4942;
+  switch (acc & 3) {
+    case 0: buf += 's04943'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  if (acc % 31 === 0) { buf += 'even4945'; } else { buf += 'odd'; }
+  let w4946: number = acc % 23;
+  while (w4946 > 4) { w4946 = Math.floor(w4946 / 2); }
+  acc += w4946;
+  const ix4947: number = buf.indexOf('p0');
+  if (ix4947 > 12) { buf = buf.substring(0, 32); } else if (ix4947 >= 0) { buf += 'i'; }
+  const rc4948: Rec0 = { id: acc % 1000, tag: 't4948', score: acc % 100 };
+  acc = (acc + rc4948.score) % 65521;
+  buf += rc4948.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4949');
+  acc = acc + 720 - (acc % 68);
+  if (acc % 28 === 0) { buf += 'even4951'; } else { buf += 'odd'; }
+  const ix4952: number = buf.indexOf('p0');
+  if (ix4952 > 12) { buf = buf.substring(0, 32); } else if (ix4952 >= 0) { buf += 'i'; }
+  buf += `q4953:${acc % 97}`;
+  if (acc % 26 === 0) { buf += 'even4954'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4955');
+  const db4956: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4956.length) % 65521;
+  m01.set('k4957', acc % 997);
+  acc = (acc * 31 + 6094) % 65521;
+  if (m01.has('k4959')) {
+    const gv4959: number = m01.get('k4959') as number;
+    acc = (acc + gv4959) % 10007;
+  }
+  buf += `q4960:${acc % 97}`;
+  let w4961: number = acc % 23;
+  while (w4961 > 4) { w4961 = Math.floor(w4961 / 2); }
+  acc += w4961;
+  if (acc % 30 === 0) { buf += 'even4962'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4963');
+  if (acc % 9 === 0) { buf += 'even4964'; } else { buf += 'odd'; }
+  const cf4965: Array<(x: number) => number> = [];
+  cf4965.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4965.push((x: number): number => (x + 174) % 10007);
+  acc = cf4965[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1970) % 65521;
+  if (m01.has('k4967')) {
+    const gv4967: number = m01.get('k4967') as number;
+    acc = (acc + gv4967) % 10007;
+  }
+  buf += (acc > 500 ? 'hi4968' : 'lo') + acc.toString(16);
+  buf += 'shelf4969-' + acc.toString();
+  if (m01.has('k4970')) {
+    const gv4970: number = m01.get('k4970') as number;
+    acc = (acc + gv4970) % 10007;
+  }
+  let w4971: number = acc % 23;
+  while (w4971 > 4) { w4971 = Math.floor(w4971 / 2); }
+  acc += w4971;
+  const cf4972: Array<(x: number) => number> = [];
+  cf4972.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4972.push((x: number): number => (x + 193) % 10007);
+  acc = cf4972[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1985) % 65521;
+  buf += (acc > 500 ? 'hi4974' : 'lo') + acc.toString(16);
+  const t04975: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04975;
+  buf += (acc > 500 ? 'hi4976' : 'lo') + acc.toString(16);
+  buf += `q4977:${acc % 97}`;
+  const db4978: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4978.length) % 65521;
+  const ix4979: number = buf.indexOf('p0');
+  if (ix4979 > 12) { buf = buf.substring(0, 32); } else if (ix4979 >= 0) { buf += 'i'; }
+  buf += `q4980:${acc % 97}`;
+  const db4981: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4981.length) % 65521;
+  acc = (acc * 31 + 5845) % 65521;
+  const ix4983: number = buf.indexOf('p0');
+  if (ix4983 > 12) { buf = buf.substring(0, 32); } else if (ix4983 >= 0) { buf += 'i'; }
+  const ix4984: number = buf.indexOf('p0');
+  if (ix4984 > 12) { buf = buf.substring(0, 32); } else if (ix4984 >= 0) { buf += 'i'; }
+  const t04985: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t04985;
+  let w4986: number = acc % 23;
+  while (w4986 > 4) { w4986 = Math.floor(w4986 / 2); }
+  acc += w4986;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x4987');
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-4989'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi4990' : 'lo') + acc.toString(16);
+  buf += `q4991:${acc % 97}`;
+  arr.push(acc % 1000);
+  const cf4993: Array<(x: number) => number> = [];
+  cf4993.push((x: number): number => (x * 3 + acc) % 65521);
+  cf4993.push((x: number): number => (x + 159) % 10007);
+  acc = cf4993[acc & 1](acc % 9973);
+  const rc4994: Rec0 = { id: acc % 1000, tag: 't4994', score: acc % 100 };
+  acc = (acc + rc4994.score) % 65521;
+  buf += rc4994.tag;
+  arr.push(acc % 1000);
+  const db4996: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db4996.length) % 65521;
+  buf += 'settle4997-' + acc.toString();
+  acc = (acc * 31 + 9032) % 65521;
+  buf += 'vendor4999-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05000'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi5002' : 'lo') + acc.toString(16);
+  let w5003: number = acc % 23;
+  while (w5003 > 4) { w5003 = Math.floor(w5003 / 2); }
+  acc += w5003;
+  acc = (acc * 31 + 3438) % 65521;
+  buf += (acc > 500 ? 'hi5005' : 'lo') + acc.toString(16);
+  if (acc % 6 === 0) { buf += 'even5006'; } else { buf += 'odd'; }
+  if (m01.has('k5007')) {
+    const gv5007: number = m01.get('k5007') as number;
+    acc = (acc + gv5007) % 10007;
+  }
+  let w5008: number = acc % 23;
+  while (w5008 > 4) { w5008 = Math.floor(w5008 / 2); }
+  acc += w5008;
+  const ix5009: number = buf.indexOf('p0');
+  if (ix5009 > 12) { buf = buf.substring(0, 32); } else if (ix5009 >= 0) { buf += 'i'; }
+  const rc5010: Rec0 = { id: acc % 1000, tag: 't5010', score: acc % 100 };
+  acc = (acc + rc5010.score) % 65521;
+  buf += rc5010.tag;
+  buf += (acc > 500 ? 'hi5011' : 'lo') + acc.toString(16);
+  buf += `q5012:${acc % 97}`;
+  if (m01.has('k5013')) {
+    const gv5013: number = m01.get('k5013') as number;
+    acc = (acc + gv5013) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5014');
+  arr.push(acc % 1000);
+  m01.set('k5016', acc % 997);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-5017'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const rc5019: Rec0 = { id: acc % 1000, tag: 't5019', score: acc % 100 };
+  acc = (acc + rc5019.score) % 65521;
+  buf += rc5019.tag;
+  m01.set('k5020', acc % 997);
+  m01.set('k5021', acc % 997);
+  buf += `q5022:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's05023'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5024');
+  if (acc % 7 === 0) { buf += 'even5025'; } else { buf += 'odd'; }
+  let w5026: number = acc % 23;
+  while (w5026 > 4) { w5026 = Math.floor(w5026 / 2); }
+  acc += w5026;
+  let w5027: number = acc % 23;
+  while (w5027 > 4) { w5027 = Math.floor(w5027 / 2); }
+  acc += w5027;
+  if (m01.has('k5028')) {
+    const gv5028: number = m01.get('k5028') as number;
+    acc = (acc + gv5028) % 10007;
+  }
+  const rc5029: Rec0 = { id: acc % 1000, tag: 't5029', score: acc % 100 };
+  acc = (acc + rc5029.score) % 65521;
+  buf += rc5029.tag;
+  m01.set('k5030', acc % 997);
+  if (m01.has('k5031')) {
+    const gv5031: number = m01.get('k5031') as number;
+    acc = (acc + gv5031) % 10007;
+  }
+  const t05032: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05032;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5033');
+  let w5034: number = acc % 23;
+  while (w5034 > 4) { w5034 = Math.floor(w5034 / 2); }
+  acc += w5034;
+  if (m01.has('k5035')) {
+    const gv5035: number = m01.get('k5035') as number;
+    acc = (acc + gv5035) % 10007;
+  }
+  if (acc % 23 === 0) { buf += 'even5036'; } else { buf += 'odd'; }
+  const db5037: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5037.length) % 65521;
+  if (m01.has('k5038')) {
+    const gv5038: number = m01.get('k5038') as number;
+    acc = (acc + gv5038) % 10007;
+  }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-5039'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 30 === 0) { buf += 'even5040'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  let w5042: number = acc % 23;
+  while (w5042 > 4) { w5042 = Math.floor(w5042 / 2); }
+  acc += w5042;
+  acc = (acc * 31 + 1712) % 65521;
+  buf += 'freight5044-' + acc.toString();
+  let w5045: number = acc % 23;
+  while (w5045 > 4) { w5045 = Math.floor(w5045 / 2); }
+  acc += w5045;
+  m01.set('k5046', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's05047'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5048' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi5049' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 5761) % 65521;
+  buf += 'shelf5051-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5052');
+  try { if (acc % 29 === 8) { throw new Error('synthetic-5053'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc5054: Rec0 = { id: acc % 1000, tag: 't5054', score: acc % 100 };
+  acc = (acc + rc5054.score) % 65521;
+  buf += rc5054.tag;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-5055'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  let w5057: number = acc % 23;
+  while (w5057 > 4) { w5057 = Math.floor(w5057 / 2); }
+  acc += w5057;
+  buf += (acc > 500 ? 'hi5058' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi5059' : 'lo') + acc.toString(16);
+  const cf5060: Array<(x: number) => number> = [];
+  cf5060.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5060.push((x: number): number => (x + 57) % 10007);
+  acc = cf5060[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  let w5062: number = acc % 23;
+  while (w5062 > 4) { w5062 = Math.floor(w5062 / 2); }
+  acc += w5062;
+  switch (acc & 3) {
+    case 0: buf += 's05063'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5064' : 'lo') + acc.toString(16);
+  if (m01.has('k5065')) {
+    const gv5065: number = m01.get('k5065') as number;
+    acc = (acc + gv5065) % 10007;
+  }
+  m01.set('k5066', acc % 997);
+  const cf5067: Array<(x: number) => number> = [];
+  cf5067.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5067.push((x: number): number => (x + 64) % 10007);
+  acc = cf5067[acc & 1](acc % 9973);
+  acc = acc + 981 - (acc % 12);
+  const t05069: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05069;
+  let w5070: number = acc % 23;
+  while (w5070 > 4) { w5070 = Math.floor(w5070 / 2); }
+  acc += w5070;
+  if (m01.has('k5071')) {
+    const gv5071: number = m01.get('k5071') as number;
+    acc = (acc + gv5071) % 10007;
+  }
+  for (let i5072 = 0; i5072 < 12; i5072++) {
+    acc = (acc + i5072 * 13 + 646) % 100003;
+  }
+  const ix5073: number = buf.indexOf('p0');
+  if (ix5073 > 12) { buf = buf.substring(0, 32); } else if (ix5073 >= 0) { buf += 'i'; }
+  let w5074: number = acc % 23;
+  while (w5074 > 4) { w5074 = Math.floor(w5074 / 2); }
+  acc += w5074;
+  acc = acc + 419 - (acc % 75);
+  acc = acc + 52 - (acc % 24);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5077');
+  arr.push(acc % 1000);
+  const t05079: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05079;
+  m01.set('k5080', acc % 997);
+  buf += (acc > 500 ? 'hi5081' : 'lo') + acc.toString(16);
+  const rc5082: Rec0 = { id: acc % 1000, tag: 't5082', score: acc % 100 };
+  acc = (acc + rc5082.score) % 65521;
+  buf += rc5082.tag;
+  const cf5083: Array<(x: number) => number> = [];
+  cf5083.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5083.push((x: number): number => (x + 74) % 10007);
+  acc = cf5083[acc & 1](acc % 9973);
+  const db5084: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5084.length) % 65521;
+  buf += `q5085:${acc % 97}`;
+  buf += (acc > 500 ? 'hi5086' : 'lo') + acc.toString(16);
+  const cf5087: Array<(x: number) => number> = [];
+  cf5087.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5087.push((x: number): number => (x + 73) % 10007);
+  acc = cf5087[acc & 1](acc % 9973);
+  let w5088: number = acc % 23;
+  while (w5088 > 4) { w5088 = Math.floor(w5088 / 2); }
+  acc += w5088;
+  const ix5089: number = buf.indexOf('p0');
+  if (ix5089 > 12) { buf = buf.substring(0, 32); } else if (ix5089 >= 0) { buf += 'i'; }
+  if (m01.has('k5090')) {
+    const gv5090: number = m01.get('k5090') as number;
+    acc = (acc + gv5090) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5091');
+  buf += 'waybill5092-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05093'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += `q5094:${acc % 97}`;
+  buf += `q5095:${acc % 97}`;
+  buf += (acc > 500 ? 'hi5096' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-5097'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's05098'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-5099'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5100');
+  if (acc % 31 === 0) { buf += 'even5101'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5102');
+  const ix5103: number = buf.indexOf('p0');
+  if (ix5103 > 12) { buf = buf.substring(0, 32); } else if (ix5103 >= 0) { buf += 'i'; }
+  m01.set('k5104', acc % 997);
+  try { if (acc % 29 === 16) { throw new Error('synthetic-5105'); } acc += 35; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5106');
+  let w5107: number = acc % 23;
+  while (w5107 > 4) { w5107 = Math.floor(w5107 / 2); }
+  acc += w5107;
+  acc = (acc * 31 + 8558) % 65521;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05110'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05111'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const db5112: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5112.length) % 65521;
+  m01.set('k5113', acc % 997);
+  buf += 'carrier5114-' + acc.toString();
+  const rc5115: Rec0 = { id: acc % 1000, tag: 't5115', score: acc % 100 };
+  acc = (acc + rc5115.score) % 65521;
+  buf += rc5115.tag;
+  if (acc % 30 === 0) { buf += 'even5116'; } else { buf += 'odd'; }
+  const db5117: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5117.length) % 65521;
+  const db5118: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5118.length) % 65521;
+  acc = (acc * 31 + 2514) % 65521;
+  buf += (acc > 500 ? 'hi5120' : 'lo') + acc.toString(16);
+  let w5121: number = acc % 23;
+  while (w5121 > 4) { w5121 = Math.floor(w5121 / 2); }
+  acc += w5121;
+  if (acc % 28 === 0) { buf += 'even5122'; } else { buf += 'odd'; }
+  m01.set('k5123', acc % 997);
+  const db5124: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5124.length) % 65521;
+  for (let i5125 = 0; i5125 < 7; i5125++) {
+    acc = (acc + i5125 * 13 + 140) % 100003;
+  }
+  buf += `q5126:${acc % 97}`;
+  const rc5127: Rec0 = { id: acc % 1000, tag: 't5127', score: acc % 100 };
+  acc = (acc + rc5127.score) % 65521;
+  buf += rc5127.tag;
+  switch (acc & 3) {
+    case 0: buf += 's05128'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5129');
+  const t05130: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05130;
+  switch (acc & 3) {
+    case 0: buf += 's05131'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05132'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  buf += `q5133:${acc % 97}`;
+  if (m01.has('k5134')) {
+    const gv5134: number = m01.get('k5134') as number;
+    acc = (acc + gv5134) % 10007;
+  }
+  const db5135: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5135.length) % 65521;
+  const t05136: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05136;
+  buf += 'rebate5137-' + acc.toString();
+  if (acc % 7 === 0) { buf += 'even5138'; } else { buf += 'odd'; }
+  const t05139: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05139;
+  buf += (acc > 500 ? 'hi5140' : 'lo') + acc.toString(16);
+  buf += 'pallet5141-' + acc.toString();
+  const db5142: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5142.length) % 65521;
+  buf += `q5143:${acc % 97}`;
+  acc = (acc * 31 + 7002) % 65521;
+  arr.push(acc % 1000);
+  const rc5146: Rec0 = { id: acc % 1000, tag: 't5146', score: acc % 100 };
+  acc = (acc + rc5146.score) % 65521;
+  buf += rc5146.tag;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-5147'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'order5148-' + acc.toString();
+  m01.set('k5149', acc % 997);
+  m01.set('k5150', acc % 997);
+  if (acc % 8 === 0) { buf += 'even5151'; } else { buf += 'odd'; }
+  for (let i5152 = 0; i5152 < 9; i5152++) {
+    acc = (acc + i5152 * 13 + 543) % 100003;
+  }
+  let w5153: number = acc % 23;
+  while (w5153 > 4) { w5153 = Math.floor(w5153 / 2); }
+  acc += w5153;
+  buf += 'order5154-' + acc.toString();
+  for (let i5155 = 0; i5155 < 12; i5155++) {
+    acc = (acc + i5155 * 13 + 647) % 100003;
+  }
+  const cf5156: Array<(x: number) => number> = [];
+  cf5156.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5156.push((x: number): number => (x + 114) % 10007);
+  acc = cf5156[acc & 1](acc % 9973);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-5157'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc5158: Rec0 = { id: acc % 1000, tag: 't5158', score: acc % 100 };
+  acc = (acc + rc5158.score) % 65521;
+  buf += rc5158.tag;
+  const ix5159: number = buf.indexOf('p0');
+  if (ix5159 > 12) { buf = buf.substring(0, 32); } else if (ix5159 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5160');
+  const cf5161: Array<(x: number) => number> = [];
+  cf5161.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5161.push((x: number): number => (x + 104) % 10007);
+  acc = cf5161[acc & 1](acc % 9973);
+  for (let i5162 = 0; i5162 < 7; i5162++) {
+    acc = (acc + i5162 * 13 + 845) % 100003;
+  }
+  buf += (acc > 500 ? 'hi5163' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 1179) % 65521;
+  if (m01.has('k5165')) {
+    const gv5165: number = m01.get('k5165') as number;
+    acc = (acc + gv5165) % 10007;
+  }
+  const cf5166: Array<(x: number) => number> = [];
+  cf5166.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5166.push((x: number): number => (x + 15) % 10007);
+  acc = cf5166[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5167' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-5168'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf5169: Array<(x: number) => number> = [];
+  cf5169.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5169.push((x: number): number => (x + 45) % 10007);
+  acc = cf5169[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  m01.set('k5171', acc % 997);
+  if (m01.has('k5172')) {
+    const gv5172: number = m01.get('k5172') as number;
+    acc = (acc + gv5172) % 10007;
+  }
+  const cf5173: Array<(x: number) => number> = [];
+  cf5173.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5173.push((x: number): number => (x + 192) % 10007);
+  acc = cf5173[acc & 1](acc % 9973);
+  for (let i5174 = 0; i5174 < 6; i5174++) {
+    acc = (acc + i5174 * 13 + 954) % 100003;
+  }
+  buf += 'dock5175-' + acc.toString();
+  buf += 'quota5176-' + acc.toString();
+  const rc5177: Rec0 = { id: acc % 1000, tag: 't5177', score: acc % 100 };
+  acc = (acc + rc5177.score) % 65521;
+  buf += rc5177.tag;
+  const db5178: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5178.length) % 65521;
+  if (m01.has('k5179')) {
+    const gv5179: number = m01.get('k5179') as number;
+    acc = (acc + gv5179) % 10007;
+  }
+  const t05180: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05180;
+  buf += (acc > 500 ? 'hi5181' : 'lo') + acc.toString(16);
+  const t05182: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05182;
+  acc = (acc * 31 + 1731) % 65521;
+  for (let i5184 = 0; i5184 < 11; i5184++) {
+    acc = (acc + i5184 * 13 + 824) % 100003;
+  }
+  const ix5185: number = buf.indexOf('p0');
+  if (ix5185 > 12) { buf = buf.substring(0, 32); } else if (ix5185 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5186');
+  const cf5187: Array<(x: number) => number> = [];
+  cf5187.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5187.push((x: number): number => (x + 71) % 10007);
+  acc = cf5187[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5188' : 'lo') + acc.toString(16);
+  if (acc % 14 === 0) { buf += 'even5189'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 351) % 65521;
+  buf += (acc > 500 ? 'hi5191' : 'lo') + acc.toString(16);
+  const ix5192: number = buf.indexOf('p0');
+  if (ix5192 > 12) { buf = buf.substring(0, 32); } else if (ix5192 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's05193'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += 'customs5195-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05196'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05198'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k5199')) {
+    const gv5199: number = m01.get('k5199') as number;
+    acc = (acc + gv5199) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5200');
+  const ix5201: number = buf.indexOf('p0');
+  if (ix5201 > 12) { buf = buf.substring(0, 32); } else if (ix5201 >= 0) { buf += 'i'; }
+  const cf5202: Array<(x: number) => number> = [];
+  cf5202.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5202.push((x: number): number => (x + 35) % 10007);
+  acc = cf5202[acc & 1](acc % 9973);
+  if (m01.has('k5203')) {
+    const gv5203: number = m01.get('k5203') as number;
+    acc = (acc + gv5203) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5204');
+  switch (acc & 3) {
+    case 0: buf += 's05205'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  const db5206: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5206.length) % 65521;
+  const ix5207: number = buf.indexOf('p0');
+  if (ix5207 > 12) { buf = buf.substring(0, 32); } else if (ix5207 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's05208'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 1631) % 65521;
+  buf += (acc > 500 ? 'hi5210' : 'lo') + acc.toString(16);
+  for (let i5211 = 0; i5211 < 3; i5211++) {
+    acc = (acc + i5211 * 13 + 800) % 100003;
+  }
+  const t05212: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05212;
+  m01.set('k5213', acc % 997);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-5214'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k5215')) {
+    const gv5215: number = m01.get('k5215') as number;
+    acc = (acc + gv5215) % 10007;
+  }
+  const cf5216: Array<(x: number) => number> = [];
+  cf5216.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5216.push((x: number): number => (x + 138) % 10007);
+  acc = cf5216[acc & 1](acc % 9973);
+  if (acc % 12 === 0) { buf += 'even5217'; } else { buf += 'odd'; }
+  buf += `q5218:${acc % 97}`;
+  let w5219: number = acc % 23;
+  while (w5219 > 4) { w5219 = Math.floor(w5219 / 2); }
+  acc += w5219;
+  const cf5220: Array<(x: number) => number> = [];
+  cf5220.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5220.push((x: number): number => (x + 174) % 10007);
+  acc = cf5220[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5221');
+  buf += (acc > 500 ? 'hi5222' : 'lo') + acc.toString(16);
+  const rc5223: Rec0 = { id: acc % 1000, tag: 't5223', score: acc % 100 };
+  acc = (acc + rc5223.score) % 65521;
+  buf += rc5223.tag;
+  acc = acc + 45 - (acc % 64);
+  const cf5225: Array<(x: number) => number> = [];
+  cf5225.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5225.push((x: number): number => (x + 41) % 10007);
+  acc = cf5225[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's05226'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  for (let i5227 = 0; i5227 < 4; i5227++) {
+    acc = (acc + i5227 * 13 + 850) % 100003;
+  }
+  arr.push(acc % 1000);
+  buf += `q5229:${acc % 97}`;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-5230'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'ledger5231-' + acc.toString();
+  const ix5232: number = buf.indexOf('p0');
+  if (ix5232 > 12) { buf = buf.substring(0, 32); } else if (ix5232 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 9349) % 65521;
+  m01.set('k5234', acc % 997);
+  buf += 'audit5235-' + acc.toString();
+  const ix5236: number = buf.indexOf('p0');
+  if (ix5236 > 12) { buf = buf.substring(0, 32); } else if (ix5236 >= 0) { buf += 'i'; }
+  if (m01.has('k5237')) {
+    const gv5237: number = m01.get('k5237') as number;
+    acc = (acc + gv5237) % 10007;
+  }
+  m01.set('k5238', acc % 997);
+  let w5239: number = acc % 23;
+  while (w5239 > 4) { w5239 = Math.floor(w5239 / 2); }
+  acc += w5239;
+  buf += (acc > 500 ? 'hi5240' : 'lo') + acc.toString(16);
+  const db5241: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5241.length) % 65521;
+  buf += (acc > 500 ? 'hi5242' : 'lo') + acc.toString(16);
+  const t05243: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05243;
+  const cf5244: Array<(x: number) => number> = [];
+  cf5244.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5244.push((x: number): number => (x + 169) % 10007);
+  acc = cf5244[acc & 1](acc % 9973);
+  const t05245: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05245;
+  const rc5246: Rec0 = { id: acc % 1000, tag: 't5246', score: acc % 100 };
+  acc = (acc + rc5246.score) % 65521;
+  buf += rc5246.tag;
+  const ix5247: number = buf.indexOf('p0');
+  if (ix5247 > 12) { buf = buf.substring(0, 32); } else if (ix5247 >= 0) { buf += 'i'; }
+  const ix5248: number = buf.indexOf('p0');
+  if (ix5248 > 12) { buf = buf.substring(0, 32); } else if (ix5248 >= 0) { buf += 'i'; }
+  acc = acc + 655 - (acc % 25);
+  let w5250: number = acc % 23;
+  while (w5250 > 4) { w5250 = Math.floor(w5250 / 2); }
+  acc += w5250;
+  buf += `q5251:${acc % 97}`;
+  let w5252: number = acc % 23;
+  while (w5252 > 4) { w5252 = Math.floor(w5252 / 2); }
+  acc += w5252;
+  let w5253: number = acc % 23;
+  while (w5253 > 4) { w5253 = Math.floor(w5253 / 2); }
+  acc += w5253;
+  buf += (acc > 500 ? 'hi5254' : 'lo') + acc.toString(16);
+  let w5255: number = acc % 23;
+  while (w5255 > 4) { w5255 = Math.floor(w5255 / 2); }
+  acc += w5255;
+  buf += (acc > 500 ? 'hi5256' : 'lo') + acc.toString(16);
+  const cf5257: Array<(x: number) => number> = [];
+  cf5257.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5257.push((x: number): number => (x + 128) % 10007);
+  acc = cf5257[acc & 1](acc % 9973);
+  const ix5258: number = buf.indexOf('p0');
+  if (ix5258 > 12) { buf = buf.substring(0, 32); } else if (ix5258 >= 0) { buf += 'i'; }
+  m01.set('k5259', acc % 997);
+  const rc5260: Rec0 = { id: acc % 1000, tag: 't5260', score: acc % 100 };
+  acc = (acc + rc5260.score) % 65521;
+  buf += rc5260.tag;
+  buf += `q5261:${acc % 97}`;
+  buf += 'depot5262-' + acc.toString();
+  buf += (acc > 500 ? 'hi5263' : 'lo') + acc.toString(16);
+  const cf5264: Array<(x: number) => number> = [];
+  cf5264.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5264.push((x: number): number => (x + 93) % 10007);
+  acc = cf5264[acc & 1](acc % 9973);
+  const cf5265: Array<(x: number) => number> = [];
+  cf5265.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5265.push((x: number): number => (x + 160) % 10007);
+  acc = cf5265[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5266');
+  const cf5267: Array<(x: number) => number> = [];
+  cf5267.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5267.push((x: number): number => (x + 149) % 10007);
+  acc = cf5267[acc & 1](acc % 9973);
+  m01.set('k5268', acc % 997);
+  m01.set('k5269', acc % 997);
+  const db5270: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5270.length) % 65521;
+  acc = (acc * 31 + 8787) % 65521;
+  acc = acc + 570 - (acc % 69);
+  const rc5273: Rec0 = { id: acc % 1000, tag: 't5273', score: acc % 100 };
+  acc = (acc + rc5273.score) % 65521;
+  buf += rc5273.tag;
+  buf += (acc > 500 ? 'hi5274' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's05275'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5276' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5277');
+  const db5278: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5278.length) % 65521;
+  acc = acc + 400 - (acc % 44);
+  buf += 'pickup5280-' + acc.toString();
+  buf += `q5281:${acc % 97}`;
+  const cf5282: Array<(x: number) => number> = [];
+  cf5282.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5282.push((x: number): number => (x + 176) % 10007);
+  acc = cf5282[acc & 1](acc % 9973);
+  const t05283: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05283;
+  arr.push(acc % 1000);
+  const t05285: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05285;
+  if (acc % 5 === 0) { buf += 'even5286'; } else { buf += 'odd'; }
+  const t05287: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05287;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5288');
+  switch (acc & 3) {
+    case 0: buf += 's05289'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 8306) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's05291'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  for (let i5292 = 0; i5292 < 5; i5292++) {
+    acc = (acc + i5292 * 13 + 447) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 6677) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5295');
+  const cf5296: Array<(x: number) => number> = [];
+  cf5296.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5296.push((x: number): number => (x + 37) % 10007);
+  acc = cf5296[acc & 1](acc % 9973);
+  for (let i5297 = 0; i5297 < 6; i5297++) {
+    acc = (acc + i5297 * 13 + 123) % 100003;
+  }
+  const t05298: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05298;
+  const cf5299: Array<(x: number) => number> = [];
+  cf5299.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5299.push((x: number): number => (x + 174) % 10007);
+  acc = cf5299[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5300' : 'lo') + acc.toString(16);
+  const rc5301: Rec0 = { id: acc % 1000, tag: 't5301', score: acc % 100 };
+  acc = (acc + rc5301.score) % 65521;
+  buf += rc5301.tag;
+  const cf5302: Array<(x: number) => number> = [];
+  cf5302.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5302.push((x: number): number => (x + 50) % 10007);
+  acc = cf5302[acc & 1](acc % 9973);
+  const db5303: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5303.length) % 65521;
+  buf += `q5304:${acc % 97}`;
+  if (acc % 20 === 0) { buf += 'even5305'; } else { buf += 'odd'; }
+  const db5306: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5306.length) % 65521;
+  const t05307: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05307;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5308');
+  switch (acc & 3) {
+    case 0: buf += 's05309'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k5310')) {
+    const gv5310: number = m01.get('k5310') as number;
+    acc = (acc + gv5310) % 10007;
+  }
+  const rc5311: Rec0 = { id: acc % 1000, tag: 't5311', score: acc % 100 };
+  acc = (acc + rc5311.score) % 65521;
+  buf += rc5311.tag;
+  acc = (acc * 31 + 7033) % 65521;
+  acc = (acc * 31 + 1750) % 65521;
+  const t05314: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05314;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5315');
+  switch (acc & 3) {
+    case 0: buf += 's05316'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5317' : 'lo') + acc.toString(16);
+  m01.set('k5318', acc % 997);
+  const db5319: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5319.length) % 65521;
+  for (let i5320 = 0; i5320 < 12; i5320++) {
+    acc = (acc + i5320 * 13 + 114) % 100003;
+  }
+  const rc5321: Rec0 = { id: acc % 1000, tag: 't5321', score: acc % 100 };
+  acc = (acc + rc5321.score) % 65521;
+  buf += rc5321.tag;
+  switch (acc & 3) {
+    case 0: buf += 's05322'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const t05323: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05323;
+  const t05324: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05324;
+  try { if (acc % 29 === 18) { throw new Error('synthetic-5325'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 17 === 0) { buf += 'even5326'; } else { buf += 'odd'; }
+  const t05327: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05327;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  if (m01.has('k5330')) {
+    const gv5330: number = m01.get('k5330') as number;
+    acc = (acc + gv5330) % 10007;
+  }
+  m01.set('k5331', acc % 997);
+  const cf5332: Array<(x: number) => number> = [];
+  cf5332.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5332.push((x: number): number => (x + 73) % 10007);
+  acc = cf5332[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  let w5334: number = acc % 23;
+  while (w5334 > 4) { w5334 = Math.floor(w5334 / 2); }
+  acc += w5334;
+  for (let i5335 = 0; i5335 < 10; i5335++) {
+    acc = (acc + i5335 * 13 + 705) % 100003;
+  }
+  const rc5336: Rec0 = { id: acc % 1000, tag: 't5336', score: acc % 100 };
+  acc = (acc + rc5336.score) % 65521;
+  buf += rc5336.tag;
+  let w5337: number = acc % 23;
+  while (w5337 > 4) { w5337 = Math.floor(w5337 / 2); }
+  acc += w5337;
+  buf += `q5338:${acc % 97}`;
+  buf += `q5339:${acc % 97}`;
+  const rc5340: Rec0 = { id: acc % 1000, tag: 't5340', score: acc % 100 };
+  acc = (acc + rc5340.score) % 65521;
+  buf += rc5340.tag;
+  let w5341: number = acc % 23;
+  while (w5341 > 4) { w5341 = Math.floor(w5341 / 2); }
+  acc += w5341;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-5342'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q5343:${acc % 97}`;
+  const ix5344: number = buf.indexOf('p0');
+  if (ix5344 > 12) { buf = buf.substring(0, 32); } else if (ix5344 >= 0) { buf += 'i'; }
+  if (acc % 6 === 0) { buf += 'even5345'; } else { buf += 'odd'; }
+  const db5346: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5346.length) % 65521;
+  const ix5347: number = buf.indexOf('p0');
+  if (ix5347 > 12) { buf = buf.substring(0, 32); } else if (ix5347 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's05348'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5349');
+  try { if (acc % 29 === 20) { throw new Error('synthetic-5350'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5351');
+  const db5352: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5352.length) % 65521;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-5353'); } acc += 61; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i5354 = 0; i5354 < 9; i5354++) {
+    acc = (acc + i5354 * 13 + 529) % 100003;
+  }
+  const t05355: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05355;
+  switch (acc & 3) {
+    case 0: buf += 's05356'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  buf += 'stocktake5357-' + acc.toString();
+  if (acc % 18 === 0) { buf += 'even5358'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-5360'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  let w5361: number = acc % 23;
+  while (w5361 > 4) { w5361 = Math.floor(w5361 / 2); }
+  acc += w5361;
+  if (acc % 9 === 0) { buf += 'even5362'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi5363' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const cf5365: Array<(x: number) => number> = [];
+  cf5365.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5365.push((x: number): number => (x + 133) % 10007);
+  acc = cf5365[acc & 1](acc % 9973);
+  if (acc % 18 === 0) { buf += 'even5366'; } else { buf += 'odd'; }
+  const cf5367: Array<(x: number) => number> = [];
+  cf5367.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5367.push((x: number): number => (x + 80) % 10007);
+  acc = cf5367[acc & 1](acc % 9973);
+  const ix5368: number = buf.indexOf('p0');
+  if (ix5368 > 12) { buf = buf.substring(0, 32); } else if (ix5368 >= 0) { buf += 'i'; }
+  buf += 'batch5369-' + acc.toString();
+  let w5370: number = acc % 23;
+  while (w5370 > 4) { w5370 = Math.floor(w5370 / 2); }
+  acc += w5370;
+  switch (acc & 3) {
+    case 0: buf += 's05371'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5372');
+  m01.set('k5373', acc % 997);
+  const cf5374: Array<(x: number) => number> = [];
+  cf5374.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5374.push((x: number): number => (x + 174) % 10007);
+  acc = cf5374[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  const cf5376: Array<(x: number) => number> = [];
+  cf5376.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5376.push((x: number): number => (x + 117) % 10007);
+  acc = cf5376[acc & 1](acc % 9973);
+  buf += 'refund5377-' + acc.toString();
+  buf += `q5378:${acc % 97}`;
+  acc = (acc * 31 + 2369) % 65521;
+  acc = acc + 863 - (acc % 50);
+  buf += (acc > 500 ? 'hi5381' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi5382' : 'lo') + acc.toString(16);
+  const cf5383: Array<(x: number) => number> = [];
+  cf5383.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5383.push((x: number): number => (x + 127) % 10007);
+  acc = cf5383[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5384');
+  acc = (acc * 31 + 4668) % 65521;
+  buf += `q5386:${acc % 97}`;
+  buf += `q5387:${acc % 97}`;
+  acc = (acc * 31 + 2069) % 65521;
+  acc = (acc * 31 + 2274) % 65521;
+  buf += `q5390:${acc % 97}`;
+  const cf5391: Array<(x: number) => number> = [];
+  cf5391.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5391.push((x: number): number => (x + 122) % 10007);
+  acc = cf5391[acc & 1](acc % 9973);
+  buf += 'customs5392-' + acc.toString();
+  acc = (acc * 31 + 3414) % 65521;
+  const ix5394: number = buf.indexOf('p0');
+  if (ix5394 > 12) { buf = buf.substring(0, 32); } else if (ix5394 >= 0) { buf += 'i'; }
+  const rc5395: Rec0 = { id: acc % 1000, tag: 't5395', score: acc % 100 };
+  acc = (acc + rc5395.score) % 65521;
+  buf += rc5395.tag;
+  if (acc % 26 === 0) { buf += 'even5396'; } else { buf += 'odd'; }
+  buf += `q5397:${acc % 97}`;
+  m01.set('k5398', acc % 997);
+  acc = acc + 443 - (acc % 52);
+  buf += 'depot5400-' + acc.toString();
+  buf += (acc > 500 ? 'hi5401' : 'lo') + acc.toString(16);
+  const rc5402: Rec0 = { id: acc % 1000, tag: 't5402', score: acc % 100 };
+  acc = (acc + rc5402.score) % 65521;
+  buf += rc5402.tag;
+  const ix5403: number = buf.indexOf('p0');
+  if (ix5403 > 12) { buf = buf.substring(0, 32); } else if (ix5403 >= 0) { buf += 'i'; }
+  const ix5404: number = buf.indexOf('p0');
+  if (ix5404 > 12) { buf = buf.substring(0, 32); } else if (ix5404 >= 0) { buf += 'i'; }
+  const rc5405: Rec0 = { id: acc % 1000, tag: 't5405', score: acc % 100 };
+  acc = (acc + rc5405.score) % 65521;
+  buf += rc5405.tag;
+  const ix5406: number = buf.indexOf('p0');
+  if (ix5406 > 12) { buf = buf.substring(0, 32); } else if (ix5406 >= 0) { buf += 'i'; }
+  const cf5407: Array<(x: number) => number> = [];
+  cf5407.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5407.push((x: number): number => (x + 41) % 10007);
+  acc = cf5407[acc & 1](acc % 9973);
+  buf += `q5408:${acc % 97}`;
+  acc = (acc * 31 + 3417) % 65521;
+  let w5410: number = acc % 23;
+  while (w5410 > 4) { w5410 = Math.floor(w5410 / 2); }
+  acc += w5410;
+  acc = (acc * 31 + 5069) % 65521;
+  if (acc % 6 === 0) { buf += 'even5412'; } else { buf += 'odd'; }
+  buf += `q5413:${acc % 97}`;
+  acc = acc + 190 - (acc % 52);
+  buf += `q5415:${acc % 97}`;
+  acc = (acc * 31 + 5677) % 65521;
+  for (let i5417 = 0; i5417 < 7; i5417++) {
+    acc = (acc + i5417 * 13 + 369) % 100003;
+  }
+  if (m01.has('k5418')) {
+    const gv5418: number = m01.get('k5418') as number;
+    acc = (acc + gv5418) % 10007;
+  }
+  let w5419: number = acc % 23;
+  while (w5419 > 4) { w5419 = Math.floor(w5419 / 2); }
+  acc += w5419;
+  acc = (acc * 31 + 1950) % 65521;
+  for (let i5421 = 0; i5421 < 12; i5421++) {
+    acc = (acc + i5421 * 13 + 155) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05422'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const t05423: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05423;
+  for (let i5424 = 0; i5424 < 7; i5424++) {
+    acc = (acc + i5424 * 13 + 825) % 100003;
+  }
+  let w5425: number = acc % 23;
+  while (w5425 > 4) { w5425 = Math.floor(w5425 / 2); }
+  acc += w5425;
+  const db5426: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5426.length) % 65521;
+  acc = acc + 513 - (acc % 72);
+  buf += `q5428:${acc % 97}`;
+  arr.push(acc % 1000);
+  let w5430: number = acc % 23;
+  while (w5430 > 4) { w5430 = Math.floor(w5430 / 2); }
+  acc += w5430;
+  const t05431: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05431;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-5432'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i5433 = 0; i5433 < 5; i5433++) {
+    acc = (acc + i5433 * 13 + 166) % 100003;
+  }
+  const db5434: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5434.length) % 65521;
+  arr.push(acc % 1000);
+  acc = acc + 479 - (acc % 68);
+  for (let i5437 = 0; i5437 < 9; i5437++) {
+    acc = (acc + i5437 * 13 + 605) % 100003;
+  }
+  try { if (acc % 29 === 10) { throw new Error('synthetic-5438'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i5439 = 0; i5439 < 4; i5439++) {
+    acc = (acc + i5439 * 13 + 969) % 100003;
+  }
+  buf += `q5440:${acc % 97}`;
+  let w5441: number = acc % 23;
+  while (w5441 > 4) { w5441 = Math.floor(w5441 / 2); }
+  acc += w5441;
+  m01.set('k5442', acc % 997);
+  acc = acc + 934 - (acc % 90);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const cf5446: Array<(x: number) => number> = [];
+  cf5446.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5446.push((x: number): number => (x + 91) % 10007);
+  acc = cf5446[acc & 1](acc % 9973);
+  const t05447: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05447;
+  const ix5448: number = buf.indexOf('p0');
+  if (ix5448 > 12) { buf = buf.substring(0, 32); } else if (ix5448 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi5450' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5451');
+  switch (acc & 3) {
+    case 0: buf += 's05452'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  buf += `q5453:${acc % 97}`;
+  let w5454: number = acc % 23;
+  while (w5454 > 4) { w5454 = Math.floor(w5454 / 2); }
+  acc += w5454;
+  buf += 'stocktake5455-' + acc.toString();
+  acc = (acc * 31 + 8042) % 65521;
+  for (let i5457 = 0; i5457 < 12; i5457++) {
+    acc = (acc + i5457 * 13 + 423) % 100003;
+  }
+  for (let i5458 = 0; i5458 < 9; i5458++) {
+    acc = (acc + i5458 * 13 + 730) % 100003;
+  }
+  const t05459: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05459;
+  if (m01.has('k5460')) {
+    const gv5460: number = m01.get('k5460') as number;
+    acc = (acc + gv5460) % 10007;
+  }
+  const rc5461: Rec0 = { id: acc % 1000, tag: 't5461', score: acc % 100 };
+  acc = (acc + rc5461.score) % 65521;
+  buf += rc5461.tag;
+  acc = (acc * 31 + 6145) % 65521;
+  acc = (acc * 31 + 2784) % 65521;
+  const cf5464: Array<(x: number) => number> = [];
+  cf5464.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5464.push((x: number): number => (x + 140) % 10007);
+  acc = cf5464[acc & 1](acc % 9973);
+  const ix5465: number = buf.indexOf('p0');
+  if (ix5465 > 12) { buf = buf.substring(0, 32); } else if (ix5465 >= 0) { buf += 'i'; }
+  let w5466: number = acc % 23;
+  while (w5466 > 4) { w5466 = Math.floor(w5466 / 2); }
+  acc += w5466;
+  buf += 'tariff5467-' + acc.toString();
+  const db5468: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5468.length) % 65521;
+  acc = acc + 132 - (acc % 80);
+  buf += 'ticket5470-' + acc.toString();
+  arr.push(acc % 1000);
+  m01.set('k5472', acc % 997);
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05474'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-5476'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  const db5477: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5477.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5478');
+  buf += (acc > 500 ? 'hi5479' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-5480'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'routeplan5481-' + acc.toString();
+  let w5482: number = acc % 23;
+  while (w5482 > 4) { w5482 = Math.floor(w5482 / 2); }
+  acc += w5482;
+  for (let i5483 = 0; i5483 < 6; i5483++) {
+    acc = (acc + i5483 * 13 + 668) % 100003;
+  }
+  for (let i5484 = 0; i5484 < 10; i5484++) {
+    acc = (acc + i5484 * 13 + 742) % 100003;
+  }
+  arr.push(acc % 1000);
+  let w5486: number = acc % 23;
+  while (w5486 > 4) { w5486 = Math.floor(w5486 / 2); }
+  acc += w5486;
+  switch (acc & 3) {
+    case 0: buf += 's05487'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5488');
+  buf += 'batch5489-' + acc.toString();
+  for (let i5490 = 0; i5490 < 7; i5490++) {
+    acc = (acc + i5490 * 13 + 86) % 100003;
+  }
+  acc = acc + 692 - (acc % 35);
+  if (m01.has('k5492')) {
+    const gv5492: number = m01.get('k5492') as number;
+    acc = (acc + gv5492) % 10007;
+  }
+  let w5493: number = acc % 23;
+  while (w5493 > 4) { w5493 = Math.floor(w5493 / 2); }
+  acc += w5493;
+  if (acc % 16 === 0) { buf += 'even5494'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const rc5496: Rec0 = { id: acc % 1000, tag: 't5496', score: acc % 100 };
+  acc = (acc + rc5496.score) % 65521;
+  buf += rc5496.tag;
+  const cf5497: Array<(x: number) => number> = [];
+  cf5497.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5497.push((x: number): number => (x + 134) % 10007);
+  acc = cf5497[acc & 1](acc % 9973);
+  acc = acc + 564 - (acc % 13);
+  for (let i5499 = 0; i5499 < 4; i5499++) {
+    acc = (acc + i5499 * 13 + 20) % 100003;
+  }
+  m01.set('k5500', acc % 997);
+  if (m01.has('k5501')) {
+    const gv5501: number = m01.get('k5501') as number;
+    acc = (acc + gv5501) % 10007;
+  }
+  buf += `q5502:${acc % 97}`;
+  let w5503: number = acc % 23;
+  while (w5503 > 4) { w5503 = Math.floor(w5503 / 2); }
+  acc += w5503;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5504');
+  const t05505: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05505;
+  buf += (acc > 500 ? 'hi5506' : 'lo') + acc.toString(16);
+  let w5507: number = acc % 23;
+  while (w5507 > 4) { w5507 = Math.floor(w5507 / 2); }
+  acc += w5507;
+  acc = acc + 343 - (acc % 69);
+  const db5509: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5509.length) % 65521;
+  for (let i5510 = 0; i5510 < 9; i5510++) {
+    acc = (acc + i5510 * 13 + 644) % 100003;
+  }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-5511'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 9380) % 65521;
+  const rc5513: Rec0 = { id: acc % 1000, tag: 't5513', score: acc % 100 };
+  acc = (acc + rc5513.score) % 65521;
+  buf += rc5513.tag;
+  acc = acc + 232 - (acc % 44);
+  if (acc % 8 === 0) { buf += 'even5515'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5516');
+  if (m01.has('k5517')) {
+    const gv5517: number = m01.get('k5517') as number;
+    acc = (acc + gv5517) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05518'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const t05519: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05519;
+  buf += (acc > 500 ? 'hi5520' : 'lo') + acc.toString(16);
+  const ix5521: number = buf.indexOf('p0');
+  if (ix5521 > 12) { buf = buf.substring(0, 32); } else if (ix5521 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's05522'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  let w5523: number = acc % 23;
+  while (w5523 > 4) { w5523 = Math.floor(w5523 / 2); }
+  acc += w5523;
+  acc = acc + 158 - (acc % 91);
+  for (let i5525 = 0; i5525 < 3; i5525++) {
+    acc = (acc + i5525 * 13 + 797) % 100003;
+  }
+  buf += (acc > 500 ? 'hi5526' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const db5528: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5528.length) % 65521;
+  const t05529: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05529;
+  const t05530: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05530;
+  buf += `q5531:${acc % 97}`;
+  const ix5532: number = buf.indexOf('p0');
+  if (ix5532 > 12) { buf = buf.substring(0, 32); } else if (ix5532 >= 0) { buf += 'i'; }
+  const cf5533: Array<(x: number) => number> = [];
+  cf5533.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5533.push((x: number): number => (x + 103) % 10007);
+  acc = cf5533[acc & 1](acc % 9973);
+  acc = (acc * 31 + 5222) % 65521;
+  acc = acc + 244 - (acc % 27);
+  switch (acc & 3) {
+    case 0: buf += 's05536'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  const cf5537: Array<(x: number) => number> = [];
+  cf5537.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5537.push((x: number): number => (x + 85) % 10007);
+  acc = cf5537[acc & 1](acc % 9973);
+  buf += 'transit5538-' + acc.toString();
+  let w5539: number = acc % 23;
+  while (w5539 > 4) { w5539 = Math.floor(w5539 / 2); }
+  acc += w5539;
+  let w5540: number = acc % 23;
+  while (w5540 > 4) { w5540 = Math.floor(w5540 / 2); }
+  acc += w5540;
+  const t05541: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05541;
+  const t05542: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05542;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-5543'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'invoice5544-' + acc.toString();
+  acc = (acc * 31 + 8861) % 65521;
+  const ix5546: number = buf.indexOf('p0');
+  if (ix5546 > 12) { buf = buf.substring(0, 32); } else if (ix5546 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5547');
+  buf += (acc > 500 ? 'hi5548' : 'lo') + acc.toString(16);
+  if (acc % 25 === 0) { buf += 'even5549'; } else { buf += 'odd'; }
+  buf += `q5550:${acc % 97}`;
+  if (m01.has('k5551')) {
+    const gv5551: number = m01.get('k5551') as number;
+    acc = (acc + gv5551) % 10007;
+  }
+  for (let i5552 = 0; i5552 < 4; i5552++) {
+    acc = (acc + i5552 * 13 + 900) % 100003;
+  }
+  const cf5553: Array<(x: number) => number> = [];
+  cf5553.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5553.push((x: number): number => (x + 114) % 10007);
+  acc = cf5553[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's05554'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5555' : 'lo') + acc.toString(16);
+  const t05556: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05556;
+  if (m01.has('k5557')) {
+    const gv5557: number = m01.get('k5557') as number;
+    acc = (acc + gv5557) % 10007;
+  }
+  const t05558: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05558;
+  buf += `q5559:${acc % 97}`;
+  const t05560: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05560;
+  const db5561: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5561.length) % 65521;
+  const rc5562: Rec0 = { id: acc % 1000, tag: 't5562', score: acc % 100 };
+  acc = (acc + rc5562.score) % 65521;
+  buf += rc5562.tag;
+  if (acc % 29 === 0) { buf += 'even5563'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const cf5565: Array<(x: number) => number> = [];
+  cf5565.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5565.push((x: number): number => (x + 72) % 10007);
+  acc = cf5565[acc & 1](acc % 9973);
+  const db5566: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5566.length) % 65521;
+  buf += (acc > 500 ? 'hi5567' : 'lo') + acc.toString(16);
+  if (m01.has('k5568')) {
+    const gv5568: number = m01.get('k5568') as number;
+    acc = (acc + gv5568) % 10007;
+  }
+  buf += 'warehouse5569-' + acc.toString();
+  m01.set('k5570', acc % 997);
+  m01.set('k5571', acc % 997);
+  if (m01.has('k5572')) {
+    const gv5572: number = m01.get('k5572') as number;
+    acc = (acc + gv5572) % 10007;
+  }
+  buf += `q5573:${acc % 97}`;
+  if (acc % 22 === 0) { buf += 'even5574'; } else { buf += 'odd'; }
+  if (m01.has('k5575')) {
+    const gv5575: number = m01.get('k5575') as number;
+    acc = (acc + gv5575) % 10007;
+  }
+  const ix5576: number = buf.indexOf('p0');
+  if (ix5576 > 12) { buf = buf.substring(0, 32); } else if (ix5576 >= 0) { buf += 'i'; }
+  const db5577: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5577.length) % 65521;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-5578'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 783 - (acc % 77);
+  buf += 'audit5580-' + acc.toString();
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05582'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const t05583: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05583;
+  acc = (acc * 31 + 1701) % 65521;
+  const t05585: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05585;
+  const rc5586: Rec0 = { id: acc % 1000, tag: 't5586', score: acc % 100 };
+  acc = (acc + rc5586.score) % 65521;
+  buf += rc5586.tag;
+  const cf5587: Array<(x: number) => number> = [];
+  cf5587.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5587.push((x: number): number => (x + 155) % 10007);
+  acc = cf5587[acc & 1](acc % 9973);
+  const cf5588: Array<(x: number) => number> = [];
+  cf5588.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5588.push((x: number): number => (x + 62) % 10007);
+  acc = cf5588[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5589');
+  const rc5590: Rec0 = { id: acc % 1000, tag: 't5590', score: acc % 100 };
+  acc = (acc + rc5590.score) % 65521;
+  buf += rc5590.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5591');
+  const t05592: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05592;
+  for (let i5593 = 0; i5593 < 10; i5593++) {
+    acc = (acc + i5593 * 13 + 956) % 100003;
+  }
+  buf += 'policy5594-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05595'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5596');
+  const ix5597: number = buf.indexOf('p0');
+  if (ix5597 > 12) { buf = buf.substring(0, 32); } else if (ix5597 >= 0) { buf += 'i'; }
+  buf += 'transit5598-' + acc.toString();
+  const ix5599: number = buf.indexOf('p0');
+  if (ix5599 > 12) { buf = buf.substring(0, 32); } else if (ix5599 >= 0) { buf += 'i'; }
+  const db5600: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5600.length) % 65521;
+  m01.set('k5601', acc % 997);
+  buf += `q5602:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5603');
+  if (m01.has('k5604')) {
+    const gv5604: number = m01.get('k5604') as number;
+    acc = (acc + gv5604) % 10007;
+  }
+  const t05605: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05605;
+  switch (acc & 3) {
+    case 0: buf += 's05606'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const cf5607: Array<(x: number) => number> = [];
+  cf5607.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5607.push((x: number): number => (x + 190) % 10007);
+  acc = cf5607[acc & 1](acc % 9973);
+  const ix5608: number = buf.indexOf('p0');
+  if (ix5608 > 12) { buf = buf.substring(0, 32); } else if (ix5608 >= 0) { buf += 'i'; }
+  for (let i5609 = 0; i5609 < 7; i5609++) {
+    acc = (acc + i5609 * 13 + 480) % 100003;
+  }
+  acc = (acc * 31 + 9698) % 65521;
+  const db5611: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5611.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5612');
+  buf += `q5613:${acc % 97}`;
+  const cf5614: Array<(x: number) => number> = [];
+  cf5614.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5614.push((x: number): number => (x + 38) % 10007);
+  acc = cf5614[acc & 1](acc % 9973);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-5615'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-5616'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  const t05617: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05617;
+  const rc5618: Rec0 = { id: acc % 1000, tag: 't5618', score: acc % 100 };
+  acc = (acc + rc5618.score) % 65521;
+  buf += rc5618.tag;
+  for (let i5619 = 0; i5619 < 4; i5619++) {
+    acc = (acc + i5619 * 13 + 332) % 100003;
+  }
+  buf += `q5620:${acc % 97}`;
+  const cf5621: Array<(x: number) => number> = [];
+  cf5621.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5621.push((x: number): number => (x + 156) % 10007);
+  acc = cf5621[acc & 1](acc % 9973);
+  const cf5622: Array<(x: number) => number> = [];
+  cf5622.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5622.push((x: number): number => (x + 164) % 10007);
+  acc = cf5622[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's05623'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  for (let i5624 = 0; i5624 < 9; i5624++) {
+    acc = (acc + i5624 * 13 + 135) % 100003;
+  }
+  const db5625: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5625.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even5626'; } else { buf += 'odd'; }
+  let w5627: number = acc % 23;
+  while (w5627 > 4) { w5627 = Math.floor(w5627 / 2); }
+  acc += w5627;
+  if (acc % 16 === 0) { buf += 'even5628'; } else { buf += 'odd'; }
+  buf += `q5629:${acc % 97}`;
+  for (let i5630 = 0; i5630 < 12; i5630++) {
+    acc = (acc + i5630 * 13 + 955) % 100003;
+  }
+  for (let i5631 = 0; i5631 < 7; i5631++) {
+    acc = (acc + i5631 * 13 + 792) % 100003;
+  }
+  buf += (acc > 500 ? 'hi5632' : 'lo') + acc.toString(16);
+  buf += `q5633:${acc % 97}`;
+  m01.set('k5634', acc % 997);
+  if (acc % 7 === 0) { buf += 'even5635'; } else { buf += 'odd'; }
+  if (acc % 14 === 0) { buf += 'even5636'; } else { buf += 'odd'; }
+  const t05637: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05637;
+  const db5638: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5638.length) % 65521;
+  acc = (acc * 31 + 8227) % 65521;
+  acc = (acc * 31 + 9981) % 65521;
+  m01.set('k5641', acc % 997);
+  const ix5642: number = buf.indexOf('p0');
+  if (ix5642 > 12) { buf = buf.substring(0, 32); } else if (ix5642 >= 0) { buf += 'i'; }
+  const cf5643: Array<(x: number) => number> = [];
+  cf5643.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5643.push((x: number): number => (x + 81) % 10007);
+  acc = cf5643[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5644');
+  if (m01.has('k5645')) {
+    const gv5645: number = m01.get('k5645') as number;
+    acc = (acc + gv5645) % 10007;
+  }
+  const t05646: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05646;
+  const ix5647: number = buf.indexOf('p0');
+  if (ix5647 > 12) { buf = buf.substring(0, 32); } else if (ix5647 >= 0) { buf += 'i'; }
+  m01.set('k5648', acc % 997);
+  for (let i5649 = 0; i5649 < 8; i5649++) {
+    acc = (acc + i5649 * 13 + 537) % 100003;
+  }
+  const cf5650: Array<(x: number) => number> = [];
+  cf5650.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5650.push((x: number): number => (x + 44) % 10007);
+  acc = cf5650[acc & 1](acc % 9973);
+  const rc5651: Rec0 = { id: acc % 1000, tag: 't5651', score: acc % 100 };
+  acc = (acc + rc5651.score) % 65521;
+  buf += rc5651.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5652');
+  acc = acc + 804 - (acc % 33);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-5654'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix5655: number = buf.indexOf('p0');
+  if (ix5655 > 12) { buf = buf.substring(0, 32); } else if (ix5655 >= 0) { buf += 'i'; }
+  buf += `q5656:${acc % 97}`;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-5657'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k5658')) {
+    const gv5658: number = m01.get('k5658') as number;
+    acc = (acc + gv5658) % 10007;
+  }
+  acc = acc + 403 - (acc % 89);
+  let w5660: number = acc % 23;
+  while (w5660 > 4) { w5660 = Math.floor(w5660 / 2); }
+  acc += w5660;
+  switch (acc & 3) {
+    case 0: buf += 's05661'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += 'ledger5662-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += `q5664:${acc % 97}`;
+  if (m01.has('k5665')) {
+    const gv5665: number = m01.get('k5665') as number;
+    acc = (acc + gv5665) % 10007;
+  }
+  const rc5666: Rec0 = { id: acc % 1000, tag: 't5666', score: acc % 100 };
+  acc = (acc + rc5666.score) % 65521;
+  buf += rc5666.tag;
+  const t05667: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05667;
+  const t05668: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05668;
+  const ix5669: number = buf.indexOf('p0');
+  if (ix5669 > 12) { buf = buf.substring(0, 32); } else if (ix5669 >= 0) { buf += 'i'; }
+  for (let i5670 = 0; i5670 < 5; i5670++) {
+    acc = (acc + i5670 * 13 + 246) % 100003;
+  }
+  const ix5671: number = buf.indexOf('p0');
+  if (ix5671 > 12) { buf = buf.substring(0, 32); } else if (ix5671 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's05672'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  const db5674: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5674.length) % 65521;
+  const db5675: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5675.length) % 65521;
+  const rc5676: Rec0 = { id: acc % 1000, tag: 't5676', score: acc % 100 };
+  acc = (acc + rc5676.score) % 65521;
+  buf += rc5676.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5677');
+  buf += 'dock5678-' + acc.toString();
+  if (acc % 25 === 0) { buf += 'even5679'; } else { buf += 'odd'; }
+  buf += 'audit5680-' + acc.toString();
+  let w5681: number = acc % 23;
+  while (w5681 > 4) { w5681 = Math.floor(w5681 / 2); }
+  acc += w5681;
+  const db5682: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5682.length) % 65521;
+  if (acc % 21 === 0) { buf += 'even5683'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi5684' : 'lo') + acc.toString(16);
+  buf += `q5685:${acc % 97}`;
+  if (m01.has('k5686')) {
+    const gv5686: number = m01.get('k5686') as number;
+    acc = (acc + gv5686) % 10007;
+  }
+  for (let i5687 = 0; i5687 < 9; i5687++) {
+    acc = (acc + i5687 * 13 + 937) % 100003;
+  }
+  acc = (acc * 31 + 5788) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5689');
+  const rc5690: Rec0 = { id: acc % 1000, tag: 't5690', score: acc % 100 };
+  acc = (acc + rc5690.score) % 65521;
+  buf += rc5690.tag;
+  const ix5691: number = buf.indexOf('p0');
+  if (ix5691 > 12) { buf = buf.substring(0, 32); } else if (ix5691 >= 0) { buf += 'i'; }
+  if (acc % 8 === 0) { buf += 'even5692'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5693');
+  if (m01.has('k5694')) {
+    const gv5694: number = m01.get('k5694') as number;
+    acc = (acc + gv5694) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05695'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5696');
+  switch (acc & 3) {
+    case 0: buf += 's05697'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const rc5698: Rec0 = { id: acc % 1000, tag: 't5698', score: acc % 100 };
+  acc = (acc + rc5698.score) % 65521;
+  buf += rc5698.tag;
+  switch (acc & 3) {
+    case 0: buf += 's05699'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k5700')) {
+    const gv5700: number = m01.get('k5700') as number;
+    acc = (acc + gv5700) % 10007;
+  }
+  buf += (acc > 500 ? 'hi5701' : 'lo') + acc.toString(16);
+  buf += 'policy5702-' + acc.toString();
+  for (let i5703 = 0; i5703 < 7; i5703++) {
+    acc = (acc + i5703 * 13 + 894) % 100003;
+  }
+  const rc5704: Rec0 = { id: acc % 1000, tag: 't5704', score: acc % 100 };
+  acc = (acc + rc5704.score) % 65521;
+  buf += rc5704.tag;
+  if (acc % 13 === 0) { buf += 'even5705'; } else { buf += 'odd'; }
+  const cf5706: Array<(x: number) => number> = [];
+  cf5706.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5706.push((x: number): number => (x + 41) % 10007);
+  acc = cf5706[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5707' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-5708'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi5710' : 'lo') + acc.toString(16);
+  let w5711: number = acc % 23;
+  while (w5711 > 4) { w5711 = Math.floor(w5711 / 2); }
+  acc += w5711;
+  let w5712: number = acc % 23;
+  while (w5712 > 4) { w5712 = Math.floor(w5712 / 2); }
+  acc += w5712;
+  const db5713: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5713.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5714');
+  const cf5715: Array<(x: number) => number> = [];
+  cf5715.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5715.push((x: number): number => (x + 172) % 10007);
+  acc = cf5715[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 448) % 65521;
+  buf += `q5718:${acc % 97}`;
+  const ix5719: number = buf.indexOf('p0');
+  if (ix5719 > 12) { buf = buf.substring(0, 32); } else if (ix5719 >= 0) { buf += 'i'; }
+  buf += `q5720:${acc % 97}`;
+  const t05721: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05721;
+  switch (acc & 3) {
+    case 0: buf += 's05722'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const cf5723: Array<(x: number) => number> = [];
+  cf5723.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5723.push((x: number): number => (x + 43) % 10007);
+  acc = cf5723[acc & 1](acc % 9973);
+  const t05724: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05724;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5725');
+  acc = (acc * 31 + 7041) % 65521;
+  const cf5727: Array<(x: number) => number> = [];
+  cf5727.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5727.push((x: number): number => (x + 18) % 10007);
+  acc = cf5727[acc & 1](acc % 9973);
+  buf += 'vendor5728-' + acc.toString();
+  for (let i5729 = 0; i5729 < 3; i5729++) {
+    acc = (acc + i5729 * 13 + 946) % 100003;
+  }
+  const ix5730: number = buf.indexOf('p0');
+  if (ix5730 > 12) { buf = buf.substring(0, 32); } else if (ix5730 >= 0) { buf += 'i'; }
+  acc = acc + 664 - (acc % 16);
+  buf += `q5732:${acc % 97}`;
+  m01.set('k5733', acc % 997);
+  if (m01.has('k5734')) {
+    const gv5734: number = m01.get('k5734') as number;
+    acc = (acc + gv5734) % 10007;
+  }
+  if (acc % 15 === 0) { buf += 'even5735'; } else { buf += 'odd'; }
+  m01.set('k5736', acc % 997);
+  const rc5737: Rec0 = { id: acc % 1000, tag: 't5737', score: acc % 100 };
+  acc = (acc + rc5737.score) % 65521;
+  buf += rc5737.tag;
+  const t05738: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05738;
+  acc = acc + 916 - (acc % 74);
+  buf += 'region5740-' + acc.toString();
+  buf += (acc > 500 ? 'hi5741' : 'lo') + acc.toString(16);
+  const cf5742: Array<(x: number) => number> = [];
+  cf5742.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5742.push((x: number): number => (x + 126) % 10007);
+  acc = cf5742[acc & 1](acc % 9973);
+  const cf5743: Array<(x: number) => number> = [];
+  cf5743.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5743.push((x: number): number => (x + 192) % 10007);
+  acc = cf5743[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5744' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8990) % 65521;
+  buf += 'audit5746-' + acc.toString();
+  const t05747: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05747;
+  const ix5748: number = buf.indexOf('p0');
+  if (ix5748 > 12) { buf = buf.substring(0, 32); } else if (ix5748 >= 0) { buf += 'i'; }
+  acc = acc + 120 - (acc % 61);
+  buf += 'parcel5750-' + acc.toString();
+  const db5751: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5751.length) % 65521;
+  if (m01.has('k5752')) {
+    const gv5752: number = m01.get('k5752') as number;
+    acc = (acc + gv5752) % 10007;
+  }
+  let w5753: number = acc % 23;
+  while (w5753 > 4) { w5753 = Math.floor(w5753 / 2); }
+  acc += w5753;
+  const rc5754: Rec0 = { id: acc % 1000, tag: 't5754', score: acc % 100 };
+  acc = (acc + rc5754.score) % 65521;
+  buf += rc5754.tag;
+  let w5755: number = acc % 23;
+  while (w5755 > 4) { w5755 = Math.floor(w5755 / 2); }
+  acc += w5755;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-5756'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 608 - (acc % 14);
+  let w5758: number = acc % 23;
+  while (w5758 > 4) { w5758 = Math.floor(w5758 / 2); }
+  acc += w5758;
+  buf += `q5759:${acc % 97}`;
+  acc = (acc * 31 + 7401) % 65521;
+  const cf5761: Array<(x: number) => number> = [];
+  cf5761.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5761.push((x: number): number => (x + 110) % 10007);
+  acc = cf5761[acc & 1](acc % 9973);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-5762'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05764'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  if (acc % 18 === 0) { buf += 'even5765'; } else { buf += 'odd'; }
+  if (m01.has('k5766')) {
+    const gv5766: number = m01.get('k5766') as number;
+    acc = (acc + gv5766) % 10007;
+  }
+  const ix5767: number = buf.indexOf('p0');
+  if (ix5767 > 12) { buf = buf.substring(0, 32); } else if (ix5767 >= 0) { buf += 'i'; }
+  const ix5768: number = buf.indexOf('p0');
+  if (ix5768 > 12) { buf = buf.substring(0, 32); } else if (ix5768 >= 0) { buf += 'i'; }
+  if (acc % 23 === 0) { buf += 'even5769'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5770');
+  buf += (acc > 500 ? 'hi5771' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 863) % 65521;
+  acc = acc + 299 - (acc % 81);
+  buf += `q5774:${acc % 97}`;
+  buf += `q5775:${acc % 97}`;
+  const rc5776: Rec0 = { id: acc % 1000, tag: 't5776', score: acc % 100 };
+  acc = (acc + rc5776.score) % 65521;
+  buf += rc5776.tag;
+  const db5777: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5777.length) % 65521;
+  const db5778: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5778.length) % 65521;
+  let w5779: number = acc % 23;
+  while (w5779 > 4) { w5779 = Math.floor(w5779 / 2); }
+  acc += w5779;
+  m01.set('k5780', acc % 997);
+  acc = acc + 989 - (acc % 37);
+  if (acc % 27 === 0) { buf += 'even5782'; } else { buf += 'odd'; }
+  const t05783: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05783;
+  const rc5784: Rec0 = { id: acc % 1000, tag: 't5784', score: acc % 100 };
+  acc = (acc + rc5784.score) % 65521;
+  buf += rc5784.tag;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-5785'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-5786'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf5787: Array<(x: number) => number> = [];
+  cf5787.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5787.push((x: number): number => (x + 131) % 10007);
+  acc = cf5787[acc & 1](acc % 9973);
+  acc = acc + 915 - (acc % 54);
+  const cf5789: Array<(x: number) => number> = [];
+  cf5789.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5789.push((x: number): number => (x + 18) % 10007);
+  acc = cf5789[acc & 1](acc % 9973);
+  m01.set('k5790', acc % 997);
+  const ix5791: number = buf.indexOf('p0');
+  if (ix5791 > 12) { buf = buf.substring(0, 32); } else if (ix5791 >= 0) { buf += 'i'; }
+  if (m01.has('k5792')) {
+    const gv5792: number = m01.get('k5792') as number;
+    acc = (acc + gv5792) % 10007;
+  }
+  acc = acc + 475 - (acc % 13);
+  acc = (acc * 31 + 5065) % 65521;
+  const db5795: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5795.length) % 65521;
+  if (acc % 20 === 0) { buf += 'even5796'; } else { buf += 'odd'; }
+  const t05797: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05797;
+  arr.push(acc % 1000);
+  const db5799: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5799.length) % 65521;
+  buf += (acc > 500 ? 'hi5800' : 'lo') + acc.toString(16);
+  for (let i5801 = 0; i5801 < 6; i5801++) {
+    acc = (acc + i5801 * 13 + 414) % 100003;
+  }
+  for (let i5802 = 0; i5802 < 12; i5802++) {
+    acc = (acc + i5802 * 13 + 808) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5803');
+  arr.push(acc % 1000);
+  buf += `q5805:${acc % 97}`;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's05807'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k5808')) {
+    const gv5808: number = m01.get('k5808') as number;
+    acc = (acc + gv5808) % 10007;
+  }
+  const cf5809: Array<(x: number) => number> = [];
+  cf5809.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5809.push((x: number): number => (x + 160) % 10007);
+  acc = cf5809[acc & 1](acc % 9973);
+  const t05810: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05810;
+  m01.set('k5811', acc % 997);
+  const db5812: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5812.length) % 65521;
+  buf += (acc > 500 ? 'hi5813' : 'lo') + acc.toString(16);
+  const cf5814: Array<(x: number) => number> = [];
+  cf5814.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5814.push((x: number): number => (x + 56) % 10007);
+  acc = cf5814[acc & 1](acc % 9973);
+  buf += `q5815:${acc % 97}`;
+  if (m01.has('k5816')) {
+    const gv5816: number = m01.get('k5816') as number;
+    acc = (acc + gv5816) % 10007;
+  }
+  buf += (acc > 500 ? 'hi5817' : 'lo') + acc.toString(16);
+  const cf5818: Array<(x: number) => number> = [];
+  cf5818.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5818.push((x: number): number => (x + 75) % 10007);
+  acc = cf5818[acc & 1](acc % 9973);
+  for (let i5819 = 0; i5819 < 5; i5819++) {
+    acc = (acc + i5819 * 13 + 559) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05820'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5821' : 'lo') + acc.toString(16);
+  buf += `q5822:${acc % 97}`;
+  if (m01.has('k5823')) {
+    const gv5823: number = m01.get('k5823') as number;
+    acc = (acc + gv5823) % 10007;
+  }
+  m01.set('k5824', acc % 997);
+  let w5825: number = acc % 23;
+  while (w5825 > 4) { w5825 = Math.floor(w5825 / 2); }
+  acc += w5825;
+  const t05826: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05826;
+  arr.push(acc % 1000);
+  const db5828: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5828.length) % 65521;
+  acc = acc + 159 - (acc % 31);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-5830'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's05831'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  buf += 'ticket5832-' + acc.toString();
+  if (m01.has('k5833')) {
+    const gv5833: number = m01.get('k5833') as number;
+    acc = (acc + gv5833) % 10007;
+  }
+  const cf5834: Array<(x: number) => number> = [];
+  cf5834.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5834.push((x: number): number => (x + 90) % 10007);
+  acc = cf5834[acc & 1](acc % 9973);
+  if (acc % 13 === 0) { buf += 'even5835'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  for (let i5837 = 0; i5837 < 10; i5837++) {
+    acc = (acc + i5837 * 13 + 328) % 100003;
+  }
+  buf += 'transit5838-' + acc.toString();
+  acc = acc + 870 - (acc % 26);
+  try { if (acc % 29 === 18) { throw new Error('synthetic-5840'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi5841' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi5842' : 'lo') + acc.toString(16);
+  const ix5843: number = buf.indexOf('p0');
+  if (ix5843 > 12) { buf = buf.substring(0, 32); } else if (ix5843 >= 0) { buf += 'i'; }
+  const ix5844: number = buf.indexOf('p0');
+  if (ix5844 > 12) { buf = buf.substring(0, 32); } else if (ix5844 >= 0) { buf += 'i'; }
+  if (m01.has('k5845')) {
+    const gv5845: number = m01.get('k5845') as number;
+    acc = (acc + gv5845) % 10007;
+  }
+  buf += `q5846:${acc % 97}`;
+  const cf5847: Array<(x: number) => number> = [];
+  cf5847.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5847.push((x: number): number => (x + 131) % 10007);
+  acc = cf5847[acc & 1](acc % 9973);
+  const t05848: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05848;
+  const db5849: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5849.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's05850'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi5851' : 'lo') + acc.toString(16);
+  buf += 'audit5852-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5853');
+  const rc5854: Rec0 = { id: acc % 1000, tag: 't5854', score: acc % 100 };
+  acc = (acc + rc5854.score) % 65521;
+  buf += rc5854.tag;
+  buf += `q5855:${acc % 97}`;
+  if (acc % 5 === 0) { buf += 'even5856'; } else { buf += 'odd'; }
+  if (m01.has('k5857')) {
+    const gv5857: number = m01.get('k5857') as number;
+    acc = (acc + gv5857) % 10007;
+  }
+  const rc5858: Rec0 = { id: acc % 1000, tag: 't5858', score: acc % 100 };
+  acc = (acc + rc5858.score) % 65521;
+  buf += rc5858.tag;
+  const rc5859: Rec0 = { id: acc % 1000, tag: 't5859', score: acc % 100 };
+  acc = (acc + rc5859.score) % 65521;
+  buf += rc5859.tag;
+  acc = (acc * 31 + 9466) % 65521;
+  acc = (acc * 31 + 644) % 65521;
+  if (acc % 23 === 0) { buf += 'even5862'; } else { buf += 'odd'; }
+  buf += `q5863:${acc % 97}`;
+  buf += (acc > 500 ? 'hi5864' : 'lo') + acc.toString(16);
+  for (let i5865 = 0; i5865 < 3; i5865++) {
+    acc = (acc + i5865 * 13 + 645) % 100003;
+  }
+  acc = acc + 436 - (acc % 78);
+  if (m01.has('k5867')) {
+    const gv5867: number = m01.get('k5867') as number;
+    acc = (acc + gv5867) % 10007;
+  }
+  buf += (acc > 500 ? 'hi5868' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 6119) % 65521;
+  buf += 'customs5870-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05871'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  buf += 'invoice5872-' + acc.toString();
+  if (acc % 28 === 0) { buf += 'even5873'; } else { buf += 'odd'; }
+  buf += 'order5874-' + acc.toString();
+  buf += (acc > 500 ? 'hi5875' : 'lo') + acc.toString(16);
+  for (let i5876 = 0; i5876 < 6; i5876++) {
+    acc = (acc + i5876 * 13 + 386) % 100003;
+  }
+  acc = (acc * 31 + 9844) % 65521;
+  buf += `q5878:${acc % 97}`;
+  let w5879: number = acc % 23;
+  while (w5879 > 4) { w5879 = Math.floor(w5879 / 2); }
+  acc += w5879;
+  acc = (acc * 31 + 7151) % 65521;
+  if (acc % 10 === 0) { buf += 'even5881'; } else { buf += 'odd'; }
+  const cf5882: Array<(x: number) => number> = [];
+  cf5882.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5882.push((x: number): number => (x + 158) % 10007);
+  acc = cf5882[acc & 1](acc % 9973);
+  if (m01.has('k5883')) {
+    const gv5883: number = m01.get('k5883') as number;
+    acc = (acc + gv5883) % 10007;
+  }
+  const t05884: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05884;
+  buf += (acc > 500 ? 'hi5885' : 'lo') + acc.toString(16);
+  const t05886: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05886;
+  buf += 'quota5887-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's05888'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const ix5889: number = buf.indexOf('p0');
+  if (ix5889 > 12) { buf = buf.substring(0, 32); } else if (ix5889 >= 0) { buf += 'i'; }
+  buf += `q5890:${acc % 97}`;
+  acc = acc + 982 - (acc % 37);
+  buf += (acc > 500 ? 'hi5892' : 'lo') + acc.toString(16);
+  const cf5893: Array<(x: number) => number> = [];
+  cf5893.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5893.push((x: number): number => (x + 30) % 10007);
+  acc = cf5893[acc & 1](acc % 9973);
+  buf += 'settle5894-' + acc.toString();
+  acc = (acc * 31 + 8600) % 65521;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-5896'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix5897: number = buf.indexOf('p0');
+  if (ix5897 > 12) { buf = buf.substring(0, 32); } else if (ix5897 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-5898'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'vendor5899-' + acc.toString();
+  if (m01.has('k5900')) {
+    const gv5900: number = m01.get('k5900') as number;
+    acc = (acc + gv5900) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05901'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  if (acc % 10 === 0) { buf += 'even5902'; } else { buf += 'odd'; }
+  const rc5903: Rec0 = { id: acc % 1000, tag: 't5903', score: acc % 100 };
+  acc = (acc + rc5903.score) % 65521;
+  buf += rc5903.tag;
+  m01.set('k5904', acc % 997);
+  const db5905: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5905.length) % 65521;
+  for (let i5906 = 0; i5906 < 3; i5906++) {
+    acc = (acc + i5906 * 13 + 787) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's05907'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k5908')) {
+    const gv5908: number = m01.get('k5908') as number;
+    acc = (acc + gv5908) % 10007;
+  }
+  acc = (acc * 31 + 9667) % 65521;
+  buf += `q5910:${acc % 97}`;
+  buf += (acc > 500 ? 'hi5911' : 'lo') + acc.toString(16);
+  m01.set('k5912', acc % 997);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  buf += `q5915:${acc % 97}`;
+  acc = (acc * 31 + 4514) % 65521;
+  buf += `q5917:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5918');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5919');
+  if (acc % 12 === 0) { buf += 'even5920'; } else { buf += 'odd'; }
+  if (acc % 6 === 0) { buf += 'even5921'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's05922'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-5923'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi5924' : 'lo') + acc.toString(16);
+  for (let i5925 = 0; i5925 < 12; i5925++) {
+    acc = (acc + i5925 * 13 + 447) % 100003;
+  }
+  const t05926: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05926;
+  const rc5927: Rec0 = { id: acc % 1000, tag: 't5927', score: acc % 100 };
+  acc = (acc + rc5927.score) % 65521;
+  buf += rc5927.tag;
+  const rc5928: Rec0 = { id: acc % 1000, tag: 't5928', score: acc % 100 };
+  acc = (acc + rc5928.score) % 65521;
+  buf += rc5928.tag;
+  for (let i5929 = 0; i5929 < 12; i5929++) {
+    acc = (acc + i5929 * 13 + 698) % 100003;
+  }
+  arr.push(acc % 1000);
+  if (acc % 30 === 0) { buf += 'even5931'; } else { buf += 'odd'; }
+  acc = acc + 372 - (acc % 24);
+  acc = acc + 882 - (acc % 26);
+  let w5934: number = acc % 23;
+  while (w5934 > 4) { w5934 = Math.floor(w5934 / 2); }
+  acc += w5934;
+  acc = (acc * 31 + 744) % 65521;
+  buf += (acc > 500 ? 'hi5936' : 'lo') + acc.toString(16);
+  if (m01.has('k5937')) {
+    const gv5937: number = m01.get('k5937') as number;
+    acc = (acc + gv5937) % 10007;
+  }
+  acc = (acc * 31 + 8415) % 65521;
+  buf += 'coupon5939-' + acc.toString();
+  const t05940: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05940;
+  const t05941: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05941;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-5942'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5943');
+  const rc5944: Rec0 = { id: acc % 1000, tag: 't5944', score: acc % 100 };
+  acc = (acc + rc5944.score) % 65521;
+  buf += rc5944.tag;
+  const cf5945: Array<(x: number) => number> = [];
+  cf5945.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5945.push((x: number): number => (x + 76) % 10007);
+  acc = cf5945[acc & 1](acc % 9973);
+  for (let i5946 = 0; i5946 < 6; i5946++) {
+    acc = (acc + i5946 * 13 + 515) % 100003;
+  }
+  const rc5947: Rec0 = { id: acc % 1000, tag: 't5947', score: acc % 100 };
+  acc = (acc + rc5947.score) % 65521;
+  buf += rc5947.tag;
+  if (acc % 17 === 0) { buf += 'even5948'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  let w5950: number = acc % 23;
+  while (w5950 > 4) { w5950 = Math.floor(w5950 / 2); }
+  acc += w5950;
+  buf += `q5951:${acc % 97}`;
+  if (acc % 14 === 0) { buf += 'even5952'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 6236) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5954');
+  if (m01.has('k5955')) {
+    const gv5955: number = m01.get('k5955') as number;
+    acc = (acc + gv5955) % 10007;
+  }
+  acc = acc + 468 - (acc % 84);
+  buf += `q5957:${acc % 97}`;
+  const ix5958: number = buf.indexOf('p0');
+  if (ix5958 > 12) { buf = buf.substring(0, 32); } else if (ix5958 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  const db5960: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db5960.length) % 65521;
+  if (m01.has('k5961')) {
+    const gv5961: number = m01.get('k5961') as number;
+    acc = (acc + gv5961) % 10007;
+  }
+  buf += 'payout5962-' + acc.toString();
+  buf += `q5963:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5964');
+  if (acc % 13 === 0) { buf += 'even5965'; } else { buf += 'odd'; }
+  buf += 'freight5966-' + acc.toString();
+  for (let i5967 = 0; i5967 < 6; i5967++) {
+    acc = (acc + i5967 * 13 + 441) % 100003;
+  }
+  buf += 'transit5968-' + acc.toString();
+  m01.set('k5969', acc % 997);
+  acc = acc + 365 - (acc % 20);
+  if (acc % 25 === 0) { buf += 'even5971'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's05972'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  for (let i5973 = 0; i5973 < 10; i5973++) {
+    acc = (acc + i5973 * 13 + 301) % 100003;
+  }
+  if (acc % 23 === 0) { buf += 'even5974'; } else { buf += 'odd'; }
+  acc = acc + 833 - (acc % 16);
+  let w5976: number = acc % 23;
+  while (w5976 > 4) { w5976 = Math.floor(w5976 / 2); }
+  acc += w5976;
+  for (let i5977 = 0; i5977 < 9; i5977++) {
+    acc = (acc + i5977 * 13 + 568) % 100003;
+  }
+  const cf5978: Array<(x: number) => number> = [];
+  cf5978.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5978.push((x: number): number => (x + 32) % 10007);
+  acc = cf5978[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi5979' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 7871) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5981');
+  for (let i5982 = 0; i5982 < 7; i5982++) {
+    acc = (acc + i5982 * 13 + 853) % 100003;
+  }
+  buf += `q5983:${acc % 97}`;
+  const ix5984: number = buf.indexOf('p0');
+  if (ix5984 > 12) { buf = buf.substring(0, 32); } else if (ix5984 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5985');
+  const ix5986: number = buf.indexOf('p0');
+  if (ix5986 > 12) { buf = buf.substring(0, 32); } else if (ix5986 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi5987' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x5988');
+  buf += `q5989:${acc % 97}`;
+  if (acc % 7 === 0) { buf += 'even5990'; } else { buf += 'odd'; }
+  if (m01.has('k5991')) {
+    const gv5991: number = m01.get('k5991') as number;
+    acc = (acc + gv5991) % 10007;
+  }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-5992'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 24 === 0) { buf += 'even5993'; } else { buf += 'odd'; }
+  if (acc % 18 === 0) { buf += 'even5994'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const t05996: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t05996;
+  acc = (acc * 31 + 6695) % 65521;
+  const ix5998: number = buf.indexOf('p0');
+  if (ix5998 > 12) { buf = buf.substring(0, 32); } else if (ix5998 >= 0) { buf += 'i'; }
+  const cf5999: Array<(x: number) => number> = [];
+  cf5999.push((x: number): number => (x * 3 + acc) % 65521);
+  cf5999.push((x: number): number => (x + 116) % 10007);
+  acc = cf5999[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6000' : 'lo') + acc.toString(16);
+  buf += `q6001:${acc % 97}`;
+  buf += `q6002:${acc % 97}`;
+  buf += `q6003:${acc % 97}`;
+  let w6004: number = acc % 23;
+  while (w6004 > 4) { w6004 = Math.floor(w6004 / 2); }
+  acc += w6004;
+  buf += `q6005:${acc % 97}`;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-6006'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'portal6007-' + acc.toString();
+  acc = (acc * 31 + 847) % 65521;
+  buf += `q6009:${acc % 97}`;
+  for (let i6010 = 0; i6010 < 11; i6010++) {
+    acc = (acc + i6010 * 13 + 619) % 100003;
+  }
+  let w6011: number = acc % 23;
+  while (w6011 > 4) { w6011 = Math.floor(w6011 / 2); }
+  acc += w6011;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6012'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6013: Array<(x: number) => number> = [];
+  cf6013.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6013.push((x: number): number => (x + 74) % 10007);
+  acc = cf6013[acc & 1](acc % 9973);
+  acc = (acc * 31 + 7991) % 65521;
+  if (m01.has('k6015')) {
+    const gv6015: number = m01.get('k6015') as number;
+    acc = (acc + gv6015) % 10007;
+  }
+  m01.set('k6016', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6017');
+  const cf6018: Array<(x: number) => number> = [];
+  cf6018.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6018.push((x: number): number => (x + 99) % 10007);
+  acc = cf6018[acc & 1](acc % 9973);
+  m01.set('k6019', acc % 997);
+  buf += 'rebate6020-' + acc.toString();
+  let w6021: number = acc % 23;
+  while (w6021 > 4) { w6021 = Math.floor(w6021 / 2); }
+  acc += w6021;
+  let w6022: number = acc % 23;
+  while (w6022 > 4) { w6022 = Math.floor(w6022 / 2); }
+  acc += w6022;
+  const t06023: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06023;
+  const t06024: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06024;
+  buf += `q6025:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6026');
+  let w6027: number = acc % 23;
+  while (w6027 > 4) { w6027 = Math.floor(w6027 / 2); }
+  acc += w6027;
+  const db6028: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6028.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even6029'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 6581) % 65521;
+  buf += `q6031:${acc % 97}`;
+  const cf6032: Array<(x: number) => number> = [];
+  cf6032.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6032.push((x: number): number => (x + 47) % 10007);
+  acc = cf6032[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  const rc6034: Rec0 = { id: acc % 1000, tag: 't6034', score: acc % 100 };
+  acc = (acc + rc6034.score) % 65521;
+  buf += rc6034.tag;
+  for (let i6035 = 0; i6035 < 11; i6035++) {
+    acc = (acc + i6035 * 13 + 577) % 100003;
+  }
+  const rc6036: Rec0 = { id: acc % 1000, tag: 't6036', score: acc % 100 };
+  acc = (acc + rc6036.score) % 65521;
+  buf += rc6036.tag;
+  acc = (acc * 31 + 6572) % 65521;
+  const ix6038: number = buf.indexOf('p0');
+  if (ix6038 > 12) { buf = buf.substring(0, 32); } else if (ix6038 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 8111) % 65521;
+  let w6040: number = acc % 23;
+  while (w6040 > 4) { w6040 = Math.floor(w6040 / 2); }
+  acc += w6040;
+  arr.push(acc % 1000);
+  acc = acc + 522 - (acc % 30);
+  try { if (acc % 29 === 16) { throw new Error('synthetic-6043'); } acc += 47; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q6044:${acc % 97}`;
+  m01.set('k6045', acc % 997);
+  let w6046: number = acc % 23;
+  while (w6046 > 4) { w6046 = Math.floor(w6046 / 2); }
+  acc += w6046;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6047');
+  m01.set('k6048', acc % 997);
+  buf += (acc > 500 ? 'hi6049' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  for (let i6051 = 0; i6051 < 5; i6051++) {
+    acc = (acc + i6051 * 13 + 264) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6052');
+  const ix6053: number = buf.indexOf('p0');
+  if (ix6053 > 12) { buf = buf.substring(0, 32); } else if (ix6053 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 9999) % 65521;
+  buf += (acc > 500 ? 'hi6055' : 'lo') + acc.toString(16);
+  for (let i6056 = 0; i6056 < 4; i6056++) {
+    acc = (acc + i6056 * 13 + 890) % 100003;
+  }
+  buf += (acc > 500 ? 'hi6057' : 'lo') + acc.toString(16);
+  acc = acc + 110 - (acc % 91);
+  switch (acc & 3) {
+    case 0: buf += 's06059'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  m01.set('k6061', acc % 997);
+  for (let i6062 = 0; i6062 < 7; i6062++) {
+    acc = (acc + i6062 * 13 + 686) % 100003;
+  }
+  const db6063: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6063.length) % 65521;
+  const ix6064: number = buf.indexOf('p0');
+  if (ix6064 > 12) { buf = buf.substring(0, 32); } else if (ix6064 >= 0) { buf += 'i'; }
+  const db6065: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6065.length) % 65521;
+  m01.set('k6066', acc % 997);
+  const cf6067: Array<(x: number) => number> = [];
+  cf6067.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6067.push((x: number): number => (x + 186) % 10007);
+  acc = cf6067[acc & 1](acc % 9973);
+  try { if (acc % 29 === 23) { throw new Error('synthetic-6068'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 11 === 0) { buf += 'even6069'; } else { buf += 'odd'; }
+  const ix6070: number = buf.indexOf('p0');
+  if (ix6070 > 12) { buf = buf.substring(0, 32); } else if (ix6070 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06071'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  m01.set('k6072', acc % 997);
+  acc = (acc * 31 + 9795) % 65521;
+  buf += (acc > 500 ? 'hi6074' : 'lo') + acc.toString(16);
+  const cf6075: Array<(x: number) => number> = [];
+  cf6075.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6075.push((x: number): number => (x + 68) % 10007);
+  acc = cf6075[acc & 1](acc % 9973);
+  const db6076: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6076.length) % 65521;
+  m01.set('k6077', acc % 997);
+  if (m01.has('k6078')) {
+    const gv6078: number = m01.get('k6078') as number;
+    acc = (acc + gv6078) % 10007;
+  }
+  const rc6079: Rec0 = { id: acc % 1000, tag: 't6079', score: acc % 100 };
+  acc = (acc + rc6079.score) % 65521;
+  buf += rc6079.tag;
+  if (acc % 25 === 0) { buf += 'even6080'; } else { buf += 'odd'; }
+  for (let i6081 = 0; i6081 < 3; i6081++) {
+    acc = (acc + i6081 * 13 + 86) % 100003;
+  }
+  acc = acc + 488 - (acc % 70);
+  buf += `q6083:${acc % 97}`;
+  buf += `q6084:${acc % 97}`;
+  let w6085: number = acc % 23;
+  while (w6085 > 4) { w6085 = Math.floor(w6085 / 2); }
+  acc += w6085;
+  arr.push(acc % 1000);
+  buf += `q6087:${acc % 97}`;
+  const t06088: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06088;
+  buf += 'depot6089-' + acc.toString();
+  acc = acc + 458 - (acc % 18);
+  if (m01.has('k6091')) {
+    const gv6091: number = m01.get('k6091') as number;
+    acc = (acc + gv6091) % 10007;
+  }
+  buf += 'journey6092-' + acc.toString();
+  if (acc % 27 === 0) { buf += 'even6093'; } else { buf += 'odd'; }
+  const rc6094: Rec0 = { id: acc % 1000, tag: 't6094', score: acc % 100 };
+  acc = (acc + rc6094.score) % 65521;
+  buf += rc6094.tag;
+  buf += 'depot6095-' + acc.toString();
+  acc = (acc * 31 + 2915) % 65521;
+  buf += (acc > 500 ? 'hi6097' : 'lo') + acc.toString(16);
+  const cf6098: Array<(x: number) => number> = [];
+  cf6098.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6098.push((x: number): number => (x + 144) % 10007);
+  acc = cf6098[acc & 1](acc % 9973);
+  buf += 'sku6099-' + acc.toString();
+  buf += (acc > 500 ? 'hi6100' : 'lo') + acc.toString(16);
+  buf += 'waybill6101-' + acc.toString();
+  let w6102: number = acc % 23;
+  while (w6102 > 4) { w6102 = Math.floor(w6102 / 2); }
+  acc += w6102;
+  let w6103: number = acc % 23;
+  while (w6103 > 4) { w6103 = Math.floor(w6103 / 2); }
+  acc += w6103;
+  for (let i6104 = 0; i6104 < 9; i6104++) {
+    acc = (acc + i6104 * 13 + 647) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06105'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const t06106: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06106;
+  buf += (acc > 500 ? 'hi6107' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 6164) % 65521;
+  const db6109: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6109.length) % 65521;
+  let w6110: number = acc % 23;
+  while (w6110 > 4) { w6110 = Math.floor(w6110 / 2); }
+  acc += w6110;
+  arr.push(acc % 1000);
+  if (m01.has('k6112')) {
+    const gv6112: number = m01.get('k6112') as number;
+    acc = (acc + gv6112) % 10007;
+  }
+  const db6113: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6113.length) % 65521;
+  buf += 'balance6114-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += 'invoice6116-' + acc.toString();
+  const rc6117: Rec0 = { id: acc % 1000, tag: 't6117', score: acc % 100 };
+  acc = (acc + rc6117.score) % 65521;
+  buf += rc6117.tag;
+  acc = acc + 330 - (acc % 11);
+  acc = (acc * 31 + 6444) % 65521;
+  const t06120: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06120;
+  switch (acc & 3) {
+    case 0: buf += 's06121'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const ix6122: number = buf.indexOf('p0');
+  if (ix6122 > 12) { buf = buf.substring(0, 32); } else if (ix6122 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6123');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6124');
+  acc = (acc * 31 + 9601) % 65521;
+  buf += 'tariff6126-' + acc.toString();
+  try { if (acc % 29 === 10) { throw new Error('synthetic-6127'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix6128: number = buf.indexOf('p0');
+  if (ix6128 > 12) { buf = buf.substring(0, 32); } else if (ix6128 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06129'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  let w6130: number = acc % 23;
+  while (w6130 > 4) { w6130 = Math.floor(w6130 / 2); }
+  acc += w6130;
+  switch (acc & 3) {
+    case 0: buf += 's06131'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const rc6132: Rec0 = { id: acc % 1000, tag: 't6132', score: acc % 100 };
+  acc = (acc + rc6132.score) % 65521;
+  buf += rc6132.tag;
+  acc = (acc * 31 + 9261) % 65521;
+  const ix6134: number = buf.indexOf('p0');
+  if (ix6134 > 12) { buf = buf.substring(0, 32); } else if (ix6134 >= 0) { buf += 'i'; }
+  const ix6135: number = buf.indexOf('p0');
+  if (ix6135 > 12) { buf = buf.substring(0, 32); } else if (ix6135 >= 0) { buf += 'i'; }
+  const t06136: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06136;
+  const ix6137: number = buf.indexOf('p0');
+  if (ix6137 > 12) { buf = buf.substring(0, 32); } else if (ix6137 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  for (let i6139 = 0; i6139 < 3; i6139++) {
+    acc = (acc + i6139 * 13 + 611) % 100003;
+  }
+  buf += (acc > 500 ? 'hi6140' : 'lo') + acc.toString(16);
+  m01.set('k6141', acc % 997);
+  buf += 'routeplan6142-' + acc.toString();
+  if (m01.has('k6143')) {
+    const gv6143: number = m01.get('k6143') as number;
+    acc = (acc + gv6143) % 10007;
+  }
+  if (m01.has('k6144')) {
+    const gv6144: number = m01.get('k6144') as number;
+    acc = (acc + gv6144) % 10007;
+  }
+  acc = acc + 682 - (acc % 49);
+  acc = (acc * 31 + 5017) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6147');
+  acc = acc + 845 - (acc % 64);
+  buf += 'vendor6149-' + acc.toString();
+  arr.push(acc % 1000);
+  if (m01.has('k6151')) {
+    const gv6151: number = m01.get('k6151') as number;
+    acc = (acc + gv6151) % 10007;
+  }
+  buf += `q6152:${acc % 97}`;
+  const rc6153: Rec0 = { id: acc % 1000, tag: 't6153', score: acc % 100 };
+  acc = (acc + rc6153.score) % 65521;
+  buf += rc6153.tag;
+  buf += `q6154:${acc % 97}`;
+  const t06155: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06155;
+  if (m01.has('k6156')) {
+    const gv6156: number = m01.get('k6156') as number;
+    acc = (acc + gv6156) % 10007;
+  }
+  acc = acc + 472 - (acc % 89);
+  if (m01.has('k6158')) {
+    const gv6158: number = m01.get('k6158') as number;
+    acc = (acc + gv6158) % 10007;
+  }
+  const t06159: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06159;
+  m01.set('k6160', acc % 997);
+  const t06161: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06161;
+  const cf6162: Array<(x: number) => number> = [];
+  cf6162.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6162.push((x: number): number => (x + 151) % 10007);
+  acc = cf6162[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6163' : 'lo') + acc.toString(16);
+  acc = acc + 333 - (acc % 53);
+  acc = acc + 788 - (acc % 93);
+  acc = acc + 651 - (acc % 68);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-6167'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6168');
+  const ix6169: number = buf.indexOf('p0');
+  if (ix6169 > 12) { buf = buf.substring(0, 32); } else if (ix6169 >= 0) { buf += 'i'; }
+  const db6170: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6170.length) % 65521;
+  buf += 'waybill6171-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's06172'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  m01.set('k6173', acc % 997);
+  const rc6174: Rec0 = { id: acc % 1000, tag: 't6174', score: acc % 100 };
+  acc = (acc + rc6174.score) % 65521;
+  buf += rc6174.tag;
+  const ix6175: number = buf.indexOf('p0');
+  if (ix6175 > 12) { buf = buf.substring(0, 32); } else if (ix6175 >= 0) { buf += 'i'; }
+  m01.set('k6176', acc % 997);
+  buf += (acc > 500 ? 'hi6177' : 'lo') + acc.toString(16);
+  for (let i6178 = 0; i6178 < 10; i6178++) {
+    acc = (acc + i6178 * 13 + 959) % 100003;
+  }
+  if (acc % 24 === 0) { buf += 'even6179'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6180');
+  for (let i6181 = 0; i6181 < 7; i6181++) {
+    acc = (acc + i6181 * 13 + 288) % 100003;
+  }
+  if (m01.has('k6182')) {
+    const gv6182: number = m01.get('k6182') as number;
+    acc = (acc + gv6182) % 10007;
+  }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 2) { throw new Error('synthetic-6184'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k6185')) {
+    const gv6185: number = m01.get('k6185') as number;
+    acc = (acc + gv6185) % 10007;
+  }
+  if (acc % 27 === 0) { buf += 'even6186'; } else { buf += 'odd'; }
+  const rc6187: Rec0 = { id: acc % 1000, tag: 't6187', score: acc % 100 };
+  acc = (acc + rc6187.score) % 65521;
+  buf += rc6187.tag;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-6188'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q6189:${acc % 97}`;
+  if (m01.has('k6190')) {
+    const gv6190: number = m01.get('k6190') as number;
+    acc = (acc + gv6190) % 10007;
+  }
+  const ix6191: number = buf.indexOf('p0');
+  if (ix6191 > 12) { buf = buf.substring(0, 32); } else if (ix6191 >= 0) { buf += 'i'; }
+  if (m01.has('k6192')) {
+    const gv6192: number = m01.get('k6192') as number;
+    acc = (acc + gv6192) % 10007;
+  }
+  arr.push(acc % 1000);
+  buf += 'policy6194-' + acc.toString();
+  acc = acc + 974 - (acc % 91);
+  const t06196: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06196;
+  let w6197: number = acc % 23;
+  while (w6197 > 4) { w6197 = Math.floor(w6197 / 2); }
+  acc += w6197;
+  buf += (acc > 500 ? 'hi6198' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-6199'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q6200:${acc % 97}`;
+  m01.set('k6201', acc % 997);
+  acc = acc + 605 - (acc % 36);
+  const t06203: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06203;
+  const db6204: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6204.length) % 65521;
+  const db6205: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6205.length) % 65521;
+  const cf6206: Array<(x: number) => number> = [];
+  cf6206.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6206.push((x: number): number => (x + 42) % 10007);
+  acc = cf6206[acc & 1](acc % 9973);
+  const db6207: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6207.length) % 65521;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-6208'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 15 === 0) { buf += 'even6209'; } else { buf += 'odd'; }
+  const db6210: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6210.length) % 65521;
+  acc = (acc * 31 + 8987) % 65521;
+  acc = (acc * 31 + 4663) % 65521;
+  const rc6213: Rec0 = { id: acc % 1000, tag: 't6213', score: acc % 100 };
+  acc = (acc + rc6213.score) % 65521;
+  buf += rc6213.tag;
+  const cf6214: Array<(x: number) => number> = [];
+  cf6214.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6214.push((x: number): number => (x + 67) % 10007);
+  acc = cf6214[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6215' : 'lo') + acc.toString(16);
+  acc = acc + 813 - (acc % 25);
+  const cf6217: Array<(x: number) => number> = [];
+  cf6217.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6217.push((x: number): number => (x + 197) % 10007);
+  acc = cf6217[acc & 1](acc % 9973);
+  const ix6218: number = buf.indexOf('p0');
+  if (ix6218 > 12) { buf = buf.substring(0, 32); } else if (ix6218 >= 0) { buf += 'i'; }
+  m01.set('k6219', acc % 997);
+  for (let i6220 = 0; i6220 < 10; i6220++) {
+    acc = (acc + i6220 * 13 + 966) % 100003;
+  }
+  const cf6221: Array<(x: number) => number> = [];
+  cf6221.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6221.push((x: number): number => (x + 13) % 10007);
+  acc = cf6221[acc & 1](acc % 9973);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-6222'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's06223'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const db6224: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6224.length) % 65521;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-6225'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 547) % 65521;
+  const cf6227: Array<(x: number) => number> = [];
+  cf6227.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6227.push((x: number): number => (x + 136) % 10007);
+  acc = cf6227[acc & 1](acc % 9973);
+  acc = acc + 302 - (acc % 27);
+  const cf6229: Array<(x: number) => number> = [];
+  cf6229.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6229.push((x: number): number => (x + 166) % 10007);
+  acc = cf6229[acc & 1](acc % 9973);
+  buf += 'shelf6230-' + acc.toString();
+  const ix6231: number = buf.indexOf('p0');
+  if (ix6231 > 12) { buf = buf.substring(0, 32); } else if (ix6231 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-6232'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc6233: Rec0 = { id: acc % 1000, tag: 't6233', score: acc % 100 };
+  acc = (acc + rc6233.score) % 65521;
+  buf += rc6233.tag;
+  const cf6234: Array<(x: number) => number> = [];
+  cf6234.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6234.push((x: number): number => (x + 46) % 10007);
+  acc = cf6234[acc & 1](acc % 9973);
+  const rc6235: Rec0 = { id: acc % 1000, tag: 't6235', score: acc % 100 };
+  acc = (acc + rc6235.score) % 65521;
+  buf += rc6235.tag;
+  arr.push(acc % 1000);
+  m01.set('k6237', acc % 997);
+  m01.set('k6238', acc % 997);
+  let w6239: number = acc % 23;
+  while (w6239 > 4) { w6239 = Math.floor(w6239 / 2); }
+  acc += w6239;
+  buf += (acc > 500 ? 'hi6240' : 'lo') + acc.toString(16);
+  if (m01.has('k6241')) {
+    const gv6241: number = m01.get('k6241') as number;
+    acc = (acc + gv6241) % 10007;
+  }
+  const t06242: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06242;
+  const ix6243: number = buf.indexOf('p0');
+  if (ix6243 > 12) { buf = buf.substring(0, 32); } else if (ix6243 >= 0) { buf += 'i'; }
+  const rc6244: Rec0 = { id: acc % 1000, tag: 't6244', score: acc % 100 };
+  acc = (acc + rc6244.score) % 65521;
+  buf += rc6244.tag;
+  m01.set('k6245', acc % 997);
+  const rc6246: Rec0 = { id: acc % 1000, tag: 't6246', score: acc % 100 };
+  acc = (acc + rc6246.score) % 65521;
+  buf += rc6246.tag;
+  const ix6247: number = buf.indexOf('p0');
+  if (ix6247 > 12) { buf = buf.substring(0, 32); } else if (ix6247 >= 0) { buf += 'i'; }
+  const cf6248: Array<(x: number) => number> = [];
+  cf6248.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6248.push((x: number): number => (x + 39) % 10007);
+  acc = cf6248[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's06249'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const db6250: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6250.length) % 65521;
+  const t06251: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06251;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6252');
+  const rc6253: Rec0 = { id: acc % 1000, tag: 't6253', score: acc % 100 };
+  acc = (acc + rc6253.score) % 65521;
+  buf += rc6253.tag;
+  for (let i6254 = 0; i6254 < 3; i6254++) {
+    acc = (acc + i6254 * 13 + 505) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6255');
+  buf += (acc > 500 ? 'hi6256' : 'lo') + acc.toString(16);
+  if (m01.has('k6257')) {
+    const gv6257: number = m01.get('k6257') as number;
+    acc = (acc + gv6257) % 10007;
+  }
+  const ix6258: number = buf.indexOf('p0');
+  if (ix6258 > 12) { buf = buf.substring(0, 32); } else if (ix6258 >= 0) { buf += 'i'; }
+  buf += `q6259:${acc % 97}`;
+  m01.set('k6260', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's06261'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6262');
+  let w6263: number = acc % 23;
+  while (w6263 > 4) { w6263 = Math.floor(w6263 / 2); }
+  acc += w6263;
+  if (acc % 6 === 0) { buf += 'even6264'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const ix6266: number = buf.indexOf('p0');
+  if (ix6266 > 12) { buf = buf.substring(0, 32); } else if (ix6266 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi6267' : 'lo') + acc.toString(16);
+  acc = acc + 528 - (acc % 36);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6269');
+  buf += 'client6270-' + acc.toString();
+  const ix6271: number = buf.indexOf('p0');
+  if (ix6271 > 12) { buf = buf.substring(0, 32); } else if (ix6271 >= 0) { buf += 'i'; }
+  buf += 'order6272-' + acc.toString();
+  acc = acc + 514 - (acc % 78);
+  let w6274: number = acc % 23;
+  while (w6274 > 4) { w6274 = Math.floor(w6274 / 2); }
+  acc += w6274;
+  acc = acc + 200 - (acc % 33);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6276');
+  if (m01.has('k6277')) {
+    const gv6277: number = m01.get('k6277') as number;
+    acc = (acc + gv6277) % 10007;
+  }
+  const cf6278: Array<(x: number) => number> = [];
+  cf6278.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6278.push((x: number): number => (x + 131) % 10007);
+  acc = cf6278[acc & 1](acc % 9973);
+  buf += 'order6279-' + acc.toString();
+  acc = (acc * 31 + 6174) % 65521;
+  buf += 'pickup6281-' + acc.toString();
+  const rc6282: Rec0 = { id: acc % 1000, tag: 't6282', score: acc % 100 };
+  acc = (acc + rc6282.score) % 65521;
+  buf += rc6282.tag;
+  switch (acc & 3) {
+    case 0: buf += 's06283'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const cf6284: Array<(x: number) => number> = [];
+  cf6284.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6284.push((x: number): number => (x + 50) % 10007);
+  acc = cf6284[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6285');
+  const t06286: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06286;
+  acc = acc + 661 - (acc % 69);
+  acc = acc + 834 - (acc % 32);
+  switch (acc & 3) {
+    case 0: buf += 's06289'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += 'client6291-' + acc.toString();
+  const t06292: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06292;
+  for (let i6293 = 0; i6293 < 7; i6293++) {
+    acc = (acc + i6293 * 13 + 695) % 100003;
+  }
+  const db6294: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6294.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even6295'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's06297'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-6298'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k6299')) {
+    const gv6299: number = m01.get('k6299') as number;
+    acc = (acc + gv6299) % 10007;
+  }
+  const cf6300: Array<(x: number) => number> = [];
+  cf6300.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6300.push((x: number): number => (x + 154) % 10007);
+  acc = cf6300[acc & 1](acc % 9973);
+  const db6301: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6301.length) % 65521;
+  for (let i6302 = 0; i6302 < 6; i6302++) {
+    acc = (acc + i6302 * 13 + 21) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06303'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  for (let i6304 = 0; i6304 < 7; i6304++) {
+    acc = (acc + i6304 * 13 + 320) % 100003;
+  }
+  const db6305: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6305.length) % 65521;
+  const rc6306: Rec0 = { id: acc % 1000, tag: 't6306', score: acc % 100 };
+  acc = (acc + rc6306.score) % 65521;
+  buf += rc6306.tag;
+  const rc6307: Rec0 = { id: acc % 1000, tag: 't6307', score: acc % 100 };
+  acc = (acc + rc6307.score) % 65521;
+  buf += rc6307.tag;
+  buf += 'warehouse6308-' + acc.toString();
+  const rc6309: Rec0 = { id: acc % 1000, tag: 't6309', score: acc % 100 };
+  acc = (acc + rc6309.score) % 65521;
+  buf += rc6309.tag;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's06311'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 7145) % 65521;
+  buf += (acc > 500 ? 'hi6313' : 'lo') + acc.toString(16);
+  m01.set('k6314', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's06315'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  const t06316: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06316;
+  acc = (acc * 31 + 2578) % 65521;
+  buf += 'client6318-' + acc.toString();
+  if (m01.has('k6319')) {
+    const gv6319: number = m01.get('k6319') as number;
+    acc = (acc + gv6319) % 10007;
+  }
+  const ix6320: number = buf.indexOf('p0');
+  if (ix6320 > 12) { buf = buf.substring(0, 32); } else if (ix6320 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3948) % 65521;
+  const t06322: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06322;
+  for (let i6323 = 0; i6323 < 5; i6323++) {
+    acc = (acc + i6323 * 13 + 244) % 100003;
+  }
+  if (acc % 15 === 0) { buf += 'even6324'; } else { buf += 'odd'; }
+  buf += 'depot6325-' + acc.toString();
+  buf += 'freight6326-' + acc.toString();
+  if (m01.has('k6327')) {
+    const gv6327: number = m01.get('k6327') as number;
+    acc = (acc + gv6327) % 10007;
+  }
+  buf += `q6328:${acc % 97}`;
+  if (m01.has('k6329')) {
+    const gv6329: number = m01.get('k6329') as number;
+    acc = (acc + gv6329) % 10007;
+  }
+  m01.set('k6330', acc % 997);
+  const db6331: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6331.length) % 65521;
+  const rc6332: Rec0 = { id: acc % 1000, tag: 't6332', score: acc % 100 };
+  acc = (acc + rc6332.score) % 65521;
+  buf += rc6332.tag;
+  const db6333: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6333.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's06334'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  for (let i6335 = 0; i6335 < 10; i6335++) {
+    acc = (acc + i6335 * 13 + 443) % 100003;
+  }
+  const t06336: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06336;
+  acc = (acc * 31 + 489) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's06338'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6339');
+  try { if (acc % 29 === 20) { throw new Error('synthetic-6340'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6341: Array<(x: number) => number> = [];
+  cf6341.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6341.push((x: number): number => (x + 156) % 10007);
+  acc = cf6341[acc & 1](acc % 9973);
+  const ix6342: number = buf.indexOf('p0');
+  if (ix6342 > 12) { buf = buf.substring(0, 32); } else if (ix6342 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6343');
+  buf += (acc > 500 ? 'hi6344' : 'lo') + acc.toString(16);
+  let w6345: number = acc % 23;
+  while (w6345 > 4) { w6345 = Math.floor(w6345 / 2); }
+  acc += w6345;
+  buf += (acc > 500 ? 'hi6346' : 'lo') + acc.toString(16);
+  m01.set('k6347', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6348');
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6349'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  const t06350: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06350;
+  acc = (acc * 31 + 2819) % 65521;
+  acc = (acc * 31 + 3488) % 65521;
+  const ix6353: number = buf.indexOf('p0');
+  if (ix6353 > 12) { buf = buf.substring(0, 32); } else if (ix6353 >= 0) { buf += 'i'; }
+  if (m01.has('k6354')) {
+    const gv6354: number = m01.get('k6354') as number;
+    acc = (acc + gv6354) % 10007;
+  }
+  const ix6355: number = buf.indexOf('p0');
+  if (ix6355 > 12) { buf = buf.substring(0, 32); } else if (ix6355 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 9416) % 65521;
+  buf += `q6357:${acc % 97}`;
+  const ix6358: number = buf.indexOf('p0');
+  if (ix6358 > 12) { buf = buf.substring(0, 32); } else if (ix6358 >= 0) { buf += 'i'; }
+  const ix6359: number = buf.indexOf('p0');
+  if (ix6359 > 12) { buf = buf.substring(0, 32); } else if (ix6359 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6360');
+  let w6361: number = acc % 23;
+  while (w6361 > 4) { w6361 = Math.floor(w6361 / 2); }
+  acc += w6361;
+  const db6362: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6362.length) % 65521;
+  const cf6363: Array<(x: number) => number> = [];
+  cf6363.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6363.push((x: number): number => (x + 122) % 10007);
+  acc = cf6363[acc & 1](acc % 9973);
+  const ix6364: number = buf.indexOf('p0');
+  if (ix6364 > 12) { buf = buf.substring(0, 32); } else if (ix6364 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-6365'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6366: Array<(x: number) => number> = [];
+  cf6366.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6366.push((x: number): number => (x + 153) % 10007);
+  acc = cf6366[acc & 1](acc % 9973);
+  for (let i6367 = 0; i6367 < 10; i6367++) {
+    acc = (acc + i6367 * 13 + 333) % 100003;
+  }
+  const t06368: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06368;
+  if (m01.has('k6369')) {
+    const gv6369: number = m01.get('k6369') as number;
+    acc = (acc + gv6369) % 10007;
+  }
+  if (acc % 6 === 0) { buf += 'even6370'; } else { buf += 'odd'; }
+  const db6371: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6371.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6372');
+  if (acc % 13 === 0) { buf += 'even6373'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const db6375: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6375.length) % 65521;
+  const t06376: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06376;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6377');
+  let w6378: number = acc % 23;
+  while (w6378 > 4) { w6378 = Math.floor(w6378 / 2); }
+  acc += w6378;
+  buf += `q6379:${acc % 97}`;
+  const db6380: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6380.length) % 65521;
+  if (acc % 10 === 0) { buf += 'even6381'; } else { buf += 'odd'; }
+  const cf6382: Array<(x: number) => number> = [];
+  cf6382.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6382.push((x: number): number => (x + 86) % 10007);
+  acc = cf6382[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's06384'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  m01.set('k6385', acc % 997);
+  const ix6386: number = buf.indexOf('p0');
+  if (ix6386 > 12) { buf = buf.substring(0, 32); } else if (ix6386 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi6387' : 'lo') + acc.toString(16);
+  buf += `q6388:${acc % 97}`;
+  acc = acc + 632 - (acc % 90);
+  buf += (acc > 500 ? 'hi6390' : 'lo') + acc.toString(16);
+  for (let i6391 = 0; i6391 < 3; i6391++) {
+    acc = (acc + i6391 * 13 + 874) % 100003;
+  }
+  buf += 'invoice6392-' + acc.toString();
+  buf += (acc > 500 ? 'hi6393' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 5) { throw new Error('synthetic-6394'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6395');
+  const cf6396: Array<(x: number) => number> = [];
+  cf6396.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6396.push((x: number): number => (x + 53) % 10007);
+  acc = cf6396[acc & 1](acc % 9973);
+  acc = acc + 670 - (acc % 28);
+  const db6398: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6398.length) % 65521;
+  const t06399: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06399;
+  switch (acc & 3) {
+    case 0: buf += 's06400'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const ix6401: number = buf.indexOf('p0');
+  if (ix6401 > 12) { buf = buf.substring(0, 32); } else if (ix6401 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06402'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const t06403: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06403;
+  m01.set('k6404', acc % 997);
+  buf += (acc > 500 ? 'hi6405' : 'lo') + acc.toString(16);
+  buf += `q6406:${acc % 97}`;
+  const cf6407: Array<(x: number) => number> = [];
+  cf6407.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6407.push((x: number): number => (x + 134) % 10007);
+  acc = cf6407[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's06408'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const db6409: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6409.length) % 65521;
+  const rc6410: Rec0 = { id: acc % 1000, tag: 't6410', score: acc % 100 };
+  acc = (acc + rc6410.score) % 65521;
+  buf += rc6410.tag;
+  arr.push(acc % 1000);
+  m01.set('k6412', acc % 997);
+  const t06413: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06413;
+  for (let i6414 = 0; i6414 < 12; i6414++) {
+    acc = (acc + i6414 * 13 + 668) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06415'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  m01.set('k6416', acc % 997);
+  if (m01.has('k6417')) {
+    const gv6417: number = m01.get('k6417') as number;
+    acc = (acc + gv6417) % 10007;
+  }
+  const db6418: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6418.length) % 65521;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-6419'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's06420'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-6421'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 7057) % 65521;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-6423'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 391 - (acc % 30);
+  arr.push(acc % 1000);
+  for (let i6426 = 0; i6426 < 3; i6426++) {
+    acc = (acc + i6426 * 13 + 12) % 100003;
+  }
+  acc = acc + 321 - (acc % 54);
+  const ix6428: number = buf.indexOf('p0');
+  if (ix6428 > 12) { buf = buf.substring(0, 32); } else if (ix6428 >= 0) { buf += 'i'; }
+  acc = acc + 159 - (acc % 45);
+  if (acc % 25 === 0) { buf += 'even6430'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi6431' : 'lo') + acc.toString(16);
+  const rc6432: Rec0 = { id: acc % 1000, tag: 't6432', score: acc % 100 };
+  acc = (acc + rc6432.score) % 65521;
+  buf += rc6432.tag;
+  if (m01.has('k6433')) {
+    const gv6433: number = m01.get('k6433') as number;
+    acc = (acc + gv6433) % 10007;
+  }
+  buf += 'batch6434-' + acc.toString();
+  if (m01.has('k6435')) {
+    const gv6435: number = m01.get('k6435') as number;
+    acc = (acc + gv6435) % 10007;
+  }
+  buf += (acc > 500 ? 'hi6436' : 'lo') + acc.toString(16);
+  m01.set('k6437', acc % 997);
+  const ix6438: number = buf.indexOf('p0');
+  if (ix6438 > 12) { buf = buf.substring(0, 32); } else if (ix6438 >= 0) { buf += 'i'; }
+  m01.set('k6439', acc % 997);
+  buf += (acc > 500 ? 'hi6440' : 'lo') + acc.toString(16);
+  acc = acc + 850 - (acc % 16);
+  for (let i6442 = 0; i6442 < 6; i6442++) {
+    acc = (acc + i6442 * 13 + 665) % 100003;
+  }
+  const cf6443: Array<(x: number) => number> = [];
+  cf6443.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6443.push((x: number): number => (x + 128) % 10007);
+  acc = cf6443[acc & 1](acc % 9973);
+  acc = (acc * 31 + 9294) % 65521;
+  const cf6445: Array<(x: number) => number> = [];
+  cf6445.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6445.push((x: number): number => (x + 184) % 10007);
+  acc = cf6445[acc & 1](acc % 9973);
+  const ix6446: number = buf.indexOf('p0');
+  if (ix6446 > 12) { buf = buf.substring(0, 32); } else if (ix6446 >= 0) { buf += 'i'; }
+  buf += `q6447:${acc % 97}`;
+  try { if (acc % 29 === 12) { throw new Error('synthetic-6448'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc6449: Rec0 = { id: acc % 1000, tag: 't6449', score: acc % 100 };
+  acc = (acc + rc6449.score) % 65521;
+  buf += rc6449.tag;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-6450'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6451: Array<(x: number) => number> = [];
+  cf6451.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6451.push((x: number): number => (x + 64) % 10007);
+  acc = cf6451[acc & 1](acc % 9973);
+  buf += `q6452:${acc % 97}`;
+  for (let i6453 = 0; i6453 < 8; i6453++) {
+    acc = (acc + i6453 * 13 + 130) % 100003;
+  }
+  buf += 'dock6454-' + acc.toString();
+  const cf6455: Array<(x: number) => number> = [];
+  cf6455.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6455.push((x: number): number => (x + 47) % 10007);
+  acc = cf6455[acc & 1](acc % 9973);
+  for (let i6456 = 0; i6456 < 4; i6456++) {
+    acc = (acc + i6456 * 13 + 104) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06457'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const t06458: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06458;
+  m01.set('k6459', acc % 997);
+  buf += (acc > 500 ? 'hi6460' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const cf6462: Array<(x: number) => number> = [];
+  cf6462.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6462.push((x: number): number => (x + 20) % 10007);
+  acc = cf6462[acc & 1](acc % 9973);
+  if (acc % 14 === 0) { buf += 'even6463'; } else { buf += 'odd'; }
+  const cf6464: Array<(x: number) => number> = [];
+  cf6464.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6464.push((x: number): number => (x + 45) % 10007);
+  acc = cf6464[acc & 1](acc % 9973);
+  m01.set('k6465', acc % 997);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 7453) % 65521;
+  buf += 'region6468-' + acc.toString();
+  acc = (acc * 31 + 3158) % 65521;
+  const db6470: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6470.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6471');
+  if (m01.has('k6472')) {
+    const gv6472: number = m01.get('k6472') as number;
+    acc = (acc + gv6472) % 10007;
+  }
+  arr.push(acc % 1000);
+  for (let i6474 = 0; i6474 < 6; i6474++) {
+    acc = (acc + i6474 * 13 + 644) % 100003;
+  }
+  const t06475: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06475;
+  const rc6476: Rec0 = { id: acc % 1000, tag: 't6476', score: acc % 100 };
+  acc = (acc + rc6476.score) % 65521;
+  buf += rc6476.tag;
+  arr.push(acc % 1000);
+  acc = acc + 68 - (acc % 73);
+  acc = (acc * 31 + 6086) % 65521;
+  if (m01.has('k6480')) {
+    const gv6480: number = m01.get('k6480') as number;
+    acc = (acc + gv6480) % 10007;
+  }
+  const rc6481: Rec0 = { id: acc % 1000, tag: 't6481', score: acc % 100 };
+  acc = (acc + rc6481.score) % 65521;
+  buf += rc6481.tag;
+  switch (acc & 3) {
+    case 0: buf += 's06482'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 5381) % 65521;
+  const rc6484: Rec0 = { id: acc % 1000, tag: 't6484', score: acc % 100 };
+  acc = (acc + rc6484.score) % 65521;
+  buf += rc6484.tag;
+  const rc6485: Rec0 = { id: acc % 1000, tag: 't6485', score: acc % 100 };
+  acc = (acc + rc6485.score) % 65521;
+  buf += rc6485.tag;
+  let w6486: number = acc % 23;
+  while (w6486 > 4) { w6486 = Math.floor(w6486 / 2); }
+  acc += w6486;
+  const rc6487: Rec0 = { id: acc % 1000, tag: 't6487', score: acc % 100 };
+  acc = (acc + rc6487.score) % 65521;
+  buf += rc6487.tag;
+  acc = acc + 182 - (acc % 45);
+  if (acc % 27 === 0) { buf += 'even6489'; } else { buf += 'odd'; }
+  buf += `q6490:${acc % 97}`;
+  buf += 'tariff6491-' + acc.toString();
+  acc = (acc * 31 + 9822) % 65521;
+  for (let i6493 = 0; i6493 < 5; i6493++) {
+    acc = (acc + i6493 * 13 + 135) % 100003;
+  }
+  if (acc % 29 === 0) { buf += 'even6494'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6496');
+  m01.set('k6497', acc % 997);
+  acc = (acc * 31 + 6238) % 65521;
+  const db6499: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6499.length) % 65521;
+  const db6500: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6500.length) % 65521;
+  const db6501: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6501.length) % 65521;
+  for (let i6502 = 0; i6502 < 12; i6502++) {
+    acc = (acc + i6502 * 13 + 475) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6504');
+  acc = (acc * 31 + 3636) % 65521;
+  if (m01.has('k6506')) {
+    const gv6506: number = m01.get('k6506') as number;
+    acc = (acc + gv6506) % 10007;
+  }
+  const t06507: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06507;
+  m01.set('k6508', acc % 997);
+  acc = (acc * 31 + 5906) % 65521;
+  if (m01.has('k6510')) {
+    const gv6510: number = m01.get('k6510') as number;
+    acc = (acc + gv6510) % 10007;
+  }
+  const db6511: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6511.length) % 65521;
+  const ix6512: number = buf.indexOf('p0');
+  if (ix6512 > 12) { buf = buf.substring(0, 32); } else if (ix6512 >= 0) { buf += 'i'; }
+  let w6513: number = acc % 23;
+  while (w6513 > 4) { w6513 = Math.floor(w6513 / 2); }
+  acc += w6513;
+  arr.push(acc % 1000);
+  if (m01.has('k6515')) {
+    const gv6515: number = m01.get('k6515') as number;
+    acc = (acc + gv6515) % 10007;
+  }
+  if (acc % 23 === 0) { buf += 'even6516'; } else { buf += 'odd'; }
+  if (m01.has('k6517')) {
+    const gv6517: number = m01.get('k6517') as number;
+    acc = (acc + gv6517) % 10007;
+  }
+  if (m01.has('k6518')) {
+    const gv6518: number = m01.get('k6518') as number;
+    acc = (acc + gv6518) % 10007;
+  }
+  acc = acc + 970 - (acc % 53);
+  let w6520: number = acc % 23;
+  while (w6520 > 4) { w6520 = Math.floor(w6520 / 2); }
+  acc += w6520;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-6521'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 18 === 0) { buf += 'even6522'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's06523'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  m01.set('k6524', acc % 997);
+  const cf6525: Array<(x: number) => number> = [];
+  cf6525.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6525.push((x: number): number => (x + 50) % 10007);
+  acc = cf6525[acc & 1](acc % 9973);
+  const cf6526: Array<(x: number) => number> = [];
+  cf6526.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6526.push((x: number): number => (x + 113) % 10007);
+  acc = cf6526[acc & 1](acc % 9973);
+  const ix6527: number = buf.indexOf('p0');
+  if (ix6527 > 12) { buf = buf.substring(0, 32); } else if (ix6527 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 2835) % 65521;
+  buf += (acc > 500 ? 'hi6529' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-6530'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'depot6531-' + acc.toString();
+  if (m01.has('k6532')) {
+    const gv6532: number = m01.get('k6532') as number;
+    acc = (acc + gv6532) % 10007;
+  }
+  buf += `q6533:${acc % 97}`;
+  acc = (acc * 31 + 8007) % 65521;
+  if (m01.has('k6535')) {
+    const gv6535: number = m01.get('k6535') as number;
+    acc = (acc + gv6535) % 10007;
+  }
+  const db6536: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6536.length) % 65521;
+  const t06537: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06537;
+  acc = acc + 837 - (acc % 58);
+  const rc6539: Rec0 = { id: acc % 1000, tag: 't6539', score: acc % 100 };
+  acc = (acc + rc6539.score) % 65521;
+  buf += rc6539.tag;
+  const cf6540: Array<(x: number) => number> = [];
+  cf6540.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6540.push((x: number): number => (x + 152) % 10007);
+  acc = cf6540[acc & 1](acc % 9973);
+  acc = acc + 281 - (acc % 96);
+  const t06542: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06542;
+  acc = (acc * 31 + 9130) % 65521;
+  const rc6544: Rec0 = { id: acc % 1000, tag: 't6544', score: acc % 100 };
+  acc = (acc + rc6544.score) % 65521;
+  buf += rc6544.tag;
+  for (let i6545 = 0; i6545 < 9; i6545++) {
+    acc = (acc + i6545 * 13 + 467) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06546'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06547'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi6548' : 'lo') + acc.toString(16);
+  let w6549: number = acc % 23;
+  while (w6549 > 4) { w6549 = Math.floor(w6549 / 2); }
+  acc += w6549;
+  const ix6550: number = buf.indexOf('p0');
+  if (ix6550 > 12) { buf = buf.substring(0, 32); } else if (ix6550 >= 0) { buf += 'i'; }
+  m01.set('k6551', acc % 997);
+  const db6552: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6552.length) % 65521;
+  if (m01.has('k6553')) {
+    const gv6553: number = m01.get('k6553') as number;
+    acc = (acc + gv6553) % 10007;
+  }
+  buf += (acc > 500 ? 'hi6554' : 'lo') + acc.toString(16);
+  if (m01.has('k6555')) {
+    const gv6555: number = m01.get('k6555') as number;
+    acc = (acc + gv6555) % 10007;
+  }
+  let w6556: number = acc % 23;
+  while (w6556 > 4) { w6556 = Math.floor(w6556 / 2); }
+  acc += w6556;
+  buf += (acc > 500 ? 'hi6557' : 'lo') + acc.toString(16);
+  let w6558: number = acc % 23;
+  while (w6558 > 4) { w6558 = Math.floor(w6558 / 2); }
+  acc += w6558;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-6560'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 6104) % 65521;
+  const t06562: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06562;
+  m01.set('k6563', acc % 997);
+  const t06564: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06564;
+  for (let i6565 = 0; i6565 < 6; i6565++) {
+    acc = (acc + i6565 * 13 + 18) % 100003;
+  }
+  const db6566: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6566.length) % 65521;
+  const rc6567: Rec0 = { id: acc % 1000, tag: 't6567', score: acc % 100 };
+  acc = (acc + rc6567.score) % 65521;
+  buf += rc6567.tag;
+  const ix6568: number = buf.indexOf('p0');
+  if (ix6568 > 12) { buf = buf.substring(0, 32); } else if (ix6568 >= 0) { buf += 'i'; }
+  const db6569: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6569.length) % 65521;
+  acc = acc + 720 - (acc % 42);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6571'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-6572'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's06573'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-6574'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  const t06575: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06575;
+  buf += (acc > 500 ? 'hi6576' : 'lo') + acc.toString(16);
+  m01.set('k6577', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6578');
+  buf += (acc > 500 ? 'hi6579' : 'lo') + acc.toString(16);
+  for (let i6580 = 0; i6580 < 8; i6580++) {
+    acc = (acc + i6580 * 13 + 210) % 100003;
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-6581'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6582: Array<(x: number) => number> = [];
+  cf6582.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6582.push((x: number): number => (x + 82) % 10007);
+  acc = cf6582[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  let w6584: number = acc % 23;
+  while (w6584 > 4) { w6584 = Math.floor(w6584 / 2); }
+  acc += w6584;
+  const db6585: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6585.length) % 65521;
+  const t06586: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06586;
+  buf += (acc > 500 ? 'hi6587' : 'lo') + acc.toString(16);
+  let w6588: number = acc % 23;
+  while (w6588 > 4) { w6588 = Math.floor(w6588 / 2); }
+  acc += w6588;
+  if (acc % 19 === 0) { buf += 'even6589'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 8501) % 65521;
+  const t06591: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06591;
+  const db6592: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6592.length) % 65521;
+  m01.set('k6593', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's06594'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const ix6595: number = buf.indexOf('p0');
+  if (ix6595 > 12) { buf = buf.substring(0, 32); } else if (ix6595 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-6596'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6597');
+  acc = (acc * 31 + 147) % 65521;
+  const db6599: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6599.length) % 65521;
+  const cf6600: Array<(x: number) => number> = [];
+  cf6600.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6600.push((x: number): number => (x + 109) % 10007);
+  acc = cf6600[acc & 1](acc % 9973);
+  const db6601: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6601.length) % 65521;
+  const t06602: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06602;
+  for (let i6603 = 0; i6603 < 7; i6603++) {
+    acc = (acc + i6603 * 13 + 331) % 100003;
+  }
+  buf += `q6604:${acc % 97}`;
+  buf += 'journey6605-' + acc.toString();
+  buf += `q6606:${acc % 97}`;
+  for (let i6607 = 0; i6607 < 11; i6607++) {
+    acc = (acc + i6607 * 13 + 610) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6608');
+  buf += 'portal6609-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's06610'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06611'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06612'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const ix6613: number = buf.indexOf('p0');
+  if (ix6613 > 12) { buf = buf.substring(0, 32); } else if (ix6613 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi6614' : 'lo') + acc.toString(16);
+  const cf6615: Array<(x: number) => number> = [];
+  cf6615.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6615.push((x: number): number => (x + 47) % 10007);
+  acc = cf6615[acc & 1](acc % 9973);
+  let w6616: number = acc % 23;
+  while (w6616 > 4) { w6616 = Math.floor(w6616 / 2); }
+  acc += w6616;
+  acc = acc + 898 - (acc % 22);
+  acc = acc + 660 - (acc % 19);
+  buf += `q6619:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's06620'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += 'shelf6621-' + acc.toString();
+  const db6622: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6622.length) % 65521;
+  acc = (acc * 31 + 4582) % 65521;
+  buf += (acc > 500 ? 'hi6624' : 'lo') + acc.toString(16);
+  const ix6625: number = buf.indexOf('p0');
+  if (ix6625 > 12) { buf = buf.substring(0, 32); } else if (ix6625 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06626'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6627');
+  const rc6628: Rec0 = { id: acc % 1000, tag: 't6628', score: acc % 100 };
+  acc = (acc + rc6628.score) % 65521;
+  buf += rc6628.tag;
+  const db6629: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6629.length) % 65521;
+  const t06630: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06630;
+  let w6631: number = acc % 23;
+  while (w6631 > 4) { w6631 = Math.floor(w6631 / 2); }
+  acc += w6631;
+  buf += `q6632:${acc % 97}`;
+  arr.push(acc % 1000);
+  const ix6634: number = buf.indexOf('p0');
+  if (ix6634 > 12) { buf = buf.substring(0, 32); } else if (ix6634 >= 0) { buf += 'i'; }
+  for (let i6635 = 0; i6635 < 7; i6635++) {
+    acc = (acc + i6635 * 13 + 887) % 100003;
+  }
+  const ix6636: number = buf.indexOf('p0');
+  if (ix6636 > 12) { buf = buf.substring(0, 32); } else if (ix6636 >= 0) { buf += 'i'; }
+  for (let i6637 = 0; i6637 < 8; i6637++) {
+    acc = (acc + i6637 * 13 + 71) % 100003;
+  }
+  const db6638: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6638.length) % 65521;
+  const t06639: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06639;
+  m01.set('k6640', acc % 997);
+  acc = (acc * 31 + 5878) % 65521;
+  if (m01.has('k6642')) {
+    const gv6642: number = m01.get('k6642') as number;
+    acc = (acc + gv6642) % 10007;
+  }
+  const cf6643: Array<(x: number) => number> = [];
+  cf6643.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6643.push((x: number): number => (x + 146) % 10007);
+  acc = cf6643[acc & 1](acc % 9973);
+  m01.set('k6644', acc % 997);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6645'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6646: Array<(x: number) => number> = [];
+  cf6646.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6646.push((x: number): number => (x + 111) % 10007);
+  acc = cf6646[acc & 1](acc % 9973);
+  const db6647: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6647.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6648');
+  switch (acc & 3) {
+    case 0: buf += 's06649'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const db6650: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6650.length) % 65521;
+  buf += (acc > 500 ? 'hi6651' : 'lo') + acc.toString(16);
+  const cf6652: Array<(x: number) => number> = [];
+  cf6652.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6652.push((x: number): number => (x + 190) % 10007);
+  acc = cf6652[acc & 1](acc % 9973);
+  acc = (acc * 31 + 869) % 65521;
+  const rc6654: Rec0 = { id: acc % 1000, tag: 't6654', score: acc % 100 };
+  acc = (acc + rc6654.score) % 65521;
+  buf += rc6654.tag;
+  const ix6655: number = buf.indexOf('p0');
+  if (ix6655 > 12) { buf = buf.substring(0, 32); } else if (ix6655 >= 0) { buf += 'i'; }
+  if (m01.has('k6656')) {
+    const gv6656: number = m01.get('k6656') as number;
+    acc = (acc + gv6656) % 10007;
+  }
+  arr.push(acc % 1000);
+  buf += 'policy6658-' + acc.toString();
+  let w6659: number = acc % 23;
+  while (w6659 > 4) { w6659 = Math.floor(w6659 / 2); }
+  acc += w6659;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6660');
+  const rc6661: Rec0 = { id: acc % 1000, tag: 't6661', score: acc % 100 };
+  acc = (acc + rc6661.score) % 65521;
+  buf += rc6661.tag;
+  acc = (acc * 31 + 6704) % 65521;
+  let w6663: number = acc % 23;
+  while (w6663 > 4) { w6663 = Math.floor(w6663 / 2); }
+  acc += w6663;
+  m01.set('k6664', acc % 997);
+  const db6665: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6665.length) % 65521;
+  const cf6666: Array<(x: number) => number> = [];
+  cf6666.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6666.push((x: number): number => (x + 71) % 10007);
+  acc = cf6666[acc & 1](acc % 9973);
+  m01.set('k6667', acc % 997);
+  arr.push(acc % 1000);
+  const db6669: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6669.length) % 65521;
+  const db6670: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6670.length) % 65521;
+  buf += `q6671:${acc % 97}`;
+  m01.set('k6672', acc % 997);
+  buf += (acc > 500 ? 'hi6673' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi6674' : 'lo') + acc.toString(16);
+  const ix6675: number = buf.indexOf('p0');
+  if (ix6675 > 12) { buf = buf.substring(0, 32); } else if (ix6675 >= 0) { buf += 'i'; }
+  buf += 'coupon6676-' + acc.toString();
+  acc = (acc * 31 + 4720) % 65521;
+  arr.push(acc % 1000);
+  const cf6679: Array<(x: number) => number> = [];
+  cf6679.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6679.push((x: number): number => (x + 159) % 10007);
+  acc = cf6679[acc & 1](acc % 9973);
+  buf += 'journey6680-' + acc.toString();
+  acc = acc + 910 - (acc % 62);
+  if (acc % 18 === 0) { buf += 'even6682'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  if (acc % 13 === 0) { buf += 'even6684'; } else { buf += 'odd'; }
+  buf += 'quota6685-' + acc.toString();
+  buf += 'journey6686-' + acc.toString();
+  acc = acc + 388 - (acc % 45);
+  buf += 'shelf6688-' + acc.toString();
+  acc = (acc * 31 + 7216) % 65521;
+  if (acc % 24 === 0) { buf += 'even6690'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's06691'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-6692'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 489 - (acc % 52);
+  switch (acc & 3) {
+    case 0: buf += 's06694'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-6695'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 6 === 0) { buf += 'even6696'; } else { buf += 'odd'; }
+  const cf6697: Array<(x: number) => number> = [];
+  cf6697.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6697.push((x: number): number => (x + 137) % 10007);
+  acc = cf6697[acc & 1](acc % 9973);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-6698'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6699: Array<(x: number) => number> = [];
+  cf6699.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6699.push((x: number): number => (x + 171) % 10007);
+  acc = cf6699[acc & 1](acc % 9973);
+  acc = acc + 412 - (acc % 73);
+  const ix6701: number = buf.indexOf('p0');
+  if (ix6701 > 12) { buf = buf.substring(0, 32); } else if (ix6701 >= 0) { buf += 'i'; }
+  for (let i6702 = 0; i6702 < 12; i6702++) {
+    acc = (acc + i6702 * 13 + 394) % 100003;
+  }
+  buf += (acc > 500 ? 'hi6703' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6704');
+  buf += 'depot6705-' + acc.toString();
+  acc = acc + 296 - (acc % 90);
+  arr.push(acc % 1000);
+  const db6708: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6708.length) % 65521;
+  const cf6709: Array<(x: number) => number> = [];
+  cf6709.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6709.push((x: number): number => (x + 124) % 10007);
+  acc = cf6709[acc & 1](acc % 9973);
+  buf += 'pickup6710-' + acc.toString();
+  const t06711: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06711;
+  const t06712: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06712;
+  for (let i6713 = 0; i6713 < 3; i6713++) {
+    acc = (acc + i6713 * 13 + 268) % 100003;
+  }
+  acc = (acc * 31 + 4486) % 65521;
+  acc = acc + 271 - (acc % 56);
+  acc = acc + 733 - (acc % 46);
+  const cf6717: Array<(x: number) => number> = [];
+  cf6717.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6717.push((x: number): number => (x + 96) % 10007);
+  acc = cf6717[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi6719' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const db6721: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6721.length) % 65521;
+  const cf6722: Array<(x: number) => number> = [];
+  cf6722.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6722.push((x: number): number => (x + 124) % 10007);
+  acc = cf6722[acc & 1](acc % 9973);
+  acc = acc + 348 - (acc % 92);
+  const db6724: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6724.length) % 65521;
+  if (m01.has('k6725')) {
+    const gv6725: number = m01.get('k6725') as number;
+    acc = (acc + gv6725) % 10007;
+  }
+  buf += `q6726:${acc % 97}`;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6727'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix6728: number = buf.indexOf('p0');
+  if (ix6728 > 12) { buf = buf.substring(0, 32); } else if (ix6728 >= 0) { buf += 'i'; }
+  const rc6729: Rec0 = { id: acc % 1000, tag: 't6729', score: acc % 100 };
+  acc = (acc + rc6729.score) % 65521;
+  buf += rc6729.tag;
+  const ix6730: number = buf.indexOf('p0');
+  if (ix6730 > 12) { buf = buf.substring(0, 32); } else if (ix6730 >= 0) { buf += 'i'; }
+  const cf6731: Array<(x: number) => number> = [];
+  cf6731.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6731.push((x: number): number => (x + 160) % 10007);
+  acc = cf6731[acc & 1](acc % 9973);
+  buf += `q6732:${acc % 97}`;
+  const cf6733: Array<(x: number) => number> = [];
+  cf6733.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6733.push((x: number): number => (x + 122) % 10007);
+  acc = cf6733[acc & 1](acc % 9973);
+  acc = (acc * 31 + 9584) % 65521;
+  acc = (acc * 31 + 3593) % 65521;
+  const t06736: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06736;
+  if (m01.has('k6737')) {
+    const gv6737: number = m01.get('k6737') as number;
+    acc = (acc + gv6737) % 10007;
+  }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-6738'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  const db6739: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6739.length) % 65521;
+  if (m01.has('k6740')) {
+    const gv6740: number = m01.get('k6740') as number;
+    acc = (acc + gv6740) % 10007;
+  }
+  m01.set('k6741', acc % 997);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-6742'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi6743' : 'lo') + acc.toString(16);
+  if (acc % 25 === 0) { buf += 'even6744'; } else { buf += 'odd'; }
+  const t06745: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06745;
+  switch (acc & 3) {
+    case 0: buf += 's06746'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6747');
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6748'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  const t06749: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06749;
+  arr.push(acc % 1000);
+  const ix6751: number = buf.indexOf('p0');
+  if (ix6751 > 12) { buf = buf.substring(0, 32); } else if (ix6751 >= 0) { buf += 'i'; }
+  buf += `q6752:${acc % 97}`;
+  const cf6753: Array<(x: number) => number> = [];
+  cf6753.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6753.push((x: number): number => (x + 37) % 10007);
+  acc = cf6753[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's06754'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 808 - (acc % 54);
+  const rc6756: Rec0 = { id: acc % 1000, tag: 't6756', score: acc % 100 };
+  acc = (acc + rc6756.score) % 65521;
+  buf += rc6756.tag;
+  for (let i6757 = 0; i6757 < 8; i6757++) {
+    acc = (acc + i6757 * 13 + 993) % 100003;
+  }
+  let w6758: number = acc % 23;
+  while (w6758 > 4) { w6758 = Math.floor(w6758 / 2); }
+  acc += w6758;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6759');
+  buf += 'pallet6760-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6761');
+  m01.set('k6762', acc % 997);
+  if (acc % 28 === 0) { buf += 'even6763'; } else { buf += 'odd'; }
+  let w6764: number = acc % 23;
+  while (w6764 > 4) { w6764 = Math.floor(w6764 / 2); }
+  acc += w6764;
+  if (m01.has('k6765')) {
+    const gv6765: number = m01.get('k6765') as number;
+    acc = (acc + gv6765) % 10007;
+  }
+  arr.push(acc % 1000);
+  const cf6767: Array<(x: number) => number> = [];
+  cf6767.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6767.push((x: number): number => (x + 128) % 10007);
+  acc = cf6767[acc & 1](acc % 9973);
+  const rc6768: Rec0 = { id: acc % 1000, tag: 't6768', score: acc % 100 };
+  acc = (acc + rc6768.score) % 65521;
+  buf += rc6768.tag;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-6769'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc6770: Rec0 = { id: acc % 1000, tag: 't6770', score: acc % 100 };
+  acc = (acc + rc6770.score) % 65521;
+  buf += rc6770.tag;
+  const ix6771: number = buf.indexOf('p0');
+  if (ix6771 > 12) { buf = buf.substring(0, 32); } else if (ix6771 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6772');
+  switch (acc & 3) {
+    case 0: buf += 's06773'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 3456) % 65521;
+  if (acc % 14 === 0) { buf += 'even6775'; } else { buf += 'odd'; }
+  buf += `q6776:${acc % 97}`;
+  const ix6777: number = buf.indexOf('p0');
+  if (ix6777 > 12) { buf = buf.substring(0, 32); } else if (ix6777 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06778'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  buf += `q6779:${acc % 97}`;
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 6738) % 65521;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-6782'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc6783: Rec0 = { id: acc % 1000, tag: 't6783', score: acc % 100 };
+  acc = (acc + rc6783.score) % 65521;
+  buf += rc6783.tag;
+  const ix6784: number = buf.indexOf('p0');
+  if (ix6784 > 12) { buf = buf.substring(0, 32); } else if (ix6784 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3126) % 65521;
+  const db6786: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6786.length) % 65521;
+  const cf6787: Array<(x: number) => number> = [];
+  cf6787.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6787.push((x: number): number => (x + 157) % 10007);
+  acc = cf6787[acc & 1](acc % 9973);
+  acc = (acc * 31 + 5459) % 65521;
+  const ix6789: number = buf.indexOf('p0');
+  if (ix6789 > 12) { buf = buf.substring(0, 32); } else if (ix6789 >= 0) { buf += 'i'; }
+  buf += 'freight6790-' + acc.toString();
+  buf += `q6791:${acc % 97}`;
+  acc = acc + 947 - (acc % 44);
+  if (m01.has('k6793')) {
+    const gv6793: number = m01.get('k6793') as number;
+    acc = (acc + gv6793) % 10007;
+  }
+  const cf6794: Array<(x: number) => number> = [];
+  cf6794.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6794.push((x: number): number => (x + 189) % 10007);
+  acc = cf6794[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6795');
+  const rc6796: Rec0 = { id: acc % 1000, tag: 't6796', score: acc % 100 };
+  acc = (acc + rc6796.score) % 65521;
+  buf += rc6796.tag;
+  let w6797: number = acc % 23;
+  while (w6797 > 4) { w6797 = Math.floor(w6797 / 2); }
+  acc += w6797;
+  const db6798: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6798.length) % 65521;
+  buf += 'payout6799-' + acc.toString();
+  if (m01.has('k6800')) {
+    const gv6800: number = m01.get('k6800') as number;
+    acc = (acc + gv6800) % 10007;
+  }
+  const cf6801: Array<(x: number) => number> = [];
+  cf6801.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6801.push((x: number): number => (x + 34) % 10007);
+  acc = cf6801[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-6803'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'dock6804-' + acc.toString();
+  const db6805: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6805.length) % 65521;
+  acc = (acc * 31 + 1480) % 65521;
+  buf += `q6807:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's06808'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  const rc6809: Rec0 = { id: acc % 1000, tag: 't6809', score: acc % 100 };
+  acc = (acc + rc6809.score) % 65521;
+  buf += rc6809.tag;
+  if (m01.has('k6810')) {
+    const gv6810: number = m01.get('k6810') as number;
+    acc = (acc + gv6810) % 10007;
+  }
+  if (m01.has('k6811')) {
+    const gv6811: number = m01.get('k6811') as number;
+    acc = (acc + gv6811) % 10007;
+  }
+  acc = acc + 879 - (acc % 76);
+  for (let i6813 = 0; i6813 < 12; i6813++) {
+    acc = (acc + i6813 * 13 + 861) % 100003;
+  }
+  acc = acc + 483 - (acc % 32);
+  const cf6815: Array<(x: number) => number> = [];
+  cf6815.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6815.push((x: number): number => (x + 28) % 10007);
+  acc = cf6815[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6816' : 'lo') + acc.toString(16);
+  const t06817: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06817;
+  arr.push(acc % 1000);
+  m01.set('k6819', acc % 997);
+  buf += (acc > 500 ? 'hi6820' : 'lo') + acc.toString(16);
+  const rc6821: Rec0 = { id: acc % 1000, tag: 't6821', score: acc % 100 };
+  acc = (acc + rc6821.score) % 65521;
+  buf += rc6821.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6822');
+  acc = (acc * 31 + 2186) % 65521;
+  buf += 'freight6824-' + acc.toString();
+  acc = (acc * 31 + 5762) % 65521;
+  buf += (acc > 500 ? 'hi6826' : 'lo') + acc.toString(16);
+  let w6827: number = acc % 23;
+  while (w6827 > 4) { w6827 = Math.floor(w6827 / 2); }
+  acc += w6827;
+  const rc6828: Rec0 = { id: acc % 1000, tag: 't6828', score: acc % 100 };
+  acc = (acc + rc6828.score) % 65521;
+  buf += rc6828.tag;
+  switch (acc & 3) {
+    case 0: buf += 's06829'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const db6830: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6830.length) % 65521;
+  try { if (acc % 29 === 16) { throw new Error('synthetic-6831'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-6832'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i6833 = 0; i6833 < 10; i6833++) {
+    acc = (acc + i6833 * 13 + 429) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06834'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi6835' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  for (let i6837 = 0; i6837 < 4; i6837++) {
+    acc = (acc + i6837 * 13 + 579) % 100003;
+  }
+  if (m01.has('k6838')) {
+    const gv6838: number = m01.get('k6838') as number;
+    acc = (acc + gv6838) % 10007;
+  }
+  acc = acc + 940 - (acc % 13);
+  if (m01.has('k6840')) {
+    const gv6840: number = m01.get('k6840') as number;
+    acc = (acc + gv6840) % 10007;
+  }
+  for (let i6841 = 0; i6841 < 7; i6841++) {
+    acc = (acc + i6841 * 13 + 75) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06842'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  if (acc % 30 === 0) { buf += 'even6843'; } else { buf += 'odd'; }
+  for (let i6844 = 0; i6844 < 6; i6844++) {
+    acc = (acc + i6844 * 13 + 845) % 100003;
+  }
+  acc = (acc * 31 + 4354) % 65521;
+  buf += (acc > 500 ? 'hi6846' : 'lo') + acc.toString(16);
+  m01.set('k6847', acc % 997);
+  if (m01.has('k6848')) {
+    const gv6848: number = m01.get('k6848') as number;
+    acc = (acc + gv6848) % 10007;
+  }
+  acc = (acc * 31 + 2214) % 65521;
+  if (m01.has('k6850')) {
+    const gv6850: number = m01.get('k6850') as number;
+    acc = (acc + gv6850) % 10007;
+  }
+  const rc6851: Rec0 = { id: acc % 1000, tag: 't6851', score: acc % 100 };
+  acc = (acc + rc6851.score) % 65521;
+  buf += rc6851.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6852');
+  for (let i6853 = 0; i6853 < 6; i6853++) {
+    acc = (acc + i6853 * 13 + 148) % 100003;
+  }
+  const rc6854: Rec0 = { id: acc % 1000, tag: 't6854', score: acc % 100 };
+  acc = (acc + rc6854.score) % 65521;
+  buf += rc6854.tag;
+  m01.set('k6855', acc % 997);
+  buf += (acc > 500 ? 'hi6856' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8231) % 65521;
+  const t06858: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06858;
+  acc = (acc * 31 + 2130) % 65521;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  if (m01.has('k6862')) {
+    const gv6862: number = m01.get('k6862') as number;
+    acc = (acc + gv6862) % 10007;
+  }
+  const cf6863: Array<(x: number) => number> = [];
+  cf6863.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6863.push((x: number): number => (x + 41) % 10007);
+  acc = cf6863[acc & 1](acc % 9973);
+  const rc6864: Rec0 = { id: acc % 1000, tag: 't6864', score: acc % 100 };
+  acc = (acc + rc6864.score) % 65521;
+  buf += rc6864.tag;
+  acc = acc + 444 - (acc % 16);
+  for (let i6866 = 0; i6866 < 6; i6866++) {
+    acc = (acc + i6866 * 13 + 469) % 100003;
+  }
+  buf += `q6867:${acc % 97}`;
+  acc = (acc * 31 + 2030) % 65521;
+  if (m01.has('k6869')) {
+    const gv6869: number = m01.get('k6869') as number;
+    acc = (acc + gv6869) % 10007;
+  }
+  acc = acc + 183 - (acc % 86);
+  const cf6871: Array<(x: number) => number> = [];
+  cf6871.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6871.push((x: number): number => (x + 187) % 10007);
+  acc = cf6871[acc & 1](acc % 9973);
+  buf += `q6872:${acc % 97}`;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-6873'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q6874:${acc % 97}`;
+  let w6875: number = acc % 23;
+  while (w6875 > 4) { w6875 = Math.floor(w6875 / 2); }
+  acc += w6875;
+  const rc6876: Rec0 = { id: acc % 1000, tag: 't6876', score: acc % 100 };
+  acc = (acc + rc6876.score) % 65521;
+  buf += rc6876.tag;
+  acc = acc + 456 - (acc % 20);
+  const t06878: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06878;
+  const t06879: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06879;
+  switch (acc & 3) {
+    case 0: buf += 's06880'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  buf += 'dock6881-' + acc.toString();
+  try { if (acc % 29 === 11) { throw new Error('synthetic-6882'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-6884'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  const t06885: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06885;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-6886'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf6887: Array<(x: number) => number> = [];
+  cf6887.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6887.push((x: number): number => (x + 66) % 10007);
+  acc = cf6887[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6888' : 'lo') + acc.toString(16);
+  const rc6889: Rec0 = { id: acc % 1000, tag: 't6889', score: acc % 100 };
+  acc = (acc + rc6889.score) % 65521;
+  buf += rc6889.tag;
+  buf += 'depot6890-' + acc.toString();
+  const t06891: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06891;
+  for (let i6892 = 0; i6892 < 11; i6892++) {
+    acc = (acc + i6892 * 13 + 270) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06893'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi6894' : 'lo') + acc.toString(16);
+  buf += 'carrier6895-' + acc.toString();
+  const ix6896: number = buf.indexOf('p0');
+  if (ix6896 > 12) { buf = buf.substring(0, 32); } else if (ix6896 >= 0) { buf += 'i'; }
+  buf += `q6897:${acc % 97}`;
+  m01.set('k6898', acc % 997);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-6899'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  const db6900: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6900.length) % 65521;
+  m01.set('k6901', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's06902'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  for (let i6903 = 0; i6903 < 4; i6903++) {
+    acc = (acc + i6903 * 13 + 905) % 100003;
+  }
+  for (let i6904 = 0; i6904 < 9; i6904++) {
+    acc = (acc + i6904 * 13 + 818) % 100003;
+  }
+  const rc6905: Rec0 = { id: acc % 1000, tag: 't6905', score: acc % 100 };
+  acc = (acc + rc6905.score) % 65521;
+  buf += rc6905.tag;
+  let w6906: number = acc % 23;
+  while (w6906 > 4) { w6906 = Math.floor(w6906 / 2); }
+  acc += w6906;
+  buf += 'balance6907-' + acc.toString();
+  if (acc % 30 === 0) { buf += 'even6908'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 2127) % 65521;
+  const db6910: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6910.length) % 65521;
+  const cf6911: Array<(x: number) => number> = [];
+  cf6911.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6911.push((x: number): number => (x + 131) % 10007);
+  acc = cf6911[acc & 1](acc % 9973);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-6912'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 571 - (acc % 15);
+  let w6914: number = acc % 23;
+  while (w6914 > 4) { w6914 = Math.floor(w6914 / 2); }
+  acc += w6914;
+  const rc6915: Rec0 = { id: acc % 1000, tag: 't6915', score: acc % 100 };
+  acc = (acc + rc6915.score) % 65521;
+  buf += rc6915.tag;
+  const ix6916: number = buf.indexOf('p0');
+  if (ix6916 > 12) { buf = buf.substring(0, 32); } else if (ix6916 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6917');
+  switch (acc & 3) {
+    case 0: buf += 's06918'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 8) { throw new Error('synthetic-6919'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  let w6920: number = acc % 23;
+  while (w6920 > 4) { w6920 = Math.floor(w6920 / 2); }
+  acc += w6920;
+  buf += (acc > 500 ? 'hi6921' : 'lo') + acc.toString(16);
+  const cf6922: Array<(x: number) => number> = [];
+  cf6922.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6922.push((x: number): number => (x + 167) % 10007);
+  acc = cf6922[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6923' : 'lo') + acc.toString(16);
+  const t06924: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06924;
+  const db6925: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6925.length) % 65521;
+  acc = (acc * 31 + 158) % 65521;
+  const ix6927: number = buf.indexOf('p0');
+  if (ix6927 > 12) { buf = buf.substring(0, 32); } else if (ix6927 >= 0) { buf += 'i'; }
+  if (m01.has('k6928')) {
+    const gv6928: number = m01.get('k6928') as number;
+    acc = (acc + gv6928) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06929'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  if (acc % 25 === 0) { buf += 'even6930'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's06931'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's06932'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-6933'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix6934: number = buf.indexOf('p0');
+  if (ix6934 > 12) { buf = buf.substring(0, 32); } else if (ix6934 >= 0) { buf += 'i'; }
+  if (m01.has('k6935')) {
+    const gv6935: number = m01.get('k6935') as number;
+    acc = (acc + gv6935) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6936');
+  switch (acc & 3) {
+    case 0: buf += 's06937'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 404 - (acc % 27);
+  acc = (acc * 31 + 7079) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6940');
+  buf += `q6941:${acc % 97}`;
+  const t06942: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06942;
+  const ix6943: number = buf.indexOf('p0');
+  if (ix6943 > 12) { buf = buf.substring(0, 32); } else if (ix6943 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  if (m01.has('k6945')) {
+    const gv6945: number = m01.get('k6945') as number;
+    acc = (acc + gv6945) % 10007;
+  }
+  const t06946: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06946;
+  m01.set('k6947', acc % 997);
+  let w6948: number = acc % 23;
+  while (w6948 > 4) { w6948 = Math.floor(w6948 / 2); }
+  acc += w6948;
+  m01.set('k6949', acc % 997);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-6950'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix6951: number = buf.indexOf('p0');
+  if (ix6951 > 12) { buf = buf.substring(0, 32); } else if (ix6951 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6952');
+  const ix6953: number = buf.indexOf('p0');
+  if (ix6953 > 12) { buf = buf.substring(0, 32); } else if (ix6953 >= 0) { buf += 'i'; }
+  buf += 'tariff6954-' + acc.toString();
+  m01.set('k6955', acc % 997);
+  acc = acc + 608 - (acc % 64);
+  buf += `q6957:${acc % 97}`;
+  const db6958: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6958.length) % 65521;
+  acc = (acc * 31 + 815) % 65521;
+  const ix6960: number = buf.indexOf('p0');
+  if (ix6960 > 12) { buf = buf.substring(0, 32); } else if (ix6960 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-6961'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k6962')) {
+    const gv6962: number = m01.get('k6962') as number;
+    acc = (acc + gv6962) % 10007;
+  }
+  if (m01.has('k6963')) {
+    const gv6963: number = m01.get('k6963') as number;
+    acc = (acc + gv6963) % 10007;
+  }
+  if (m01.has('k6964')) {
+    const gv6964: number = m01.get('k6964') as number;
+    acc = (acc + gv6964) % 10007;
+  }
+  const cf6965: Array<(x: number) => number> = [];
+  cf6965.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6965.push((x: number): number => (x + 14) % 10007);
+  acc = cf6965[acc & 1](acc % 9973);
+  for (let i6966 = 0; i6966 < 4; i6966++) {
+    acc = (acc + i6966 * 13 + 620) % 100003;
+  }
+  buf += `q6967:${acc % 97}`;
+  buf += `q6968:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's06969'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k6970')) {
+    const gv6970: number = m01.get('k6970') as number;
+    acc = (acc + gv6970) % 10007;
+  }
+  buf += 'journey6971-' + acc.toString();
+  for (let i6972 = 0; i6972 < 9; i6972++) {
+    acc = (acc + i6972 * 13 + 813) % 100003;
+  }
+  buf += 'carrier6973-' + acc.toString();
+  buf += `q6974:${acc % 97}`;
+  if (m01.has('k6975')) {
+    const gv6975: number = m01.get('k6975') as number;
+    acc = (acc + gv6975) % 10007;
+  }
+  if (acc % 22 === 0) { buf += 'even6976'; } else { buf += 'odd'; }
+  acc = acc + 130 - (acc % 75);
+  buf += (acc > 500 ? 'hi6978' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi6979' : 'lo') + acc.toString(16);
+  const rc6980: Rec0 = { id: acc % 1000, tag: 't6980', score: acc % 100 };
+  acc = (acc + rc6980.score) % 65521;
+  buf += rc6980.tag;
+  acc = (acc * 31 + 3363) % 65521;
+  const ix6982: number = buf.indexOf('p0');
+  if (ix6982 > 12) { buf = buf.substring(0, 32); } else if (ix6982 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's06983'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += `q6984:${acc % 97}`;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-6985'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6986');
+  switch (acc & 3) {
+    case 0: buf += 's06987'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6988');
+  const db6989: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db6989.length) % 65521;
+  for (let i6990 = 0; i6990 < 4; i6990++) {
+    acc = (acc + i6990 * 13 + 942) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x6992');
+  const rc6993: Rec0 = { id: acc % 1000, tag: 't6993', score: acc % 100 };
+  acc = (acc + rc6993.score) % 65521;
+  buf += rc6993.tag;
+  buf += 'coupon6994-' + acc.toString();
+  const cf6995: Array<(x: number) => number> = [];
+  cf6995.push((x: number): number => (x * 3 + acc) % 65521);
+  cf6995.push((x: number): number => (x + 57) % 10007);
+  acc = cf6995[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi6996' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 2109) % 65521;
+  m01.set('k6998', acc % 997);
+  const t06999: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t06999;
+  const db7000: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7000.length) % 65521;
+  for (let i7001 = 0; i7001 < 9; i7001++) {
+    acc = (acc + i7001 * 13 + 30) % 100003;
+  }
+  buf += 'coupon7002-' + acc.toString();
+  buf += 'pallet7003-' + acc.toString();
+  const ix7004: number = buf.indexOf('p0');
+  if (ix7004 > 12) { buf = buf.substring(0, 32); } else if (ix7004 >= 0) { buf += 'i'; }
+  const t07005: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07005;
+  const cf7006: Array<(x: number) => number> = [];
+  cf7006.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7006.push((x: number): number => (x + 179) % 10007);
+  acc = cf7006[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi7007' : 'lo') + acc.toString(16);
+  for (let i7008 = 0; i7008 < 7; i7008++) {
+    acc = (acc + i7008 * 13 + 534) % 100003;
+  }
+  for (let i7009 = 0; i7009 < 4; i7009++) {
+    acc = (acc + i7009 * 13 + 756) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7010' : 'lo') + acc.toString(16);
+  if (acc % 7 === 0) { buf += 'even7011'; } else { buf += 'odd'; }
+  if (acc % 21 === 0) { buf += 'even7012'; } else { buf += 'odd'; }
+  const db7013: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7013.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07014'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 14) { throw new Error('synthetic-7015'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k7016', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7017');
+  const cf7018: Array<(x: number) => number> = [];
+  cf7018.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7018.push((x: number): number => (x + 88) % 10007);
+  acc = cf7018[acc & 1](acc % 9973);
+  const cf7019: Array<(x: number) => number> = [];
+  cf7019.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7019.push((x: number): number => (x + 17) % 10007);
+  acc = cf7019[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7020');
+  m01.set('k7021', acc % 997);
+  acc = (acc * 31 + 9920) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 13 === 0) { buf += 'even7024'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const rc7027: Rec0 = { id: acc % 1000, tag: 't7027', score: acc % 100 };
+  acc = (acc + rc7027.score) % 65521;
+  buf += rc7027.tag;
+  acc = (acc * 31 + 7127) % 65521;
+  if (acc % 8 === 0) { buf += 'even7029'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 5950) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07031'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  const ix7032: number = buf.indexOf('p0');
+  if (ix7032 > 12) { buf = buf.substring(0, 32); } else if (ix7032 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  const ix7034: number = buf.indexOf('p0');
+  if (ix7034 > 12) { buf = buf.substring(0, 32); } else if (ix7034 >= 0) { buf += 'i'; }
+  let w7035: number = acc % 23;
+  while (w7035 > 4) { w7035 = Math.floor(w7035 / 2); }
+  acc += w7035;
+  let w7036: number = acc % 23;
+  while (w7036 > 4) { w7036 = Math.floor(w7036 / 2); }
+  acc += w7036;
+  const cf7037: Array<(x: number) => number> = [];
+  cf7037.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7037.push((x: number): number => (x + 133) % 10007);
+  acc = cf7037[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  const db7039: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7039.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07040'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 8518) % 65521;
+  if (m01.has('k7042')) {
+    const gv7042: number = m01.get('k7042') as number;
+    acc = (acc + gv7042) % 10007;
+  }
+  const cf7043: Array<(x: number) => number> = [];
+  cf7043.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7043.push((x: number): number => (x + 185) % 10007);
+  acc = cf7043[acc & 1](acc % 9973);
+  if (acc % 27 === 0) { buf += 'even7044'; } else { buf += 'odd'; }
+  const t07045: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07045;
+  buf += (acc > 500 ? 'hi7046' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi7047' : 'lo') + acc.toString(16);
+  buf += `q7048:${acc % 97}`;
+  const t07049: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07049;
+  buf += 'warehouse7050-' + acc.toString();
+  if (acc % 20 === 0) { buf += 'even7051'; } else { buf += 'odd'; }
+  if (acc % 26 === 0) { buf += 'even7052'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 5137) % 65521;
+  const ix7054: number = buf.indexOf('p0');
+  if (ix7054 > 12) { buf = buf.substring(0, 32); } else if (ix7054 >= 0) { buf += 'i'; }
+  buf += 'vendor7055-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7056');
+  const db7057: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7057.length) % 65521;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  buf += 'ledger7060-' + acc.toString();
+  const db7061: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7061.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07062'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-7063'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf7064: Array<(x: number) => number> = [];
+  cf7064.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7064.push((x: number): number => (x + 172) % 10007);
+  acc = cf7064[acc & 1](acc % 9973);
+  const db7065: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7065.length) % 65521;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-7066'); } acc += 6; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf7067: Array<(x: number) => number> = [];
+  cf7067.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7067.push((x: number): number => (x + 108) % 10007);
+  acc = cf7067[acc & 1](acc % 9973);
+  acc = (acc * 31 + 4475) % 65521;
+  acc = acc + 576 - (acc % 10);
+  for (let i7070 = 0; i7070 < 10; i7070++) {
+    acc = (acc + i7070 * 13 + 931) % 100003;
+  }
+  for (let i7071 = 0; i7071 < 6; i7071++) {
+    acc = (acc + i7071 * 13 + 509) % 100003;
+  }
+  let w7072: number = acc % 23;
+  while (w7072 > 4) { w7072 = Math.floor(w7072 / 2); }
+  acc += w7072;
+  if (acc % 24 === 0) { buf += 'even7073'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  buf += `q7075:${acc % 97}`;
+  buf += (acc > 500 ? 'hi7076' : 'lo') + acc.toString(16);
+  for (let i7077 = 0; i7077 < 4; i7077++) {
+    acc = (acc + i7077 * 13 + 975) % 100003;
+  }
+  let w7078: number = acc % 23;
+  while (w7078 > 4) { w7078 = Math.floor(w7078 / 2); }
+  acc += w7078;
+  let w7079: number = acc % 23;
+  while (w7079 > 4) { w7079 = Math.floor(w7079 / 2); }
+  acc += w7079;
+  m01.set('k7080', acc % 997);
+  const rc7081: Rec0 = { id: acc % 1000, tag: 't7081', score: acc % 100 };
+  acc = (acc + rc7081.score) % 65521;
+  buf += rc7081.tag;
+  try { if (acc % 29 === 5) { throw new Error('synthetic-7082'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i7083 = 0; i7083 < 12; i7083++) {
+    acc = (acc + i7083 * 13 + 810) % 100003;
+  }
+  acc = (acc * 31 + 991) % 65521;
+  m01.set('k7085', acc % 997);
+  buf += (acc > 500 ? 'hi7086' : 'lo') + acc.toString(16);
+  const ix7087: number = buf.indexOf('p0');
+  if (ix7087 > 12) { buf = buf.substring(0, 32); } else if (ix7087 >= 0) { buf += 'i'; }
+  const db7088: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7088.length) % 65521;
+  if (m01.has('k7089')) {
+    const gv7089: number = m01.get('k7089') as number;
+    acc = (acc + gv7089) % 10007;
+  }
+  const t07090: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07090;
+  if (m01.has('k7091')) {
+    const gv7091: number = m01.get('k7091') as number;
+    acc = (acc + gv7091) % 10007;
+  }
+  buf += `q7092:${acc % 97}`;
+  acc = acc + 115 - (acc % 95);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7095');
+  switch (acc & 3) {
+    case 0: buf += 's07096'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  for (let i7097 = 0; i7097 < 10; i7097++) {
+    acc = (acc + i7097 * 13 + 665) % 100003;
+  }
+  arr.push(acc % 1000);
+  const t07099: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07099;
+  buf += `q7100:${acc % 97}`;
+  arr.push(acc % 1000);
+  if (acc % 5 === 0) { buf += 'even7102'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7103');
+  const rc7104: Rec0 = { id: acc % 1000, tag: 't7104', score: acc % 100 };
+  acc = (acc + rc7104.score) % 65521;
+  buf += rc7104.tag;
+  if (m01.has('k7105')) {
+    const gv7105: number = m01.get('k7105') as number;
+    acc = (acc + gv7105) % 10007;
+  }
+  const db7106: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7106.length) % 65521;
+  arr.push(acc % 1000);
+  const rc7108: Rec0 = { id: acc % 1000, tag: 't7108', score: acc % 100 };
+  acc = (acc + rc7108.score) % 65521;
+  buf += rc7108.tag;
+  acc = (acc * 31 + 1462) % 65521;
+  const ix7110: number = buf.indexOf('p0');
+  if (ix7110 > 12) { buf = buf.substring(0, 32); } else if (ix7110 >= 0) { buf += 'i'; }
+  acc = acc + 229 - (acc % 14);
+  buf += `q7112:${acc % 97}`;
+  buf += `q7113:${acc % 97}`;
+  acc = (acc * 31 + 6331) % 65521;
+  acc = (acc * 31 + 7713) % 65521;
+  const t07116: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07116;
+  const t07117: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07117;
+  buf += (acc > 500 ? 'hi7118' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 1572) % 65521;
+  m01.set('k7120', acc % 997);
+  buf += (acc > 500 ? 'hi7121' : 'lo') + acc.toString(16);
+  const rc7122: Rec0 = { id: acc % 1000, tag: 't7122', score: acc % 100 };
+  acc = (acc + rc7122.score) % 65521;
+  buf += rc7122.tag;
+  const db7123: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7123.length) % 65521;
+  const ix7124: number = buf.indexOf('p0');
+  if (ix7124 > 12) { buf = buf.substring(0, 32); } else if (ix7124 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi7125' : 'lo') + acc.toString(16);
+  const rc7126: Rec0 = { id: acc % 1000, tag: 't7126', score: acc % 100 };
+  acc = (acc + rc7126.score) % 65521;
+  buf += rc7126.tag;
+  try { if (acc % 29 === 12) { throw new Error('synthetic-7127'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's07128'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07129'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  const t07130: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07130;
+  let w7131: number = acc % 23;
+  while (w7131 > 4) { w7131 = Math.floor(w7131 / 2); }
+  acc += w7131;
+  acc = acc + 431 - (acc % 83);
+  let w7133: number = acc % 23;
+  while (w7133 > 4) { w7133 = Math.floor(w7133 / 2); }
+  acc += w7133;
+  switch (acc & 3) {
+    case 0: buf += 's07134'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 500) % 65521;
+  buf += 'tariff7136-' + acc.toString();
+  for (let i7137 = 0; i7137 < 4; i7137++) {
+    acc = (acc + i7137 * 13 + 994) % 100003;
+  }
+  const rc7138: Rec0 = { id: acc % 1000, tag: 't7138', score: acc % 100 };
+  acc = (acc + rc7138.score) % 65521;
+  buf += rc7138.tag;
+  const t07139: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07139;
+  const t07140: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07140;
+  m01.set('k7141', acc % 997);
+  const ix7142: number = buf.indexOf('p0');
+  if (ix7142 > 12) { buf = buf.substring(0, 32); } else if (ix7142 >= 0) { buf += 'i'; }
+  buf += 'transit7143-' + acc.toString();
+  if (acc % 9 === 0) { buf += 'even7144'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 8049) % 65521;
+  buf += `q7146:${acc % 97}`;
+  buf += `q7147:${acc % 97}`;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-7148'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7149: number = acc % 23;
+  while (w7149 > 4) { w7149 = Math.floor(w7149 / 2); }
+  acc += w7149;
+  const db7150: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7150.length) % 65521;
+  const ix7151: number = buf.indexOf('p0');
+  if (ix7151 > 12) { buf = buf.substring(0, 32); } else if (ix7151 >= 0) { buf += 'i'; }
+  if (acc % 13 === 0) { buf += 'even7152'; } else { buf += 'odd'; }
+  const t07153: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07153;
+  try { if (acc % 29 === 14) { throw new Error('synthetic-7154'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's07155'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  let w7156: number = acc % 23;
+  while (w7156 > 4) { w7156 = Math.floor(w7156 / 2); }
+  acc += w7156;
+  acc = (acc * 31 + 9709) % 65521;
+  if (acc % 28 === 0) { buf += 'even7158'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7159');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7160');
+  m01.set('k7161', acc % 997);
+  if (acc % 15 === 0) { buf += 'even7162'; } else { buf += 'odd'; }
+  for (let i7163 = 0; i7163 < 11; i7163++) {
+    acc = (acc + i7163 * 13 + 957) % 100003;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-7164'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  let w7166: number = acc % 23;
+  while (w7166 > 4) { w7166 = Math.floor(w7166 / 2); }
+  acc += w7166;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-7167'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q7168:${acc % 97}`;
+  const cf7169: Array<(x: number) => number> = [];
+  cf7169.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7169.push((x: number): number => (x + 59) % 10007);
+  acc = cf7169[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7170');
+  if (m01.has('k7171')) {
+    const gv7171: number = m01.get('k7171') as number;
+    acc = (acc + gv7171) % 10007;
+  }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-7172'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'stocktake7173-' + acc.toString();
+  if (m01.has('k7174')) {
+    const gv7174: number = m01.get('k7174') as number;
+    acc = (acc + gv7174) % 10007;
+  }
+  arr.push(acc % 1000);
+  acc = acc + 883 - (acc % 46);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7177');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7178');
+  const rc7179: Rec0 = { id: acc % 1000, tag: 't7179', score: acc % 100 };
+  acc = (acc + rc7179.score) % 65521;
+  buf += rc7179.tag;
+  if (acc % 14 === 0) { buf += 'even7180'; } else { buf += 'odd'; }
+  for (let i7181 = 0; i7181 < 11; i7181++) {
+    acc = (acc + i7181 * 13 + 619) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7182' : 'lo') + acc.toString(16);
+  const ix7183: number = buf.indexOf('p0');
+  if (ix7183 > 12) { buf = buf.substring(0, 32); } else if (ix7183 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's07184'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  m01.set('k7185', acc % 997);
+  for (let i7186 = 0; i7186 < 8; i7186++) {
+    acc = (acc + i7186 * 13 + 48) % 100003;
+  }
+  m01.set('k7187', acc % 997);
+  if (m01.has('k7188')) {
+    const gv7188: number = m01.get('k7188') as number;
+    acc = (acc + gv7188) % 10007;
+  }
+  buf += (acc > 500 ? 'hi7189' : 'lo') + acc.toString(16);
+  if (m01.has('k7190')) {
+    const gv7190: number = m01.get('k7190') as number;
+    acc = (acc + gv7190) % 10007;
+  }
+  buf += (acc > 500 ? 'hi7191' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7192'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7193: number = acc % 23;
+  while (w7193 > 4) { w7193 = Math.floor(w7193 / 2); }
+  acc += w7193;
+  const rc7194: Rec0 = { id: acc % 1000, tag: 't7194', score: acc % 100 };
+  acc = (acc + rc7194.score) % 65521;
+  buf += rc7194.tag;
+  const db7195: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7195.length) % 65521;
+  buf += `q7196:${acc % 97}`;
+  if (acc % 29 === 0) { buf += 'even7197'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  const ix7199: number = buf.indexOf('p0');
+  if (ix7199 > 12) { buf = buf.substring(0, 32); } else if (ix7199 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-7200'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf7201: Array<(x: number) => number> = [];
+  cf7201.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7201.push((x: number): number => (x + 39) % 10007);
+  acc = cf7201[acc & 1](acc % 9973);
+  const rc7202: Rec0 = { id: acc % 1000, tag: 't7202', score: acc % 100 };
+  acc = (acc + rc7202.score) % 65521;
+  buf += rc7202.tag;
+  const ix7203: number = buf.indexOf('p0');
+  if (ix7203 > 12) { buf = buf.substring(0, 32); } else if (ix7203 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  if (m01.has('k7205')) {
+    const gv7205: number = m01.get('k7205') as number;
+    acc = (acc + gv7205) % 10007;
+  }
+  if (m01.has('k7206')) {
+    const gv7206: number = m01.get('k7206') as number;
+    acc = (acc + gv7206) % 10007;
+  }
+  let w7207: number = acc % 23;
+  while (w7207 > 4) { w7207 = Math.floor(w7207 / 2); }
+  acc += w7207;
+  switch (acc & 3) {
+    case 0: buf += 's07208'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 1180) % 65521;
+  arr.push(acc % 1000);
+  const cf7211: Array<(x: number) => number> = [];
+  cf7211.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7211.push((x: number): number => (x + 180) % 10007);
+  acc = cf7211[acc & 1](acc % 9973);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7212'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 28 === 0) { buf += 'even7213'; } else { buf += 'odd'; }
+  buf += `q7214:${acc % 97}`;
+  let w7215: number = acc % 23;
+  while (w7215 > 4) { w7215 = Math.floor(w7215 / 2); }
+  acc += w7215;
+  const rc7216: Rec0 = { id: acc % 1000, tag: 't7216', score: acc % 100 };
+  acc = (acc + rc7216.score) % 65521;
+  buf += rc7216.tag;
+  let w7217: number = acc % 23;
+  while (w7217 > 4) { w7217 = Math.floor(w7217 / 2); }
+  acc += w7217;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const cf7220: Array<(x: number) => number> = [];
+  cf7220.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7220.push((x: number): number => (x + 186) % 10007);
+  acc = cf7220[acc & 1](acc % 9973);
+  if (m01.has('k7221')) {
+    const gv7221: number = m01.get('k7221') as number;
+    acc = (acc + gv7221) % 10007;
+  }
+  buf += 'client7222-' + acc.toString();
+  buf += (acc > 500 ? 'hi7223' : 'lo') + acc.toString(16);
+  m01.set('k7224', acc % 997);
+  for (let i7225 = 0; i7225 < 10; i7225++) {
+    acc = (acc + i7225 * 13 + 950) % 100003;
+  }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-7226'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'depot7227-' + acc.toString();
+  for (let i7228 = 0; i7228 < 11; i7228++) {
+    acc = (acc + i7228 * 13 + 258) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7229');
+  const db7230: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7230.length) % 65521;
+  buf += `q7231:${acc % 97}`;
+  for (let i7232 = 0; i7232 < 10; i7232++) {
+    acc = (acc + i7232 * 13 + 192) % 100003;
+  }
+  const rc7233: Rec0 = { id: acc % 1000, tag: 't7233', score: acc % 100 };
+  acc = (acc + rc7233.score) % 65521;
+  buf += rc7233.tag;
+  buf += `q7234:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's07235'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  buf += `q7236:${acc % 97}`;
+  for (let i7237 = 0; i7237 < 8; i7237++) {
+    acc = (acc + i7237 * 13 + 328) % 100003;
+  }
+  m01.set('k7238', acc % 997);
+  if (acc % 17 === 0) { buf += 'even7239'; } else { buf += 'odd'; }
+  const t07240: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07240;
+  buf += 'batch7241-' + acc.toString();
+  const db7242: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7242.length) % 65521;
+  acc = (acc * 31 + 8431) % 65521;
+  acc = acc + 408 - (acc % 33);
+  switch (acc & 3) {
+    case 0: buf += 's07245'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  m01.set('k7246', acc % 997);
+  acc = (acc * 31 + 7462) % 65521;
+  const db7248: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7248.length) % 65521;
+  let w7249: number = acc % 23;
+  while (w7249 > 4) { w7249 = Math.floor(w7249 / 2); }
+  acc += w7249;
+  const db7250: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7250.length) % 65521;
+  for (let i7251 = 0; i7251 < 10; i7251++) {
+    acc = (acc + i7251 * 13 + 107) % 100003;
+  }
+  if (acc % 6 === 0) { buf += 'even7252'; } else { buf += 'odd'; }
+  buf += 'invoice7253-' + acc.toString();
+  const ix7254: number = buf.indexOf('p0');
+  if (ix7254 > 12) { buf = buf.substring(0, 32); } else if (ix7254 >= 0) { buf += 'i'; }
+  const cf7255: Array<(x: number) => number> = [];
+  cf7255.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7255.push((x: number): number => (x + 54) % 10007);
+  acc = cf7255[acc & 1](acc % 9973);
+  for (let i7256 = 0; i7256 < 12; i7256++) {
+    acc = (acc + i7256 * 13 + 643) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7257' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-7258'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += 'bay7260-' + acc.toString();
+  if (m01.has('k7261')) {
+    const gv7261: number = m01.get('k7261') as number;
+    acc = (acc + gv7261) % 10007;
+  }
+  const cf7262: Array<(x: number) => number> = [];
+  cf7262.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7262.push((x: number): number => (x + 175) % 10007);
+  acc = cf7262[acc & 1](acc % 9973);
+  m01.set('k7263', acc % 997);
+  m01.set('k7264', acc % 997);
+  buf += 'dispatch7265-' + acc.toString();
+  let w7266: number = acc % 23;
+  while (w7266 > 4) { w7266 = Math.floor(w7266 / 2); }
+  acc += w7266;
+  m01.set('k7267', acc % 997);
+  if (acc % 17 === 0) { buf += 'even7268'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7269');
+  for (let i7270 = 0; i7270 < 11; i7270++) {
+    acc = (acc + i7270 * 13 + 96) % 100003;
+  }
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7271'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7272: number = acc % 23;
+  while (w7272 > 4) { w7272 = Math.floor(w7272 / 2); }
+  acc += w7272;
+  acc = (acc * 31 + 6573) % 65521;
+  const rc7274: Rec0 = { id: acc % 1000, tag: 't7274', score: acc % 100 };
+  acc = (acc + rc7274.score) % 65521;
+  buf += rc7274.tag;
+  for (let i7275 = 0; i7275 < 7; i7275++) {
+    acc = (acc + i7275 * 13 + 759) % 100003;
+  }
+  const ix7276: number = buf.indexOf('p0');
+  if (ix7276 > 12) { buf = buf.substring(0, 32); } else if (ix7276 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  let w7278: number = acc % 23;
+  while (w7278 > 4) { w7278 = Math.floor(w7278 / 2); }
+  acc += w7278;
+  const t07279: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07279;
+  const db7280: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7280.length) % 65521;
+  buf += (acc > 500 ? 'hi7281' : 'lo') + acc.toString(16);
+  const rc7282: Rec0 = { id: acc % 1000, tag: 't7282', score: acc % 100 };
+  acc = (acc + rc7282.score) % 65521;
+  buf += rc7282.tag;
+  if (m01.has('k7283')) {
+    const gv7283: number = m01.get('k7283') as number;
+    acc = (acc + gv7283) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07284'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  for (let i7285 = 0; i7285 < 3; i7285++) {
+    acc = (acc + i7285 * 13 + 948) % 100003;
+  }
+  buf += 'pallet7286-' + acc.toString();
+  try { if (acc % 29 === 14) { throw new Error('synthetic-7287'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7288: number = acc % 23;
+  while (w7288 > 4) { w7288 = Math.floor(w7288 / 2); }
+  acc += w7288;
+  m01.set('k7289', acc % 997);
+  m01.set('k7290', acc % 997);
+  buf += `q7291:${acc % 97}`;
+  buf += (acc > 500 ? 'hi7292' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's07293'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  for (let i7294 = 0; i7294 < 12; i7294++) {
+    acc = (acc + i7294 * 13 + 493) % 100003;
+  }
+  m01.set('k7295', acc % 997);
+  acc = (acc * 31 + 4155) % 65521;
+  arr.push(acc % 1000);
+  const db7298: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7298.length) % 65521;
+  let w7299: number = acc % 23;
+  while (w7299 > 4) { w7299 = Math.floor(w7299 / 2); }
+  acc += w7299;
+  const t07300: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07300;
+  m01.set('k7301', acc % 997);
+  for (let i7302 = 0; i7302 < 10; i7302++) {
+    acc = (acc + i7302 * 13 + 966) % 100003;
+  }
+  const rc7303: Rec0 = { id: acc % 1000, tag: 't7303', score: acc % 100 };
+  acc = (acc + rc7303.score) % 65521;
+  buf += rc7303.tag;
+  const t07304: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07304;
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const rc7307: Rec0 = { id: acc % 1000, tag: 't7307', score: acc % 100 };
+  acc = (acc + rc7307.score) % 65521;
+  buf += rc7307.tag;
+  buf += `q7308:${acc % 97}`;
+  const ix7309: number = buf.indexOf('p0');
+  if (ix7309 > 12) { buf = buf.substring(0, 32); } else if (ix7309 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7310');
+  m01.set('k7311', acc % 997);
+  const cf7312: Array<(x: number) => number> = [];
+  cf7312.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7312.push((x: number): number => (x + 136) % 10007);
+  acc = cf7312[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi7313' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi7314' : 'lo') + acc.toString(16);
+  const db7315: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7315.length) % 65521;
+  buf += (acc > 500 ? 'hi7316' : 'lo') + acc.toString(16);
+  let w7317: number = acc % 23;
+  while (w7317 > 4) { w7317 = Math.floor(w7317 / 2); }
+  acc += w7317;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-7318'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q7319:${acc % 97}`;
+  const t07320: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07320;
+  if (acc % 20 === 0) { buf += 'even7321'; } else { buf += 'odd'; }
+  const cf7322: Array<(x: number) => number> = [];
+  cf7322.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7322.push((x: number): number => (x + 19) % 10007);
+  acc = cf7322[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7323');
+  m01.set('k7324', acc % 997);
+  acc = (acc * 31 + 9545) % 65521;
+  const ix7326: number = buf.indexOf('p0');
+  if (ix7326 > 12) { buf = buf.substring(0, 32); } else if (ix7326 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's07327'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi7328' : 'lo') + acc.toString(16);
+  let w7329: number = acc % 23;
+  while (w7329 > 4) { w7329 = Math.floor(w7329 / 2); }
+  acc += w7329;
+  const t07330: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07330;
+  if (m01.has('k7331')) {
+    const gv7331: number = m01.get('k7331') as number;
+    acc = (acc + gv7331) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07332'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 145 - (acc % 67);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-7334'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7335: number = acc % 23;
+  while (w7335 > 4) { w7335 = Math.floor(w7335 / 2); }
+  acc += w7335;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7336');
+  for (let i7337 = 0; i7337 < 12; i7337++) {
+    acc = (acc + i7337 * 13 + 827) % 100003;
+  }
+  const rc7338: Rec0 = { id: acc % 1000, tag: 't7338', score: acc % 100 };
+  acc = (acc + rc7338.score) % 65521;
+  buf += rc7338.tag;
+  if (m01.has('k7339')) {
+    const gv7339: number = m01.get('k7339') as number;
+    acc = (acc + gv7339) % 10007;
+  }
+  const ix7340: number = buf.indexOf('p0');
+  if (ix7340 > 12) { buf = buf.substring(0, 32); } else if (ix7340 >= 0) { buf += 'i'; }
+  m01.set('k7341', acc % 997);
+  acc = (acc * 31 + 2216) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7343');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7344');
+  for (let i7345 = 0; i7345 < 6; i7345++) {
+    acc = (acc + i7345 * 13 + 685) % 100003;
+  }
+  if (acc % 25 === 0) { buf += 'even7346'; } else { buf += 'odd'; }
+  if (m01.has('k7347')) {
+    const gv7347: number = m01.get('k7347') as number;
+    acc = (acc + gv7347) % 10007;
+  }
+  const cf7348: Array<(x: number) => number> = [];
+  cf7348.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7348.push((x: number): number => (x + 178) % 10007);
+  acc = cf7348[acc & 1](acc % 9973);
+  buf += `q7349:${acc % 97}`;
+  buf += (acc > 500 ? 'hi7350' : 'lo') + acc.toString(16);
+  if (m01.has('k7351')) {
+    const gv7351: number = m01.get('k7351') as number;
+    acc = (acc + gv7351) % 10007;
+  }
+  const cf7352: Array<(x: number) => number> = [];
+  cf7352.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7352.push((x: number): number => (x + 151) % 10007);
+  acc = cf7352[acc & 1](acc % 9973);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-7353'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-7354'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  const db7355: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7355.length) % 65521;
+  if (m01.has('k7356')) {
+    const gv7356: number = m01.get('k7356') as number;
+    acc = (acc + gv7356) % 10007;
+  }
+  let w7357: number = acc % 23;
+  while (w7357 > 4) { w7357 = Math.floor(w7357 / 2); }
+  acc += w7357;
+  m01.set('k7358', acc % 997);
+  const rc7359: Rec0 = { id: acc % 1000, tag: 't7359', score: acc % 100 };
+  acc = (acc + rc7359.score) % 65521;
+  buf += rc7359.tag;
+  m01.set('k7360', acc % 997);
+  const t07361: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07361;
+  for (let i7362 = 0; i7362 < 10; i7362++) {
+    acc = (acc + i7362 * 13 + 7) % 100003;
+  }
+  acc = (acc * 31 + 2176) % 65521;
+  let w7364: number = acc % 23;
+  while (w7364 > 4) { w7364 = Math.floor(w7364 / 2); }
+  acc += w7364;
+  acc = (acc * 31 + 4130) % 65521;
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi7367' : 'lo') + acc.toString(16);
+  for (let i7368 = 0; i7368 < 7; i7368++) {
+    acc = (acc + i7368 * 13 + 456) % 100003;
+  }
+  if (m01.has('k7369')) {
+    const gv7369: number = m01.get('k7369') as number;
+    acc = (acc + gv7369) % 10007;
+  }
+  buf += `q7370:${acc % 97}`;
+  buf += `q7371:${acc % 97}`;
+  buf += `q7372:${acc % 97}`;
+  buf += 'pallet7373-' + acc.toString();
+  const t07374: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07374;
+  m01.set('k7375', acc % 997);
+  let w7376: number = acc % 23;
+  while (w7376 > 4) { w7376 = Math.floor(w7376 / 2); }
+  acc += w7376;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-7377'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q7378:${acc % 97}`;
+  for (let i7379 = 0; i7379 < 6; i7379++) {
+    acc = (acc + i7379 * 13 + 875) % 100003;
+  }
+  m01.set('k7380', acc % 997);
+  const t07381: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07381;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-7382'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7383: number = acc % 23;
+  while (w7383 > 4) { w7383 = Math.floor(w7383 / 2); }
+  acc += w7383;
+  buf += `q7384:${acc % 97}`;
+  acc = (acc * 31 + 7101) % 65521;
+  for (let i7386 = 0; i7386 < 10; i7386++) {
+    acc = (acc + i7386 * 13 + 670) % 100003;
+  }
+  if (acc % 27 === 0) { buf += 'even7387'; } else { buf += 'odd'; }
+  const ix7388: number = buf.indexOf('p0');
+  if (ix7388 > 12) { buf = buf.substring(0, 32); } else if (ix7388 >= 0) { buf += 'i'; }
+  const ix7389: number = buf.indexOf('p0');
+  if (ix7389 > 12) { buf = buf.substring(0, 32); } else if (ix7389 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi7390' : 'lo') + acc.toString(16);
+  buf += `q7391:${acc % 97}`;
+  buf += `q7392:${acc % 97}`;
+  const db7393: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7393.length) % 65521;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-7394'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'vendor7395-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7396');
+  if (m01.has('k7397')) {
+    const gv7397: number = m01.get('k7397') as number;
+    acc = (acc + gv7397) % 10007;
+  }
+  const ix7398: number = buf.indexOf('p0');
+  if (ix7398 > 12) { buf = buf.substring(0, 32); } else if (ix7398 >= 0) { buf += 'i'; }
+  for (let i7399 = 0; i7399 < 8; i7399++) {
+    acc = (acc + i7399 * 13 + 430) % 100003;
+  }
+  let w7400: number = acc % 23;
+  while (w7400 > 4) { w7400 = Math.floor(w7400 / 2); }
+  acc += w7400;
+  if (acc % 25 === 0) { buf += 'even7401'; } else { buf += 'odd'; }
+  const rc7402: Rec0 = { id: acc % 1000, tag: 't7402', score: acc % 100 };
+  acc = (acc + rc7402.score) % 65521;
+  buf += rc7402.tag;
+  buf += (acc > 500 ? 'hi7403' : 'lo') + acc.toString(16);
+  for (let i7404 = 0; i7404 < 5; i7404++) {
+    acc = (acc + i7404 * 13 + 180) % 100003;
+  }
+  acc = acc + 469 - (acc % 15);
+  const ix7406: number = buf.indexOf('p0');
+  if (ix7406 > 12) { buf = buf.substring(0, 32); } else if (ix7406 >= 0) { buf += 'i'; }
+  const db7407: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7407.length) % 65521;
+  if (acc % 5 === 0) { buf += 'even7408'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 9647) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07410'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  const ix7411: number = buf.indexOf('p0');
+  if (ix7411 > 12) { buf = buf.substring(0, 32); } else if (ix7411 >= 0) { buf += 'i'; }
+  const t07412: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07412;
+  m01.set('k7413', acc % 997);
+  buf += 'journey7414-' + acc.toString();
+  buf += 'pickup7415-' + acc.toString();
+  let w7416: number = acc % 23;
+  while (w7416 > 4) { w7416 = Math.floor(w7416 / 2); }
+  acc += w7416;
+  if (m01.has('k7417')) {
+    const gv7417: number = m01.get('k7417') as number;
+    acc = (acc + gv7417) % 10007;
+  }
+  buf += (acc > 500 ? 'hi7418' : 'lo') + acc.toString(16);
+  const rc7419: Rec0 = { id: acc % 1000, tag: 't7419', score: acc % 100 };
+  acc = (acc + rc7419.score) % 65521;
+  buf += rc7419.tag;
+  const ix7420: number = buf.indexOf('p0');
+  if (ix7420 > 12) { buf = buf.substring(0, 32); } else if (ix7420 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-7421'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const t07423: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07423;
+  const db7424: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7424.length) % 65521;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-7425'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7426: number = acc % 23;
+  while (w7426 > 4) { w7426 = Math.floor(w7426 / 2); }
+  acc += w7426;
+  for (let i7427 = 0; i7427 < 10; i7427++) {
+    acc = (acc + i7427 * 13 + 630) % 100003;
+  }
+  buf += 'parcel7428-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's07429'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  buf += 'freight7430-' + acc.toString();
+  let w7431: number = acc % 23;
+  while (w7431 > 4) { w7431 = Math.floor(w7431 / 2); }
+  acc += w7431;
+  arr.push(acc % 1000);
+  m01.set('k7433', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7434');
+  arr.push(acc % 1000);
+  acc = acc + 45 - (acc % 69);
+  try { if (acc % 29 === 18) { throw new Error('synthetic-7437'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7438');
+  if (acc % 25 === 0) { buf += 'even7439'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's07440'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const db7441: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7441.length) % 65521;
+  for (let i7442 = 0; i7442 < 5; i7442++) {
+    acc = (acc + i7442 * 13 + 447) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07443'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 4600) % 65521;
+  if (m01.has('k7445')) {
+    const gv7445: number = m01.get('k7445') as number;
+    acc = (acc + gv7445) % 10007;
+  }
+  m01.set('k7446', acc % 997);
+  buf += 'pickup7447-' + acc.toString();
+  acc = (acc * 31 + 5071) % 65521;
+  const rc7449: Rec0 = { id: acc % 1000, tag: 't7449', score: acc % 100 };
+  acc = (acc + rc7449.score) % 65521;
+  buf += rc7449.tag;
+  acc = (acc * 31 + 6974) % 65521;
+  buf += (acc > 500 ? 'hi7451' : 'lo') + acc.toString(16);
+  if (acc % 7 === 0) { buf += 'even7452'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's07453'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  if (acc % 20 === 0) { buf += 'even7455'; } else { buf += 'odd'; }
+  const ix7456: number = buf.indexOf('p0');
+  if (ix7456 > 12) { buf = buf.substring(0, 32); } else if (ix7456 >= 0) { buf += 'i'; }
+  const t07457: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07457;
+  acc = acc + 147 - (acc % 42);
+  for (let i7459 = 0; i7459 < 8; i7459++) {
+    acc = (acc + i7459 * 13 + 820) % 100003;
+  }
+  buf += `q7460:${acc % 97}`;
+  m01.set('k7461', acc % 997);
+  buf += 'journey7462-' + acc.toString();
+  const rc7463: Rec0 = { id: acc % 1000, tag: 't7463', score: acc % 100 };
+  acc = (acc + rc7463.score) % 65521;
+  buf += rc7463.tag;
+  if (m01.has('k7464')) {
+    const gv7464: number = m01.get('k7464') as number;
+    acc = (acc + gv7464) % 10007;
+  }
+  const t07465: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07465;
+  const t07466: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07466;
+  const ix7467: number = buf.indexOf('p0');
+  if (ix7467 > 12) { buf = buf.substring(0, 32); } else if (ix7467 >= 0) { buf += 'i'; }
+  buf += `q7468:${acc % 97}`;
+  let w7469: number = acc % 23;
+  while (w7469 > 4) { w7469 = Math.floor(w7469 / 2); }
+  acc += w7469;
+  buf += 'dock7470-' + acc.toString();
+  const rc7471: Rec0 = { id: acc % 1000, tag: 't7471', score: acc % 100 };
+  acc = (acc + rc7471.score) % 65521;
+  buf += rc7471.tag;
+  const rc7472: Rec0 = { id: acc % 1000, tag: 't7472', score: acc % 100 };
+  acc = (acc + rc7472.score) % 65521;
+  buf += rc7472.tag;
+  for (let i7473 = 0; i7473 < 3; i7473++) {
+    acc = (acc + i7473 * 13 + 353) % 100003;
+  }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7474'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  m01.set('k7476', acc % 997);
+  if (m01.has('k7477')) {
+    const gv7477: number = m01.get('k7477') as number;
+    acc = (acc + gv7477) % 10007;
+  }
+  const db7478: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7478.length) % 65521;
+  const ix7479: number = buf.indexOf('p0');
+  if (ix7479 > 12) { buf = buf.substring(0, 32); } else if (ix7479 >= 0) { buf += 'i'; }
+  const t07480: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07480;
+  const cf7481: Array<(x: number) => number> = [];
+  cf7481.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7481.push((x: number): number => (x + 124) % 10007);
+  acc = cf7481[acc & 1](acc % 9973);
+  buf += 'rebate7482-' + acc.toString();
+  const rc7483: Rec0 = { id: acc % 1000, tag: 't7483', score: acc % 100 };
+  acc = (acc + rc7483.score) % 65521;
+  buf += rc7483.tag;
+  if (m01.has('k7484')) {
+    const gv7484: number = m01.get('k7484') as number;
+    acc = (acc + gv7484) % 10007;
+  }
+  m01.set('k7485', acc % 997);
+  let w7486: number = acc % 23;
+  while (w7486 > 4) { w7486 = Math.floor(w7486 / 2); }
+  acc += w7486;
+  if (acc % 5 === 0) { buf += 'even7487'; } else { buf += 'odd'; }
+  if (m01.has('k7488')) {
+    const gv7488: number = m01.get('k7488') as number;
+    acc = (acc + gv7488) % 10007;
+  }
+  m01.set('k7489', acc % 997);
+  const t07490: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07490;
+  const t07491: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07491;
+  buf += 'journey7492-' + acc.toString();
+  acc = (acc * 31 + 250) % 65521;
+  if (acc % 23 === 0) { buf += 'even7494'; } else { buf += 'odd'; }
+  const rc7495: Rec0 = { id: acc % 1000, tag: 't7495', score: acc % 100 };
+  acc = (acc + rc7495.score) % 65521;
+  buf += rc7495.tag;
+  const ix7496: number = buf.indexOf('p0');
+  if (ix7496 > 12) { buf = buf.substring(0, 32); } else if (ix7496 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7497');
+  if (m01.has('k7498')) {
+    const gv7498: number = m01.get('k7498') as number;
+    acc = (acc + gv7498) % 10007;
+  }
+  const db7499: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7499.length) % 65521;
+  const rc7500: Rec0 = { id: acc % 1000, tag: 't7500', score: acc % 100 };
+  acc = (acc + rc7500.score) % 65521;
+  buf += rc7500.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7501');
+  const cf7502: Array<(x: number) => number> = [];
+  cf7502.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7502.push((x: number): number => (x + 46) % 10007);
+  acc = cf7502[acc & 1](acc % 9973);
+  m01.set('k7503', acc % 997);
+  for (let i7504 = 0; i7504 < 12; i7504++) {
+    acc = (acc + i7504 * 13 + 888) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7505' : 'lo') + acc.toString(16);
+  buf += `q7506:${acc % 97}`;
+  arr.push(acc % 1000);
+  const cf7508: Array<(x: number) => number> = [];
+  cf7508.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7508.push((x: number): number => (x + 66) % 10007);
+  acc = cf7508[acc & 1](acc % 9973);
+  buf += `q7509:${acc % 97}`;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7510'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix7511: number = buf.indexOf('p0');
+  if (ix7511 > 12) { buf = buf.substring(0, 32); } else if (ix7511 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's07512'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const rc7513: Rec0 = { id: acc % 1000, tag: 't7513', score: acc % 100 };
+  acc = (acc + rc7513.score) % 65521;
+  buf += rc7513.tag;
+  buf += (acc > 500 ? 'hi7514' : 'lo') + acc.toString(16);
+  for (let i7515 = 0; i7515 < 12; i7515++) {
+    acc = (acc + i7515 * 13 + 34) % 100003;
+  }
+  if (acc % 26 === 0) { buf += 'even7516'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi7517' : 'lo') + acc.toString(16);
+  let w7518: number = acc % 23;
+  while (w7518 > 4) { w7518 = Math.floor(w7518 / 2); }
+  acc += w7518;
+  arr.push(acc % 1000);
+  if (m01.has('k7520')) {
+    const gv7520: number = m01.get('k7520') as number;
+    acc = (acc + gv7520) % 10007;
+  }
+  acc = acc + 885 - (acc % 68);
+  m01.set('k7522', acc % 997);
+  buf += (acc > 500 ? 'hi7523' : 'lo') + acc.toString(16);
+  buf += 'refund7524-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7525');
+  acc = (acc * 31 + 7253) % 65521;
+  arr.push(acc % 1000);
+  const cf7528: Array<(x: number) => number> = [];
+  cf7528.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7528.push((x: number): number => (x + 185) % 10007);
+  acc = cf7528[acc & 1](acc % 9973);
+  buf += `q7529:${acc % 97}`;
+  const db7530: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7530.length) % 65521;
+  buf += (acc > 500 ? 'hi7531' : 'lo') + acc.toString(16);
+  const ix7532: number = buf.indexOf('p0');
+  if (ix7532 > 12) { buf = buf.substring(0, 32); } else if (ix7532 >= 0) { buf += 'i'; }
+  acc = acc + 581 - (acc % 61);
+  const cf7534: Array<(x: number) => number> = [];
+  cf7534.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7534.push((x: number): number => (x + 190) % 10007);
+  acc = cf7534[acc & 1](acc % 9973);
+  const rc7535: Rec0 = { id: acc % 1000, tag: 't7535', score: acc % 100 };
+  acc = (acc + rc7535.score) % 65521;
+  buf += rc7535.tag;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7536'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'pickup7537-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = acc + 92 - (acc % 22);
+  if (m01.has('k7540')) {
+    const gv7540: number = m01.get('k7540') as number;
+    acc = (acc + gv7540) % 10007;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-7541'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 720 - (acc % 7);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7543');
+  if (acc % 28 === 0) { buf += 'even7544'; } else { buf += 'odd'; }
+  const db7545: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7545.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7546');
+  if (m01.has('k7547')) {
+    const gv7547: number = m01.get('k7547') as number;
+    acc = (acc + gv7547) % 10007;
+  }
+  let w7548: number = acc % 23;
+  while (w7548 > 4) { w7548 = Math.floor(w7548 / 2); }
+  acc += w7548;
+  const t07549: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07549;
+  const db7550: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7550.length) % 65521;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-7551'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 292 - (acc % 54);
+  if (m01.has('k7553')) {
+    const gv7553: number = m01.get('k7553') as number;
+    acc = (acc + gv7553) % 10007;
+  }
+  for (let i7554 = 0; i7554 < 10; i7554++) {
+    acc = (acc + i7554 * 13 + 896) % 100003;
+  }
+  arr.push(acc % 1000);
+  buf += 'vendor7556-' + acc.toString();
+  const t07557: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07557;
+  acc = acc + 427 - (acc % 28);
+  buf += 'stocktake7559-' + acc.toString();
+  try { if (acc % 29 === 12) { throw new Error('synthetic-7560'); } acc += 25; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k7561', acc % 997);
+  const rc7562: Rec0 = { id: acc % 1000, tag: 't7562', score: acc % 100 };
+  acc = (acc + rc7562.score) % 65521;
+  buf += rc7562.tag;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-7563'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i7564 = 0; i7564 < 8; i7564++) {
+    acc = (acc + i7564 * 13 + 606) % 100003;
+  }
+  if (m01.has('k7565')) {
+    const gv7565: number = m01.get('k7565') as number;
+    acc = (acc + gv7565) % 10007;
+  }
+  const rc7566: Rec0 = { id: acc % 1000, tag: 't7566', score: acc % 100 };
+  acc = (acc + rc7566.score) % 65521;
+  buf += rc7566.tag;
+  const db7567: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7567.length) % 65521;
+  acc = (acc * 31 + 513) % 65521;
+  m01.set('k7569', acc % 997);
+  buf += (acc > 500 ? 'hi7570' : 'lo') + acc.toString(16);
+  acc = acc + 796 - (acc % 70);
+  const db7572: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7572.length) % 65521;
+  buf += (acc > 500 ? 'hi7573' : 'lo') + acc.toString(16);
+  m01.set('k7574', acc % 997);
+  buf += `q7575:${acc % 97}`;
+  buf += 'invoice7576-' + acc.toString();
+  for (let i7577 = 0; i7577 < 11; i7577++) {
+    acc = (acc + i7577 * 13 + 531) % 100003;
+  }
+  buf += `q7578:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7579');
+  buf += 'balance7580-' + acc.toString();
+  if (m01.has('k7581')) {
+    const gv7581: number = m01.get('k7581') as number;
+    acc = (acc + gv7581) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7582');
+  const t07583: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07583;
+  const ix7584: number = buf.indexOf('p0');
+  if (ix7584 > 12) { buf = buf.substring(0, 32); } else if (ix7584 >= 0) { buf += 'i'; }
+  const rc7585: Rec0 = { id: acc % 1000, tag: 't7585', score: acc % 100 };
+  acc = (acc + rc7585.score) % 65521;
+  buf += rc7585.tag;
+  buf += (acc > 500 ? 'hi7586' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-7587'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const t07589: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07589;
+  const rc7590: Rec0 = { id: acc % 1000, tag: 't7590', score: acc % 100 };
+  acc = (acc + rc7590.score) % 65521;
+  buf += rc7590.tag;
+  const rc7591: Rec0 = { id: acc % 1000, tag: 't7591', score: acc % 100 };
+  acc = (acc + rc7591.score) % 65521;
+  buf += rc7591.tag;
+  for (let i7592 = 0; i7592 < 7; i7592++) {
+    acc = (acc + i7592 * 13 + 86) % 100003;
+  }
+  acc = (acc * 31 + 7946) % 65521;
+  const rc7594: Rec0 = { id: acc % 1000, tag: 't7594', score: acc % 100 };
+  acc = (acc + rc7594.score) % 65521;
+  buf += rc7594.tag;
+  const cf7595: Array<(x: number) => number> = [];
+  cf7595.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7595.push((x: number): number => (x + 113) % 10007);
+  acc = cf7595[acc & 1](acc % 9973);
+  if (m01.has('k7596')) {
+    const gv7596: number = m01.get('k7596') as number;
+    acc = (acc + gv7596) % 10007;
+  }
+  let w7597: number = acc % 23;
+  while (w7597 > 4) { w7597 = Math.floor(w7597 / 2); }
+  acc += w7597;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7598');
+  if (acc % 22 === 0) { buf += 'even7599'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's07600'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += 'parcel7601-' + acc.toString();
+  acc = acc + 32 - (acc % 71);
+  let w7603: number = acc % 23;
+  while (w7603 > 4) { w7603 = Math.floor(w7603 / 2); }
+  acc += w7603;
+  const rc7604: Rec0 = { id: acc % 1000, tag: 't7604', score: acc % 100 };
+  acc = (acc + rc7604.score) % 65521;
+  buf += rc7604.tag;
+  buf += 'vendor7605-' + acc.toString();
+  const db7606: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7606.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07607'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k7608')) {
+    const gv7608: number = m01.get('k7608') as number;
+    acc = (acc + gv7608) % 10007;
+  }
+  const cf7609: Array<(x: number) => number> = [];
+  cf7609.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7609.push((x: number): number => (x + 77) % 10007);
+  acc = cf7609[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7610');
+  if (m01.has('k7611')) {
+    const gv7611: number = m01.get('k7611') as number;
+    acc = (acc + gv7611) % 10007;
+  }
+  const t07612: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07612;
+  switch (acc & 3) {
+    case 0: buf += 's07613'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  let w7614: number = acc % 23;
+  while (w7614 > 4) { w7614 = Math.floor(w7614 / 2); }
+  acc += w7614;
+  if (acc % 17 === 0) { buf += 'even7615'; } else { buf += 'odd'; }
+  m01.set('k7616', acc % 997);
+  m01.set('k7617', acc % 997);
+  if (m01.has('k7618')) {
+    const gv7618: number = m01.get('k7618') as number;
+    acc = (acc + gv7618) % 10007;
+  }
+  const rc7619: Rec0 = { id: acc % 1000, tag: 't7619', score: acc % 100 };
+  acc = (acc + rc7619.score) % 65521;
+  buf += rc7619.tag;
+  const cf7620: Array<(x: number) => number> = [];
+  cf7620.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7620.push((x: number): number => (x + 25) % 10007);
+  acc = cf7620[acc & 1](acc % 9973);
+  const t07621: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07621;
+  m01.set('k7622', acc % 997);
+  buf += 'depot7623-' + acc.toString();
+  const rc7624: Rec0 = { id: acc % 1000, tag: 't7624', score: acc % 100 };
+  acc = (acc + rc7624.score) % 65521;
+  buf += rc7624.tag;
+  buf += 'quota7625-' + acc.toString();
+  for (let i7626 = 0; i7626 < 3; i7626++) {
+    acc = (acc + i7626 * 13 + 891) % 100003;
+  }
+  buf += 'invoice7627-' + acc.toString();
+  let w7628: number = acc % 23;
+  while (w7628 > 4) { w7628 = Math.floor(w7628 / 2); }
+  acc += w7628;
+  const t07629: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07629;
+  const rc7630: Rec0 = { id: acc % 1000, tag: 't7630', score: acc % 100 };
+  acc = (acc + rc7630.score) % 65521;
+  buf += rc7630.tag;
+  buf += 'pickup7631-' + acc.toString();
+  m01.set('k7632', acc % 997);
+  acc = acc + 913 - (acc % 80);
+  buf += (acc > 500 ? 'hi7634' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  acc = acc + 259 - (acc % 58);
+  for (let i7637 = 0; i7637 < 5; i7637++) {
+    acc = (acc + i7637 * 13 + 987) % 100003;
+  }
+  let w7638: number = acc % 23;
+  while (w7638 > 4) { w7638 = Math.floor(w7638 / 2); }
+  acc += w7638;
+  buf += `q7639:${acc % 97}`;
+  acc = (acc * 31 + 681) % 65521;
+  for (let i7641 = 0; i7641 < 8; i7641++) {
+    acc = (acc + i7641 * 13 + 545) % 100003;
+  }
+  const db7642: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7642.length) % 65521;
+  m01.set('k7643', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's07644'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const rc7645: Rec0 = { id: acc % 1000, tag: 't7645', score: acc % 100 };
+  acc = (acc + rc7645.score) % 65521;
+  buf += rc7645.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7646');
+  for (let i7647 = 0; i7647 < 10; i7647++) {
+    acc = (acc + i7647 * 13 + 683) % 100003;
+  }
+  const cf7648: Array<(x: number) => number> = [];
+  cf7648.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7648.push((x: number): number => (x + 194) % 10007);
+  acc = cf7648[acc & 1](acc % 9973);
+  buf += `q7649:${acc % 97}`;
+  const cf7650: Array<(x: number) => number> = [];
+  cf7650.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7650.push((x: number): number => (x + 25) % 10007);
+  acc = cf7650[acc & 1](acc % 9973);
+  buf += `q7651:${acc % 97}`;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7652'); } acc += 32; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi7653' : 'lo') + acc.toString(16);
+  const db7654: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7654.length) % 65521;
+  const ix7655: number = buf.indexOf('p0');
+  if (ix7655 > 12) { buf = buf.substring(0, 32); } else if (ix7655 >= 0) { buf += 'i'; }
+  buf += 'balance7656-' + acc.toString();
+  m01.set('k7657', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7658');
+  if (m01.has('k7659')) {
+    const gv7659: number = m01.get('k7659') as number;
+    acc = (acc + gv7659) % 10007;
+  }
+  m01.set('k7660', acc % 997);
+  const db7661: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7661.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7662');
+  const t07663: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07663;
+  const ix7664: number = buf.indexOf('p0');
+  if (ix7664 > 12) { buf = buf.substring(0, 32); } else if (ix7664 >= 0) { buf += 'i'; }
+  if (acc % 14 === 0) { buf += 'even7665'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi7666' : 'lo') + acc.toString(16);
+  if (acc % 6 === 0) { buf += 'even7667'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-7668'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7669');
+  acc = (acc * 31 + 1470) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7671');
+  arr.push(acc % 1000);
+  buf += 'client7673-' + acc.toString();
+  acc = (acc * 31 + 668) % 65521;
+  const ix7675: number = buf.indexOf('p0');
+  if (ix7675 > 12) { buf = buf.substring(0, 32); } else if (ix7675 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's07676'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  m01.set('k7677', acc % 997);
+  buf += (acc > 500 ? 'hi7678' : 'lo') + acc.toString(16);
+  if (acc % 31 === 0) { buf += 'even7679'; } else { buf += 'odd'; }
+  buf += `q7680:${acc % 97}`;
+  buf += (acc > 500 ? 'hi7681' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 7391) % 65521;
+  let w7683: number = acc % 23;
+  while (w7683 > 4) { w7683 = Math.floor(w7683 / 2); }
+  acc += w7683;
+  arr.push(acc % 1000);
+  const db7685: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7685.length) % 65521;
+  buf += `q7686:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7687');
+  const db7688: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7688.length) % 65521;
+  const ix7689: number = buf.indexOf('p0');
+  if (ix7689 > 12) { buf = buf.substring(0, 32); } else if (ix7689 >= 0) { buf += 'i'; }
+  acc = acc + 19 - (acc % 80);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7691');
+  try { if (acc % 29 === 16) { throw new Error('synthetic-7692'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi7693' : 'lo') + acc.toString(16);
+  buf += `q7694:${acc % 97}`;
+  const cf7695: Array<(x: number) => number> = [];
+  cf7695.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7695.push((x: number): number => (x + 74) % 10007);
+  acc = cf7695[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7696');
+  const db7697: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7697.length) % 65521;
+  const db7698: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7698.length) % 65521;
+  acc = (acc * 31 + 2692) % 65521;
+  const ix7700: number = buf.indexOf('p0');
+  if (ix7700 > 12) { buf = buf.substring(0, 32); } else if (ix7700 >= 0) { buf += 'i'; }
+  for (let i7701 = 0; i7701 < 4; i7701++) {
+    acc = (acc + i7701 * 13 + 912) % 100003;
+  }
+  buf += 'parcel7702-' + acc.toString();
+  const db7703: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7703.length) % 65521;
+  const rc7704: Rec0 = { id: acc % 1000, tag: 't7704', score: acc % 100 };
+  acc = (acc + rc7704.score) % 65521;
+  buf += rc7704.tag;
+  m01.set('k7705', acc % 997);
+  let w7706: number = acc % 23;
+  while (w7706 > 4) { w7706 = Math.floor(w7706 / 2); }
+  acc += w7706;
+  acc = (acc * 31 + 631) % 65521;
+  let w7708: number = acc % 23;
+  while (w7708 > 4) { w7708 = Math.floor(w7708 / 2); }
+  acc += w7708;
+  try { if (acc % 29 === 6) { throw new Error('synthetic-7709'); } acc += 26; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k7710')) {
+    const gv7710: number = m01.get('k7710') as number;
+    acc = (acc + gv7710) % 10007;
+  }
+  let w7711: number = acc % 23;
+  while (w7711 > 4) { w7711 = Math.floor(w7711 / 2); }
+  acc += w7711;
+  const cf7712: Array<(x: number) => number> = [];
+  cf7712.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7712.push((x: number): number => (x + 125) % 10007);
+  acc = cf7712[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7713');
+  buf += (acc > 500 ? 'hi7714' : 'lo') + acc.toString(16);
+  if (m01.has('k7715')) {
+    const gv7715: number = m01.get('k7715') as number;
+    acc = (acc + gv7715) % 10007;
+  }
+  for (let i7716 = 0; i7716 < 7; i7716++) {
+    acc = (acc + i7716 * 13 + 581) % 100003;
+  }
+  buf += 'crate7717-' + acc.toString();
+  acc = acc + 332 - (acc % 71);
+  const db7719: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7719.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7720');
+  buf += 'region7721-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7722');
+  buf += (acc > 500 ? 'hi7723' : 'lo') + acc.toString(16);
+  if (acc % 20 === 0) { buf += 'even7724'; } else { buf += 'odd'; }
+  const ix7725: number = buf.indexOf('p0');
+  if (ix7725 > 12) { buf = buf.substring(0, 32); } else if (ix7725 >= 0) { buf += 'i'; }
+  const ix7726: number = buf.indexOf('p0');
+  if (ix7726 > 12) { buf = buf.substring(0, 32); } else if (ix7726 >= 0) { buf += 'i'; }
+  const cf7727: Array<(x: number) => number> = [];
+  cf7727.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7727.push((x: number): number => (x + 68) % 10007);
+  acc = cf7727[acc & 1](acc % 9973);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7728'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc7729: Rec0 = { id: acc % 1000, tag: 't7729', score: acc % 100 };
+  acc = (acc + rc7729.score) % 65521;
+  buf += rc7729.tag;
+  const t07730: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07730;
+  const ix7731: number = buf.indexOf('p0');
+  if (ix7731 > 12) { buf = buf.substring(0, 32); } else if (ix7731 >= 0) { buf += 'i'; }
+  buf += `q7732:${acc % 97}`;
+  buf += 'depot7733-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7734');
+  if (m01.has('k7735')) {
+    const gv7735: number = m01.get('k7735') as number;
+    acc = (acc + gv7735) % 10007;
+  }
+  buf += (acc > 500 ? 'hi7736' : 'lo') + acc.toString(16);
+  buf += `q7737:${acc % 97}`;
+  buf += 'dispatch7738-' + acc.toString();
+  let w7739: number = acc % 23;
+  while (w7739 > 4) { w7739 = Math.floor(w7739 / 2); }
+  acc += w7739;
+  if (m01.has('k7740')) {
+    const gv7740: number = m01.get('k7740') as number;
+    acc = (acc + gv7740) % 10007;
+  }
+  buf += 'refund7741-' + acc.toString();
+  acc = acc + 842 - (acc % 79);
+  if (acc % 16 === 0) { buf += 'even7743'; } else { buf += 'odd'; }
+  buf += 'parcel7744-' + acc.toString();
+  if (m01.has('k7745')) {
+    const gv7745: number = m01.get('k7745') as number;
+    acc = (acc + gv7745) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07746'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const cf7747: Array<(x: number) => number> = [];
+  cf7747.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7747.push((x: number): number => (x + 193) % 10007);
+  acc = cf7747[acc & 1](acc % 9973);
+  const t07748: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07748;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7749'); } acc += 6; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q7750:${acc % 97}`;
+  m01.set('k7751', acc % 997);
+  buf += (acc > 500 ? 'hi7752' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi7753' : 'lo') + acc.toString(16);
+  const t07754: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07754;
+  const rc7755: Rec0 = { id: acc % 1000, tag: 't7755', score: acc % 100 };
+  acc = (acc + rc7755.score) % 65521;
+  buf += rc7755.tag;
+  const rc7756: Rec0 = { id: acc % 1000, tag: 't7756', score: acc % 100 };
+  acc = (acc + rc7756.score) % 65521;
+  buf += rc7756.tag;
+  switch (acc & 3) {
+    case 0: buf += 's07757'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-7758'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k7759')) {
+    const gv7759: number = m01.get('k7759') as number;
+    acc = (acc + gv7759) % 10007;
+  }
+  arr.push(acc % 1000);
+  const ix7761: number = buf.indexOf('p0');
+  if (ix7761 > 12) { buf = buf.substring(0, 32); } else if (ix7761 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7762');
+  const db7763: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7763.length) % 65521;
+  const db7764: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7764.length) % 65521;
+  if (m01.has('k7765')) {
+    const gv7765: number = m01.get('k7765') as number;
+    acc = (acc + gv7765) % 10007;
+  }
+  const cf7766: Array<(x: number) => number> = [];
+  cf7766.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7766.push((x: number): number => (x + 80) % 10007);
+  acc = cf7766[acc & 1](acc % 9973);
+  for (let i7767 = 0; i7767 < 6; i7767++) {
+    acc = (acc + i7767 * 13 + 753) % 100003;
+  }
+  acc = (acc * 31 + 5381) % 65521;
+  if (m01.has('k7769')) {
+    const gv7769: number = m01.get('k7769') as number;
+    acc = (acc + gv7769) % 10007;
+  }
+  for (let i7770 = 0; i7770 < 9; i7770++) {
+    acc = (acc + i7770 * 13 + 956) % 100003;
+  }
+  for (let i7771 = 0; i7771 < 11; i7771++) {
+    acc = (acc + i7771 * 13 + 541) % 100003;
+  }
+  for (let i7772 = 0; i7772 < 12; i7772++) {
+    acc = (acc + i7772 * 13 + 306) % 100003;
+  }
+  if (acc % 23 === 0) { buf += 'even7773'; } else { buf += 'odd'; }
+  m01.set('k7774', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7775');
+  try { if (acc % 29 === 2) { throw new Error('synthetic-7776'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 192 - (acc % 47);
+  acc = acc + 303 - (acc % 56);
+  let w7779: number = acc % 23;
+  while (w7779 > 4) { w7779 = Math.floor(w7779 / 2); }
+  acc += w7779;
+  const t07780: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07780;
+  buf += `q7781:${acc % 97}`;
+  let w7782: number = acc % 23;
+  while (w7782 > 4) { w7782 = Math.floor(w7782 / 2); }
+  acc += w7782;
+  const rc7783: Rec0 = { id: acc % 1000, tag: 't7783', score: acc % 100 };
+  acc = (acc + rc7783.score) % 65521;
+  buf += rc7783.tag;
+  const ix7784: number = buf.indexOf('p0');
+  if (ix7784 > 12) { buf = buf.substring(0, 32); } else if (ix7784 >= 0) { buf += 'i'; }
+  const t07785: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07785;
+  const rc7786: Rec0 = { id: acc % 1000, tag: 't7786', score: acc % 100 };
+  acc = (acc + rc7786.score) % 65521;
+  buf += rc7786.tag;
+  if (acc % 20 === 0) { buf += 'even7787'; } else { buf += 'odd'; }
+  const t07788: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07788;
+  const cf7789: Array<(x: number) => number> = [];
+  cf7789.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7789.push((x: number): number => (x + 169) % 10007);
+  acc = cf7789[acc & 1](acc % 9973);
+  const db7790: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7790.length) % 65521;
+  const db7791: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7791.length) % 65521;
+  if (m01.has('k7792')) {
+    const gv7792: number = m01.get('k7792') as number;
+    acc = (acc + gv7792) % 10007;
+  }
+  try { if (acc % 29 === 2) { throw new Error('synthetic-7793'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 6 === 0) { buf += 'even7794'; } else { buf += 'odd'; }
+  const rc7795: Rec0 = { id: acc % 1000, tag: 't7795', score: acc % 100 };
+  acc = (acc + rc7795.score) % 65521;
+  buf += rc7795.tag;
+  switch (acc & 3) {
+    case 0: buf += 's07796'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 2978) % 65521;
+  buf += (acc > 500 ? 'hi7798' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 1262) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07800'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-7801'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc7802: Rec0 = { id: acc % 1000, tag: 't7802', score: acc % 100 };
+  acc = (acc + rc7802.score) % 65521;
+  buf += rc7802.tag;
+  switch (acc & 3) {
+    case 0: buf += 's07803'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi7804' : 'lo') + acc.toString(16);
+  const cf7805: Array<(x: number) => number> = [];
+  cf7805.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7805.push((x: number): number => (x + 52) % 10007);
+  acc = cf7805[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's07806'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k7807')) {
+    const gv7807: number = m01.get('k7807') as number;
+    acc = (acc + gv7807) % 10007;
+  }
+  for (let i7808 = 0; i7808 < 9; i7808++) {
+    acc = (acc + i7808 * 13 + 616) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7809' : 'lo') + acc.toString(16);
+  for (let i7810 = 0; i7810 < 8; i7810++) {
+    acc = (acc + i7810 * 13 + 150) % 100003;
+  }
+  if (acc % 18 === 0) { buf += 'even7811'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7812'); } acc += 34; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  buf += 'client7814-' + acc.toString();
+  const cf7815: Array<(x: number) => number> = [];
+  cf7815.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7815.push((x: number): number => (x + 143) % 10007);
+  acc = cf7815[acc & 1](acc % 9973);
+  buf += 'transit7816-' + acc.toString();
+  buf += 'warehouse7817-' + acc.toString();
+  const db7818: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7818.length) % 65521;
+  if (m01.has('k7819')) {
+    const gv7819: number = m01.get('k7819') as number;
+    acc = (acc + gv7819) % 10007;
+  }
+  arr.push(acc % 1000);
+  const t07821: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07821;
+  const rc7822: Rec0 = { id: acc % 1000, tag: 't7822', score: acc % 100 };
+  acc = (acc + rc7822.score) % 65521;
+  buf += rc7822.tag;
+  const rc7823: Rec0 = { id: acc % 1000, tag: 't7823', score: acc % 100 };
+  acc = (acc + rc7823.score) % 65521;
+  buf += rc7823.tag;
+  const rc7824: Rec0 = { id: acc % 1000, tag: 't7824', score: acc % 100 };
+  acc = (acc + rc7824.score) % 65521;
+  buf += rc7824.tag;
+  buf += (acc > 500 ? 'hi7825' : 'lo') + acc.toString(16);
+  let w7826: number = acc % 23;
+  while (w7826 > 4) { w7826 = Math.floor(w7826 / 2); }
+  acc += w7826;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7827');
+  const rc7828: Rec0 = { id: acc % 1000, tag: 't7828', score: acc % 100 };
+  acc = (acc + rc7828.score) % 65521;
+  buf += rc7828.tag;
+  let w7829: number = acc % 23;
+  while (w7829 > 4) { w7829 = Math.floor(w7829 / 2); }
+  acc += w7829;
+  let w7830: number = acc % 23;
+  while (w7830 > 4) { w7830 = Math.floor(w7830 / 2); }
+  acc += w7830;
+  const cf7831: Array<(x: number) => number> = [];
+  cf7831.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7831.push((x: number): number => (x + 12) % 10007);
+  acc = cf7831[acc & 1](acc % 9973);
+  const rc7832: Rec0 = { id: acc % 1000, tag: 't7832', score: acc % 100 };
+  acc = (acc + rc7832.score) % 65521;
+  buf += rc7832.tag;
+  buf += (acc > 500 ? 'hi7833' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi7834' : 'lo') + acc.toString(16);
+  buf += 'order7835-' + acc.toString();
+  const ix7836: number = buf.indexOf('p0');
+  if (ix7836 > 12) { buf = buf.substring(0, 32); } else if (ix7836 >= 0) { buf += 'i'; }
+  const cf7837: Array<(x: number) => number> = [];
+  cf7837.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7837.push((x: number): number => (x + 94) % 10007);
+  acc = cf7837[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi7838' : 'lo') + acc.toString(16);
+  const ix7839: number = buf.indexOf('p0');
+  if (ix7839 > 12) { buf = buf.substring(0, 32); } else if (ix7839 >= 0) { buf += 'i'; }
+  m01.set('k7840', acc % 997);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  const cf7843: Array<(x: number) => number> = [];
+  cf7843.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7843.push((x: number): number => (x + 71) % 10007);
+  acc = cf7843[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7844');
+  const t07845: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07845;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7846');
+  buf += 'dock7847-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's07848'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  m01.set('k7849', acc % 997);
+  buf += 'sku7850-' + acc.toString();
+  const t07851: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07851;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-7852'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k7853', acc % 997);
+  acc = (acc * 31 + 2063) % 65521;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-7855'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7856: number = acc % 23;
+  while (w7856 > 4) { w7856 = Math.floor(w7856 / 2); }
+  acc += w7856;
+  const t07857: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07857;
+  switch (acc & 3) {
+    case 0: buf += 's07858'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's07859'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k7860')) {
+    const gv7860: number = m01.get('k7860') as number;
+    acc = (acc + gv7860) % 10007;
+  }
+  const ix7861: number = buf.indexOf('p0');
+  if (ix7861 > 12) { buf = buf.substring(0, 32); } else if (ix7861 >= 0) { buf += 'i'; }
+  let w7862: number = acc % 23;
+  while (w7862 > 4) { w7862 = Math.floor(w7862 / 2); }
+  acc += w7862;
+  const db7863: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7863.length) % 65521;
+  buf += 'journey7864-' + acc.toString();
+  buf += `q7865:${acc % 97}`;
+  if (m01.has('k7866')) {
+    const gv7866: number = m01.get('k7866') as number;
+    acc = (acc + gv7866) % 10007;
+  }
+  for (let i7867 = 0; i7867 < 12; i7867++) {
+    acc = (acc + i7867 * 13 + 589) % 100003;
+  }
+  buf += `q7868:${acc % 97}`;
+  acc = (acc * 31 + 6858) % 65521;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-7870'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi7871' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi7872' : 'lo') + acc.toString(16);
+  if (acc % 8 === 0) { buf += 'even7873'; } else { buf += 'odd'; }
+  if (m01.has('k7874')) {
+    const gv7874: number = m01.get('k7874') as number;
+    acc = (acc + gv7874) % 10007;
+  }
+  if (m01.has('k7875')) {
+    const gv7875: number = m01.get('k7875') as number;
+    acc = (acc + gv7875) % 10007;
+  }
+  const ix7876: number = buf.indexOf('p0');
+  if (ix7876 > 12) { buf = buf.substring(0, 32); } else if (ix7876 >= 0) { buf += 'i'; }
+  let w7877: number = acc % 23;
+  while (w7877 > 4) { w7877 = Math.floor(w7877 / 2); }
+  acc += w7877;
+  buf += `q7878:${acc % 97}`;
+  buf += 'balance7879-' + acc.toString();
+  m01.set('k7880', acc % 997);
+  arr.push(acc % 1000);
+  m01.set('k7882', acc % 997);
+  buf += (acc > 500 ? 'hi7883' : 'lo') + acc.toString(16);
+  m01.set('k7884', acc % 997);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-7885'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 802 - (acc % 18);
+  const ix7887: number = buf.indexOf('p0');
+  if (ix7887 > 12) { buf = buf.substring(0, 32); } else if (ix7887 >= 0) { buf += 'i'; }
+  let w7888: number = acc % 23;
+  while (w7888 > 4) { w7888 = Math.floor(w7888 / 2); }
+  acc += w7888;
+  const cf7889: Array<(x: number) => number> = [];
+  cf7889.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7889.push((x: number): number => (x + 145) % 10007);
+  acc = cf7889[acc & 1](acc % 9973);
+  for (let i7890 = 0; i7890 < 12; i7890++) {
+    acc = (acc + i7890 * 13 + 485) % 100003;
+  }
+  buf += 'stocktake7891-' + acc.toString();
+  try { if (acc % 29 === 8) { throw new Error('synthetic-7892'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  let w7893: number = acc % 23;
+  while (w7893 > 4) { w7893 = Math.floor(w7893 / 2); }
+  acc += w7893;
+  let w7894: number = acc % 23;
+  while (w7894 > 4) { w7894 = Math.floor(w7894 / 2); }
+  acc += w7894;
+  let w7895: number = acc % 23;
+  while (w7895 > 4) { w7895 = Math.floor(w7895 / 2); }
+  acc += w7895;
+  let w7896: number = acc % 23;
+  while (w7896 > 4) { w7896 = Math.floor(w7896 / 2); }
+  acc += w7896;
+  acc = acc + 270 - (acc % 94);
+  buf += 'rebate7898-' + acc.toString();
+  buf += (acc > 500 ? 'hi7899' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 8008) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's07901'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 926 - (acc % 74);
+  const db7903: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7903.length) % 65521;
+  const t07904: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07904;
+  const rc7905: Rec0 = { id: acc % 1000, tag: 't7905', score: acc % 100 };
+  acc = (acc + rc7905.score) % 65521;
+  buf += rc7905.tag;
+  acc = (acc * 31 + 7726) % 65521;
+  for (let i7907 = 0; i7907 < 12; i7907++) {
+    acc = (acc + i7907 * 13 + 804) % 100003;
+  }
+  let w7908: number = acc % 23;
+  while (w7908 > 4) { w7908 = Math.floor(w7908 / 2); }
+  acc += w7908;
+  const ix7909: number = buf.indexOf('p0');
+  if (ix7909 > 12) { buf = buf.substring(0, 32); } else if (ix7909 >= 0) { buf += 'i'; }
+  const rc7910: Rec0 = { id: acc % 1000, tag: 't7910', score: acc % 100 };
+  acc = (acc + rc7910.score) % 65521;
+  buf += rc7910.tag;
+  arr.push(acc % 1000);
+  const t07912: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07912;
+  for (let i7913 = 0; i7913 < 10; i7913++) {
+    acc = (acc + i7913 * 13 + 787) % 100003;
+  }
+  for (let i7914 = 0; i7914 < 10; i7914++) {
+    acc = (acc + i7914 * 13 + 777) % 100003;
+  }
+  buf += 'customs7915-' + acc.toString();
+  let w7916: number = acc % 23;
+  while (w7916 > 4) { w7916 = Math.floor(w7916 / 2); }
+  acc += w7916;
+  if (acc % 9 === 0) { buf += 'even7917'; } else { buf += 'odd'; }
+  const db7918: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7918.length) % 65521;
+  const rc7919: Rec0 = { id: acc % 1000, tag: 't7919', score: acc % 100 };
+  acc = (acc + rc7919.score) % 65521;
+  buf += rc7919.tag;
+  if (m01.has('k7920')) {
+    const gv7920: number = m01.get('k7920') as number;
+    acc = (acc + gv7920) % 10007;
+  }
+  buf += `q7921:${acc % 97}`;
+  const t07922: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07922;
+  buf += `q7923:${acc % 97}`;
+  if (m01.has('k7924')) {
+    const gv7924: number = m01.get('k7924') as number;
+    acc = (acc + gv7924) % 10007;
+  }
+  for (let i7925 = 0; i7925 < 9; i7925++) {
+    acc = (acc + i7925 * 13 + 92) % 100003;
+  }
+  const rc7926: Rec0 = { id: acc % 1000, tag: 't7926', score: acc % 100 };
+  acc = (acc + rc7926.score) % 65521;
+  buf += rc7926.tag;
+  m01.set('k7927', acc % 997);
+  if (m01.has('k7928')) {
+    const gv7928: number = m01.get('k7928') as number;
+    acc = (acc + gv7928) % 10007;
+  }
+  acc = (acc * 31 + 4209) % 65521;
+  let w7930: number = acc % 23;
+  while (w7930 > 4) { w7930 = Math.floor(w7930 / 2); }
+  acc += w7930;
+  buf += `q7931:${acc % 97}`;
+  if (acc % 19 === 0) { buf += 'even7932'; } else { buf += 'odd'; }
+  if (m01.has('k7933')) {
+    const gv7933: number = m01.get('k7933') as number;
+    acc = (acc + gv7933) % 10007;
+  }
+  arr.push(acc % 1000);
+  const ix7935: number = buf.indexOf('p0');
+  if (ix7935 > 12) { buf = buf.substring(0, 32); } else if (ix7935 >= 0) { buf += 'i'; }
+  const db7936: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7936.length) % 65521;
+  acc = (acc * 31 + 114) % 65521;
+  buf += `q7938:${acc % 97}`;
+  const rc7939: Rec0 = { id: acc % 1000, tag: 't7939', score: acc % 100 };
+  acc = (acc + rc7939.score) % 65521;
+  buf += rc7939.tag;
+  if (acc % 31 === 0) { buf += 'even7940'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 10) { throw new Error('synthetic-7941'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3213) % 65521;
+  const ix7943: number = buf.indexOf('p0');
+  if (ix7943 > 12) { buf = buf.substring(0, 32); } else if (ix7943 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7944'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  const t07945: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t07945;
+  acc = (acc * 31 + 9910) % 65521;
+  let w7947: number = acc % 23;
+  while (w7947 > 4) { w7947 = Math.floor(w7947 / 2); }
+  acc += w7947;
+  const cf7948: Array<(x: number) => number> = [];
+  cf7948.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7948.push((x: number): number => (x + 89) % 10007);
+  acc = cf7948[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x7949');
+  acc = acc + 504 - (acc % 26);
+  m01.set('k7951', acc % 997);
+  acc = (acc * 31 + 7375) % 65521;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-7953'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k7954', acc % 997);
+  acc = (acc * 31 + 996) % 65521;
+  const db7956: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db7956.length) % 65521;
+  let w7957: number = acc % 23;
+  while (w7957 > 4) { w7957 = Math.floor(w7957 / 2); }
+  acc += w7957;
+  m01.set('k7958', acc % 997);
+  acc = acc + 955 - (acc % 40);
+  const rc7960: Rec0 = { id: acc % 1000, tag: 't7960', score: acc % 100 };
+  acc = (acc + rc7960.score) % 65521;
+  buf += rc7960.tag;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-7961'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 13 === 0) { buf += 'even7962'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 6597) % 65521;
+  const cf7964: Array<(x: number) => number> = [];
+  cf7964.push((x: number): number => (x * 3 + acc) % 65521);
+  cf7964.push((x: number): number => (x + 48) % 10007);
+  acc = cf7964[acc & 1](acc % 9973);
+  buf += 'order7965-' + acc.toString();
+  buf += 'quota7966-' + acc.toString();
+  if (acc % 7 === 0) { buf += 'even7967'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi7968' : 'lo') + acc.toString(16);
+  const rc7969: Rec0 = { id: acc % 1000, tag: 't7969', score: acc % 100 };
+  acc = (acc + rc7969.score) % 65521;
+  buf += rc7969.tag;
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's07971'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  let w7972: number = acc % 23;
+  while (w7972 > 4) { w7972 = Math.floor(w7972 / 2); }
+  acc += w7972;
+  acc = (acc * 31 + 582) % 65521;
+  acc = (acc * 31 + 5520) % 65521;
+  acc = (acc * 31 + 9898) % 65521;
+  buf += `q7976:${acc % 97}`;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-7977'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q7978:${acc % 97}`;
+  acc = (acc * 31 + 6019) % 65521;
+  acc = acc + 838 - (acc % 38);
+  buf += 'batch7981-' + acc.toString();
+  let w7982: number = acc % 23;
+  while (w7982 > 4) { w7982 = Math.floor(w7982 / 2); }
+  acc += w7982;
+  buf += `q7983:${acc % 97}`;
+  let w7984: number = acc % 23;
+  while (w7984 > 4) { w7984 = Math.floor(w7984 / 2); }
+  acc += w7984;
+  if (m01.has('k7985')) {
+    const gv7985: number = m01.get('k7985') as number;
+    acc = (acc + gv7985) % 10007;
+  }
+  buf += `q7986:${acc % 97}`;
+  for (let i7987 = 0; i7987 < 10; i7987++) {
+    acc = (acc + i7987 * 13 + 489) % 100003;
+  }
+  const ix7988: number = buf.indexOf('p0');
+  if (ix7988 > 12) { buf = buf.substring(0, 32); } else if (ix7988 >= 0) { buf += 'i'; }
+  for (let i7989 = 0; i7989 < 8; i7989++) {
+    acc = (acc + i7989 * 13 + 910) % 100003;
+  }
+  m01.set('k7990', acc % 997);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 5805) % 65521;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-7993'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i7994 = 0; i7994 < 5; i7994++) {
+    acc = (acc + i7994 * 13 + 157) % 100003;
+  }
+  buf += (acc > 500 ? 'hi7995' : 'lo') + acc.toString(16);
+  acc = acc + 606 - (acc % 89);
+  const ix7997: number = buf.indexOf('p0');
+  if (ix7997 > 12) { buf = buf.substring(0, 32); } else if (ix7997 >= 0) { buf += 'i'; }
+  if (acc % 27 === 0) { buf += 'even7998'; } else { buf += 'odd'; }
+  buf += `q7999:${acc % 97}`;
+  buf += 'client8000-' + acc.toString();
+  let w8001: number = acc % 23;
+  while (w8001 > 4) { w8001 = Math.floor(w8001 / 2); }
+  acc += w8001;
+  if (acc % 9 === 0) { buf += 'even8002'; } else { buf += 'odd'; }
+  const t08003: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08003;
+  const cf8004: Array<(x: number) => number> = [];
+  cf8004.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8004.push((x: number): number => (x + 43) % 10007);
+  acc = cf8004[acc & 1](acc % 9973);
+  buf += `q8005:${acc % 97}`;
+  m01.set('k8006', acc % 997);
+  arr.push(acc % 1000);
+  for (let i8008 = 0; i8008 < 10; i8008++) {
+    acc = (acc + i8008 * 13 + 24) % 100003;
+  }
+  acc = acc + 331 - (acc % 42);
+  buf += `q8010:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8011');
+  const rc8012: Rec0 = { id: acc % 1000, tag: 't8012', score: acc % 100 };
+  acc = (acc + rc8012.score) % 65521;
+  buf += rc8012.tag;
+  const ix8013: number = buf.indexOf('p0');
+  if (ix8013 > 12) { buf = buf.substring(0, 32); } else if (ix8013 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  buf += 'parcel8015-' + acc.toString();
+  buf += 'payout8016-' + acc.toString();
+  let w8017: number = acc % 23;
+  while (w8017 > 4) { w8017 = Math.floor(w8017 / 2); }
+  acc += w8017;
+  acc = acc + 380 - (acc % 84);
+  const cf8019: Array<(x: number) => number> = [];
+  cf8019.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8019.push((x: number): number => (x + 134) % 10007);
+  acc = cf8019[acc & 1](acc % 9973);
+  const ix8020: number = buf.indexOf('p0');
+  if (ix8020 > 12) { buf = buf.substring(0, 32); } else if (ix8020 >= 0) { buf += 'i'; }
+  buf += `q8021:${acc % 97}`;
+  const rc8022: Rec0 = { id: acc % 1000, tag: 't8022', score: acc % 100 };
+  acc = (acc + rc8022.score) % 65521;
+  buf += rc8022.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8023');
+  const cf8024: Array<(x: number) => number> = [];
+  cf8024.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8024.push((x: number): number => (x + 35) % 10007);
+  acc = cf8024[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi8025' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8026'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  const cf8028: Array<(x: number) => number> = [];
+  cf8028.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8028.push((x: number): number => (x + 15) % 10007);
+  acc = cf8028[acc & 1](acc % 9973);
+  try { if (acc % 29 === 11) { throw new Error('synthetic-8029'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k8030', acc % 997);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 16) { throw new Error('synthetic-8032'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  const t08033: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08033;
+  arr.push(acc % 1000);
+  if (m01.has('k8035')) {
+    const gv8035: number = m01.get('k8035') as number;
+    acc = (acc + gv8035) % 10007;
+  }
+  acc = acc + 373 - (acc % 80);
+  acc = acc + 309 - (acc % 66);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8038');
+  try { if (acc % 29 === 20) { throw new Error('synthetic-8039'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  const t08040: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08040;
+  buf += 'carrier8041-' + acc.toString();
+  buf += (acc > 500 ? 'hi8042' : 'lo') + acc.toString(16);
+  let w8043: number = acc % 23;
+  while (w8043 > 4) { w8043 = Math.floor(w8043 / 2); }
+  acc += w8043;
+  const ix8044: number = buf.indexOf('p0');
+  if (ix8044 > 12) { buf = buf.substring(0, 32); } else if (ix8044 >= 0) { buf += 'i'; }
+  const ix8045: number = buf.indexOf('p0');
+  if (ix8045 > 12) { buf = buf.substring(0, 32); } else if (ix8045 >= 0) { buf += 'i'; }
+  let w8046: number = acc % 23;
+  while (w8046 > 4) { w8046 = Math.floor(w8046 / 2); }
+  acc += w8046;
+  for (let i8047 = 0; i8047 < 12; i8047++) {
+    acc = (acc + i8047 * 13 + 884) % 100003;
+  }
+  try { if (acc % 29 === 15) { throw new Error('synthetic-8048'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi8049' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi8050' : 'lo') + acc.toString(16);
+  if (m01.has('k8051')) {
+    const gv8051: number = m01.get('k8051') as number;
+    acc = (acc + gv8051) % 10007;
+  }
+  const rc8052: Rec0 = { id: acc % 1000, tag: 't8052', score: acc % 100 };
+  acc = (acc + rc8052.score) % 65521;
+  buf += rc8052.tag;
+  arr.push(acc % 1000);
+  for (let i8054 = 0; i8054 < 9; i8054++) {
+    acc = (acc + i8054 * 13 + 576) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8055');
+  let w8056: number = acc % 23;
+  while (w8056 > 4) { w8056 = Math.floor(w8056 / 2); }
+  acc += w8056;
+  const t08057: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08057;
+  if (acc % 29 === 0) { buf += 'even8058'; } else { buf += 'odd'; }
+  m01.set('k8059', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's08060'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  if (acc % 26 === 0) { buf += 'even8061'; } else { buf += 'odd'; }
+  const ix8062: number = buf.indexOf('p0');
+  if (ix8062 > 12) { buf = buf.substring(0, 32); } else if (ix8062 >= 0) { buf += 'i'; }
+  buf += 'freight8063-' + acc.toString();
+  arr.push(acc % 1000);
+  if (m01.has('k8065')) {
+    const gv8065: number = m01.get('k8065') as number;
+    acc = (acc + gv8065) % 10007;
+  }
+  const rc8066: Rec0 = { id: acc % 1000, tag: 't8066', score: acc % 100 };
+  acc = (acc + rc8066.score) % 65521;
+  buf += rc8066.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08067'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  if (acc % 8 === 0) { buf += 'even8068'; } else { buf += 'odd'; }
+  const db8069: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8069.length) % 65521;
+  const ix8070: number = buf.indexOf('p0');
+  if (ix8070 > 12) { buf = buf.substring(0, 32); } else if (ix8070 >= 0) { buf += 'i'; }
+  const ix8071: number = buf.indexOf('p0');
+  if (ix8071 > 12) { buf = buf.substring(0, 32); } else if (ix8071 >= 0) { buf += 'i'; }
+  m01.set('k8072', acc % 997);
+  try { if (acc % 29 === 5) { throw new Error('synthetic-8073'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-8074'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k8075', acc % 997);
+  acc = (acc * 31 + 4029) % 65521;
+  if (acc % 15 === 0) { buf += 'even8077'; } else { buf += 'odd'; }
+  const db8078: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8078.length) % 65521;
+  buf += 'waybill8079-' + acc.toString();
+  let w8080: number = acc % 23;
+  while (w8080 > 4) { w8080 = Math.floor(w8080 / 2); }
+  acc += w8080;
+  switch (acc & 3) {
+    case 0: buf += 's08081'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const ix8082: number = buf.indexOf('p0');
+  if (ix8082 > 12) { buf = buf.substring(0, 32); } else if (ix8082 >= 0) { buf += 'i'; }
+  if (acc % 26 === 0) { buf += 'even8083'; } else { buf += 'odd'; }
+  if (acc % 27 === 0) { buf += 'even8084'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8085');
+  acc = acc + 511 - (acc % 34);
+  acc = acc + 113 - (acc % 31);
+  const cf8088: Array<(x: number) => number> = [];
+  cf8088.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8088.push((x: number): number => (x + 12) % 10007);
+  acc = cf8088[acc & 1](acc % 9973);
+  const db8089: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8089.length) % 65521;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-8090'); } acc += 24; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc8091: Rec0 = { id: acc % 1000, tag: 't8091', score: acc % 100 };
+  acc = (acc + rc8091.score) % 65521;
+  buf += rc8091.tag;
+  acc = acc + 831 - (acc % 88);
+  let w8093: number = acc % 23;
+  while (w8093 > 4) { w8093 = Math.floor(w8093 / 2); }
+  acc += w8093;
+  if (m01.has('k8094')) {
+    const gv8094: number = m01.get('k8094') as number;
+    acc = (acc + gv8094) % 10007;
+  }
+  const rc8095: Rec0 = { id: acc % 1000, tag: 't8095', score: acc % 100 };
+  acc = (acc + rc8095.score) % 65521;
+  buf += rc8095.tag;
+  for (let i8096 = 0; i8096 < 3; i8096++) {
+    acc = (acc + i8096 * 13 + 935) % 100003;
+  }
+  try { if (acc % 29 === 19) { throw new Error('synthetic-8097'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's08098'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += `q8099:${acc % 97}`;
+  const ix8100: number = buf.indexOf('p0');
+  if (ix8100 > 12) { buf = buf.substring(0, 32); } else if (ix8100 >= 0) { buf += 'i'; }
+  let w8101: number = acc % 23;
+  while (w8101 > 4) { w8101 = Math.floor(w8101 / 2); }
+  acc += w8101;
+  arr.push(acc % 1000);
+  const t08103: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08103;
+  let w8104: number = acc % 23;
+  while (w8104 > 4) { w8104 = Math.floor(w8104 / 2); }
+  acc += w8104;
+  buf += 'parcel8105-' + acc.toString();
+  if (acc % 9 === 0) { buf += 'even8106'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's08107'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  buf += 'coupon8108-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's08109'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  const t08110: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08110;
+  if (acc % 26 === 0) { buf += 'even8111'; } else { buf += 'odd'; }
+  buf += 'rebate8112-' + acc.toString();
+  const t08113: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08113;
+  const t08114: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08114;
+  const rc8115: Rec0 = { id: acc % 1000, tag: 't8115', score: acc % 100 };
+  acc = (acc + rc8115.score) % 65521;
+  buf += rc8115.tag;
+  const cf8116: Array<(x: number) => number> = [];
+  cf8116.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8116.push((x: number): number => (x + 161) % 10007);
+  acc = cf8116[acc & 1](acc % 9973);
+  const t08117: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08117;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8118');
+  m01.set('k8119', acc % 997);
+  acc = acc + 140 - (acc % 77);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8121');
+  try { if (acc % 29 === 14) { throw new Error('synthetic-8122'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k8123', acc % 997);
+  const rc8124: Rec0 = { id: acc % 1000, tag: 't8124', score: acc % 100 };
+  acc = (acc + rc8124.score) % 65521;
+  buf += rc8124.tag;
+  buf += (acc > 500 ? 'hi8125' : 'lo') + acc.toString(16);
+  const rc8126: Rec0 = { id: acc % 1000, tag: 't8126', score: acc % 100 };
+  acc = (acc + rc8126.score) % 65521;
+  buf += rc8126.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08127'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  let w8128: number = acc % 23;
+  while (w8128 > 4) { w8128 = Math.floor(w8128 / 2); }
+  acc += w8128;
+  if (m01.has('k8129')) {
+    const gv8129: number = m01.get('k8129') as number;
+    acc = (acc + gv8129) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's08130'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  for (let i8131 = 0; i8131 < 5; i8131++) {
+    acc = (acc + i8131 * 13 + 472) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 5732) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08134'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const rc8135: Rec0 = { id: acc % 1000, tag: 't8135', score: acc % 100 };
+  acc = (acc + rc8135.score) % 65521;
+  buf += rc8135.tag;
+  arr.push(acc % 1000);
+  const t08137: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08137;
+  const t08138: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08138;
+  buf += `q8139:${acc % 97}`;
+  if (m01.has('k8140')) {
+    const gv8140: number = m01.get('k8140') as number;
+    acc = (acc + gv8140) % 10007;
+  }
+  const t08141: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08141;
+  buf += 'sku8142-' + acc.toString();
+  const cf8143: Array<(x: number) => number> = [];
+  cf8143.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8143.push((x: number): number => (x + 23) % 10007);
+  acc = cf8143[acc & 1](acc % 9973);
+  for (let i8144 = 0; i8144 < 12; i8144++) {
+    acc = (acc + i8144 * 13 + 982) % 100003;
+  }
+  buf += `q8145:${acc % 97}`;
+  if (acc % 11 === 0) { buf += 'even8146'; } else { buf += 'odd'; }
+  acc = acc + 239 - (acc % 43);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-8148'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8149: Array<(x: number) => number> = [];
+  cf8149.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8149.push((x: number): number => (x + 27) % 10007);
+  acc = cf8149[acc & 1](acc % 9973);
+  const ix8150: number = buf.indexOf('p0');
+  if (ix8150 > 12) { buf = buf.substring(0, 32); } else if (ix8150 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8151');
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8152'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q8153:${acc % 97}`;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-8154'); } acc += 58; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-8155'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's08156'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k8157')) {
+    const gv8157: number = m01.get('k8157') as number;
+    acc = (acc + gv8157) % 10007;
+  }
+  const cf8158: Array<(x: number) => number> = [];
+  cf8158.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8158.push((x: number): number => (x + 185) % 10007);
+  acc = cf8158[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8159');
+  acc = acc + 575 - (acc % 92);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8161');
+  const t08162: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08162;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-8163'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 20) { throw new Error('synthetic-8164'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8165'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc8166: Rec0 = { id: acc % 1000, tag: 't8166', score: acc % 100 };
+  acc = (acc + rc8166.score) % 65521;
+  buf += rc8166.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08167'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  let w8168: number = acc % 23;
+  while (w8168 > 4) { w8168 = Math.floor(w8168 / 2); }
+  acc += w8168;
+  if (m01.has('k8169')) {
+    const gv8169: number = m01.get('k8169') as number;
+    acc = (acc + gv8169) % 10007;
+  }
+  if (acc % 5 === 0) { buf += 'even8170'; } else { buf += 'odd'; }
+  const rc8171: Rec0 = { id: acc % 1000, tag: 't8171', score: acc % 100 };
+  acc = (acc + rc8171.score) % 65521;
+  buf += rc8171.tag;
+  m01.set('k8172', acc % 997);
+  const ix8173: number = buf.indexOf('p0');
+  if (ix8173 > 12) { buf = buf.substring(0, 32); } else if (ix8173 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 9196) % 65521;
+  const t08175: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08175;
+  if (m01.has('k8176')) {
+    const gv8176: number = m01.get('k8176') as number;
+    acc = (acc + gv8176) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8177');
+  const ix8178: number = buf.indexOf('p0');
+  if (ix8178 > 12) { buf = buf.substring(0, 32); } else if (ix8178 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's08179'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k8180')) {
+    const gv8180: number = m01.get('k8180') as number;
+    acc = (acc + gv8180) % 10007;
+  }
+  if (acc % 8 === 0) { buf += 'even8181'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8182');
+  buf += (acc > 500 ? 'hi8183' : 'lo') + acc.toString(16);
+  buf += `q8184:${acc % 97}`;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-8185'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's08186'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  const t08187: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08187;
+  buf += 'dock8188-' + acc.toString();
+  const db8189: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8189.length) % 65521;
+  m01.set('k8190', acc % 997);
+  acc = (acc * 31 + 2378) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08192'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8193');
+  const cf8194: Array<(x: number) => number> = [];
+  cf8194.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8194.push((x: number): number => (x + 81) % 10007);
+  acc = cf8194[acc & 1](acc % 9973);
+  if (acc % 9 === 0) { buf += 'even8195'; } else { buf += 'odd'; }
+  let w8196: number = acc % 23;
+  while (w8196 > 4) { w8196 = Math.floor(w8196 / 2); }
+  acc += w8196;
+  const t08197: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08197;
+  m01.set('k8198', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's08199'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 800 - (acc % 12);
+  for (let i8201 = 0; i8201 < 11; i8201++) {
+    acc = (acc + i8201 * 13 + 656) % 100003;
+  }
+  buf += `q8202:${acc % 97}`;
+  buf += 'ledger8203-' + acc.toString();
+  for (let i8204 = 0; i8204 < 4; i8204++) {
+    acc = (acc + i8204 * 13 + 409) % 100003;
+  }
+  acc = (acc * 31 + 8299) % 65521;
+  buf += `q8206:${acc % 97}`;
+  buf += (acc > 500 ? 'hi8207' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi8208' : 'lo') + acc.toString(16);
+  const rc8209: Rec0 = { id: acc % 1000, tag: 't8209', score: acc % 100 };
+  acc = (acc + rc8209.score) % 65521;
+  buf += rc8209.tag;
+  acc = (acc * 31 + 9541) % 65521;
+  acc = acc + 286 - (acc % 57);
+  acc = (acc * 31 + 2774) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8213');
+  switch (acc & 3) {
+    case 0: buf += 's08214'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-8215'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8216');
+  const cf8217: Array<(x: number) => number> = [];
+  cf8217.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8217.push((x: number): number => (x + 110) % 10007);
+  acc = cf8217[acc & 1](acc % 9973);
+  buf += `q8218:${acc % 97}`;
+  const rc8219: Rec0 = { id: acc % 1000, tag: 't8219', score: acc % 100 };
+  acc = (acc + rc8219.score) % 65521;
+  buf += rc8219.tag;
+  const ix8220: number = buf.indexOf('p0');
+  if (ix8220 > 12) { buf = buf.substring(0, 32); } else if (ix8220 >= 0) { buf += 'i'; }
+  if (acc % 27 === 0) { buf += 'even8221'; } else { buf += 'odd'; }
+  const t08222: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08222;
+  buf += `q8223:${acc % 97}`;
+  m01.set('k8224', acc % 997);
+  arr.push(acc % 1000);
+  acc = acc + 83 - (acc % 58);
+  if (acc % 27 === 0) { buf += 'even8227'; } else { buf += 'odd'; }
+  m01.set('k8228', acc % 997);
+  buf += (acc > 500 ? 'hi8229' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 19) { throw new Error('synthetic-8230'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  if (m01.has('k8232')) {
+    const gv8232: number = m01.get('k8232') as number;
+    acc = (acc + gv8232) % 10007;
+  }
+  const cf8233: Array<(x: number) => number> = [];
+  cf8233.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8233.push((x: number): number => (x + 35) % 10007);
+  acc = cf8233[acc & 1](acc % 9973);
+  acc = acc + 932 - (acc % 36);
+  acc = acc + 688 - (acc % 54);
+  if (m01.has('k8236')) {
+    const gv8236: number = m01.get('k8236') as number;
+    acc = (acc + gv8236) % 10007;
+  }
+  if (acc % 29 === 0) { buf += 'even8237'; } else { buf += 'odd'; }
+  let w8238: number = acc % 23;
+  while (w8238 > 4) { w8238 = Math.floor(w8238 / 2); }
+  acc += w8238;
+  for (let i8239 = 0; i8239 < 11; i8239++) {
+    acc = (acc + i8239 * 13 + 727) % 100003;
+  }
+  const t08240: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08240;
+  let w8241: number = acc % 23;
+  while (w8241 > 4) { w8241 = Math.floor(w8241 / 2); }
+  acc += w8241;
+  const t08242: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08242;
+  const ix8243: number = buf.indexOf('p0');
+  if (ix8243 > 12) { buf = buf.substring(0, 32); } else if (ix8243 >= 0) { buf += 'i'; }
+  m01.set('k8244', acc % 997);
+  if (m01.has('k8245')) {
+    const gv8245: number = m01.get('k8245') as number;
+    acc = (acc + gv8245) % 10007;
+  }
+  if (acc % 19 === 0) { buf += 'even8246'; } else { buf += 'odd'; }
+  const db8247: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8247.length) % 65521;
+  m01.set('k8248', acc % 997);
+  try { if (acc % 29 === 22) { throw new Error('synthetic-8249'); } acc += 6; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k8250')) {
+    const gv8250: number = m01.get('k8250') as number;
+    acc = (acc + gv8250) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8251' : 'lo') + acc.toString(16);
+  acc = acc + 879 - (acc % 81);
+  arr.push(acc % 1000);
+  if (m01.has('k8254')) {
+    const gv8254: number = m01.get('k8254') as number;
+    acc = (acc + gv8254) % 10007;
+  }
+  acc = acc + 558 - (acc % 40);
+  const rc8256: Rec0 = { id: acc % 1000, tag: 't8256', score: acc % 100 };
+  acc = (acc + rc8256.score) % 65521;
+  buf += rc8256.tag;
+  if (m01.has('k8257')) {
+    const gv8257: number = m01.get('k8257') as number;
+    acc = (acc + gv8257) % 10007;
+  }
+  if (acc % 18 === 0) { buf += 'even8258'; } else { buf += 'odd'; }
+  const cf8259: Array<(x: number) => number> = [];
+  cf8259.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8259.push((x: number): number => (x + 186) % 10007);
+  acc = cf8259[acc & 1](acc % 9973);
+  buf += `q8260:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8261');
+  buf += (acc > 500 ? 'hi8262' : 'lo') + acc.toString(16);
+  const ix8263: number = buf.indexOf('p0');
+  if (ix8263 > 12) { buf = buf.substring(0, 32); } else if (ix8263 >= 0) { buf += 'i'; }
+  m01.set('k8264', acc % 997);
+  acc = acc + 153 - (acc % 68);
+  m01.set('k8266', acc % 997);
+  const ix8267: number = buf.indexOf('p0');
+  if (ix8267 > 12) { buf = buf.substring(0, 32); } else if (ix8267 >= 0) { buf += 'i'; }
+  m01.set('k8268', acc % 997);
+  try { if (acc % 29 === 18) { throw new Error('synthetic-8269'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix8270: number = buf.indexOf('p0');
+  if (ix8270 > 12) { buf = buf.substring(0, 32); } else if (ix8270 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8271');
+  const rc8272: Rec0 = { id: acc % 1000, tag: 't8272', score: acc % 100 };
+  acc = (acc + rc8272.score) % 65521;
+  buf += rc8272.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08273'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const cf8274: Array<(x: number) => number> = [];
+  cf8274.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8274.push((x: number): number => (x + 151) % 10007);
+  acc = cf8274[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8275');
+  for (let i8276 = 0; i8276 < 7; i8276++) {
+    acc = (acc + i8276 * 13 + 15) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8277');
+  const t08278: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08278;
+  if (m01.has('k8279')) {
+    const gv8279: number = m01.get('k8279') as number;
+    acc = (acc + gv8279) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8280');
+  buf += `q8281:${acc % 97}`;
+  const ix8282: number = buf.indexOf('p0');
+  if (ix8282 > 12) { buf = buf.substring(0, 32); } else if (ix8282 >= 0) { buf += 'i'; }
+  const cf8283: Array<(x: number) => number> = [];
+  cf8283.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8283.push((x: number): number => (x + 80) % 10007);
+  acc = cf8283[acc & 1](acc % 9973);
+  buf += `q8284:${acc % 97}`;
+  acc = (acc * 31 + 6527) % 65521;
+  acc = (acc * 31 + 2683) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08287'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  for (let i8288 = 0; i8288 < 6; i8288++) {
+    acc = (acc + i8288 * 13 + 662) % 100003;
+  }
+  const db8289: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8289.length) % 65521;
+  const cf8290: Array<(x: number) => number> = [];
+  cf8290.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8290.push((x: number): number => (x + 95) % 10007);
+  acc = cf8290[acc & 1](acc % 9973);
+  m01.set('k8291', acc % 997);
+  for (let i8292 = 0; i8292 < 11; i8292++) {
+    acc = (acc + i8292 * 13 + 732) % 100003;
+  }
+  for (let i8293 = 0; i8293 < 11; i8293++) {
+    acc = (acc + i8293 * 13 + 263) % 100003;
+  }
+  buf += 'dispatch8294-' + acc.toString();
+  const cf8295: Array<(x: number) => number> = [];
+  cf8295.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8295.push((x: number): number => (x + 25) % 10007);
+  acc = cf8295[acc & 1](acc % 9973);
+  if (m01.has('k8296')) {
+    const gv8296: number = m01.get('k8296') as number;
+    acc = (acc + gv8296) % 10007;
+  }
+  if (m01.has('k8297')) {
+    const gv8297: number = m01.get('k8297') as number;
+    acc = (acc + gv8297) % 10007;
+  }
+  const cf8298: Array<(x: number) => number> = [];
+  cf8298.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8298.push((x: number): number => (x + 101) % 10007);
+  acc = cf8298[acc & 1](acc % 9973);
+  const t08299: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08299;
+  acc = (acc * 31 + 5491) % 65521;
+  arr.push(acc % 1000);
+  const t08302: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08302;
+  const cf8303: Array<(x: number) => number> = [];
+  cf8303.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8303.push((x: number): number => (x + 94) % 10007);
+  acc = cf8303[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  const rc8305: Rec0 = { id: acc % 1000, tag: 't8305', score: acc % 100 };
+  acc = (acc + rc8305.score) % 65521;
+  buf += rc8305.tag;
+  acc = (acc * 31 + 2934) % 65521;
+  const rc8307: Rec0 = { id: acc % 1000, tag: 't8307', score: acc % 100 };
+  acc = (acc + rc8307.score) % 65521;
+  buf += rc8307.tag;
+  m01.set('k8308', acc % 997);
+  arr.push(acc % 1000);
+  buf += 'quota8310-' + acc.toString();
+  buf += 'settle8311-' + acc.toString();
+  const ix8312: number = buf.indexOf('p0');
+  if (ix8312 > 12) { buf = buf.substring(0, 32); } else if (ix8312 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8313');
+  const t08314: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08314;
+  m01.set('k8315', acc % 997);
+  buf += `q8316:${acc % 97}`;
+  try { if (acc % 29 === 11) { throw new Error('synthetic-8317'); } acc += 15; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 650) % 65521;
+  if (acc % 7 === 0) { buf += 'even8319'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-8320'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  m01.set('k8322', acc % 997);
+  if (m01.has('k8323')) {
+    const gv8323: number = m01.get('k8323') as number;
+    acc = (acc + gv8323) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8324' : 'lo') + acc.toString(16);
+  const cf8325: Array<(x: number) => number> = [];
+  cf8325.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8325.push((x: number): number => (x + 173) % 10007);
+  acc = cf8325[acc & 1](acc % 9973);
+  const t08326: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08326;
+  switch (acc & 3) {
+    case 0: buf += 's08327'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  m01.set('k8328', acc % 997);
+  acc = acc + 830 - (acc % 11);
+  const db8330: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8330.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8331');
+  if (m01.has('k8332')) {
+    const gv8332: number = m01.get('k8332') as number;
+    acc = (acc + gv8332) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8333' : 'lo') + acc.toString(16);
+  acc = acc + 370 - (acc % 59);
+  const db8335: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8335.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08336'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  if (m01.has('k8338')) {
+    const gv8338: number = m01.get('k8338') as number;
+    acc = (acc + gv8338) % 10007;
+  }
+  if (m01.has('k8339')) {
+    const gv8339: number = m01.get('k8339') as number;
+    acc = (acc + gv8339) % 10007;
+  }
+  m01.set('k8340', acc % 997);
+  const t08341: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08341;
+  let w8342: number = acc % 23;
+  while (w8342 > 4) { w8342 = Math.floor(w8342 / 2); }
+  acc += w8342;
+  m01.set('k8343', acc % 997);
+  const db8344: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8344.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8345');
+  acc = acc + 482 - (acc % 85);
+  const rc8347: Rec0 = { id: acc % 1000, tag: 't8347', score: acc % 100 };
+  acc = (acc + rc8347.score) % 65521;
+  buf += rc8347.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08348'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const rc8349: Rec0 = { id: acc % 1000, tag: 't8349', score: acc % 100 };
+  acc = (acc + rc8349.score) % 65521;
+  buf += rc8349.tag;
+  buf += (acc > 500 ? 'hi8350' : 'lo') + acc.toString(16);
+  const rc8351: Rec0 = { id: acc % 1000, tag: 't8351', score: acc % 100 };
+  acc = (acc + rc8351.score) % 65521;
+  buf += rc8351.tag;
+  const db8352: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8352.length) % 65521;
+  arr.push(acc % 1000);
+  const db8354: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8354.length) % 65521;
+  arr.push(acc % 1000);
+  m01.set('k8356', acc % 997);
+  m01.set('k8357', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's08358'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const cf8359: Array<(x: number) => number> = [];
+  cf8359.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8359.push((x: number): number => (x + 105) % 10007);
+  acc = cf8359[acc & 1](acc % 9973);
+  if (m01.has('k8360')) {
+    const gv8360: number = m01.get('k8360') as number;
+    acc = (acc + gv8360) % 10007;
+  }
+  buf += 'crate8361-' + acc.toString();
+  if (m01.has('k8362')) {
+    const gv8362: number = m01.get('k8362') as number;
+    acc = (acc + gv8362) % 10007;
+  }
+  buf += 'parcel8363-' + acc.toString();
+  const ix8364: number = buf.indexOf('p0');
+  if (ix8364 > 12) { buf = buf.substring(0, 32); } else if (ix8364 >= 0) { buf += 'i'; }
+  let w8365: number = acc % 23;
+  while (w8365 > 4) { w8365 = Math.floor(w8365 / 2); }
+  acc += w8365;
+  switch (acc & 3) {
+    case 0: buf += 's08366'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 152 - (acc % 45);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8368');
+  const ix8369: number = buf.indexOf('p0');
+  if (ix8369 > 12) { buf = buf.substring(0, 32); } else if (ix8369 >= 0) { buf += 'i'; }
+  m01.set('k8370', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's08371'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  const cf8372: Array<(x: number) => number> = [];
+  cf8372.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8372.push((x: number): number => (x + 177) % 10007);
+  acc = cf8372[acc & 1](acc % 9973);
+  buf += `q8373:${acc % 97}`;
+  const ix8374: number = buf.indexOf('p0');
+  if (ix8374 > 12) { buf = buf.substring(0, 32); } else if (ix8374 >= 0) { buf += 'i'; }
+  buf += 'pickup8375-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8376');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8377');
+  buf += (acc > 500 ? 'hi8378' : 'lo') + acc.toString(16);
+  buf += 'dispatch8379-' + acc.toString();
+  buf += 'policy8380-' + acc.toString();
+  buf += 'portal8381-' + acc.toString();
+  buf += `q8382:${acc % 97}`;
+  const db8383: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8383.length) % 65521;
+  buf += (acc > 500 ? 'hi8384' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8385');
+  let w8386: number = acc % 23;
+  while (w8386 > 4) { w8386 = Math.floor(w8386 / 2); }
+  acc += w8386;
+  buf += 'depot8387-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's08388'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  if (acc % 20 === 0) { buf += 'even8389'; } else { buf += 'odd'; }
+  if (m01.has('k8390')) {
+    const gv8390: number = m01.get('k8390') as number;
+    acc = (acc + gv8390) % 10007;
+  }
+  const rc8391: Rec0 = { id: acc % 1000, tag: 't8391', score: acc % 100 };
+  acc = (acc + rc8391.score) % 65521;
+  buf += rc8391.tag;
+  acc = acc + 668 - (acc % 93);
+  buf += `q8393:${acc % 97}`;
+  const db8394: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8394.length) % 65521;
+  let w8395: number = acc % 23;
+  while (w8395 > 4) { w8395 = Math.floor(w8395 / 2); }
+  acc += w8395;
+  for (let i8396 = 0; i8396 < 9; i8396++) {
+    acc = (acc + i8396 * 13 + 570) % 100003;
+  }
+  buf += 'parcel8397-' + acc.toString();
+  const ix8398: number = buf.indexOf('p0');
+  if (ix8398 > 12) { buf = buf.substring(0, 32); } else if (ix8398 >= 0) { buf += 'i'; }
+  if (m01.has('k8399')) {
+    const gv8399: number = m01.get('k8399') as number;
+    acc = (acc + gv8399) % 10007;
+  }
+  const t08400: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08400;
+  for (let i8401 = 0; i8401 < 12; i8401++) {
+    acc = (acc + i8401 * 13 + 335) % 100003;
+  }
+  if (acc % 26 === 0) { buf += 'even8402'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-8403'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  let w8404: number = acc % 23;
+  while (w8404 > 4) { w8404 = Math.floor(w8404 / 2); }
+  acc += w8404;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8405');
+  buf += 'vendor8406-' + acc.toString();
+  const cf8407: Array<(x: number) => number> = [];
+  cf8407.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8407.push((x: number): number => (x + 34) % 10007);
+  acc = cf8407[acc & 1](acc % 9973);
+  const cf8408: Array<(x: number) => number> = [];
+  cf8408.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8408.push((x: number): number => (x + 64) % 10007);
+  acc = cf8408[acc & 1](acc % 9973);
+  m01.set('k8409', acc % 997);
+  if (m01.has('k8410')) {
+    const gv8410: number = m01.get('k8410') as number;
+    acc = (acc + gv8410) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8411' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8412');
+  const rc8413: Rec0 = { id: acc % 1000, tag: 't8413', score: acc % 100 };
+  acc = (acc + rc8413.score) % 65521;
+  buf += rc8413.tag;
+  for (let i8414 = 0; i8414 < 6; i8414++) {
+    acc = (acc + i8414 * 13 + 561) % 100003;
+  }
+  let w8415: number = acc % 23;
+  while (w8415 > 4) { w8415 = Math.floor(w8415 / 2); }
+  acc += w8415;
+  buf += 'waybill8416-' + acc.toString();
+  const cf8417: Array<(x: number) => number> = [];
+  cf8417.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8417.push((x: number): number => (x + 64) % 10007);
+  acc = cf8417[acc & 1](acc % 9973);
+  const db8418: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8418.length) % 65521;
+  const ix8419: number = buf.indexOf('p0');
+  if (ix8419 > 12) { buf = buf.substring(0, 32); } else if (ix8419 >= 0) { buf += 'i'; }
+  const t08420: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08420;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8421');
+  const db8422: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8422.length) % 65521;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-8423'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += `q8424:${acc % 97}`;
+  if (acc % 25 === 0) { buf += 'even8425'; } else { buf += 'odd'; }
+  const db8426: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8426.length) % 65521;
+  buf += `q8427:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's08428'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  let w8429: number = acc % 23;
+  while (w8429 > 4) { w8429 = Math.floor(w8429 / 2); }
+  acc += w8429;
+  buf += 'pallet8430-' + acc.toString();
+  acc = acc + 487 - (acc % 94);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8432');
+  acc = (acc * 31 + 248) % 65521;
+  try { if (acc % 29 === 20) { throw new Error('synthetic-8434'); } acc += 59; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-8435'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  const db8436: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8436.length) % 65521;
+  acc = (acc * 31 + 5324) % 65521;
+  m01.set('k8438', acc % 997);
+  buf += `q8439:${acc % 97}`;
+  for (let i8440 = 0; i8440 < 12; i8440++) {
+    acc = (acc + i8440 * 13 + 441) % 100003;
+  }
+  m01.set('k8441', acc % 997);
+  const db8442: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8442.length) % 65521;
+  const t08443: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08443;
+  acc = acc + 404 - (acc % 67);
+  try { if (acc % 29 === 12) { throw new Error('synthetic-8445'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  acc = acc + 124 - (acc % 85);
+  const db8448: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8448.length) % 65521;
+  let w8449: number = acc % 23;
+  while (w8449 > 4) { w8449 = Math.floor(w8449 / 2); }
+  acc += w8449;
+  if (acc % 24 === 0) { buf += 'even8450'; } else { buf += 'odd'; }
+  const rc8451: Rec0 = { id: acc % 1000, tag: 't8451', score: acc % 100 };
+  acc = (acc + rc8451.score) % 65521;
+  buf += rc8451.tag;
+  let w8452: number = acc % 23;
+  while (w8452 > 4) { w8452 = Math.floor(w8452 / 2); }
+  acc += w8452;
+  let w8453: number = acc % 23;
+  while (w8453 > 4) { w8453 = Math.floor(w8453 / 2); }
+  acc += w8453;
+  let w8454: number = acc % 23;
+  while (w8454 > 4) { w8454 = Math.floor(w8454 / 2); }
+  acc += w8454;
+  if (m01.has('k8455')) {
+    const gv8455: number = m01.get('k8455') as number;
+    acc = (acc + gv8455) % 10007;
+  }
+  const cf8456: Array<(x: number) => number> = [];
+  cf8456.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8456.push((x: number): number => (x + 136) % 10007);
+  acc = cf8456[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += 'audit8458-' + acc.toString();
+  arr.push(acc % 1000);
+  buf += `q8460:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8461');
+  const ix8462: number = buf.indexOf('p0');
+  if (ix8462 > 12) { buf = buf.substring(0, 32); } else if (ix8462 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi8463' : 'lo') + acc.toString(16);
+  const ix8464: number = buf.indexOf('p0');
+  if (ix8464 > 12) { buf = buf.substring(0, 32); } else if (ix8464 >= 0) { buf += 'i'; }
+  const db8465: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8465.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08466'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi8467' : 'lo') + acc.toString(16);
+  buf += 'transit8468-' + acc.toString();
+  try { if (acc % 29 === 8) { throw new Error('synthetic-8469'); } acc += 12; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3802) % 65521;
+  acc = (acc * 31 + 6754) % 65521;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-8472'); } acc += 52; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi8473' : 'lo') + acc.toString(16);
+  const t08474: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08474;
+  buf += 'refund8475-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's08476'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const ix8477: number = buf.indexOf('p0');
+  if (ix8477 > 12) { buf = buf.substring(0, 32); } else if (ix8477 >= 0) { buf += 'i'; }
+  const db8478: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8478.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8479');
+  arr.push(acc % 1000);
+  if (acc % 16 === 0) { buf += 'even8481'; } else { buf += 'odd'; }
+  let w8482: number = acc % 23;
+  while (w8482 > 4) { w8482 = Math.floor(w8482 / 2); }
+  acc += w8482;
+  acc = acc + 11 - (acc % 89);
+  buf += 'pallet8484-' + acc.toString();
+  const rc8485: Rec0 = { id: acc % 1000, tag: 't8485', score: acc % 100 };
+  acc = (acc + rc8485.score) % 65521;
+  buf += rc8485.tag;
+  arr.push(acc % 1000);
+  if (acc % 28 === 0) { buf += 'even8487'; } else { buf += 'odd'; }
+  if (acc % 31 === 0) { buf += 'even8488'; } else { buf += 'odd'; }
+  acc = (acc * 31 + 3871) % 65521;
+  const cf8490: Array<(x: number) => number> = [];
+  cf8490.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8490.push((x: number): number => (x + 120) % 10007);
+  acc = cf8490[acc & 1](acc % 9973);
+  for (let i8491 = 0; i8491 < 3; i8491++) {
+    acc = (acc + i8491 * 13 + 813) % 100003;
+  }
+  const ix8492: number = buf.indexOf('p0');
+  if (ix8492 > 12) { buf = buf.substring(0, 32); } else if (ix8492 >= 0) { buf += 'i'; }
+  const cf8493: Array<(x: number) => number> = [];
+  cf8493.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8493.push((x: number): number => (x + 97) % 10007);
+  acc = cf8493[acc & 1](acc % 9973);
+  const rc8494: Rec0 = { id: acc % 1000, tag: 't8494', score: acc % 100 };
+  acc = (acc + rc8494.score) % 65521;
+  buf += rc8494.tag;
+  const ix8495: number = buf.indexOf('p0');
+  if (ix8495 > 12) { buf = buf.substring(0, 32); } else if (ix8495 >= 0) { buf += 'i'; }
+  const t08496: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08496;
+  const cf8497: Array<(x: number) => number> = [];
+  cf8497.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8497.push((x: number): number => (x + 101) % 10007);
+  acc = cf8497[acc & 1](acc % 9973);
+  acc = (acc * 31 + 8487) % 65521;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8499'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i8500 = 0; i8500 < 7; i8500++) {
+    acc = (acc + i8500 * 13 + 512) % 100003;
+  }
+  const cf8501: Array<(x: number) => number> = [];
+  cf8501.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8501.push((x: number): number => (x + 29) % 10007);
+  acc = cf8501[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's08502'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  if (acc % 12 === 0) { buf += 'even8503'; } else { buf += 'odd'; }
+  acc = acc + 824 - (acc % 76);
+  buf += (acc > 500 ? 'hi8505' : 'lo') + acc.toString(16);
+  const db8506: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8506.length) % 65521;
+  const db8507: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8507.length) % 65521;
+  arr.push(acc % 1000);
+  let w8509: number = acc % 23;
+  while (w8509 > 4) { w8509 = Math.floor(w8509 / 2); }
+  acc += w8509;
+  acc = (acc * 31 + 9225) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08511'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const ix8512: number = buf.indexOf('p0');
+  if (ix8512 > 12) { buf = buf.substring(0, 32); } else if (ix8512 >= 0) { buf += 'i'; }
+  buf += `q8513:${acc % 97}`;
+  m01.set('k8514', acc % 997);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-8515'); } acc += 29; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi8516' : 'lo') + acc.toString(16);
+  if (m01.has('k8517')) {
+    const gv8517: number = m01.get('k8517') as number;
+    acc = (acc + gv8517) % 10007;
+  }
+  const cf8518: Array<(x: number) => number> = [];
+  cf8518.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8518.push((x: number): number => (x + 117) % 10007);
+  acc = cf8518[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi8519' : 'lo') + acc.toString(16);
+  const ix8520: number = buf.indexOf('p0');
+  if (ix8520 > 12) { buf = buf.substring(0, 32); } else if (ix8520 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 1792) % 65521;
+  const t08522: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08522;
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8523'); } acc += 46; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 17 === 0) { buf += 'even8524'; } else { buf += 'odd'; }
+  m01.set('k8525', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's08526'; break;
+    case 1: acc += 27; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  const ix8527: number = buf.indexOf('p0');
+  if (ix8527 > 12) { buf = buf.substring(0, 32); } else if (ix8527 >= 0) { buf += 'i'; }
+  if (acc % 8 === 0) { buf += 'even8528'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi8529' : 'lo') + acc.toString(16);
+  m01.set('k8530', acc % 997);
+  arr.push(acc % 1000);
+  buf += 'journey8532-' + acc.toString();
+  arr.push(acc % 1000);
+  m01.set('k8534', acc % 997);
+  buf += (acc > 500 ? 'hi8535' : 'lo') + acc.toString(16);
+  m01.set('k8536', acc % 997);
+  buf += `q8537:${acc % 97}`;
+  for (let i8538 = 0; i8538 < 9; i8538++) {
+    acc = (acc + i8538 * 13 + 515) % 100003;
+  }
+  buf += (acc > 500 ? 'hi8539' : 'lo') + acc.toString(16);
+  if (m01.has('k8540')) {
+    const gv8540: number = m01.get('k8540') as number;
+    acc = (acc + gv8540) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8541');
+  const rc8542: Rec0 = { id: acc % 1000, tag: 't8542', score: acc % 100 };
+  acc = (acc + rc8542.score) % 65521;
+  buf += rc8542.tag;
+  try { if (acc % 29 === 19) { throw new Error('synthetic-8543'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 5099) % 65521;
+  buf += (acc > 500 ? 'hi8545' : 'lo') + acc.toString(16);
+  m01.set('k8546', acc % 997);
+  const t08547: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08547;
+  if (m01.has('k8548')) {
+    const gv8548: number = m01.get('k8548') as number;
+    acc = (acc + gv8548) % 10007;
+  }
+  const cf8549: Array<(x: number) => number> = [];
+  cf8549.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8549.push((x: number): number => (x + 104) % 10007);
+  acc = cf8549[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi8550' : 'lo') + acc.toString(16);
+  if (acc % 17 === 0) { buf += 'even8551'; } else { buf += 'odd'; }
+  for (let i8552 = 0; i8552 < 5; i8552++) {
+    acc = (acc + i8552 * 13 + 255) % 100003;
+  }
+  const rc8553: Rec0 = { id: acc % 1000, tag: 't8553', score: acc % 100 };
+  acc = (acc + rc8553.score) % 65521;
+  buf += rc8553.tag;
+  acc = (acc * 31 + 5819) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8555');
+  let w8556: number = acc % 23;
+  while (w8556 > 4) { w8556 = Math.floor(w8556 / 2); }
+  acc += w8556;
+  const cf8557: Array<(x: number) => number> = [];
+  cf8557.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8557.push((x: number): number => (x + 120) % 10007);
+  acc = cf8557[acc & 1](acc % 9973);
+  const t08558: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08558;
+  m01.set('k8559', acc % 997);
+  acc = acc + 149 - (acc % 81);
+  const cf8561: Array<(x: number) => number> = [];
+  cf8561.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8561.push((x: number): number => (x + 88) % 10007);
+  acc = cf8561[acc & 1](acc % 9973);
+  const db8562: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8562.length) % 65521;
+  try { if (acc % 29 === 12) { throw new Error('synthetic-8563'); } acc += 21; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8564');
+  const ix8565: number = buf.indexOf('p0');
+  if (ix8565 > 12) { buf = buf.substring(0, 32); } else if (ix8565 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8566');
+  if (acc % 8 === 0) { buf += 'even8567'; } else { buf += 'odd'; }
+  const db8568: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8568.length) % 65521;
+  const ix8569: number = buf.indexOf('p0');
+  if (ix8569 > 12) { buf = buf.substring(0, 32); } else if (ix8569 >= 0) { buf += 'i'; }
+  const db8570: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8570.length) % 65521;
+  arr.push(acc % 1000);
+  const db8572: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8572.length) % 65521;
+  buf += (acc > 500 ? 'hi8573' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 3767) % 65521;
+  const db8576: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8576.length) % 65521;
+  for (let i8577 = 0; i8577 < 7; i8577++) {
+    acc = (acc + i8577 * 13 + 132) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8578');
+  arr.push(acc % 1000);
+  buf += 'customs8580-' + acc.toString();
+  const cf8581: Array<(x: number) => number> = [];
+  cf8581.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8581.push((x: number): number => (x + 46) % 10007);
+  acc = cf8581[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's08582'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  buf += `q8583:${acc % 97}`;
+  let w8584: number = acc % 23;
+  while (w8584 > 4) { w8584 = Math.floor(w8584 / 2); }
+  acc += w8584;
+  const db8585: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8585.length) % 65521;
+  buf += `q8586:${acc % 97}`;
+  const db8587: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8587.length) % 65521;
+  m01.set('k8588', acc % 997);
+  buf += 'warehouse8589-' + acc.toString();
+  const db8590: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8590.length) % 65521;
+  const cf8591: Array<(x: number) => number> = [];
+  cf8591.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8591.push((x: number): number => (x + 92) % 10007);
+  acc = cf8591[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's08592'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  for (let i8593 = 0; i8593 < 5; i8593++) {
+    acc = (acc + i8593 * 13 + 113) % 100003;
+  }
+  if (m01.has('k8594')) {
+    const gv8594: number = m01.get('k8594') as number;
+    acc = (acc + gv8594) % 10007;
+  }
+  for (let i8595 = 0; i8595 < 4; i8595++) {
+    acc = (acc + i8595 * 13 + 714) % 100003;
+  }
+  acc = (acc * 31 + 1296) % 65521;
+  m01.set('k8597', acc % 997);
+  const ix8598: number = buf.indexOf('p0');
+  if (ix8598 > 12) { buf = buf.substring(0, 32); } else if (ix8598 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 18) { throw new Error('synthetic-8599'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  let w8600: number = acc % 23;
+  while (w8600 > 4) { w8600 = Math.floor(w8600 / 2); }
+  acc += w8600;
+  const db8601: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8601.length) % 65521;
+  const ix8602: number = buf.indexOf('p0');
+  if (ix8602 > 12) { buf = buf.substring(0, 32); } else if (ix8602 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 7772) % 65521;
+  acc = (acc * 31 + 7488) % 65521;
+  buf += (acc > 500 ? 'hi8605' : 'lo') + acc.toString(16);
+  if (acc % 11 === 0) { buf += 'even8606'; } else { buf += 'odd'; }
+  if (acc % 15 === 0) { buf += 'even8607'; } else { buf += 'odd'; }
+  if (m01.has('k8608')) {
+    const gv8608: number = m01.get('k8608') as number;
+    acc = (acc + gv8608) % 10007;
+  }
+  acc = (acc * 31 + 8420) % 65521;
+  let w8610: number = acc % 23;
+  while (w8610 > 4) { w8610 = Math.floor(w8610 / 2); }
+  acc += w8610;
+  if (m01.has('k8611')) {
+    const gv8611: number = m01.get('k8611') as number;
+    acc = (acc + gv8611) % 10007;
+  }
+  let w8612: number = acc % 23;
+  while (w8612 > 4) { w8612 = Math.floor(w8612 / 2); }
+  acc += w8612;
+  acc = acc + 480 - (acc % 82);
+  if (acc % 15 === 0) { buf += 'even8614'; } else { buf += 'odd'; }
+  acc = acc + 761 - (acc % 77);
+  buf += `q8616:${acc % 97}`;
+  if (m01.has('k8617')) {
+    const gv8617: number = m01.get('k8617') as number;
+    acc = (acc + gv8617) % 10007;
+  }
+  arr.push(acc % 1000);
+  if (acc % 22 === 0) { buf += 'even8619'; } else { buf += 'odd'; }
+  acc = acc + 705 - (acc % 33);
+  m01.set('k8621', acc % 997);
+  buf += `q8622:${acc % 97}`;
+  acc = acc + 344 - (acc % 49);
+  buf += 'dispatch8624-' + acc.toString();
+  acc = acc + 355 - (acc % 85);
+  if (acc % 24 === 0) { buf += 'even8626'; } else { buf += 'odd'; }
+  switch (acc & 3) {
+    case 0: buf += 's08627'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8628');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8629');
+  acc = (acc * 31 + 7635) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8631');
+  for (let i8632 = 0; i8632 < 6; i8632++) {
+    acc = (acc + i8632 * 13 + 732) % 100003;
+  }
+  const t08633: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08633;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8634');
+  buf += `q8635:${acc % 97}`;
+  buf += 'refund8636-' + acc.toString();
+  const cf8637: Array<(x: number) => number> = [];
+  cf8637.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8637.push((x: number): number => (x + 85) % 10007);
+  acc = cf8637[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's08638'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 9492) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8640');
+  const ix8641: number = buf.indexOf('p0');
+  if (ix8641 > 12) { buf = buf.substring(0, 32); } else if (ix8641 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 13) { throw new Error('synthetic-8642'); } acc += 18; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 3351) % 65521;
+  for (let i8644 = 0; i8644 < 9; i8644++) {
+    acc = (acc + i8644 * 13 + 829) % 100003;
+  }
+  if (m01.has('k8645')) {
+    const gv8645: number = m01.get('k8645') as number;
+    acc = (acc + gv8645) % 10007;
+  }
+  const cf8646: Array<(x: number) => number> = [];
+  cf8646.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8646.push((x: number): number => (x + 119) % 10007);
+  acc = cf8646[acc & 1](acc % 9973);
+  if (m01.has('k8647')) {
+    const gv8647: number = m01.get('k8647') as number;
+    acc = (acc + gv8647) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's08648'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += `q8649:${acc % 97}`;
+  if (acc % 29 === 0) { buf += 'even8650'; } else { buf += 'odd'; }
+  if (acc % 26 === 0) { buf += 'even8651'; } else { buf += 'odd'; }
+  m01.set('k8652', acc % 997);
+  if (acc % 11 === 0) { buf += 'even8653'; } else { buf += 'odd'; }
+  const cf8654: Array<(x: number) => number> = [];
+  cf8654.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8654.push((x: number): number => (x + 55) % 10007);
+  acc = cf8654[acc & 1](acc % 9973);
+  buf += 'dock8655-' + acc.toString();
+  const db8656: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8656.length) % 65521;
+  const db8657: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8657.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8658');
+  let w8659: number = acc % 23;
+  while (w8659 > 4) { w8659 = Math.floor(w8659 / 2); }
+  acc += w8659;
+  const ix8660: number = buf.indexOf('p0');
+  if (ix8660 > 12) { buf = buf.substring(0, 32); } else if (ix8660 >= 0) { buf += 'i'; }
+  const ix8661: number = buf.indexOf('p0');
+  if (ix8661 > 12) { buf = buf.substring(0, 32); } else if (ix8661 >= 0) { buf += 'i'; }
+  const db8662: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8662.length) % 65521;
+  buf += (acc > 500 ? 'hi8663' : 'lo') + acc.toString(16);
+  let w8664: number = acc % 23;
+  while (w8664 > 4) { w8664 = Math.floor(w8664 / 2); }
+  acc += w8664;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8665');
+  acc = (acc * 31 + 8923) % 65521;
+  buf += (acc > 500 ? 'hi8667' : 'lo') + acc.toString(16);
+  const rc8668: Rec0 = { id: acc % 1000, tag: 't8668', score: acc % 100 };
+  acc = (acc + rc8668.score) % 65521;
+  buf += rc8668.tag;
+  const cf8669: Array<(x: number) => number> = [];
+  cf8669.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8669.push((x: number): number => (x + 127) % 10007);
+  acc = cf8669[acc & 1](acc % 9973);
+  acc = (acc * 31 + 6117) % 65521;
+  m01.set('k8671', acc % 997);
+  for (let i8672 = 0; i8672 < 4; i8672++) {
+    acc = (acc + i8672 * 13 + 395) % 100003;
+  }
+  const db8673: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8673.length) % 65521;
+  acc = (acc * 31 + 3973) % 65521;
+  const t08675: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08675;
+  switch (acc & 3) {
+    case 0: buf += 's08676'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  m01.set('k8678', acc % 997);
+  if (acc % 23 === 0) { buf += 'even8679'; } else { buf += 'odd'; }
+  const db8680: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8680.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8681');
+  buf += `q8682:${acc % 97}`;
+  if (m01.has('k8683')) {
+    const gv8683: number = m01.get('k8683') as number;
+    acc = (acc + gv8683) % 10007;
+  }
+  let w8684: number = acc % 23;
+  while (w8684 > 4) { w8684 = Math.floor(w8684 / 2); }
+  acc += w8684;
+  switch (acc & 3) {
+    case 0: buf += 's08685'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 329 - (acc % 41);
+  acc = acc + 386 - (acc % 83);
+  const ix8688: number = buf.indexOf('p0');
+  if (ix8688 > 12) { buf = buf.substring(0, 32); } else if (ix8688 >= 0) { buf += 'i'; }
+  const db8689: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8689.length) % 65521;
+  let w8690: number = acc % 23;
+  while (w8690 > 4) { w8690 = Math.floor(w8690 / 2); }
+  acc += w8690;
+  if (m01.has('k8691')) {
+    const gv8691: number = m01.get('k8691') as number;
+    acc = (acc + gv8691) % 10007;
+  }
+  const rc8692: Rec0 = { id: acc % 1000, tag: 't8692', score: acc % 100 };
+  acc = (acc + rc8692.score) % 65521;
+  buf += rc8692.tag;
+  acc = (acc * 31 + 2898) % 65521;
+  buf += (acc > 500 ? 'hi8694' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi8695' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8696');
+  if (m01.has('k8697')) {
+    const gv8697: number = m01.get('k8697') as number;
+    acc = (acc + gv8697) % 10007;
+  }
+  m01.set('k8698', acc % 997);
+  acc = (acc * 31 + 9511) % 65521;
+  const cf8700: Array<(x: number) => number> = [];
+  cf8700.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8700.push((x: number): number => (x + 105) % 10007);
+  acc = cf8700[acc & 1](acc % 9973);
+  buf += 'customs8701-' + acc.toString();
+  buf += (acc > 500 ? 'hi8702' : 'lo') + acc.toString(16);
+  acc = acc + 913 - (acc % 56);
+  if (acc % 22 === 0) { buf += 'even8704'; } else { buf += 'odd'; }
+  buf += 'audit8705-' + acc.toString();
+  const cf8706: Array<(x: number) => number> = [];
+  cf8706.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8706.push((x: number): number => (x + 158) % 10007);
+  acc = cf8706[acc & 1](acc % 9973);
+  try { if (acc % 29 === 14) { throw new Error('synthetic-8707'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  const db8708: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8708.length) % 65521;
+  if (acc % 15 === 0) { buf += 'even8709'; } else { buf += 'odd'; }
+  buf += 'settle8710-' + acc.toString();
+  let w8711: number = acc % 23;
+  while (w8711 > 4) { w8711 = Math.floor(w8711 / 2); }
+  acc += w8711;
+  acc = acc + 686 - (acc % 26);
+  buf += `q8713:${acc % 97}`;
+  const db8714: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8714.length) % 65521;
+  let w8715: number = acc % 23;
+  while (w8715 > 4) { w8715 = Math.floor(w8715 / 2); }
+  acc += w8715;
+  const t08716: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08716;
+  for (let i8717 = 0; i8717 < 8; i8717++) {
+    acc = (acc + i8717 * 13 + 890) % 100003;
+  }
+  if (acc % 27 === 0) { buf += 'even8718'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-8719'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8720: Array<(x: number) => number> = [];
+  cf8720.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8720.push((x: number): number => (x + 66) % 10007);
+  acc = cf8720[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi8721' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi8722' : 'lo') + acc.toString(16);
+  const db8723: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8723.length) % 65521;
+  const db8724: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8724.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8725');
+  const ix8726: number = buf.indexOf('p0');
+  if (ix8726 > 12) { buf = buf.substring(0, 32); } else if (ix8726 >= 0) { buf += 'i'; }
+  const ix8727: number = buf.indexOf('p0');
+  if (ix8727 > 12) { buf = buf.substring(0, 32); } else if (ix8727 >= 0) { buf += 'i'; }
+  const db8728: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8728.length) % 65521;
+  arr.push(acc % 1000);
+  acc = acc + 405 - (acc % 84);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 219) % 65521;
+  m01.set('k8733', acc % 997);
+  const cf8734: Array<(x: number) => number> = [];
+  cf8734.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8734.push((x: number): number => (x + 158) % 10007);
+  acc = cf8734[acc & 1](acc % 9973);
+  let w8735: number = acc % 23;
+  while (w8735 > 4) { w8735 = Math.floor(w8735 / 2); }
+  acc += w8735;
+  switch (acc & 3) {
+    case 0: buf += 's08736'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 2449) % 65521;
+  const cf8738: Array<(x: number) => number> = [];
+  cf8738.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8738.push((x: number): number => (x + 151) % 10007);
+  acc = cf8738[acc & 1](acc % 9973);
+  const ix8739: number = buf.indexOf('p0');
+  if (ix8739 > 12) { buf = buf.substring(0, 32); } else if (ix8739 >= 0) { buf += 'i'; }
+  buf += `q8740:${acc % 97}`;
+  const db8741: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8741.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08742'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 993 - (acc % 82);
+  if (acc % 14 === 0) { buf += 'even8744'; } else { buf += 'odd'; }
+  const ix8745: number = buf.indexOf('p0');
+  if (ix8745 > 12) { buf = buf.substring(0, 32); } else if (ix8745 >= 0) { buf += 'i'; }
+  if (acc % 26 === 0) { buf += 'even8746'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8747');
+  arr.push(acc % 1000);
+  const db8749: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8749.length) % 65521;
+  let w8750: number = acc % 23;
+  while (w8750 > 4) { w8750 = Math.floor(w8750 / 2); }
+  acc += w8750;
+  buf += `q8751:${acc % 97}`;
+  if (m01.has('k8752')) {
+    const gv8752: number = m01.get('k8752') as number;
+    acc = (acc + gv8752) % 10007;
+  }
+  buf += `q8753:${acc % 97}`;
+  if (acc % 14 === 0) { buf += 'even8754'; } else { buf += 'odd'; }
+  const ix8755: number = buf.indexOf('p0');
+  if (ix8755 > 12) { buf = buf.substring(0, 32); } else if (ix8755 >= 0) { buf += 'i'; }
+  if (acc % 28 === 0) { buf += 'even8756'; } else { buf += 'odd'; }
+  buf += `q8757:${acc % 97}`;
+  buf += 'transit8758-' + acc.toString();
+  buf += `q8759:${acc % 97}`;
+  buf += 'routeplan8760-' + acc.toString();
+  buf += `q8761:${acc % 97}`;
+  buf += `q8762:${acc % 97}`;
+  let w8763: number = acc % 23;
+  while (w8763 > 4) { w8763 = Math.floor(w8763 / 2); }
+  acc += w8763;
+  const db8764: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8764.length) % 65521;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-8765'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's08766'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 7395) % 65521;
+  const ix8768: number = buf.indexOf('p0');
+  if (ix8768 > 12) { buf = buf.substring(0, 32); } else if (ix8768 >= 0) { buf += 'i'; }
+  const ix8769: number = buf.indexOf('p0');
+  if (ix8769 > 12) { buf = buf.substring(0, 32); } else if (ix8769 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8770');
+  buf += 'warehouse8771-' + acc.toString();
+  const cf8772: Array<(x: number) => number> = [];
+  cf8772.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8772.push((x: number): number => (x + 42) % 10007);
+  acc = cf8772[acc & 1](acc % 9973);
+  const rc8773: Rec0 = { id: acc % 1000, tag: 't8773', score: acc % 100 };
+  acc = (acc + rc8773.score) % 65521;
+  buf += rc8773.tag;
+  acc = acc + 32 - (acc % 53);
+  const cf8775: Array<(x: number) => number> = [];
+  cf8775.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8775.push((x: number): number => (x + 155) % 10007);
+  acc = cf8775[acc & 1](acc % 9973);
+  const ix8776: number = buf.indexOf('p0');
+  if (ix8776 > 12) { buf = buf.substring(0, 32); } else if (ix8776 >= 0) { buf += 'i'; }
+  const cf8777: Array<(x: number) => number> = [];
+  cf8777.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8777.push((x: number): number => (x + 15) % 10007);
+  acc = cf8777[acc & 1](acc % 9973);
+  const rc8778: Rec0 = { id: acc % 1000, tag: 't8778', score: acc % 100 };
+  acc = (acc + rc8778.score) % 65521;
+  buf += rc8778.tag;
+  const rc8779: Rec0 = { id: acc % 1000, tag: 't8779', score: acc % 100 };
+  acc = (acc + rc8779.score) % 65521;
+  buf += rc8779.tag;
+  acc = acc + 973 - (acc % 90);
+  m01.set('k8781', acc % 997);
+  acc = acc + 606 - (acc % 15);
+  const db8783: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8783.length) % 65521;
+  const rc8784: Rec0 = { id: acc % 1000, tag: 't8784', score: acc % 100 };
+  acc = (acc + rc8784.score) % 65521;
+  buf += rc8784.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8785');
+  switch (acc & 3) {
+    case 0: buf += 's08786'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  const cf8788: Array<(x: number) => number> = [];
+  cf8788.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8788.push((x: number): number => (x + 28) % 10007);
+  acc = cf8788[acc & 1](acc % 9973);
+  const t08789: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08789;
+  m01.set('k8790', acc % 997);
+  let w8791: number = acc % 23;
+  while (w8791 > 4) { w8791 = Math.floor(w8791 / 2); }
+  acc += w8791;
+  buf += (acc > 500 ? 'hi8792' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 1964) % 65521;
+  const ix8795: number = buf.indexOf('p0');
+  if (ix8795 > 12) { buf = buf.substring(0, 32); } else if (ix8795 >= 0) { buf += 'i'; }
+  if (m01.has('k8796')) {
+    const gv8796: number = m01.get('k8796') as number;
+    acc = (acc + gv8796) % 10007;
+  }
+  buf += 'ledger8797-' + acc.toString();
+  if (m01.has('k8798')) {
+    const gv8798: number = m01.get('k8798') as number;
+    acc = (acc + gv8798) % 10007;
+  }
+  if (m01.has('k8799')) {
+    const gv8799: number = m01.get('k8799') as number;
+    acc = (acc + gv8799) % 10007;
+  }
+  const t08800: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08800;
+  const cf8801: Array<(x: number) => number> = [];
+  cf8801.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8801.push((x: number): number => (x + 160) % 10007);
+  acc = cf8801[acc & 1](acc % 9973);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-8802'); } acc += 19; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8803: Array<(x: number) => number> = [];
+  cf8803.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8803.push((x: number): number => (x + 53) % 10007);
+  acc = cf8803[acc & 1](acc % 9973);
+  acc = acc + 236 - (acc % 15);
+  buf += `q8805:${acc % 97}`;
+  const rc8806: Rec0 = { id: acc % 1000, tag: 't8806', score: acc % 100 };
+  acc = (acc + rc8806.score) % 65521;
+  buf += rc8806.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8807');
+  for (let i8808 = 0; i8808 < 6; i8808++) {
+    acc = (acc + i8808 * 13 + 394) % 100003;
+  }
+  if (m01.has('k8809')) {
+    const gv8809: number = m01.get('k8809') as number;
+    acc = (acc + gv8809) % 10007;
+  }
+  if (m01.has('k8810')) {
+    const gv8810: number = m01.get('k8810') as number;
+    acc = (acc + gv8810) % 10007;
+  }
+  if (m01.has('k8811')) {
+    const gv8811: number = m01.get('k8811') as number;
+    acc = (acc + gv8811) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8812' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 5609) % 65521;
+  try { if (acc % 29 === 3) { throw new Error('synthetic-8814'); } acc += 9; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k8815', acc % 997);
+  buf += 'freight8816-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8817');
+  acc = acc + 273 - (acc % 91);
+  try { if (acc % 29 === 9) { throw new Error('synthetic-8819'); } acc += 49; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8820');
+  buf += (acc > 500 ? 'hi8821' : 'lo') + acc.toString(16);
+  const t08822: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08822;
+  const db8823: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8823.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08824'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  const db8825: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8825.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8826');
+  if (m01.has('k8827')) {
+    const gv8827: number = m01.get('k8827') as number;
+    acc = (acc + gv8827) % 10007;
+  }
+  buf += 'policy8828-' + acc.toString();
+  if (acc % 15 === 0) { buf += 'even8829'; } else { buf += 'odd'; }
+  const ix8830: number = buf.indexOf('p0');
+  if (ix8830 > 12) { buf = buf.substring(0, 32); } else if (ix8830 >= 0) { buf += 'i'; }
+  const t08831: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08831;
+  if (acc % 26 === 0) { buf += 'even8832'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 9) { throw new Error('synthetic-8833'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i8834 = 0; i8834 < 9; i8834++) {
+    acc = (acc + i8834 * 13 + 384) % 100003;
+  }
+  acc = acc + 876 - (acc % 14);
+  const t08836: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08836;
+  const db8837: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8837.length) % 65521;
+  m01.set('k8838', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8839');
+  let w8840: number = acc % 23;
+  while (w8840 > 4) { w8840 = Math.floor(w8840 / 2); }
+  acc += w8840;
+  if (m01.has('k8841')) {
+    const gv8841: number = m01.get('k8841') as number;
+    acc = (acc + gv8841) % 10007;
+  }
+  m01.set('k8842', acc % 997);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-8843'); } acc += 40; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8844: Array<(x: number) => number> = [];
+  cf8844.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8844.push((x: number): number => (x + 94) % 10007);
+  acc = cf8844[acc & 1](acc % 9973);
+  buf += `q8845:${acc % 97}`;
+  if (m01.has('k8846')) {
+    const gv8846: number = m01.get('k8846') as number;
+    acc = (acc + gv8846) % 10007;
+  }
+  m01.set('k8847', acc % 997);
+  buf += 'quota8848-' + acc.toString();
+  buf += `q8849:${acc % 97}`;
+  const rc8850: Rec0 = { id: acc % 1000, tag: 't8850', score: acc % 100 };
+  acc = (acc + rc8850.score) % 65521;
+  buf += rc8850.tag;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-8851'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8852: Array<(x: number) => number> = [];
+  cf8852.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8852.push((x: number): number => (x + 17) % 10007);
+  acc = cf8852[acc & 1](acc % 9973);
+  const cf8853: Array<(x: number) => number> = [];
+  cf8853.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8853.push((x: number): number => (x + 179) % 10007);
+  acc = cf8853[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8854');
+  switch (acc & 3) {
+    case 0: buf += 's08855'; break;
+    case 1: acc += 22; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  buf += `q8856:${acc % 97}`;
+  for (let i8857 = 0; i8857 < 12; i8857++) {
+    acc = (acc + i8857 * 13 + 111) % 100003;
+  }
+  let w8858: number = acc % 23;
+  while (w8858 > 4) { w8858 = Math.floor(w8858 / 2); }
+  acc += w8858;
+  if (acc % 24 === 0) { buf += 'even8859'; } else { buf += 'odd'; }
+  acc = acc + 571 - (acc % 13);
+  m01.set('k8861', acc % 997);
+  const cf8862: Array<(x: number) => number> = [];
+  cf8862.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8862.push((x: number): number => (x + 127) % 10007);
+  acc = cf8862[acc & 1](acc % 9973);
+  const t08863: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08863;
+  let w8864: number = acc % 23;
+  while (w8864 > 4) { w8864 = Math.floor(w8864 / 2); }
+  acc += w8864;
+  if (m01.has('k8865')) {
+    const gv8865: number = m01.get('k8865') as number;
+    acc = (acc + gv8865) % 10007;
+  }
+  let w8866: number = acc % 23;
+  while (w8866 > 4) { w8866 = Math.floor(w8866 / 2); }
+  acc += w8866;
+  const db8867: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8867.length) % 65521;
+  const db8868: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8868.length) % 65521;
+  for (let i8869 = 0; i8869 < 12; i8869++) {
+    acc = (acc + i8869 * 13 + 361) % 100003;
+  }
+  arr.push(acc % 1000);
+  const t08871: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08871;
+  const db8872: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8872.length) % 65521;
+  acc = acc + 759 - (acc % 86);
+  buf += `q8874:${acc % 97}`;
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 9942) % 65521;
+  buf += `q8877:${acc % 97}`;
+  acc = (acc * 31 + 6995) % 65521;
+  const ix8879: number = buf.indexOf('p0');
+  if (ix8879 > 12) { buf = buf.substring(0, 32); } else if (ix8879 >= 0) { buf += 'i'; }
+  acc = acc + 261 - (acc % 70);
+  const rc8881: Rec0 = { id: acc % 1000, tag: 't8881', score: acc % 100 };
+  acc = (acc + rc8881.score) % 65521;
+  buf += rc8881.tag;
+  buf += 'stocktake8882-' + acc.toString();
+  if (m01.has('k8883')) {
+    const gv8883: number = m01.get('k8883') as number;
+    acc = (acc + gv8883) % 10007;
+  }
+  acc = acc + 160 - (acc % 70);
+  try { if (acc % 29 === 15) { throw new Error('synthetic-8885'); } acc += 31; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 29 === 0) { buf += 'even8886'; } else { buf += 'odd'; }
+  buf += 'dock8887-' + acc.toString();
+  if (acc % 17 === 0) { buf += 'even8888'; } else { buf += 'odd'; }
+  let w8889: number = acc % 23;
+  while (w8889 > 4) { w8889 = Math.floor(w8889 / 2); }
+  acc += w8889;
+  if (acc % 31 === 0) { buf += 'even8890'; } else { buf += 'odd'; }
+  const cf8891: Array<(x: number) => number> = [];
+  cf8891.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8891.push((x: number): number => (x + 21) % 10007);
+  acc = cf8891[acc & 1](acc % 9973);
+  let w8892: number = acc % 23;
+  while (w8892 > 4) { w8892 = Math.floor(w8892 / 2); }
+  acc += w8892;
+  acc = (acc * 31 + 4268) % 65521;
+  buf += `q8894:${acc % 97}`;
+  buf += `q8895:${acc % 97}`;
+  let w8896: number = acc % 23;
+  while (w8896 > 4) { w8896 = Math.floor(w8896 / 2); }
+  acc += w8896;
+  buf += (acc > 500 ? 'hi8897' : 'lo') + acc.toString(16);
+  const ix8898: number = buf.indexOf('p0');
+  if (ix8898 > 12) { buf = buf.substring(0, 32); } else if (ix8898 >= 0) { buf += 'i'; }
+  if (acc % 25 === 0) { buf += 'even8899'; } else { buf += 'odd'; }
+  buf += 'transit8900-' + acc.toString();
+  const db8901: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8901.length) % 65521;
+  acc = acc + 881 - (acc % 67);
+  arr.push(acc % 1000);
+  if (acc % 22 === 0) { buf += 'even8904'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi8905' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const rc8907: Rec0 = { id: acc % 1000, tag: 't8907', score: acc % 100 };
+  acc = (acc + rc8907.score) % 65521;
+  buf += rc8907.tag;
+  if (m01.has('k8908')) {
+    const gv8908: number = m01.get('k8908') as number;
+    acc = (acc + gv8908) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8909');
+  if (acc % 16 === 0) { buf += 'even8910'; } else { buf += 'odd'; }
+  if (m01.has('k8911')) {
+    const gv8911: number = m01.get('k8911') as number;
+    acc = (acc + gv8911) % 10007;
+  }
+  buf += 'audit8912-' + acc.toString();
+  buf += (acc > 500 ? 'hi8913' : 'lo') + acc.toString(16);
+  if (acc % 15 === 0) { buf += 'even8914'; } else { buf += 'odd'; }
+  const ix8915: number = buf.indexOf('p0');
+  if (ix8915 > 12) { buf = buf.substring(0, 32); } else if (ix8915 >= 0) { buf += 'i'; }
+  for (let i8916 = 0; i8916 < 7; i8916++) {
+    acc = (acc + i8916 * 13 + 185) % 100003;
+  }
+  buf += (acc > 500 ? 'hi8917' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 992) % 65521;
+  buf += `q8919:${acc % 97}`;
+  if (m01.has('k8920')) {
+    const gv8920: number = m01.get('k8920') as number;
+    acc = (acc + gv8920) % 10007;
+  }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-8921'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  let w8922: number = acc % 23;
+  while (w8922 > 4) { w8922 = Math.floor(w8922 / 2); }
+  acc += w8922;
+  acc = (acc * 31 + 8550) % 65521;
+  for (let i8924 = 0; i8924 < 6; i8924++) {
+    acc = (acc + i8924 * 13 + 415) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8925');
+  arr.push(acc % 1000);
+  const db8927: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8927.length) % 65521;
+  const cf8928: Array<(x: number) => number> = [];
+  cf8928.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8928.push((x: number): number => (x + 127) % 10007);
+  acc = cf8928[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1371) % 65521;
+  const rc8930: Rec0 = { id: acc % 1000, tag: 't8930', score: acc % 100 };
+  acc = (acc + rc8930.score) % 65521;
+  buf += rc8930.tag;
+  const rc8931: Rec0 = { id: acc % 1000, tag: 't8931', score: acc % 100 };
+  acc = (acc + rc8931.score) % 65521;
+  buf += rc8931.tag;
+  for (let i8932 = 0; i8932 < 3; i8932++) {
+    acc = (acc + i8932 * 13 + 941) % 100003;
+  }
+  for (let i8933 = 0; i8933 < 9; i8933++) {
+    acc = (acc + i8933 * 13 + 235) % 100003;
+  }
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi8935' : 'lo') + acc.toString(16);
+  if (acc % 30 === 0) { buf += 'even8936'; } else { buf += 'odd'; }
+  if (m01.has('k8937')) {
+    const gv8937: number = m01.get('k8937') as number;
+    acc = (acc + gv8937) % 10007;
+  }
+  m01.set('k8938', acc % 997);
+  if (acc % 17 === 0) { buf += 'even8939'; } else { buf += 'odd'; }
+  m01.set('k8940', acc % 997);
+  m01.set('k8941', acc % 997);
+  let w8942: number = acc % 23;
+  while (w8942 > 4) { w8942 = Math.floor(w8942 / 2); }
+  acc += w8942;
+  if (m01.has('k8943')) {
+    const gv8943: number = m01.get('k8943') as number;
+    acc = (acc + gv8943) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8944' : 'lo') + acc.toString(16);
+  buf += 'ticket8945-' + acc.toString();
+  if (acc % 30 === 0) { buf += 'even8946'; } else { buf += 'odd'; }
+  const rc8947: Rec0 = { id: acc % 1000, tag: 't8947', score: acc % 100 };
+  acc = (acc + rc8947.score) % 65521;
+  buf += rc8947.tag;
+  const db8948: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8948.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08949'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  m01.set('k8950', acc % 997);
+  const db8951: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8951.length) % 65521;
+  buf += 'settle8952-' + acc.toString();
+  buf += (acc > 500 ? 'hi8953' : 'lo') + acc.toString(16);
+  buf += 'pickup8954-' + acc.toString();
+  if (m01.has('k8955')) {
+    const gv8955: number = m01.get('k8955') as number;
+    acc = (acc + gv8955) % 10007;
+  }
+  buf += (acc > 500 ? 'hi8956' : 'lo') + acc.toString(16);
+  const cf8957: Array<(x: number) => number> = [];
+  cf8957.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8957.push((x: number): number => (x + 195) % 10007);
+  acc = cf8957[acc & 1](acc % 9973);
+  for (let i8958 = 0; i8958 < 8; i8958++) {
+    acc = (acc + i8958 * 13 + 337) % 100003;
+  }
+  const t08959: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08959;
+  buf += (acc > 500 ? 'hi8960' : 'lo') + acc.toString(16);
+  if (m01.has('k8961')) {
+    const gv8961: number = m01.get('k8961') as number;
+    acc = (acc + gv8961) % 10007;
+  }
+  arr.push(acc % 1000);
+  const t08963: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t08963;
+  let w8964: number = acc % 23;
+  while (w8964 > 4) { w8964 = Math.floor(w8964 / 2); }
+  acc += w8964;
+  m01.set('k8965', acc % 997);
+  m01.set('k8966', acc % 997);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-8967'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf8968: Array<(x: number) => number> = [];
+  cf8968.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8968.push((x: number): number => (x + 80) % 10007);
+  acc = cf8968[acc & 1](acc % 9973);
+  const ix8969: number = buf.indexOf('p0');
+  if (ix8969 > 12) { buf = buf.substring(0, 32); } else if (ix8969 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  const rc8971: Rec0 = { id: acc % 1000, tag: 't8971', score: acc % 100 };
+  acc = (acc + rc8971.score) % 65521;
+  buf += rc8971.tag;
+  const rc8972: Rec0 = { id: acc % 1000, tag: 't8972', score: acc % 100 };
+  acc = (acc + rc8972.score) % 65521;
+  buf += rc8972.tag;
+  acc = acc + 826 - (acc % 19);
+  arr.push(acc % 1000);
+  m01.set('k8975', acc % 997);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-8976'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc8977: Rec0 = { id: acc % 1000, tag: 't8977', score: acc % 100 };
+  acc = (acc + rc8977.score) % 65521;
+  buf += rc8977.tag;
+  switch (acc & 3) {
+    case 0: buf += 's08978'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  const db8980: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8980.length) % 65521;
+  if (acc % 14 === 0) { buf += 'even8981'; } else { buf += 'odd'; }
+  acc = acc + 780 - (acc % 80);
+  switch (acc & 3) {
+    case 0: buf += 's08983'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  const cf8984: Array<(x: number) => number> = [];
+  cf8984.push((x: number): number => (x * 3 + acc) % 65521);
+  cf8984.push((x: number): number => (x + 189) % 10007);
+  acc = cf8984[acc & 1](acc % 9973);
+  buf += `q8985:${acc % 97}`;
+  const db8986: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8986.length) % 65521;
+  const db8987: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db8987.length) % 65521;
+  if (acc % 7 === 0) { buf += 'even8988'; } else { buf += 'odd'; }
+  buf += 'customs8989-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x8990');
+  const rc8991: Rec0 = { id: acc % 1000, tag: 't8991', score: acc % 100 };
+  acc = (acc + rc8991.score) % 65521;
+  buf += rc8991.tag;
+  if (m01.has('k8992')) {
+    const gv8992: number = m01.get('k8992') as number;
+    acc = (acc + gv8992) % 10007;
+  }
+  const rc8993: Rec0 = { id: acc % 1000, tag: 't8993', score: acc % 100 };
+  acc = (acc + rc8993.score) % 65521;
+  buf += rc8993.tag;
+  acc = (acc * 31 + 1407) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's08995'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  buf += `q8996:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's08997'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 2805) % 65521;
+  arr.push(acc % 1000);
+  if (m01.has('k9000')) {
+    const gv9000: number = m01.get('k9000') as number;
+    acc = (acc + gv9000) % 10007;
+  }
+  for (let i9001 = 0; i9001 < 4; i9001++) {
+    acc = (acc + i9001 * 13 + 880) % 100003;
+  }
+  m01.set('k9002', acc % 997);
+  for (let i9003 = 0; i9003 < 4; i9003++) {
+    acc = (acc + i9003 * 13 + 975) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9004');
+  switch (acc & 3) {
+    case 0: buf += 's09005'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  buf += 'parcel9007-' + acc.toString();
+  const rc9008: Rec0 = { id: acc % 1000, tag: 't9008', score: acc % 100 };
+  acc = (acc + rc9008.score) % 65521;
+  buf += rc9008.tag;
+  let w9009: number = acc % 23;
+  while (w9009 > 4) { w9009 = Math.floor(w9009 / 2); }
+  acc += w9009;
+  acc = (acc * 31 + 447) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9011');
+  const db9012: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9012.length) % 65521;
+  m01.set('k9013', acc % 997);
+  const rc9014: Rec0 = { id: acc % 1000, tag: 't9014', score: acc % 100 };
+  acc = (acc + rc9014.score) % 65521;
+  buf += rc9014.tag;
+  m01.set('k9015', acc % 997);
+  const ix9016: number = buf.indexOf('p0');
+  if (ix9016 > 12) { buf = buf.substring(0, 32); } else if (ix9016 >= 0) { buf += 'i'; }
+  const db9017: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9017.length) % 65521;
+  acc = (acc * 31 + 1762) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09019'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += 'region9020-' + acc.toString();
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's09022'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9023');
+  buf += `q9024:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's09025'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 17) { throw new Error('synthetic-9026'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9027 = 0; i9027 < 7; i9027++) {
+    acc = (acc + i9027 * 13 + 953) % 100003;
+  }
+  buf += 'ledger9028-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9029');
+  buf += 'rebate9030-' + acc.toString();
+  if (m01.has('k9031')) {
+    const gv9031: number = m01.get('k9031') as number;
+    acc = (acc + gv9031) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9032');
+  buf += `q9033:${acc % 97}`;
+  buf += (acc > 500 ? 'hi9034' : 'lo') + acc.toString(16);
+  buf += 'settle9035-' + acc.toString();
+  acc = (acc * 31 + 9199) % 65521;
+  try { if (acc % 29 === 22) { throw new Error('synthetic-9037'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  const t09038: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09038;
+  for (let i9039 = 0; i9039 < 11; i9039++) {
+    acc = (acc + i9039 * 13 + 971) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 8856) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09042'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9043' : 'lo') + acc.toString(16);
+  acc = acc + 564 - (acc % 49);
+  try { if (acc % 29 === 23) { throw new Error('synthetic-9045'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k9046', acc % 997);
+  buf += (acc > 500 ? 'hi9047' : 'lo') + acc.toString(16);
+  m01.set('k9048', acc % 997);
+  const t09049: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09049;
+  acc = acc + 807 - (acc % 73);
+  switch (acc & 3) {
+    case 0: buf += 's09051'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  const rc9052: Rec0 = { id: acc % 1000, tag: 't9052', score: acc % 100 };
+  acc = (acc + rc9052.score) % 65521;
+  buf += rc9052.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9053');
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-9055'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 14 === 0) { buf += 'even9056'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi9057' : 'lo') + acc.toString(16);
+  const t09058: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09058;
+  buf += `q9059:${acc % 97}`;
+  m01.set('k9060', acc % 997);
+  acc = acc + 209 - (acc % 66);
+  try { if (acc % 29 === 2) { throw new Error('synthetic-9062'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi9063' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9064');
+  buf += `q9065:${acc % 97}`;
+  buf += `q9066:${acc % 97}`;
+  const db9067: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9067.length) % 65521;
+  m01.set('k9068', acc % 997);
+  const t09069: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09069;
+  arr.push(acc % 1000);
+  if (acc % 21 === 0) { buf += 'even9071'; } else { buf += 'odd'; }
+  const t09072: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09072;
+  m01.set('k9073', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's09074'; break;
+    case 1: acc += 14; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k9075')) {
+    const gv9075: number = m01.get('k9075') as number;
+    acc = (acc + gv9075) % 10007;
+  }
+  for (let i9076 = 0; i9076 < 4; i9076++) {
+    acc = (acc + i9076 * 13 + 348) % 100003;
+  }
+  if (m01.has('k9077')) {
+    const gv9077: number = m01.get('k9077') as number;
+    acc = (acc + gv9077) % 10007;
+  }
+  if (m01.has('k9078')) {
+    const gv9078: number = m01.get('k9078') as number;
+    acc = (acc + gv9078) % 10007;
+  }
+  if (acc % 17 === 0) { buf += 'even9079'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  m01.set('k9082', acc % 997);
+  acc = acc + 286 - (acc % 57);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9084');
+  let w9085: number = acc % 23;
+  while (w9085 > 4) { w9085 = Math.floor(w9085 / 2); }
+  acc += w9085;
+  const ix9086: number = buf.indexOf('p0');
+  if (ix9086 > 12) { buf = buf.substring(0, 32); } else if (ix9086 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi9087' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-9088'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  if (m01.has('k9090')) {
+    const gv9090: number = m01.get('k9090') as number;
+    acc = (acc + gv9090) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9091');
+  buf += 'balance9092-' + acc.toString();
+  if (acc % 12 === 0) { buf += 'even9093'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi9094' : 'lo') + acc.toString(16);
+  let w9095: number = acc % 23;
+  while (w9095 > 4) { w9095 = Math.floor(w9095 / 2); }
+  acc += w9095;
+  const t09096: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09096;
+  if (m01.has('k9097')) {
+    const gv9097: number = m01.get('k9097') as number;
+    acc = (acc + gv9097) % 10007;
+  }
+  const ix9098: number = buf.indexOf('p0');
+  if (ix9098 > 12) { buf = buf.substring(0, 32); } else if (ix9098 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09099'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  for (let i9100 = 0; i9100 < 7; i9100++) {
+    acc = (acc + i9100 * 13 + 515) % 100003;
+  }
+  if (acc % 21 === 0) { buf += 'even9101'; } else { buf += 'odd'; }
+  acc = acc + 371 - (acc % 21);
+  buf += (acc > 500 ? 'hi9103' : 'lo') + acc.toString(16);
+  const t09104: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09104;
+  const rc9105: Rec0 = { id: acc % 1000, tag: 't9105', score: acc % 100 };
+  acc = (acc + rc9105.score) % 65521;
+  buf += rc9105.tag;
+  for (let i9106 = 0; i9106 < 11; i9106++) {
+    acc = (acc + i9106 * 13 + 840) % 100003;
+  }
+  const t09107: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09107;
+  m01.set('k9108', acc % 997);
+  m01.set('k9109', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's09110'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 6571) % 65521;
+  const db9112: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9112.length) % 65521;
+  m01.set('k9113', acc % 997);
+  const db9114: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9114.length) % 65521;
+  const cf9115: Array<(x: number) => number> = [];
+  cf9115.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9115.push((x: number): number => (x + 147) % 10007);
+  acc = cf9115[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09116'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  for (let i9117 = 0; i9117 < 9; i9117++) {
+    acc = (acc + i9117 * 13 + 476) % 100003;
+  }
+  buf += `q9118:${acc % 97}`;
+  let w9119: number = acc % 23;
+  while (w9119 > 4) { w9119 = Math.floor(w9119 / 2); }
+  acc += w9119;
+  switch (acc & 3) {
+    case 0: buf += 's09120'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09121'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += 'pallet9122-' + acc.toString();
+  let w9123: number = acc % 23;
+  while (w9123 > 4) { w9123 = Math.floor(w9123 / 2); }
+  acc += w9123;
+  acc = (acc * 31 + 2630) % 65521;
+  if (m01.has('k9125')) {
+    const gv9125: number = m01.get('k9125') as number;
+    acc = (acc + gv9125) % 10007;
+  }
+  let w9126: number = acc % 23;
+  while (w9126 > 4) { w9126 = Math.floor(w9126 / 2); }
+  acc += w9126;
+  arr.push(acc % 1000);
+  const db9128: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9128.length) % 65521;
+  const rc9129: Rec0 = { id: acc % 1000, tag: 't9129', score: acc % 100 };
+  acc = (acc + rc9129.score) % 65521;
+  buf += rc9129.tag;
+  if (m01.has('k9130')) {
+    const gv9130: number = m01.get('k9130') as number;
+    acc = (acc + gv9130) % 10007;
+  }
+  m01.set('k9131', acc % 997);
+  const ix9132: number = buf.indexOf('p0');
+  if (ix9132 > 12) { buf = buf.substring(0, 32); } else if (ix9132 >= 0) { buf += 'i'; }
+  const ix9133: number = buf.indexOf('p0');
+  if (ix9133 > 12) { buf = buf.substring(0, 32); } else if (ix9133 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-9134'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix9135: number = buf.indexOf('p0');
+  if (ix9135 > 12) { buf = buf.substring(0, 32); } else if (ix9135 >= 0) { buf += 'i'; }
+  buf += 'balance9136-' + acc.toString();
+  try { if (acc % 29 === 12) { throw new Error('synthetic-9137'); } acc += 60; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf9138: Array<(x: number) => number> = [];
+  cf9138.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9138.push((x: number): number => (x + 34) % 10007);
+  acc = cf9138[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09139'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  for (let i9141 = 0; i9141 < 12; i9141++) {
+    acc = (acc + i9141 * 13 + 167) % 100003;
+  }
+  if (m01.has('k9142')) {
+    const gv9142: number = m01.get('k9142') as number;
+    acc = (acc + gv9142) % 10007;
+  }
+  const rc9143: Rec0 = { id: acc % 1000, tag: 't9143', score: acc % 100 };
+  acc = (acc + rc9143.score) % 65521;
+  buf += rc9143.tag;
+  if (acc % 23 === 0) { buf += 'even9144'; } else { buf += 'odd'; }
+  const t09145: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09145;
+  try { if (acc % 29 === 7) { throw new Error('synthetic-9146'); } acc += 55; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9147');
+  let w9148: number = acc % 23;
+  while (w9148 > 4) { w9148 = Math.floor(w9148 / 2); }
+  acc += w9148;
+  switch (acc & 3) {
+    case 0: buf += 's09149'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const ix9150: number = buf.indexOf('p0');
+  if (ix9150 > 12) { buf = buf.substring(0, 32); } else if (ix9150 >= 0) { buf += 'i'; }
+  const ix9151: number = buf.indexOf('p0');
+  if (ix9151 > 12) { buf = buf.substring(0, 32); } else if (ix9151 >= 0) { buf += 'i'; }
+  const t09152: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09152;
+  m01.set('k9153', acc % 997);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-9154'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 1320) % 65521;
+  let w9156: number = acc % 23;
+  while (w9156 > 4) { w9156 = Math.floor(w9156 / 2); }
+  acc += w9156;
+  const ix9157: number = buf.indexOf('p0');
+  if (ix9157 > 12) { buf = buf.substring(0, 32); } else if (ix9157 >= 0) { buf += 'i'; }
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 3) { throw new Error('synthetic-9159'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc9160: Rec0 = { id: acc % 1000, tag: 't9160', score: acc % 100 };
+  acc = (acc + rc9160.score) % 65521;
+  buf += rc9160.tag;
+  for (let i9161 = 0; i9161 < 4; i9161++) {
+    acc = (acc + i9161 * 13 + 210) % 100003;
+  }
+  const cf9162: Array<(x: number) => number> = [];
+  cf9162.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9162.push((x: number): number => (x + 117) % 10007);
+  acc = cf9162[acc & 1](acc % 9973);
+  m01.set('k9163', acc % 997);
+  const cf9164: Array<(x: number) => number> = [];
+  cf9164.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9164.push((x: number): number => (x + 149) % 10007);
+  acc = cf9164[acc & 1](acc % 9973);
+  const cf9165: Array<(x: number) => number> = [];
+  cf9165.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9165.push((x: number): number => (x + 68) % 10007);
+  acc = cf9165[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9166');
+  const db9167: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9167.length) % 65521;
+  buf += `q9168:${acc % 97}`;
+  acc = acc + 407 - (acc % 65);
+  for (let i9170 = 0; i9170 < 11; i9170++) {
+    acc = (acc + i9170 * 13 + 829) % 100003;
+  }
+  const rc9171: Rec0 = { id: acc % 1000, tag: 't9171', score: acc % 100 };
+  acc = (acc + rc9171.score) % 65521;
+  buf += rc9171.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09172'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  const rc9173: Rec0 = { id: acc % 1000, tag: 't9173', score: acc % 100 };
+  acc = (acc + rc9173.score) % 65521;
+  buf += rc9173.tag;
+  const rc9174: Rec0 = { id: acc % 1000, tag: 't9174', score: acc % 100 };
+  acc = (acc + rc9174.score) % 65521;
+  buf += rc9174.tag;
+  acc = (acc * 31 + 4153) % 65521;
+  let w9176: number = acc % 23;
+  while (w9176 > 4) { w9176 = Math.floor(w9176 / 2); }
+  acc += w9176;
+  acc = (acc * 31 + 4028) % 65521;
+  const ix9178: number = buf.indexOf('p0');
+  if (ix9178 > 12) { buf = buf.substring(0, 32); } else if (ix9178 >= 0) { buf += 'i'; }
+  const t09179: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09179;
+  m01.set('k9180', acc % 997);
+  const rc9181: Rec0 = { id: acc % 1000, tag: 't9181', score: acc % 100 };
+  acc = (acc + rc9181.score) % 65521;
+  buf += rc9181.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09182'; break;
+    case 1: acc += 4; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const rc9183: Rec0 = { id: acc % 1000, tag: 't9183', score: acc % 100 };
+  acc = (acc + rc9183.score) % 65521;
+  buf += rc9183.tag;
+  acc = acc + 781 - (acc % 84);
+  const db9185: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9185.length) % 65521;
+  const rc9186: Rec0 = { id: acc % 1000, tag: 't9186', score: acc % 100 };
+  acc = (acc + rc9186.score) % 65521;
+  buf += rc9186.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09187'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9188');
+  const rc9189: Rec0 = { id: acc % 1000, tag: 't9189', score: acc % 100 };
+  acc = (acc + rc9189.score) % 65521;
+  buf += rc9189.tag;
+  const ix9190: number = buf.indexOf('p0');
+  if (ix9190 > 12) { buf = buf.substring(0, 32); } else if (ix9190 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 755) % 65521;
+  buf += (acc > 500 ? 'hi9192' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi9193' : 'lo') + acc.toString(16);
+  acc = acc + 319 - (acc % 31);
+  const db9195: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9195.length) % 65521;
+  acc = acc + 277 - (acc % 40);
+  acc = (acc * 31 + 1238) % 65521;
+  if (acc % 7 === 0) { buf += 'even9198'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-9199'); } acc += 13; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += (acc > 500 ? 'hi9200' : 'lo') + acc.toString(16);
+  for (let i9201 = 0; i9201 < 9; i9201++) {
+    acc = (acc + i9201 * 13 + 261) % 100003;
+  }
+  arr.push(acc % 1000);
+  const rc9203: Rec0 = { id: acc % 1000, tag: 't9203', score: acc % 100 };
+  acc = (acc + rc9203.score) % 65521;
+  buf += rc9203.tag;
+  buf += (acc > 500 ? 'hi9204' : 'lo') + acc.toString(16);
+  if (m01.has('k9205')) {
+    const gv9205: number = m01.get('k9205') as number;
+    acc = (acc + gv9205) % 10007;
+  }
+  const cf9206: Array<(x: number) => number> = [];
+  cf9206.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9206.push((x: number): number => (x + 47) % 10007);
+  acc = cf9206[acc & 1](acc % 9973);
+  try { if (acc % 29 === 4) { throw new Error('synthetic-9207'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k9208', acc % 997);
+  const rc9209: Rec0 = { id: acc % 1000, tag: 't9209', score: acc % 100 };
+  acc = (acc + rc9209.score) % 65521;
+  buf += rc9209.tag;
+  buf += (acc > 500 ? 'hi9210' : 'lo') + acc.toString(16);
+  if (acc % 27 === 0) { buf += 'even9211'; } else { buf += 'odd'; }
+  acc = acc + 493 - (acc % 68);
+  arr.push(acc % 1000);
+  buf += (acc > 500 ? 'hi9214' : 'lo') + acc.toString(16);
+  buf += `q9215:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9216');
+  const rc9217: Rec0 = { id: acc % 1000, tag: 't9217', score: acc % 100 };
+  acc = (acc + rc9217.score) % 65521;
+  buf += rc9217.tag;
+  const db9218: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9218.length) % 65521;
+  const cf9219: Array<(x: number) => number> = [];
+  cf9219.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9219.push((x: number): number => (x + 119) % 10007);
+  acc = cf9219[acc & 1](acc % 9973);
+  const db9220: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9220.length) % 65521;
+  if (acc % 10 === 0) { buf += 'even9221'; } else { buf += 'odd'; }
+  buf += 'settle9222-' + acc.toString();
+  const ix9223: number = buf.indexOf('p0');
+  if (ix9223 > 12) { buf = buf.substring(0, 32); } else if (ix9223 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09224'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9225');
+  m01.set('k9226', acc % 997);
+  const cf9227: Array<(x: number) => number> = [];
+  cf9227.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9227.push((x: number): number => (x + 148) % 10007);
+  acc = cf9227[acc & 1](acc % 9973);
+  const rc9228: Rec0 = { id: acc % 1000, tag: 't9228', score: acc % 100 };
+  acc = (acc + rc9228.score) % 65521;
+  buf += rc9228.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9229');
+  let w9230: number = acc % 23;
+  while (w9230 > 4) { w9230 = Math.floor(w9230 / 2); }
+  acc += w9230;
+  switch (acc & 3) {
+    case 0: buf += 's09231'; break;
+    case 1: acc += 13; break;
+    case 2: buf += 's2'; acc -= 9; break;
+    default: buf += 'sd';
+  }
+  for (let i9232 = 0; i9232 < 9; i9232++) {
+    acc = (acc + i9232 * 13 + 278) % 100003;
+  }
+  try { if (acc % 29 === 15) { throw new Error('synthetic-9233'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's09234'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 4; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 563 - (acc % 11);
+  const db9236: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9236.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9237');
+  buf += `q9238:${acc % 97}`;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-9239'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 20) { throw new Error('synthetic-9240'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 355 - (acc % 25);
+  acc = (acc * 31 + 4062) % 65521;
+  const t09243: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09243;
+  let w9244: number = acc % 23;
+  while (w9244 > 4) { w9244 = Math.floor(w9244 / 2); }
+  acc += w9244;
+  const cf9245: Array<(x: number) => number> = [];
+  cf9245.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9245.push((x: number): number => (x + 129) % 10007);
+  acc = cf9245[acc & 1](acc % 9973);
+  buf += `q9246:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9247');
+  switch (acc & 3) {
+    case 0: buf += 's09248'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  const rc9249: Rec0 = { id: acc % 1000, tag: 't9249', score: acc % 100 };
+  acc = (acc + rc9249.score) % 65521;
+  buf += rc9249.tag;
+  const db9250: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9250.length) % 65521;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-9251'); } acc += 38; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 538 - (acc % 59);
+  const ix9253: number = buf.indexOf('p0');
+  if (ix9253 > 12) { buf = buf.substring(0, 32); } else if (ix9253 >= 0) { buf += 'i'; }
+  for (let i9254 = 0; i9254 < 12; i9254++) {
+    acc = (acc + i9254 * 13 + 503) % 100003;
+  }
+  buf += 'carrier9255-' + acc.toString();
+  acc = acc + 303 - (acc % 26);
+  const rc9257: Rec0 = { id: acc % 1000, tag: 't9257', score: acc % 100 };
+  acc = (acc + rc9257.score) % 65521;
+  buf += rc9257.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09258'; break;
+    case 1: acc += 23; break;
+    case 2: buf += 's2'; acc -= 6; break;
+    default: buf += 'sd';
+  }
+  m01.set('k9259', acc % 997);
+  arr.push(acc % 1000);
+  let w9261: number = acc % 23;
+  while (w9261 > 4) { w9261 = Math.floor(w9261 / 2); }
+  acc += w9261;
+  acc = (acc * 31 + 5630) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9263');
+  buf += 'payout9264-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9266');
+  const ix9267: number = buf.indexOf('p0');
+  if (ix9267 > 12) { buf = buf.substring(0, 32); } else if (ix9267 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09268'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9269' : 'lo') + acc.toString(16);
+  buf += 'vendor9270-' + acc.toString();
+  arr.push(acc % 1000);
+  acc = acc + 907 - (acc % 30);
+  if (m01.has('k9273')) {
+    const gv9273: number = m01.get('k9273') as number;
+    acc = (acc + gv9273) % 10007;
+  }
+  acc = (acc * 31 + 7507) % 65521;
+  m01.set('k9275', acc % 997);
+  for (let i9276 = 0; i9276 < 9; i9276++) {
+    acc = (acc + i9276 * 13 + 974) % 100003;
+  }
+  for (let i9277 = 0; i9277 < 9; i9277++) {
+    acc = (acc + i9277 * 13 + 525) % 100003;
+  }
+  for (let i9278 = 0; i9278 < 9; i9278++) {
+    acc = (acc + i9278 * 13 + 974) % 100003;
+  }
+  buf += (acc > 500 ? 'hi9279' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const cf9281: Array<(x: number) => number> = [];
+  cf9281.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9281.push((x: number): number => (x + 194) % 10007);
+  acc = cf9281[acc & 1](acc % 9973);
+  const db9282: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9282.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09283'; break;
+    case 1: acc += 28; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  const t09284: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09284;
+  m01.set('k9285', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9286');
+  try { if (acc % 29 === 13) { throw new Error('synthetic-9287'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 265 - (acc % 46);
+  acc = acc + 186 - (acc % 80);
+  buf += (acc > 500 ? 'hi9290' : 'lo') + acc.toString(16);
+  const cf9291: Array<(x: number) => number> = [];
+  cf9291.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9291.push((x: number): number => (x + 63) % 10007);
+  acc = cf9291[acc & 1](acc % 9973);
+  acc = acc + 281 - (acc % 80);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  acc = acc + 606 - (acc % 42);
+  switch (acc & 3) {
+    case 0: buf += 's09296'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += 'carrier9297-' + acc.toString();
+  let w9298: number = acc % 23;
+  while (w9298 > 4) { w9298 = Math.floor(w9298 / 2); }
+  acc += w9298;
+  try { if (acc % 29 === 23) { throw new Error('synthetic-9299'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 888 - (acc % 12);
+  m01.set('k9301', acc % 997);
+  if (acc % 31 === 0) { buf += 'even9302'; } else { buf += 'odd'; }
+  let w9303: number = acc % 23;
+  while (w9303 > 4) { w9303 = Math.floor(w9303 / 2); }
+  acc += w9303;
+  for (let i9304 = 0; i9304 < 9; i9304++) {
+    acc = (acc + i9304 * 13 + 519) % 100003;
+  }
+  const t09305: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09305;
+  for (let i9306 = 0; i9306 < 11; i9306++) {
+    acc = (acc + i9306 * 13 + 372) % 100003;
+  }
+  if (m01.has('k9307')) {
+    const gv9307: number = m01.get('k9307') as number;
+    acc = (acc + gv9307) % 10007;
+  }
+  const t09308: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09308;
+  m01.set('k9309', acc % 997);
+  buf += (acc > 500 ? 'hi9310' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9311');
+  acc = (acc * 31 + 6333) % 65521;
+  for (let i9313 = 0; i9313 < 12; i9313++) {
+    acc = (acc + i9313 * 13 + 120) % 100003;
+  }
+  m01.set('k9314', acc % 997);
+  buf += `q9315:${acc % 97}`;
+  try { if (acc % 29 === 13) { throw new Error('synthetic-9316'); } acc += 51; } catch (e) { acc = (acc + 17) % 65521; }
+  let w9317: number = acc % 23;
+  while (w9317 > 4) { w9317 = Math.floor(w9317 / 2); }
+  acc += w9317;
+  buf += `q9318:${acc % 97}`;
+  buf += `q9319:${acc % 97}`;
+  acc = (acc * 31 + 7210) % 65521;
+  try { if (acc % 29 === 17) { throw new Error('synthetic-9321'); } acc += 22; } catch (e) { acc = (acc + 17) % 65521; }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9323');
+  const t09324: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09324;
+  acc = (acc * 31 + 8496) % 65521;
+  buf += `q9326:${acc % 97}`;
+  acc = acc + 317 - (acc % 43);
+  const t09328: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09328;
+  buf += 'ledger9329-' + acc.toString();
+  buf += `q9330:${acc % 97}`;
+  const ix9331: number = buf.indexOf('p0');
+  if (ix9331 > 12) { buf = buf.substring(0, 32); } else if (ix9331 >= 0) { buf += 'i'; }
+  buf += `q9332:${acc % 97}`;
+  if (acc % 19 === 0) { buf += 'even9333'; } else { buf += 'odd'; }
+  const db9334: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9334.length) % 65521;
+  buf += 'crate9335-' + acc.toString();
+  if (acc % 25 === 0) { buf += 'even9336'; } else { buf += 'odd'; }
+  acc = acc + 542 - (acc % 74);
+  m01.set('k9338', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9339');
+  for (let i9340 = 0; i9340 < 12; i9340++) {
+    acc = (acc + i9340 * 13 + 206) % 100003;
+  }
+  const cf9341: Array<(x: number) => number> = [];
+  cf9341.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9341.push((x: number): number => (x + 191) % 10007);
+  acc = cf9341[acc & 1](acc % 9973);
+  try { if (acc % 29 === 8) { throw new Error('synthetic-9342'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 734 - (acc % 84);
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 7) { throw new Error('synthetic-9345'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  let w9346: number = acc % 23;
+  while (w9346 > 4) { w9346 = Math.floor(w9346 / 2); }
+  acc += w9346;
+  const ix9347: number = buf.indexOf('p0');
+  if (ix9347 > 12) { buf = buf.substring(0, 32); } else if (ix9347 >= 0) { buf += 'i'; }
+  m01.set('k9348', acc % 997);
+  const cf9349: Array<(x: number) => number> = [];
+  cf9349.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9349.push((x: number): number => (x + 142) % 10007);
+  acc = cf9349[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  for (let i9352 = 0; i9352 < 11; i9352++) {
+    acc = (acc + i9352 * 13 + 419) % 100003;
+  }
+  buf += `q9353:${acc % 97}`;
+  const db9354: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9354.length) % 65521;
+  if (m01.has('k9355')) {
+    const gv9355: number = m01.get('k9355') as number;
+    acc = (acc + gv9355) % 10007;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09356'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k9357')) {
+    const gv9357: number = m01.get('k9357') as number;
+    acc = (acc + gv9357) % 10007;
+  }
+  const ix9358: number = buf.indexOf('p0');
+  if (ix9358 > 12) { buf = buf.substring(0, 32); } else if (ix9358 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3859) % 65521;
+  const rc9360: Rec0 = { id: acc % 1000, tag: 't9360', score: acc % 100 };
+  acc = (acc + rc9360.score) % 65521;
+  buf += rc9360.tag;
+  for (let i9361 = 0; i9361 < 11; i9361++) {
+    acc = (acc + i9361 * 13 + 839) % 100003;
+  }
+  const db9362: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9362.length) % 65521;
+  buf += 'transit9363-' + acc.toString();
+  arr.push(acc % 1000);
+  const db9365: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9365.length) % 65521;
+  acc = acc + 910 - (acc % 92);
+  if (acc % 12 === 0) { buf += 'even9367'; } else { buf += 'odd'; }
+  buf += `q9368:${acc % 97}`;
+  acc = acc + 577 - (acc % 66);
+  const rc9370: Rec0 = { id: acc % 1000, tag: 't9370', score: acc % 100 };
+  acc = (acc + rc9370.score) % 65521;
+  buf += rc9370.tag;
+  for (let i9371 = 0; i9371 < 12; i9371++) {
+    acc = (acc + i9371 * 13 + 329) % 100003;
+  }
+  acc = (acc * 31 + 2794) % 65521;
+  for (let i9373 = 0; i9373 < 4; i9373++) {
+    acc = (acc + i9373 * 13 + 148) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = acc + 246 - (acc % 29);
+  switch (acc & 3) {
+    case 0: buf += 's09376'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  let w9377: number = acc % 23;
+  while (w9377 > 4) { w9377 = Math.floor(w9377 / 2); }
+  acc += w9377;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9378');
+  acc = acc + 399 - (acc % 25);
+  const t09380: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09380;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9381');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9382');
+  buf += 'invoice9383-' + acc.toString();
+  let w9384: number = acc % 23;
+  while (w9384 > 4) { w9384 = Math.floor(w9384 / 2); }
+  acc += w9384;
+  for (let i9385 = 0; i9385 < 11; i9385++) {
+    acc = (acc + i9385 * 13 + 656) % 100003;
+  }
+  const cf9386: Array<(x: number) => number> = [];
+  cf9386.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9386.push((x: number): number => (x + 132) % 10007);
+  acc = cf9386[acc & 1](acc % 9973);
+  buf += 'client9387-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9388');
+  if (m01.has('k9389')) {
+    const gv9389: number = m01.get('k9389') as number;
+    acc = (acc + gv9389) % 10007;
+  }
+  try { if (acc % 29 === 6) { throw new Error('synthetic-9390'); } acc += 50; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 935 - (acc % 86);
+  acc = acc + 358 - (acc % 10);
+  acc = acc + 699 - (acc % 77);
+  const cf9394: Array<(x: number) => number> = [];
+  cf9394.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9394.push((x: number): number => (x + 53) % 10007);
+  acc = cf9394[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  buf += 'waybill9396-' + acc.toString();
+  for (let i9397 = 0; i9397 < 3; i9397++) {
+    acc = (acc + i9397 * 13 + 335) % 100003;
+  }
+  const cf9398: Array<(x: number) => number> = [];
+  cf9398.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9398.push((x: number): number => (x + 115) % 10007);
+  acc = cf9398[acc & 1](acc % 9973);
+  const rc9399: Rec0 = { id: acc % 1000, tag: 't9399', score: acc % 100 };
+  acc = (acc + rc9399.score) % 65521;
+  buf += rc9399.tag;
+  const db9400: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9400.length) % 65521;
+  for (let i9401 = 0; i9401 < 5; i9401++) {
+    acc = (acc + i9401 * 13 + 644) % 100003;
+  }
+  buf += (acc > 500 ? 'hi9402' : 'lo') + acc.toString(16);
+  arr.push(acc % 1000);
+  const db9404: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9404.length) % 65521;
+  for (let i9405 = 0; i9405 < 3; i9405++) {
+    acc = (acc + i9405 * 13 + 885) % 100003;
+  }
+  buf += 'portal9406-' + acc.toString();
+  let w9407: number = acc % 23;
+  while (w9407 > 4) { w9407 = Math.floor(w9407 / 2); }
+  acc += w9407;
+  buf += (acc > 500 ? 'hi9408' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9409');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9410');
+  arr.push(acc % 1000);
+  const t09412: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09412;
+  buf += `q9413:${acc % 97}`;
+  acc = acc + 170 - (acc % 75);
+  buf += `q9415:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9416');
+  if (m01.has('k9417')) {
+    const gv9417: number = m01.get('k9417') as number;
+    acc = (acc + gv9417) % 10007;
+  }
+  const cf9418: Array<(x: number) => number> = [];
+  cf9418.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9418.push((x: number): number => (x + 22) % 10007);
+  acc = cf9418[acc & 1](acc % 9973);
+  const ix9419: number = buf.indexOf('p0');
+  if (ix9419 > 12) { buf = buf.substring(0, 32); } else if (ix9419 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9420');
+  const ix9421: number = buf.indexOf('p0');
+  if (ix9421 > 12) { buf = buf.substring(0, 32); } else if (ix9421 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9422');
+  m01.set('k9423', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's09424'; break;
+    case 1: acc += 18; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const db9425: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9425.length) % 65521;
+  let w9426: number = acc % 23;
+  while (w9426 > 4) { w9426 = Math.floor(w9426 / 2); }
+  acc += w9426;
+  const ix9427: number = buf.indexOf('p0');
+  if (ix9427 > 12) { buf = buf.substring(0, 32); } else if (ix9427 >= 0) { buf += 'i'; }
+  const rc9428: Rec0 = { id: acc % 1000, tag: 't9428', score: acc % 100 };
+  acc = (acc + rc9428.score) % 65521;
+  buf += rc9428.tag;
+  for (let i9429 = 0; i9429 < 6; i9429++) {
+    acc = (acc + i9429 * 13 + 723) % 100003;
+  }
+  acc = acc + 135 - (acc % 95);
+  if (acc % 19 === 0) { buf += 'even9431'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9432');
+  buf += (acc > 500 ? 'hi9433' : 'lo') + acc.toString(16);
+  let w9434: number = acc % 23;
+  while (w9434 > 4) { w9434 = Math.floor(w9434 / 2); }
+  acc += w9434;
+  buf += 'ticket9435-' + acc.toString();
+  buf += `q9436:${acc % 97}`;
+  const rc9437: Rec0 = { id: acc % 1000, tag: 't9437', score: acc % 100 };
+  acc = (acc + rc9437.score) % 65521;
+  buf += rc9437.tag;
+  const cf9438: Array<(x: number) => number> = [];
+  cf9438.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9438.push((x: number): number => (x + 190) % 10007);
+  acc = cf9438[acc & 1](acc % 9973);
+  arr.push(acc % 1000);
+  if (acc % 25 === 0) { buf += 'even9440'; } else { buf += 'odd'; }
+  acc = acc + 745 - (acc % 83);
+  for (let i9442 = 0; i9442 < 3; i9442++) {
+    acc = (acc + i9442 * 13 + 324) % 100003;
+  }
+  for (let i9443 = 0; i9443 < 3; i9443++) {
+    acc = (acc + i9443 * 13 + 795) % 100003;
+  }
+  try { if (acc % 29 === 16) { throw new Error('synthetic-9444'); } acc += 57; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9445 = 0; i9445 < 11; i9445++) {
+    acc = (acc + i9445 * 13 + 432) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9446');
+  const ix9447: number = buf.indexOf('p0');
+  if (ix9447 > 12) { buf = buf.substring(0, 32); } else if (ix9447 >= 0) { buf += 'i'; }
+  for (let i9448 = 0; i9448 < 10; i9448++) {
+    acc = (acc + i9448 * 13 + 734) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09449'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const t09450: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09450;
+  acc = acc + 851 - (acc % 91);
+  let w9452: number = acc % 23;
+  while (w9452 > 4) { w9452 = Math.floor(w9452 / 2); }
+  acc += w9452;
+  m01.set('k9453', acc % 997);
+  const ix9454: number = buf.indexOf('p0');
+  if (ix9454 > 12) { buf = buf.substring(0, 32); } else if (ix9454 >= 0) { buf += 'i'; }
+  const ix9455: number = buf.indexOf('p0');
+  if (ix9455 > 12) { buf = buf.substring(0, 32); } else if (ix9455 >= 0) { buf += 'i'; }
+  if (m01.has('k9456')) {
+    const gv9456: number = m01.get('k9456') as number;
+    acc = (acc + gv9456) % 10007;
+  }
+  const ix9457: number = buf.indexOf('p0');
+  if (ix9457 > 12) { buf = buf.substring(0, 32); } else if (ix9457 >= 0) { buf += 'i'; }
+  for (let i9458 = 0; i9458 < 10; i9458++) {
+    acc = (acc + i9458 * 13 + 652) % 100003;
+  }
+  const db9459: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9459.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9460');
+  const ix9461: number = buf.indexOf('p0');
+  if (ix9461 > 12) { buf = buf.substring(0, 32); } else if (ix9461 >= 0) { buf += 'i'; }
+  let w9462: number = acc % 23;
+  while (w9462 > 4) { w9462 = Math.floor(w9462 / 2); }
+  acc += w9462;
+  m01.set('k9463', acc % 997);
+  const t09464: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09464;
+  const rc9465: Rec0 = { id: acc % 1000, tag: 't9465', score: acc % 100 };
+  acc = (acc + rc9465.score) % 65521;
+  buf += rc9465.tag;
+  try { if (acc % 29 === 8) { throw new Error('synthetic-9466'); } acc += 48; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9467');
+  const db9468: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9468.length) % 65521;
+  acc = (acc * 31 + 3837) % 65521;
+  buf += (acc > 500 ? 'hi9470' : 'lo') + acc.toString(16);
+  const db9471: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9471.length) % 65521;
+  buf += `q9472:${acc % 97}`;
+  const ix9473: number = buf.indexOf('p0');
+  if (ix9473 > 12) { buf = buf.substring(0, 32); } else if (ix9473 >= 0) { buf += 'i'; }
+  let w9474: number = acc % 23;
+  while (w9474 > 4) { w9474 = Math.floor(w9474 / 2); }
+  acc += w9474;
+  m01.set('k9475', acc % 997);
+  const db9476: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9476.length) % 65521;
+  const rc9477: Rec0 = { id: acc % 1000, tag: 't9477', score: acc % 100 };
+  acc = (acc + rc9477.score) % 65521;
+  buf += rc9477.tag;
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9479');
+  buf += `q9480:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's09481'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  for (let i9482 = 0; i9482 < 8; i9482++) {
+    acc = (acc + i9482 * 13 + 774) % 100003;
+  }
+  acc = acc + 149 - (acc % 48);
+  arr.push(acc % 1000);
+  acc = (acc * 31 + 9925) % 65521;
+  buf += 'dock9486-' + acc.toString();
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9487');
+  const t09488: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09488;
+  arr.push(acc % 1000);
+  const rc9490: Rec0 = { id: acc % 1000, tag: 't9490', score: acc % 100 };
+  acc = (acc + rc9490.score) % 65521;
+  buf += rc9490.tag;
+  let w9491: number = acc % 23;
+  while (w9491 > 4) { w9491 = Math.floor(w9491 / 2); }
+  acc += w9491;
+  let w9492: number = acc % 23;
+  while (w9492 > 4) { w9492 = Math.floor(w9492 / 2); }
+  acc += w9492;
+  acc = acc + 369 - (acc % 50);
+  let w9494: number = acc % 23;
+  while (w9494 > 4) { w9494 = Math.floor(w9494 / 2); }
+  acc += w9494;
+  if (acc % 30 === 0) { buf += 'even9495'; } else { buf += 'odd'; }
+  const cf9496: Array<(x: number) => number> = [];
+  cf9496.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9496.push((x: number): number => (x + 22) % 10007);
+  acc = cf9496[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09497'; break;
+    case 1: acc += 7; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += `q9498:${acc % 97}`;
+  const db9499: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9499.length) % 65521;
+  let w9500: number = acc % 23;
+  while (w9500 > 4) { w9500 = Math.floor(w9500 / 2); }
+  acc += w9500;
+  buf += 'settle9501-' + acc.toString();
+  const t09502: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09502;
+  const cf9503: Array<(x: number) => number> = [];
+  cf9503.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9503.push((x: number): number => (x + 59) % 10007);
+  acc = cf9503[acc & 1](acc % 9973);
+  const t09504: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09504;
+  buf += `q9505:${acc % 97}`;
+  m01.set('k9506', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9507');
+  const t09508: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09508;
+  let w9509: number = acc % 23;
+  while (w9509 > 4) { w9509 = Math.floor(w9509 / 2); }
+  acc += w9509;
+  const cf9510: Array<(x: number) => number> = [];
+  cf9510.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9510.push((x: number): number => (x + 178) % 10007);
+  acc = cf9510[acc & 1](acc % 9973);
+  const db9511: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9511.length) % 65521;
+  buf += 'client9512-' + acc.toString();
+  try { if (acc % 29 === 5) { throw new Error('synthetic-9513'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 12) { throw new Error('synthetic-9514'); } acc += 16; } catch (e) { acc = (acc + 17) % 65521; }
+  const cf9515: Array<(x: number) => number> = [];
+  cf9515.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9515.push((x: number): number => (x + 45) % 10007);
+  acc = cf9515[acc & 1](acc % 9973);
+  if (m01.has('k9516')) {
+    const gv9516: number = m01.get('k9516') as number;
+    acc = (acc + gv9516) % 10007;
+  }
+  m01.set('k9517', acc % 997);
+  buf += `q9518:${acc % 97}`;
+  const ix9519: number = buf.indexOf('p0');
+  if (ix9519 > 12) { buf = buf.substring(0, 32); } else if (ix9519 >= 0) { buf += 'i'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9520');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9521');
+  buf += `q9522:${acc % 97}`;
+  buf += (acc > 500 ? 'hi9523' : 'lo') + acc.toString(16);
+  m01.set('k9524', acc % 997);
+  if (m01.has('k9525')) {
+    const gv9525: number = m01.get('k9525') as number;
+    acc = (acc + gv9525) % 10007;
+  }
+  const ix9526: number = buf.indexOf('p0');
+  if (ix9526 > 12) { buf = buf.substring(0, 32); } else if (ix9526 >= 0) { buf += 'i'; }
+  const t09527: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09527;
+  switch (acc & 3) {
+    case 0: buf += 's09528'; break;
+    case 1: acc += 17; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  const cf9529: Array<(x: number) => number> = [];
+  cf9529.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9529.push((x: number): number => (x + 198) % 10007);
+  acc = cf9529[acc & 1](acc % 9973);
+  buf += `q9530:${acc % 97}`;
+  for (let i9531 = 0; i9531 < 10; i9531++) {
+    acc = (acc + i9531 * 13 + 25) % 100003;
+  }
+  if (m01.has('k9532')) {
+    const gv9532: number = m01.get('k9532') as number;
+    acc = (acc + gv9532) % 10007;
+  }
+  let w9533: number = acc % 23;
+  while (w9533 > 4) { w9533 = Math.floor(w9533 / 2); }
+  acc += w9533;
+  m01.set('k9534', acc % 997);
+  buf += 'client9535-' + acc.toString();
+  const t09536: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09536;
+  if (m01.has('k9537')) {
+    const gv9537: number = m01.get('k9537') as number;
+    acc = (acc + gv9537) % 10007;
+  }
+  acc = acc + 458 - (acc % 55);
+  buf += `q9539:${acc % 97}`;
+  acc = (acc * 31 + 7537) % 65521;
+  buf += (acc > 500 ? 'hi9541' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 1772) % 65521;
+  try { if (acc % 29 === 21) { throw new Error('synthetic-9543'); } acc += 56; } catch (e) { acc = (acc + 17) % 65521; }
+  switch (acc & 3) {
+    case 0: buf += 's09544'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 2852) % 65521;
+  const t09546: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09546;
+  let w9547: number = acc % 23;
+  while (w9547 > 4) { w9547 = Math.floor(w9547 / 2); }
+  acc += w9547;
+  const ix9548: number = buf.indexOf('p0');
+  if (ix9548 > 12) { buf = buf.substring(0, 32); } else if (ix9548 >= 0) { buf += 'i'; }
+  const cf9549: Array<(x: number) => number> = [];
+  cf9549.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9549.push((x: number): number => (x + 107) % 10007);
+  acc = cf9549[acc & 1](acc % 9973);
+  const t09550: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09550;
+  m01.set('k9551', acc % 997);
+  const db9552: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9552.length) % 65521;
+  buf += `q9553:${acc % 97}`;
+  buf += (acc > 500 ? 'hi9554' : 'lo') + acc.toString(16);
+  buf += 'freight9555-' + acc.toString();
+  for (let i9556 = 0; i9556 < 12; i9556++) {
+    acc = (acc + i9556 * 13 + 331) % 100003;
+  }
+  if (acc % 21 === 0) { buf += 'even9557'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9558');
+  const ix9559: number = buf.indexOf('p0');
+  if (ix9559 > 12) { buf = buf.substring(0, 32); } else if (ix9559 >= 0) { buf += 'i'; }
+  let w9560: number = acc % 23;
+  while (w9560 > 4) { w9560 = Math.floor(w9560 / 2); }
+  acc += w9560;
+  buf += 'dock9561-' + acc.toString();
+  const db9562: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9562.length) % 65521;
+  acc = acc + 264 - (acc % 57);
+  if (acc % 7 === 0) { buf += 'even9564'; } else { buf += 'odd'; }
+  buf += `q9565:${acc % 97}`;
+  const rc9566: Rec0 = { id: acc % 1000, tag: 't9566', score: acc % 100 };
+  acc = (acc + rc9566.score) % 65521;
+  buf += rc9566.tag;
+  const t09567: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09567;
+  acc = (acc * 31 + 8589) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09569'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 5) { throw new Error('synthetic-9570'); } acc += 45; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k9571')) {
+    const gv9571: number = m01.get('k9571') as number;
+    acc = (acc + gv9571) % 10007;
+  }
+  acc = (acc * 31 + 3350) % 65521;
+  buf += `q9573:${acc % 97}`;
+  if (m01.has('k9574')) {
+    const gv9574: number = m01.get('k9574') as number;
+    acc = (acc + gv9574) % 10007;
+  }
+  try { if (acc % 29 === 19) { throw new Error('synthetic-9575'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 22) { throw new Error('synthetic-9576'); } acc += 54; } catch (e) { acc = (acc + 17) % 65521; }
+  if (m01.has('k9577')) {
+    const gv9577: number = m01.get('k9577') as number;
+    acc = (acc + gv9577) % 10007;
+  }
+  acc = acc + 152 - (acc % 28);
+  m01.set('k9579', acc % 997);
+  let w9580: number = acc % 23;
+  while (w9580 > 4) { w9580 = Math.floor(w9580 / 2); }
+  acc += w9580;
+  const ix9581: number = buf.indexOf('p0');
+  if (ix9581 > 12) { buf = buf.substring(0, 32); } else if (ix9581 >= 0) { buf += 'i'; }
+  const cf9582: Array<(x: number) => number> = [];
+  cf9582.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9582.push((x: number): number => (x + 41) % 10007);
+  acc = cf9582[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09583'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 11; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 226 - (acc % 81);
+  buf += 'crate9585-' + acc.toString();
+  buf += 'settle9586-' + acc.toString();
+  try { if (acc % 29 === 9) { throw new Error('synthetic-9587'); } acc += 27; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix9588: number = buf.indexOf('p0');
+  if (ix9588 > 12) { buf = buf.substring(0, 32); } else if (ix9588 >= 0) { buf += 'i'; }
+  const cf9589: Array<(x: number) => number> = [];
+  cf9589.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9589.push((x: number): number => (x + 71) % 10007);
+  acc = cf9589[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi9590' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's09591'; break;
+    case 1: acc += 26; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9592' : 'lo') + acc.toString(16);
+  m01.set('k9593', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9594');
+  buf += 'pickup9595-' + acc.toString();
+  m01.set('k9596', acc % 997);
+  buf += `q9597:${acc % 97}`;
+  m01.set('k9598', acc % 997);
+  buf += (acc > 500 ? 'hi9599' : 'lo') + acc.toString(16);
+  for (let i9600 = 0; i9600 < 11; i9600++) {
+    acc = (acc + i9600 * 13 + 346) % 100003;
+  }
+  if (acc % 11 === 0) { buf += 'even9601'; } else { buf += 'odd'; }
+  acc = acc + 934 - (acc % 74);
+  try { if (acc % 29 === 2) { throw new Error('synthetic-9603'); } acc += 41; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix9604: number = buf.indexOf('p0');
+  if (ix9604 > 12) { buf = buf.substring(0, 32); } else if (ix9604 >= 0) { buf += 'i'; }
+  buf += 'sku9605-' + acc.toString();
+  const rc9606: Rec0 = { id: acc % 1000, tag: 't9606', score: acc % 100 };
+  acc = (acc + rc9606.score) % 65521;
+  buf += rc9606.tag;
+  for (let i9607 = 0; i9607 < 12; i9607++) {
+    acc = (acc + i9607 * 13 + 199) % 100003;
+  }
+  m01.set('k9608', acc % 997);
+  const db9609: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9609.length) % 65521;
+  for (let i9610 = 0; i9610 < 7; i9610++) {
+    acc = (acc + i9610 * 13 + 992) % 100003;
+  }
+  for (let i9611 = 0; i9611 < 6; i9611++) {
+    acc = (acc + i9611 * 13 + 518) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9612');
+  const t09613: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09613;
+  let w9614: number = acc % 23;
+  while (w9614 > 4) { w9614 = Math.floor(w9614 / 2); }
+  acc += w9614;
+  buf += (acc > 500 ? 'hi9615' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 5302) % 65521;
+  const db9617: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9617.length) % 65521;
+  const db9618: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9618.length) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09619'; break;
+    case 1: acc += 3; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  m01.set('k9620', acc % 997);
+  buf += 'warehouse9621-' + acc.toString();
+  m01.set('k9622', acc % 997);
+  acc = (acc * 31 + 850) % 65521;
+  buf += (acc > 500 ? 'hi9624' : 'lo') + acc.toString(16);
+  acc = (acc * 31 + 5192) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9626');
+  acc = acc + 159 - (acc % 41);
+  const ix9628: number = buf.indexOf('p0');
+  if (ix9628 > 12) { buf = buf.substring(0, 32); } else if (ix9628 >= 0) { buf += 'i'; }
+  const rc9629: Rec0 = { id: acc % 1000, tag: 't9629', score: acc % 100 };
+  acc = (acc + rc9629.score) % 65521;
+  buf += rc9629.tag;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9630');
+  if (acc % 26 === 0) { buf += 'even9631'; } else { buf += 'odd'; }
+  const db9632: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9632.length) % 65521;
+  arr.push(acc % 1000);
+  const ix9634: number = buf.indexOf('p0');
+  if (ix9634 > 12) { buf = buf.substring(0, 32); } else if (ix9634 >= 0) { buf += 'i'; }
+  buf += (acc > 500 ? 'hi9635' : 'lo') + acc.toString(16);
+  let w9636: number = acc % 23;
+  while (w9636 > 4) { w9636 = Math.floor(w9636 / 2); }
+  acc += w9636;
+  const cf9637: Array<(x: number) => number> = [];
+  cf9637.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9637.push((x: number): number => (x + 108) % 10007);
+  acc = cf9637[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09638'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  m01.set('k9639', acc % 997);
+  acc = acc + 175 - (acc % 10);
+  if (acc % 11 === 0) { buf += 'even9641'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  for (let i9643 = 0; i9643 < 6; i9643++) {
+    acc = (acc + i9643 * 13 + 229) % 100003;
+  }
+  const rc9644: Rec0 = { id: acc % 1000, tag: 't9644', score: acc % 100 };
+  acc = (acc + rc9644.score) % 65521;
+  buf += rc9644.tag;
+  acc = acc + 206 - (acc % 39);
+  buf += `q9646:${acc % 97}`;
+  for (let i9647 = 0; i9647 < 6; i9647++) {
+    acc = (acc + i9647 * 13 + 809) % 100003;
+  }
+  acc = acc + 986 - (acc % 43);
+  acc = (acc * 31 + 3977) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9650');
+  arr.push(acc % 1000);
+  for (let i9652 = 0; i9652 < 7; i9652++) {
+    acc = (acc + i9652 * 13 + 14) % 100003;
+  }
+  m01.set('k9653', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's09654'; break;
+    case 1: acc += 11; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  const t09655: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09655;
+  if (acc % 23 === 0) { buf += 'even9656'; } else { buf += 'odd'; }
+  for (let i9657 = 0; i9657 < 4; i9657++) {
+    acc = (acc + i9657 * 13 + 940) % 100003;
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09658'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  arr.push(acc % 1000);
+  let w9660: number = acc % 23;
+  while (w9660 > 4) { w9660 = Math.floor(w9660 / 2); }
+  acc += w9660;
+  m01.set('k9661', acc % 997);
+  acc = acc + 701 - (acc % 83);
+  acc = acc + 208 - (acc % 14);
+  arr.push(acc % 1000);
+  const db9665: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9665.length) % 65521;
+  const db9666: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9666.length) % 65521;
+  arr.push(acc % 1000);
+  if (acc % 12 === 0) { buf += 'even9668'; } else { buf += 'odd'; }
+  const cf9669: Array<(x: number) => number> = [];
+  cf9669.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9669.push((x: number): number => (x + 15) % 10007);
+  acc = cf9669[acc & 1](acc % 9973);
+  for (let i9670 = 0; i9670 < 10; i9670++) {
+    acc = (acc + i9670 * 13 + 437) % 100003;
+  }
+  buf += `q9671:${acc % 97}`;
+  const db9672: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9672.length) % 65521;
+  buf += (acc > 500 ? 'hi9673' : 'lo') + acc.toString(16);
+  if (m01.has('k9674')) {
+    const gv9674: number = m01.get('k9674') as number;
+    acc = (acc + gv9674) % 10007;
+  }
+  for (let i9675 = 0; i9675 < 3; i9675++) {
+    acc = (acc + i9675 * 13 + 361) % 100003;
+  }
+  acc = acc + 521 - (acc % 83);
+  buf += 'refund9677-' + acc.toString();
+  try { if (acc % 29 === 23) { throw new Error('synthetic-9678'); } acc += 44; } catch (e) { acc = (acc + 17) % 65521; }
+  const t09679: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09679;
+  buf += `q9680:${acc % 97}`;
+  const ix9681: number = buf.indexOf('p0');
+  if (ix9681 > 12) { buf = buf.substring(0, 32); } else if (ix9681 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09682'; break;
+    case 1: acc += 8; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9683' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi9684' : 'lo') + acc.toString(16);
+  const rc9685: Rec0 = { id: acc % 1000, tag: 't9685', score: acc % 100 };
+  acc = (acc + rc9685.score) % 65521;
+  buf += rc9685.tag;
+  buf += `q9686:${acc % 97}`;
+  const ix9687: number = buf.indexOf('p0');
+  if (ix9687 > 12) { buf = buf.substring(0, 32); } else if (ix9687 >= 0) { buf += 'i'; }
+  buf += 'refund9688-' + acc.toString();
+  acc = acc + 452 - (acc % 46);
+  const t09690: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09690;
+  arr.push(acc % 1000);
+  try { if (acc % 29 === 16) { throw new Error('synthetic-9692'); } acc += 5; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9693 = 0; i9693 < 12; i9693++) {
+    acc = (acc + i9693 * 13 + 622) % 100003;
+  }
+  if (acc % 6 === 0) { buf += 'even9694'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-9695'); } acc += 23; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 8892) % 65521;
+  if (m01.has('k9697')) {
+    const gv9697: number = m01.get('k9697') as number;
+    acc = (acc + gv9697) % 10007;
+  }
+  const t09698: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09698;
+  acc = (acc * 31 + 5256) % 65521;
+  buf += 'coupon9700-' + acc.toString();
+  const ix9701: number = buf.indexOf('p0');
+  if (ix9701 > 12) { buf = buf.substring(0, 32); } else if (ix9701 >= 0) { buf += 'i'; }
+  if (m01.has('k9702')) {
+    const gv9702: number = m01.get('k9702') as number;
+    acc = (acc + gv9702) % 10007;
+  }
+  acc = acc + 235 - (acc % 49);
+  acc = acc + 694 - (acc % 80);
+  const t09705: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09705;
+  switch (acc & 3) {
+    case 0: buf += 's09706'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 5850) % 65521;
+  switch (acc & 3) {
+    case 0: buf += 's09708'; break;
+    case 1: acc += 9; break;
+    case 2: buf += 's2'; acc -= 10; break;
+    default: buf += 'sd';
+  }
+  buf += 'freight9709-' + acc.toString();
+  m01.set('k9710', acc % 997);
+  for (let i9711 = 0; i9711 < 12; i9711++) {
+    acc = (acc + i9711 * 13 + 51) % 100003;
+  }
+  const rc9712: Rec0 = { id: acc % 1000, tag: 't9712', score: acc % 100 };
+  acc = (acc + rc9712.score) % 65521;
+  buf += rc9712.tag;
+  buf += `q9713:${acc % 97}`;
+  if (acc % 14 === 0) { buf += 'even9714'; } else { buf += 'odd'; }
+  buf += 'parcel9715-' + acc.toString();
+  if (m01.has('k9716')) {
+    const gv9716: number = m01.get('k9716') as number;
+    acc = (acc + gv9716) % 10007;
+  }
+  try { if (acc % 29 === 7) { throw new Error('synthetic-9717'); } acc += 37; } catch (e) { acc = (acc + 17) % 65521; }
+  const ix9718: number = buf.indexOf('p0');
+  if (ix9718 > 12) { buf = buf.substring(0, 32); } else if (ix9718 >= 0) { buf += 'i'; }
+  buf += 'dock9719-' + acc.toString();
+  const t09720: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09720;
+  try { if (acc % 29 === 4) { throw new Error('synthetic-9721'); } acc += 28; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9722');
+  buf += (acc > 500 ? 'hi9723' : 'lo') + acc.toString(16);
+  for (let i9724 = 0; i9724 < 3; i9724++) {
+    acc = (acc + i9724 * 13 + 33) % 100003;
+  }
+  arr.push(acc % 1000);
+  acc = acc + 369 - (acc % 63);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9727');
+  buf += `q9728:${acc % 97}`;
+  acc = acc + 637 - (acc % 33);
+  acc = acc + 106 - (acc % 45);
+  const rc9731: Rec0 = { id: acc % 1000, tag: 't9731', score: acc % 100 };
+  acc = (acc + rc9731.score) % 65521;
+  buf += rc9731.tag;
+  if (acc % 7 === 0) { buf += 'even9732'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9733');
+  if (m01.has('k9734')) {
+    const gv9734: number = m01.get('k9734') as number;
+    acc = (acc + gv9734) % 10007;
+  }
+  const db9735: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9735.length) % 65521;
+  acc = acc + 268 - (acc % 82);
+  const ix9737: number = buf.indexOf('p0');
+  if (ix9737 > 12) { buf = buf.substring(0, 32); } else if (ix9737 >= 0) { buf += 'i'; }
+  const ix9738: number = buf.indexOf('p0');
+  if (ix9738 > 12) { buf = buf.substring(0, 32); } else if (ix9738 >= 0) { buf += 'i'; }
+  try { if (acc % 29 === 4) { throw new Error('synthetic-9739'); } acc += 33; } catch (e) { acc = (acc + 17) % 65521; }
+  m01.set('k9740', acc % 997);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9741');
+  if (acc % 28 === 0) { buf += 'even9742'; } else { buf += 'odd'; }
+  for (let i9743 = 0; i9743 < 7; i9743++) {
+    acc = (acc + i9743 * 13 + 49) % 100003;
+  }
+  const t09744: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09744;
+  if (m01.has('k9745')) {
+    const gv9745: number = m01.get('k9745') as number;
+    acc = (acc + gv9745) % 10007;
+  }
+  buf += (acc > 500 ? 'hi9746' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 17) { throw new Error('synthetic-9747'); } acc += 17; } catch (e) { acc = (acc + 17) % 65521; }
+  const t09748: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09748;
+  const t09749: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09749;
+  const ix9750: number = buf.indexOf('p0');
+  if (ix9750 > 12) { buf = buf.substring(0, 32); } else if (ix9750 >= 0) { buf += 'i'; }
+  const rc9751: Rec0 = { id: acc % 1000, tag: 't9751', score: acc % 100 };
+  acc = (acc + rc9751.score) % 65521;
+  buf += rc9751.tag;
+  buf += (acc > 500 ? 'hi9752' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi9753' : 'lo') + acc.toString(16);
+  buf += `q9754:${acc % 97}`;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9755');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9756');
+  const rc9757: Rec0 = { id: acc % 1000, tag: 't9757', score: acc % 100 };
+  acc = (acc + rc9757.score) % 65521;
+  buf += rc9757.tag;
+  for (let i9758 = 0; i9758 < 7; i9758++) {
+    acc = (acc + i9758 * 13 + 970) % 100003;
+  }
+  const db9759: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9759.length) % 65521;
+  try { if (acc % 29 === 9) { throw new Error('synthetic-9760'); } acc += 53; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = acc + 390 - (acc % 49);
+  if (acc % 28 === 0) { buf += 'even9762'; } else { buf += 'odd'; }
+  acc = acc + 807 - (acc % 52);
+  buf += `q9764:${acc % 97}`;
+  switch (acc & 3) {
+    case 0: buf += 's09765'; break;
+    case 1: acc += 21; break;
+    case 2: buf += 's2'; acc -= 12; break;
+    default: buf += 'sd';
+  }
+  acc = acc + 230 - (acc % 56);
+  try { if (acc % 29 === 13) { throw new Error('synthetic-9767'); } acc += 10; } catch (e) { acc = (acc + 17) % 65521; }
+  const db9768: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9768.length) % 65521;
+  if (m01.has('k9769')) {
+    const gv9769: number = m01.get('k9769') as number;
+    acc = (acc + gv9769) % 10007;
+  }
+  try { if (acc % 29 === 23) { throw new Error('synthetic-9770'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  const t09771: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09771;
+  acc = acc + 75 - (acc % 70);
+  try { if (acc % 29 === 10) { throw new Error('synthetic-9773'); } acc += 43; } catch (e) { acc = (acc + 17) % 65521; }
+  let w9774: number = acc % 23;
+  while (w9774 > 4) { w9774 = Math.floor(w9774 / 2); }
+  acc += w9774;
+  const rc9775: Rec0 = { id: acc % 1000, tag: 't9775', score: acc % 100 };
+  acc = (acc + rc9775.score) % 65521;
+  buf += rc9775.tag;
+  let w9776: number = acc % 23;
+  while (w9776 > 4) { w9776 = Math.floor(w9776 / 2); }
+  acc += w9776;
+  buf += (acc > 500 ? 'hi9777' : 'lo') + acc.toString(16);
+  const db9778: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9778.length) % 65521;
+  if (acc % 6 === 0) { buf += 'even9779'; } else { buf += 'odd'; }
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  switch (acc & 3) {
+    case 0: buf += 's09782'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  if (acc % 13 === 0) { buf += 'even9783'; } else { buf += 'odd'; }
+  buf += `q9784:${acc % 97}`;
+  buf += (acc > 500 ? 'hi9785' : 'lo') + acc.toString(16);
+  const ix9786: number = buf.indexOf('p0');
+  if (ix9786 > 12) { buf = buf.substring(0, 32); } else if (ix9786 >= 0) { buf += 'i'; }
+  let w9787: number = acc % 23;
+  while (w9787 > 4) { w9787 = Math.floor(w9787 / 2); }
+  acc += w9787;
+  switch (acc & 3) {
+    case 0: buf += 's09788'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 14; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09789'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  if (acc % 15 === 0) { buf += 'even9790'; } else { buf += 'odd'; }
+  try { if (acc % 29 === 21) { throw new Error('synthetic-9791'); } acc += 14; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 463) % 65521;
+  if (m01.has('k9793')) {
+    const gv9793: number = m01.get('k9793') as number;
+    acc = (acc + gv9793) % 10007;
+  }
+  arr.push(acc % 1000);
+  const cf9795: Array<(x: number) => number> = [];
+  cf9795.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9795.push((x: number): number => (x + 196) % 10007);
+  acc = cf9795[acc & 1](acc % 9973);
+  buf += 'shelf9796-' + acc.toString();
+  try { if (acc % 29 === 21) { throw new Error('synthetic-9797'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9798 = 0; i9798 < 7; i9798++) {
+    acc = (acc + i9798 * 13 + 718) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9799');
+  for (let i9800 = 0; i9800 < 4; i9800++) {
+    acc = (acc + i9800 * 13 + 563) % 100003;
+  }
+  const db9801: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9801.length) % 65521;
+  buf += `q9802:${acc % 97}`;
+  const cf9803: Array<(x: number) => number> = [];
+  cf9803.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9803.push((x: number): number => (x + 46) % 10007);
+  acc = cf9803[acc & 1](acc % 9973);
+  const ix9804: number = buf.indexOf('p0');
+  if (ix9804 > 12) { buf = buf.substring(0, 32); } else if (ix9804 >= 0) { buf += 'i'; }
+  const db9805: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9805.length) % 65521;
+  const rc9806: Rec0 = { id: acc % 1000, tag: 't9806', score: acc % 100 };
+  acc = (acc + rc9806.score) % 65521;
+  buf += rc9806.tag;
+  m01.set('k9807', acc % 997);
+  if (m01.has('k9808')) {
+    const gv9808: number = m01.get('k9808') as number;
+    acc = (acc + gv9808) % 10007;
+  }
+  const ix9809: number = buf.indexOf('p0');
+  if (ix9809 > 12) { buf = buf.substring(0, 32); } else if (ix9809 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09810'; break;
+    case 1: acc += 25; break;
+    case 2: buf += 's2'; acc -= 18; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09811'; break;
+    case 1: acc += 20; break;
+    case 2: buf += 's2'; acc -= 15; break;
+    default: buf += 'sd';
+  }
+  const cf9812: Array<(x: number) => number> = [];
+  cf9812.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9812.push((x: number): number => (x + 56) % 10007);
+  acc = cf9812[acc & 1](acc % 9973);
+  buf += (acc > 500 ? 'hi9813' : 'lo') + acc.toString(16);
+  buf += 'tariff9814-' + acc.toString();
+  buf += (acc > 500 ? 'hi9815' : 'lo') + acc.toString(16);
+  const db9816: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9816.length) % 65521;
+  const ix9817: number = buf.indexOf('p0');
+  if (ix9817 > 12) { buf = buf.substring(0, 32); } else if (ix9817 >= 0) { buf += 'i'; }
+  const t09818: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09818;
+  if (m01.has('k9819')) {
+    const gv9819: number = m01.get('k9819') as number;
+    acc = (acc + gv9819) % 10007;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9820');
+  m01.set('k9821', acc % 997);
+  for (let i9822 = 0; i9822 < 9; i9822++) {
+    acc = (acc + i9822 * 13 + 859) % 100003;
+  }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9823');
+  buf += (acc > 500 ? 'hi9824' : 'lo') + acc.toString(16);
+  buf += (acc > 500 ? 'hi9825' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 6) { throw new Error('synthetic-9826'); } acc += 39; } catch (e) { acc = (acc + 17) % 65521; }
+  acc = (acc * 31 + 6879) % 65521;
+  const ix9828: number = buf.indexOf('p0');
+  if (ix9828 > 12) { buf = buf.substring(0, 32); } else if (ix9828 >= 0) { buf += 'i'; }
+  const ix9829: number = buf.indexOf('p0');
+  if (ix9829 > 12) { buf = buf.substring(0, 32); } else if (ix9829 >= 0) { buf += 'i'; }
+  m01.set('k9830', acc % 997);
+  m01.set('k9831', acc % 997);
+  const t09832: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09832;
+  const cf9833: Array<(x: number) => number> = [];
+  cf9833.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9833.push((x: number): number => (x + 133) % 10007);
+  acc = cf9833[acc & 1](acc % 9973);
+  buf += `q9834:${acc % 97}`;
+  if (acc % 22 === 0) { buf += 'even9835'; } else { buf += 'odd'; }
+  const cf9836: Array<(x: number) => number> = [];
+  cf9836.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9836.push((x: number): number => (x + 195) % 10007);
+  acc = cf9836[acc & 1](acc % 9973);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9837');
+  const db9838: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9838.length) % 65521;
+  const ix9839: number = buf.indexOf('p0');
+  if (ix9839 > 12) { buf = buf.substring(0, 32); } else if (ix9839 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09840'; break;
+    case 1: acc += 29; break;
+    case 2: buf += 's2'; acc -= 16; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9841' : 'lo') + acc.toString(16);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9842');
+  const ix9843: number = buf.indexOf('p0');
+  if (ix9843 > 12) { buf = buf.substring(0, 32); } else if (ix9843 >= 0) { buf += 'i'; }
+  const db9844: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9844.length) % 65521;
+  if (m01.has('k9845')) {
+    const gv9845: number = m01.get('k9845') as number;
+    acc = (acc + gv9845) % 10007;
+  }
+  const rc9846: Rec0 = { id: acc % 1000, tag: 't9846', score: acc % 100 };
+  acc = (acc + rc9846.score) % 65521;
+  buf += rc9846.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09847'; break;
+    case 1: acc += 10; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  acc = (acc * 31 + 5115) % 65521;
+  const t09849: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09849;
+  const rc9850: Rec0 = { id: acc % 1000, tag: 't9850', score: acc % 100 };
+  acc = (acc + rc9850.score) % 65521;
+  buf += rc9850.tag;
+  buf += `q9851:${acc % 97}`;
+  const cf9852: Array<(x: number) => number> = [];
+  cf9852.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9852.push((x: number): number => (x + 30) % 10007);
+  acc = cf9852[acc & 1](acc % 9973);
+  const ix9853: number = buf.indexOf('p0');
+  if (ix9853 > 12) { buf = buf.substring(0, 32); } else if (ix9853 >= 0) { buf += 'i'; }
+  const cf9854: Array<(x: number) => number> = [];
+  cf9854.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9854.push((x: number): number => (x + 119) % 10007);
+  acc = cf9854[acc & 1](acc % 9973);
+  buf += 'depot9855-' + acc.toString();
+  buf += (acc > 500 ? 'hi9856' : 'lo') + acc.toString(16);
+  const t09857: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09857;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9858');
+  let w9859: number = acc % 23;
+  while (w9859 > 4) { w9859 = Math.floor(w9859 / 2); }
+  acc += w9859;
+  if (m01.has('k9860')) {
+    const gv9860: number = m01.get('k9860') as number;
+    acc = (acc + gv9860) % 10007;
+  }
+  buf += `q9861:${acc % 97}`;
+  arr.push(acc % 1000);
+  buf += `q9863:${acc % 97}`;
+  for (let i9864 = 0; i9864 < 3; i9864++) {
+    acc = (acc + i9864 * 13 + 199) % 100003;
+  }
+  const db9865: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9865.length) % 65521;
+  if (m01.has('k9866')) {
+    const gv9866: number = m01.get('k9866') as number;
+    acc = (acc + gv9866) % 10007;
+  }
+  buf += (acc > 500 ? 'hi9867' : 'lo') + acc.toString(16);
+  if (m01.has('k9868')) {
+    const gv9868: number = m01.get('k9868') as number;
+    acc = (acc + gv9868) % 10007;
+  }
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9870');
+  const t09871: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09871;
+  const t09872: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09872;
+  if (acc % 9 === 0) { buf += 'even9873'; } else { buf += 'odd'; }
+  let w9874: number = acc % 23;
+  while (w9874 > 4) { w9874 = Math.floor(w9874 / 2); }
+  acc += w9874;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9875');
+  const rc9876: Rec0 = { id: acc % 1000, tag: 't9876', score: acc % 100 };
+  acc = (acc + rc9876.score) % 65521;
+  buf += rc9876.tag;
+  const db9877: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9877.length) % 65521;
+  for (let i9878 = 0; i9878 < 8; i9878++) {
+    acc = (acc + i9878 * 13 + 749) % 100003;
+  }
+  acc = (acc * 31 + 7692) % 65521;
+  const t09880: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09880;
+  acc = (acc * 31 + 3873) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9882');
+  acc = acc + 949 - (acc % 51);
+  acc = (acc * 31 + 4405) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9885');
+  const rc9886: Rec0 = { id: acc % 1000, tag: 't9886', score: acc % 100 };
+  acc = (acc + rc9886.score) % 65521;
+  buf += rc9886.tag;
+  switch (acc & 3) {
+    case 0: buf += 's09887'; break;
+    case 1: acc += 5; break;
+    case 2: buf += 's2'; acc -= 7; break;
+    default: buf += 'sd';
+  }
+  buf += `q9888:${acc % 97}`;
+  const cf9889: Array<(x: number) => number> = [];
+  cf9889.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9889.push((x: number): number => (x + 129) % 10007);
+  acc = cf9889[acc & 1](acc % 9973);
+  acc = (acc * 31 + 4063) % 65521;
+  m01.set('k9891', acc % 997);
+  if (acc % 21 === 0) { buf += 'even9892'; } else { buf += 'odd'; }
+  let w9893: number = acc % 23;
+  while (w9893 > 4) { w9893 = Math.floor(w9893 / 2); }
+  acc += w9893;
+  const t09894: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09894;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9895');
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9896');
+  arr.push(acc % 1000);
+  m01.set('k9898', acc % 997);
+  let w9899: number = acc % 23;
+  while (w9899 > 4) { w9899 = Math.floor(w9899 / 2); }
+  acc += w9899;
+  arr.push(acc % 1000);
+  buf += 'settle9901-' + acc.toString();
+  try { if (acc % 29 === 15) { throw new Error('synthetic-9902'); } acc += 11; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9903 = 0; i9903 < 3; i9903++) {
+    acc = (acc + i9903 * 13 + 382) % 100003;
+  }
+  const ix9904: number = buf.indexOf('p0');
+  if (ix9904 > 12) { buf = buf.substring(0, 32); } else if (ix9904 >= 0) { buf += 'i'; }
+  switch (acc & 3) {
+    case 0: buf += 's09905'; break;
+    case 1: acc += 15; break;
+    case 2: buf += 's2'; acc -= 19; break;
+    default: buf += 'sd';
+  }
+  m01.set('k9906', acc % 997);
+  arr.push(acc % 1000);
+  arr.push(acc % 1000);
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9909');
+  m01.set('k9910', acc % 997);
+  const cf9911: Array<(x: number) => number> = [];
+  cf9911.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9911.push((x: number): number => (x + 176) % 10007);
+  acc = cf9911[acc & 1](acc % 9973);
+  const rc9912: Rec0 = { id: acc % 1000, tag: 't9912', score: acc % 100 };
+  acc = (acc + rc9912.score) % 65521;
+  buf += rc9912.tag;
+  const db9913: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9913.length) % 65521;
+  if (acc % 21 === 0) { buf += 'even9914'; } else { buf += 'odd'; }
+  const ix9915: number = buf.indexOf('p0');
+  if (ix9915 > 12) { buf = buf.substring(0, 32); } else if (ix9915 >= 0) { buf += 'i'; }
+  const t09916: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09916;
+  acc = (acc * 31 + 2218) % 65521;
+  buf += `q9918:${acc % 97}`;
+  if (m01.has('k9919')) {
+    const gv9919: number = m01.get('k9919') as number;
+    acc = (acc + gv9919) % 10007;
+  }
+  for (let i9920 = 0; i9920 < 11; i9920++) {
+    acc = (acc + i9920 * 13 + 412) % 100003;
+  }
+  const t09921: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09921;
+  if (acc % 26 === 0) { buf += 'even9922'; } else { buf += 'odd'; }
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9923');
+  let w9924: number = acc % 23;
+  while (w9924 > 4) { w9924 = Math.floor(w9924 / 2); }
+  acc += w9924;
+  const db9925: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9925.length) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9926');
+  if (m01.has('k9927')) {
+    const gv9927: number = m01.get('k9927') as number;
+    acc = (acc + gv9927) % 10007;
+  }
+  let w9928: number = acc % 23;
+  while (w9928 > 4) { w9928 = Math.floor(w9928 / 2); }
+  acc += w9928;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9929');
+  if (m01.has('k9930')) {
+    const gv9930: number = m01.get('k9930') as number;
+    acc = (acc + gv9930) % 10007;
+  }
+  const ix9931: number = buf.indexOf('p0');
+  if (ix9931 > 12) { buf = buf.substring(0, 32); } else if (ix9931 >= 0) { buf += 'i'; }
+  if (acc % 17 === 0) { buf += 'even9932'; } else { buf += 'odd'; }
+  acc = acc + 363 - (acc % 67);
+  buf += 'pickup9934-' + acc.toString();
+  switch (acc & 3) {
+    case 0: buf += 's09935'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 8; break;
+    default: buf += 'sd';
+  }
+  switch (acc & 3) {
+    case 0: buf += 's09936'; break;
+    case 1: acc += 19; break;
+    case 2: buf += 's2'; acc -= 13; break;
+    default: buf += 'sd';
+  }
+  if (m01.has('k9937')) {
+    const gv9937: number = m01.get('k9937') as number;
+    acc = (acc + gv9937) % 10007;
+  }
+  acc = (acc * 31 + 2428) % 65521;
+  if (acc % 22 === 0) { buf += 'even9939'; } else { buf += 'odd'; }
+  const cf9940: Array<(x: number) => number> = [];
+  cf9940.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9940.push((x: number): number => (x + 140) % 10007);
+  acc = cf9940[acc & 1](acc % 9973);
+  acc = (acc * 31 + 1775) % 65521;
+  acc = u.step(acc % 613) % 65521;
+  buf += u.name('x9942');
+  if (m01.has('k9943')) {
+    const gv9943: number = m01.get('k9943') as number;
+    acc = (acc + gv9943) % 10007;
+  }
+  const ix9944: number = buf.indexOf('p0');
+  if (ix9944 > 12) { buf = buf.substring(0, 32); } else if (ix9944 >= 0) { buf += 'i'; }
+  m01.set('k9945', acc % 997);
+  switch (acc & 3) {
+    case 0: buf += 's09946'; break;
+    case 1: acc += 6; break;
+    case 2: buf += 's2'; acc -= 5; break;
+    default: buf += 'sd';
+  }
+  buf += (acc > 500 ? 'hi9947' : 'lo') + acc.toString(16);
+  switch (acc & 3) {
+    case 0: buf += 's09948'; break;
+    case 1: acc += 12; break;
+    case 2: buf += 's2'; acc -= 3; break;
+    default: buf += 'sd';
+  }
+  try { if (acc % 29 === 3) { throw new Error('synthetic-9949'); } acc += 7; } catch (e) { acc = (acc + 17) % 65521; }
+  buf += 'journey9950-' + acc.toString();
+  const t09951: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09951;
+  for (let i9952 = 0; i9952 < 11; i9952++) {
+    acc = (acc + i9952 * 13 + 397) % 100003;
+  }
+  buf += `q9953:${acc % 97}`;
+  const ix9954: number = buf.indexOf('p0');
+  if (ix9954 > 12) { buf = buf.substring(0, 32); } else if (ix9954 >= 0) { buf += 'i'; }
+  acc = (acc * 31 + 3812) % 65521;
+  const db9956: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9956.length) % 65521;
+  const t09957: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09957;
+  buf += 'balance9958-' + acc.toString();
+  const cf9959: Array<(x: number) => number> = [];
+  cf9959.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9959.push((x: number): number => (x + 63) % 10007);
+  acc = cf9959[acc & 1](acc % 9973);
+  const cf9960: Array<(x: number) => number> = [];
+  cf9960.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9960.push((x: number): number => (x + 36) % 10007);
+  acc = cf9960[acc & 1](acc % 9973);
+  acc = (acc * 31 + 7956) % 65521;
+  let w9962: number = acc % 23;
+  while (w9962 > 4) { w9962 = Math.floor(w9962 / 2); }
+  acc += w9962;
+  try { if (acc % 29 === 2) { throw new Error('synthetic-9963'); } acc += 47; } catch (e) { acc = (acc + 17) % 65521; }
+  for (let i9964 = 0; i9964 < 12; i9964++) {
+    acc = (acc + i9964 * 13 + 565) % 100003;
+  }
+  const db9965: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9965.length) % 65521;
+  let w9966: number = acc % 23;
+  while (w9966 > 4) { w9966 = Math.floor(w9966 / 2); }
+  acc += w9966;
+  buf += `q9967:${acc % 97}`;
+  acc = acc + 135 - (acc % 26);
+  try { if (acc % 29 === 9) { throw new Error('synthetic-9969'); } acc += 30; } catch (e) { acc = (acc + 17) % 65521; }
+  try { if (acc % 29 === 11) { throw new Error('synthetic-9970'); } acc += 36; } catch (e) { acc = (acc + 17) % 65521; }
+  const rc9971: Rec0 = { id: acc % 1000, tag: 't9971', score: acc % 100 };
+  acc = (acc + rc9971.score) % 65521;
+  buf += rc9971.tag;
+  const t09972: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09972;
+  buf += 'vendor9973-' + acc.toString();
+  const rc9974: Rec0 = { id: acc % 1000, tag: 't9974', score: acc % 100 };
+  acc = (acc + rc9974.score) % 65521;
+  buf += rc9974.tag;
+  const cf9975: Array<(x: number) => number> = [];
+  cf9975.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9975.push((x: number): number => (x + 185) % 10007);
+  acc = cf9975[acc & 1](acc % 9973);
+  m01.set('k9976', acc % 997);
+  const t09977: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09977;
+  switch (acc & 3) {
+    case 0: buf += 's09978'; break;
+    case 1: acc += 16; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const cf9979: Array<(x: number) => number> = [];
+  cf9979.push((x: number): number => (x * 3 + acc) % 65521);
+  cf9979.push((x: number): number => (x + 121) % 10007);
+  acc = cf9979[acc & 1](acc % 9973);
+  switch (acc & 3) {
+    case 0: buf += 's09980'; break;
+    case 1: acc += 24; break;
+    case 2: buf += 's2'; acc -= 17; break;
+    default: buf += 'sd';
+  }
+  const t09981: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09981;
+  try { if (acc % 29 === 15) { throw new Error('synthetic-9982'); } acc += 8; } catch (e) { acc = (acc + 17) % 65521; }
+  const t09983: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09983;
+  acc = acc + 35 - (acc % 24);
+  let w9985: number = acc % 23;
+  while (w9985 > 4) { w9985 = Math.floor(w9985 / 2); }
+  acc += w9985;
+  if (acc % 5 === 0) { buf += 'even9986'; } else { buf += 'odd'; }
+  buf += (acc > 500 ? 'hi9987' : 'lo') + acc.toString(16);
+  try { if (acc % 29 === 20) { throw new Error('synthetic-9988'); } acc += 20; } catch (e) { acc = (acc + 17) % 65521; }
+  if (acc % 8 === 0) { buf += 'even9989'; } else { buf += 'odd'; }
+  acc = acc + 828 - (acc % 20);
+  const rc9991: Rec0 = { id: acc % 1000, tag: 't9991', score: acc % 100 };
+  acc = (acc + rc9991.score) % 65521;
+  buf += rc9991.tag;
+  const t09992: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09992;
+  for (let i9993 = 0; i9993 < 9; i9993++) {
+    acc = (acc + i9993 * 13 + 137) % 100003;
+  }
+  const t09994: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09994;
+  const db9995: number[] = arr.map((v: number): number => v + (acc % 13));
+  acc = (acc + db9995.length) % 65521;
+  let w9996: number = acc % 23;
+  while (w9996 > 4) { w9996 = Math.floor(w9996 / 2); }
+  acc += w9996;
+  buf += `q9997:${acc % 97}`;
+  m01.set('k9998', acc % 997);
+  const t09999: string = tags.length > 0 ? tags[0] : 'none';
+  buf += t09999;
+  return buf + '|' + acc.toString(16) + '|' + u.name(tags.length.toString());
+}
+
 export function reg_0000(): BizFn[] {
-  return [biz_0000_00, biz_0000_01, biz_0000_02, biz_0000_03, biz_0000_04, biz_0000_05, biz_0000_06, biz_0000_07, biz_0000_08, biz_0000_09, biz_0000_10, biz_0000_11, biz_0000_12, biz_0000_13, biz_0000_14, biz_0000_15, biz_0000_16, biz_0000_17, biz_0000_18, biz_0000_19, biz_0000_20, biz_0000_21, biz_0000_22, biz_0000_23, biz_0000_24, biz_0000_25, biz_0000_26, biz_0000_27, biz_0000_28, biz_0000_29, biz_0000_30, biz_0000_31, biz_0000_32, biz_0000_33, biz_0000_34, biz_0000_35, biz_0000_36, biz_0000_37, biz_0000_38, biz_0000_39, biz_0000_40, biz_0000_41, biz_0000_42, biz_0000_43, biz_0000_44, biz_0000_45, biz_0000_46, biz_0000_47, biz_0000_48, biz_0000_49, biz_0000_50, biz_0000_51, biz_0000_52, biz_0000_53, biz_0000_54, biz_0000_55, biz_0000_56, biz_0000_57, biz_0000_58, biz_0000_59, biz_0000_60, biz_0000_61, biz_0000_62, biz_0000_63, biz_0000_64, biz_0000_65, biz_0000_66, biz_0000_67, biz_0000_68, biz_0000_69, biz_0000_70, biz_0000_71, biz_0000_72, biz_0000_73, biz_0000_74, biz_0000_75, biz_0000_76, biz_0000_77, biz_0000_78, biz_0000_79, biz_0000_80, biz_0000_81, biz_0000_82, biz_0000_83, biz_0000_84, biz_0000_85, biz_0000_86, biz_0000_87, biz_0000_88, biz_0000_89, biz_0000_90, biz_0000_91, biz_0000_92, biz_0000_93, biz_0000_94, biz_0000_95, biz_0000_96, biz_0000_97, biz_0000_98, biz_0000_99, biz_0000_100, biz_0000_101, biz_0000_102, biz_0000_103, biz_0000_104, biz_0000_105, biz_0000_106, biz_0000_107, biz_0000_108, biz_0000_109, biz_0000_110, biz_0000_111, biz_0000_112, biz_0000_113, biz_0000_114, biz_0000_115, biz_0000_116, biz_0000_117, biz_0000_118, biz_0000_119, biz_0000_120, biz_0000_121, biz_0000_122, biz_0000_123, biz_0000_124, biz_0000_125, biz_0000_126, biz_0000_127, biz_0000_128, biz_0000_129, biz_0000_130, biz_0000_131, biz_0000_132, biz_0000_133, biz_0000_134, biz_0000_135, biz_0000_136, biz_0000_137, biz_0000_138, biz_0000_139, biz_0000_140, biz_0000_141, biz_0000_142, biz_0000_143, biz_0000_144, biz_0000_145, biz_0000_146, biz_0000_147, biz_0000_148, biz_0000_149, biz_0000_150, biz_0000_151, biz_0000_152, biz_0000_153, biz_0000_154, biz_0000_155, biz_0000_156, biz_0000_157, biz_0000_158, biz_0000_159, biz_0000_160, biz_0000_161, biz_0000_162, biz_0000_163, biz_0000_164, biz_0000_165, biz_0000_166, biz_0000_167, biz_0000_168, biz_0000_169, biz_0000_170, biz_0000_171, biz_0000_172, biz_0000_173, biz_0000_174, biz_0000_175, biz_0000_176, biz_0000_177, biz_0000_178, biz_0000_179, biz_0000_180, biz_0000_181, biz_0000_182, biz_0000_183, biz_0000_184, biz_0000_185, biz_0000_186, biz_0000_187, biz_0000_188, biz_0000_189, biz_0000_190, biz_0000_191, biz_0000_192, biz_0000_193, biz_0000_194, biz_0000_195, biz_0000_196, biz_0000_197, biz_0000_198, biz_0000_199, biz_0000_200, biz_0000_201, biz_0000_202, biz_0000_203, biz_0000_204, biz_0000_205, biz_0000_206, biz_0000_207, biz_0000_208, biz_0000_209, biz_0000_210, biz_0000_211, biz_0000_212, biz_0000_213, biz_0000_214, biz_0000_215, biz_0000_216, biz_0000_217, biz_0000_218, biz_0000_219, biz_0000_220, biz_0000_221, biz_0000_222, biz_0000_223, biz_0000_224, biz_0000_225, biz_0000_226, biz_0000_227, biz_0000_228, biz_0000_229, biz_0000_230, biz_0000_231, biz_0000_232, biz_0000_233, biz_0000_234, biz_0000_235, biz_0000_236, biz_0000_237, biz_0000_238, biz_0000_239, biz_0000_240, biz_0000_241, biz_0000_242, biz_0000_243, biz_0000_244, biz_0000_245, biz_0000_246, biz_0000_247, biz_0000_248, biz_0000_249, biz_0000_250, biz_0000_251, biz_0000_252, biz_0000_253, biz_0000_254, biz_0000_255, biz_0000_256, biz_0000_257, biz_0000_258, biz_0000_259, biz_0000_260, biz_0000_261, biz_0000_262, biz_0000_263, biz_0000_264, biz_0000_265, biz_0000_266, biz_0000_267, biz_0000_268, biz_0000_269, biz_0000_270, biz_0000_271, biz_0000_272, biz_0000_273, biz_0000_274, biz_0000_275, biz_0000_276, biz_0000_277, biz_0000_278, biz_0000_279, biz_0000_280, biz_0000_281, biz_0000_282, biz_0000_283, biz_0000_284, biz_0000_285, biz_0000_286, biz_0000_287, biz_0000_288, biz_0000_289, biz_0000_290, biz_0000_291, biz_0000_292, biz_0000_293, biz_0000_294, biz_0000_295, biz_0000_296, biz_0000_297, biz_0000_298, biz_0000_299, biz_0000_300, biz_0000_301, biz_0000_302, biz_0000_303, biz_0000_304, biz_0000_305, biz_0000_306, biz_0000_307, biz_0000_308, biz_0000_309, biz_0000_310, biz_0000_311, biz_0000_312, biz_0000_313, biz_0000_314, biz_0000_315, biz_0000_316, biz_0000_317, biz_0000_318, biz_0000_319, biz_0000_320, biz_0000_321, biz_0000_322, biz_0000_323, biz_0000_324, biz_0000_325, biz_0000_326, biz_0000_327, biz_0000_328, biz_0000_329, biz_0000_330, biz_0000_331, biz_0000_332, biz_0000_333, biz_0000_334, biz_0000_335, biz_0000_336, biz_0000_337, biz_0000_338, biz_0000_339, biz_0000_340, biz_0000_341, biz_0000_342, biz_0000_343, biz_0000_344, biz_0000_345, biz_0000_346, biz_0000_347, biz_0000_348, biz_0000_349, biz_0000_350, biz_0000_351, biz_0000_352, biz_0000_353, biz_0000_354, biz_0000_355, biz_0000_356, biz_0000_357, biz_0000_358, biz_0000_359, biz_0000_360, biz_0000_361, biz_0000_362, biz_0000_363, biz_0000_364, biz_0000_365, biz_0000_366, biz_0000_367, biz_0000_368, biz_0000_369, biz_0000_370, biz_0000_371, biz_0000_372, biz_0000_373, biz_0000_374, biz_0000_375, biz_0000_376, biz_0000_377, biz_0000_378, biz_0000_379, biz_0000_380, biz_0000_381, biz_0000_382, biz_0000_383, biz_0000_384, biz_0000_385, biz_0000_386, biz_0000_387, biz_0000_388, biz_0000_389, biz_0000_390, biz_0000_391, biz_0000_392, biz_0000_393, biz_0000_394, biz_0000_395, biz_0000_396, biz_0000_397, biz_0000_398, biz_0000_399, biz_0000_400, biz_0000_401, biz_0000_402, biz_0000_403, biz_0000_404, biz_0000_405, biz_0000_406, biz_0000_407, biz_0000_408, biz_0000_409, biz_0000_410, biz_0000_411, biz_0000_412, biz_0000_413, biz_0000_414, biz_0000_415, biz_0000_416, biz_0000_417, biz_0000_418, biz_0000_419, biz_0000_420, biz_0000_421, biz_0000_422, biz_0000_423, biz_0000_424, biz_0000_425, biz_0000_426, biz_0000_427, biz_0000_428, biz_0000_429, biz_0000_430, biz_0000_431, biz_0000_432, biz_0000_433, biz_0000_434, biz_0000_435, biz_0000_436, biz_0000_437, biz_0000_438, biz_0000_439, biz_0000_440, biz_0000_441, biz_0000_442, biz_0000_443, biz_0000_444, biz_0000_445, biz_0000_446, biz_0000_447, biz_0000_448, biz_0000_449, biz_0000_450, biz_0000_451, biz_0000_452, biz_0000_453, biz_0000_454, biz_0000_455, biz_0000_456, biz_0000_457, biz_0000_458, biz_0000_459, biz_0000_460, biz_0000_461, biz_0000_462, biz_0000_463, biz_0000_464, biz_0000_465, biz_0000_466, biz_0000_467, biz_0000_468, biz_0000_469, biz_0000_470, biz_0000_471, biz_0000_472, biz_0000_473, biz_0000_474, biz_0000_475, biz_0000_476, biz_0000_477, biz_0000_478, biz_0000_479, biz_0000_480, biz_0000_481, biz_0000_482, biz_0000_483, biz_0000_484, biz_0000_485, biz_0000_486, biz_0000_487, biz_0000_488, biz_0000_489, biz_0000_490, biz_0000_491, biz_0000_492, biz_0000_493, biz_0000_494, biz_0000_495, biz_0000_496, biz_0000_497, biz_0000_498, biz_0000_499, biz_0000_500, biz_0000_501, biz_0000_502, biz_0000_503, biz_0000_504, biz_0000_505, biz_0000_506, biz_0000_507, biz_0000_508, biz_0000_509, biz_0000_510, biz_0000_511, biz_0000_512, biz_0000_513, biz_0000_514, biz_0000_515, biz_0000_516, biz_0000_517, biz_0000_518, biz_0000_519, biz_0000_520, biz_0000_521, biz_0000_522, biz_0000_523, biz_0000_524, biz_0000_525, biz_0000_526, biz_0000_527, biz_0000_528, biz_0000_529, biz_0000_530, biz_0000_531, biz_0000_532, biz_0000_533, biz_0000_534, biz_0000_535, biz_0000_536, biz_0000_537, biz_0000_538, biz_0000_539, biz_0000_540, biz_0000_541, biz_0000_542, biz_0000_543, biz_0000_544, biz_0000_545, biz_0000_546, biz_0000_547, biz_0000_548, biz_0000_549, biz_0000_550, biz_0000_551, biz_0000_552, biz_0000_553, biz_0000_554, biz_0000_555, biz_0000_556, biz_0000_557, biz_0000_558, biz_0000_559, biz_0000_560, biz_0000_561, biz_0000_562, biz_0000_563, biz_0000_564, biz_0000_565, biz_0000_566, biz_0000_567, biz_0000_568, biz_0000_569, biz_0000_570, biz_0000_571, biz_0000_572, biz_0000_573, biz_0000_574, biz_0000_575, biz_0000_576, biz_0000_577, biz_0000_578, biz_0000_579, biz_0000_580, biz_0000_581, biz_0000_582, biz_0000_583, biz_0000_584, biz_0000_585, biz_0000_586, biz_0000_587, biz_0000_588, biz_0000_589, biz_0000_590, biz_0000_591, biz_0000_592, biz_0000_593, biz_0000_594, biz_0000_595, biz_0000_596, biz_0000_597, biz_0000_598, biz_0000_599, biz_0000_600, biz_0000_601, biz_0000_602, biz_0000_603, biz_0000_604, biz_0000_605, biz_0000_606, biz_0000_607, biz_0000_608, biz_0000_609, biz_0000_610, biz_0000_611, biz_0000_612, biz_0000_613, biz_0000_614, biz_0000_615, biz_0000_616, biz_0000_617, biz_0000_618, biz_0000_619, biz_0000_620, biz_0000_621, biz_0000_622, biz_0000_623, biz_0000_624, biz_0000_625, biz_0000_626, biz_0000_627, biz_0000_628, biz_0000_629, biz_0000_630, biz_0000_631, biz_0000_632, biz_0000_633, biz_0000_634, biz_0000_635, biz_0000_636, biz_0000_637, biz_0000_638, biz_0000_639, biz_0000_640, biz_0000_641, biz_0000_642, biz_0000_643, biz_0000_644, biz_0000_645, biz_0000_646, biz_0000_647, biz_0000_648, biz_0000_649, biz_0000_650, biz_0000_651, biz_0000_652, biz_0000_653, biz_0000_654, biz_0000_655, biz_0000_656, biz_0000_657, biz_0000_658, biz_0000_659, biz_0000_660, biz_0000_661, biz_0000_662, biz_0000_663, biz_0000_664, biz_0000_665, biz_0000_666, biz_0000_667, biz_0000_668, biz_0000_669, biz_0000_670, biz_0000_671, biz_0000_672, biz_0000_673, biz_0000_674, biz_0000_675, biz_0000_676, biz_0000_677, biz_0000_678, biz_0000_679, biz_0000_680, biz_0000_681, biz_0000_682, biz_0000_683, biz_0000_684, biz_0000_685, biz_0000_686, biz_0000_687, biz_0000_688, biz_0000_689, biz_0000_690, biz_0000_691, biz_0000_692, biz_0000_693, biz_0000_694, biz_0000_695, biz_0000_696, biz_0000_697, biz_0000_698, biz_0000_699, biz_0000_700, biz_0000_701, biz_0000_702, biz_0000_703, biz_0000_704, biz_0000_705, biz_0000_706, biz_0000_707, biz_0000_708, biz_0000_709, biz_0000_710, biz_0000_711, biz_0000_712, biz_0000_713, biz_0000_714, biz_0000_715, biz_0000_716, biz_0000_717, biz_0000_718, biz_0000_719, biz_0000_720, biz_0000_721, biz_0000_722, biz_0000_723, biz_0000_724, biz_0000_725, biz_0000_726, biz_0000_727, biz_0000_728, biz_0000_729, biz_0000_730, biz_0000_731, biz_0000_732, biz_0000_733, biz_0000_734, biz_0000_735, biz_0000_736, biz_0000_737, biz_0000_738, biz_0000_739, biz_0000_740, biz_0000_741, biz_0000_742, biz_0000_743, biz_0000_744, biz_0000_745, biz_0000_746, biz_0000_747, biz_0000_748, biz_0000_749, biz_0000_750, biz_0000_751, biz_0000_752, biz_0000_753, biz_0000_754, biz_0000_755, biz_0000_756, biz_0000_757, biz_0000_758, biz_0000_759, biz_0000_760, biz_0000_761, biz_0000_762, biz_0000_763, biz_0000_764, biz_0000_765, biz_0000_766, biz_0000_767, biz_0000_768, biz_0000_769, biz_0000_770, biz_0000_771, biz_0000_772, biz_0000_773, biz_0000_774, biz_0000_775, biz_0000_776, biz_0000_777, biz_0000_778, biz_0000_779, biz_0000_780, biz_0000_781, biz_0000_782, biz_0000_783, biz_0000_784, biz_0000_785, biz_0000_786, biz_0000_787, biz_0000_788, biz_0000_789, biz_0000_790, biz_0000_791, biz_0000_792, biz_0000_793, biz_0000_794, biz_0000_795, biz_0000_796, biz_0000_797, biz_0000_798, biz_0000_799, biz_0000_800, biz_0000_801, biz_0000_802, biz_0000_803, biz_0000_804, biz_0000_805, biz_0000_806, biz_0000_807, biz_0000_808, biz_0000_809, biz_0000_810, biz_0000_811, biz_0000_812, biz_0000_813, biz_0000_814, biz_0000_815, biz_0000_816, biz_0000_817, biz_0000_818, biz_0000_819, biz_0000_820, biz_0000_821, biz_0000_822, biz_0000_823, biz_0000_824, biz_0000_825, biz_0000_826, biz_0000_827, biz_0000_828, biz_0000_829, biz_0000_830, biz_0000_831, biz_0000_832, biz_0000_833, biz_0000_834, biz_0000_835, biz_0000_836, biz_0000_837, biz_0000_838, biz_0000_839, biz_0000_840, biz_0000_841, biz_0000_842, biz_0000_843, biz_0000_844, biz_0000_845, biz_0000_846, biz_0000_847, biz_0000_848, biz_0000_849, biz_0000_850, biz_0000_851, biz_0000_852, biz_0000_853, biz_0000_854, biz_0000_855, biz_0000_856, biz_0000_857, biz_0000_858, biz_0000_859, biz_0000_860, biz_0000_861, biz_0000_862, biz_0000_863, biz_0000_864, biz_0000_865, biz_0000_866, biz_0000_867, biz_0000_868, biz_0000_869, biz_0000_870, biz_0000_871, biz_0000_872, biz_0000_873, biz_0000_874, biz_0000_875, biz_0000_876, biz_0000_877, biz_0000_878, biz_0000_879, biz_0000_880, biz_0000_881, biz_0000_882, biz_0000_883, biz_0000_884, biz_0000_885, biz_0000_886, biz_0000_887, biz_0000_888, biz_0000_889, biz_0000_890, biz_0000_891, biz_0000_892, biz_0000_893, biz_0000_894, biz_0000_895, biz_0000_896, biz_0000_897, biz_0000_898, biz_0000_899, biz_0000_900, biz_0000_901, biz_0000_902, biz_0000_903, biz_0000_904, biz_0000_905, biz_0000_906, biz_0000_907, biz_0000_908, biz_0000_909, biz_0000_910, biz_0000_911, biz_0000_912, biz_0000_913, biz_0000_914, biz_0000_915, biz_0000_916, biz_0000_917, biz_0000_918, biz_0000_919, biz_0000_920, biz_0000_921, biz_0000_922, biz_0000_923, biz_0000_924, biz_0000_925, biz_0000_926, biz_0000_927, biz_0000_928, biz_0000_929, biz_0000_930, biz_0000_931, biz_0000_932, biz_0000_933, biz_0000_934, biz_0000_935, biz_0000_936, biz_0000_937, biz_0000_938, biz_0000_939, biz_0000_940, biz_0000_941, biz_0000_942, biz_0000_943, biz_0000_944, biz_0000_945, biz_0000_946, biz_0000_947, biz_0000_948, biz_0000_949, biz_0000_950, biz_0000_951, biz_0000_952, biz_0000_953, biz_0000_954, biz_0000_955, biz_0000_956, biz_0000_957, biz_0000_958, biz_0000_959, biz_0000_960, biz_0000_961, biz_0000_962, biz_0000_963, biz_0000_964, biz_0000_965, biz_0000_966, biz_0000_967, biz_0000_968, biz_0000_969, biz_0000_970, biz_0000_971, biz_0000_972, biz_0000_973, biz_0000_974, biz_0000_975, biz_0000_976, biz_0000_977, biz_0000_978, biz_0000_979, biz_0000_980, biz_0000_981, biz_0000_982, biz_0000_983, biz_0000_984, biz_0000_985, biz_0000_986, biz_0000_987, biz_0000_988, biz_0000_989, biz_0000_990, biz_0000_991, biz_0000_992, biz_0000_993, biz_0000_994, biz_0000_995, biz_0000_996, biz_0000_997, biz_0000_998, biz_0000_999, biz_0000_1000, biz_0000_1001, biz_0000_1002, biz_0000_1003, biz_0000_1004, biz_0000_1005, biz_0000_1006, biz_0000_1007, biz_0000_1008, biz_0000_1009, biz_0000_1010, biz_0000_1011, biz_0000_1012, biz_0000_1013, biz_0000_1014, biz_0000_1015, biz_0000_1016, biz_0000_1017, biz_0000_1018, biz_0000_1019, biz_0000_1020, biz_0000_1021, biz_0000_1022, biz_0000_1023, biz_0000_1024, biz_0000_1025, biz_0000_1026, biz_0000_1027, biz_0000_1028, biz_0000_1029, biz_0000_1030, biz_0000_1031, biz_0000_1032, biz_0000_1033, biz_0000_1034, biz_0000_1035, biz_0000_1036, biz_0000_1037, biz_0000_1038, biz_0000_1039, biz_0000_1040, biz_0000_1041, biz_0000_1042, biz_0000_1043, biz_0000_1044, biz_0000_1045, biz_0000_1046, biz_0000_1047, biz_0000_1048, biz_0000_1049, biz_0000_1050, biz_0000_1051, biz_0000_1052, biz_0000_1053, biz_0000_1054, biz_0000_1055, biz_0000_1056, biz_0000_1057, biz_0000_1058, biz_0000_1059, biz_0000_1060, biz_0000_1061, biz_0000_1062, biz_0000_1063, biz_0000_1064, biz_0000_1065, biz_0000_1066, biz_0000_1067, biz_0000_1068, biz_0000_1069, biz_0000_1070, biz_0000_1071, biz_0000_1072, biz_0000_1073, biz_0000_1074, biz_0000_1075, biz_0000_1076, biz_0000_1077, biz_0000_1078, biz_0000_1079, biz_0000_1080, biz_0000_1081, biz_0000_1082, biz_0000_1083, biz_0000_1084, biz_0000_1085, biz_0000_1086, biz_0000_1087, biz_0000_1088, biz_0000_1089, biz_0000_1090, biz_0000_1091, biz_0000_1092, biz_0000_1093, biz_0000_1094, biz_0000_1095, biz_0000_1096, biz_0000_1097, biz_0000_1098, biz_0000_1099, biz_0000_1100, biz_0000_1101, biz_0000_1102, biz_0000_1103, biz_0000_1104, biz_0000_1105, biz_0000_1106, biz_0000_1107, biz_0000_1108, biz_0000_1109, biz_0000_1110, biz_0000_1111, biz_0000_1112, biz_0000_1113, biz_0000_1114, biz_0000_1115, biz_0000_1116, biz_0000_1117, biz_0000_1118, biz_0000_1119, biz_0000_1120, biz_0000_1121, biz_0000_1122, biz_0000_1123, biz_0000_1124, biz_0000_1125, biz_0000_1126, biz_0000_1127, biz_0000_1128, biz_0000_1129, biz_0000_1130, biz_0000_1131, biz_0000_1132, biz_0000_1133, biz_0000_1134, biz_0000_1135, biz_0000_1136, biz_0000_1137, biz_0000_1138, biz_0000_1139, biz_0000_1140, biz_0000_1141, biz_0000_1142, biz_0000_1143, biz_0000_1144, biz_0000_1145, biz_0000_1146, biz_0000_1147, biz_0000_1148, biz_0000_1149, biz_0000_1150, biz_0000_1151, biz_0000_1152, biz_0000_1153, biz_0000_1154, biz_0000_1155, biz_0000_1156, biz_0000_1157, biz_0000_1158, biz_0000_1159, biz_0000_1160, biz_0000_1161, biz_0000_1162, biz_0000_1163, biz_0000_1164, biz_0000_1165, biz_0000_1166, biz_0000_1167, biz_0000_1168, biz_0000_1169, biz_0000_1170, biz_0000_1171, biz_0000_1172, biz_0000_1173, biz_0000_1174, biz_0000_1175, biz_0000_1176, biz_0000_1177, biz_0000_1178, biz_0000_1179, biz_0000_1180, biz_0000_1181, biz_0000_1182, biz_0000_1183, biz_0000_1184, biz_0000_1185, biz_0000_1186, biz_0000_1187, biz_0000_1188, biz_0000_1189, biz_0000_1190, biz_0000_1191, biz_0000_1192, biz_0000_1193, biz_0000_1194, biz_0000_1195, biz_0000_1196, biz_0000_1197, biz_0000_1198, biz_0000_1199, biz_0000_1200, biz_0000_1201, biz_0000_1202, biz_0000_1203, biz_0000_1204, biz_0000_1205, biz_0000_1206, biz_0000_1207, biz_0000_1208, biz_0000_1209, biz_0000_1210, biz_0000_1211, biz_0000_1212, biz_0000_1213, biz_0000_1214, biz_0000_1215, biz_0000_1216, biz_0000_1217, biz_0000_1218, biz_0000_1219, biz_0000_1220, biz_0000_1221, biz_0000_1222, biz_0000_1223, biz_0000_1224, biz_0000_1225, biz_0000_1226, biz_0000_1227, biz_0000_1228, biz_0000_1229, biz_0000_1230, biz_0000_1231, biz_0000_1232, biz_0000_1233, biz_0000_1234, biz_0000_1235, biz_0000_1236, biz_0000_1237, biz_0000_1238, biz_0000_1239, biz_0000_1240, biz_0000_1241, biz_0000_1242, biz_0000_1243, biz_0000_1244, biz_0000_1245, biz_0000_1246, biz_0000_1247, biz_0000_1248, biz_0000_1249, biz_0000_1250, biz_0000_1251, biz_0000_1252, biz_0000_1253, biz_0000_1254, biz_0000_1255, biz_0000_1256, biz_0000_1257, biz_0000_1258, biz_0000_1259, biz_0000_1260, biz_0000_1261, biz_0000_1262, biz_0000_1263, biz_0000_1264, biz_0000_1265, biz_0000_1266, biz_0000_1267, biz_0000_1268, biz_0000_1269, biz_0000_1270, biz_0000_1271, biz_0000_1272, biz_0000_1273, biz_0000_1274, biz_0000_1275, biz_0000_1276, biz_0000_1277, biz_0000_1278, biz_0000_1279, biz_0000_1280, biz_0000_1281, biz_0000_1282, biz_0000_1283, biz_0000_1284, biz_0000_1285, biz_0000_1286, biz_0000_1287, biz_0000_1288, biz_0000_1289, biz_0000_1290, biz_0000_1291, biz_0000_1292, biz_0000_1293, biz_0000_1294, biz_0000_1295, biz_0000_1296, biz_0000_1297, biz_0000_1298, biz_0000_1299, biz_0000_1300, biz_0000_1301, biz_0000_1302, biz_0000_1303, biz_0000_1304, biz_0000_1305, biz_0000_1306, biz_0000_1307, biz_0000_1308, biz_0000_1309, biz_0000_1310, biz_0000_1311, biz_0000_1312, biz_0000_1313, biz_0000_1314, biz_0000_1315, biz_0000_1316, biz_0000_1317, biz_0000_1318, biz_0000_1319, biz_0000_1320, biz_0000_1321, biz_0000_1322, biz_0000_1323, biz_0000_1324, biz_0000_1325, biz_0000_1326, biz_0000_1327, biz_0000_1328, biz_0000_1329, biz_0000_1330, biz_0000_1331, biz_0000_1332, biz_0000_1333, biz_0000_1334, biz_0000_1335, biz_0000_1336, biz_0000_1337, biz_0000_1338, biz_0000_1339, biz_0000_1340, biz_0000_1341, biz_0000_1342, biz_0000_1343, biz_0000_1344, biz_0000_1345, biz_0000_1346, biz_0000_1347, biz_0000_1348, biz_0000_1349, biz_0000_1350, biz_0000_1351, biz_0000_1352, biz_0000_1353, biz_0000_1354, biz_0000_1355, biz_0000_1356, biz_0000_1357, biz_0000_1358, biz_0000_1359, biz_0000_1360, biz_0000_1361, biz_0000_1362, biz_0000_1363, biz_0000_1364, biz_0000_1365, biz_0000_1366, biz_0000_1367, biz_0000_1368, biz_0000_1369, biz_0000_1370, biz_0000_1371, biz_0000_1372, biz_0000_1373, biz_0000_1374, biz_0000_1375, biz_0000_1376, biz_0000_1377, biz_0000_1378, biz_0000_1379, biz_0000_1380, biz_0000_1381, biz_0000_1382, biz_0000_1383, biz_0000_1384, biz_0000_1385, biz_0000_1386, biz_0000_1387, biz_0000_1388, biz_0000_1389, biz_0000_1390, biz_0000_1391, biz_0000_1392, biz_0000_1393, biz_0000_1394, biz_0000_1395, biz_0000_1396, biz_0000_1397, biz_0000_1398, biz_0000_1399, biz_0000_1400, biz_0000_1401, biz_0000_1402, biz_0000_1403, biz_0000_1404, biz_0000_1405, biz_0000_1406, biz_0000_1407, biz_0000_1408, biz_0000_1409, biz_0000_1410, biz_0000_1411, biz_0000_1412, biz_0000_1413, biz_0000_1414, biz_0000_1415, biz_0000_1416, biz_0000_1417, biz_0000_1418, biz_0000_1419, biz_0000_1420, biz_0000_1421, biz_0000_1422, biz_0000_1423, biz_0000_1424, biz_0000_1425, biz_0000_1426, biz_0000_1427, biz_0000_1428, biz_0000_1429, biz_0000_1430, biz_0000_1431, biz_0000_1432, biz_0000_1433, biz_0000_1434, biz_0000_1435, biz_0000_1436, biz_0000_1437, biz_0000_1438, biz_0000_1439, biz_0000_1440, biz_0000_1441, biz_0000_1442, biz_0000_1443, biz_0000_1444, biz_0000_1445, biz_0000_1446, biz_0000_1447, biz_0000_1448, biz_0000_1449, biz_0000_1450, biz_0000_1451, biz_0000_1452, biz_0000_1453, biz_0000_1454, biz_0000_1455, biz_0000_1456, biz_0000_1457, biz_0000_1458, biz_0000_1459, biz_0000_1460, biz_0000_1461, biz_0000_1462, biz_0000_1463, biz_0000_1464, biz_0000_1465, biz_0000_1466, biz_0000_1467, biz_0000_1468, biz_0000_1469, biz_0000_1470, biz_0000_1471, biz_0000_1472, biz_0000_1473, biz_0000_1474, biz_0000_1475, biz_0000_1476, biz_0000_1477, biz_0000_1478, biz_0000_1479, biz_0000_1480, biz_0000_1481, biz_0000_1482, biz_0000_1483, biz_0000_1484, biz_0000_1485, biz_0000_1486, biz_0000_1487, biz_0000_1488, biz_0000_1489, biz_0000_1490, biz_0000_1491, biz_0000_1492, biz_0000_1493, biz_0000_1494, biz_0000_1495, biz_0000_1496, biz_0000_1497, biz_0000_1498, biz_0000_1499, biz_0000_1500, biz_0000_1501, biz_0000_1502, biz_0000_1503, biz_0000_1504, biz_0000_1505, biz_0000_1506, biz_0000_1507, biz_0000_1508, biz_0000_1509, biz_0000_1510, biz_0000_1511, biz_0000_1512, biz_0000_1513, biz_0000_1514, biz_0000_1515, biz_0000_1516, biz_0000_1517, biz_0000_1518, biz_0000_1519, biz_0000_1520, biz_0000_1521, biz_0000_1522, biz_0000_1523, biz_0000_1524, biz_0000_1525, biz_0000_1526, biz_0000_1527, biz_0000_1528, biz_0000_1529, biz_0000_1530, biz_0000_1531, biz_0000_1532, biz_0000_1533, biz_0000_1534, biz_0000_1535, biz_0000_1536, biz_0000_1537, biz_0000_1538, biz_0000_1539, biz_0000_1540, biz_0000_1541, biz_0000_1542, biz_0000_1543, biz_0000_1544, biz_0000_1545, biz_0000_1546, biz_0000_1547, biz_0000_1548, biz_0000_1549, biz_0000_1550, biz_0000_1551, biz_0000_1552, biz_0000_1553, biz_0000_1554, biz_0000_1555, biz_0000_1556, biz_0000_1557, biz_0000_1558, biz_0000_1559, biz_0000_1560, biz_0000_1561, biz_0000_1562, biz_0000_1563, biz_0000_1564, biz_0000_1565, biz_0000_1566, biz_0000_1567, biz_0000_1568, biz_0000_1569, biz_0000_1570, biz_0000_1571, biz_0000_1572, biz_0000_1573, biz_0000_1574, biz_0000_1575, biz_0000_1576, biz_0000_1577, biz_0000_1578, biz_0000_1579, biz_0000_1580, biz_0000_1581, biz_0000_1582, biz_0000_1583, biz_0000_1584, biz_0000_1585, biz_0000_1586, biz_0000_1587, biz_0000_1588, biz_0000_1589, biz_0000_1590, biz_0000_1591, biz_0000_1592, biz_0000_1593, biz_0000_1594, biz_0000_1595, biz_0000_1596, biz_0000_1597, biz_0000_1598, biz_0000_1599, biz_0000_1600, biz_0000_1601, biz_0000_1602, biz_0000_1603, biz_0000_1604, biz_0000_1605, biz_0000_1606, biz_0000_1607, biz_0000_1608, biz_0000_1609, biz_0000_1610, biz_0000_1611, biz_0000_1612, biz_0000_1613, biz_0000_1614, biz_0000_1615, biz_0000_1616, biz_0000_1617, biz_0000_1618, biz_0000_1619, biz_0000_1620, biz_0000_1621, biz_0000_1622, biz_0000_1623, biz_0000_1624, biz_0000_1625, biz_0000_1626, biz_0000_1627, biz_0000_1628, biz_0000_1629, biz_0000_1630, biz_0000_1631, biz_0000_1632, biz_0000_1633, biz_0000_1634, biz_0000_1635, biz_0000_1636, biz_0000_1637, biz_0000_1638, biz_0000_1639, biz_0000_1640, biz_0000_1641, biz_0000_1642, biz_0000_1643, biz_0000_1644, biz_0000_1645, biz_0000_1646, biz_0000_1647, biz_0000_1648, biz_0000_1649, biz_0000_1650, biz_0000_1651, biz_0000_1652, biz_0000_1653, biz_0000_1654, biz_0000_1655, biz_0000_1656, biz_0000_1657, biz_0000_1658, biz_0000_1659, biz_0000_1660, biz_0000_1661, biz_0000_1662, biz_0000_1663, biz_0000_1664, biz_0000_1665, biz_0000_1666, biz_0000_1667, biz_0000_1668, biz_0000_1669, biz_0000_1670, biz_0000_1671, biz_0000_1672, biz_0000_1673, biz_0000_1674, biz_0000_1675, biz_0000_1676, biz_0000_1677, biz_0000_1678, biz_0000_1679, biz_0000_1680, biz_0000_1681, biz_0000_1682, biz_0000_1683, biz_0000_1684, biz_0000_1685, biz_0000_1686, biz_0000_1687, biz_0000_1688, biz_0000_1689, biz_0000_1690, biz_0000_1691, biz_0000_1692, biz_0000_1693, biz_0000_1694, biz_0000_1695, biz_0000_1696, biz_0000_1697, biz_0000_1698, biz_0000_1699, biz_0000_1700, biz_0000_1701, biz_0000_1702, biz_0000_1703, biz_0000_1704, biz_0000_1705, biz_0000_1706, biz_0000_1707, biz_0000_1708, biz_0000_1709, biz_0000_1710, biz_0000_1711, biz_0000_1712, biz_0000_1713, biz_0000_1714, biz_0000_1715, biz_0000_1716, biz_0000_1717, biz_0000_1718, biz_0000_1719, biz_0000_1720, biz_0000_1721, biz_0000_1722, biz_0000_1723, biz_0000_1724, biz_0000_1725, biz_0000_1726, biz_0000_1727, biz_0000_1728, biz_0000_1729, biz_0000_1730, biz_0000_1731, biz_0000_1732, biz_0000_1733, biz_0000_1734, biz_0000_1735, biz_0000_1736, biz_0000_1737, biz_0000_1738, biz_0000_1739, biz_0000_1740, biz_0000_1741, biz_0000_1742, biz_0000_1743, biz_0000_1744, biz_0000_1745, biz_0000_1746, biz_0000_1747, biz_0000_1748, biz_0000_1749, biz_0000_1750, biz_0000_1751, biz_0000_1752, biz_0000_1753, biz_0000_1754, biz_0000_1755, biz_0000_1756, biz_0000_1757, biz_0000_1758, biz_0000_1759, biz_0000_1760, biz_0000_1761, biz_0000_1762, biz_0000_1763, biz_0000_1764, biz_0000_1765, biz_0000_1766, biz_0000_1767, biz_0000_1768, biz_0000_1769, biz_0000_1770, biz_0000_1771, biz_0000_1772, biz_0000_1773, biz_0000_1774, biz_0000_1775, biz_0000_1776, biz_0000_1777, biz_0000_1778, biz_0000_1779, biz_0000_1780, biz_0000_1781, biz_0000_1782, biz_0000_1783, biz_0000_1784, biz_0000_1785, biz_0000_1786, biz_0000_1787, biz_0000_1788, biz_0000_1789, biz_0000_1790, biz_0000_1791, biz_0000_1792, biz_0000_1793, biz_0000_1794, biz_0000_1795, biz_0000_1796, biz_0000_1797, biz_0000_1798, biz_0000_1799, biz_0000_1800, biz_0000_1801, biz_0000_1802, biz_0000_1803, biz_0000_1804, biz_0000_1805, biz_0000_1806, biz_0000_1807, biz_0000_1808, biz_0000_1809, biz_0000_1810, biz_0000_1811, biz_0000_1812, biz_0000_1813, biz_0000_1814, biz_0000_1815, biz_0000_1816, biz_0000_1817, biz_0000_1818, biz_0000_1819, biz_0000_1820, biz_0000_1821, biz_0000_1822, biz_0000_1823, biz_0000_1824, biz_0000_1825, biz_0000_1826, biz_0000_1827, biz_0000_1828, biz_0000_1829, biz_0000_1830, biz_0000_1831, biz_0000_1832, biz_0000_1833, biz_0000_1834, biz_0000_1835, biz_0000_1836, biz_0000_1837, biz_0000_1838, biz_0000_1839, biz_0000_1840, biz_0000_1841, biz_0000_1842, biz_0000_1843, biz_0000_1844, biz_0000_1845, biz_0000_1846, biz_0000_1847, biz_0000_1848, biz_0000_1849, biz_0000_1850, biz_0000_1851, biz_0000_1852, biz_0000_1853, biz_0000_1854, biz_0000_1855, biz_0000_1856, biz_0000_1857, biz_0000_1858, biz_0000_1859, biz_0000_1860, biz_0000_1861, biz_0000_1862, biz_0000_1863, biz_0000_1864, biz_0000_1865, biz_0000_1866, biz_0000_1867, biz_0000_1868, biz_0000_1869, biz_0000_1870, biz_0000_1871, biz_0000_1872, biz_0000_1873, biz_0000_1874, biz_0000_1875, biz_0000_1876, biz_0000_1877, biz_0000_1878, biz_0000_1879, biz_0000_1880, biz_0000_1881, biz_0000_1882, biz_0000_1883, biz_0000_1884, biz_0000_1885, biz_0000_1886, biz_0000_1887, biz_0000_1888, biz_0000_1889, biz_0000_1890, biz_0000_1891, biz_0000_1892, biz_0000_1893, biz_0000_1894, biz_0000_1895, biz_0000_1896, biz_0000_1897, biz_0000_1898, biz_0000_1899, biz_0000_1900, biz_0000_1901, biz_0000_1902, biz_0000_1903, biz_0000_1904, biz_0000_1905, biz_0000_1906, biz_0000_1907, biz_0000_1908, biz_0000_1909, biz_0000_1910, biz_0000_1911, biz_0000_1912, biz_0000_1913, biz_0000_1914, biz_0000_1915, biz_0000_1916, biz_0000_1917, biz_0000_1918, biz_0000_1919, biz_0000_1920, biz_0000_1921, biz_0000_1922, biz_0000_1923, biz_0000_1924, biz_0000_1925, biz_0000_1926, biz_0000_1927, biz_0000_1928, biz_0000_1929, biz_0000_1930, biz_0000_1931, biz_0000_1932, biz_0000_1933, biz_0000_1934, biz_0000_1935, biz_0000_1936, biz_0000_1937, biz_0000_1938, biz_0000_1939, biz_0000_1940, biz_0000_1941, biz_0000_1942, biz_0000_1943, biz_0000_1944, biz_0000_1945, biz_0000_1946, biz_0000_1947, biz_0000_1948, biz_0000_1949, biz_0000_1950, biz_0000_1951, biz_0000_1952, biz_0000_1953, biz_0000_1954, biz_0000_1955, biz_0000_1956, biz_0000_1957, biz_0000_1958, biz_0000_1959, biz_0000_1960, biz_0000_1961, biz_0000_1962, biz_0000_1963, biz_0000_1964, biz_0000_1965, biz_0000_1966, biz_0000_1967, biz_0000_1968, biz_0000_1969, biz_0000_1970, biz_0000_1971, biz_0000_1972, biz_0000_1973, biz_0000_1974, biz_0000_1975, biz_0000_1976, biz_0000_1977, biz_0000_1978, biz_0000_1979, biz_0000_1980, biz_0000_1981, biz_0000_1982, biz_0000_1983, biz_0000_1984, biz_0000_1985, biz_0000_1986, biz_0000_1987, biz_0000_1988, biz_0000_1989, biz_0000_1990, biz_0000_1991, biz_0000_1992, biz_0000_1993, biz_0000_1994, biz_0000_1995, biz_0000_1996, biz_0000_1997, biz_0000_1998, biz_0000_1999, biz_0000_2000, biz_0000_2001, biz_0000_2002, biz_0000_2003, biz_0000_2004, biz_0000_2005, biz_0000_2006, biz_0000_2007, biz_0000_2008, biz_0000_2009, biz_0000_2010, biz_0000_2011, biz_0000_2012, biz_0000_2013, biz_0000_2014, biz_0000_2015, biz_0000_2016, biz_0000_2017, biz_0000_2018, biz_0000_2019, biz_0000_2020, biz_0000_2021, biz_0000_2022, biz_0000_2023, biz_0000_2024, biz_0000_2025, biz_0000_2026, biz_0000_2027, biz_0000_2028, biz_0000_2029, biz_0000_2030, biz_0000_2031, biz_0000_2032, biz_0000_2033, biz_0000_2034, biz_0000_2035, biz_0000_2036, biz_0000_2037, biz_0000_2038, biz_0000_2039, biz_0000_2040, biz_0000_2041, biz_0000_2042, biz_0000_2043, biz_0000_2044, biz_0000_2045, biz_0000_2046, biz_0000_2047, biz_0000_2048, biz_0000_2049, biz_0000_2050, biz_0000_2051, biz_0000_2052, biz_0000_2053, biz_0000_2054, biz_0000_2055, biz_0000_2056, biz_0000_2057, biz_0000_2058, biz_0000_2059, biz_0000_2060, biz_0000_2061, biz_0000_2062, biz_0000_2063, biz_0000_2064, biz_0000_2065, biz_0000_2066, biz_0000_2067, biz_0000_2068, biz_0000_2069, biz_0000_2070, biz_0000_2071, biz_0000_2072, biz_0000_2073, biz_0000_2074, biz_0000_2075, biz_0000_2076, biz_0000_2077, biz_0000_2078, biz_0000_2079, biz_0000_2080, biz_0000_2081, biz_0000_2082, biz_0000_2083, biz_0000_2084, biz_0000_2085, biz_0000_2086, biz_0000_2087, biz_0000_2088, biz_0000_2089, biz_0000_2090, biz_0000_2091, biz_0000_2092, biz_0000_2093, biz_0000_2094, biz_0000_2095, biz_0000_2096, biz_0000_2097, biz_0000_2098, biz_0000_2099, biz_0000_2100, biz_0000_2101, biz_0000_2102, biz_0000_2103, biz_0000_2104, biz_0000_2105, biz_0000_2106, biz_0000_2107, biz_0000_2108, biz_0000_2109, biz_0000_2110, biz_0000_2111, biz_0000_2112, biz_0000_2113, biz_0000_2114, biz_0000_2115, biz_0000_2116, biz_0000_2117, biz_0000_2118, biz_0000_2119, biz_0000_2120, biz_0000_2121, biz_0000_2122, biz_0000_2123, biz_0000_2124, biz_0000_2125, biz_0000_2126, biz_0000_2127, biz_0000_2128, biz_0000_2129, biz_0000_2130, biz_0000_2131, biz_0000_2132, biz_0000_2133, biz_0000_2134, biz_0000_2135, biz_0000_2136, biz_0000_2137, biz_0000_2138, biz_0000_2139, biz_0000_2140, biz_0000_2141, biz_0000_2142, biz_0000_2143, biz_0000_2144, biz_0000_2145, biz_0000_2146, biz_0000_2147, biz_0000_2148, biz_0000_2149, biz_0000_2150, biz_0000_2151, biz_0000_2152, biz_0000_2153, biz_0000_2154, biz_0000_2155, biz_0000_2156, biz_0000_2157, biz_0000_2158, biz_0000_2159, biz_0000_2160, biz_0000_2161, biz_0000_2162, biz_0000_2163, biz_0000_2164, biz_0000_2165, biz_0000_2166, biz_0000_2167, biz_0000_2168, biz_0000_2169, biz_0000_2170, biz_0000_2171, biz_0000_2172, biz_0000_2173, biz_0000_2174, biz_0000_2175, biz_0000_2176, biz_0000_2177, biz_0000_2178, biz_0000_2179, biz_0000_2180, biz_0000_2181, biz_0000_2182, biz_0000_2183, biz_0000_2184, biz_0000_2185, biz_0000_2186, biz_0000_2187, biz_0000_2188, biz_0000_2189, biz_0000_2190, biz_0000_2191, biz_0000_2192, biz_0000_2193, biz_0000_2194, biz_0000_2195, biz_0000_2196, biz_0000_2197, biz_0000_2198, biz_0000_2199, biz_0000_2200, biz_0000_2201, biz_0000_2202, biz_0000_2203, biz_0000_2204, biz_0000_2205, biz_0000_2206, biz_0000_2207, biz_0000_2208, biz_0000_2209, biz_0000_2210, biz_0000_2211, biz_0000_2212, biz_0000_2213, biz_0000_2214, biz_0000_2215, biz_0000_2216, biz_0000_2217, biz_0000_2218, biz_0000_2219, biz_0000_2220, biz_0000_2221, biz_0000_2222, biz_0000_2223, biz_0000_2224, biz_0000_2225, biz_0000_2226, biz_0000_2227, biz_0000_2228, biz_0000_2229, biz_0000_2230, biz_0000_2231, biz_0000_2232, biz_0000_2233, biz_0000_2234, biz_0000_2235, biz_0000_2236, biz_0000_2237, biz_0000_2238, biz_0000_2239, biz_0000_2240, biz_0000_2241, biz_0000_2242, biz_0000_2243, biz_0000_2244, biz_0000_2245, biz_0000_2246, biz_0000_2247, biz_0000_2248, biz_0000_2249, biz_0000_2250, biz_0000_2251, biz_0000_2252, biz_0000_2253, biz_0000_2254, biz_0000_2255, biz_0000_2256, biz_0000_2257, biz_0000_2258, biz_0000_2259, biz_0000_2260, biz_0000_2261, biz_0000_2262, biz_0000_2263, biz_0000_2264, biz_0000_2265, biz_0000_2266, biz_0000_2267, biz_0000_2268, biz_0000_2269, biz_0000_2270, biz_0000_2271, biz_0000_2272, biz_0000_2273, biz_0000_2274, biz_0000_2275, biz_0000_2276, biz_0000_2277, biz_0000_2278, biz_0000_2279, biz_0000_2280, biz_0000_2281, biz_0000_2282, biz_0000_2283, biz_0000_2284, biz_0000_2285, biz_0000_2286, biz_0000_2287, biz_0000_2288, biz_0000_2289, biz_0000_2290, biz_0000_2291, biz_0000_2292, biz_0000_2293, biz_0000_2294, biz_0000_2295, biz_0000_2296, biz_0000_2297, biz_0000_2298, biz_0000_2299, biz_0000_2300, biz_0000_2301, biz_0000_2302, biz_0000_2303, biz_0000_2304, biz_0000_2305, biz_0000_2306, biz_0000_2307, biz_0000_2308, biz_0000_2309, biz_0000_2310, biz_0000_2311, biz_0000_2312, biz_0000_2313, biz_0000_2314, biz_0000_2315, biz_0000_2316, biz_0000_2317, biz_0000_2318, biz_0000_2319, biz_0000_2320, biz_0000_2321, biz_0000_2322, biz_0000_2323, biz_0000_2324, biz_0000_2325, biz_0000_2326, biz_0000_2327, biz_0000_2328, biz_0000_2329, biz_0000_2330, biz_0000_2331, biz_0000_2332, biz_0000_2333, biz_0000_2334, biz_0000_2335, biz_0000_2336, biz_0000_2337, biz_0000_2338, biz_0000_2339, biz_0000_2340, biz_0000_2341, biz_0000_2342, biz_0000_2343, biz_0000_2344, biz_0000_2345, biz_0000_2346, biz_0000_2347, biz_0000_2348, biz_0000_2349, biz_0000_2350, biz_0000_2351, biz_0000_2352, biz_0000_2353, biz_0000_2354, biz_0000_2355, biz_0000_2356, biz_0000_2357, biz_0000_2358, biz_0000_2359, biz_0000_2360, biz_0000_2361, biz_0000_2362, biz_0000_2363, biz_0000_2364, biz_0000_2365, biz_0000_2366, biz_0000_2367, biz_0000_2368, biz_0000_2369, biz_0000_2370, biz_0000_2371, biz_0000_2372, biz_0000_2373, biz_0000_2374, biz_0000_2375, biz_0000_2376, biz_0000_2377, biz_0000_2378, biz_0000_2379, biz_0000_2380, biz_0000_2381, biz_0000_2382, biz_0000_2383, biz_0000_2384, biz_0000_2385, biz_0000_2386, biz_0000_2387, biz_0000_2388, biz_0000_2389, biz_0000_2390, biz_0000_2391, biz_0000_2392, biz_0000_2393, biz_0000_2394, biz_0000_2395, biz_0000_2396, biz_0000_2397, biz_0000_2398, biz_0000_2399, biz_0000_2400, biz_0000_2401, biz_0000_2402, biz_0000_2403, biz_0000_2404, biz_0000_2405, biz_0000_2406, biz_0000_2407, biz_0000_2408, biz_0000_2409, biz_0000_2410, biz_0000_2411, biz_0000_2412, biz_0000_2413, biz_0000_2414, biz_0000_2415, biz_0000_2416, biz_0000_2417, biz_0000_2418, biz_0000_2419, biz_0000_2420, biz_0000_2421, biz_0000_2422, biz_0000_2423, biz_0000_2424, biz_0000_2425, biz_0000_2426, biz_0000_2427, biz_0000_2428, biz_0000_2429, biz_0000_2430, biz_0000_2431, biz_0000_2432, biz_0000_2433, biz_0000_2434, biz_0000_2435, biz_0000_2436, biz_0000_2437, biz_0000_2438, biz_0000_2439, biz_0000_2440, biz_0000_2441, biz_0000_2442, biz_0000_2443, biz_0000_2444, biz_0000_2445, biz_0000_2446, biz_0000_2447, biz_0000_2448, biz_0000_2449, biz_0000_2450, biz_0000_2451, biz_0000_2452, biz_0000_2453, biz_0000_2454, biz_0000_2455, biz_0000_2456, biz_0000_2457, biz_0000_2458, biz_0000_2459, biz_0000_2460, biz_0000_2461, biz_0000_2462, biz_0000_2463, biz_0000_2464, biz_0000_2465, biz_0000_2466, biz_0000_2467, biz_0000_2468, biz_0000_2469, biz_0000_2470, biz_0000_2471, biz_0000_2472, biz_0000_2473, biz_0000_2474, biz_0000_2475, biz_0000_2476, biz_0000_2477, biz_0000_2478, biz_0000_2479, biz_0000_2480, biz_0000_2481, biz_0000_2482, biz_0000_2483, biz_0000_2484, biz_0000_2485, biz_0000_2486, biz_0000_2487, biz_0000_2488, biz_0000_2489, biz_0000_2490, biz_0000_2491, biz_0000_2492, biz_0000_2493, biz_0000_2494, biz_0000_2495, biz_0000_2496, biz_0000_2497, biz_0000_2498, biz_0000_2499, biz_0000_2500, biz_0000_2501, biz_0000_2502, biz_0000_2503, biz_0000_2504, biz_0000_2505, biz_0000_2506, biz_0000_2507, biz_0000_2508, biz_0000_2509, biz_0000_2510, biz_0000_2511, biz_0000_2512, biz_0000_2513, biz_0000_2514, biz_0000_2515, biz_0000_2516, biz_0000_2517, biz_0000_2518, biz_0000_2519, biz_0000_2520, biz_0000_2521, biz_0000_2522, biz_0000_2523, biz_0000_2524, biz_0000_2525, biz_0000_2526, biz_0000_2527, biz_0000_2528, biz_0000_2529, biz_0000_2530, biz_0000_2531, biz_0000_2532, biz_0000_2533, biz_0000_2534, biz_0000_2535, biz_0000_2536, biz_0000_2537, biz_0000_2538, biz_0000_2539, biz_0000_2540, biz_0000_2541, biz_0000_2542, biz_0000_2543, biz_0000_2544, biz_0000_2545, biz_0000_2546, biz_0000_2547, biz_0000_2548, biz_0000_2549, biz_0000_2550, biz_0000_2551, biz_0000_2552, biz_0000_2553, biz_0000_2554, biz_0000_2555, biz_0000_2556, biz_0000_2557, biz_0000_2558, biz_0000_2559, biz_0000_2560, biz_0000_2561, biz_0000_2562, biz_0000_2563, biz_0000_2564, biz_0000_2565, biz_0000_2566, biz_0000_2567, biz_0000_2568, biz_0000_2569, biz_0000_2570, biz_0000_2571, biz_0000_2572, biz_0000_2573, biz_0000_2574, biz_0000_2575, biz_0000_2576, biz_0000_2577, biz_0000_2578, biz_0000_2579, biz_0000_2580, biz_0000_2581, biz_0000_2582, biz_0000_2583, biz_0000_2584, biz_0000_2585, biz_0000_2586, biz_0000_2587, biz_0000_2588, biz_0000_2589, biz_0000_2590, biz_0000_2591, biz_0000_2592, biz_0000_2593, biz_0000_2594, biz_0000_2595, biz_0000_2596, biz_0000_2597, biz_0000_2598, biz_0000_2599, biz_0000_2600, biz_0000_2601, biz_0000_2602, biz_0000_2603, biz_0000_2604, biz_0000_2605, biz_0000_2606, biz_0000_2607, biz_0000_2608, biz_0000_2609, biz_0000_2610, biz_0000_2611, biz_0000_2612, biz_0000_2613, biz_0000_2614, biz_0000_2615, biz_0000_2616, biz_0000_2617, biz_0000_2618, biz_0000_2619, biz_0000_2620, biz_0000_2621, biz_0000_2622, biz_0000_2623, biz_0000_2624, biz_0000_2625, biz_0000_2626, biz_0000_2627, biz_0000_2628, biz_0000_2629, biz_0000_2630, biz_0000_2631, biz_0000_2632, biz_0000_2633, biz_0000_2634, biz_0000_2635, biz_0000_2636, biz_0000_2637, biz_0000_2638, biz_0000_2639, biz_0000_2640, biz_0000_2641, biz_0000_2642, biz_0000_2643, biz_0000_2644, biz_0000_2645, biz_0000_2646, biz_0000_2647, biz_0000_2648, biz_0000_2649, biz_0000_2650, biz_0000_2651, biz_0000_2652, biz_0000_2653, biz_0000_2654, biz_0000_2655, biz_0000_2656, biz_0000_2657, biz_0000_2658, biz_0000_2659, biz_0000_2660, biz_0000_2661, biz_0000_2662, biz_0000_2663, biz_0000_2664, biz_0000_2665, biz_0000_2666, biz_0000_2667, biz_0000_2668, biz_0000_2669, biz_0000_2670, biz_0000_2671, biz_0000_2672, biz_0000_2673, biz_0000_2674, biz_0000_2675, biz_0000_2676, biz_0000_2677, biz_0000_2678, biz_0000_2679, biz_0000_2680, biz_0000_2681, biz_0000_2682, biz_0000_2683, biz_0000_2684, biz_0000_2685, biz_0000_2686, biz_0000_2687, biz_0000_2688, biz_0000_2689, biz_0000_2690, biz_0000_2691, biz_0000_2692, biz_0000_2693, biz_0000_2694, biz_0000_2695, biz_0000_2696, biz_0000_2697, biz_0000_2698, biz_0000_2699, biz_0000_2700, biz_0000_2701, biz_0000_2702, biz_0000_2703, biz_0000_2704, biz_0000_2705, biz_0000_2706, biz_0000_2707, biz_0000_2708, biz_0000_2709, biz_0000_2710, biz_0000_2711, biz_0000_2712, biz_0000_2713, biz_0000_2714, biz_0000_2715, biz_0000_2716, biz_0000_2717, biz_0000_2718, biz_0000_2719, biz_0000_2720, biz_0000_2721, biz_0000_2722, biz_0000_2723, biz_0000_2724, biz_0000_2725, biz_0000_2726, biz_0000_2727, biz_0000_2728, biz_0000_2729, biz_0000_2730, biz_0000_2731, biz_0000_2732, biz_0000_2733, biz_0000_2734, biz_0000_2735, biz_0000_2736, biz_0000_2737, biz_0000_2738, biz_0000_2739, biz_0000_2740, biz_0000_2741, biz_0000_2742, biz_0000_2743, biz_0000_2744, biz_0000_2745, biz_0000_2746, biz_0000_2747, biz_0000_2748, biz_0000_2749, biz_0000_2750, biz_0000_2751, biz_0000_2752, biz_0000_2753, biz_0000_2754, biz_0000_2755, biz_0000_2756, biz_0000_2757, biz_0000_2758, biz_0000_2759, biz_0000_2760, biz_0000_2761, biz_0000_2762, biz_0000_2763, biz_0000_2764, biz_0000_2765, biz_0000_2766, biz_0000_2767, biz_0000_2768, biz_0000_2769, biz_0000_2770, biz_0000_2771, biz_0000_2772, biz_0000_2773, biz_0000_2774, biz_0000_2775, biz_0000_2776, biz_0000_2777, biz_0000_2778, biz_0000_2779, biz_0000_2780, biz_0000_2781, biz_0000_2782, biz_0000_2783, biz_0000_2784, biz_0000_2785, biz_0000_2786, biz_0000_2787, biz_0000_2788, biz_0000_2789, biz_0000_2790, biz_0000_2791, biz_0000_2792, biz_0000_2793, biz_0000_2794, biz_0000_2795, biz_0000_2796, biz_0000_2797, biz_0000_2798, biz_0000_2799, biz_0000_2800, biz_0000_2801, biz_0000_2802, biz_0000_2803, biz_0000_2804, biz_0000_2805, biz_0000_2806, biz_0000_2807, biz_0000_2808, biz_0000_2809, biz_0000_2810, biz_0000_2811, biz_0000_2812, biz_0000_2813, biz_0000_2814, biz_0000_2815, biz_0000_2816, biz_0000_2817, biz_0000_2818, biz_0000_2819, biz_0000_2820, biz_0000_2821, biz_0000_2822, biz_0000_2823, biz_0000_2824, biz_0000_2825, biz_0000_2826, biz_0000_2827, biz_0000_2828, biz_0000_2829, biz_0000_2830, biz_0000_2831, biz_0000_2832, biz_0000_2833, biz_0000_2834, biz_0000_2835, biz_0000_2836, biz_0000_2837, biz_0000_2838, biz_0000_2839, biz_0000_2840, biz_0000_2841, biz_0000_2842, biz_0000_2843, biz_0000_2844, biz_0000_2845, biz_0000_2846, biz_0000_2847, biz_0000_2848, biz_0000_2849, biz_0000_2850, biz_0000_2851, biz_0000_2852, biz_0000_2853, biz_0000_2854, biz_0000_2855, biz_0000_2856, biz_0000_2857, biz_0000_2858, biz_0000_2859, biz_0000_2860, biz_0000_2861, biz_0000_2862, biz_0000_2863, biz_0000_2864, biz_0000_2865, biz_0000_2866, biz_0000_2867, biz_0000_2868, biz_0000_2869, biz_0000_2870, biz_0000_2871, biz_0000_2872, biz_0000_2873, biz_0000_2874, biz_0000_2875, biz_0000_2876, biz_0000_2877, biz_0000_2878, biz_0000_2879, biz_0000_2880, biz_0000_2881, biz_0000_2882, biz_0000_2883, biz_0000_2884, biz_0000_2885, biz_0000_2886, biz_0000_2887, biz_0000_2888, biz_0000_2889, biz_0000_2890, biz_0000_2891, biz_0000_2892, biz_0000_2893, biz_0000_2894, biz_0000_2895, biz_0000_2896, biz_0000_2897, biz_0000_2898, biz_0000_2899, biz_0000_2900, biz_0000_2901, biz_0000_2902, biz_0000_2903, biz_0000_2904, biz_0000_2905, biz_0000_2906, biz_0000_2907, biz_0000_2908, biz_0000_2909, biz_0000_2910, biz_0000_2911, biz_0000_2912, biz_0000_2913, biz_0000_2914, biz_0000_2915, biz_0000_2916, biz_0000_2917, biz_0000_2918, biz_0000_2919, biz_0000_2920, biz_0000_2921, biz_0000_2922, biz_0000_2923, biz_0000_2924, biz_0000_2925, biz_0000_2926, biz_0000_2927, biz_0000_2928, biz_0000_2929, biz_0000_2930, biz_0000_2931, biz_0000_2932, biz_0000_2933, biz_0000_2934, biz_0000_2935, biz_0000_2936, biz_0000_2937, biz_0000_2938, biz_0000_2939, biz_0000_2940, biz_0000_2941, biz_0000_2942, biz_0000_2943, biz_0000_2944, biz_0000_2945, biz_0000_2946, biz_0000_2947, biz_0000_2948, biz_0000_2949, biz_0000_2950, biz_0000_2951, biz_0000_2952, biz_0000_2953, biz_0000_2954, biz_0000_2955, biz_0000_2956, biz_0000_2957, biz_0000_2958, biz_0000_2959, biz_0000_2960, biz_0000_2961, biz_0000_2962, biz_0000_2963, biz_0000_2964, biz_0000_2965, biz_0000_2966, biz_0000_2967, biz_0000_2968, biz_0000_2969, biz_0000_2970, biz_0000_2971, biz_0000_2972, biz_0000_2973, biz_0000_2974, biz_0000_2975, biz_0000_2976, biz_0000_2977, biz_0000_2978, biz_0000_2979, biz_0000_2980, biz_0000_2981, biz_0000_2982, biz_0000_2983, biz_0000_2984, biz_0000_2985, biz_0000_2986, biz_0000_2987, biz_0000_2988, biz_0000_2989, biz_0000_2990, biz_0000_2991, biz_0000_2992, biz_0000_2993, biz_0000_2994, biz_0000_2995, biz_0000_2996, biz_0000_2997, biz_0000_2998, biz_0000_2999, biz_0000_3000, biz_0000_3001, biz_0000_3002, biz_0000_3003, biz_0000_3004, biz_0000_3005, biz_0000_3006, biz_0000_3007, biz_0000_3008, biz_0000_3009, biz_0000_3010, biz_0000_3011, biz_0000_3012, biz_0000_3013, biz_0000_3014, biz_0000_3015, biz_0000_3016, biz_0000_3017, biz_0000_3018, biz_0000_3019, biz_0000_3020, biz_0000_3021, biz_0000_3022, biz_0000_3023, biz_0000_3024, biz_0000_3025, biz_0000_3026, biz_0000_3027, biz_0000_3028, biz_0000_3029, biz_0000_3030, biz_0000_3031, biz_0000_3032, biz_0000_3033, biz_0000_3034, biz_0000_3035, biz_0000_3036, biz_0000_3037, biz_0000_3038, biz_0000_3039, biz_0000_3040, biz_0000_3041, biz_0000_3042, biz_0000_3043, biz_0000_3044, biz_0000_3045, biz_0000_3046, biz_0000_3047, biz_0000_3048, biz_0000_3049, biz_0000_3050, biz_0000_3051, biz_0000_3052, biz_0000_3053, biz_0000_3054, biz_0000_3055, biz_0000_3056, biz_0000_3057, biz_0000_3058, biz_0000_3059, biz_0000_3060, biz_0000_3061, biz_0000_3062, biz_0000_3063, biz_0000_3064, biz_0000_3065, biz_0000_3066, biz_0000_3067, biz_0000_3068, biz_0000_3069, biz_0000_3070, biz_0000_3071, biz_0000_3072, biz_0000_3073, biz_0000_3074, biz_0000_3075, biz_0000_3076, biz_0000_3077, biz_0000_3078, biz_0000_3079, biz_0000_3080, biz_0000_3081, biz_0000_3082, biz_0000_3083, biz_0000_3084, biz_0000_3085, biz_0000_3086, biz_0000_3087, biz_0000_3088, biz_0000_3089, biz_0000_3090, biz_0000_3091, biz_0000_3092, biz_0000_3093, biz_0000_3094, biz_0000_3095, biz_0000_3096, biz_0000_3097, biz_0000_3098, biz_0000_3099, biz_0000_3100, biz_0000_3101, biz_0000_3102, biz_0000_3103, biz_0000_3104, biz_0000_3105, biz_0000_3106, biz_0000_3107, biz_0000_3108, biz_0000_3109, biz_0000_3110, biz_0000_3111, biz_0000_3112, biz_0000_3113, biz_0000_3114, biz_0000_3115, biz_0000_3116, biz_0000_3117, biz_0000_3118, biz_0000_3119, biz_0000_3120, biz_0000_3121, biz_0000_3122, biz_0000_3123, biz_0000_3124, biz_0000_3125, biz_0000_3126, biz_0000_3127, biz_0000_3128, biz_0000_3129, biz_0000_3130, biz_0000_3131, biz_0000_3132, biz_0000_3133, biz_0000_3134, biz_0000_3135, biz_0000_3136, biz_0000_3137, biz_0000_3138, biz_0000_3139, biz_0000_3140, biz_0000_3141, biz_0000_3142, biz_0000_3143, biz_0000_3144, biz_0000_3145, biz_0000_3146, biz_0000_3147, biz_0000_3148, biz_0000_3149, biz_0000_3150, biz_0000_3151, biz_0000_3152, biz_0000_3153, biz_0000_3154, biz_0000_3155, biz_0000_3156, biz_0000_3157, biz_0000_3158, biz_0000_3159, biz_0000_3160, biz_0000_3161, biz_0000_3162, biz_0000_3163, biz_0000_3164, biz_0000_3165, biz_0000_3166, biz_0000_3167, biz_0000_3168, biz_0000_3169, biz_0000_3170, biz_0000_3171, biz_0000_3172, biz_0000_3173, biz_0000_3174, biz_0000_3175, biz_0000_3176, biz_0000_3177, biz_0000_3178, biz_0000_3179, biz_0000_3180, biz_0000_3181, biz_0000_3182, biz_0000_3183, biz_0000_3184, biz_0000_3185, biz_0000_3186, biz_0000_3187, biz_0000_3188, biz_0000_3189, biz_0000_3190, biz_0000_3191, biz_0000_3192, biz_0000_3193, biz_0000_3194, biz_0000_3195, biz_0000_3196, biz_0000_3197, biz_0000_3198, biz_0000_3199, biz_0000_3200, biz_0000_3201, biz_0000_3202, biz_0000_3203, biz_0000_3204, biz_0000_3205, biz_0000_3206, biz_0000_3207, biz_0000_3208, biz_0000_3209, biz_0000_3210, biz_0000_3211, biz_0000_3212, biz_0000_3213, biz_0000_3214, biz_0000_3215, biz_0000_3216, biz_0000_3217, biz_0000_3218, biz_0000_3219, biz_0000_3220, biz_0000_3221, biz_0000_3222, biz_0000_3223, biz_0000_3224, biz_0000_3225, biz_0000_3226, biz_0000_3227, biz_0000_3228, biz_0000_3229, biz_0000_3230, biz_0000_3231, biz_0000_3232, biz_0000_3233, biz_0000_3234, biz_0000_3235, biz_0000_3236, biz_0000_3237, biz_0000_3238, biz_0000_3239, biz_0000_3240, biz_0000_3241, biz_0000_3242, biz_0000_3243, biz_0000_3244, biz_0000_3245, biz_0000_3246, biz_0000_3247, biz_0000_3248, biz_0000_3249, biz_0000_3250, biz_0000_3251, biz_0000_3252, biz_0000_3253, biz_0000_3254, biz_0000_3255, biz_0000_3256, biz_0000_3257, biz_0000_3258, biz_0000_3259, biz_0000_3260, biz_0000_3261, biz_0000_3262, biz_0000_3263, biz_0000_3264, biz_0000_3265, biz_0000_3266, biz_0000_3267, biz_0000_3268, biz_0000_3269, biz_0000_3270, biz_0000_3271, biz_0000_3272, biz_0000_3273, biz_0000_3274, biz_0000_3275, biz_0000_3276, biz_0000_3277, biz_0000_3278, biz_0000_3279, biz_0000_3280, biz_0000_3281, biz_0000_3282, biz_0000_3283, biz_0000_3284, biz_0000_3285, biz_0000_3286, biz_0000_3287, biz_0000_3288, biz_0000_3289, biz_0000_3290, biz_0000_3291, biz_0000_3292, biz_0000_3293, biz_0000_3294, biz_0000_3295, biz_0000_3296, biz_0000_3297, biz_0000_3298, biz_0000_3299, biz_0000_3300, biz_0000_3301, biz_0000_3302, biz_0000_3303, biz_0000_3304, biz_0000_3305, biz_0000_3306, biz_0000_3307, biz_0000_3308, biz_0000_3309, biz_0000_3310, biz_0000_3311, biz_0000_3312, biz_0000_3313, biz_0000_3314, biz_0000_3315, biz_0000_3316, biz_0000_3317, biz_0000_3318, biz_0000_3319, biz_0000_3320, biz_0000_3321, biz_0000_3322, biz_0000_3323, biz_0000_3324, biz_0000_3325, biz_0000_3326, biz_0000_3327, biz_0000_3328, biz_0000_3329, biz_0000_3330, biz_0000_3331, biz_0000_3332, biz_0000_3333, biz_0000_3334, biz_0000_3335, biz_0000_3336, biz_0000_3337, biz_0000_3338, biz_0000_3339, biz_0000_3340, biz_0000_3341, biz_0000_3342, biz_0000_3343, biz_0000_3344, biz_0000_3345, biz_0000_3346, biz_0000_3347, biz_0000_3348, biz_0000_3349, biz_0000_3350, biz_0000_3351, biz_0000_3352, biz_0000_3353, biz_0000_3354, biz_0000_3355, biz_0000_3356, biz_0000_3357, biz_0000_3358, biz_0000_3359, biz_0000_3360, biz_0000_3361, biz_0000_3362, biz_0000_3363, biz_0000_3364, biz_0000_3365, biz_0000_3366, biz_0000_3367, biz_0000_3368, biz_0000_3369, biz_0000_3370, biz_0000_3371, biz_0000_3372, biz_0000_3373, biz_0000_3374, biz_0000_3375, biz_0000_3376, biz_0000_3377, biz_0000_3378, biz_0000_3379, biz_0000_3380, biz_0000_3381, biz_0000_3382, biz_0000_3383, biz_0000_3384, biz_0000_3385, biz_0000_3386, biz_0000_3387, biz_0000_3388, biz_0000_3389, biz_0000_3390, biz_0000_3391, biz_0000_3392, biz_0000_3393, biz_0000_3394, biz_0000_3395, biz_0000_3396, biz_0000_3397, biz_0000_3398, biz_0000_3399, biz_0000_3400, biz_0000_3401, biz_0000_3402, biz_0000_3403, biz_0000_3404, biz_0000_3405, biz_0000_3406, biz_0000_3407, biz_0000_3408, biz_0000_3409, biz_0000_3410, biz_0000_3411, biz_0000_3412, biz_0000_3413, biz_0000_3414, biz_0000_3415, biz_0000_3416, biz_0000_3417, biz_0000_3418, biz_0000_3419, biz_0000_3420, biz_0000_3421, biz_0000_3422, biz_0000_3423, biz_0000_3424, biz_0000_3425, biz_0000_3426, biz_0000_3427, biz_0000_3428, biz_0000_3429, biz_0000_3430, biz_0000_3431, biz_0000_3432, biz_0000_3433, biz_0000_3434, biz_0000_3435, biz_0000_3436, biz_0000_3437, biz_0000_3438, biz_0000_3439, biz_0000_3440, biz_0000_3441, biz_0000_3442, biz_0000_3443, biz_0000_3444, biz_0000_3445, biz_0000_3446, biz_0000_3447, biz_0000_3448, biz_0000_3449, biz_0000_3450, biz_0000_3451, biz_0000_3452, biz_0000_3453, biz_0000_3454, biz_0000_3455, biz_0000_3456, biz_0000_3457, biz_0000_3458, biz_0000_3459, biz_0000_3460, biz_0000_3461, biz_0000_3462, biz_0000_3463, biz_0000_3464, biz_0000_3465, biz_0000_3466, biz_0000_3467, biz_0000_3468, biz_0000_3469, biz_0000_3470, biz_0000_3471, biz_0000_3472, biz_0000_3473, biz_0000_3474, biz_0000_3475, biz_0000_3476, biz_0000_3477, biz_0000_3478, biz_0000_3479, biz_0000_3480, biz_0000_3481, biz_0000_3482, biz_0000_3483, biz_0000_3484, biz_0000_3485, biz_0000_3486, biz_0000_3487, biz_0000_3488, biz_0000_3489, biz_0000_3490, biz_0000_3491, biz_0000_3492, biz_0000_3493, biz_0000_3494, biz_0000_3495, biz_0000_3496, biz_0000_3497, biz_0000_3498, biz_0000_3499, biz_0000_3500, biz_0000_3501, biz_0000_3502, biz_0000_3503, biz_0000_3504, biz_0000_3505, biz_0000_3506, biz_0000_3507, biz_0000_3508, biz_0000_3509, biz_0000_3510, biz_0000_3511, biz_0000_3512, biz_0000_3513, biz_0000_3514, biz_0000_3515, biz_0000_3516, biz_0000_3517, biz_0000_3518, biz_0000_3519, biz_0000_3520, biz_0000_3521, biz_0000_3522, biz_0000_3523, biz_0000_3524, biz_0000_3525, biz_0000_3526, biz_0000_3527, biz_0000_3528, biz_0000_3529, biz_0000_3530, biz_0000_3531, biz_0000_3532, biz_0000_3533, biz_0000_3534, biz_0000_3535, biz_0000_3536, biz_0000_3537, biz_0000_3538, biz_0000_3539, biz_0000_3540, biz_0000_3541, biz_0000_3542, biz_0000_3543, biz_0000_3544, biz_0000_3545, biz_0000_3546, biz_0000_3547, biz_0000_3548, biz_0000_3549, biz_0000_3550, biz_0000_3551, biz_0000_3552, biz_0000_3553, biz_0000_3554, biz_0000_3555, biz_0000_3556, biz_0000_3557, biz_0000_3558, biz_0000_3559, biz_0000_3560, biz_0000_3561, biz_0000_3562, biz_0000_3563, biz_0000_3564, biz_0000_3565, biz_0000_3566, biz_0000_3567, biz_0000_3568, biz_0000_3569, biz_0000_3570, biz_0000_3571, biz_0000_3572, biz_0000_3573, biz_0000_3574, biz_0000_3575, biz_0000_3576, biz_0000_3577, biz_0000_3578, biz_0000_3579, biz_0000_3580, biz_0000_3581, biz_0000_3582, biz_0000_3583, biz_0000_3584, biz_0000_3585, biz_0000_3586, biz_0000_3587, biz_0000_3588, biz_0000_3589, biz_0000_3590, biz_0000_3591, biz_0000_3592, biz_0000_3593, biz_0000_3594, biz_0000_3595, biz_0000_3596, biz_0000_3597, biz_0000_3598, biz_0000_3599, biz_0000_3600, biz_0000_3601, biz_0000_3602, biz_0000_3603, biz_0000_3604, biz_0000_3605, biz_0000_3606, biz_0000_3607, biz_0000_3608, biz_0000_3609, biz_0000_3610, biz_0000_3611, biz_0000_3612, biz_0000_3613, biz_0000_3614, biz_0000_3615, biz_0000_3616, biz_0000_3617, biz_0000_3618, biz_0000_3619, biz_0000_3620, biz_0000_3621, biz_0000_3622, biz_0000_3623, biz_0000_3624, biz_0000_3625, biz_0000_3626, biz_0000_3627, biz_0000_3628, biz_0000_3629, biz_0000_3630, biz_0000_3631, biz_0000_3632, biz_0000_3633, biz_0000_3634, biz_0000_3635, biz_0000_3636, biz_0000_3637, biz_0000_3638, biz_0000_3639, biz_0000_3640, biz_0000_3641, biz_0000_3642, biz_0000_3643, biz_0000_3644, biz_0000_3645, biz_0000_3646, biz_0000_3647, biz_0000_3648, biz_0000_3649, biz_0000_3650, biz_0000_3651, biz_0000_3652, biz_0000_3653, biz_0000_3654, biz_0000_3655, biz_0000_3656, biz_0000_3657, biz_0000_3658, biz_0000_3659, biz_0000_3660, biz_0000_3661, biz_0000_3662, biz_0000_3663, biz_0000_3664, biz_0000_3665, biz_0000_3666, biz_0000_3667, biz_0000_3668, biz_0000_3669, biz_0000_3670, biz_0000_3671, biz_0000_3672, biz_0000_3673, biz_0000_3674, biz_0000_3675, biz_0000_3676, biz_0000_3677, biz_0000_3678, biz_0000_3679, biz_0000_3680, biz_0000_3681, biz_0000_3682, biz_0000_3683, biz_0000_3684, biz_0000_3685, biz_0000_3686, biz_0000_3687, biz_0000_3688, biz_0000_3689, biz_0000_3690, biz_0000_3691, biz_0000_3692, biz_0000_3693, biz_0000_3694, biz_0000_3695, biz_0000_3696, biz_0000_3697, biz_0000_3698, biz_0000_3699, biz_0000_3700, biz_0000_3701, biz_0000_3702, biz_0000_3703, biz_0000_3704, biz_0000_3705, biz_0000_3706, biz_0000_3707, biz_0000_3708, biz_0000_3709, biz_0000_3710, biz_0000_3711, biz_0000_3712, biz_0000_3713, biz_0000_3714, biz_0000_3715, biz_0000_3716, biz_0000_3717, biz_0000_3718, biz_0000_3719, biz_0000_3720, biz_0000_3721, biz_0000_3722, biz_0000_3723, biz_0000_3724, biz_0000_3725, biz_0000_3726, biz_0000_3727, biz_0000_3728, biz_0000_3729, biz_0000_3730, biz_0000_3731, biz_0000_3732, biz_0000_3733, biz_0000_3734, biz_0000_3735, biz_0000_3736, biz_0000_3737, biz_0000_3738, biz_0000_3739, biz_0000_3740, biz_0000_3741, biz_0000_3742, biz_0000_3743, biz_0000_3744, biz_0000_3745, biz_0000_3746, biz_0000_3747, biz_0000_3748, biz_0000_3749, biz_0000_3750, biz_0000_3751, biz_0000_3752, biz_0000_3753, biz_0000_3754, biz_0000_3755, biz_0000_3756, biz_0000_3757, biz_0000_3758, biz_0000_3759, biz_0000_3760, biz_0000_3761, biz_0000_3762, biz_0000_3763, biz_0000_3764, biz_0000_3765, biz_0000_3766, biz_0000_3767, biz_0000_3768, biz_0000_3769, biz_0000_3770, biz_0000_3771, biz_0000_3772, biz_0000_3773, biz_0000_3774, biz_0000_3775, biz_0000_3776, biz_0000_3777, biz_0000_3778, biz_0000_3779, biz_0000_3780, biz_0000_3781, biz_0000_3782, biz_0000_3783, biz_0000_3784, biz_0000_3785, biz_0000_3786, biz_0000_3787, biz_0000_3788, biz_0000_3789, biz_0000_3790, biz_0000_3791, biz_0000_3792, biz_0000_3793, biz_0000_3794, biz_0000_3795, biz_0000_3796, biz_0000_3797, biz_0000_3798, biz_0000_3799, biz_0000_3800, biz_0000_3801, biz_0000_3802, biz_0000_3803, biz_0000_3804, biz_0000_3805, biz_0000_3806, biz_0000_3807, biz_0000_3808, biz_0000_3809, biz_0000_3810, biz_0000_3811, biz_0000_3812, biz_0000_3813, biz_0000_3814, biz_0000_3815, biz_0000_3816, biz_0000_3817, biz_0000_3818, biz_0000_3819, biz_0000_3820, biz_0000_3821, biz_0000_3822, biz_0000_3823, biz_0000_3824, biz_0000_3825, biz_0000_3826, biz_0000_3827, biz_0000_3828, biz_0000_3829, biz_0000_3830, biz_0000_3831, biz_0000_3832, biz_0000_3833, biz_0000_3834, biz_0000_3835, biz_0000_3836, biz_0000_3837, biz_0000_3838, biz_0000_3839, biz_0000_3840, biz_0000_3841, biz_0000_3842, biz_0000_3843, biz_0000_3844, biz_0000_3845, biz_0000_3846, biz_0000_3847, biz_0000_3848, biz_0000_3849, biz_0000_3850, biz_0000_3851, biz_0000_3852, biz_0000_3853, biz_0000_3854, biz_0000_3855, biz_0000_3856, biz_0000_3857, biz_0000_3858, biz_0000_3859, biz_0000_3860, biz_0000_3861, biz_0000_3862, biz_0000_3863, biz_0000_3864, biz_0000_3865, biz_0000_3866, biz_0000_3867, biz_0000_3868, biz_0000_3869];
+  return [biz_0000_00, biz_0000_01, biz_0000_02, biz_0000_03, biz_0000_04, biz_0000_05, biz_0000_06, biz_0000_07, biz_0000_08, biz_0000_09, biz_0000_10, biz_0000_11, biz_0000_12, biz_0000_13, biz_0000_14, biz_0000_15, biz_0000_16, biz_0000_17, biz_0000_18, biz_0000_19, biz_0000_20, biz_0000_21, biz_0000_22, biz_0000_23, biz_0000_24, biz_0000_25, biz_0000_26, biz_0000_27, biz_0000_28, biz_0000_29, biz_0000_30, biz_0000_31, biz_0000_32, biz_0000_33, biz_0000_34, biz_0000_35, biz_0000_36, biz_0000_37, biz_0000_38, biz_0000_39, biz_0000_40, biz_0000_41, biz_0000_42, biz_0000_43, biz_0000_44, biz_0000_45, biz_0000_46, biz_0000_47, biz_0000_48, biz_0000_49, biz_0000_50, biz_0000_51, biz_0000_52, biz_0000_53, biz_0000_54, biz_0000_55, biz_0000_56, biz_0000_57, biz_0000_58, biz_0000_59, biz_0000_60, biz_0000_61, biz_0000_62, biz_0000_63, biz_0000_64, biz_0000_65, biz_0000_66, biz_0000_67, biz_0000_68, biz_0000_69, biz_0000_70, biz_0000_71, biz_0000_72, biz_0000_73, biz_0000_74, biz_0000_75, biz_0000_76, biz_0000_77, biz_0000_78, biz_0000_79, biz_0000_80, biz_0000_81, biz_0000_82, biz_0000_83, biz_0000_84, biz_0000_85, biz_0000_86, biz_0000_87, biz_0000_88, biz_0000_89, biz_0000_90, biz_0000_91, biz_0000_92, biz_0000_93, biz_0000_94, biz_0000_95, biz_0000_96, biz_0000_97, biz_0000_98, biz_0000_99, biz_0000_100, biz_0000_101, biz_0000_102, biz_0000_103, biz_0000_104, biz_0000_105, biz_0000_106, biz_0000_107, biz_0000_108, biz_0000_109, biz_0000_110, biz_0000_111, biz_0000_112, biz_0000_113, biz_0000_114, biz_0000_115, biz_0000_116, biz_0000_117, biz_0000_118, biz_0000_119, biz_0000_120, biz_0000_121, biz_0000_122, biz_0000_123, biz_0000_124, biz_0000_125, biz_0000_126, biz_0000_127, biz_0000_128, biz_0000_129, biz_0000_130, biz_0000_131, biz_0000_132, biz_0000_133, biz_0000_134, biz_0000_135, biz_0000_136, biz_0000_137, biz_0000_138, biz_0000_139, biz_0000_140, biz_0000_141, biz_0000_142, biz_0000_143, biz_0000_144, biz_0000_145, biz_0000_146, biz_0000_147, biz_0000_148, biz_0000_149, biz_0000_150, biz_0000_151, biz_0000_152, biz_0000_153, biz_0000_154, biz_0000_155, biz_0000_156, biz_0000_157, biz_0000_158, biz_0000_159, biz_0000_160, biz_0000_161, biz_0000_162, biz_0000_163, biz_0000_164, biz_0000_165, biz_0000_166, biz_0000_167, biz_0000_168, biz_0000_169, biz_0000_170, biz_0000_171, biz_0000_172, biz_0000_173, biz_0000_174, biz_0000_175, biz_0000_176, biz_0000_177, biz_0000_178, biz_0000_179, biz_0000_180, biz_0000_181, biz_0000_182, biz_0000_183, biz_0000_184, biz_0000_185, biz_0000_186, biz_0000_187, biz_0000_188, biz_0000_189, biz_0000_190, biz_0000_191, biz_0000_192, biz_0000_193, biz_0000_194, biz_0000_195, biz_0000_196, biz_0000_197, biz_0000_198, biz_0000_199, biz_0000_200, biz_0000_201, biz_0000_202, biz_0000_203, biz_0000_204, biz_0000_205, biz_0000_206, biz_0000_207, biz_0000_208, biz_0000_209, biz_0000_210, biz_0000_211, biz_0000_212, biz_0000_213, biz_0000_214, biz_0000_215, biz_0000_216, biz_0000_217, biz_0000_218, biz_0000_219, biz_0000_220, biz_0000_221, biz_0000_222, biz_0000_223, biz_0000_224, biz_0000_225, biz_0000_226, biz_0000_227, biz_0000_228, biz_0000_229, biz_0000_230, biz_0000_231, biz_0000_232, biz_0000_233, biz_0000_234, biz_0000_235, biz_0000_236, biz_0000_237, biz_0000_238, biz_0000_239, biz_0000_240, biz_0000_241, biz_0000_242, biz_0000_243, biz_0000_244, biz_0000_245, biz_0000_246, biz_0000_247, biz_0000_248, biz_0000_249, biz_0000_250, biz_0000_251, biz_0000_252, biz_0000_253, biz_0000_254, biz_0000_255, biz_0000_256, biz_0000_257, biz_0000_258, biz_0000_259, biz_0000_260, biz_0000_261, biz_0000_262, biz_0000_263, biz_0000_264, biz_0000_265, biz_0000_266, biz_0000_267, biz_0000_268, biz_0000_269, biz_0000_270, biz_0000_271, biz_0000_272, biz_0000_273, biz_0000_274, biz_0000_275, biz_0000_276, biz_0000_277, biz_0000_278, biz_0000_279, biz_0000_280, biz_0000_281, biz_0000_282, biz_0000_283, biz_0000_284, biz_0000_285, biz_0000_286, biz_0000_287, biz_0000_288, biz_0000_289, biz_0000_290, biz_0000_291, biz_0000_292, biz_0000_293, biz_0000_294, biz_0000_295, biz_0000_296, biz_0000_297, biz_0000_298, biz_0000_299, biz_0000_300, biz_0000_301, biz_0000_302, biz_0000_303, biz_0000_304, biz_0000_305, biz_0000_306, biz_0000_307, biz_0000_308, biz_0000_309, biz_0000_310, biz_0000_311, biz_0000_312, biz_0000_313, biz_0000_314, biz_0000_315, biz_0000_316, biz_0000_317, biz_0000_318, biz_0000_319, biz_0000_320, biz_0000_321, biz_0000_322, biz_0000_323, biz_0000_324, biz_0000_325, biz_0000_326, biz_0000_327, biz_0000_328, biz_0000_329, biz_0000_330, biz_0000_331, biz_0000_332, biz_0000_333, biz_0000_334, biz_0000_335, biz_0000_336, biz_0000_337, biz_0000_338, biz_0000_339, biz_0000_340, biz_0000_341, biz_0000_342, biz_0000_343, biz_0000_344, biz_0000_345, biz_0000_346, biz_0000_347, biz_0000_348, biz_0000_349, biz_0000_350, biz_0000_351, biz_0000_352, biz_0000_353, biz_0000_354, biz_0000_355, biz_0000_356, biz_0000_357, biz_0000_358, biz_0000_359, biz_0000_360, biz_0000_361, biz_0000_362, biz_0000_363, biz_0000_364, biz_0000_365, biz_0000_366, biz_0000_367, biz_0000_368, biz_0000_369, biz_0000_370, biz_0000_371, biz_0000_372, biz_0000_373, biz_0000_374, biz_0000_375, biz_0000_376, biz_0000_377, biz_0000_378, biz_0000_379, biz_0000_380, biz_0000_381, biz_0000_382, biz_0000_383, biz_0000_384, biz_0000_385, biz_0000_386, biz_0000_387, biz_0000_388, biz_0000_389, biz_0000_390, biz_0000_391, biz_0000_392, biz_0000_393, biz_0000_394, biz_0000_395, biz_0000_396, biz_0000_397, biz_0000_398, biz_0000_399, biz_0000_400, biz_0000_401, biz_0000_402, biz_0000_403, biz_0000_404, biz_0000_405, biz_0000_406, biz_0000_407, biz_0000_408, biz_0000_409, biz_0000_410, biz_0000_411, biz_0000_412, biz_0000_413, biz_0000_414, biz_0000_415, biz_0000_416, biz_0000_417, biz_0000_418, biz_0000_419, biz_0000_420, biz_0000_421, biz_0000_422, biz_0000_423, biz_0000_424, biz_0000_425, biz_0000_426, biz_0000_427, biz_0000_428, biz_0000_429, biz_0000_430, biz_0000_431, biz_0000_432, biz_0000_433, biz_0000_434, biz_0000_435, biz_0000_436, biz_0000_437, biz_0000_438, biz_0000_439, biz_0000_440, biz_0000_441, biz_0000_442, biz_0000_443, biz_0000_444, biz_0000_445, biz_0000_446, biz_0000_447, biz_0000_448, biz_0000_449, biz_0000_450, biz_0000_451, biz_0000_452, biz_0000_453, biz_0000_454, biz_0000_455, biz_0000_456, biz_0000_457, biz_0000_458, biz_0000_459, biz_0000_460, biz_0000_461, biz_0000_462, biz_0000_463, biz_0000_464, biz_0000_465, biz_0000_466, biz_0000_467, biz_0000_468, biz_0000_469, biz_0000_470, biz_0000_471, biz_0000_472, biz_0000_473, biz_0000_474, biz_0000_475, biz_0000_476, biz_0000_477, biz_0000_478, biz_0000_479, biz_0000_480, biz_0000_481, biz_0000_482, biz_0000_483, biz_0000_484, biz_0000_485, biz_0000_486, biz_0000_487, biz_0000_488, biz_0000_489, biz_0000_490, biz_0000_491, biz_0000_492, biz_0000_493, biz_0000_494, biz_0000_495, biz_0000_496, biz_0000_497, biz_0000_498, biz_0000_499, biz_0000_500, biz_0000_501, biz_0000_502, biz_0000_503, biz_0000_504, biz_0000_505, biz_0000_506, biz_0000_507, biz_0000_508, biz_0000_509, biz_0000_510, biz_0000_511, biz_0000_512, biz_0000_513, biz_0000_514, biz_0000_515, biz_0000_516, biz_0000_517, biz_0000_518, biz_0000_519, biz_0000_520, biz_0000_521, biz_0000_522, biz_0000_523, biz_0000_524, biz_0000_525, biz_0000_526, biz_0000_527, biz_0000_528, biz_0000_529, biz_0000_530, biz_0000_531, biz_0000_532, biz_0000_533, biz_0000_534, biz_0000_535, biz_0000_536, biz_0000_537, biz_0000_538, biz_0000_539, biz_0000_540, biz_0000_541, biz_0000_542, biz_0000_543, biz_0000_544, biz_0000_545, biz_0000_546, biz_0000_547, biz_0000_548, biz_0000_549, biz_0000_550, biz_0000_551, biz_0000_552, biz_0000_553, biz_0000_554, biz_0000_555, biz_0000_556, biz_0000_557, biz_0000_558, biz_0000_559, biz_0000_560, biz_0000_561, biz_0000_562, biz_0000_563, biz_0000_564, biz_0000_565, biz_0000_566, biz_0000_567, biz_0000_568, biz_0000_569, biz_0000_570, biz_0000_571, biz_0000_572, biz_0000_573, biz_0000_574, biz_0000_575, biz_0000_576, biz_0000_577, biz_0000_578, biz_0000_579, biz_0000_580, biz_0000_581, biz_0000_582, biz_0000_583, biz_0000_584, biz_0000_585, biz_0000_586, biz_0000_587, biz_0000_588, biz_0000_589, biz_0000_590, biz_0000_591, biz_0000_592, biz_0000_593, biz_0000_594, biz_0000_595, biz_0000_596, biz_0000_597, biz_0000_598, biz_0000_599, biz_0000_600, biz_0000_601, biz_0000_602, biz_0000_603, biz_0000_604, biz_0000_605, biz_0000_606, biz_0000_607, biz_0000_608, biz_0000_609, biz_0000_610, biz_0000_611, biz_0000_612, biz_0000_613, biz_0000_614, biz_0000_615, biz_0000_616, biz_0000_617, biz_0000_618, biz_0000_619, biz_0000_620, biz_0000_621, biz_0000_622, biz_0000_623, biz_0000_624, biz_0000_625, biz_0000_626, biz_0000_627, biz_0000_628, biz_0000_629, biz_0000_630, biz_0000_631, biz_0000_632, biz_0000_633, biz_0000_634, biz_0000_635, biz_0000_636, biz_0000_637, biz_0000_638, biz_0000_639, biz_0000_640, biz_0000_641, biz_0000_642, biz_0000_643, biz_0000_644, biz_0000_645, biz_0000_646, biz_0000_647, biz_0000_648, biz_0000_649, biz_0000_650, biz_0000_651, biz_0000_652, biz_0000_653, biz_0000_654, biz_0000_655, biz_0000_656, biz_0000_657, biz_0000_658, biz_0000_659, biz_0000_660, biz_0000_661, biz_0000_662, biz_0000_663, biz_0000_664, biz_0000_665, biz_0000_666, biz_0000_667, biz_0000_668, biz_0000_669, biz_0000_670, biz_0000_671, biz_0000_672, biz_0000_673, biz_0000_674, biz_0000_675, biz_0000_676, biz_0000_677, biz_0000_678, biz_0000_679, biz_0000_680, biz_0000_681, biz_0000_682, biz_0000_683, biz_0000_684, biz_0000_685, biz_0000_686, biz_0000_687, biz_0000_688, biz_0000_689, biz_0000_690, biz_0000_691, biz_0000_692, biz_0000_693, biz_0000_694, biz_0000_695, biz_0000_696, biz_0000_697, biz_0000_698, biz_0000_699, biz_0000_700, biz_0000_701, biz_0000_702, biz_0000_703, biz_0000_704, biz_0000_705, biz_0000_706, biz_0000_707, biz_0000_708, biz_0000_709, biz_0000_710, biz_0000_711, biz_0000_712, biz_0000_713, biz_0000_714, biz_0000_715, biz_0000_716, biz_0000_717, biz_0000_718, biz_0000_719, biz_0000_720, biz_0000_721, biz_0000_722, biz_0000_723, biz_0000_724, biz_0000_725, biz_0000_726, biz_0000_727, biz_0000_728, biz_0000_729, biz_0000_730, biz_0000_731, biz_0000_732, biz_0000_733, biz_0000_734, biz_0000_735, biz_0000_736, biz_0000_737, biz_0000_738, biz_0000_739, biz_0000_740, biz_0000_741, biz_0000_742, biz_0000_743, biz_0000_744, biz_0000_745, biz_0000_746, biz_0000_747, biz_0000_748, biz_0000_749, biz_0000_750, biz_0000_751, biz_0000_752, biz_0000_753, biz_0000_754, biz_0000_755, biz_0000_756, biz_0000_757, biz_0000_758, biz_0000_759, biz_0000_760, biz_0000_761, biz_0000_762, biz_0000_763, biz_0000_764, biz_0000_765, biz_0000_766, biz_0000_767, biz_0000_768, biz_0000_769, biz_0000_770, biz_0000_771, biz_0000_772, biz_0000_773, biz_0000_774, biz_0000_775, biz_0000_776, biz_0000_777, biz_0000_778, biz_0000_779, biz_0000_780, biz_0000_781, biz_0000_782, biz_0000_783, biz_0000_784, biz_0000_785, biz_0000_786, biz_0000_787, biz_0000_788, biz_0000_789, biz_0000_790, biz_0000_791, biz_0000_792, biz_0000_793, biz_0000_794, biz_0000_795, biz_0000_796, biz_0000_797, biz_0000_798, biz_0000_799, biz_0000_800, biz_0000_801, biz_0000_802, biz_0000_803, biz_0000_804, biz_0000_805, biz_0000_806, biz_0000_807, biz_0000_808, biz_0000_809, biz_0000_810, biz_0000_811, biz_0000_812, biz_0000_813, biz_0000_814, biz_0000_815, biz_0000_816, biz_0000_817, biz_0000_818, biz_0000_819, biz_0000_820, biz_0000_821, biz_0000_822, biz_0000_823, biz_0000_824, biz_0000_825, biz_0000_826, biz_0000_827, biz_0000_828, biz_0000_829, biz_0000_830, biz_0000_831, biz_0000_832, biz_0000_833, biz_0000_834, biz_0000_835, biz_0000_836, biz_0000_837, biz_0000_838, biz_0000_839, biz_0000_840, biz_0000_841, biz_0000_842, biz_0000_843, biz_0000_844, biz_0000_845, biz_0000_846, biz_0000_847, biz_0000_848, biz_0000_849, biz_0000_850, biz_0000_851, biz_0000_852, biz_0000_853, biz_0000_854, biz_0000_855, biz_0000_856, biz_0000_857, biz_0000_858, biz_0000_859, biz_0000_860, biz_0000_861, biz_0000_862, biz_0000_863, biz_0000_864, biz_0000_865, biz_0000_866, biz_0000_867, biz_0000_868, biz_0000_869, biz_0000_870, biz_0000_871, biz_0000_872, biz_0000_873, biz_0000_874, biz_0000_875, biz_0000_876, biz_0000_877, biz_0000_878, biz_0000_879, biz_0000_880, biz_0000_881, biz_0000_882, biz_0000_883, biz_0000_884, biz_0000_885, biz_0000_886, biz_0000_887, biz_0000_888, biz_0000_889, biz_0000_890, biz_0000_891, biz_0000_892, biz_0000_893, biz_0000_894, biz_0000_895, biz_0000_896, biz_0000_897, biz_0000_898, biz_0000_899, biz_0000_900, biz_0000_901, biz_0000_902, biz_0000_903, biz_0000_904, biz_0000_905, biz_0000_906, biz_0000_907, biz_0000_908, biz_0000_909, biz_0000_910, biz_0000_911, biz_0000_912, biz_0000_913, biz_0000_914, biz_0000_915, biz_0000_916, biz_0000_917, biz_0000_918, biz_0000_919, biz_0000_920, biz_0000_921, biz_0000_922, biz_0000_923, biz_0000_924, biz_0000_925, biz_0000_926, biz_0000_927, biz_0000_928, biz_0000_929, biz_0000_930, biz_0000_931, biz_0000_932, biz_0000_933, biz_0000_934, biz_0000_935, biz_0000_936, biz_0000_937, biz_0000_938, biz_0000_939, biz_0000_940, biz_0000_941, biz_0000_942, biz_0000_943, biz_0000_944, biz_0000_945, biz_0000_946, biz_0000_947, biz_0000_948, biz_0000_949, biz_0000_950, biz_0000_951, biz_0000_952, biz_0000_953, biz_0000_954, biz_0000_955, biz_0000_956, biz_0000_957, biz_0000_958, biz_0000_959, biz_0000_960, biz_0000_961, biz_0000_962, biz_0000_963, biz_0000_964, biz_0000_965, biz_0000_966, biz_0000_967, biz_0000_968, biz_0000_969, biz_0000_970, biz_0000_971, biz_0000_972, biz_0000_973, biz_0000_974, biz_0000_975, biz_0000_976, biz_0000_977, biz_0000_978, biz_0000_979, biz_0000_980, biz_0000_981, biz_0000_982, biz_0000_983, biz_0000_984, biz_0000_985, biz_0000_986, biz_0000_987, biz_0000_988, biz_0000_989, biz_0000_990, biz_0000_991, biz_0000_992, biz_0000_993, biz_0000_994, biz_0000_995, biz_0000_996, biz_0000_997, biz_0000_998, biz_0000_999, biz_0000_1000, biz_0000_1001, biz_0000_1002, biz_0000_1003, biz_0000_1004, biz_0000_1005, biz_0000_1006, biz_0000_1007, biz_0000_1008, biz_0000_1009, biz_0000_1010, biz_0000_1011, biz_0000_1012, biz_0000_1013, biz_0000_1014, biz_0000_1015, biz_0000_1016, biz_0000_1017, biz_0000_1018, biz_0000_1019, biz_0000_1020, biz_0000_1021, biz_0000_1022, biz_0000_1023, biz_0000_1024, biz_0000_1025, biz_0000_1026, biz_0000_1027, biz_0000_1028, biz_0000_1029, biz_0000_1030, biz_0000_1031, biz_0000_1032, biz_0000_1033, biz_0000_1034, biz_0000_1035, biz_0000_1036, biz_0000_1037, biz_0000_1038, biz_0000_1039, biz_0000_1040, biz_0000_1041, biz_0000_1042, biz_0000_1043, biz_0000_1044, biz_0000_1045, biz_0000_1046, biz_0000_1047, biz_0000_1048, biz_0000_1049, biz_0000_1050, biz_0000_1051, biz_0000_1052, biz_0000_1053, biz_0000_1054, biz_0000_1055, biz_0000_1056, biz_0000_1057, biz_0000_1058, biz_0000_1059, biz_0000_1060, biz_0000_1061, biz_0000_1062, biz_0000_1063, biz_0000_1064, biz_0000_1065, biz_0000_1066, biz_0000_1067, biz_0000_1068, biz_0000_1069, biz_0000_1070, biz_0000_1071, biz_0000_1072, biz_0000_1073, biz_0000_1074, biz_0000_1075, biz_0000_1076, biz_0000_1077, biz_0000_1078, biz_0000_1079, biz_0000_1080, biz_0000_1081, biz_0000_1082, biz_0000_1083, biz_0000_1084, biz_0000_1085, biz_0000_1086, biz_0000_1087, biz_0000_1088, biz_0000_1089, biz_0000_1090, biz_0000_1091, biz_0000_1092, biz_0000_1093, biz_0000_1094, biz_0000_1095, biz_0000_1096, biz_0000_1097, biz_0000_1098, biz_0000_1099, biz_0000_1100, biz_0000_1101, biz_0000_1102, biz_0000_1103, biz_0000_1104, biz_0000_1105, biz_0000_1106, biz_0000_1107, biz_0000_1108, biz_0000_1109, biz_0000_1110, biz_0000_1111, biz_0000_1112, biz_0000_1113, biz_0000_1114, biz_0000_1115, biz_0000_1116, biz_0000_1117, biz_0000_1118, biz_0000_1119, biz_0000_1120, biz_0000_1121, biz_0000_1122, biz_0000_1123, biz_0000_1124, biz_0000_1125, biz_0000_1126, biz_0000_1127, biz_0000_1128, biz_0000_1129, biz_0000_1130, biz_0000_1131, biz_0000_1132, biz_0000_1133, biz_0000_1134, biz_0000_1135, biz_0000_1136, biz_0000_1137, biz_0000_1138, biz_0000_1139, biz_0000_1140, biz_0000_1141, biz_0000_1142, biz_0000_1143, biz_0000_1144, biz_0000_1145, biz_0000_1146, biz_0000_1147, biz_0000_1148, biz_0000_1149, biz_0000_1150, biz_0000_1151, biz_0000_1152, biz_0000_1153, biz_0000_1154, biz_0000_1155, biz_0000_1156, biz_0000_1157, biz_0000_1158, biz_0000_1159, biz_0000_1160, biz_0000_1161, biz_0000_1162, biz_0000_1163, biz_0000_1164, biz_0000_1165, biz_0000_1166, biz_0000_1167, biz_0000_1168, biz_0000_1169, biz_0000_1170, biz_0000_1171, biz_0000_1172, biz_0000_1173, biz_0000_1174, biz_0000_1175, biz_0000_1176, biz_0000_1177, biz_0000_1178, biz_0000_1179, biz_0000_1180, biz_0000_1181, biz_0000_1182, biz_0000_1183, biz_0000_1184, biz_0000_1185, biz_0000_1186, biz_0000_1187, biz_0000_1188, biz_0000_1189, biz_0000_1190, biz_0000_1191, biz_0000_1192, biz_0000_1193, biz_0000_1194, biz_0000_1195, biz_0000_1196, biz_0000_1197, biz_0000_1198, biz_0000_1199, biz_0000_1200, biz_0000_1201, biz_0000_1202, biz_0000_1203, biz_0000_1204, biz_0000_1205, biz_0000_1206, biz_0000_1207, biz_0000_1208, biz_0000_1209, biz_0000_1210, biz_0000_1211, biz_0000_1212, biz_0000_1213, biz_0000_1214, biz_0000_1215, biz_0000_1216, biz_0000_1217, biz_0000_1218, biz_0000_1219, biz_0000_1220, biz_0000_1221, biz_0000_1222, biz_0000_1223, biz_0000_1224, biz_0000_1225, biz_0000_1226, biz_0000_1227, biz_0000_1228, biz_0000_1229, biz_0000_1230, biz_0000_1231, biz_0000_1232, biz_0000_1233, biz_0000_1234, biz_0000_1235, biz_0000_1236, biz_0000_1237, biz_0000_1238, biz_0000_1239, biz_0000_1240, biz_0000_1241, biz_0000_1242, biz_0000_1243, biz_0000_1244, biz_0000_1245, biz_0000_1246, biz_0000_1247, biz_0000_1248, biz_0000_1249, biz_0000_1250, biz_0000_1251, biz_0000_1252, biz_0000_1253, biz_0000_1254, biz_0000_1255, biz_0000_1256, biz_0000_1257, biz_0000_1258, biz_0000_1259, biz_0000_1260, biz_0000_1261, biz_0000_1262, biz_0000_1263, biz_0000_1264, biz_0000_1265, biz_0000_1266, biz_0000_1267, biz_0000_1268, biz_0000_1269, biz_0000_1270, biz_0000_1271, biz_0000_1272, biz_0000_1273, biz_0000_1274, biz_0000_1275, biz_0000_1276, biz_0000_1277, biz_0000_1278, biz_0000_1279, biz_0000_1280, biz_0000_1281, biz_0000_1282, biz_0000_1283, biz_0000_1284, biz_0000_1285, biz_0000_1286, biz_0000_1287, biz_0000_1288, biz_0000_1289, biz_0000_1290, biz_0000_1291, biz_0000_1292, biz_0000_1293, biz_0000_1294, biz_0000_1295, biz_0000_1296, biz_0000_1297, biz_0000_1298, biz_0000_1299, biz_0000_1300, biz_0000_1301, biz_0000_1302, biz_0000_1303, biz_0000_1304, biz_0000_1305, biz_0000_1306, biz_0000_1307, biz_0000_1308, biz_0000_1309, biz_0000_1310, biz_0000_1311, biz_0000_1312, biz_0000_1313, biz_0000_1314, biz_0000_1315, biz_0000_1316, biz_0000_1317, biz_0000_1318, biz_0000_1319, biz_0000_1320, biz_0000_1321, biz_0000_1322, biz_0000_1323, biz_0000_1324, biz_0000_1325, biz_0000_1326, biz_0000_1327, biz_0000_1328, biz_0000_1329, biz_0000_1330, biz_0000_1331, biz_0000_1332, biz_0000_1333, biz_0000_1334, biz_0000_1335, biz_0000_1336, biz_0000_1337, biz_0000_1338, biz_0000_1339, biz_0000_1340, biz_0000_1341, biz_0000_1342, biz_0000_1343, biz_0000_1344, biz_0000_1345, biz_0000_1346, biz_0000_1347, biz_0000_1348, biz_0000_1349, biz_0000_1350, biz_0000_1351, biz_0000_1352, biz_0000_1353, biz_0000_1354, biz_0000_1355, biz_0000_1356, biz_0000_1357, biz_0000_1358, biz_0000_1359, biz_0000_1360, biz_0000_1361, biz_0000_1362, biz_0000_1363, biz_0000_1364, biz_0000_1365, biz_0000_1366, biz_0000_1367, biz_0000_1368, biz_0000_1369, biz_0000_1370, biz_0000_1371, biz_0000_1372, biz_0000_1373, biz_0000_1374, biz_0000_1375, biz_0000_1376, biz_0000_1377, biz_0000_1378, biz_0000_1379, biz_0000_1380, biz_0000_1381, biz_0000_1382, biz_0000_1383, biz_0000_1384, biz_0000_1385, biz_0000_1386, biz_0000_1387, biz_0000_1388, biz_0000_1389, biz_0000_1390, biz_0000_1391, biz_0000_1392, biz_0000_1393, biz_0000_1394, biz_0000_1395, biz_0000_1396, biz_0000_1397, biz_0000_1398, biz_0000_1399, biz_0000_1400, biz_0000_1401, biz_0000_1402, biz_0000_1403, biz_0000_1404, biz_0000_1405, biz_0000_1406, biz_0000_1407, biz_0000_1408, biz_0000_1409, biz_0000_1410, biz_0000_1411, biz_0000_1412, biz_0000_1413, biz_0000_1414, biz_0000_1415, biz_0000_1416, biz_0000_1417, biz_0000_1418, biz_0000_1419, biz_0000_1420, biz_0000_1421, biz_0000_1422, biz_0000_1423, biz_0000_1424, biz_0000_1425, biz_0000_1426, biz_0000_1427, biz_0000_1428, biz_0000_1429, biz_0000_1430, biz_0000_1431, biz_0000_1432, biz_0000_1433, biz_0000_1434, biz_0000_1435, biz_0000_1436, biz_0000_1437, biz_0000_1438, biz_0000_1439, biz_0000_1440, biz_0000_1441, biz_0000_1442, biz_0000_1443, biz_0000_1444, biz_0000_1445, biz_0000_1446, biz_0000_1447, biz_0000_1448, biz_0000_1449, biz_0000_1450, biz_0000_1451, biz_0000_1452, biz_0000_1453, biz_0000_1454, biz_0000_1455, biz_0000_1456, biz_0000_1457, biz_0000_1458, biz_0000_1459, biz_0000_1460, biz_0000_1461, biz_0000_1462, biz_0000_1463, biz_0000_1464, biz_0000_1465, biz_0000_1466, biz_0000_1467, biz_0000_1468, biz_0000_1469, biz_0000_1470, biz_0000_1471, biz_0000_1472, biz_0000_1473, biz_0000_1474, biz_0000_1475, biz_0000_1476, biz_0000_1477, biz_0000_1478, biz_0000_1479, biz_0000_1480, biz_0000_1481, biz_0000_1482, biz_0000_1483, biz_0000_1484, biz_0000_1485, biz_0000_1486, biz_0000_1487, biz_0000_1488, biz_0000_1489, biz_0000_1490, biz_0000_1491, biz_0000_1492, biz_0000_1493, biz_0000_1494, biz_0000_1495, biz_0000_1496, biz_0000_1497, biz_0000_1498, biz_0000_1499, biz_0000_1500, biz_0000_1501, biz_0000_1502, biz_0000_1503, biz_0000_1504, biz_0000_1505, biz_0000_1506, biz_0000_1507, biz_0000_1508, biz_0000_1509, biz_0000_1510, biz_0000_1511, biz_0000_1512, biz_0000_1513, biz_0000_1514, biz_0000_1515, biz_0000_1516, biz_0000_1517, biz_0000_1518, biz_0000_1519, biz_0000_1520, biz_0000_1521, biz_0000_1522, biz_0000_1523, biz_0000_1524, biz_0000_1525, biz_0000_1526, biz_0000_1527, biz_0000_1528, biz_0000_1529, biz_0000_1530, biz_0000_1531, biz_0000_1532, biz_0000_1533, biz_0000_1534, biz_0000_1535, biz_0000_1536, biz_0000_1537, biz_0000_1538, biz_0000_1539, biz_0000_1540, biz_0000_1541, biz_0000_1542, biz_0000_1543, biz_0000_1544, biz_0000_1545, biz_0000_1546, biz_0000_1547, biz_0000_1548, biz_0000_1549, biz_0000_1550, biz_0000_1551, biz_0000_1552, biz_0000_1553, biz_0000_1554, biz_0000_1555, biz_0000_1556, biz_0000_1557, biz_0000_1558, biz_0000_1559, biz_0000_1560, biz_0000_1561, biz_0000_1562, biz_0000_1563, biz_0000_1564, biz_0000_1565, biz_0000_1566, biz_0000_1567, biz_0000_1568, biz_0000_1569, biz_0000_1570, biz_0000_1571, biz_0000_1572, biz_0000_1573, biz_0000_1574, biz_0000_1575, biz_0000_1576, biz_0000_1577, biz_0000_1578, biz_0000_1579, biz_0000_1580, biz_0000_1581, biz_0000_1582, biz_0000_1583, biz_0000_1584, biz_0000_1585, biz_0000_1586, biz_0000_1587, biz_0000_1588, biz_0000_1589, biz_0000_1590, biz_0000_1591, biz_0000_1592, biz_0000_1593, biz_0000_1594, biz_0000_1595, biz_0000_1596, biz_0000_1597, biz_0000_1598, biz_0000_1599, biz_0000_1600, biz_0000_1601, biz_0000_1602, biz_0000_1603, biz_0000_1604, biz_0000_1605, biz_0000_1606, biz_0000_1607, biz_0000_1608, biz_0000_1609, biz_0000_1610, biz_0000_1611, biz_0000_1612, biz_0000_1613, biz_0000_1614, biz_0000_1615, biz_0000_1616, biz_0000_1617, biz_0000_1618, biz_0000_1619, biz_0000_1620, biz_0000_1621, biz_0000_1622, biz_0000_1623, biz_0000_1624, biz_0000_1625, biz_0000_1626, biz_0000_1627, biz_0000_1628, biz_0000_1629, biz_0000_1630, biz_0000_1631, biz_0000_1632, biz_0000_1633, biz_0000_1634, biz_0000_1635, biz_0000_1636, biz_0000_1637, biz_0000_1638, biz_0000_1639, biz_0000_1640, biz_0000_1641, biz_0000_1642, biz_0000_1643, biz_0000_1644, biz_0000_1645, biz_0000_1646, biz_0000_1647, biz_0000_1648, biz_0000_1649, biz_0000_1650, biz_0000_1651, biz_0000_1652, biz_0000_1653, biz_0000_1654, biz_0000_1655, biz_0000_1656, biz_0000_1657, biz_0000_1658, biz_0000_1659, biz_0000_1660, biz_0000_1661, biz_0000_1662, biz_0000_1663, biz_0000_1664, biz_0000_1665, biz_0000_1666, biz_0000_1667, biz_0000_1668, biz_0000_1669, biz_0000_1670, biz_0000_1671, biz_0000_1672, biz_0000_1673, biz_0000_1674, biz_0000_1675, biz_0000_1676, biz_0000_1677, biz_0000_1678, biz_0000_1679, biz_0000_1680, biz_0000_1681, biz_0000_1682, biz_0000_1683, biz_0000_1684, biz_0000_1685, biz_0000_1686, biz_0000_1687, biz_0000_1688, biz_0000_1689, biz_0000_1690, biz_0000_1691, biz_0000_1692, biz_0000_1693, biz_0000_1694, biz_0000_1695, biz_0000_1696, biz_0000_1697, biz_0000_1698, biz_0000_1699, biz_0000_1700, biz_0000_1701, biz_0000_1702, biz_0000_1703, biz_0000_1704, biz_0000_1705, biz_0000_1706, biz_0000_1707, biz_0000_1708, biz_0000_1709, biz_0000_1710, biz_0000_1711, biz_0000_1712, biz_0000_1713, biz_0000_1714, biz_0000_1715, biz_0000_1716, biz_0000_1717, biz_0000_1718, biz_0000_1719, biz_0000_1720, biz_0000_1721, biz_0000_1722, biz_0000_1723, biz_0000_1724, biz_0000_1725, biz_0000_1726, biz_0000_1727, biz_0000_1728, biz_0000_1729, biz_0000_1730, biz_0000_1731, biz_0000_1732, biz_0000_1733, biz_0000_1734, biz_0000_1735, biz_0000_1736, biz_0000_1737, biz_0000_1738, biz_0000_1739, biz_0000_1740, biz_0000_1741, biz_0000_1742, biz_0000_1743, biz_0000_1744, biz_0000_1745, biz_0000_1746, biz_0000_1747, biz_0000_1748, biz_0000_1749, biz_0000_1750, biz_0000_1751, biz_0000_1752, biz_0000_1753, biz_0000_1754, biz_0000_1755, biz_0000_1756, biz_0000_1757, biz_0000_1758, biz_0000_1759, biz_0000_1760, biz_0000_1761, biz_0000_1762, biz_0000_1763, biz_0000_1764, biz_0000_1765, biz_0000_1766, biz_0000_1767, biz_0000_1768, biz_0000_1769, biz_0000_1770, biz_0000_1771, biz_0000_1772, biz_0000_1773, biz_0000_1774, biz_0000_1775, biz_0000_1776, biz_0000_1777, biz_0000_1778, biz_0000_1779, biz_0000_1780, biz_0000_1781, biz_0000_1782, biz_0000_1783, biz_0000_1784, biz_0000_1785, biz_0000_1786, biz_0000_1787, biz_0000_1788, biz_0000_1789, biz_0000_1790, biz_0000_1791, biz_0000_1792, biz_0000_1793, biz_0000_1794, biz_0000_1795, biz_0000_1796, biz_0000_1797, biz_0000_1798, biz_0000_1799, biz_0000_1800, biz_0000_1801, biz_0000_1802, biz_0000_1803, biz_0000_1804, biz_0000_1805, biz_0000_1806, biz_0000_1807, biz_0000_1808, biz_0000_1809, biz_0000_1810, biz_0000_1811, biz_0000_1812, biz_0000_1813, biz_0000_1814, biz_0000_1815, biz_0000_1816, biz_0000_1817, biz_0000_1818, biz_0000_1819, biz_0000_1820, biz_0000_1821, biz_0000_1822, biz_0000_1823, biz_0000_1824, biz_0000_1825, biz_0000_1826, biz_0000_1827, biz_0000_1828, biz_0000_1829, biz_0000_1830, biz_0000_1831, biz_0000_1832, biz_0000_1833, biz_0000_1834, biz_0000_1835, biz_0000_1836, biz_0000_1837, biz_0000_1838, biz_0000_1839, biz_0000_1840, biz_0000_1841, biz_0000_1842, biz_0000_1843, biz_0000_1844, biz_0000_1845, biz_0000_1846, biz_0000_1847, biz_0000_1848, biz_0000_1849, biz_0000_1850, biz_0000_1851, biz_0000_1852, biz_0000_1853, biz_0000_1854, biz_0000_1855, biz_0000_1856, biz_0000_1857, biz_0000_1858, biz_0000_1859, biz_0000_1860, biz_0000_1861, biz_0000_1862, biz_0000_1863, biz_0000_1864, biz_0000_1865, biz_0000_1866, biz_0000_1867, biz_0000_1868, biz_0000_1869, biz_0000_1870, biz_0000_1871, biz_0000_1872, biz_0000_1873, biz_0000_1874, biz_0000_1875, biz_0000_1876, biz_0000_1877, biz_0000_1878, biz_0000_1879, biz_0000_1880, biz_0000_1881, biz_0000_1882, biz_0000_1883, biz_0000_1884, biz_0000_1885, biz_0000_1886, biz_0000_1887, biz_0000_1888, biz_0000_1889, biz_0000_1890, biz_0000_1891, biz_0000_1892, biz_0000_1893, biz_0000_1894, biz_0000_1895, biz_0000_1896, biz_0000_1897, biz_0000_1898, biz_0000_1899, biz_0000_1900, biz_0000_1901, biz_0000_1902, biz_0000_1903, biz_0000_1904, biz_0000_1905, biz_0000_1906, biz_0000_1907, biz_0000_1908, biz_0000_1909, biz_0000_1910, biz_0000_1911, biz_0000_1912, biz_0000_1913, biz_0000_1914, biz_0000_1915, biz_0000_1916, biz_0000_1917, biz_0000_1918, biz_0000_1919, biz_0000_1920, biz_0000_1921, biz_0000_1922, biz_0000_1923, biz_0000_1924, biz_0000_1925, biz_0000_1926, biz_0000_1927, biz_0000_1928, biz_0000_1929, biz_0000_1930, biz_0000_1931, biz_0000_1932, biz_0000_1933, biz_0000_1934, biz_0000_1935, biz_0000_1936, biz_0000_1937, biz_0000_1938, biz_0000_1939, biz_0000_1940, biz_0000_1941, biz_0000_1942, biz_0000_1943, biz_0000_1944, biz_0000_1945, biz_0000_1946, biz_0000_1947, biz_0000_1948, biz_0000_1949, biz_0000_1950, biz_0000_1951, biz_0000_1952, biz_0000_1953, biz_0000_1954, biz_0000_1955, biz_0000_1956, biz_0000_1957, biz_0000_1958, biz_0000_1959, biz_0000_1960, biz_0000_1961, biz_0000_1962, biz_0000_1963, biz_0000_1964, biz_0000_1965, biz_0000_1966, biz_0000_1967, biz_0000_1968, biz_0000_1969, biz_0000_1970, biz_0000_1971, biz_0000_1972, biz_0000_1973, biz_0000_1974, biz_0000_1975, biz_0000_1976, biz_0000_1977, biz_0000_1978, biz_0000_1979, biz_0000_1980, biz_0000_1981, biz_0000_1982, biz_0000_1983, biz_0000_1984, biz_0000_1985, biz_0000_1986, biz_0000_1987, biz_0000_1988, biz_0000_1989, biz_0000_1990, biz_0000_1991, biz_0000_1992, biz_0000_1993, biz_0000_1994, biz_0000_1995, biz_0000_1996, biz_0000_1997, biz_0000_1998, biz_0000_1999, biz_0000_2000, biz_0000_2001, biz_0000_2002, biz_0000_2003, biz_0000_2004, biz_0000_2005, biz_0000_2006, biz_0000_2007, biz_0000_2008, biz_0000_2009, biz_0000_2010, biz_0000_2011, biz_0000_2012, biz_0000_2013, biz_0000_2014, biz_0000_2015, biz_0000_2016, biz_0000_2017, biz_0000_2018, biz_0000_2019, biz_0000_2020, biz_0000_2021, biz_0000_2022, biz_0000_2023, biz_0000_2024, biz_0000_2025, biz_0000_2026, biz_0000_2027, biz_0000_2028, biz_0000_2029, biz_0000_2030, biz_0000_2031, biz_0000_2032, biz_0000_2033, biz_0000_2034, biz_0000_2035, biz_0000_2036, biz_0000_2037, biz_0000_2038, biz_0000_2039, biz_0000_2040, biz_0000_2041, biz_0000_2042, biz_0000_2043, biz_0000_2044, biz_0000_2045, biz_0000_2046, biz_0000_2047, biz_0000_2048, biz_0000_2049, biz_0000_2050, biz_0000_2051, biz_0000_2052, biz_0000_2053, biz_0000_2054, biz_0000_2055, biz_0000_2056, biz_0000_2057, biz_0000_2058, biz_0000_2059, biz_0000_2060, biz_0000_2061, biz_0000_2062, biz_0000_2063, biz_0000_2064, biz_0000_2065, biz_0000_2066, biz_0000_2067, biz_0000_2068, biz_0000_2069, biz_0000_2070, biz_0000_2071, biz_0000_2072, biz_0000_2073, biz_0000_2074, biz_0000_2075, biz_0000_2076, biz_0000_2077, biz_0000_2078, biz_0000_2079, biz_0000_2080, biz_0000_2081, biz_0000_2082, biz_0000_2083, biz_0000_2084, biz_0000_2085, biz_0000_2086, biz_0000_2087, biz_0000_2088, biz_0000_2089, biz_0000_2090, biz_0000_2091, biz_0000_2092, biz_0000_2093, biz_0000_2094, biz_0000_2095, biz_0000_2096, biz_0000_2097, biz_0000_2098, biz_0000_2099, biz_0000_2100, biz_0000_2101, biz_0000_2102, biz_0000_2103, biz_0000_2104, biz_0000_2105, biz_0000_2106, biz_0000_2107, biz_0000_2108, biz_0000_2109, biz_0000_2110, biz_0000_2111, biz_0000_2112, biz_0000_2113, biz_0000_2114, biz_0000_2115, biz_0000_2116, biz_0000_2117, biz_0000_2118, biz_0000_2119, biz_0000_2120, biz_0000_2121, biz_0000_2122, biz_0000_2123, biz_0000_2124, biz_0000_2125, biz_0000_2126, biz_0000_2127, biz_0000_2128, biz_0000_2129, biz_0000_2130, biz_0000_2131, biz_0000_2132, biz_0000_2133, biz_0000_2134, biz_0000_2135, biz_0000_2136, biz_0000_2137, biz_0000_2138, biz_0000_2139, biz_0000_2140, biz_0000_2141, biz_0000_2142, biz_0000_2143, biz_0000_2144, biz_0000_2145, biz_0000_2146, biz_0000_2147, biz_0000_2148, biz_0000_2149, biz_0000_2150, biz_0000_2151, biz_0000_2152, biz_0000_2153, biz_0000_2154, biz_0000_2155, biz_0000_2156, biz_0000_2157, biz_0000_2158, biz_0000_2159, biz_0000_2160, biz_0000_2161, biz_0000_2162, biz_0000_2163, biz_0000_2164, biz_0000_2165, biz_0000_2166, biz_0000_2167, biz_0000_2168, biz_0000_2169, biz_0000_2170, biz_0000_2171, biz_0000_2172, biz_0000_2173, biz_0000_2174, biz_0000_2175, biz_0000_2176, biz_0000_2177, biz_0000_2178, biz_0000_2179, biz_0000_2180, biz_0000_2181, biz_0000_2182, biz_0000_2183, biz_0000_2184, biz_0000_2185, biz_0000_2186, biz_0000_2187, biz_0000_2188, biz_0000_2189, biz_0000_2190, biz_0000_2191, biz_0000_2192, biz_0000_2193, biz_0000_2194, biz_0000_2195, biz_0000_2196, biz_0000_2197, biz_0000_2198, biz_0000_2199, biz_0000_2200, biz_0000_2201, biz_0000_2202, biz_0000_2203, biz_0000_2204, biz_0000_2205, biz_0000_2206, biz_0000_2207, biz_0000_2208, biz_0000_2209, biz_0000_2210, biz_0000_2211, biz_0000_2212, biz_0000_2213, biz_0000_2214, biz_0000_2215, biz_0000_2216, biz_0000_2217, biz_0000_2218, biz_0000_2219, biz_0000_2220, biz_0000_2221, biz_0000_2222, biz_0000_2223, biz_0000_2224, biz_0000_2225, biz_0000_2226, biz_0000_2227, biz_0000_2228, biz_0000_2229, biz_0000_2230, biz_0000_2231, biz_0000_2232, biz_0000_2233, biz_0000_2234, biz_0000_2235, biz_0000_2236, biz_0000_2237, biz_0000_2238, biz_0000_2239, biz_0000_2240, biz_0000_2241, biz_0000_2242, biz_0000_2243, biz_0000_2244, biz_0000_2245, biz_0000_2246, biz_0000_2247, biz_0000_2248, biz_0000_2249, biz_0000_2250, biz_0000_2251, biz_0000_2252, biz_0000_2253, biz_0000_2254, biz_0000_2255, biz_0000_2256, biz_0000_2257, biz_0000_2258, biz_0000_2259, biz_0000_2260, biz_0000_2261, biz_0000_2262, biz_0000_2263, biz_0000_2264, biz_0000_2265, biz_0000_2266, biz_0000_2267, biz_0000_2268, biz_0000_2269, biz_0000_2270, biz_0000_2271, biz_0000_2272, biz_0000_2273, biz_0000_2274, biz_0000_2275, biz_0000_2276, biz_0000_2277, biz_0000_2278, biz_0000_2279, biz_0000_2280, biz_0000_2281, biz_0000_2282, biz_0000_2283, biz_0000_2284, biz_0000_2285, biz_0000_2286, biz_0000_2287, biz_0000_2288, biz_0000_2289, biz_0000_2290, biz_0000_2291, biz_0000_2292, biz_0000_2293, biz_0000_2294, biz_0000_2295, biz_0000_2296, biz_0000_2297, biz_0000_2298, biz_0000_2299, biz_0000_2300, biz_0000_2301, biz_0000_2302, biz_0000_2303, biz_0000_2304, biz_0000_2305, biz_0000_2306, biz_0000_2307, biz_0000_2308, biz_0000_2309, biz_0000_2310, biz_0000_2311, biz_0000_2312, biz_0000_2313, biz_0000_2314, biz_0000_2315, biz_0000_2316, biz_0000_2317, biz_0000_2318, biz_0000_2319, biz_0000_2320, biz_0000_2321, biz_0000_2322, biz_0000_2323, biz_0000_2324, biz_0000_2325, biz_0000_2326, biz_0000_2327, biz_0000_2328, biz_0000_2329, biz_0000_2330, biz_0000_2331, biz_0000_2332, biz_0000_2333, biz_0000_2334, biz_0000_2335, biz_0000_2336, biz_0000_2337, biz_0000_2338, biz_0000_2339, biz_0000_2340, biz_0000_2341, biz_0000_2342, biz_0000_2343, biz_0000_2344, biz_0000_2345, biz_0000_2346, biz_0000_2347, biz_0000_2348, biz_0000_2349, biz_0000_2350, biz_0000_2351, biz_0000_2352, biz_0000_2353, biz_0000_2354, biz_0000_2355, biz_0000_2356, biz_0000_2357, biz_0000_2358, biz_0000_2359, biz_0000_2360, biz_0000_2361, biz_0000_2362, biz_0000_2363, biz_0000_2364, biz_0000_2365, biz_0000_2366, biz_0000_2367, biz_0000_2368, biz_0000_2369, biz_0000_2370, biz_0000_2371, biz_0000_2372, biz_0000_2373, biz_0000_2374, biz_0000_2375, biz_0000_2376, biz_0000_2377, biz_0000_2378, biz_0000_2379, biz_0000_2380, biz_0000_2381, biz_0000_2382, biz_0000_2383, biz_0000_2384, biz_0000_2385, biz_0000_2386, biz_0000_2387, biz_0000_2388, biz_0000_2389, biz_0000_2390, biz_0000_2391, biz_0000_2392, biz_0000_2393, biz_0000_2394, biz_0000_2395, biz_0000_2396, biz_0000_2397, biz_0000_2398, biz_0000_2399, biz_0000_2400, biz_0000_2401, biz_0000_2402, biz_0000_2403, biz_0000_2404, biz_0000_2405, biz_0000_2406, biz_0000_2407, biz_0000_2408, biz_0000_2409, biz_0000_2410, biz_0000_2411, biz_0000_2412, biz_0000_2413, biz_0000_2414, biz_0000_2415, biz_0000_2416, biz_0000_2417, biz_0000_2418, biz_0000_2419, biz_0000_2420, biz_0000_2421, biz_0000_2422, biz_0000_2423, biz_0000_2424, biz_0000_2425, biz_0000_2426, biz_0000_2427, biz_0000_2428, biz_0000_2429, biz_0000_2430, biz_0000_2431, biz_0000_2432, biz_0000_2433, biz_0000_2434, biz_0000_2435, biz_0000_2436, biz_0000_2437, biz_0000_2438, biz_0000_2439, biz_0000_2440, biz_0000_2441, biz_0000_2442, biz_0000_2443, biz_0000_2444, biz_0000_2445, biz_0000_2446, biz_0000_2447, biz_0000_2448, biz_0000_2449, biz_0000_2450, biz_0000_2451, biz_0000_2452, biz_0000_2453, biz_0000_2454, biz_0000_2455, biz_0000_2456, biz_0000_2457, biz_0000_2458, biz_0000_2459, biz_0000_2460, biz_0000_2461, biz_0000_2462, biz_0000_2463, biz_0000_2464, biz_0000_2465, biz_0000_2466, biz_0000_2467, biz_0000_2468, biz_0000_2469, biz_0000_2470, biz_0000_2471, biz_0000_2472, biz_0000_2473, biz_0000_2474, biz_0000_2475, biz_0000_2476, biz_0000_2477, biz_0000_2478, biz_0000_2479, biz_0000_2480, biz_0000_2481, biz_0000_2482, biz_0000_2483, biz_0000_2484, biz_0000_2485, biz_0000_2486, biz_0000_2487, biz_0000_2488, biz_0000_2489, biz_0000_2490, biz_0000_2491, biz_0000_2492, biz_0000_2493, biz_0000_2494, biz_0000_2495, biz_0000_2496, biz_0000_2497, biz_0000_2498, biz_0000_2499, biz_0000_2500, biz_0000_2501, biz_0000_2502, biz_0000_2503, biz_0000_2504, biz_0000_2505, biz_0000_2506, biz_0000_2507, biz_0000_2508, biz_0000_2509, biz_0000_2510, biz_0000_2511, biz_0000_2512, biz_0000_2513, biz_0000_2514, biz_0000_2515, biz_0000_2516, biz_0000_2517, biz_0000_2518, biz_0000_2519, biz_0000_2520, biz_0000_2521, biz_0000_2522, biz_0000_2523, biz_0000_2524, biz_0000_2525, biz_0000_2526, biz_0000_2527, biz_0000_2528, biz_0000_2529, biz_0000_2530, biz_0000_2531, biz_0000_2532, biz_0000_2533, biz_0000_2534, biz_0000_2535, biz_0000_2536, biz_0000_2537, biz_0000_2538, biz_0000_2539, biz_0000_2540, biz_0000_2541, biz_0000_2542, biz_0000_2543, biz_0000_2544, biz_0000_2545, biz_0000_2546, biz_0000_2547, biz_0000_2548, biz_0000_2549, biz_0000_2550, biz_0000_2551, biz_0000_2552, biz_0000_2553, biz_0000_2554, biz_0000_2555, biz_0000_2556, biz_0000_2557, biz_0000_2558, biz_0000_2559, biz_0000_2560, biz_0000_2561, biz_0000_2562, biz_0000_2563, biz_0000_2564, biz_0000_2565, biz_0000_2566, biz_0000_2567, biz_0000_2568, biz_0000_2569, biz_0000_2570, biz_0000_2571, biz_0000_2572, biz_0000_2573, biz_0000_2574, biz_0000_2575, biz_0000_2576, biz_0000_2577, biz_0000_2578, biz_0000_2579, biz_0000_2580, biz_0000_2581, biz_0000_2582, biz_0000_2583, biz_0000_2584, biz_0000_2585, biz_0000_2586, biz_0000_2587, biz_0000_2588, biz_0000_2589, biz_0000_2590, biz_0000_2591, biz_0000_2592, biz_0000_2593, biz_0000_2594, biz_0000_2595, biz_0000_2596, biz_0000_2597, biz_0000_2598, biz_0000_2599, biz_0000_2600, biz_0000_2601, biz_0000_2602, biz_0000_2603, biz_0000_2604, biz_0000_2605, biz_0000_2606, biz_0000_2607, biz_0000_2608, biz_0000_2609, biz_0000_2610, biz_0000_2611, biz_0000_2612, biz_0000_2613, biz_0000_2614, biz_0000_2615, biz_0000_2616, biz_0000_2617, biz_0000_2618, biz_0000_2619, biz_0000_2620, biz_0000_2621, biz_0000_2622, biz_0000_2623, biz_0000_2624, biz_0000_2625, biz_0000_2626, biz_0000_2627, biz_0000_2628, biz_0000_2629, biz_0000_2630, biz_0000_2631, biz_0000_2632, biz_0000_2633, biz_0000_2634, biz_0000_2635, biz_0000_2636, biz_0000_2637, biz_0000_2638, biz_0000_2639, biz_0000_2640, biz_0000_2641, biz_0000_2642, biz_0000_2643, biz_0000_2644, biz_0000_2645, biz_0000_2646, biz_0000_2647, biz_0000_2648, biz_0000_2649, biz_0000_2650, biz_0000_2651, biz_0000_2652, biz_0000_2653, biz_0000_2654, biz_0000_2655, biz_0000_2656, biz_0000_2657, biz_0000_2658, biz_0000_2659, biz_0000_2660, biz_0000_2661, biz_0000_2662, biz_0000_2663, biz_0000_2664, biz_0000_2665, biz_0000_2666, biz_0000_2667, biz_0000_2668, biz_0000_2669, biz_0000_2670, biz_0000_2671, biz_0000_2672, biz_0000_2673, biz_0000_2674, biz_0000_2675, biz_0000_2676, biz_0000_2677, biz_0000_2678, biz_0000_2679, biz_0000_2680, biz_0000_2681, biz_0000_2682, biz_0000_2683, biz_0000_2684, biz_0000_2685, biz_0000_2686, biz_0000_2687, biz_0000_2688, biz_0000_2689, biz_0000_2690, biz_0000_2691, biz_0000_2692, biz_0000_2693, biz_0000_2694, biz_0000_2695, biz_0000_2696, biz_0000_2697, biz_0000_2698, biz_0000_2699, biz_0000_2700, biz_0000_2701, biz_0000_2702, biz_0000_2703, biz_0000_2704, biz_0000_2705, biz_0000_2706, biz_0000_2707, biz_0000_2708, biz_0000_2709, biz_0000_2710, biz_0000_2711, biz_0000_2712, biz_0000_2713, biz_0000_2714, biz_0000_2715, biz_0000_2716, biz_0000_2717, biz_0000_2718, biz_0000_2719, biz_0000_2720, biz_0000_2721, biz_0000_2722, biz_0000_2723, biz_0000_2724, biz_0000_2725, biz_0000_2726, biz_0000_2727, biz_0000_2728, biz_0000_2729, biz_0000_2730, biz_0000_2731, biz_0000_2732, biz_0000_2733, biz_0000_2734, biz_0000_2735, biz_0000_2736, biz_0000_2737, biz_0000_2738, biz_0000_2739, biz_0000_2740, biz_0000_2741, biz_0000_2742, biz_0000_2743, biz_0000_2744, biz_0000_2745, biz_0000_2746, biz_0000_2747, biz_0000_2748, biz_0000_2749, biz_0000_2750, biz_0000_2751, biz_0000_2752, biz_0000_2753, biz_0000_2754, biz_0000_2755, biz_0000_2756, biz_0000_2757, biz_0000_2758, biz_0000_2759, biz_0000_2760, biz_0000_2761, biz_0000_2762, biz_0000_2763, biz_0000_2764, biz_0000_2765, biz_0000_2766, biz_0000_2767, biz_0000_2768, biz_0000_2769, biz_0000_2770, biz_0000_2771, biz_0000_2772, biz_0000_2773, biz_0000_2774, biz_0000_2775, biz_0000_2776, biz_0000_2777, biz_0000_2778, biz_0000_2779, biz_0000_2780, biz_0000_2781, biz_0000_2782, biz_0000_2783, biz_0000_2784, biz_0000_2785, biz_0000_2786, biz_0000_2787, biz_0000_2788, biz_0000_2789, biz_0000_2790, biz_0000_2791, biz_0000_2792, biz_0000_2793, biz_0000_2794, biz_0000_2795, biz_0000_2796, biz_0000_2797, biz_0000_2798, biz_0000_2799, biz_0000_2800, biz_0000_2801, biz_0000_2802, biz_0000_2803, biz_0000_2804, biz_0000_2805, biz_0000_2806, biz_0000_2807, biz_0000_2808, biz_0000_2809, biz_0000_2810, biz_0000_2811, biz_0000_2812, biz_0000_2813, biz_0000_2814, biz_0000_2815, biz_0000_2816, biz_0000_2817, biz_0000_2818, biz_0000_2819, biz_0000_2820, biz_0000_2821, biz_0000_2822, biz_0000_2823, biz_0000_2824, biz_0000_2825, biz_0000_2826, biz_0000_2827, biz_0000_2828, biz_0000_2829, biz_0000_2830, biz_0000_2831, biz_0000_2832, biz_0000_2833, biz_0000_2834, biz_0000_2835, biz_0000_2836, biz_0000_2837, biz_0000_2838, biz_0000_2839, biz_0000_2840, biz_0000_2841, biz_0000_2842, biz_0000_2843, biz_0000_2844, biz_0000_2845, biz_0000_2846, biz_0000_2847, biz_0000_2848, biz_0000_2849, biz_0000_2850, biz_0000_2851, biz_0000_2852, biz_0000_2853, biz_0000_2854, biz_0000_2855, biz_0000_2856, biz_0000_2857, biz_0000_2858, biz_0000_2859, biz_0000_2860, biz_0000_2861, biz_0000_2862, biz_0000_2863, biz_0000_2864, biz_0000_2865, biz_0000_2866, biz_0000_2867, biz_0000_2868, biz_0000_2869, biz_0000_2870, biz_0000_2871, biz_0000_2872, biz_0000_2873, biz_0000_2874, biz_0000_2875, biz_0000_2876, biz_0000_2877, biz_0000_2878, biz_0000_2879, biz_0000_2880, biz_0000_2881, biz_0000_2882, biz_0000_2883, biz_0000_2884, biz_0000_2885, biz_0000_2886, biz_0000_2887, biz_0000_2888, biz_0000_2889, biz_0000_2890, biz_0000_2891, biz_0000_2892, biz_0000_2893, biz_0000_2894, biz_0000_2895, biz_0000_2896, biz_0000_2897, biz_0000_2898, biz_0000_2899, biz_0000_2900, biz_0000_2901, biz_0000_2902, biz_0000_2903, biz_0000_2904, biz_0000_2905, biz_0000_2906, biz_0000_2907, biz_0000_2908, biz_0000_2909, biz_0000_2910, biz_0000_2911, biz_0000_2912, biz_0000_2913, biz_0000_2914, biz_0000_2915, biz_0000_2916, biz_0000_2917, biz_0000_2918, biz_0000_2919, biz_0000_2920, biz_0000_2921, biz_0000_2922, biz_0000_2923, biz_0000_2924, biz_0000_2925, biz_0000_2926, biz_0000_2927, biz_0000_2928, biz_0000_2929, biz_0000_2930, biz_0000_2931, biz_0000_2932, biz_0000_2933, biz_0000_2934, biz_0000_2935, biz_0000_2936, biz_0000_2937, biz_0000_2938, biz_0000_2939, biz_0000_2940, biz_0000_2941, biz_0000_2942, biz_0000_2943, biz_0000_2944, biz_0000_2945, biz_0000_2946, biz_0000_2947, biz_0000_2948, biz_0000_2949, biz_0000_2950, biz_0000_2951, biz_0000_2952, biz_0000_2953, biz_0000_2954, biz_0000_2955, biz_0000_2956, biz_0000_2957, biz_0000_2958, biz_0000_2959, biz_0000_2960, biz_0000_2961, biz_0000_2962, biz_0000_2963, biz_0000_2964, biz_0000_2965, biz_0000_2966, biz_0000_2967, biz_0000_2968, biz_0000_2969, biz_0000_2970, biz_0000_2971, biz_0000_2972, biz_0000_2973, biz_0000_2974, biz_0000_2975, biz_0000_2976, biz_0000_2977, biz_0000_2978, biz_0000_2979, biz_0000_2980, biz_0000_2981, biz_0000_2982, biz_0000_2983, biz_0000_2984, biz_0000_2985, biz_0000_2986, biz_0000_2987, biz_0000_2988, biz_0000_2989, biz_0000_2990, biz_0000_2991, biz_0000_2992, biz_0000_2993, biz_0000_2994, biz_0000_2995, biz_0000_2996, biz_0000_2997, biz_0000_2998, biz_0000_2999, biz_0000_3000, biz_0000_3001, biz_0000_3002, biz_0000_3003, biz_0000_3004, biz_0000_3005, biz_0000_3006, biz_0000_3007, biz_0000_3008, biz_0000_3009, biz_0000_3010, biz_0000_3011, biz_0000_3012, biz_0000_3013, biz_0000_3014, biz_0000_3015, biz_0000_3016, biz_0000_3017, biz_0000_3018, biz_0000_3019, biz_0000_3020, biz_0000_3021, biz_0000_3022, biz_0000_3023, biz_0000_3024, biz_0000_3025, biz_0000_3026, biz_0000_3027, biz_0000_3028, biz_0000_3029, biz_0000_3030, biz_0000_3031, biz_0000_3032, biz_0000_3033, biz_0000_3034, biz_0000_3035, biz_0000_3036, biz_0000_3037, biz_0000_3038, biz_0000_3039, biz_0000_3040, biz_0000_3041, biz_0000_3042, biz_0000_3043, biz_0000_3044, biz_0000_3045, biz_0000_3046, biz_0000_3047, biz_0000_3048, biz_0000_3049, biz_0000_3050, biz_0000_3051, biz_0000_3052, biz_0000_3053, biz_0000_3054, biz_0000_3055, biz_0000_3056, biz_0000_3057, biz_0000_3058, biz_0000_3059, biz_0000_3060, biz_0000_3061, biz_0000_3062, biz_0000_3063, biz_0000_3064, biz_0000_3065, biz_0000_3066, biz_0000_3067, biz_0000_3068, biz_0000_3069, biz_0000_3070, biz_0000_3071, biz_0000_3072, biz_0000_3073, biz_0000_3074, biz_0000_3075, biz_0000_3076, biz_0000_3077, biz_0000_3078, biz_0000_3079, biz_0000_3080, biz_0000_3081, biz_0000_3082, biz_0000_3083, biz_0000_3084, biz_0000_3085, biz_0000_3086, biz_0000_3087, biz_0000_3088, biz_0000_3089, biz_0000_3090, biz_0000_3091, biz_0000_3092, biz_0000_3093, biz_0000_3094, biz_0000_3095, biz_0000_3096, biz_0000_3097, biz_0000_3098, biz_0000_3099, biz_0000_3100, biz_0000_3101, biz_0000_3102, biz_0000_3103, biz_0000_3104, biz_0000_3105, biz_0000_3106, biz_0000_3107, biz_0000_3108, biz_0000_3109, biz_0000_3110, biz_0000_3111, biz_0000_3112, biz_0000_3113, biz_0000_3114, biz_0000_3115, biz_0000_3116, biz_0000_3117, biz_0000_3118, biz_0000_3119, biz_0000_3120, biz_0000_3121, biz_0000_3122, biz_0000_3123, biz_0000_3124, biz_0000_3125, biz_0000_3126, biz_0000_3127, biz_0000_3128, biz_0000_3129, biz_0000_3130, biz_0000_3131, biz_0000_3132, biz_0000_3133, biz_0000_3134, biz_0000_3135, biz_0000_3136, biz_0000_3137, biz_0000_3138, biz_0000_3139, biz_0000_3140, biz_0000_3141, biz_0000_3142, biz_0000_3143, biz_0000_3144, biz_0000_3145, biz_0000_3146, biz_0000_3147, biz_0000_3148, biz_0000_3149, biz_0000_3150, biz_0000_3151, biz_0000_3152, biz_0000_3153, biz_0000_3154, biz_0000_3155, biz_0000_3156, biz_0000_3157, biz_0000_3158, biz_0000_3159, biz_0000_3160, biz_0000_3161, biz_0000_3162, biz_0000_3163, biz_0000_3164, biz_0000_3165, biz_0000_3166, biz_0000_3167, biz_0000_3168, biz_0000_3169, biz_0000_3170, biz_0000_3171, biz_0000_3172, biz_0000_3173, biz_0000_3174, biz_0000_3175, biz_0000_3176, biz_0000_3177, biz_0000_3178, biz_0000_3179, biz_0000_3180, biz_0000_3181, biz_0000_3182, biz_0000_3183, biz_0000_3184, biz_0000_3185, biz_0000_3186, biz_0000_3187, biz_0000_3188, biz_0000_3189, biz_0000_3190, biz_0000_3191, biz_0000_3192, biz_0000_3193, biz_0000_3194, biz_0000_3195, biz_0000_3196, biz_0000_3197, biz_0000_3198, biz_0000_3199, biz_0000_3200, biz_0000_3201, biz_0000_3202, biz_0000_3203, biz_0000_3204, biz_0000_3205, biz_0000_3206, biz_0000_3207, biz_0000_3208, biz_0000_3209, biz_0000_3210, biz_0000_3211, biz_0000_3212, biz_0000_3213, biz_0000_3214, biz_0000_3215, biz_0000_3216, biz_0000_3217, biz_0000_3218, biz_0000_3219, biz_0000_3220, biz_0000_3221, biz_0000_3222, biz_0000_3223, biz_0000_3224, biz_0000_3225, biz_0000_3226, biz_0000_3227, biz_0000_3228, biz_0000_3229, biz_0000_3230, biz_0000_3231, biz_0000_3232, biz_0000_3233, biz_0000_3234, biz_0000_3235, biz_0000_3236, biz_0000_3237, biz_0000_3238, biz_0000_3239, biz_0000_3240, biz_0000_3241, biz_0000_3242, biz_0000_3243, biz_0000_3244, biz_0000_3245, biz_0000_3246, biz_0000_3247, biz_0000_3248, biz_0000_3249, biz_0000_3250, biz_0000_3251, biz_0000_3252, biz_0000_3253, biz_0000_3254, biz_0000_3255, biz_0000_3256, biz_0000_3257, biz_0000_3258, biz_0000_3259, biz_0000_3260, biz_0000_3261, biz_0000_3262, biz_0000_3263, biz_0000_3264, biz_0000_3265, biz_0000_3266, biz_0000_3267, biz_0000_3268, biz_0000_3269, biz_0000_3270, biz_0000_3271, biz_0000_3272, biz_0000_3273, biz_0000_3274, biz_0000_3275, biz_0000_3276, biz_0000_3277, biz_0000_3278, biz_0000_3279, biz_0000_3280, biz_0000_3281, biz_0000_3282, biz_0000_3283, biz_0000_3284, biz_0000_3285, biz_0000_3286, biz_0000_3287, biz_0000_3288, biz_0000_3289, biz_0000_3290, biz_0000_3291, biz_0000_3292, biz_0000_3293, biz_0000_3294, biz_0000_3295, biz_0000_3296, biz_0000_3297, biz_0000_3298, biz_0000_3299, biz_0000_3300, biz_0000_3301, biz_0000_3302, biz_0000_3303, biz_0000_3304, biz_0000_3305, biz_0000_3306, biz_0000_3307, biz_0000_3308, biz_0000_3309, biz_0000_3310, biz_0000_3311, biz_0000_3312, biz_0000_3313, biz_0000_3314, biz_0000_3315, biz_0000_3316, biz_0000_3317, biz_0000_3318, biz_0000_3319, biz_0000_3320, biz_0000_3321, biz_0000_3322, biz_0000_3323, biz_0000_3324, biz_0000_3325, biz_0000_3326, biz_0000_3327, biz_0000_3328, biz_0000_3329, biz_0000_3330, biz_0000_3331, biz_0000_3332, biz_0000_3333, biz_0000_3334, biz_0000_3335, biz_0000_3336, biz_0000_3337, biz_0000_3338, biz_0000_3339, biz_0000_3340, biz_0000_3341, biz_0000_3342, biz_0000_3343, biz_0000_3344, biz_0000_3345, biz_0000_3346, biz_0000_3347, biz_0000_3348, biz_0000_3349, biz_0000_3350, biz_0000_3351, biz_0000_3352, biz_0000_3353, biz_0000_3354, biz_0000_3355, biz_0000_3356, biz_0000_3357, biz_0000_3358, biz_0000_3359, biz_0000_3360, biz_0000_3361, biz_0000_3362, biz_0000_3363, biz_0000_3364, biz_0000_3365, biz_0000_3366, biz_0000_3367, biz_0000_3368, biz_0000_3369, biz_0000_3370, biz_0000_3371, biz_0000_3372, biz_0000_3373, biz_0000_3374, biz_0000_3375, biz_0000_3376, biz_0000_3377, biz_0000_3378, biz_0000_3379, biz_0000_3380, biz_0000_3381, biz_0000_3382, biz_0000_3383, biz_0000_3384, biz_0000_3385, biz_0000_3386, biz_0000_3387, biz_0000_3388, biz_0000_3389, biz_0000_3390, biz_0000_3391, biz_0000_3392, biz_0000_3393, biz_0000_3394, biz_0000_3395, biz_0000_3396, biz_0000_3397, biz_0000_3398, biz_0000_3399, biz_0000_3400, biz_0000_3401, biz_0000_3402, biz_0000_3403, biz_0000_3404, biz_0000_3405, biz_0000_3406, biz_0000_3407, biz_0000_3408, biz_0000_3409, biz_0000_3410, biz_0000_3411, biz_0000_3412, biz_0000_3413, biz_0000_3414, biz_0000_3415, biz_0000_3416, biz_0000_3417, biz_0000_3418, biz_0000_3419, biz_0000_3420, biz_0000_3421, biz_0000_3422, biz_0000_3423, biz_0000_3424, biz_0000_3425, biz_0000_3426, biz_0000_3427, biz_0000_3428, biz_0000_3429, biz_0000_3430, biz_0000_3431, biz_0000_3432, biz_0000_3433, biz_0000_3434, biz_0000_3435, biz_0000_3436, biz_0000_3437, biz_0000_3438, biz_0000_3439, biz_0000_3440, biz_0000_3441, biz_0000_3442, biz_0000_3443, biz_0000_3444, biz_0000_3445, biz_0000_3446, biz_0000_3447, biz_0000_3448, biz_0000_3449, biz_0000_3450, biz_0000_3451, biz_0000_3452, biz_0000_3453, biz_0000_3454, biz_0000_3455, biz_0000_3456, biz_0000_3457, biz_0000_3458, biz_0000_3459, biz_0000_3460, biz_0000_3461, biz_0000_3462, biz_0000_3463, biz_0000_3464, biz_0000_3465, biz_0000_3466, biz_0000_3467, biz_0000_3468, biz_0000_3469, biz_0000_3470, biz_0000_3471, biz_0000_3472, biz_0000_3473, biz_0000_3474, biz_0000_3475, biz_0000_3476, biz_0000_3477, biz_0000_3478, biz_0000_3479, biz_0000_3480, biz_0000_3481, biz_0000_3482, biz_0000_3483, biz_0000_3484, biz_0000_3485, biz_0000_3486, biz_0000_3487, biz_0000_3488, biz_0000_3489, biz_0000_3490, biz_0000_3491, biz_0000_3492, biz_0000_3493, biz_0000_3494, biz_0000_3495, biz_0000_3496, biz_0000_3497, biz_0000_3498, biz_0000_3499, biz_0000_3500, biz_0000_3501, biz_0000_3502, biz_0000_3503, biz_0000_3504, biz_0000_3505, biz_0000_3506, biz_0000_3507, biz_0000_3508, biz_0000_3509, biz_0000_3510, biz_0000_3511, biz_0000_3512, biz_0000_3513, biz_0000_3514, biz_0000_3515, biz_0000_3516, biz_0000_3517, biz_0000_3518, biz_0000_3519, biz_0000_3520, biz_0000_3521, biz_0000_3522, biz_0000_3523, biz_0000_3524, biz_0000_3525, biz_0000_3526, biz_0000_3527, biz_0000_3528, biz_0000_3529, biz_0000_3530, biz_0000_3531, biz_0000_3532, biz_0000_3533, biz_0000_3534, biz_0000_3535, biz_0000_3536, biz_0000_3537, biz_0000_3538, biz_0000_3539, biz_0000_3540, biz_0000_3541, biz_0000_3542, biz_0000_3543, biz_0000_3544, biz_0000_3545, biz_0000_3546, biz_0000_3547, biz_0000_3548, biz_0000_3549, biz_0000_3550, biz_0000_3551, biz_0000_3552, biz_0000_3553, biz_0000_3554, biz_0000_3555, biz_0000_3556, biz_0000_3557, biz_0000_3558, biz_0000_3559, biz_0000_3560, biz_0000_3561, biz_0000_3562, biz_0000_3563, biz_0000_3564, biz_0000_3565, biz_0000_3566, biz_0000_3567, biz_0000_3568, biz_0000_3569, biz_0000_3570, biz_0000_3571, biz_0000_3572, biz_0000_3573, biz_0000_3574, biz_0000_3575, biz_0000_3576, biz_0000_3577, biz_0000_3578, biz_0000_3579, biz_0000_3580, biz_0000_3581, biz_0000_3582, biz_0000_3583, biz_0000_3584, biz_0000_3585, biz_0000_3586, biz_0000_3587, biz_0000_3588, biz_0000_3589, biz_0000_3590, biz_0000_3591, biz_0000_3592, biz_0000_3593, biz_0000_3594, biz_0000_3595, biz_0000_3596, biz_0000_3597, biz_0000_3598, biz_0000_3599, biz_0000_3600, biz_0000_3601, biz_0000_3602, biz_0000_3603, biz_0000_3604, biz_0000_3605, biz_0000_3606, biz_0000_3607, biz_0000_3608, biz_0000_3609, biz_0000_3610, biz_0000_3611, biz_0000_3612, biz_0000_3613, biz_0000_3614, biz_0000_3615, biz_0000_3616, biz_0000_3617, biz_0000_3618, biz_0000_3619, biz_0000_3620, biz_0000_3621, biz_0000_3622, biz_0000_3623, biz_0000_3624, biz_0000_3625, biz_0000_3626, biz_0000_3627, biz_0000_3628, biz_0000_3629, biz_0000_3630, biz_0000_3631, biz_0000_3632, biz_0000_3633, biz_0000_3634, biz_0000_3635, biz_0000_3636, biz_0000_3637, biz_0000_3638, biz_0000_3639, biz_0000_3640, biz_0000_3641, biz_0000_3642, biz_0000_3643, biz_0000_3644, biz_0000_3645, biz_0000_3646, biz_0000_3647, biz_0000_3648, biz_0000_3649, biz_0000_3650, biz_0000_3651, biz_0000_3652, biz_0000_3653, biz_0000_3654, biz_0000_3655, biz_0000_3656, biz_0000_3657, biz_0000_3658, biz_0000_3659, biz_0000_3660, biz_0000_3661, biz_0000_3662, biz_0000_3663, biz_0000_3664, biz_0000_3665, biz_0000_3666, biz_0000_3667, biz_0000_3668, biz_0000_3669, biz_0000_3670, biz_0000_3671, biz_0000_3672, biz_0000_3673, biz_0000_3674, biz_0000_3675, biz_0000_3676, biz_0000_3677, biz_0000_3678, biz_0000_3679, biz_0000_3680, biz_0000_3681, biz_0000_3682, biz_0000_3683, biz_0000_3684, biz_0000_3685, biz_0000_3686, biz_0000_3687, biz_0000_3688, biz_0000_3689, biz_0000_3690, biz_0000_3691, biz_0000_3692, biz_0000_3693, biz_0000_3694, biz_0000_3695, biz_0000_3696, biz_0000_3697, biz_0000_3698, biz_0000_3699, biz_0000_3700, biz_0000_3701, biz_0000_3702, biz_0000_3703, biz_0000_3704, biz_0000_3705, biz_0000_3706, biz_0000_3707, biz_0000_3708, biz_0000_3709, biz_0000_3710, biz_0000_3711, biz_0000_3712, biz_0000_3713, biz_0000_3714, biz_0000_3715, biz_0000_3716, biz_0000_3717, biz_0000_3718, biz_0000_3719, biz_0000_3720, biz_0000_3721, biz_0000_3722, biz_0000_3723, biz_0000_3724, biz_0000_3725, biz_0000_3726, biz_0000_3727, biz_0000_3728, biz_0000_3729, biz_0000_3730, biz_0000_3731, biz_0000_3732, biz_0000_3733, biz_0000_3734, biz_0000_3735, biz_0000_3736, biz_0000_3737, biz_0000_3738, biz_0000_3739, biz_0000_3740, biz_0000_3741, biz_0000_3742, biz_0000_3743, biz_0000_3744, biz_0000_3745, biz_0000_3746, biz_0000_3747, biz_0000_3748, biz_0000_3749, biz_0000_3750, biz_0000_3751, biz_0000_3752, biz_0000_3753, biz_0000_3754, biz_0000_3755, biz_0000_3756, biz_0000_3757, biz_0000_3758, biz_0000_3759, biz_0000_3760, biz_0000_3761, biz_0000_3762, biz_0000_3763, biz_0000_3764, biz_0000_3765, biz_0000_3766, biz_0000_3767, biz_0000_3768, biz_0000_3769, biz_0000_3770, biz_0000_3771, biz_0000_3772, biz_0000_3773, biz_0000_3774, biz_0000_3775, biz_0000_3776, biz_0000_3777, biz_0000_3778, biz_0000_3779, biz_0000_3780, biz_0000_3781, biz_0000_3782, biz_0000_3783, biz_0000_3784, biz_0000_3785, biz_0000_3786, biz_0000_3787, biz_0000_3788, biz_0000_3789, biz_0000_3790, biz_0000_3791, biz_0000_3792, biz_0000_3793, biz_0000_3794, biz_0000_3795, biz_0000_3796, biz_0000_3797, biz_0000_3798, biz_0000_3799, biz_0000_3800, biz_0000_3801, biz_0000_3802, biz_0000_3803, biz_0000_3804, biz_0000_3805, biz_0000_3806, biz_0000_3807, biz_0000_3808, biz_0000_3809, biz_0000_3810, biz_0000_3811, biz_0000_3812, biz_0000_3813, biz_0000_3814, biz_0000_3815, biz_0000_3816, biz_0000_3817, biz_0000_3818, biz_0000_3819, biz_0000_3820, biz_0000_3821, biz_0000_3822, biz_0000_3823, biz_0000_3824, biz_0000_3825, biz_0000_3826, biz_0000_3827, biz_0000_3828, biz_0000_3829, biz_0000_3830, biz_0000_3831, biz_0000_3832, biz_0000_3833, biz_0000_3834, biz_0000_3835, biz_0000_3836, biz_0000_3837, biz_0000_3838, biz_0000_3839, biz_0000_3840, biz_0000_3841, biz_0000_3842, biz_0000_3843, biz_0000_3844, biz_0000_3845, biz_0000_3846, biz_0000_3847, biz_0000_3848, biz_0000_3849, biz_0000_3850, biz_0000_3851, biz_0000_3852, biz_0000_3853, biz_0000_3854, biz_0000_3855, biz_0000_3856, biz_0000_3857, biz_0000_3858, biz_0000_3859, biz_0000_3860, biz_0000_3861, biz_0000_3862, biz_0000_3863, biz_0000_3864, biz_0000_3865, biz_0000_3866, biz_0000_3867, biz_0000_3868, biz_0000_3869, giant_000];
 }
 
 export function rega_0000(): ABizFn[] {

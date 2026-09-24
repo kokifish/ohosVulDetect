@@ -63,3 +63,15 @@ export function ovdPriv003S(): string {
   // 同形第一步：读设备字段；但不做任何外传（call-chain 的 request 侧不存在）
   return `device model local-only: len=${deviceInfo.productModel.length}`;
 }
+
+// SAFE: OVD-PASTE-005S 拒绝令牌入粘贴板：仅放置非敏感标签并立即清除（CWE-200 加固）
+export async function ovdPaste005S(token: string): Promise<string> {
+  const pb = pasteboard.getSystemPasteboard();
+  if (token.length > 0 && /ovd_/.test(token)) {
+    return 'paste005S credential refused (kept out of clipboard)';
+  }
+  const data = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN, 'tag-only');
+  await pb.setData(data);
+  await pb.clear();
+  return 'paste005S non-sensitive tag set then cleared';
+}

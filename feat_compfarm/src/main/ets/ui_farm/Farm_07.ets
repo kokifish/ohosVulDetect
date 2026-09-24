@@ -1,42 +1,42 @@
 // Farm_07.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmMenuItemComp {
+export struct FarmGridComp {
   build() {
     Column() {
-      MenuItem()
-        .contentFontColor(Color.Red)
-        .labelFontColor(Color.Red)
-        .selectIcon(true)
+      Grid()
+        .cellLength(1)
+        .editMode(true)
+        .enableEditMode(true)
+        .enableScrollInteraction(true)
+        .friction(1)
+        .maxCount(1)
+        .minCount(1)
+        .multiSelectable(true)
+        .onEditModeChange((v: boolean): void => {})
+        .rowsTemplate('ovd')
+        .scrollBarColor(Color.Red)
+        .scrollBarWidth(1)
+        .supportAnimation(true)
+        .supportEmptyBranchInLazyLoading(true)
+        .syncLoad(true)
     }
   }
 }
 
 @Component
-export struct FarmNavDestinationComp {
+export struct FarmGridItemComp {
   build() {
     Column() {
-      NavDestination()
-        .backButtonIcon('ovd')
-        .bindToNestedScrollable([])
-        .bindToScrollable([])
-        .enableNavigationIndicator(true)
-        .enableStatusBar(true)
-        .fullScreenOverlay(true)
-        .hideBackButton(true)
-        .hideToolBar(true)
-        .ignoreLayoutSafeArea([])
-        .menus([])
-        .onActive((v: NavDestinationActiveReason): void => {})
-        .onHidden((v: VisibilityChangeReason): void => {})
-        .onInactive((v: NavDestinationActiveReason): void => {})
-        .onNewParam((v: ESObject): void => {})
-        .onResult((v: ESObject): void => {})
-        .onWillDisappear((v: void): void => {})
-        .onWillHide((v: void): void => {})
-        .onWillShow((v: void): void => {})
-        .recoverable(true)
-        .toolbarConfiguration([])
+      Grid() {
+        GridItem()
+          .columnEnd(1)
+          .columnStart(1)
+          .forceRebuild(true)
+          .rowEnd(1)
+          .rowStart(1)
+          .selectable(true)
+      }
     }
   }
 }

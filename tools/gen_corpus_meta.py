@@ -59,22 +59,31 @@ NOTES = [
 ]
 
 
-def record_stats(text: str) -> dict[str, list[int]]:
-    """按 .function 行携带的 record（&源文件&）归因指令/函数，返回 {record: [inst, funcs]}。"""
+def record_stats(text: str) -> tuple[dict[str, list[int]], dict]:
+    """按 .function 行携带的 record（&源文件&）归因指令/函数。
+    返回 ({record: [inst, funcs]}, 最大单方法画像 {name, record, instructions})。"""
     stats: dict[str, list[int]] = {}
     cur = "<none>"
+    max_m = {"name": "", "record": "", "instructions": 0}
+    cur_func_inst = 0
+    cur_func_name = ""
     for ln in text.split("\n"):
         m = REC_RE.match(ln)
         if m:
             cur = m.group(1)
             stats.setdefault(cur, [0, 0])
             stats[cur][1] += 1
+            cur_func_name = ln.split("&", 2)[-1].split("(", 1)[0].strip().lstrip(".")
+            cur_func_inst = 0
             continue
         m = OP_RE.match(ln)
         if m and m.group(1) not in NOISE:
             stats.setdefault(cur, [0, 0])
             stats[cur][0] += 1
-    return stats
+            cur_func_inst += 1
+            if cur_func_inst > max_m["instructions"]:
+                max_m = {"name": cur_func_name, "record": cur, "instructions": cur_func_inst}
+    return stats, max_m
 
 
 def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
@@ -111,6 +120,7 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
                 zf.extractall(pdir)
             abc_bytes = inst = funcs = 0
             rec_stats: dict[str, list[int]] = {}
+            max_method = {"name": "", "record": "", "instructions": 0}
             for abc in sorted(pdir.rglob("*.abc")):
                 abc_bytes += abc.stat().st_size
                 out = work / "x.dis"
@@ -122,10 +132,13 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
                 inst += i
                 funcs += f
                 if with_records and name == "feat_heavy":
-                    for rec, (ri, rf) in record_stats(text).items():
+                    rs, mm = record_stats(text)
+                    for rec, (ri, rf) in rs.items():
                         cur = rec_stats.setdefault(rec, [0, 0])
                         cur[0] += ri
                         cur[1] += rf
+                    if mm["instructions"] > max_method["instructions"]:
+                        max_method = mm
             entry = {"name": name, "type": mods_meta.get(name, ""), "bytes": pkg.stat().st_size,
                      "abc_bytes": abc_bytes, "instructions": inst, "functions": funcs}
             if rec_stats:
@@ -136,6 +149,8 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
                     "top1": {"name": tops[0][0], "instructions": tops[0][1][0],
                              "functions": tops[0][1][1]},
                     "top1_share": round(tops[0][1][0] / total, 4) if total else 0.0,
+                    "max_method": {k: max_method[k] for k in ("name", "record", "instructions")
+                                   if max_method["instructions"] > 0},
                     "top5": [{"name": n, "instructions": v[0]} for n, v in tops[:5]],
                 }
             modules.append(entry)
@@ -149,6 +164,14 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
     info["total_instructions"] = total
     info["total_functions"] = sum(m["functions"] for m in modules)
     return info
+
+
+def write_full_sidecar(path: pathlib.Path, info: dict) -> None:
+    """产物旁写全量画像 sidecar（含每模块指令/函数/record 分布），覆盖 build.py 的基础版。"""
+    sc = dict(info)
+    sc["profile"] = "full (per-module inst/funcs/record dist); repo-level rollup in corpus_meta.json"
+    path.with_suffix(path.suffix + ".meta.json").write_text(
+        json.dumps(sc, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def md5_of(path: pathlib.Path) -> str:
@@ -186,6 +209,7 @@ def main() -> int:
     for v in VARIANTS:
         print(f"== profile {apps[v].name}")
         variants[v] = profile_app(apps[v], args.ark_disasm, with_records=(v == "api26-release"))
+        write_full_sidecar(apps[v], variants[v])
     tiers: dict[str, dict] = {}
     ref_md5 = md5_of(apps["api26-release"])
     for t in TIERS:
@@ -197,6 +221,7 @@ def main() -> int:
             tiers[t]["same_build_as"] = "api26-release"
         else:
             tiers[t] = profile_app(p, args.ark_disasm, with_records=(t != "heavy"))
+        write_full_sidecar(p, tiers[t])
 
     meta = {
         "schema_version": "1.0",

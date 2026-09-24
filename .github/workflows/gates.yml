@@ -15,6 +15,13 @@ jobs:
         run: python3 tools/check_twin_fp.py
       - name: sync_pages
         run: python3 tools/sync_pages.py
+      - name: coverage audit (sdk manifest fixture)
+        run: |
+          # CI 无 DevEco SDK：用 tools/sdk_manifest.json 清单快照跑覆盖对账 + 漂移门禁
+          # （本地以真实 SDK 跑同名命令；快照漂移时本地 --dump-fixture 重新生成）。
+          # 组件内 API 对账（check_component_api_coverage.py）依赖 SDK d.ts，保持本地执行。
+          python3 tools/check_corpus_coverage.py --use-fixture | tee /tmp/cov.txt
+          grep -q '漂移检查 OK' /tmp/cov.txt
       - name: generator determinism (all)
         run: |
           # 全部纯源码生成器原地重生成，git diff --exit-code 验证与提交内容一致。

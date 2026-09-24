@@ -1,27 +1,26 @@
 // Farm_04.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmImageAnimatorComp {
+export struct FarmCounterComp {
   build() {
     Column() {
-      ImageAnimator()
-        .fixedSize(true)
-        .iterations(1)
-        .monitorInvisibleArea(true)
-        .preDecode(1)
-        .reverse(true)
+      Counter()
+        .enableDec(true)
+        .enableInc(true)
+        .onDec((): void => {})
+        .onInc((): void => {})
     }
   }
 }
 
 @Component
-export struct FarmImageSpanComp {
+export struct FarmDataPanelComp {
   build() {
     Column() {
-      Text() {
-        ImageSpan($r('app.media.startIcon'))
-          .supportSvg2(true)
-      }
+      DataPanel({ values: [] })
+        .closeEffect(true)
+        .trackBackgroundColor(Color.Red)
+        .valueColors([])
     }
   }
 }

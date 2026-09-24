@@ -1,28 +1,27 @@
 // Farm_09.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmRectComp {
+export struct FarmImageAnimatorComp {
   build() {
     Column() {
-      Rect()
-        .radius(1)
-        .radiusHeight(1)
-        .radiusWidth(1)
+      ImageAnimator()
+        .fixedSize(true)
+        .iterations(1)
+        .monitorInvisibleArea(true)
+        .preDecode(1)
+        .reverse(true)
     }
   }
 }
 
 @Component
-export struct FarmRefreshComp {
+export struct FarmImageSpanComp {
   build() {
     Column() {
-      Refresh({ refreshing: true })
-        .maxPullDownDistance(1)
-        .onOffsetChange((v: number): void => {})
-        .pullDownRatio(1)
-        .pullToRefresh(true)
-        .pullUpToCancelRefresh(true)
-        .refreshOffset(1)
+      Text() {
+        ImageSpan($r('app.media.startIcon'))
+          .supportSvg2(true)
+      }
     }
   }
 }

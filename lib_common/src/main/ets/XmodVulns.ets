@@ -28,3 +28,11 @@ export function ovdXmod002(ctx: common.Context): string {
   p.flush();
   return 'har session cache written';
 }
+
+// VULN: OVD-XMOD-005 HAR 退款回调令牌：常量经共享 preferences 缓存（CWE-312/798）
+export function ovdXmod005(ctx: common.Context): string {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_har_refund' });
+  p.putSync('vd-har-refund-callback', 'cb_tok_xmod55_ovd9f31');
+  p.flush();
+  return 'har refund callback token cached';
+}

@@ -31,6 +31,10 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-dkv', '分布式 KV 同步泄露', 'pages/DkvVulnPage'),
   new DemoItem('cat-micc', '麦克风静默采集', 'pages/MiccVulnPage'),
   new DemoItem('cat-taint', '跨函数污点链', 'pages/TaintVulnPage'),
+  new DemoItem('cat-wifi', '热点口令落盘', 'pages/WifiVulnPage'),
+  new DemoItem('cat-geo', '精确坐标明文缓存', 'pages/GeoVulnPage'),
+  new DemoItem('cat-dev', '设备指纹持久化', 'pages/DevVulnPage'),
+  new DemoItem('cat-emtr', '进程事件令牌广播', 'pages/EmtrVulnPage'),
 ];
 
 @Entry

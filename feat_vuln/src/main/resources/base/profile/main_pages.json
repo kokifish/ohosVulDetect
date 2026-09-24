@@ -30,6 +30,10 @@
     "pages/PwdinVulnPage",
     "pages/DkvVulnPage",
     "pages/MiccVulnPage",
-    "pages/TaintVulnPage"
+    "pages/TaintVulnPage",
+    "pages/WifiVulnPage",
+    "pages/GeoVulnPage",
+    "pages/DevVulnPage",
+    "pages/EmtrVulnPage"
   ]
 }

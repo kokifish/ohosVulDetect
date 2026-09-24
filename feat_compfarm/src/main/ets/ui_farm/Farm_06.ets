@@ -1,22 +1,27 @@
 // Farm_06.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmLoadingProgressComp {
+export struct FarmFolderStackComp {
   build() {
     Column() {
-      LoadingProgress()
-        .enableLoading(true)
+      FolderStack()
+        .alignContent(Alignment.Center)
+        .autoHalfFold(true)
+        .enableAnimation(true)
     }
   }
 }
 
 @Component
-export struct FarmMarqueeComp {
+export struct FarmGaugeComp {
   build() {
     Column() {
-      Marquee({ start: true, src: 'ovd' })
-        .allowScale(true)
-        .onStop((v: void): void => {})
+      Gauge({ value: 1 })
+        .colors(Color.Red)
+        .endAngle(1)
+        .privacySensitive(true)
+        .startAngle(1)
+        .value(1)
     }
   }
 }

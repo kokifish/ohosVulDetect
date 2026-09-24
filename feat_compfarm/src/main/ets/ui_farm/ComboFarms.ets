@@ -1,26 +1,26 @@
 // ComboFarms.ets — 跨组件组合调用语料（生成，勿手改）：农场组件嵌入组合容器。
 
+import { FarmAlphabetIndexerComp } from './Farm_00';
 import { FarmButtonComp } from './Farm_00';
-import { FarmCheckboxComp } from './Farm_00';
-import { FarmColumnComp } from './Farm_01';
-import { FarmComponent3DComp } from './Farm_01';
-import { FarmCounterComp } from './Farm_02';
-import { FarmFolderStackComp } from './Farm_02';
-import { FarmGridColComp } from './Farm_03';
-import { FarmGridComp } from './Farm_03';
-import { FarmImageAnimatorComp } from './Farm_04';
-import { FarmImageSpanComp } from './Farm_04';
-import { FarmIndicatorComponentComp } from './Farm_05';
-import { FarmListComp } from './Farm_05';
+import { FarmCalendarPickerComp } from './Farm_01';
+import { FarmCanvasComp } from './Farm_01';
+import { FarmCheckboxComp } from './Farm_02';
+import { FarmCheckboxGroupComp } from './Farm_02';
+import { FarmColumnComp } from './Farm_03';
+import { FarmComponent3DComp } from './Farm_03';
+import { FarmCounterComp } from './Farm_04';
+import { FarmDataPanelComp } from './Farm_04';
+import { FarmDatePickerComp } from './Farm_05';
+import { FarmDividerComp } from './Farm_05';
 
 @Builder
 export function farmCombo1() {
   Column({ space: 6 }) {
     Text('combo layer').fontSize(12)
+    FarmAlphabetIndexerComp()
     FarmButtonComp()
-    FarmCheckboxComp()
-    FarmColumnComp()
-    FarmComponent3DComp()
+    FarmCalendarPickerComp()
+    FarmCanvasComp()
   }
   .padding(8)
   }
@@ -29,10 +29,10 @@ export function farmCombo1() {
 export function farmCombo2() {
   Row({ space: 6 }) {
     Text('combo layer').fontSize(12)
-    FarmCounterComp()
-    FarmFolderStackComp()
-    FarmGridComp()
-    FarmGridColComp()
+    FarmCheckboxComp()
+    FarmCheckboxGroupComp()
+    FarmColumnComp()
+    FarmComponent3DComp()
   }
   .padding(8)
   }
@@ -41,10 +41,10 @@ export function farmCombo2() {
 export function farmCombo3() {
   Stack({ alignContent: Alignment.Center }) {
     Text('combo layer').fontSize(12)
-    FarmImageAnimatorComp()
-    FarmImageSpanComp()
-    FarmIndicatorComponentComp()
-    FarmListComp()
+    FarmCounterComp()
+    FarmDataPanelComp()
+    FarmDatePickerComp()
+    FarmDividerComp()
   }
   .padding(8)
   }

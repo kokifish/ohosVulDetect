@@ -1,39 +1,53 @@
 // Farm_13.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmSideBarContainerComp {
+export struct FarmNavDestinationComp {
   build() {
     Column() {
-      SideBarContainer()
-        .autoHide(true)
-        .maxSideBarWidth(1)
-        .minSideBarWidth(1)
-        .showControlButton(true)
-        .showSideBar(true)
-        .showSideBarWithGesture(true)
+      NavDestination()
+        .backButtonIcon('ovd')
+        .bindToNestedScrollable([])
+        .bindToScrollable([])
+        .enableNavigationIndicator(true)
+        .enableStatusBar(true)
+        .fullScreenOverlay(true)
+        .hideBackButton(true)
+        .hideToolBar(true)
+        .ignoreLayoutSafeArea([])
+        .menus([])
+        .onActive((v: NavDestinationActiveReason): void => {})
+        .onHidden((v: VisibilityChangeReason): void => {})
+        .onInactive((v: NavDestinationActiveReason): void => {})
+        .onNewParam((v: ESObject): void => {})
+        .onResult((v: ESObject): void => {})
+        .onWillDisappear((v: void): void => {})
+        .onWillHide((v: void): void => {})
+        .onWillShow((v: void): void => {})
+        .recoverable(true)
+        .toolbarConfiguration([])
     }
   }
 }
 
 @Component
-export struct FarmSliderComp {
+export struct FarmNavigationComp {
   build() {
     Column() {
-      Slider()
-        .blockBorderColor(Color.Red)
-        .blockBorderWidth(1)
-        .blockColor(Color.Red)
-        .enableHapticFeedback(true)
-        .maxLabel('ovd')
-        .minLabel('ovd')
-        .minResponsiveDistance(1)
-        .showSteps(true)
-        .showTips(true)
-        .stepColor(Color.Red)
-        .stepSize(1)
-        .trackBorderRadius(1)
-        .trackColor(Color.Red)
-        .trackThickness(1)
+      Navigation()
+        .backButtonIcon('ovd')
+        .enableDragBar(true)
+        .enableModeChangeAnimation(true)
+        .enableToolBarAdaptation(true)
+        .enableVisibilityLifecycleWithContentCover(true)
+        .hideBackButton(true)
+        .hideNavBar(true)
+        .hideToolBar(true)
+        .ignoreLayoutSafeArea([])
+        .menus([])
+        .navBarWidth(1)
+        .recoverable(true)
+        .subTitle('ovd')
+        .toolbarConfiguration([])
     }
   }
 }

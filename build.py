@@ -49,8 +49,10 @@ SAMPLES_DIR = ROOT / "build" / "samples"
 # small/medium 为单文件小农场：须同时 pin BIZ_FUNCS，否则会继承默认 3870 变成 heavy 规模
 TIER_ENVS = {
     "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
+              "OVD_HEAVY_GIANT_STMTS": "0",
               "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
-    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43"},
+    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
+               "OVD_HEAVY_GIANT_STMTS": "0"},
     "heavy": None,
 }
 
@@ -65,6 +67,33 @@ def env() -> dict:
     e["PATH"] = f"{NODE_BIN}:{OHPM_BIN}:{e.get('PATH', '')}"
     e["DEVECO_SDK_HOME"] = SDK_HOME
     return e
+
+
+def write_sidecar(dst: pathlib.Path, sdk: str, mode: str) -> None:
+    """产物旁写 <名>.meta.json 基础画像（变体/字节/模块清单/apiVersion）。
+    外部消费者拿到工件即见构成，不依赖读仓库；指令/record 级完整画像由
+    tools/gen_corpus_meta.py 落同名 sidecar（构建后 Mandatory 步骤覆盖本文件）。"""
+    import json
+    import zipfile
+    meta: dict = {"artifact": dst.name, "sdk": sdk, "mode": mode,
+                  "bytes": dst.stat().st_size,
+                  "note": "basic profile; run tools/gen_corpus_meta.py for instruction/record-level stats (overrides this file)"}
+    try:
+        with zipfile.ZipFile(dst) as z:
+            meta["zip_raw_bytes"] = sum(i.file_size for i in z.infolist())
+            meta["zip_stored_bytes"] = sum(i.compress_size for i in z.infolist())
+            meta["modules"] = [i.filename.rsplit('/', 1)[-1].split('-')[0]
+                               for i in z.infolist() if i.filename.endswith(('.hap', '.hsp'))]
+            if "pack.info" in z.namelist():
+                pack = json.loads(z.read("pack.info"))
+                meta["bundle"] = pack["summary"]["app"]["bundleName"]
+                mods = pack["summary"]["modules"]
+                if mods and mods[0].get("apiVersion"):
+                    meta["api_version"] = mods[0]["apiVersion"]
+    except (zipfile.BadZipFile, KeyError, ValueError):
+        pass
+    dst.with_suffix(dst.suffix + ".meta.json").write_text(
+        json.dumps(meta, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def collect(sdks: list[str], mode: str) -> list[pathlib.Path]:
@@ -84,6 +113,7 @@ def collect(sdks: list[str], mode: str) -> list[pathlib.Path]:
             new_name = f"{stem[0]}-{sdk}-{mode}-" + "-".join(stem[2:]) + f.suffix
             dst = out_dir / new_name
             shutil.copy2(f, dst)
+            write_sidecar(dst, sdk, mode)
             copied.append(dst)
     return copied
 

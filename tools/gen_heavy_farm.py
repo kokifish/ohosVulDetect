@@ -36,6 +36,9 @@ BIZ_FILES = int(os.environ.get('OVD_HEAVY_BIZ_FILES', '1'))
 BIZ_FUNCS = int(os.environ.get('OVD_HEAVY_BIZ_FUNCS', '3870'))
 BIZ_STMTS = int(os.environ.get('OVD_HEAVY_BIZ_STMTS', '52'))
 BIZ_ASYNC_EVERY = 10     # 每 N 个函数产 1 个 async 孪生
+# 巨方法（方法级不均衡样本）：仅 Biz0000 附加 1 个 GIANT_STMTS 语句块的单函数，
+# 实测 10k 块 ≈ 49 万指令、es2abc 无上限迹象；样本档 pin 0 保持小档规模。
+GIANT_STMTS = int(os.environ.get('OVD_HEAVY_GIANT_STMTS', '10000'))
 API_FNS_CAP = int(os.environ.get('OVD_HEAVY_API_CAP', '8'))
 API_PER_FILE = 24        # apiwrap 每文件模块数
 KIT_STATIC_FNS = 4       # 每 openharmony Kit 静态包装数
@@ -252,10 +255,13 @@ TEMPLATES = [t_arith, t_arith2, t_concat, t_templ, t_push, t_mapset, t_mapget,
              t_literal, t_ternary, t_arrmap, t_tags]
 
 
-def biz_function(fidx: int, j: int, salt: int) -> str:
+def biz_function(fidx: int, j: int, salt: int, stmts: int = 0, fname: str = '') -> str:
+    """单个业务函数；stmts/fname 缺省时按 BIZ_STMTS/常规命名（giant 巨方法复用同一模板池）。"""
+    n_blocks = stmts or BIZ_STMTS
+    name = fname or f'biz_{fidx:04d}_{j:02d}'
     rng = LCG(salt * 1000003 + fidx * 97 + j)
     lines: list[str] = []
-    lines.append(f'export function biz_{fidx:04d}_{j:02d}(seed: number, raw: string): string {{')
+    lines.append(f'export function {name}(seed: number, raw: string): string {{')
     lines.append(f'  let acc: number = (seed * 31 + raw.length + {salt % 9973}) % 100003;')
     lines.append("  let buf: string = raw.length.toString(16) + ':';")
     lines.append("  const tags: string[] = raw.split('-');")
@@ -263,8 +269,8 @@ def biz_function(fidx: int, j: int, salt: int) -> str:
     lines.append('  const arr: number[] = [];')
     lines.append(f'  const u: Unit{fidx} = new Unit{fidx}(acc);')
     uq = 0
-    for i in range(BIZ_STMTS):
-        if i in (BIZ_STMTS // 3, 2 * BIZ_STMTS // 3):
+    for i in range(n_blocks):
+        if i in (n_blocks // 3, 2 * n_blocks // 3):
             tpl = t_closure  # 每函数强制 2 处闭包（数组间接调用，防 release 内联；保函数数达标）
         else:
             tpl = TEMPLATES[rng.nxt(0, len(TEMPLATES) - 1)]
@@ -309,6 +315,11 @@ def gen_biz_file(idx: int) -> str:
             out.append(biz_async(idx, j))
             out.append('')
             asyncs.append(f'biz_{idx:04d}_{j:02d}a')
+    if idx == 0 and GIANT_STMTS > 0:
+        out.append(biz_function(idx, 0, salt=1000003 + idx,
+                                stmts=GIANT_STMTS, fname=f'giant_{idx:03d}'))
+        out.append('')
+        syncs.append(f'giant_{idx:03d}')
     out.append(f'export function reg_{idx:04d}(): BizFn[] {{')
     out.append(f'  return [{", ".join(syncs)}];')
     out.append('}')

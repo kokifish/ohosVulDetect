@@ -44,3 +44,9 @@ export function ovdStor004S(ctx: common.Context): string {
 export function ovdBack001S(): string {
   return 'backup policy: sensitive kv/db excluded from backup&restore';
 }
+
+// SAFE: OVD-STOR-005S refresh 凭据不落盘：仅内存保存聚合状态（CWE-312 加固）
+export function ovdStor005S(): string {
+  const state: Record<string, number> = { 'refreshCount': 1 };
+  return `stor005S in-memory only refresh state count=${state['refreshCount']} (no file)`;
+}

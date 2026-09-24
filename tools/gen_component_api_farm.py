@@ -35,12 +35,15 @@ EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRende
 # 曾全组件排除的 0 覆盖组件（Component3D/Counter/FolderStack/GridCol/StepperItem）
 # 已放回农场（2026-09 缺口专项）；编译报错方法由 auto-iter 继续累积进 EXCLUDE_METHODS。
 # Particle 构造需要复杂 ParticleOptions（emitter 必填嵌套），生成器无法保守映射，维持排除。
-EXCLUDE_COMPONENTS = {"AlphabetIndexer", "CalendarPicker", "Canvas", "CheckboxGroup", "DataPanel", "DatePicker", "Divider", "Gauge", "GridItem", "Image", "ListItem", "Navigator", "Panel", "Particle", "PatternLock", "Progress", "QRCode", "Repeat", "SaveButton", "Span"}
-# 宿主约束组件：只能嵌在特定父组件内（GridCol→GridRow / StepperItem→Stepper /
-# ImageSpan→Text / TabContent→Tabs），生成时包一层
-HOST_OF = {"GridCol": "GridRow", "StepperItem": "Stepper", "ImageSpan": "Text", "TabContent": "Tabs"}
+# 第二波（interface 字面量映射就绪后）：其余 19 个组件级排除全部放出，报错方法逐轮累积。
+EXCLUDE_COMPONENTS = {"Particle"}
+# 宿主约束组件：只能嵌在特定父组件内（生成时包一层）
+HOST_OF = {"GridCol": "GridRow", "StepperItem": "Stepper", "ImageSpan": "Text",
+           "TabContent": "Tabs", "GridItem": "Grid", "ListItem": "List", "Span": "Text"}
 # 必参构造提示（ctor_args 解析不出但 SDK 有必填参数）
-CTOR_HINTS = {"ImageSpan": "$r('app.media.startIcon')"}
+CTOR_HINTS = {"Image": "$r('app.media.startIcon')", "ImageSpan": "$r('app.media.startIcon')",
+              "QRCode": "'ovd'", "Panel": "true",
+              "Progress": "{ value: 40, total: 100, type: ProgressType.Linear }"}
 
 
 def snake(name: str):
@@ -210,7 +213,8 @@ def default_for(type_text: str, dts_text: str | None = None):
         if "Callback" in part:
             return None  # 其余未知 Callback 形态跳过
     # 单一大写名：全局枚举取首成员（100% 可编译）；TYPE_HINTS 为无 declare enum 的
-    # 全局常量对象成员；interface 对象字面量的类型匹配不可靠（多轮编译实测连锁失败），跳过
+    # 全局常量对象成员；再退一步做保守 interface 字面量（必填字段全部可映射才生成，
+    # 嵌套/回调字段不可映射则整体放弃，防连锁编译失败）
     if re.fullmatch(r"[A-Z][A-Za-z0-9]*", t):
         if t in TYPE_HINTS:
             return TYPE_HINTS[t]
@@ -218,6 +222,9 @@ def default_for(type_text: str, dts_text: str | None = None):
             m = re.search(rf"declare enum {t}\b[^{{]*\{{\s*([A-Z_0-9a-z]+)\s*=\s*", dts_text)
             if m:
                 return f"{t}.{m.group(1)}"
+            fields = interface_required_fields(dts_text, t, 1)
+            if fields:
+                return "{ " + ", ".join(f"{k}: {v}" for k, v in fields) + " }"
         return None
     return None
 

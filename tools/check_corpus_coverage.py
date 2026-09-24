@@ -42,6 +42,38 @@ def rel(p):
     return os.path.relpath(p, REPO)
 
 
+FIXTURE = os.path.join(REPO, 'tools', 'sdk_manifest.json')
+
+
+def load_fixture(path=FIXTURE):
+    """无 SDK 环境的清单快照回退（CI）：只含三份名单，漂移检查/覆盖计数可用。"""
+    with open(path, encoding='utf-8') as fh:
+        data = json.load(fh)
+    return None, data['components'], data['kits'], data['apis']
+
+
+def dump_fixture(sdk_home, path):
+    _, comps, kits, apis = load_sdk(sdk_home)
+    with open(path, 'w', encoding='utf-8') as fh:
+        json.dump({'components': comps, 'kits': kits, 'apis': apis}, fh, indent=1, sort_keys=True)
+        fh.write('\n')
+    print(f'# fixture → {path} (components={len(comps)} kits={len(kits)} apis={len(apis)})')
+
+
+def load_sdk_or_fixture(sdk_home, use_fixture=False):
+    if use_fixture:
+        return load_fixture()
+    ets = None
+    for cand in sorted(glob.glob(os.path.join(sdk_home, '*', 'openharmony', 'ets'))):
+        ets = cand
+    if ets and os.path.isdir(ets):
+        return load_sdk(sdk_home)
+    if os.path.exists(FIXTURE):
+        return load_fixture()
+    sys.exit(f'ERROR: SDK ets 目录未找到（--sdk {sdk_home}）且无清单快照 {FIXTURE}'
+             f'（本地跑一次 --dump-fixture 生成）')
+
+
 def load_sdk(sdk_home):
     ets = None
     for cand in sorted(glob.glob(os.path.join(sdk_home, '*', 'openharmony', 'ets'))):
@@ -73,9 +105,14 @@ def main():
             verbose = True
         elif a == '--json':
             json_out = args.pop(0)
+        elif a == '--dump-fixture':
+            dump_fixture(sdk_home, args.pop(0))
+            return 0
+        elif a == '--use-fixture':
+            pass  # 在 load_sdk_or_fixture 生效（跳过 SDK 探测，强制清单快照）
 
-    ets, components, kits, apis = load_sdk(sdk_home)
-    print(f'# SDK: {ets}')
+    ets, components, kits, apis = load_sdk_or_fixture(sdk_home, use_fixture='--use-fixture' in sys.argv)
+    print(f'# SDK: {ets or f"fixture {FIXTURE}"}')
     print(f'# SDK 清单: components={len(components)} kits={len(kits)} @ohos={len(apis)}')
 
     comp_used = {}   # name -> set(relpath)

@@ -121,18 +121,23 @@
 
 动态差距以 `python3 tools/check_corpus_coverage.py` 输出为准；文档树口径（~170 条目，含子组件/专用形态）的调研快照见 §2。
 
-剩余未覆盖项归因（结构性结论，非待办）：约 21 项中 13 项无 SDK 声明面（ColorPicker 族/
-DotMatrix/Piece/Sheet/DepthComponent/GeometryView/FrictionMotion/SpringMotion/SpringProp/
-ScrollMotion/MediaCachedImage 等，component_config 占位但 d.ts 缺失，结构性不可达）；
+剩余未覆盖项归因（结构性结论，非待办）：21 项中 15 项无 SDK 声明面（ColorPicker、
+ColorPickerDialog、DotMatrix、Piece、Sheet、DepthComponent、GeometryView、FrictionMotion、
+SpringMotion、SpringProp、ScrollMotion、MediaCachedImage、EffectComponent、Section、
+DynamicLayout 系，component_config 占位但 d.ts 缺失，结构性不可达）；
 Camera 无声明；Common 为元条目；DynamicComponent/IsolatedComponent/SecurityUIExtensionComponent/
-LocationButton 等需专用宿主（卡片/嵌入/系统应用）或系统能力。
+LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 
-> 2026-09 组件内 API 缺口专项：compfarm 农场放出曾整组件排除的 Component3D/Counter/
-> FolderStack/GridCol/StepperItem（Particle 因构造需复杂 ParticleOptions 维持排除），
-> default_for 新增 Optional 解包 / VoidCallback·Callback<T>/内联箭头 → 空实现、
-> Alignment 类型提示，HOST_OF 宿主包装（GridCol→GridRow、StepperItem→Stepper、
-> ImageSpan→Text、TabContent→Tabs）、CTOR_HINTS（ImageSpan 必参）；同轮
-> OhosDirect5Demo 清掉 @ohos 直连 51 个非排除缺口（418/447，剩余全部策略排除）。
+> 2026-09 组件内 API 缺口专项（两波）：compfarm 整组件排除仅剩 Particle（构造需复杂
+> ParticleOptions）；Component3D/Counter/FolderStack/GridCol/StepperItem + 第二波放出的
+> DataPanel/DatePicker/Divider/Gauge/GridItem/Image/ListItem/Navigator/Panel/PatternLock/
+> Progress/QRCode/Repeat/SaveButton/Span/CheckboxGroup/Canvas/AlphabetIndexer/CalendarPicker
+> 全部进农场。default_for：Optional 解包 / VoidCallback·Callback<T>/内联箭头 → 空实现、
+> Alignment 提示、保守 interface 字面量（必填字段全可映射才生成）；HOST_OF 七种宿主包装
+> （GridCol/StepperItem/ImageSpan/TabContent/GridItem/ListItem/Span）；CTOR_HINTS 必参构造。
+> 注意：manifest detection 的 call token 会进 farm FP 黑名单——token 与模块名互为子串时
+> farm 自动排除该模块，token 仅为函数名时 hygiene 会撞常量黑名单，新增条目须选模块名形态
+> 或改用 string-literal 检测。同轮 OhosDirect5Demo 清掉 @ohos 直连 51 个非排除缺口。
 
 ### 5.3 Kit（全集 = `ets/kits/@kit.*.d.ts`）
 

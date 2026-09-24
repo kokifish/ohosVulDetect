@@ -1,4 +1,4 @@
-import { Case, DemoScaffold, ovdXmod001, ovdXmod002, ovdXmod001S, ovdXmod002S } from 'lib_common';
+import { Case, DemoScaffold, ovdXmod001, ovdXmod002, ovdXmod001S, ovdXmod002S, ovdXmod005, ovdXmod005S } from 'lib_common';
 import { ovdXmod003, ovdXmod004, ovdXmod003S, ovdXmod004S } from 'lib_shared';
 import { common } from '@kit.AbilityKit';
 
@@ -20,6 +20,8 @@ struct XmodVulnPage {
           new Case('XMOD-003S vault readonly', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod003S(ctx)),
           new Case('XMOD-004 mesh trust any', async (ctx: common.UIAbilityContext, log: (s: string) => void): Promise<string> => `mesh trust=${ovdXmod004('vd-mesh-unknown-99')}`),
           new Case('XMOD-004S mesh allowlist', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod004S('vd-mesh-unknown-99')),
+          new Case('XMOD-005 har refund token', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod005(ctx)),
+          new Case('XMOD-005S state only', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod005S(ctx)),
         ],
       })
     }

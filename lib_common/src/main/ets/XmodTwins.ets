@@ -20,3 +20,11 @@ export function ovdXmod002S(ctx: common.Context, pageHits: number): string {
   p.flush();
   return `anonymous page hits stored: ${pageHits}`;
 }
+
+// SAFE: OVD-XMOD-005S 回调只缓存聚合状态位，无令牌（CWE-312 加固）
+export function ovdXmod005S(ctx: common.Context): string {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_har_refund_safe' });
+  p.putSync('vd-har-refund-state', 'registered');
+  p.flush();
+  return 'har refund state only (no callback token)';
+}

@@ -1,34 +1,31 @@
 // Farm_21.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmVideoComp {
+export struct FarmShapeComp {
   build() {
     Column() {
-      Video({  })
-        .enableAnalyzer(true)
-        .enableShortcutKey(true)
-        .muted(true)
-        .onFullscreenChange((v: FullscreenInfo): void => {})
-        .onPause((): void => {})
-        .onPrepared((v: PreparedInfo): void => {})
-        .onSeeked((v: PlaybackInfo): void => {})
-        .onSeeking((v: PlaybackInfo): void => {})
-        .onStop((v: void): void => {})
-        .onUpdate((v: PlaybackInfo): void => {})
+      Shape()
+        .antiAlias(true)
+        .fillOpacity(1)
+        .strokeDashArray([])
+        .strokeDashOffset(1)
+        .strokeMiterLimit(1)
+        .strokeOpacity(1)
     }
   }
 }
 
 @Component
-export struct FarmWaterFlowComp {
+export struct FarmSideBarContainerComp {
   build() {
     Column() {
-      WaterFlow()
-        .enableScrollInteraction(true)
-        .friction(1)
-        .rowsTemplate('ovd')
-        .supportEmptyBranchInLazyLoading(true)
-        .syncLoad(true)
+      SideBarContainer()
+        .autoHide(true)
+        .maxSideBarWidth(1)
+        .minSideBarWidth(1)
+        .showControlButton(true)
+        .showSideBar(true)
+        .showSideBarWithGesture(true)
     }
   }
 }
