@@ -1,34 +1,66 @@
 // Farm_30.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmVideoComp {
+export struct FarmTextInputComp {
   build() {
     Column() {
-      Video({  })
-        .enableAnalyzer(true)
-        .enableShortcutKey(true)
-        .muted(true)
-        .onFullscreenChange((v: FullscreenInfo): void => {})
-        .onPause((): void => {})
-        .onPrepared((v: PreparedInfo): void => {})
-        .onSeeked((v: PlaybackInfo): void => {})
-        .onSeeking((v: PlaybackInfo): void => {})
-        .onStop((v: void): void => {})
-        .onUpdate((v: PlaybackInfo): void => {})
+      TextInput()
+        .cancelButton({ icon: { size: 1, color: Color.Red } })
+        .caretColor(Color.Red)
+        .caretPosition(1)
+        .caretStyle({ width: 1, color: Color.Red })
+        .compressLeadingPunctuation(true)
+        .enableAutoFill(true)
+        .enableAutoFillAnimation(true)
+        .enableAutoSpacing(true)
+        .enableHapticFeedback(true)
+        .enableKeyboardOnFocus(true)
+        .enablePreviewText(true)
+        .enableSelectedDataDetector(true)
+        .fallbackLineSpacing(true)
+        .fontFeature('ovd')
+        .halfLeading(true)
+        .includeFontPadding(true)
+        .inputFilter('ovd')
+        .maxFontScale(1)
+        .maxFontSize(1)
+        .maxLength(1)
+        .minFontScale(1)
+        .minFontSize(1)
+        .onCopy((v: string): void => {})
+        .onCut((v: string): void => {})
+        .onDidDelete((v: DeleteValue): void => {})
+        .onDidInsert((v: InsertValue): void => {})
+        .onEditChange((v: boolean): void => {})
+        .onSecurityStateChange((v: boolean): void => {})
+        .onWillAttachIME((v: IMEClient): void => {})
+        .orphanCharOptimization(true)
+        .passwordIcon({ onIconSrc: 'ovd', offIconSrc: 'ovd' })
+        .passwordRules('ovd')
+        .placeholderColor(Color.Red)
+        .placeholderFont({ size: 1, weight: 1 })
+        .punctuationOverflow(true)
+        .selectAll(true)
+        .selectedBackgroundColor(Color.Red)
+        .selectionMenuHidden(true)
+        .showCounter(true)
+        .showError('ovd')
+        .showPassword(true)
+        .showPasswordIcon(true)
+        .showUnderline(true)
+        .stopBackPress(true)
+        .strokeColor(Color.Red)
+        .underlineColor(Color.Red)
     }
   }
 }
 
 @Component
-export struct FarmWaterFlowComp {
+export struct FarmTextTimerComp {
   build() {
     Column() {
-      WaterFlow()
-        .enableScrollInteraction(true)
-        .friction(1)
-        .rowsTemplate('ovd')
-        .supportEmptyBranchInLazyLoading(true)
-        .syncLoad(true)
+      TextTimer()
+        .textShadow([])
     }
   }
 }

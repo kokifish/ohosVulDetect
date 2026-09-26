@@ -1,25 +1,53 @@
 // Farm_29.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmTimePickerComp {
+export struct FarmTextClockComp {
   build() {
     Column() {
-      TimePicker()
-        .enableCascade(true)
-        .enableHapticFeedback(true)
-        .onEnterSelectedArea((v: TimePickerResult): void => {})
+      TextClock()
+        .fontFeature('ovd')
+        .textShadow([])
     }
   }
 }
 
 @Component
-export struct FarmUIPickerComponentComp {
+export struct FarmTextAreaComp {
   build() {
     Column() {
-      UIPickerComponent()
-        .canLoop(true)
-        .displayedItemCount(1)
+      TextArea()
+        .caretColor(Color.Red)
+        .caretStyle({ width: 1, color: Color.Red })
+        .compressLeadingPunctuation(true)
+        .enableAutoFill(true)
+        .enableAutoSpacing(true)
         .enableHapticFeedback(true)
+        .enableKeyboardOnFocus(true)
+        .enablePreviewText(true)
+        .enableSelectedDataDetector(true)
+        .fallbackLineSpacing(true)
+        .fontFeature('ovd')
+        .halfLeading(true)
+        .horizontalScrolling(true)
+        .includeFontPadding(true)
+        .maxFontScale(1)
+        .maxFontSize(1)
+        .maxLength(1)
+        .minFontScale(1)
+        .minFontSize(1)
+        .minLines(1)
+        .onDidDelete((v: DeleteValue): void => {})
+        .onDidInsert((v: InsertValue): void => {})
+        .onWillAttachIME((v: IMEClient): void => {})
+        .orphanCharOptimization(true)
+        .placeholderColor(Color.Red)
+        .placeholderFont({ size: 1, weight: 1 })
+        .punctuationOverflow(true)
+        .selectedBackgroundColor(Color.Red)
+        .selectionMenuHidden(true)
+        .showCounter(true)
+        .stopBackPress(true)
+        .strokeColor(Color.Red)
     }
   }
 }

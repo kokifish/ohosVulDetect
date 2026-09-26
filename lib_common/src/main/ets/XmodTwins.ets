@@ -28,3 +28,11 @@ export function ovdXmod005S(ctx: common.Context): string {
   p.flush();
   return 'har refund state only (no callback token)';
 }
+
+// SAFE: OVD-XMOD-006S 网关只缓存状态位，无鉴权常量（CWE-312 加固）
+export function ovdXmod006S(ctx: common.Context): string {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_har_gateway_safe' });
+  p.putSync('vd-har-gateway-state', 'registered');
+  p.flush();
+  return 'har gateway state only (no auth constant)';
+}

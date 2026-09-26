@@ -1,31 +1,33 @@
 // Farm_21.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmShapeComp {
+export struct FarmScrollComp {
   build() {
     Column() {
-      Shape()
-        .antiAlias(true)
-        .fillOpacity(1)
-        .strokeDashArray([])
-        .strokeDashOffset(1)
-        .strokeMiterLimit(1)
-        .strokeOpacity(1)
+      Scroll()
+        .enableBouncesZoom(true)
+        .enablePaging(true)
+        .enableScrollInteraction(true)
+        .friction(1)
+        .maxZoomScale(1)
+        .minZoomScale(1)
+        .onScrollStart((): void => {})
+        .onScrollStop((): void => {})
+        .onZoomStart((): void => {})
+        .onZoomStop((): void => {})
+        .scrollBarColor(Color.Red)
+        .scrollBarWidth(1)
+        .zoomScale(1)
     }
   }
 }
 
 @Component
-export struct FarmSideBarContainerComp {
+export struct FarmScrollBarComp {
   build() {
     Column() {
-      SideBarContainer()
-        .autoHide(true)
-        .maxSideBarWidth(1)
-        .minSideBarWidth(1)
-        .showControlButton(true)
-        .showSideBar(true)
-        .showSideBarWithGesture(true)
+      ScrollBar({ scroller: new Scroller() })
+        .enableNestedScroll(true)
     }
   }
 }

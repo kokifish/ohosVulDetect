@@ -49,3 +49,19 @@ export async function ovdCevt001S(log: (s: string) => void): Promise<string> {
     });
   });
 }
+
+// SAFE: OVD-CEVT-002S 拓扑事件最小载荷 + 订阅方权限门注释语义（CWE-200 加固）
+export const CEVT2_EVENT_SAFE = 'ovd.cevt.topo.safe';
+
+export async function ovdCevt002S(log: (s: string) => void): Promise<string> {
+  const payload: commonEventManager.CommonEventPublishData = {
+    code: 0,
+    data: ''
+  };
+  return new Promise<string>((resolve: (v: string) => void) => {
+    commonEventManager.publish(CEVT2_EVENT_SAFE, payload, (err: BusinessError) => {
+      log(`cevt2S publish err=${err ? err.code : 0}`);
+      resolve('cevt2S empty payload (topology never broadcast)');
+    });
+  });
+}

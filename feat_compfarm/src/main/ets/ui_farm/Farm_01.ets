@@ -6,6 +6,7 @@ export struct FarmCalendarPickerComp {
     Column() {
       CalendarPicker()
         .markToday(true)
+        .textStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
     }
   }
 }

@@ -21,3 +21,9 @@ export async function ovdIred001S(ctx: common.UIAbilityContext, action: string, 
     return `iredS-err=${(e as BusinessError).code}`;
   }
 }
+
+// SAFE: OVD-IRED-002S 跳板目标不可写：仅本地只读记录（CWE-940 加固）
+export function ovdIred002S(): string {
+  const hop: string = 'local-readonly-log';
+  return `ired2S hop recorded locally: ${hop} (no startAbility)`;
+}

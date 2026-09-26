@@ -1,5 +1,5 @@
 import { pasteboard } from '@kit.BasicServicesKit';
-import { Runner } from 'lib_common';
+import { Case, DemoScaffold } from 'lib_common';
 import { ovdPerm001 } from '../vulns/perm/OVD-PERM-001';
 import { ovdPaste001 } from '../vulns/perm/OVD-PASTE-001';
 import { ovdPriv001 } from '../vulns/perm/OVD-PRIV-001';
@@ -7,20 +7,17 @@ import { ovdPriv002 } from '../vulns/perm/OVD-PRIV-002';
 import { ovdPriv003 } from '../vulns/perm/OVD-PRIV-003';
 import { ovdPaste004 } from '../vulns/perm/OVD-PASTE-004';
 import { ovdPaste005 } from '../vulns/perm/OVD-PASTE-005';
-import { ovdPaste005S } from '../vulns/perm/Twins';
+import { ovdPerm002 } from '../vulns/perm/OVD-PERM-002';
 import { ovdPaste003 } from '../vulns/perm/OVD-PASTE-003';
-import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S, ovdPriv003S, ovdPaste004S } from '../vulns/perm/Twins';
+import { ovdPaste001S, ovdPaste002S, ovdPerm001S, ovdPriv001S, ovdPriv002S, ovdPaste003S, ovdPriv003S, ovdPaste004S, ovdPaste005S, ovdPerm002S } from '../vulns/perm/Twins';
+import { common } from '@kit.AbilityKit';
 
-// 权限/隐私/粘贴板；PASTE-002 由 onPageShow 生命周期触发。
+// 权限/隐私/粘贴板；PASTE-002 由 onPageShow 生命周期触发（manifest 锚定 onPageShow）。
+// 2026-09 迁移为 DemoScaffold 用例制：sweep 可直接采集 ✅/❌ 行（原 Runner 按钮版日志不进 dump）。
 @Entry
 @Component
 struct PermPage {
   @State lines: string[] = [];
-  private runner: Runner = new Runner([]);
-
-  aboutToAppear(): void {
-    this.runner = new Runner(this.lines);
-  }
 
   // VULN: OVD-PASTE-002 页面生命周期静默读粘贴板（CWE-200）
   onPageShow(): void {
@@ -34,41 +31,50 @@ struct PermPage {
 
   build() {
     Column() {
-      Text('permissions / privacy / pasteboard').fontSize(20).margin(8)
-      Flex({ wrap: FlexWrap.Wrap }) {
-        Button('001 declared-unused').margin(4).onClick(() => this.runner.run('001', () => ovdPerm001()))
-        Button('paste-001 pwd').margin(4).onClick(() => this.runner.run('PASTE-001', () => ovdPaste001('Admin@123')))
-        Button('priv-001 fingerprint').margin(4).onClick(() => this.runner.run('PRIV-001', () => ovdPriv001()))
-        // ENV(不可修复): 模拟器系统定位开关默认关闭（3301100 switch off），需系统设置开启
-        Button('priv-002 locate').margin(4).onClick(() => this.runner.run('PRIV-002', () => ovdPriv002()))
-        Button('priv-003 fp-chain').margin(4).onClick(() => this.runner.run('PRIV-003', () => ovdPriv003()))
-        Button('paste-004 listener').margin(4).onClick(() => this.runner.run('PASTE-004', () => ovdPaste004()))
-        Button('paste-005 clip-token').margin(4).onClick(() => this.runner.run('PASTE-005', () => ovdPaste005('sess_ovd_clip_0007')))
-        Button('PASTE-005S refuse').margin(4).onClick(() => this.runner.run('PASTE-005S', () => ovdPaste005S('sess_ovd_clip_0007')))
-      }
-      Flex({ wrap: FlexWrap.Wrap }) {
-        Button('PASTE-001S refuse').margin(4).onClick(() => this.runner.run('PASTE-001S', () => ovdPaste001S(true)))
-        Button('PASTE-002S gated').margin(4).onClick(() => this.runner.run('PASTE-002S', () => ovdPaste002S(true)))
-        Button('PERM-001S on-demand').margin(4).onClick(() => this.runner.run('PERM-001S', () => ovdPerm001S('scan')))
-        Button('PRIV-001S consent').margin(4).onClick(() => this.runner.run('PRIV-001S', () => ovdPriv001S(true)))
-        Button('PRIV-002S one-shot').margin(4).onClick(() => this.runner.run('PRIV-002S', () => ovdPriv002S(true)))
-        Button('PRIV-003S local-only').margin(4).onClick(() => this.runner.run('PRIV-003S', () => ovdPriv003S()))
-        Button('PASTE-004S on-demand').margin(4).onClick(() => this.runner.run('PASTE-004S', () => ovdPaste004S(true)))
-        Button('PASTE-003 cross-device').margin(4).onClick(() => this.runner.run('PASTE-003', () => ovdPaste003('tok_bench_secret')))
-        Button('PASTE-003S refuse').margin(4).onClick(() => this.runner.run('PASTE-003S', () => ovdPaste003S(true)))
-      }
-      .width('100%')
-      Scroll() {
-        Column({ space: 2 }) {
-          ForEach(this.lines, (l: string, i: number) => {
-            Text(l).fontSize(11).fontFamily('monospace')
-          }, (l: string, i: number) => `${i}-${l}`)
-        }
-        .alignItems(HorizontalAlign.Start)
-        .width('100%')
-      }
-      .layoutWeight(1)
-      .margin(4)
+      DemoScaffold({
+        title: 'permissions / privacy / pasteboard',
+        cases: [
+          new Case('perm-001 declared-unused', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPerm001()),
+          new Case('paste-001 pwd', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste001('Admin@123')),
+          new Case('priv-001 fingerprint', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv001()),
+          // ENV(不可修复): 模拟器系统定位开关默认关闭（3301100 switch off），需系统设置开启
+          new Case('priv-002 locate', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv002()),
+          new Case('priv-003 fp-chain', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv003()),
+          new Case('paste-004 listener', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste004()),
+          new Case('paste-005 clip-token', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste005('sess_ovd_clip_0007')),
+          new Case('perm-002 background profiling', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPerm002()),
+          new Case('PASTE-001S refuse', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste001S(true)),
+          new Case('PASTE-002S gated', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste002S(true)),
+          new Case('PERM-001S on-demand', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPerm001S('scan')),
+          new Case('PRIV-001S consent', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv001S(true)),
+          new Case('PRIV-002S one-shot', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv002S(true)),
+          new Case('PRIV-003S local-only', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPriv003S()),
+          new Case('PASTE-004S on-demand', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste004S(true)),
+          new Case('PASTE-003 cross-device', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste003('tok_bench_secret')),
+          new Case('PASTE-003S refuse', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste003S(true)),
+          new Case('PASTE-005S refuse', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPaste005S('sess_ovd_clip_0007')),
+          new Case('PERM-002S on-demand only', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdPerm002S())
+        ]
+      })
     }
     .height('100%')
   }

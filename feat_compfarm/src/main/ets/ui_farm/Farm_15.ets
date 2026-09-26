@@ -1,22 +1,26 @@
 // Farm_15.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmPatternLockComp {
+export struct FarmNavigatorComp {
   build() {
     Column() {
-      PatternLock()
-        .skipUnselectedPoint(true)
+      Navigator()
+        .active(true)
+        .target('ovd')
     }
   }
 }
 
 @Component
-export struct FarmProgressComp {
+export struct FarmPanelComp {
   build() {
     Column() {
-      Progress({ value: 40, total: 100, type: ProgressType.Linear })
-        .privacySensitive(true)
-        .value(1)
+      Panel(true)
+        .backgroundMask(Color.Red)
+        .fullHeight(1)
+        .halfHeight(1)
+        .miniHeight(1)
+        .showCloseIcon(true)
     }
   }
 }

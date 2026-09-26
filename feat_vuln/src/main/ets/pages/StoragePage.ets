@@ -6,7 +6,8 @@ import { ovdStor001S } from '../vulns/storage/Twins';
 import { ovdStor002 } from '../vulns/storage/OVD-STOR-002';
 import { ovdStor004 } from '../vulns/storage/OVD-STOR-004';
 import { ovdStor005 } from '../vulns/storage/OVD-STOR-005';
-import { ovdStor005S } from '../vulns/storage/Twins';
+import { ovdStor005S, ovdStor006S } from '../vulns/storage/Twins';
+import { ovdStor006 } from '../vulns/storage/OVD-STOR-006';
 
 @Entry
 @Component
@@ -33,7 +34,9 @@ struct StoragePage {
           new Case('005 rt-json', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor005(ctx)),
           new Case('005S mem-only', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor005S()),
           new Case('004S redacted', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor004S(ctx)),
-          new Case('BACK-001S policy', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdBack001S())
+          new Case('BACK-001S policy', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdBack001S()),
+          new Case('006 backup creds', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor006(ctx)),
+          new Case('006S mem-only', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdStor006S()),
         ]
       })
 

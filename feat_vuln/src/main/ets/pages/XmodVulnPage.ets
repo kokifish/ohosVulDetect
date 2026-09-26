@@ -1,5 +1,5 @@
-import { Case, DemoScaffold, ovdXmod001, ovdXmod002, ovdXmod001S, ovdXmod002S, ovdXmod005, ovdXmod005S } from 'lib_common';
-import { ovdXmod003, ovdXmod004, ovdXmod003S, ovdXmod004S } from 'lib_shared';
+import { Case, DemoScaffold, ovdXmod001, ovdXmod002, ovdXmod001S, ovdXmod002S, ovdXmod005, ovdXmod005S, ovdXmod006, ovdXmod006S } from 'lib_common';
+import { ovdXmod003, ovdXmod004, ovdXmod003S, ovdXmod004S, ovdXmod007, ovdXmod007S } from 'lib_shared';
 import { common } from '@kit.AbilityKit';
 
 // 跨模块漏洞分布：XMOD-001/002 主体在 lib_common（HAR），003/004 在 lib_shared（HSP）。
@@ -22,6 +22,10 @@ struct XmodVulnPage {
           new Case('XMOD-004S mesh allowlist', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod004S('vd-mesh-unknown-99')),
           new Case('XMOD-005 har refund token', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod005(ctx)),
           new Case('XMOD-005S state only', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod005S(ctx)),
+          new Case('XMOD-006 har gateway auth', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod006(ctx)),
+          new Case('XMOD-006S state only', async (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdXmod006S(ctx)),
+          new Case('XMOD-007 hsp ticket log', () => ovdXmod007()),
+          new Case('XMOD-007S not logged', () => ovdXmod007S()),
         ],
       })
     }

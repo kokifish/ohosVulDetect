@@ -16,3 +16,18 @@ export async function ovdWifi001S(ctx: common.UIAbilityContext): Promise<string>
   await p.flush();
   return 'wifiS signal-bucket only (no psk persisted)';
 }
+
+// SAFE: OVD-WIFI-002S 只记录在线布尔状态（CWE-359 加固）
+export async function ovdWifi002S(ctx: common.UIAbilityContext): Promise<string> {
+  let online = false;
+  try {
+    const info = await wifiManager.getLinkedInfo();
+    online = info.ssid !== undefined && info.ssid.length > 0;
+  } catch (e) {
+    online = false;
+  }
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'ovd_wifi_safe' });
+  p.putSync('wifi_online', online ? '1' : '0');
+  await p.flush();
+  return 'wifi002S online flag only';
+}

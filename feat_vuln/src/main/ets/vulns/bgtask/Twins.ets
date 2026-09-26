@@ -20,3 +20,8 @@ export async function ovdBgtask001S(ctx: common.UIAbilityContext): Promise<strin
   backgroundTaskManager.cancelSuspendDelay(delayInfo.requestId);
   return `transient delay used once (quota=${delayInfo.actualDelayTime}ms), no exfil`;
 }
+
+// SAFE: OVD-BGTASK-002S 前台短任务完成上报，无后台保活（CWE-250 加固）
+export async function ovdBgtask002S(ctx: common.UIAbilityContext): Promise<string> {
+  return `bgtask2S foreground-only report done (ctx ok=${ctx !== undefined})`;
+}

@@ -3708,6 +3708,551 @@
     "constants": []
    },
    "twin_of": "OVD-TNT-002"
+  },
+  {
+   "id": "OVD-TNT-003",
+   "title": "token via 4-hop interproc chain to file sink",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-003.ets",
+   "function": "ovdTntSink3",
+   "expected": true,
+   "twin": "OVD-TNT-003S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "src3",
+      "constants": [
+       "tnt3_tok_ovd_c74a12"
+      ]
+     },
+     {
+      "function": "ovdTntSink3",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-003S",
+   "title": "twin: 四跳链 source 换聚合值，sink 不落盘 (OVD-TNT-003)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTntSink3S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-TNT-003"
+  },
+  {
+   "id": "OVD-TNT-004",
+   "title": "token via interproc chain to pasteboard sink",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-004.ets",
+   "function": "ovdTntSink4",
+   "expected": true,
+   "twin": "OVD-TNT-004S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "src4",
+      "constants": [
+       "tnt4_tok_ovd_d91f33"
+      ]
+     },
+     {
+      "function": "ovdTntSink4",
+      "call": [
+       "setData"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-004S",
+   "title": "twin: 链路只发聚合值且立即清除 (OVD-TNT-004)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTntSink4S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-TNT-004"
+  },
+  {
+   "id": "OVD-XMOD-006",
+   "title": "gateway auth constant cached from shared HAR",
+   "category": "cross-module-distribution",
+   "cwe": "CWE-312",
+   "module": "lib_common",
+   "source": "lib_common/src/main/ets/XmodVulns.ets",
+   "function": "ovdXmod006",
+   "expected": true,
+   "twin": "OVD-XMOD-006S",
+   "detection": {
+    "type": "call-chain",
+    "call": [
+     "getPreferencesSync",
+     "putSync"
+    ],
+    "constants": [
+     "gw_vd_har_xmod6_a1b2c3"
+    ]
+   }
+  },
+  {
+   "id": "OVD-XMOD-006S",
+   "title": "twin: 网关只缓存状态位，无鉴权常量 (OVD-XMOD-006)",
+   "category": "cross-module-distribution",
+   "cwe": "CWE-312",
+   "module": "lib_common",
+   "source": "lib_common/src/main/ets/XmodTwins.ets",
+   "function": "ovdXmod006S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-XMOD-006"
+  },
+  {
+   "id": "OVD-XMOD-007",
+   "title": "credential constant written to permanent hilog from HSP",
+   "category": "cross-module-distribution",
+   "cwe": "CWE-532",
+   "module": "lib_shared",
+   "source": "lib_shared/src/main/ets/VulnTarget.ets",
+   "function": "ovdXmod007",
+   "expected": true,
+   "twin": "OVD-XMOD-007S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "info"
+    ],
+    "constants": [
+     "tok_vd_hsp_ticket_77aa"
+    ]
+   }
+  },
+  {
+   "id": "OVD-XMOD-007S",
+   "title": "twin: 凭据不进日志，只回聚合状态 (OVD-XMOD-007)",
+   "category": "cross-module-distribution",
+   "cwe": "CWE-532",
+   "module": "lib_shared",
+   "source": "lib_shared/src/main/ets/TargetTwins.ets",
+   "function": "ovdXmod007S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-XMOD-007"
+  },
+  {
+   "id": "OVD-CEVT-002",
+   "title": "network topology broadcast without subscriber gate",
+   "category": "common-event-broadcast",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/OVD-CEVT-002.ets",
+   "function": "ovdCevt002",
+   "expected": true,
+   "twin": "OVD-CEVT-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "commonEventManager",
+     "publish"
+    ],
+    "constants": [
+     "ovd.cevt.topo.net2"
+    ]
+   }
+  },
+  {
+   "id": "OVD-CEVT-002S",
+   "title": "twin: 拓扑事件最小载荷 (OVD-CEVT-002)",
+   "category": "common-event-broadcast",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdCevt002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-CEVT-002"
+  },
+  {
+   "id": "OVD-LOG-003",
+   "title": "user mailbox and region written to hilog",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/OVD-LOG-003.ets",
+   "function": "ovdLog003",
+   "expected": true,
+   "twin": "OVD-LOG-003S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "info"
+    ],
+    "constants": [
+     "ovd_log3_mail_loc"
+    ]
+   }
+  },
+  {
+   "id": "OVD-LOG-003S",
+   "title": "twin: 日志只带聚合计数，无 PII (OVD-LOG-003)",
+   "category": "sensitive-log",
+   "cwe": "CWE-532",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/log/Twins.ets",
+   "function": "ovdLog003S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-LOG-003"
+  },
+  {
+   "id": "OVD-DEBUG-003",
+   "title": "debug backdoor switch constant left in release",
+   "category": "debug-leftover",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/OVD-DEBUG-003.ets",
+   "function": "ovdDebug003",
+   "expected": true,
+   "twin": "OVD-DEBUG-003S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "hilog",
+     "debug"
+    ],
+    "constants": [
+     "ovd_debug3_backdoor"
+    ]
+   }
+  },
+  {
+   "id": "OVD-DEBUG-003S",
+   "title": "twin: 无后门开关：仅常规版本信息日志 (OVD-DEBUG-003)",
+   "category": "debug-leftover",
+   "cwe": "CWE-489",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/debug/Twins.ets",
+   "function": "ovdDebug003S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-DEBUG-003"
+  },
+  {
+   "id": "OVD-CONF-003",
+   "title": "api key constant hardcoded into request header",
+   "category": "config-leak",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/OVD-CONF-003.ets",
+   "function": "ovdConf003",
+   "expected": true,
+   "twin": "OVD-CONF-003S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "createHttp"
+    ],
+    "constants": [
+     "ovd_conf3_apikey_zz19"
+    ]
+   }
+  },
+  {
+   "id": "OVD-CONF-003S",
+   "title": "twin: key 由运行期注入且不发测试端点 (OVD-CONF-003)",
+   "category": "config-leak",
+   "cwe": "CWE-798",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/conf/Twins.ets",
+   "function": "ovdConf003S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-CONF-003"
+  },
+  {
+   "id": "OVD-DKV-002",
+   "title": "device identifier synced plaintext via distributed KV",
+   "category": "distributed-sync",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dkv/OVD-DKV-002.ets",
+   "function": "ovdDkv002",
+   "expected": true,
+   "twin": "OVD-DKV-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "distributedKVStore",
+     "put"
+    ],
+    "constants": [
+     "ovd_dkv2_devid_5e21"
+    ]
+   }
+  },
+  {
+   "id": "OVD-DKV-002S",
+   "title": "twin: 设备标识聚合值 + 加密 S3 本地库 (OVD-DKV-002)",
+   "category": "distributed-sync",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dkv/Twins.ets",
+   "function": "ovdDkv002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-DKV-002"
+  },
+  {
+   "id": "OVD-BGTASK-002",
+   "title": "location-mode background task without user awareness",
+   "category": "bgtask-abuse",
+   "cwe": "CWE-250",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/bgtask/OVD-BGTASK-002.ets",
+   "function": "ovdBgtask002",
+   "expected": true,
+   "twin": "OVD-BGTASK-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "startBackgroundRunning"
+    ],
+    "constants": [
+     "ovd_bgtask2_upload"
+    ]
+   }
+  },
+  {
+   "id": "OVD-BGTASK-002S",
+   "title": "twin: 前台短任务完成上报，无后台保活 (OVD-BGTASK-002)",
+   "category": "bgtask-abuse",
+   "cwe": "CWE-250",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/bgtask/Twins.ets",
+   "function": "ovdBgtask002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-BGTASK-002"
+  },
+  {
+   "id": "OVD-IRED-002",
+   "title": "intent forward target controlled by writable preference",
+   "category": "intent-redirection",
+   "cwe": "CWE-940",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ired/OVD-IRED-002.ets",
+   "function": "ovdIred002",
+   "expected": true,
+   "twin": "OVD-IRED-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "startAbility"
+    ],
+    "constants": [
+     "ovd_ired2_hop"
+    ]
+   }
+  },
+  {
+   "id": "OVD-IRED-002S",
+   "title": "twin: 跳板目标不可写：仅本地只读记录 (OVD-IRED-002)",
+   "category": "intent-redirection",
+   "cwe": "CWE-940",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ired/Twins.ets",
+   "function": "ovdIred002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-IRED-002"
+  },
+  {
+   "id": "OVD-NOTIF-002",
+   "title": "session token plaintext in notification banner",
+   "category": "notification-content",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/notify/OVD-NOTIF-002.ets",
+   "function": "ovdNotif002",
+   "expected": true,
+   "twin": "OVD-NOTIF-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "notificationManager",
+     "publish"
+    ],
+    "constants": [
+     "ovd_notif2_tok_46ab"
+    ]
+   }
+  },
+  {
+   "id": "OVD-NOTIF-002S",
+   "title": "twin: 通知内容最小化：标题计数、无令牌 (OVD-NOTIF-002)",
+   "category": "notification-content",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/notify/Twins.ets",
+   "function": "ovdNotif002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-NOTIF-002"
+  },
+  {
+   "id": "OVD-PERM-002",
+   "title": "clipboard read reused for background profiling",
+   "category": "permission-misuse",
+   "cwe": "CWE-250",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/OVD-PERM-002.ets",
+   "function": "ovdPerm002",
+   "expected": true,
+   "twin": "OVD-PERM-002S",
+   "detection": {
+    "type": "api-call",
+    "call": [
+     "getData"
+    ],
+    "constants": [
+     "perm002 background profiled"
+    ]
+   }
+  },
+  {
+   "id": "OVD-PERM-002S",
+   "title": "twin: 读取仅限用户显式动作的即时展示，无画像聚合 (OVD-PERM-002)",
+   "category": "permission-misuse",
+   "cwe": "CWE-250",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/perm/Twins.ets",
+   "function": "ovdPerm002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-PERM-002"
+  },
+  {
+   "id": "OVD-WIFI-002",
+   "title": "ssid/bssid persisted plaintext enabling trajectory recovery",
+   "category": "wifi-credential-exposure",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wifi/OVD-WIFI-002.ets",
+   "function": "ovdWifi002",
+   "expected": true,
+   "twin": "OVD-WIFI-002S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ssid_bssid"
+    ]
+   }
+  },
+  {
+   "id": "OVD-WIFI-002S",
+   "title": "twin: 只记录在线布尔状态 (OVD-WIFI-002)",
+   "category": "wifi-credential-exposure",
+   "cwe": "CWE-359",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wifi/Twins.ets",
+   "function": "ovdWifi002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-WIFI-002"
+  },
+  {
+   "id": "OVD-STOR-006",
+   "title": "credential blob written to backup-exposed path",
+   "category": "insecure-storage",
+   "cwe": "CWE-530",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/OVD-STOR-006.ets",
+   "function": "ovdStor006",
+   "expected": true,
+   "twin": "OVD-STOR-006S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "writeSync"
+    ],
+    "constants": [
+     "ovd_stor6_bkp"
+    ]
+   }
+  },
+  {
+   "id": "OVD-STOR-006S",
+   "title": "twin: 凭据不进备份面：内存聚合即弃 (OVD-STOR-006)",
+   "category": "insecure-storage",
+   "cwe": "CWE-530",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/storage/Twins.ets",
+   "function": "ovdStor006S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-STOR-006"
   }
  ]
 }

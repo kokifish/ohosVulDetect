@@ -8,10 +8,10 @@ import { FarmCheckboxComp } from './Farm_02';
 import { FarmCheckboxGroupComp } from './Farm_02';
 import { FarmColumnComp } from './Farm_03';
 import { FarmComponent3DComp } from './Farm_03';
+import { FarmContainerSpanComp } from './Farm_04';
 import { FarmCounterComp } from './Farm_04';
-import { FarmDataPanelComp } from './Farm_04';
+import { FarmDataPanelComp } from './Farm_05';
 import { FarmDatePickerComp } from './Farm_05';
-import { FarmDividerComp } from './Farm_05';
 
 @Builder
 export function farmCombo1() {
@@ -41,10 +41,10 @@ export function farmCombo2() {
 export function farmCombo3() {
   Stack({ alignContent: Alignment.Center }) {
     Text('combo layer').fontSize(12)
+    FarmContainerSpanComp()
     FarmCounterComp()
     FarmDataPanelComp()
     FarmDatePickerComp()
-    FarmDividerComp()
   }
   .padding(8)
   }

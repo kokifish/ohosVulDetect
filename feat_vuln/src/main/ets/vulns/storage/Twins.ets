@@ -50,3 +50,8 @@ export function ovdStor005S(): string {
   const state: Record<string, number> = { 'refreshCount': 1 };
   return `stor005S in-memory only refresh state count=${state['refreshCount']} (no file)`;
 }
+
+// SAFE: OVD-STOR-006S 凭据不进备份面：内存聚合即弃（CWE-530 加固）
+export function ovdStor006S(): string {
+  return 'stor006S in-memory credential aggregate (nothing written)';
+}

@@ -3,6 +3,8 @@ import { ovdDebug001S, ovdDebug002S } from '../vulns/debug/Twins';
 import { common } from '@kit.AbilityKit';
 import { ovdDebug001 } from '../vulns/debug/OVD-DEBUG-001';
 import { ovdDebug002 } from '../vulns/debug/OVD-DEBUG-002';
+import { ovdDebug003 } from '../vulns/debug/OVD-DEBUG-003';
+import { ovdDebug003S } from '../vulns/debug/Twins';
 
 @Entry
 @Component
@@ -22,7 +24,9 @@ struct DebugPage {
             return r;
           }),
           new Case('001S debuggable-gate', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdDebug001S()),
-          new Case('002S server-mfa', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdDebug002S(false))
+          new Case('002S server-mfa', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdDebug002S(false)),
+          new Case('debug-003 backdoor switch', () => ovdDebug003()),
+          new Case('debug-003S clean build', () => ovdDebug003S()),
         ]
       })
 

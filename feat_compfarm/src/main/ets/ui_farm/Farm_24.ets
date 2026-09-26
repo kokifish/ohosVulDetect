@@ -1,37 +1,40 @@
 // Farm_24.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmSwiperComp {
+export struct FarmSliderComp {
   build() {
     Column() {
-      Swiper()
-        .curve('ovd')
-        .customContentTransition({ transition: (v: SwiperContentTransitionProxy): void => {} })
-        .disableSwipe(true)
-        .displayArrow(true)
-        .displayCount(1)
-        .index(1)
-        .indicatorInteractive(true)
-        .interval(1)
-        .itemSpace(1)
-        .maintainVisibleContentPosition(true)
-        .nextMargin(1)
-        .onScrollStateChanged((v: ScrollState): void => {})
-        .onUnselected((v: number): void => {})
-        .prevMargin(1)
-        .vertical(true)
+      Slider()
+        .blockBorderColor(Color.Red)
+        .blockBorderWidth(1)
+        .blockColor(Color.Red)
+        .blockSize({ width: 1, height: 1 })
+        .enableHapticFeedback(true)
+        .maxLabel('ovd')
+        .minLabel('ovd')
+        .minResponsiveDistance(1)
+        .showSteps(true)
+        .showTips(true)
+        .slideRange({ from: 1, to: 1 })
+        .stepColor(Color.Red)
+        .stepSize(1)
+        .trackBorderRadius(1)
+        .trackColor(Color.Red)
+        .trackThickness(1)
     }
   }
 }
 
 @Component
-export struct FarmSymbolGlyphComp {
+export struct FarmSpanComp {
   build() {
     Column() {
-      SymbolGlyph()
-        .maxFontScale(1)
-        .minFontScale(1)
-        .shaderStyle([])
+      Text() {
+        Span('ovd')
+          .font({ size: 1, weight: 1 })
+          .fontVariations([])
+          .textShadow([])
+      }
     }
   }
 }

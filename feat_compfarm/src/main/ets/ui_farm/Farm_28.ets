@@ -1,62 +1,59 @@
 // Farm_28.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmTextInputComp {
+export struct FarmTextComp {
   build() {
     Column() {
-      TextInput()
+      Text()
+        .baselineOffset(1)
         .caretColor(Color.Red)
-        .caretPosition(1)
         .compressLeadingPunctuation(true)
-        .enableAutoFill(true)
-        .enableAutoFillAnimation(true)
+        .dataDetectorConfig({ types: [] })
         .enableAutoSpacing(true)
+        .enableDataDetector(true)
         .enableHapticFeedback(true)
-        .enableKeyboardOnFocus(true)
-        .enablePreviewText(true)
         .enableSelectedDataDetector(true)
         .fallbackLineSpacing(true)
+        .font({ size: 1, weight: 1 })
         .fontFeature('ovd')
+        .fontVariations([])
         .halfLeading(true)
         .includeFontPadding(true)
-        .inputFilter('ovd')
+        .lineHeightMultiple(1)
+        .marqueeOptions({ start: true })
         .maxFontScale(1)
         .maxFontSize(1)
-        .maxLength(1)
         .minFontScale(1)
         .minFontSize(1)
-        .onCopy((v: string): void => {})
-        .onCut((v: string): void => {})
-        .onDidDelete((v: DeleteValue): void => {})
-        .onDidInsert((v: InsertValue): void => {})
-        .onEditChange((v: boolean): void => {})
-        .onSecurityStateChange((v: boolean): void => {})
-        .onWillAttachIME((v: IMEClient): void => {})
+        .minLines(1)
+        .onMarqueeStateChange((v: MarqueeState): void => {})
+        .optimizeTrailingSpace(true)
         .orphanCharOptimization(true)
-        .passwordRules('ovd')
-        .placeholderColor(Color.Red)
+        .privacySensitive(true)
         .punctuationOverflow(true)
-        .selectAll(true)
         .selectedBackgroundColor(Color.Red)
-        .selectionMenuHidden(true)
-        .showCounter(true)
-        .showError('ovd')
-        .showPassword(true)
-        .showPasswordIcon(true)
-        .showUnderline(true)
-        .stopBackPress(true)
-        .strokeColor(Color.Red)
-        .underlineColor(Color.Red)
+        .tailIndents([])
+        .textIndent(1)
+        .textShadow([])
     }
   }
 }
 
 @Component
-export struct FarmTextTimerComp {
+export struct FarmTextPickerComp {
   build() {
     Column() {
-      TextTimer()
-        .textShadow([])
+      TextPicker()
+        .canLoop(true)
+        .defaultPickerItemHeight(1)
+        .defaultTextStyle({ minFontSize: 1, maxFontSize: 1 })
+        .disableTextStyleAnimation(true)
+        .disappearTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .enableHapticFeedback(true)
+        .selectedBackgroundStyle({ color: Color.Red })
+        .selectedIndex(1)
+        .selectedTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .textStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
     }
   }
 }

@@ -36,3 +36,11 @@ export function ovdXmod005(ctx: common.Context): string {
   p.flush();
   return 'har refund callback token cached';
 }
+
+// VULN: OVD-XMOD-006 HAR 网关鉴权常量落共享偏好（CWE-312/798）
+export function ovdXmod006(ctx: common.Context): string {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_har_gateway' });
+  p.putSync('vd-har-gateway-auth', 'gw_vd_har_xmod6_a1b2c3');
+  p.flush();
+  return 'har gateway auth cached';
+}

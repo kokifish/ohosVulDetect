@@ -15,3 +15,9 @@ export function ovdLog002S(username: string): string {
   hilog.debug(0x0999, 'AUTH', `retry login user=${username} (credential redacted)`);
   return 'masked log emitted';
 }
+
+// SAFE: OVD-LOG-003S 日志只带聚合计数，无 PII（CWE-532 加固）
+export function ovdLog003S(): string {
+  hilog.info(0xFF02, 'OVDLOG', 'aggregated users %{public}d', 1);
+  return 'log3S count-only log line';
+}

@@ -1,52 +1,39 @@
 // Farm_26.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmTextComp {
+export struct FarmSwiperComp {
   build() {
     Column() {
-      Text()
-        .baselineOffset(1)
-        .caretColor(Color.Red)
-        .compressLeadingPunctuation(true)
-        .enableAutoSpacing(true)
-        .enableDataDetector(true)
-        .enableHapticFeedback(true)
-        .enableSelectedDataDetector(true)
-        .fallbackLineSpacing(true)
-        .fontFeature('ovd')
-        .fontVariations([])
-        .halfLeading(true)
-        .includeFontPadding(true)
-        .lineHeightMultiple(1)
-        .marqueeOptions({ start: true })
-        .maxFontScale(1)
-        .maxFontSize(1)
-        .minFontScale(1)
-        .minFontSize(1)
-        .minLines(1)
-        .onMarqueeStateChange((v: MarqueeState): void => {})
-        .optimizeTrailingSpace(true)
-        .orphanCharOptimization(true)
-        .privacySensitive(true)
-        .punctuationOverflow(true)
-        .selectedBackgroundColor(Color.Red)
-        .tailIndents([])
-        .textIndent(1)
-        .textShadow([])
+      Swiper()
+        .curve('ovd')
+        .customContentTransition({ transition: (v: SwiperContentTransitionProxy): void => {} })
+        .disableSwipe(true)
+        .displayArrow(true)
+        .displayCount(1)
+        .index(1)
+        .indicatorInteractive(true)
+        .indicatorStyle({ left: 1, top: 1 })
+        .interval(1)
+        .itemSpace(1)
+        .maintainVisibleContentPosition(true)
+        .nextMargin(1)
+        .onScrollStateChanged((v: ScrollState): void => {})
+        .onUnselected((v: number): void => {})
+        .prevMargin(1)
+        .vertical(true)
     }
   }
 }
 
 @Component
-export struct FarmTextPickerComp {
+export struct FarmSymbolGlyphComp {
   build() {
     Column() {
-      TextPicker()
-        .canLoop(true)
-        .defaultPickerItemHeight(1)
-        .disableTextStyleAnimation(true)
-        .enableHapticFeedback(true)
-        .selectedIndex(1)
+      SymbolGlyph()
+        .maxFontScale(1)
+        .minFontScale(1)
+        .shaderStyle([])
+        .symbolShadow({ radius: 1 })
     }
   }
 }

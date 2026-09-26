@@ -9,3 +9,8 @@ export function ovdConf001S(remoteScheme: string): string {
 export function ovdConf002S(): string {
   return 'debug channel stripped from release build';
 }
+
+// SAFE: OVD-CONF-003S key 由运行期注入且不发测试端点（CWE-798 加固）
+export async function ovdConf003S(key: string): Promise<string> {
+  return `conf3S runtime key len=${key.length} (no hardcoded secret)`;
+}

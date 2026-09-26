@@ -75,3 +75,11 @@ export async function ovdPaste005S(token: string): Promise<string> {
   await pb.clear();
   return 'paste005S non-sensitive tag set then cleared';
 }
+
+// SAFE: OVD-PERM-002S 读取仅限用户显式动作的即时展示，无画像聚合（CWE-250 加固）
+export async function ovdPerm002S(): Promise<string> {
+  const pb = pasteboard.getSystemPasteboard();
+  const d = await pb.getData();
+  const text = d.getPrimaryText() ?? '';
+  return `perm002S on-demand display len=${text.length} (not profiled)`;
+}

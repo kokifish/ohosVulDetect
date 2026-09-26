@@ -16,3 +16,8 @@ const TRUSTED_MESH: string[] = ['vd-mesh-bench-01', 'vd-mesh-bench-02'];
 export function ovdXmod004S(deviceId: string): string {
   return TRUSTED_MESH.indexOf(deviceId) >= 0 ? 'mesh peer trusted' : 'mesh peer rejected (allowlist)';
 }
+
+// SAFE: OVD-XMOD-007S 凭据不进日志，只回聚合状态（CWE-532 加固）
+export function ovdXmod007S(): string {
+  return 'hspS ticket not logged (aggregate only)';
+}

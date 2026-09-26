@@ -2,6 +2,7 @@
 // 本文件验证评分链路对独立共享包 abc 内 record 的可达性。
 import { common } from '@kit.AbilityKit';
 import { preferences } from '@kit.ArkData';
+import hilog from '@ohos.hilog';
 
 // VULN: OVD-XMOD-003 HSP 共享保险箱 token 明文缓存（CWE-312）
 export function ovdXmod003(ctx: common.Context): string {
@@ -20,4 +21,10 @@ export function ovdXmod004(deviceId: string): boolean {
 export function ovdXmod004Usage(deviceId: string): string {
   const trusted = ovdXmod004(deviceId);
   return `mesh(${deviceId}) trusted=${trusted}`;
+}
+
+// VULN: OVD-XMOD-007 HSP 凭据常量进永久日志（CWE-532）
+export function ovdXmod007(): string {
+  hilog.info(0xFF01, 'VDSHARED', 'ticket %{public}s', 'tok_vd_hsp_ticket_77aa');
+  return 'hsp ticket logged via hilog';
 }

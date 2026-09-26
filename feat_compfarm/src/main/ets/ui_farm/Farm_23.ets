@@ -1,25 +1,33 @@
 // Farm_23.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmStackComp {
+export struct FarmShapeComp {
   build() {
     Column() {
-      Stack()
-        .alignContent(Alignment.Center)
-        .syncLoad(true)
+      Shape()
+        .antiAlias(true)
+        .fillOpacity(1)
+        .strokeDashArray([])
+        .strokeDashOffset(1)
+        .strokeMiterLimit(1)
+        .strokeOpacity(1)
+        .viewPort({ x: 1, y: 1 })
     }
   }
 }
 
 @Component
-export struct FarmStepperItemComp {
+export struct FarmSideBarContainerComp {
   build() {
     Column() {
-      Stepper() {
-        StepperItem()
-          .nextLabel('ovd')
-          .prevLabel('ovd')
-      }
+      SideBarContainer()
+        .autoHide(true)
+        .controlButton({ left: 1, top: 1 })
+        .maxSideBarWidth(1)
+        .minSideBarWidth(1)
+        .showControlButton(true)
+        .showSideBar(true)
+        .showSideBarWithGesture(true)
     }
   }
 }

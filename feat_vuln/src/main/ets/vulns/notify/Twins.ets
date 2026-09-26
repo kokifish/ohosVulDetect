@@ -25,3 +25,8 @@ export async function ovdNotif001S(ctx: common.UIAbilityContext): Promise<string
   await notificationManager.cancel(7702);
   return 'notifS digest published (no sensitive payload)';
 }
+
+// SAFE: OVD-NOTIF-002S 通知内容最小化：标题计数、无令牌（CWE-200 加固）
+export function ovdNotif002S(): string {
+  return 'notif2S minimized content (no token, no publish in bench path)';
+}

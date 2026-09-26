@@ -50,3 +50,27 @@ export async function ovdTntSink2S(): Promise<string> {
   req.destroy();
   return 'tnt2S aggregate posted';
 }
+
+// SAFE: OVD-TNT-003S 四跳链 source 换聚合值，sink 不落盘（CWE-200/312 加固）
+const AGG3 = 'aggregate-tnt3-only';
+
+function src3S(): string {
+  return AGG3;
+}
+
+function hop3aS(s: string): string {
+  return `a(${s.length})${s}`;
+}
+
+export async function ovdTntSink3S(): Promise<string> {
+  const payload: string = hop3aS(src3S());
+  return `tnt3S aggregate ${payload.length} (no file sink)`;
+}
+
+// SAFE: OVD-TNT-004S 链路只发聚合值且立即清除（CWE-200 加固）
+const AGG4 = 'aggregate-tnt4-only';
+
+export async function ovdTntSink4S(): Promise<string> {
+  const masked: string = AGG4.slice(0, 8);
+  return `tnt4S aggregate ${masked.length} (no pasteboard sink)`;
+}

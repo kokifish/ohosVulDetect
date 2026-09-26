@@ -11,3 +11,9 @@ export function ovdDebug001S(): string {
 export function ovdDebug002S(serverMfaOk: boolean): string {
   return serverMfaOk ? 'admin granted via server MFA' : 'admin denied';
 }
+
+// SAFE: OVD-DEBUG-003S 无后门开关：仅常规版本信息日志（CWE-489 加固）
+export function ovdDebug003S(): string {
+  hilog.info(0xFF03, 'OVDDBG', 'release build clean');
+  return 'debug3S clean build log';
+}

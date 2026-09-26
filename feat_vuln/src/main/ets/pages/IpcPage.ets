@@ -6,6 +6,8 @@ import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S, ovdCevt001S
 import { ovdIpc003 } from '../vulns/ipc/OVD-IPC-003';
 import { ovdCevt001 } from '../vulns/ipc/OVD-CEVT-001';
 import { ovdIpc002MagicLocal, ovdIpc004ReadLocal } from '../abilities/BackdoorAbility';
+import { ovdCevt002 } from '../vulns/ipc/OVD-CEVT-002';
+import { ovdCevt002S } from '../vulns/ipc/Twins';
 
 // IPC 面：001/002/003/004 事实源在 module.json5 / BackdoorAbility / DataShareExt；此处提供触发器。
 @Entry
@@ -73,7 +75,11 @@ struct IpcPage {
           new Case('002S verify', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc002S('com.koki.VD', true)),
           new Case('003S loopback-auth', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc003S(true)),
           new Case('004S allowlist', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc004S('viewHelp')),
-          new Case('005S sig-check', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc005S(true))
+          new Case('005S sig-check', (ctx: common.UIAbilityContext, log: (s: string) => void) => ovdIpc005S(true)),
+          new Case('cevt-002 topology broadcast', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdCevt002(log)),
+          new Case('cevt-002S minimal payload', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdCevt002S(log)),
         ]
       })
 

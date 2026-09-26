@@ -14,12 +14,12 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 105 + 105（manifest 210 条，双向一致；含跨模块 XMOD 5 对、interproc 污点链 2 对） | groundtruth/manifest.json |
+| 漏洞/孪生 | 120 + 120（manifest 240 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 4 对） | groundtruth/manifest.json |
 | 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
 | feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
-| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 31 文件 / 62 组件 / 416 调用（生成） | farm_build 实测 |
+| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 33 文件 / 66 组件 / 478 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
-| 组件内 API | 752/1296（58.0%，feat_compfarm 农场 62 组件；组件级排除仅剩 Particle；Optional/VoidCallback/Callback/内联箭头参数映射 + 保守 interface 字面量 + 7 种宿主包装 + 必参构造提示；no-decl 36 + 参数复杂跳过 401 归因） | check_component_api_coverage.py |
+| 组件内 API | 818/1296（63.1%，feat_compfarm 农场 66 组件；组件级排除仅剩 Particle；跨文件 interface/enum 索引 + 全可选接口取可选字段 + Record 字面量 + 回调空实现映射；no-decl 36 + 参数复杂跳过 334 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
 
@@ -240,8 +240,9 @@ $E -stop ovdbench
 - 同 versionCode 覆盖安装可能不生效，建议先 `bm uninstall`；
 - 模拟器锁屏会拒绝 `aa start`（Error 10106102），先 `power-shell wakeup` + `uinput -T -m` 上滑解锁；
 - API26 模拟器（bench26）走 entry 壳路由，自动化遍历按 id 前缀取页面（见 AGENTS.md）；
-- cat-perm 页 Runner 结果行不进 layout dump（全部按钮一致，含既有对）——该页新对验证按
-  「行为对照」口径（与既有同形对等观），勿以 ✅ 行缺失判失败；
+- 大按钮数页（≥14）日志区曾被按钮 Flex 挤出屏幕致结果行不可采（老 cat-perm 问题机理）：
+  DemoScaffold 已重构为单 Scroll 流（按钮 + 日志同列，2026-09），任意页日志均可达，
+  sweep 可正常采集全部 ✅/❌ 行；
 - 长遍历后 uitest dumpLayout 可能 30s 超时挂死，用 `tools/emulator_recover.sh`
   （探活/黑屏检测/冷启动）恢复；定向遍历单页可模块方式导入 sweep，设
   `es.ABILITY='VulnAbility'` 后 `es.visit_rows(['cat-xxx'], budget_seconds=600)`，

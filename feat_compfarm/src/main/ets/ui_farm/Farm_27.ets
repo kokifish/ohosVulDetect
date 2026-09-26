@@ -1,51 +1,36 @@
 // Farm_27.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmTextClockComp {
+export struct FarmTabContentComp {
   build() {
     Column() {
-      TextClock()
-        .fontFeature('ovd')
-        .textShadow([])
+      Tabs() {
+        TabContent()
+          .onWillHide((): void => {})
+          .onWillShow((): void => {})
+      }
     }
   }
 }
 
 @Component
-export struct FarmTextAreaComp {
+export struct FarmTabsComp {
   build() {
     Column() {
-      TextArea()
-        .caretColor(Color.Red)
-        .compressLeadingPunctuation(true)
-        .enableAutoFill(true)
-        .enableAutoSpacing(true)
-        .enableHapticFeedback(true)
-        .enableKeyboardOnFocus(true)
-        .enablePreviewText(true)
-        .enableSelectedDataDetector(true)
-        .fallbackLineSpacing(true)
-        .fontFeature('ovd')
-        .halfLeading(true)
-        .horizontalScrolling(true)
-        .includeFontPadding(true)
-        .maxFontScale(1)
-        .maxFontSize(1)
-        .maxLength(1)
-        .minFontScale(1)
-        .minFontSize(1)
-        .minLines(1)
-        .onDidDelete((v: DeleteValue): void => {})
-        .onDidInsert((v: InsertValue): void => {})
-        .onWillAttachIME((v: IMEClient): void => {})
-        .orphanCharOptimization(true)
-        .placeholderColor(Color.Red)
-        .punctuationOverflow(true)
-        .selectedBackgroundColor(Color.Red)
-        .selectionMenuHidden(true)
-        .showCounter(true)
-        .stopBackPress(true)
-        .strokeColor(Color.Red)
+      Tabs()
+        .animationDuration(1)
+        .barBackgroundColor(Color.Red)
+        .barBackgroundEffect({ radius: 1 })
+        .barFloatingStyle({ barWidth: { smallBarWidth: 1, mediumBarWidth: 1 }, barSideMargin: 1 })
+        .barGridAlign({ sm: 1, md: 1 })
+        .barHeight(1)
+        .barOverlap(true)
+        .barWidth(1)
+        .fadingEdge(true)
+        .onTabBarClick((v: number): void => {})
+        .onUnselected((v: number): void => {})
+        .scrollable(true)
+        .vertical(true)
     }
   }
 }

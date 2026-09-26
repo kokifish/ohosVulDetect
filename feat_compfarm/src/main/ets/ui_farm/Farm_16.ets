@@ -1,23 +1,23 @@
 // Farm_16.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
-export struct FarmQRCodeComp {
+export struct FarmPatternLockComp {
   build() {
     Column() {
-      QRCode('ovd')
-        .contentOpacity(1)
+      PatternLock()
+        .activateCircleStyle({ color: Color.Red, enableWaveEffect: true })
+        .skipUnselectedPoint(true)
     }
   }
 }
 
 @Component
-export struct FarmRatingComp {
+export struct FarmProgressComp {
   build() {
     Column() {
-      Rating()
-        .starStyle({ backgroundUri: 'ovd', foregroundUri: 'ovd' })
-        .stars(1)
-        .stepSize(1)
+      Progress({ value: 40, total: 100, type: ProgressType.Linear })
+        .privacySensitive(true)
+        .value(1)
     }
   }
 }

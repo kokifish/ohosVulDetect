@@ -39,7 +39,8 @@ EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRende
 EXCLUDE_COMPONENTS = {"Particle"}
 # 宿主约束组件：只能嵌在特定父组件内（生成时包一层）
 HOST_OF = {"GridCol": "GridRow", "StepperItem": "Stepper", "ImageSpan": "Text",
-           "TabContent": "Tabs", "GridItem": "Grid", "ListItem": "List", "Span": "Text"}
+           "TabContent": "Tabs", "GridItem": "Grid", "ListItem": "List", "Span": "Text",
+           "ContainerSpan": "Text"}
 # 必参构造提示（ctor_args 解析不出但 SDK 有必填参数）
 CTOR_HINTS = {"Image": "$r('app.media.startIcon')", "ImageSpan": "$r('app.media.startIcon')",
               "QRCode": "'ovd'", "Panel": "true",
@@ -120,18 +121,10 @@ def interface_required_fields(text, iface_name, depth=0):
     """解析 interface { name: Type; ... } 的必填字段 → [(name, 默认值)]；解析不了返回 None。"""
     if depth > 2:
         return None
-    m = re.search(rf"interface {iface_name}\b[^{{]*\{{", text)
+    m = re.search(rf"^\s*(?:export\s+|declare\s+)?interface {iface_name}\b", text, re.M)
     if not m:
         return None
-    i = m.end()
-    depth_n = 1
-    while i < len(text) and depth_n > 0:
-        if text[i] == "{":
-            depth_n += 1
-        elif text[i] == "}":
-            depth_n -= 1
-        i += 1
-    body = text[m.end():i - 1]
+    body = _brace_body(text, m.end())
     fields = []
     for fm in re.finditer(r"^\s+([a-zA-Z_]\w*)(\?)?\s*:\s*([^;\n]+)[;\n]", body, re.M):
         fname, opt, ftype = fm.group(1), fm.group(2), fm.group(3).strip()
@@ -156,6 +149,81 @@ def interface_required_fields(text, iface_name, depth=0):
     return fields
 
 
+def _brace_body(text, start):
+    """提取 start 起首个 '{' 的平衡体（不含外层花括号）。"""
+    i = text.find("{", start)
+    if i < 0:
+        return ""
+    depth = 1
+    i += 1
+    j = i
+    while j < len(text) and depth > 0:
+        if text[j] == "{":
+            depth += 1
+        elif text[j] == "}":
+            depth -= 1
+        j += 1
+    return text[i:j - 1]
+
+
+# 跨文件类型索引：interface/enum 声明 → d.ts 文本（组件自身 d.ts 优先，索引兜底）
+IFACE_INDEX: dict = {}
+ENUM_INDEX: dict = {}
+
+
+def build_type_indexes(texts):
+    for _fn, tx in texts.items():
+        for mm in re.finditer(r"^\s*(?:export\s+|declare\s+)?interface\s+([A-Z]\w+)\b", tx, re.M):
+            IFACE_INDEX.setdefault(mm.group(1), tx)
+        for mm in re.finditer(r"^\s*(?:export\s+)?(?:declare\s+)?enum\s+([A-Z]\w+)\b", tx, re.M):
+            ENUM_INDEX.setdefault(mm.group(1), tx)
+
+
+def interface_fields(iface_name, dts_text, depth=0):
+    """interface 实参字段列表：必填全可映射；必填为空（全可选）时取前 2 个可映射可选字段。
+    组件自身 d.ts 无声明时回退跨文件索引。不可映射/空接口返回 None。"""
+    if depth > 2:
+        return None
+    for src in ([dts_text] if dts_text else []) + [IFACE_INDEX.get(iface_name)]:
+        if not src:
+            continue
+        m = re.search(rf"^\s*(?:export\s+|declare\s+)?interface {iface_name}\b", src, re.M)
+        if not m:
+            continue
+        body = _brace_body(src, m.end())
+        required, optional, ok = [], [], True
+        for fm in re.finditer(r"^\s+([a-zA-Z_]\w*)(\?)?\s*:\s*([^;\n]+)[;\n]", body, re.M):
+            fname, opt, ftype = fm.group(1), bool(fm.group(2)), fm.group(3).strip()
+            v = None
+            if re.fullmatch(r"[A-Z][A-Za-z0-9]*", ftype):
+                v = interface_fields(ftype, src, depth + 1)
+                if v is not None:
+                    v = "{ " + ", ".join(f"{k}: {vv}" for k, vv in v) + " }"
+            if v is None:
+                v = default_for(ftype, src)
+            if v is None:
+                if not opt:
+                    ok = False
+                    break
+                continue
+            (required if not opt else optional).append((fname, v))
+        if not ok:
+            continue
+        fields = required or optional[:2]
+        if fields:
+            return fields
+        return None  # 空接口不生成 {}（arkts 字面量校验风险）
+    return None
+
+
+def interface_literal(iface_name, dts_text, depth=0):
+    """interface_fields 的字面量包装。"""
+    fields = interface_fields(iface_name, dts_text, depth)
+    if not fields:
+        return None
+    return "{ " + ", ".join(f"{k}: {v}" for k, v in fields) + " }"
+
+
 def ctor_args(text, comp):
     """组件构造实参文本（不含括号）；无需参数返回 ''；无法生成返回 None。
     以「返回 XAttribute 的 call signature」锚定（interface 内可能混有其他成员）。"""
@@ -174,8 +242,10 @@ def ctor_args(text, comp):
     if optional:
         return ""
     if re.fullmatch(r"[A-Z][A-Za-z0-9]*", arg_type):
-        fields = interface_required_fields(text, arg_type)
-        if fields is None:
+        # interface 实参：必填优先；必填为空（全可选）时退化为前 2 个可映射可选字段——
+        # arkts 禁止空对象字面量（实测 Refresh({}) 等直接报 not assignable）
+        fields = interface_fields(arg_type, text)
+        if not fields:
             return None
         inner = ", ".join(f"{k}: {v}" for k, v in fields)
         return "{ " + inner + " }"
@@ -191,6 +261,11 @@ def default_for(type_text: str, dts_text: str | None = None):
     m = re.fullmatch(r"Optional<(.+)>", t)
     if m:
         return default_for(m.group(1), dts_text)  # Optional<T> 解包（如 ScrollBar.enableNestedScroll）
+    m = re.fullmatch(r"Record<([^,]+),\s*(.+)>", t)
+    if m:
+        v = default_for(m.group(2), dts_text)
+        if v is not None:
+            return f"{{ 'k': {v} }}"  # Record<K,V> → 单键字面量（上下文类型定位）
     for part in [x.strip() for x in t.split("|")]:
         if re.fullmatch(r"[A-Z][A-Za-z0-9]*\.[A-Z][A-Za-z0-9]*", part):
             return part  # 全局枚举成员 X.Y
@@ -212,29 +287,33 @@ def default_for(type_text: str, dts_text: str | None = None):
             return f"(v: {part[len('Callback<'):-1]}): void => {{}}"
         if "Callback" in part:
             return None  # 其余未知 Callback 形态跳过
-    # 单一大写名：全局枚举取首成员（100% 可编译）；TYPE_HINTS 为无 declare enum 的
-    # 全局常量对象成员；再退一步做保守 interface 字面量（必填字段全部可映射才生成，
-    # 嵌套/回调字段不可映射则整体放弃，防连锁编译失败）
+    # 单一大写名：全局枚举取首成员（组件自身 d.ts 优先，跨文件索引兜底）；TYPE_HINTS 为
+    # 无 declare enum 的全局常量对象成员；再退一步做保守 interface 字面量（必填字段全部
+    # 可映射才生成，全可选接口取前 2 个可映射可选字段）
     if re.fullmatch(r"[A-Z][A-Za-z0-9]*", t):
         if t in TYPE_HINTS:
             return TYPE_HINTS[t]
-        if dts_text is not None:
-            m = re.search(rf"declare enum {t}\b[^{{]*\{{\s*([A-Z_0-9a-z]+)\s*=\s*", dts_text)
-            if m:
-                return f"{t}.{m.group(1)}"
-            fields = interface_required_fields(dts_text, t, 1)
-            if fields:
-                return "{ " + ", ".join(f"{k}: {v}" for k, v in fields) + " }"
+        for src in ([dts_text] if dts_text else []) + [ENUM_INDEX.get(t)]:
+            if src:
+                m = re.search(rf"declare enum {t}\b[^{{]*\{{\s*([A-Z_0-9a-z]+)\s*=\s*", src)
+                if m:
+                    return f"{t}.{m.group(1)}"
+        lit = interface_literal(t, dts_text)
+        if lit is not None:
+            return lit
         return None
     return None
 
 
 # 无 declare enum 的全局常量类型 → 可验证成员；猜错由编译 auto-iter 排除兜底
-TYPE_HINTS = {"Alignment": "Alignment.Center"}
+TYPE_HINTS = {"Alignment": "Alignment.Center",
+           "WebController": "new WebviewController()",
+           "Scroller": "new Scroller()"}
 
 
 def main() -> int:
     comp_dir, names, texts = load_component_texts()
+    build_type_indexes(texts)
 
     corpus = []
     for mod in ["entry", "feat_api", "feat_vuln", "feat_heavy", "lib_common", "lib_shared"]:

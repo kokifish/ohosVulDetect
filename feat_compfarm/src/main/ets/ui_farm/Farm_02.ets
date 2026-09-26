@@ -5,6 +5,7 @@ export struct FarmCheckboxComp {
   build() {
     Column() {
       Checkbox()
+        .mark({ strokeColor: Color.Red, size: 1 })
         .unselectedColor(Color.Red)
     }
   }
@@ -15,6 +16,7 @@ export struct FarmCheckboxGroupComp {
   build() {
     Column() {
       CheckboxGroup()
+        .mark({ strokeColor: Color.Red, size: 1 })
         .selectAll(true)
         .unselectedColor(Color.Red)
     }
