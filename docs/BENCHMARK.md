@@ -34,6 +34,20 @@
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
 
+### 探索方向（按价值/成本排序，未排期；结构性封顶项不列）
+
+- **漏洞语料新家族**：sendable/@Concurrent 并发面、worker 通信面、UI 状态污染面三类
+  ArkTS 特有形态（检测器区分度价值最高）；interproc 链加深为跨 record/跨模块组合形态
+  （TNT×XMOD，source 在 HAR/HSP、sink 在 feature）。
+- **FP-bait 扩展**：api-bait 困难模式从调用面延伸到规则面（近似孪生混淆形态），量化检测器区分度。
+- **组件内 API 818→更高**：剩余缺失大头是 CustomBuilder/类型化 Callback/泛型参数，
+  需生成器「回调签名合成」；组件维度 21 项与 no-decl 36 已封顶不投入。
+- **打包形态**：多 HSP 依赖链、feature HAP 按需分发（distro）等输入形态对反编译管线的扩展，
+  配套 corpus_meta 画像字段。
+- **评分基础设施**：固定 test.out 快照的评分器回归基线（防评分口径漂移）；工件 sidecar
+  的父项目消费验证闭环。
+- **指令覆盖增量**：仅随 SDK 升级重探（callruntime/patch 管线新发射形态），不作为常态投入。
+
 ## 结构
 
 | 模块 | 类型 | 内容 |
