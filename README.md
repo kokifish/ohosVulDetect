@@ -12,9 +12,12 @@
 |---|---|
 | 反编译准确性 + 指令覆盖评测（正式语料） | `build/out/ohosVulDetect-api26-release-unsigned.app` |
 | 漏洞检测评分 | `python3 groundtruth/score_output.py <工具产出的 test.out> <.app 路径>` |
-| 超大输入 / 模块不均衡压力 | 同 api26-release（feat_heavy 农场）；record 级不均衡度见 corpus_meta.json |
-| 小包高 workload | `build/out/ohosVulDetect-api24-release-unsigned.app`（无农场模块，包最小） |
-| 档位梯度采样 | `build/samples/ohosVulDetect-sample-{small,medium,heavy}.app`（`tools/build_samples.py`） |
+| 极端不均衡（app 级：feat_heavy 占 93% 指令） | 同 api26-release |
+| 极端不均衡（单模块/单 record/单方法隔离压测） | `build/out/feat_heavy-api26-release-unsigned.hap`（22.9MB 单 modules.abc） |
+| 存储膨胀对照（包大 ≠ 工作量大） | `build/out/ohosVulDetect-api26-debug-unsigned.app` |
+| 平衡小包对照 / 旧模拟器安装 | `build/out/ohosVulDetect-api24-release-unsigned.app` |
+| 不均衡梯度控制（非极端） | `build/samples/ohosVulDetect-sample-{small,medium}.app`（heavy 档 = api26-release 本身，不单独产出） |
+| 其他单模块 abc（按需派生） | `unzip -p <.app> <模块>-default.hap`（.app 内含全部 hap/hsp） |
 
 ## 必读事实（避免误判）
 
@@ -35,5 +38,5 @@
 ## 构建
 
 ```bash
-python3 build.py    # 标准 4 变体（api26/api24 × release/debug）+ 三档样本 → build/out/ 与 build/samples/
+python3 build.py    # 标准 4 变体（api26/api24 × release/debug）+ feat_heavy 单体 + 两档样本 → build/out/ 与 build/samples/
 ```

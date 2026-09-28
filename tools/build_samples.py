@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""样本矩阵构建器：用 gen_heavy_farm.py 的环境变量旋钮产出三档指令压力梯度的
+"""样本矩阵构建器：用 gen_heavy_farm.py 的环境变量旋钮产出两档指令压力梯度的
 api26-release .app 到 build/samples/，供父项目按档位选样本。
 
   small  — 极小农场（biz=1 文件 43 函数 / UI=24 / API cap=2）：单模块份额 ~20% 档
   medium — 定点 ~40% 单模块份额档（biz=1 文件 43 函数，全量 api/kit/ui 固定面）
-  heavy  — 极端档（默认提交规模：单 record 巨模块，≥5M 指令 / ≈60k 函数，~93%）
+  heavy 档不再单独产出：= 标准 api26-release（默认 farm，单 record 巨模块 ~93%）
 
 小档必须 pin OVD_HEAVY_BIZ_FUNCS：默认已是 3870（单 record 巨模块），不 pin 会继承成 heavy 规模。
 
 流程：设环境变量重生成 farm → 构建 api26-release → 收集副本 → 还原默认 farm。
 结束后工作区与进入前一致（farm 以默认参数重生成）。构建走 build.py（含 ohpm/hvigor）。
 
-用法：python3 tools/build_samples.py [--profiles small,medium,heavy] [--skip-build]
+用法：python3 tools/build_samples.py [--profiles small,medium]
 """
 import argparse
 import os
@@ -23,13 +23,12 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
-PROFILES: dict[str, dict[str, str] | None] = {
+PROFILES: dict[str, dict[str, str]] = {
     "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
               "OVD_HEAVY_GIANT_STMTS": "0",
               "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
     "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
                "OVD_HEAVY_GIANT_STMTS": "0"},
-    "heavy": None,
 }
 
 
@@ -56,9 +55,7 @@ def build_release() -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="build tiered stress samples")
-    ap.add_argument("--profiles", default="small,medium,heavy")
-    ap.add_argument("--skip-build", action="store_true",
-                    help="不重新构建：heavy 直接用 build/out 现产物（其余档仍需构建）")
+    ap.add_argument("--profiles", default="small,medium")
     args = ap.parse_args()
     names = [n.strip() for n in args.profiles.split(",") if n.strip()]
     for n in names:
@@ -72,11 +69,8 @@ def main() -> int:
     try:
         for name in names:
             env = PROFILES[name]
-            if name == "heavy" and args.skip_build and src_app.exists():
-                regen(env)
-            else:
-                regen(env)
-                build_release()
+            regen(env)
+            build_release()
             if not src_app.exists():
                 raise SystemExit(f"ERROR: 未找到 {src_app}")
             dst = samples_dir / f"ohosVulDetect-sample-{name}.app"

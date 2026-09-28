@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ohosVulDetect 基准 App 一键构建。
 
-构建轴：SDK 版本（api26 / api24）× 构建模式（release / debug）× 样本档位（small / medium / heavy）。
+构建轴：SDK 版本（api26 / api24）× 构建模式（release / debug）× 样本档位（small / medium）。
 
 用法（--sdk 与 --mode 可自由组合）：
   python3 build.py                    # 默认全量：标准 4 变体（api26+api24 × release+debug）
@@ -16,8 +16,8 @@
 
 产物路径：
   build/out/ohosVulDetect-<sdk>-<mode>-unsigned.app    标准 4 变体（api26 含 heavy 农场）
-  build/out/<模块>-<sdk>-<mode>-unsigned.{hap|hsp}      每模块产物
-  build/samples/ohosVulDetect-sample-<tier>.app        三档样本（均为 api26-release 单变体）
+  build/out/feat_heavy-api26-release-unsigned.hap      heavy 单模块单体（压测载体，仅此一个单模块包）
+  build/samples/ohosVulDetect-sample-<tier>.app        两档样本（small/medium，均 api26-release；heavy 档 = 标准 api26-release 本身）
 
 三档样本说明：构建前用 OVD_HEAVY_* 环境变量重生成 feat_heavy 语料（small≈12 万指令 /
 medium≈29 万 / heavy≈594 万，即默认规模），构建后还原默认语料；档位差异见
@@ -45,15 +45,13 @@ PRODUCT_OF = {"api26": "default", "api24": "api24"}
 BUILD_OUT = ROOT / "build" / "out"
 SAMPLES_DIR = ROOT / "build" / "samples"
 
-# 三档样本的 farm 规模旋钮（heavy=None 即默认规模=单 record 巨模块）；详见 tools/build_samples.py。
-# small/medium 为单文件小农场：须同时 pin BIZ_FUNCS，否则会继承默认 3870 变成 heavy 规模
+# 三档样本的 farm 规模旋钮；heavy 档 = 标准 api26-release 本身（同一构建，不单独产出）
 TIER_ENVS = {
     "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
               "OVD_HEAVY_GIANT_STMTS": "0",
               "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
     "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
                "OVD_HEAVY_GIANT_STMTS": "0"},
-    "heavy": None,
 }
 
 
@@ -109,6 +107,11 @@ def collect(sdks: list[str], mode: str) -> list[pathlib.Path]:
         for f in [*apps, *parts]:
             if f.suffix not in (".app", ".hap", ".hsp"):
                 continue
+            # 单模块包不收集（.app 内即含全部 hap/hsp，按需 unzip 派生）；
+            # 仅保留 feat_heavy 单体（api26-release，外部单体压测的实证载体）
+            if f.suffix != ".app" and not (f.stem.startswith("feat_heavy")
+                                           and sdk == "api26" and mode == "release"):
+                continue
             stem = f.stem.split("-")
             new_name = f"{stem[0]}-{sdk}-{mode}-" + "-".join(stem[2:]) + f.suffix
             dst = out_dir / new_name
@@ -157,13 +160,6 @@ def build_tier(name: str, e: dict) -> None:
     print(f"== sample[{name}] → {dst}")
 
 
-def copy_heavy_sample() -> None:
-    src = BUILD_OUT / "ohosVulDetect-api26-release-unsigned.app"
-    dst = SAMPLES_DIR / "ohosVulDetect-sample-heavy.app"
-    shutil.copy2(src, dst)
-    print(f"== sample[heavy] → {dst}（复用标准 api26-release）")
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description="ohosVulDetect benchmark app build")
     ap.add_argument("--sdk", choices=SDKS + ["all"], default="all",
@@ -198,7 +194,7 @@ def main() -> int:
     copied: list[pathlib.Path] = []
     if args.samples_only:
         SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
-        for tier in ("small", "medium", "heavy"):
+        for tier in ("small", "medium"):
             build_tier(tier, e)
         regen_farm(None)
     else:
@@ -222,10 +218,6 @@ def main() -> int:
                 if r.returncode != 0:
                     return r.returncode
                 copied += collect([sdk], mode)
-        if not args.no_samples and "api26" in sdks and "release" in modes:
-            # 标准 api26-release 即 heavy 档（默认 farm），直接复制为样本
-            SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
-            copy_heavy_sample()
 
     print("\n== 构建产物 ==")
     for f in sorted(BUILD_OUT.glob("*")):

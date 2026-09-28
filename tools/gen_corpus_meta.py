@@ -13,8 +13,6 @@ feat_heavy record 级分布（模块内不均衡度）与推荐用法。一切�
   python3 tools/gen_corpus_meta.py --check    # 重算并与落盘文件比对，漂移则 exit 1
 """
 import argparse
-import copy
-import hashlib
 import json
 import pathlib
 import re
@@ -30,7 +28,7 @@ from check_module_share import DEFAULT_DIS, NOISE, analyze  # noqa: E402
 
 OUT = ROOT / "corpus_meta.json"
 VARIANTS = ["api26-release", "api26-debug", "api24-release", "api24-debug"]
-TIERS = ["small", "medium", "heavy"]
+TIERS = ["small", "medium"]
 REC_RE = re.compile(r"^\.function\s+\S+\s+&([^&]+)&\.")
 OP_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)")
 
@@ -49,7 +47,7 @@ USAGE = {
     "imbalance_stress": "api26-release：feat_heavy 为 app 内主导模块；模块内不均衡度看 records.top1_share",
     "small_package": "api24-release（无农场模块，包最小）",
     "storage_bloat": "api26-debug 体积大 = debug abc 更大 + .app 外层条目零压缩存储（zip_raw≈zip_stored），指令量与 release 相同，非更高分析工作量",
-    "tiered_sampling": "build/samples 三档均 api26-release 口径；heavy 与标准 api26-release 为同一构建的副本",
+    "tiered_sampling": "build/samples 两档梯度（small/medium，均 api26-release 口径）；heavy 档 = 标准 api26-release 本身（同一构建，不单独产出）",
 }
 NOTES = [
     "lib_common 为 HAR，无独立包，编译进各依赖方 HAP 的 modules.abc",
@@ -174,14 +172,6 @@ def write_full_sidecar(path: pathlib.Path, info: dict) -> None:
         json.dumps(sc, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def md5_of(path: pathlib.Path) -> str:
-    h = hashlib.md5()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description="build artifacts → corpus_meta.json")
     ap.add_argument("--check", action="store_true", help="重算并与落盘 corpus_meta.json 比对")
@@ -201,7 +191,7 @@ def main() -> int:
     for t in TIERS:
         p = ROOT / "build" / "samples" / f"ohosVulDetect-sample-{t}.app"
         if not p.exists():
-            print(f"ERROR: 缺少样本 {p}（先跑 python3 tools/build_samples.py 或全量 build.py）")
+            print(f"ERROR: 缺少样本 {p}（先跑 python3 build.py）")
             return 1
         apps[f"sample-{t}"] = p
 
@@ -211,16 +201,10 @@ def main() -> int:
         variants[v] = profile_app(apps[v], args.ark_disasm, with_records=(v == "api26-release"))
         write_full_sidecar(apps[v], variants[v])
     tiers: dict[str, dict] = {}
-    ref_md5 = md5_of(apps["api26-release"])
     for t in TIERS:
         p = apps[f"sample-{t}"]
         print(f"== profile {p.name}")
-        if t == "heavy" and md5_of(p) == ref_md5:
-            tiers[t] = copy.deepcopy(variants["api26-release"])
-            tiers[t]["app_file"] = str(p.relative_to(ROOT))
-            tiers[t]["same_build_as"] = "api26-release"
-        else:
-            tiers[t] = profile_app(p, args.ark_disasm, with_records=(t != "heavy"))
+        tiers[t] = profile_app(p, args.ark_disasm, with_records=True)
         write_full_sidecar(p, tiers[t])
 
     meta = {

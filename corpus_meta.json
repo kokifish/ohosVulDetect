@@ -16,120 +16,13 @@
   "record = 编译单元（源文件级），对应反编译工具看到的模块；HAP/module 与 record 是两个层级"
  ],
  "sample_tiers": {
-  "heavy": {
-   "api_version": {
-    "compatible": 26,
-    "release_type": "Beta2",
-    "target": 26
-   },
-   "app_bytes": 12343682,
-   "app_file": "build/samples/ohosVulDetect-sample-heavy.app",
-   "bundle": "com.koki.VD",
-   "modules": [
-    {
-     "abc_bytes": 25452348,
-     "bytes": 25569097,
-     "functions": 60278,
-     "inst_share": 0.9322,
-     "instructions": 6419552,
-     "name": "feat_heavy",
-     "records": {
-      "count": 136,
-      "max_method": {
-       "instructions": 476641,
-       "name": "#*#giant_000",
-       "record": "feat_heavy.src.main.ets.farm.biz.Biz0000"
-      },
-      "top1": {
-       "functions": 51655,
-       "instructions": 6195973,
-       "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
-      },
-      "top1_share": 0.9652,
-      "top5": [
-       {
-        "instructions": 6195973,
-        "name": "feat_heavy.src.main.ets.farm.biz.Biz0000"
-       },
-       {
-        "instructions": 17531,
-        "name": "feat_heavy.src.main.ets.farm.ui.UiStage"
-       },
-       {
-        "instructions": 14767,
-        "name": "feat_heavy.src.main.ets.farm.apiwrap.OvwDyn"
-       },
-       {
-        "instructions": 10231,
-        "name": "feat_heavy.src.main.ets.farm.kitwrap.KtwDyn"
-       },
-       {
-        "instructions": 2555,
-        "name": "feat_heavy.src.main.ets.farm.apiwrap.Ovw04"
-       }
-      ]
-     },
-     "type": "feature"
-    },
-    {
-     "abc_bytes": 2007756,
-     "bytes": 2131036,
-     "functions": 3494,
-     "inst_share": 0.0574,
-     "instructions": 395504,
-     "name": "feat_api",
-     "type": "feature"
-    },
-    {
-     "abc_bytes": 412844,
-     "bytes": 1808285,
-     "functions": 1846,
-     "inst_share": 0.0066,
-     "instructions": 45115,
-     "name": "feat_vuln",
-     "type": "feature"
-    },
-    {
-     "abc_bytes": 189672,
-     "bytes": 306615,
-     "functions": 1260,
-     "inst_share": 0.0033,
-     "instructions": 22441,
-     "name": "feat_compfarm",
-     "type": "feature"
-    },
-    {
-     "abc_bytes": 30032,
-     "bytes": 147793,
-     "functions": 133,
-     "inst_share": 0.0004,
-     "instructions": 2899,
-     "name": "entry",
-     "type": "entry"
-    },
-    {
-     "abc_bytes": 15196,
-     "bytes": 132288,
-     "functions": 68,
-     "inst_share": 0.0002,
-     "instructions": 1135,
-     "name": "lib_shared",
-     "type": "shared"
-    }
-   ],
-   "same_build_as": "api26-release",
-   "total_functions": 67079,
-   "total_instructions": 6886646,
-   "zip_raw_bytes": 30099431,
-   "zip_stored_bytes": 12342668
-  },
   "medium": {
    "api_version": {
     "compatible": 26,
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2264767,
+   "app_bytes": 2264765,
    "app_file": "build/samples/ohosVulDetect-sample-medium.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -227,7 +120,7 @@
    "total_functions": 16000,
    "total_instructions": 754365,
    "zip_raw_bytes": 6162631,
-   "zip_stored_bytes": 2263753
+   "zip_stored_bytes": 2263751
   },
   "small": {
    "api_version": {
@@ -342,7 +235,7 @@
   "imbalance_stress": "api26-release：feat_heavy 为 app 内主导模块；模块内不均衡度看 records.top1_share",
   "small_package": "api24-release（无农场模块，包最小）",
   "storage_bloat": "api26-debug 体积大 = debug abc 更大 + .app 外层条目零压缩存储（zip_raw≈zip_stored），指令量与 release 相同，非更高分析工作量",
-  "tiered_sampling": "build/samples 三档均 api26-release 口径；heavy 与标准 api26-release 为同一构建的副本",
+  "tiered_sampling": "build/samples 两档梯度（small/medium，均 api26-release 口径）；heavy 档 = 标准 api26-release 本身（同一构建，不单独产出）",
   "vuln_scoring": "4 个标准变体均含 feat_vuln；评分：python3 groundtruth/score_output.py <test.out> <.app>"
  },
  "variants": {
@@ -404,7 +297,7 @@
     "release_type": "Beta2",
     "target": 24
    },
-   "app_bytes": 1635507,
+   "app_bytes": 1635513,
    "app_file": "build/out/ohosVulDetect-api24-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -448,7 +341,7 @@
    "total_functions": 5404,
    "total_instructions": 444324,
    "zip_raw_bytes": 4232766,
-   "zip_stored_bytes": 1634771
+   "zip_stored_bytes": 1634777
   },
   "api26-debug": {
    "api_version": {
@@ -526,7 +419,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 12343682,
+   "app_bytes": 12343683,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -624,7 +517,7 @@
    "total_functions": 67079,
    "total_instructions": 6886646,
    "zip_raw_bytes": 30099431,
-   "zip_stored_bytes": 12342668
+   "zip_stored_bytes": 12342669
   }
  }
 }
