@@ -16,6 +16,7 @@ export struct FarmMarqueeComp {
     Column() {
       Marquee({ start: true, src: 'ovd' })
         .allowScale(true)
+        .marqueeUpdateStrategy(MarqueeUpdateStrategy.DEFAULT)
         .onStop((v: void): void => {})
     }
   }

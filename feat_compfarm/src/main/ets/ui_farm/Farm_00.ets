@@ -5,23 +5,26 @@ export struct FarmAlphabetIndexerComp {
   build() {
     Column() {
       AlphabetIndexer({ arrayValue: [], selected: 1 })
+        .alignStyle(IndexerAlign.Left)
         .autoCollapse(true)
         .enableHapticFeedback(true)
-        .font({ size: 1, weight: 1 })
+        .font({ size: 1, weight: FontWeight.Lighter })
         .itemBorderRadius(1)
         .itemSize('ovd')
+        .onPopupSelect((): void => {})
         .popupBackground(Color.Red)
+        .popupBackgroundBlurStyle(BlurStyle.COMPONENT_ULTRA_THIN)
         .popupColor(Color.Red)
-        .popupFont({ size: 1, weight: 1 })
+        .popupFont({ size: 1, weight: FontWeight.Lighter })
         .popupItemBackgroundColor(Color.Red)
         .popupItemBorderRadius(1)
-        .popupItemFont({ size: 1, weight: 1 })
+        .popupItemFont({ size: 1, weight: FontWeight.Lighter })
         .popupPosition({ x: 1, y: 1 })
         .popupSelectedColor(Color.Red)
         .popupTitleBackground(Color.Red)
         .popupUnselectedColor(Color.Red)
         .selectedBackgroundColor(Color.Red)
-        .selectedFont({ size: 1, weight: 1 })
+        .selectedFont({ size: 1, weight: FontWeight.Lighter })
     }
   }
 }
@@ -31,9 +34,13 @@ export struct FarmButtonComp {
   build() {
     Column() {
       Button()
-        .labelStyle({ maxLines: 1, minFontSize: 1 })
+        .buttonStyle(ButtonStyleMode.NORMAL)
+        .controlSize(ControlSize.SMALL)
+        .fontStyle(FontStyle.Normal)
+        .labelStyle({ overflow: TextOverflow.None, maxLines: 1 })
         .maxFontScale(1)
         .minFontScale(1)
+        .role(ButtonRole.NORMAL)
         .stateEffect(true)
     }
   }

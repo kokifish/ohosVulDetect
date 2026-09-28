@@ -4253,6 +4253,111 @@
     "constants": []
    },
    "twin_of": "OVD-STOR-006"
+  },
+  {
+   "id": "OVD-SEN-001",
+   "title": "session token serialized across taskpool thread boundary and persisted plaintext",
+   "category": "concurrent-threading",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/OVD-SEN-001.ets",
+   "function": "ovdSen001",
+   "expected": true,
+   "twin": "OVD-SEN-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "execute"
+    ],
+    "constants": [
+     "ovd_sen_tok_6e21a4"
+    ]
+   }
+  },
+  {
+   "id": "OVD-SEN-001S",
+   "title": "twin: 同构 taskpool 路径只携带聚合计数 (OVD-SEN-001)",
+   "category": "concurrent-threading",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/Twins.ets",
+   "function": "ovdSen001S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-SEN-001"
+  },
+  {
+   "id": "OVD-WRK-001",
+   "title": "session token posted cross-thread via worker message",
+   "category": "worker-messaging",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wrk/OVD-WRK-001.ets",
+   "function": "ovdWrk001",
+   "expected": true,
+   "twin": "OVD-WRK-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "postMessage"
+    ],
+    "constants": [
+     "ovd_wrk_tok_51b9e2"
+    ]
+   }
+  },
+  {
+   "id": "OVD-WRK-001S",
+   "title": "twin: 只投递聚合计数 (OVD-WRK-001)",
+   "category": "worker-messaging",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wrk/Twins.ets",
+   "function": "ovdWrk001S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-WRK-001"
+  },
+  {
+   "id": "OVD-UST-001",
+   "title": "session token persisted plaintext into global ui state store",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/OVD-UST-001.ets",
+   "function": "ovdUst001",
+   "expected": true,
+   "twin": "OVD-UST-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "persistProp"
+    ],
+    "constants": [
+     "ovd_ust_tok_a9c37d"
+    ]
+   }
+  },
+  {
+   "id": "OVD-UST-001S",
+   "title": "twin: 仅内存态聚合无持久化 (OVD-UST-001)",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/Twins.ets",
+   "function": "ovdUst001S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-UST-001"
   }
  ]
 }

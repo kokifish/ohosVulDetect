@@ -6,7 +6,7 @@ export struct FarmContainerSpanComp {
     Column() {
       Text() {
         ContainerSpan()
-          .textBackgroundStyle({ color: Color.Red })
+          .textBackgroundStyle({ color: Color.Red, radius: 1 })
       }
     }
   }

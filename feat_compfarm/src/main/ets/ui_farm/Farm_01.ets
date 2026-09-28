@@ -5,8 +5,9 @@ export struct FarmCalendarPickerComp {
   build() {
     Column() {
       CalendarPicker()
+        .edgeAlign(CalendarAlign.START)
         .markToday(true)
-        .textStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .textStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
     }
   }
 }

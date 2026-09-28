@@ -16,6 +16,8 @@ export struct FarmComponent3DComp {
     Column() {
       Component3D()
         .environment('ovd')
+        .renderHeight(1)
+        .renderWidth(1)
         .shader('ovd')
         .shaderImageTexture('ovd')
         .shaderInputBuffer([])

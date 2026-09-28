@@ -5,24 +5,24 @@ export struct FarmTimePickerComp {
   build() {
     Column() {
       TimePicker()
-        .disappearTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .digitalCrownSensitivity(CrownSensitivity.LOW)
+        .disappearTextStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
         .enableCascade(true)
         .enableHapticFeedback(true)
         .onEnterSelectedArea((v: TimePickerResult): void => {})
-        .selectedTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
-        .textStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .selectedTextStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
+        .textStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
     }
   }
 }
 
 @Component
-export struct FarmUIPickerComponentComp {
+export struct FarmToggleComp {
   build() {
     Column() {
-      UIPickerComponent()
-        .canLoop(true)
-        .displayedItemCount(1)
-        .enableHapticFeedback(true)
+      Toggle({ type: ToggleType.Checkbox })
+        .switchPointColor(Color.Red)
+        .switchStyle({ pointRadius: 1, unselectedColor: Color.Red })
     }
   }
 }

@@ -9,13 +9,17 @@ export struct FarmSliderComp {
         .blockBorderWidth(1)
         .blockColor(Color.Red)
         .blockSize({ width: 1, height: 1 })
+        .blockStyle({ type: SliderBlockType.DEFAULT })
+        .digitalCrownSensitivity(CrownSensitivity.LOW)
         .enableHapticFeedback(true)
         .maxLabel('ovd')
         .minLabel('ovd')
         .minResponsiveDistance(1)
+        .selectedBorderRadius(1)
         .showSteps(true)
         .showTips(true)
         .slideRange({ from: 1, to: 1 })
+        .sliderInteractionMode(SliderInteraction.SLIDE_AND_CLICK)
         .stepColor(Color.Red)
         .stepSize(1)
         .trackBorderRadius(1)
@@ -31,9 +35,11 @@ export struct FarmSpanComp {
     Column() {
       Text() {
         Span('ovd')
-          .font({ size: 1, weight: 1 })
+          .font({ size: 1, weight: FontWeight.Lighter })
+          .fontStyle(FontStyle.Normal)
           .fontVariations([])
-          .textShadow([])
+          .textCase(TextCase.Normal)
+          .textShadow({ radius: 1 })
       }
     }
   }

@@ -34,6 +34,9 @@
     "pages/WifiVulnPage",
     "pages/GeoVulnPage",
     "pages/DevVulnPage",
-    "pages/EmtrVulnPage"
+    "pages/EmtrVulnPage",
+    "pages/SenVulnPage",
+    "pages/WrkVulnPage",
+    "pages/UstVulnPage"
   ]
 }

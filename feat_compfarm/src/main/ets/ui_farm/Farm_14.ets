@@ -19,11 +19,13 @@ export struct FarmNavDestinationComp {
         .onHidden((v: VisibilityChangeReason): void => {})
         .onInactive((v: NavDestinationActiveReason): void => {})
         .onNewParam((v: ESObject): void => {})
+        .onRestoreState((): void => {})
         .onResult((v: ESObject): void => {})
         .onWillDisappear((v: void): void => {})
         .onWillHide((v: void): void => {})
         .onWillShow((v: void): void => {})
         .recoverable(true)
+        .systemTransition(NavigationSystemTransitionType.DEFAULT)
         .toolbarConfiguration([])
     }
   }
@@ -45,9 +47,13 @@ export struct FarmNavigationComp {
         .hideToolBar(true)
         .ignoreLayoutSafeArea([])
         .menus([])
+        .minContentWidth(1)
+        .navBarPosition(NavBarPosition.Start)
         .navBarWidth(1)
         .recoverable(true)
         .subTitle('ovd')
+        .titleMode(NavigationTitleMode.Free)
+        .toolBar((): void => {})
         .toolbarConfiguration([])
     }
   }

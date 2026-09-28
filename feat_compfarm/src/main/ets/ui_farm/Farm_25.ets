@@ -19,6 +19,7 @@ export struct FarmStepperItemComp {
         StepperItem()
           .nextLabel('ovd')
           .prevLabel('ovd')
+          .status(ItemState.Normal)
       }
     }
   }

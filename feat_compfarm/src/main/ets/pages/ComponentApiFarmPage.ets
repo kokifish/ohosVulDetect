@@ -31,15 +31,16 @@ import { FarmTabContentComp, FarmTabsComp } from '../ui_farm/Farm_27';
 import { FarmTextComp, FarmTextPickerComp } from '../ui_farm/Farm_28';
 import { FarmTextClockComp, FarmTextAreaComp } from '../ui_farm/Farm_29';
 import { FarmTextInputComp, FarmTextTimerComp } from '../ui_farm/Farm_30';
-import { FarmTimePickerComp, FarmUIPickerComponentComp } from '../ui_farm/Farm_31';
-import { FarmVideoComp, FarmWaterFlowComp } from '../ui_farm/Farm_32';
+import { FarmTimePickerComp, FarmToggleComp } from '../ui_farm/Farm_31';
+import { FarmUIPickerComponentComp, FarmVideoComp } from '../ui_farm/Farm_32';
+import { FarmWaterFlowComp, FarmWebComp } from '../ui_farm/Farm_33';
 import { farmCombo1, farmCombo2, farmCombo3 } from '../ui_farm/ComboFarms';
 
 @Entry
 @Component
 struct ComponentApiFarmPage {
   @State sel: number = 0;
-  private readonly total: number = 69;
+  private readonly total: number = 71;
 
   private pick(i: number): void { this.sel = ((i % this.total) + this.total) % this.total; }
 
@@ -115,12 +116,14 @@ struct ComponentApiFarmPage {
         else if (this.sel === 60) { FarmTextInputComp() }
         else if (this.sel === 61) { FarmTextTimerComp() }
         else if (this.sel === 62) { FarmTimePickerComp() }
-        else if (this.sel === 63) { FarmUIPickerComponentComp() }
-        else if (this.sel === 64) { FarmVideoComp() }
-        else if (this.sel === 65) { FarmWaterFlowComp() }
-        else if (this.sel === 66) { farmCombo1() }
-        else if (this.sel === 67) { farmCombo2() }
-        else if (this.sel === 68) { farmCombo3() }
+        else if (this.sel === 63) { FarmToggleComp() }
+        else if (this.sel === 64) { FarmUIPickerComponentComp() }
+        else if (this.sel === 65) { FarmVideoComp() }
+        else if (this.sel === 66) { FarmWaterFlowComp() }
+        else if (this.sel === 67) { FarmWebComp() }
+        else if (this.sel === 68) { farmCombo1() }
+        else if (this.sel === 69) { farmCombo2() }
+        else if (this.sel === 70) { farmCombo3() }
     }
     .width('100%').height('100%').padding(12)
   }

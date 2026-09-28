@@ -31,7 +31,7 @@ SKIP_METHODS = {"constructor"}
 # 特殊宿主组件（attribute 语义非通用链式），不进农场
 
 # 方法级排除（编译报错的方法，由 auto-iter 累积）：key = "组件.方法"
-EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRender"), ("EmbeddedComponent", "onDrawReady"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender")])
+EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRender"), ("EmbeddedComponent", "onDrawReady"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender"), ("AlphabetIndexer", "onRequestPopupData"), ("Grid", "editModeOptions"), ("Grid", "onScrollFrameBegin"), ("List", "editModeOptions"), ("List", "onScrollFrameBegin"), ("NavDestination", "customTransition"), ("NavDestination", "onSaveState"), ("Scroll", "onScrollFrameBegin"), ("Search", "editMenuOptions"), ("Swiper", "onContentWillScroll"), ("Tabs", "customContentTransition"), ("Tabs", "onContentWillChange"), ("Text", "editMenuOptions"), ("TextArea", "editMenuOptions"), ("TextInput", "editMenuOptions"), ("WaterFlow", "onScrollFrameBegin"), ("Web", "bindSelectionMenu"), ("Web", "editMenuOptions"), ("Web", "onInterceptKeyboardAttach"), ("Web", "onOverrideErrorPage"), ("Web", "onOverrideUrlLoading"), ("Web", "enableNativeMediaPlayer"), ("Text", "bindSelectionMenu"), ("Web", "registerNativeEmbedRule"), ("Web", "enableScrollDirectionalLock")])
 # 曾全组件排除的 0 覆盖组件（Component3D/Counter/FolderStack/GridCol/StepperItem）
 # 已放回农场（2026-09 缺口专项）；编译报错方法由 auto-iter 继续累积进 EXCLUDE_METHODS。
 # Particle 构造需要复杂 ParticleOptions（emitter 必填嵌套），生成器无法保守映射，维持排除。
@@ -166,17 +166,20 @@ def _brace_body(text, start):
     return text[i:j - 1]
 
 
-# 跨文件类型索引：interface/enum 声明 → d.ts 文本（组件自身 d.ts 优先，索引兜底）
+# 跨文件类型索引：interface/enum/type 别名声明 → d.ts 文本（组件自身 d.ts 优先，索引兜底）
 IFACE_INDEX: dict = {}
 ENUM_INDEX: dict = {}
+TYPE_ALIAS_INDEX: dict = {}
 
 
 def build_type_indexes(texts):
     for _fn, tx in texts.items():
         for mm in re.finditer(r"^\s*(?:export\s+|declare\s+)?interface\s+([A-Z]\w+)\b", tx, re.M):
             IFACE_INDEX.setdefault(mm.group(1), tx)
-        for mm in re.finditer(r"^\s*(?:export\s+)?(?:declare\s+)?enum\s+([A-Z]\w+)\b", tx, re.M):
+        for mm in re.finditer(r"^\s*(?:export\s+|declare\s+)?enum\s+([A-Z]\w+)\b", tx, re.M):
             ENUM_INDEX.setdefault(mm.group(1), tx)
+        for mm in re.finditer(r"^\s*(?:export\s+|declare\s+)?type\s+(\w+)\s*=\s*([^;\n]+)", tx, re.M):
+            TYPE_ALIAS_INDEX.setdefault(mm.group(1), mm.group(2))
 
 
 def interface_fields(iface_name, dts_text, depth=0):
@@ -267,6 +270,8 @@ def default_for(type_text: str, dts_text: str | None = None):
         if v is not None:
             return f"{{ 'k': {v} }}"  # Record<K,V> → 单键字面量（上下文类型定位）
     for part in [x.strip() for x in t.split("|")]:
+        if part in ("undefined", "null", ""):
+            continue
         if re.fullmatch(r"[A-Z][A-Za-z0-9]*\.[A-Z][A-Za-z0-9]*", part):
             return part  # 全局枚举成员 X.Y
         if part == "boolean":
@@ -285,29 +290,70 @@ def default_for(type_text: str, dts_text: str | None = None):
             return "(): void => {}"  # 无参空实现：实参可少于签名形参（TS 可赋值性）
         if part.startswith("Callback<") and part.endswith(">"):
             return f"(v: {part[len('Callback<'):-1]}): void => {{}}"
+        # union 分支同样解析单一大写名（enum/alias/interface/命名回调），取首个可映射分支；
+        # 注意命名回调类型（OnXxxCallback）也走 resolve_named，不能按 'Callback' 子串提前否决
+        if re.fullmatch(r"[A-Z][A-Za-z0-9]*", part):
+            v = resolve_named(part, dts_text)
+            if v is not None:
+                return v
+            if len([x for x in t.split("|")]) == 1:
+                break  # 单名已完整解析仍失败 → 交给下方单名分支（此处防重复解析）
         if "Callback" in part:
-            return None  # 其余未知 Callback 形态跳过
-    # 单一大写名：全局枚举取首成员（组件自身 d.ts 优先，跨文件索引兜底）；TYPE_HINTS 为
-    # 无 declare enum 的全局常量对象成员；再退一步做保守 interface 字面量（必填字段全部
-    # 可映射才生成，全可选接口取前 2 个可映射可选字段）
+            return None  # 非类型名的 Callback 形态（如混合 union 尾部）跳过
+    # 单一大写名：完整解析链（TYPE_HINTS → enum → type 别名 → interface 字面量）
     if re.fullmatch(r"[A-Z][A-Za-z0-9]*", t):
-        if t in TYPE_HINTS:
-            return TYPE_HINTS[t]
-        for src in ([dts_text] if dts_text else []) + [ENUM_INDEX.get(t)]:
-            if src:
-                m = re.search(rf"declare enum {t}\b[^{{]*\{{\s*([A-Z_0-9a-z]+)\s*=\s*", src)
-                if m:
-                    return f"{t}.{m.group(1)}"
-        lit = interface_literal(t, dts_text)
-        if lit is not None:
-            return lit
-        return None
+        return resolve_named(t, dts_text)
     return None
+
+
+def resolve_named(t: str, dts_text: str | None):
+    """单一大写类型名解析链；不可解析返回 None。"""
+    if t in TYPE_HINTS:
+        return TYPE_HINTS[t]
+    # enum：组件自身 d.ts 优先，跨文件 ENUM_INDEX 兜底；体首成员前常有 JSDoc，先剥注释
+    for src in ([dts_text] if dts_text else []) + [ENUM_INDEX.get(t)]:
+        if not src:
+            continue
+        member = enum_first_member(src, t)
+        if member:
+            return f"{t}.{member}"
+    # type 别名：回调签名 → 无参空 lambda；联合 → 逐分支；单名 → 透传递归
+    alias = TYPE_ALIAS_INDEX.get(t)
+    if alias is not None:
+        body = alias.strip()
+        if body.startswith("("):
+            return "(): void => {}"
+        for part in [x.strip() for x in body.split("|")]:
+            if part in ("undefined", "null", ""):
+                continue
+            v = default_for(part, dts_text)
+            if v is not None:
+                return v
+        return None
+    lit = interface_literal(t, dts_text)
+    if lit is not None:
+        return lit
+    return None
+
+
+def enum_first_member(src: str, enum_name: str) -> str | None:
+    """enum 体首成员名（剥 JSDoc/行注释后匹配 MEMBER = 形态）。"""
+    m = re.search(rf"^\s*(?:export\s+)?(?:declare\s+)?enum\s+{enum_name}\b[^{{]*\{{", src, re.M)
+    if not m:
+        return None
+    body = _brace_body(src, m.start())
+    body = re.sub(r"/\*.*?\*/", " ", body, flags=re.S)
+    body = re.sub(r"//[^\n]*", " ", body)
+    mm = re.search(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*=", body)
+    if mm:
+        return mm.group(1)
+    mm = re.search(r"\b([A-Za-z_][A-Za-z0-9_]*)\b", body)  # 无显式值的自动枚举（如 IndexerAlign）
+    return mm.group(1) if mm else None
 
 
 # 无 declare enum 的全局常量类型 → 可验证成员；猜错由编译 auto-iter 排除兜底
 TYPE_HINTS = {"Alignment": "Alignment.Center",
-           "WebController": "new WebviewController()",
+           "WebController": "new webview.WebviewController()",
            "Scroller": "new Scroller()"}
 
 
@@ -385,6 +431,8 @@ def main() -> int:
     for fi in range(0, len(farms), COMPONENTS_PER_FILE):
         group = farms[fi:fi + COMPONENTS_PER_FILE]
         lines = [f"// Farm_{fi // COMPONENTS_PER_FILE:02d}.ets — 组件 API 缺口补齐语料（生成，勿手改）", ""]
+        if any(name == "Web" for name, _calls, _ctor in group):
+            lines.insert(1, "import { webview } from '@kit.ArkWeb';")
         for name, calls, ctor in group:
             host = HOST_OF.get(name)
             lines.append("@Component")

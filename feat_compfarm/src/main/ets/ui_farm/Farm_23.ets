@@ -9,6 +9,8 @@ export struct FarmShapeComp {
         .fillOpacity(1)
         .strokeDashArray([])
         .strokeDashOffset(1)
+        .strokeLineCap(LineCapStyle.Butt)
+        .strokeLineJoin(LineJoinStyle.Miter)
         .strokeMiterLimit(1)
         .strokeOpacity(1)
         .viewPort({ x: 1, y: 1 })
@@ -24,10 +26,12 @@ export struct FarmSideBarContainerComp {
         .autoHide(true)
         .controlButton({ left: 1, top: 1 })
         .maxSideBarWidth(1)
+        .minContentWidth(1)
         .minSideBarWidth(1)
         .showControlButton(true)
         .showSideBar(true)
         .showSideBarWithGesture(true)
+        .sideBarPosition(SideBarPosition.Start)
     }
   }
 }

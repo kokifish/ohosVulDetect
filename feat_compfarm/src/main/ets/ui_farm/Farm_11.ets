@@ -5,19 +5,28 @@ export struct FarmListComp {
   build() {
     Column() {
       List()
+        .alignListItem(ListItemAlign.Start)
+        .backPressBehavior({ closeSwipeAction: true })
         .chainAnimation(true)
         .contentEndOffset(1)
         .contentStartOffset(1)
+        .edgeEffect(EdgeEffect.Spring)
         .editMode(true)
-        .editModeOptions({ enableGatherSelectedItemsAnimation: true, useDefaultMultiSelectStyle: true })
         .enableEditMode(true)
         .enableScrollInteraction(true)
+        .focusWrapMode(FocusWrapMode.DEFAULT)
         .friction(1)
         .lanes(1)
+        .listDirection(Axis.Vertical)
         .maintainVisibleContentPosition(true)
         .multiSelectable(true)
         .onEditModeChange((v: boolean): void => {})
+        .onItemDragStart((): void => {})
+        .onScrollVisibleContentChange((): void => {})
+        .scrollSnapAlign(ScrollSnapAlign.NONE)
+        .scrollSnapAnimationSpeed(ScrollSnapAnimationSpeed.NORMAL)
         .stackFromEnd(true)
+        .sticky(StickyStyle.None)
         .supportEmptyBranchInLazyLoading(true)
         .syncLoad(true)
     }
@@ -32,7 +41,8 @@ export struct FarmListItemComp {
         ListItem()
           .editable(true)
           .selectable(true)
-          .swipeAction({ onOffsetChange: (): void => {} })
+          .sticky(Sticky.None)
+          .swipeAction({ start: (): void => {}, end: (): void => {} })
       }
     }
   }

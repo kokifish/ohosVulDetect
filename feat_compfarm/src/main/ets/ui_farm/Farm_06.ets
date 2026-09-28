@@ -5,6 +5,7 @@ export struct FarmDividerComp {
   build() {
     Column() {
       Divider()
+        .lineCap(LineCapStyle.Butt)
         .vertical(true)
     }
   }
@@ -18,6 +19,8 @@ export struct FarmFolderStackComp {
         .alignContent(Alignment.Center)
         .autoHalfFold(true)
         .enableAnimation(true)
+        .onFolderStateChange((): void => {})
+        .onHoverStatusChange((): void => {})
     }
   }
 }

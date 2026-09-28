@@ -1,0 +1,134 @@
+{
+ "schema_version": "1.0",
+ "note": "FP-bait 规则面注册表：每个 case 模拟某漏洞规则的检测形状但语义安全；评分器输出 bait-face 信号保留率（工具反编译保留陷阱信号 = 下游弱检测器的 FP 压力），不计入 F1。",
+ "cases": [
+  {
+   "id": "bait-wifi-psk",
+   "mode": "near-miss",
+   "mimics": "OVD-WIFI-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "addDeviceConfig"
+    ],
+    "constants": [
+     "ovd_wpa_psks_b72d"
+    ]
+   }
+  },
+  {
+   "id": "bait-dkv-sync",
+   "mode": "near-miss",
+   "mimics": "OVD-DKV-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "put"
+    ],
+    "constants": [
+     "tok_vd_dkv_sync_8d20"
+    ]
+   }
+  },
+  {
+   "id": "bait-clipboard-label",
+   "mode": "near-miss",
+   "mimics": "OVD-PASTE-005",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "setData"
+    ],
+    "constants": [
+     "clipboard text synced"
+    ]
+   }
+  },
+  {
+   "id": "bait-pwd-echo-log",
+   "mode": "near-miss",
+   "mimics": "OVD-LOG-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "hilog",
+     "debug"
+    ],
+    "constants": [
+     "pwd2="
+    ]
+   }
+  },
+  {
+   "id": "bait-emtr-token",
+   "mode": "near-miss",
+   "mimics": "OVD-EMTR-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "emit"
+    ],
+    "constants": [
+     "ovd_evt_tok_33bb"
+    ]
+   }
+  },
+  {
+   "id": "bait-ust-persist",
+   "mode": "near-miss",
+   "mimics": "OVD-UST-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "persistProp"
+    ],
+    "constants": [
+     "ovd_ust_tok_b8d48e"
+    ]
+   }
+  },
+  {
+   "id": "bait-sen-execute",
+   "mode": "near-miss",
+   "mimics": "OVD-SEN-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "execute"
+    ],
+    "constants": [
+     "ovd_sen_tok_7f32b5"
+    ]
+   }
+  },
+  {
+   "id": "bait-const-only",
+   "mode": "const-only",
+   "mimics": "OVD-DKV-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "hilog",
+     "info"
+    ],
+    "constants": [
+     "tok_vd_dkv_sync_9c31"
+    ]
+   }
+  },
+  {
+   "id": "bait-wrk-post",
+   "mode": "near-miss",
+   "mimics": "OVD-WRK-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "postMessage"
+    ],
+    "constants": [
+     "ovd_wrk_tok_62c4d3"
+    ]
+   }
+  }
+ ]
+}

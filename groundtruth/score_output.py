@@ -201,6 +201,32 @@ def main() -> int:
           + (f" 缺失: {', '.join(rv_miss)}" if rv_miss else ""))
     print(f"\nTP={tp} FN={fn} FP={fp} TN={tn}")
     print(f"precision={prec:.3f} recall={rec:.3f} F1={f1:.3f} Youden={rec - fpr:.3f}")
+
+    bait_path = pathlib.Path(__file__).parent / "bait.json"
+    if bait_path.exists():
+        try:
+            bait = json.loads(bait_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"bait-face: 注册表读取失败 {e}")
+            bait = None
+        if bait:
+            kept = 0
+            print("\nbait-face（FP 压力面板：陷阱信号在反编译产物中的保留率，不计入 F1）")
+            for c in bait.get("cases", []):
+                rec = record_text(blocks, c["source"])
+                if not rec:
+                    print(f"  {c['id']:24} missing-block")
+                    continue
+                det = c["signals"]
+                consts = norm_constants(det.get("constants", []))
+                c_ok = all(any(f in rec for f in forms) for _, forms in consts)
+                k_ok = all(tok in rec or f'"{tok}"' in rec for tok in det.get("call", []))
+                if c_ok and k_ok:
+                    kept += 1
+                print(f"  {c['id']:24} preserved={str(c_ok and k_ok):5} consts={c_ok} calls={k_ok} "
+                      f"mode={c.get('mode', '-')} mimics={c['mimics']}")
+            print(f"bait-face preserved {kept}/{len(bait.get('cases', []))} — "
+                  f"每个 preserved 陷阱 = 下游弱检测器一个潜在 FP（隔离由 check_bait_fp.py 保证）")
     return 0
 
 

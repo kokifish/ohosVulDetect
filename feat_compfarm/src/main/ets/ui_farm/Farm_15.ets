@@ -17,6 +17,7 @@ export struct FarmPanelComp {
     Column() {
       Panel(true)
         .backgroundMask(Color.Red)
+        .customHeight(1)
         .fullHeight(1)
         .halfHeight(1)
         .miniHeight(1)

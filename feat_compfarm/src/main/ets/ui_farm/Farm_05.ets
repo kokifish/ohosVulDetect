@@ -19,11 +19,12 @@ export struct FarmDatePickerComp {
     Column() {
       DatePicker()
         .canLoop(true)
-        .disappearTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .digitalCrownSensitivity(CrownSensitivity.LOW)
+        .disappearTextStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
         .enableHapticFeedback(true)
         .lunar(true)
-        .selectedTextStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
-        .textStyle({ color: Color.Red, font: { size: 1, weight: 1 } })
+        .selectedTextStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
+        .textStyle({ color: Color.Red, font: { size: 1, weight: FontWeight.Lighter } })
     }
   }
 }

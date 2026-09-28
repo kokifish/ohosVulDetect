@@ -35,6 +35,9 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-geo', '精确坐标明文缓存', 'pages/GeoVulnPage'),
   new DemoItem('cat-dev', '设备指纹持久化', 'pages/DevVulnPage'),
   new DemoItem('cat-emtr', '进程事件令牌广播', 'pages/EmtrVulnPage'),
+  new DemoItem('cat-sen', 'taskpool 并发面', 'pages/SenVulnPage'),
+  new DemoItem('cat-wrk', 'worker 通信面', 'pages/WrkVulnPage'),
+  new DemoItem('cat-ust', 'UI 状态持久化面', 'pages/UstVulnPage'),
 ];
 
 @Entry

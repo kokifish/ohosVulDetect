@@ -7,11 +7,15 @@ export struct FarmImageComp {
       Image($r('app.media.startIcon'))
         .antialiased(true)
         .colorFilter(Color.Red)
+        .copyOption(CopyOptions.None)
+        .dynamicRangeMode(DynamicRangeMode.HIGH)
         .enableAnalyzer(true)
         .fillColor(Color.Red)
         .fitOriginalSize(true)
         .hdrBrightness(1)
         .matchTextDirection(true)
+        .objectRepeat(ImageRepeat.NoRepeat)
+        .orientation(ImageRotateOrientation.AUTO)
         .privacySensitive(true)
         .supportSvg2(true)
         .syncLoad(true)
@@ -24,11 +28,13 @@ export struct FarmImageAnimatorComp {
   build() {
     Column() {
       ImageAnimator()
+        .fillMode(FillMode.None)
         .fixedSize(true)
         .iterations(1)
         .monitorInvisibleArea(true)
         .preDecode(1)
         .reverse(true)
+        .state(AnimationStatus.Initial)
     }
   }
 }

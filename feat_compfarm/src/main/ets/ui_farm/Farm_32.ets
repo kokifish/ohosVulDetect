@@ -1,6 +1,20 @@
 // Farm_32.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
 @Component
+export struct FarmUIPickerComponentComp {
+  build() {
+    Column() {
+      UIPickerComponent()
+        .canLoop(true)
+        .displayedItemCount(1)
+        .enableHapticFeedback(true)
+        .onScrollStop((): void => {})
+        .selectionIndicator({ type: PickerIndicatorType.BACKGROUND })
+    }
+  }
+}
+
+@Component
 export struct FarmVideoComp {
   build() {
     Column() {
@@ -16,21 +30,6 @@ export struct FarmVideoComp {
         .onSeeking((v: PlaybackInfo): void => {})
         .onStop((v: void): void => {})
         .onUpdate((v: PlaybackInfo): void => {})
-    }
-  }
-}
-
-@Component
-export struct FarmWaterFlowComp {
-  build() {
-    Column() {
-      WaterFlow()
-        .enableScrollInteraction(true)
-        .friction(1)
-        .itemConstraintSize({ minWidth: 1, maxWidth: 1 })
-        .rowsTemplate('ovd')
-        .supportEmptyBranchInLazyLoading(true)
-        .syncLoad(true)
     }
   }
 }

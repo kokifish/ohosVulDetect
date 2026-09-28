@@ -15,11 +15,14 @@ export struct FarmSaveButtonComp {
   build() {
     Column() {
       SaveButton()
+        .iconBorderRadius(1)
+        .iconSize(1)
         .setIcon($r('app.media.startIcon'))
         .setText('ovd')
         .stateEffect(true)
         .symbolFontWeight(1)
         .symbolIconColor([])
+        .symbolRenderingStrategy(SymbolRenderingStrategy.SINGLE)
         .userCancelEvent(true)
     }
   }

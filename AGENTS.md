@@ -46,6 +46,7 @@
 python3 build.py                        # 全量 4 变体：api26/api24 × release/debug（api26=SDK26 正式语料，api24=6.1.1(24) 旧模拟器兼容）
 python3 groundtruth/check_manifest.py   # groundtruth 双向一致，必须 OK
 python3 tools/check_twin_fp.py          # 孪生 FP 静态自检，必须 OK（FAIL=0）
+python3 tools/check_bait_fp.py          # FP-bait 陷阱隔离自检，必须 OK（near-miss 与规则常量双向零包含）
 python3 tools/check_module_share.py     # feat_heavy ≥5M 指令 / ≈60k 函数（release 构建后）
 python3 tools/gen_corpus_meta.py        # 语料/产物构成变化后刷新 corpus_meta.json，随后 --check 必须 OK
 ```
