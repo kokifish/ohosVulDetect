@@ -7,6 +7,7 @@ import { common } from '@kit.AbilityKit';
 import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
 import { NativeBridge } from '../web/NativeBridge';
+import { bridgeReportSink, bridgeAsyncInjectExpr, bridgeReportSinkS, bridgeAsyncInjectExprS } from '../web/NativeBridge';
 
 // WebView 漏洞集：OVD-WEB-001/002/003/004/005 + OVD-NET-003（onSslErrorReceive confirm）
 @Entry
@@ -55,11 +56,25 @@ struct WebPage {
       Button('SAFE twins 001-006').margin(4).onClick(() => {
         this.runner.run('web-001S', () => ovdWeb001S());
         this.runner.run('web-002S', () => ovdWeb002S('getVersion') ? 'bridge allowed: getVersion' : 'refused');
+        Button('web-009 chain').margin(4).onClick(() => this.runner.run('web-009', () =>
+          bridgeReportSink(this.bridge.getToken())))
+        Button('web-009S agg').margin(4).onClick(() => this.runner.run('web-009S', () => bridgeReportSinkS()))
+        Button('web-010 async').margin(4).onClick(() => this.runner.run('web-010', () =>
+          `expr ${bridgeAsyncInjectExpr().length}B`))
+        Button('web-010S safe').margin(4).onClick(() => this.runner.run('web-010S', () =>
+          `expr ${bridgeAsyncInjectExprS().length}B`))
         this.runner.run('web-003S', () => ovdWeb003S('bench<input>'));
         this.runner.run('web-004S', () => ovdWeb004S());
         this.runner.run('web-005S', () => ovdWeb005S('https://bench.example.com/home'));
         this.runner.run('web-006S', () => ovdWeb006S('https://bench.example.com/help'));
       })
+      Button('web-009 chain').margin(4).onClick(() => this.runner.run('web-009', () =>
+        bridgeReportSink(this.bridge.getToken())))
+      Button('web-009S agg').margin(4).onClick(() => this.runner.run('web-009S', () => bridgeReportSinkS()))
+      Button('web-010 async').margin(4).onClick(() => this.runner.run('web-010', () =>
+        `expr ${bridgeAsyncInjectExpr().length}B`))
+      Button('web-010S safe').margin(4).onClick(() => this.runner.run('web-010S', () =>
+        `expr ${bridgeAsyncInjectExprS().length}B`))
       Button('WEB-007 bridge-no-origin').margin(4).onClick(() => {
         this.runner.run('web-007', () => ovdWeb007(this.controller, 'stealToken'));
         this.runner.run('web-008', () => ovdWeb008(this.controller, 'dev-tag-1'));

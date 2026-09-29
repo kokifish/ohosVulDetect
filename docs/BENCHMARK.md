@@ -14,7 +14,7 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 125 + 125（manifest 250 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 6 对——其中 TNT-005/006 为跨模块组合形态：source 常量锚 HAR/HSP 记录、sink 在 feature） | groundtruth/manifest.json |
+| 漏洞/孪生 | 130 + 130（manifest 260 条，双向一致；跨模块 XMOD 7 对、interproc 链 8 对（TNT-005/006 跨模块 + DEP-001 三层依赖链 HSP→HAR→feature）、动态加载 DIMP 2 对（固定/拼接路径，半混淆 keep 形态）、桥间污点 WEB-009/异步桥 010） | groundtruth/manifest.json |
 | 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
 | feat_api 路由页 | 84（api 54 / ui 23 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
@@ -126,6 +126,24 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
 - 混淆 release 包运行行为与 debug 完全一致；
 - 逆向工具对混淆包完全兼容（NOT MODULE_ANALYZED=0、UNKNOWN ops=0），方法名/record 路径保留（export/filename 关闭所致），字符串字面量不受混淆影响；
 - property 混淆会改写 JSON 对象字面量属性名（如 `idcard`），属"困难模式"预期效果，是该维度唯一的 FN 来源。
+
+### 动态加载与密度形态（2026-09-29 轮）
+
+- **DIMP 动态加载家族（cat-dimp）**：sink 在 await import() 目标 record（DynTarget）内——
+  固定路径（001）/运行时拼接路径（002，静态调用图与模块解析双断）两形态 + DEP-001 三层
+  依赖链（HSP source→HAR 中转→feature 落盘，依赖图从星型变含链，interproc 3-hop）。
+  **半混淆形态**：feat_vuln/obfuscation-rules.txt `-keep-property-names ovdDimpSink
+  ovdDimpSafe` + `-keep-global-names`——动态入口签名保留（.dis 实证 2 处）而其余照常混淆，
+  即 ArkGuard 官方 FAQ 要求的动态加载真实发布形态。ArkTS 坑：拼接导入的模块对象须
+  `as interface`（type 对象字面量禁用、any 禁用）。
+- **字符串密度不平衡档**：tools/gen_string_density.py → lang/StringDensityLab.ts（单
+  record：120KB 单串 / 2 万元素字面量数组 / 5000 次同标识符引用（池去重→1 条）/
+  5000 微差串（池爆炸不去重）——对照形态压测池去重策略；.dis +1.4MB 全来自该 record；
+  挂载 DynamicImportDemo 'string-density' case。
+- **桥扩族（cat-web）**：WEB-009 桥间污点（getToken→reportSink 外传链）/ WEB-010 异步桥
+  （runJavaScript 回注携令牌表达式）+ 孪生。接线坑：按钮插错进 onClick 内部永不渲染
+  （须为 Flex 区兄弟节点）；cat-web 页滑动手势被 Web 组件吞——按钮区滑动须避
+  开 Web 区域。
 
 ### V2 状态管理与复用（ui-v2reuse）
 

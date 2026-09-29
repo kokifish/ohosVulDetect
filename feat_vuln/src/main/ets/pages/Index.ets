@@ -38,6 +38,7 @@ const CATS: DemoItem[] = [
   new DemoItem('cat-sen', 'taskpool 并发面', 'pages/SenVulnPage'),
   new DemoItem('cat-wrk', 'worker 通信面', 'pages/WrkVulnPage'),
   new DemoItem('cat-ust', 'UI 状态持久化面', 'pages/UstVulnPage'),
+  new DemoItem('cat-dimp', '动态加载凭据面', 'pages/DimpVulnPage'),
 ];
 
 @Entry

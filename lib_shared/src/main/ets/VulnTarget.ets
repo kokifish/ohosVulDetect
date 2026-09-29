@@ -35,3 +35,10 @@ export const HSP_TNT_TOKEN = 'tok_hsp_tnt_c3a7';
 export function ovdHspTntSrc(): string {
   return HSP_TNT_TOKEN;
 }
+
+// VULN: OVD-DEP-001 依赖链 source 锚（HSP，第三层）——经 lib_common 中转后由 feature sink 落盘
+export const DEP_CHAIN_TOKEN = 'ovd_dep_tok_chain_5c19';
+
+export function ovdDepSrc(): string {
+  return DEP_CHAIN_TOKEN;
+}

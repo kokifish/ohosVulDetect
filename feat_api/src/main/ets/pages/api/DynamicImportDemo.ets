@@ -1,4 +1,5 @@
 import { SharedBox, hspFormat } from 'lib_shared';
+import { densityStats } from '../lang/StringDensityLab';
 import { common } from '@kit.AbilityKit';
 import { Case, DemoScaffold } from 'lib_common';
 
@@ -18,6 +19,9 @@ struct DynamicImportDemo {
           new Case('lazy-hsp', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const m = await import('lib_shared');
             return `lazyDouble(21)=${m.lazyDouble(21)} greet=${m.lazyGreet('bench')}`;
+          }),
+          new Case('string-density', async (ctx: common.UIAbilityContext, log: (s: string) => void) => {
+            return `density ${densityStats()}`;
           }),
           new Case('static-hsp', (ctx: common.UIAbilityContext, log: (s: string) => void) => {
             const box = new SharedBox();

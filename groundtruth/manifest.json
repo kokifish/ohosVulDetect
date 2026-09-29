@@ -4446,6 +4446,191 @@
     "constants": []
    },
    "twin_of": "OVD-TNT-006"
+  },
+  {
+   "id": "OVD-DIMP-001",
+   "title": "credential written to preferences inside dynamically imported record (fixed path)",
+   "category": "dynamic-import",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/DynTarget.ets",
+   "function": "ovdDimpSink",
+   "expected": true,
+   "twin": "OVD-DIMP-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "ovd_dimp_tok_7f3e91"
+    ]
+   }
+  },
+  {
+   "id": "OVD-DIMP-001S",
+   "title": "twin: 动态导入只调安全聚合 (OVD-DIMP-001)",
+   "category": "dynamic-import",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/Twins.ets",
+   "function": "ovdDimp001S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-DIMP-001"
+  },
+  {
+   "id": "OVD-DIMP-002",
+   "title": "credential sink reached via runtime-concatenated dynamic import path",
+   "category": "dynamic-import",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/DynTarget.ets",
+   "function": "ovdDimpSink",
+   "expected": true,
+   "twin": "OVD-DIMP-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "ovd_dimp_tok_7f3e91"
+    ]
+   }
+  },
+  {
+   "id": "OVD-DIMP-002S",
+   "title": "twin: 拼接导入只调安全聚合 (OVD-DIMP-002)",
+   "category": "dynamic-import",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/Twins.ets",
+   "function": "ovdDimp002S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-DIMP-002"
+  },
+  {
+   "id": "OVD-WEB-009",
+   "title": "bridge-to-bridge taint: getToken result exfiltrated via reportSink",
+   "category": "webview-risk",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "function": "bridgeReportSink",
+   "expected": true,
+   "twin": "OVD-WEB-009S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ovd_web9_endpoint_2f31"
+    ]
+   }
+  },
+  {
+   "id": "OVD-WEB-009S",
+   "title": "twin: 桥上报仅聚合计数 (OVD-WEB-009)",
+   "category": "webview-risk",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "function": "bridgeReportSinkS",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-WEB-009"
+  },
+  {
+   "id": "OVD-WEB-010",
+   "title": "async bridge injects token into page JS via runJavaScript expression",
+   "category": "webview-risk",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "function": "bridgeAsyncInjectExpr",
+   "expected": true,
+   "twin": "OVD-WEB-010S",
+   "detection": {
+    "type": "string-literal",
+    "constants": [
+     "ovd_web10_async_tok_8b4c"
+    ]
+   }
+  },
+  {
+   "id": "OVD-WEB-010S",
+   "title": "twin: 异步注入仅无敏感标识 (OVD-WEB-010)",
+   "category": "webview-risk",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "function": "bridgeAsyncInjectExprS",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-WEB-010"
+  },
+  {
+   "id": "OVD-DEP-001",
+   "title": "taint through 3-layer dependency chain: HSP source -> HAR relay -> feature file sink",
+   "category": "dependency-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/OVD-DEP-001.ets",
+   "function": "ovdDepSink",
+   "expected": true,
+   "twin": "OVD-DEP-001S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdDepSrc",
+      "constants": [
+       "ovd_dep_tok_chain_5c19"
+      ]
+     },
+     {
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdDepRelay",
+      "call": [
+       "ovdDepSrc"
+      ]
+     },
+     {
+      "function": "ovdDepSink",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-DEP-001S",
+   "title": "twin: 三层链落点为聚合长度 (OVD-DEP-001)",
+   "category": "dependency-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/Twins.ets",
+   "function": "ovdDepSinkS",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-DEP-001"
   }
  ]
 }

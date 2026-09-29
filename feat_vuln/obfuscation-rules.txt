@@ -21,3 +21,9 @@
 -enable-toplevel-obfuscation
 # -enable-filename-obfuscation  # 实测导致跨包(HAP/HSP)模块加载 SyntaxError 崩溃，默认关闭
 # -enable-export-obfuscation  # 实测 HSP 跨包导出名解析失败(SyntaxError: 'b1')，默认关闭
+# 半混淆形态：跨边界动态加载入口的导出名须保留（ArkGuard 官方 FAQ；DynTarget 为
+# await import() 目标 record——名字保留、record 内其余符号照常混淆）
+-keep-property-names
+ovdDimpSink ovdDimpSafe
+-keep-global-names
+ovdDimpSink ovdDimpSafe DIMP_TOKEN

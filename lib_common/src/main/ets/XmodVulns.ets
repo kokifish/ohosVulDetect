@@ -1,3 +1,4 @@
+import { ovdDepSrc } from 'lib_shared';
 // 跨模块漏洞面（HAR）：lib_common 以静态 HAR 形态编入每个依赖方 HAP 的 abc，
 // 本文件的检测面随依赖方模块落位（feat_vuln 引用后进 feat_vuln abc），验证评分链路对
 // 「非 feature 模块源码路径 record」的可达性。
@@ -50,4 +51,9 @@ export const XMOD_TNT_TOKEN = 'tok_xmod_tnt_e5c2';
 
 export function ovdXmodTntSrc(): string {
   return XMOD_TNT_TOKEN;
+}
+
+// VULN: OVD-DEP-001 依赖链中转（HAR，第二层）：HAR→HSP 跨形态边 + 常量穿透
+export function ovdDepRelay(): string {
+  return `relay(${ovdDepSrc().length})`;
 }

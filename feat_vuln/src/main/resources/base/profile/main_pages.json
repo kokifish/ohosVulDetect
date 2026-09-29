@@ -37,6 +37,7 @@
     "pages/EmtrVulnPage",
     "pages/SenVulnPage",
     "pages/WrkVulnPage",
-    "pages/UstVulnPage"
+    "pages/UstVulnPage",
+    "pages/DimpVulnPage"
   ]
 }

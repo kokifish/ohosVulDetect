@@ -3,5 +3,5 @@ export { DemoItem } from './src/main/ets/DemoItem';
 export { Runner } from './src/main/ets/Runner';
 export { Case, DemoScaffold } from './src/main/ets/DemoScaffold';
 export { BENCH } from './src/main/ets/Constants';
-export { ovdXmod001, ovdXmod002, ovdXmod005, ovdXmod006, ovdXmodTntSrc } from './src/main/ets/XmodVulns';
+export { ovdXmod001, ovdXmod002, ovdXmod005, ovdXmod006, ovdXmodTntSrc, ovdDepRelay } from './src/main/ets/XmodVulns';
 export { ovdXmod001S, ovdXmod002S, ovdXmod005S, ovdXmod006S, ovdXmodTntSrcS } from './src/main/ets/XmodTwins';
