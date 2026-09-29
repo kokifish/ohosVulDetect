@@ -25,6 +25,7 @@ import zipfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from check_module_share import DEFAULT_DIS, NOISE, analyze  # noqa: E402
+from dis_cache import disasm  # noqa: E402
 
 OUT = ROOT / "corpus_meta.json"
 VARIANTS = ["api26-release", "api26-debug", "api24-release", "api24-debug"]
@@ -121,11 +122,9 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
             max_method = {"name": "", "record": "", "instructions": 0}
             for abc in sorted(pdir.rglob("*.abc")):
                 abc_bytes += abc.stat().st_size
-                out = work / "x.dis"
-                r = subprocess.run([dis, str(abc), str(out)], capture_output=True, text=True)
-                if r.returncode != 0:
+                text = disasm(abc, dis)
+                if not text:
                     continue
-                text = out.read_text(errors="ignore")
                 i, f, _ = analyze(text)
                 inst += i
                 funcs += f

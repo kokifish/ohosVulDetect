@@ -18,6 +18,8 @@ import re
 import subprocess
 import sys
 import tempfile
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from dis_cache import disasm
 
 MODULES = ["entry", "feat_api", "feat_vuln", "feat_heavy", "lib_shared"]
 PRODUCTS = ["api26", "api24"]
@@ -63,15 +65,13 @@ def main() -> int:
                 for abc in abcs:
                     if not abc.exists():
                         continue
-                    out = pathlib.Path(td) / f"{m}_{p}_{abc.stem}.dis"
-                    r = subprocess.run([args.ark_disasm, str(abc), str(out)], capture_output=True, text=True)
-                    if r.returncode != 0 or not out.exists():
+                    text = disasm(abc, args.ark_disasm)
+                    if not text:
                         print(f"WARN: 反汇编失败 {m}/{p}: {abc}", file=sys.stderr)
                         continue
                     seen_any = True
-                    text = out.read_text(errors="ignore")
                     used |= {mm.group(1) for mm in OPCODE_RE.finditer(text)}
-                    out.rename(dump / f"{m}_{p}_{abc.stem}.dis")  # 落快照，供下次并集
+                    (dump / f"{m}_{p}_{abc.stem}.dis").write_text(text)  # 落快照，供下次并集
     if not seen_any:
         print("ERROR: 未找到任何 modules.abc/widgets.abc/rawfile abc 或快照（先跑 build.py）")
         return 1

@@ -43,13 +43,12 @@
 ## Mandatory（任何语料/页面/生成器改动必做）
 
 ```bash
-python3 build.py                        # 全量 4 变体：api26/api24 × release/debug（api26=SDK26 正式语料，api24=6.1.1(24) 旧模拟器兼容）
-python3 groundtruth/check_manifest.py   # groundtruth 双向一致，必须 OK
-python3 tools/check_twin_fp.py          # 孪生 FP 静态自检，必须 OK（FAIL=0）
-python3 tools/check_bait_fp.py          # FP-bait 陷阱隔离自检，必须 OK（near-miss 与规则常量双向零包含）
-python3 tools/check_module_share.py     # feat_heavy ≥5M 指令 / ≈60k 函数（release 构建后）
-python3 tools/gen_corpus_meta.py        # 语料/产物构成变化后刷新 corpus_meta.json，随后 --check 必须 OK
+python3 build.py                # 全量 4 变体 + feat_heavy 单体 + 两档样本（样本走 zip 替换瘦身链，失败自动回退全链）
+python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁秒级 + 重门禁走共享反汇编缓存，~30s）
+python3 tools/verify.py --fast  # 改动迭代期仅快门禁（含 manifest/twin_fp/bait_fp/sync_pages/评分基线/覆盖对账）
 ```
+
+语料/产物构成变化后（新增模块、规模调整）：verify 前先 `python3 tools/gen_corpus_meta.py` 刷新画像再 verify（--check 含在其中）。
 
 产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。
 

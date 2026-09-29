@@ -148,9 +148,42 @@ def build_api26_release(e: dict) -> None:
     collect(["api26"], "release")
 
 
+def build_tier_fast(name: str, e: dict) -> bool:
+    """样本瘦身构建：只重编 feat_heavy（farm 旋钮只影响该模块），以标准 api26-release
+    .app 为底做 zip 条目级替换 feat_heavy-default.hap——省去全模块 assembleHap +
+    assembleApp 链（其余模块源码未变，字节级复用）。失败返回 False（回退全链）。"""
+    import zipfile
+    regen_farm(TIER_ENVS.get(name))
+    shutil.rmtree(ROOT / "feat_heavy" / "build", ignore_errors=True)
+    r = run([HVIGORW, "--no-daemon", "assembleHap", "--mode", "module",
+             "-p", "product=default", "-p", "buildMode=release",
+             "-p", "module=feat_heavy@default"], env=e)
+    if r.returncode != 0:
+        return False
+    outdir = ROOT / "feat_heavy" / "build" / "default" / "outputs" / "default"
+    new_hap = next((outdir / n for n in ("feat_heavy-default.hap", "feat_heavy-default-unsigned.hap")
+                    if (outdir / n).exists()), None)
+    if new_hap is None:
+        return False
+    base = BUILD_OUT / "ohosVulDetect-api26-release-unsigned.app"
+    if not (new_hap.exists() and base.exists()):
+        return False
+    dst = SAMPLES_DIR / f"ohosVulDetect-sample-{name}.app"
+    with zipfile.ZipFile(base) as zin, \
+            zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = new_hap.read_bytes() if item.filename == "feat_heavy-default.hap" \
+                else zin.read(item.filename)
+            zout.writestr(item, data)
+    print(f"== sample[{name}] → {dst}（zip 替换 feat_heavy hap）")
+    return True
+
+
 def build_tier(name: str, e: dict) -> None:
-    """构建单档样本：重生成对应规模 farm → api26-release → 收集副本。
-    hvigor 增量缓存对 farm 文件增删不敏感（实测跳过重编），须清模块构建目录强制全编。"""
+    """构建单档样本：优先 zip 替换瘦身链；失败回退全链（api26-release 全量构建）。"""
+    if build_tier_fast(name, e):
+        return
+    print(f"== sample[{name}] 瘦身链失败，回退全链")
     regen_farm(TIER_ENVS.get(name))
     shutil.rmtree(ROOT / "feat_heavy" / "build", ignore_errors=True)
     build_api26_release(e)
@@ -193,6 +226,8 @@ def main() -> int:
 
     copied: list[pathlib.Path] = []
     if args.samples_only:
+        # 注意：瘦身体身链不写 build/out；若回退全链，标准 api26-release .app 会被样本档
+        # farm 状态覆盖——单跑 --samples-only 后需重跑标准链（或全量 build.py）再 verify
         SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
         for tier in ("small", "medium"):
             build_tier(tier, e)

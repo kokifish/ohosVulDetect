@@ -26,6 +26,22 @@
 
 > 语料设计 checklist：见 AGENTS.md「新增内容 checklist」节（单源，勿在此重复维护）。
 
+## 测试流程基线（2026-09-29 优化轮，实测口径）
+
+- **单一验证入口**：`python3 tools/verify.py`（--fast 为快门禁）替代逐条手跑；任一 FAIL 退出码 1。
+- **共享反汇编缓存**（tools/dis_cache.py，build/dis_cache/，abc md5 → dis）：module_share /
+  corpus_meta / opcode 三工具原先各反汇编同一批 abc（feat_heavy 22MB 单次 23s、周期重复 3 次），
+  现仅首次付费——三工具连续 243s → 76s；verify 全链 27.5s（原手工链 ~249s）。
+- **样本构建瘦身**：build_tier 只重编 feat_heavy（farm 旋钮仅影响该模块）+ 以标准 api26-release
+  .app 为底 zip 条目级替换 feat_heavy hap——--samples-only 256s → 106s；产物条目集一致、
+  份额对齐（small 20.3%/medium 37.9%）、装机运行验证通过；失败自动回退全链。
+- **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 10 代表条目
+  （全 detection 形态含跨模块 interproc）锁定 score_output 判定口径——防"评分口径漂移被
+  误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。
+- **sweep 加固**：dump() 捕获 dumpLayout 超时挂死（重试而非崩）；小页（≤6 按钮）自适应
+  浅沉降（省 ~40s/页，大页保留全窗口）；行数断言——api/cat 页缺行在 stderr 摘要 +
+  `--strict` 时退出码 2（采集质量与用例成败分离）。
+
 ## 现行待办（跨会话欠账集中处，完成后即删）
 
 - **SDK/DevEco 升级（Beta2 → Release）**：AGENTS 优先级第一条；升级后重跑覆盖率归因 + sweep

@@ -61,10 +61,14 @@ def dump():
     # 空结果视为瞬态失败重试：新镜像（Beta2）上 dumpLayout 间歇返回 0 节点，
     # 撞上即漏采（正常屏幕至少有状态栏节点，0 节点必为失败）
     for _ in range(3):
-        subprocess.run(f'{HDC} shell "uitest dumpLayout -p /data/local/tmp/l.json"', shell=True,
-                       capture_output=True, timeout=30)
-        subprocess.run(f'{HDC} file recv /data/local/tmp/l.json /tmp/ovd_sweep_l.json', shell=True,
-                       capture_output=True, timeout=30)
+        try:
+            subprocess.run(f'{HDC} shell "uitest dumpLayout -p /data/local/tmp/l.json"', shell=True,
+                           capture_output=True, timeout=30)
+            subprocess.run(f'{HDC} file recv /data/local/tmp/l.json /tmp/ovd_sweep_l.json', shell=True,
+                           capture_output=True, timeout=30)
+        except subprocess.TimeoutExpired:
+            time.sleep(5.0)  # uitest 挂死（长遍历后已知形态）：重试而非崩溃
+            continue
         try:
             data = json.load(open('/tmp/ovd_sweep_l.json'))
         except Exception:
@@ -145,6 +149,7 @@ def goto_list():
 
 
 results = {}
+missing_lines = {}
 visited = set()
 
 
@@ -341,8 +346,10 @@ def run_page_buttons(page_name, max_rounds=2):
             click_until_line(b, seen)
             collect_with_settle(seen)
         collect_tail(seen)
+    # 自适应沉降：小页（≤6 按钮）无慢异步面，深沉降纯耗时；大页保留全窗口
+    stall_rounds = 12 if len(clicked_known) > 6 else 4
     stall = 0
-    for _ in range(12):
+    for _ in range(stall_rounds):
         collect_result_lines(dump(), seen)
         n = len(seen)
         swipe_region(0.85, 0.45)
@@ -354,6 +361,10 @@ def run_page_buttons(page_name, max_rounds=2):
             break
     dismiss_dialog()
     results[page_name] = sorted(seen)
+    # 行数断言材料：api/cat 页每个 Case 按钮都应出一条信号，缺行=采集质量缺口
+    if not page_name.startswith(('lang-', 'ui-')):
+        missing_lines[page_name] = [b for b in clicked_known
+                                    if not any(l.startswith(b + ' ') for l in seen)]
 
 
 LIST_HEADERS = ('API 域覆盖', '漏洞挑战')  # 列表页就绪信号
@@ -419,3 +430,11 @@ if __name__ == '__main__':
     else:
         visit_rows(['api-', 'ui-', 'lang-'], budget_seconds=budget_override or 1200)
     print(json.dumps(results, ensure_ascii=False, indent=1))
+    miss_total = sum(len(v) for v in missing_lines.values())
+    if miss_total:
+        print(f"# WARN: {miss_total} 条信号行缺失（采集质量缺口，勿当用例失败）：", file=sys.stderr)
+        for pg, miss in missing_lines.items():
+            if miss:
+                print(f"#   {pg}: {', '.join(sorted(miss))}", file=sys.stderr)
+    if '--strict' in sys.argv and miss_total:
+        sys.exit(2)

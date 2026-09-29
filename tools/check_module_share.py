@@ -18,6 +18,8 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from dis_cache import disasm
 
 OPCODE_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)", re.M)
 FUNC_RE = re.compile(r"^\.function\s+[^\s]+\s+([^\s(]+)", re.M)
@@ -93,13 +95,11 @@ def main() -> int:
             with zipfile.ZipFile(pkg) as zf:
                 zf.extractall(pdir)
             for abc in sorted(pdir.rglob("*.abc")):
-                out = work / "x.dis"
-                r = subprocess.run([args.ark_disasm, str(abc), str(out)],
-                                   capture_output=True, text=True)
-                if r.returncode != 0:
+                text = disasm(abc, args.ark_disasm)
+                if not text:
                     print(f"WARN: 反汇编失败 {mod}: {abc}")
                     continue
-                inst, funcs, stats = analyze(out.read_text(errors="ignore"))
+                inst, funcs, stats = analyze(text)
                 agg.setdefault(mod, [0, 0])
                 agg[mod][0] += inst
                 agg[mod][1] += funcs
