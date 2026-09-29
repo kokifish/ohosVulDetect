@@ -16,7 +16,7 @@
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 125 + 125（manifest 250 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 6 对——其中 TNT-005/006 为跨模块组合形态：source 常量锚 HAR/HSP 记录、sink 在 feature） | groundtruth/manifest.json |
 | 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
-| feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
+| feat_api 路由页 | 84（api 54 / ui 23 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与 133 规则常量双向零包含） | check_bait_fp.py |
@@ -110,6 +110,25 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
 - 混淆 release 包运行行为与 debug 完全一致；
 - 逆向工具对混淆包完全兼容（NOT MODULE_ANALYZED=0、UNKNOWN ops=0），方法名/record 路径保留（export/filename 关闭所致），字符串字面量不受混淆影响；
 - property 混淆会改写 JSON 对象字面量属性名（如 `idcard`），属"困难模式"预期效果，是该维度唯一的 FN 来源。
+
+### V2 状态管理与复用（ui-v2reuse）
+
+StateV2Demo 覆盖 V2 主族（@ComponentV2/@Local/@Param/@Event/@Provider/@Consumer/@Once/
+@Monitor/@Computed/@ObservedV2/@Trace）；ui-v2reuse 补齐剩余面：**@ReusableV2**（API26 复用池
++ ReusableOptions{memoryOptimizationStrategy}）、**@Reusable**（V1 对照）、**aboutToRecycle/
+aboutToReuse** 复用生命周期、**@Require @Param**、@Monitor 多路径（顶层+嵌套图）、嵌套
+@ObservedV2 对象图（OuterGraph→InnerNode[]）。
+
+- 本 SDK（Beta2）实证约束：**@Computed 不允许 set 方法**（官方 V2 文档的 getter/setter 双向
+  形态在此编译器版本不可达，页面留归因注释）；**@Param 在复用回调内只读**（aboutToReuse
+  改 @Param 报 read-only）；IMonitor 的路径面为 `dirty: Array<string>`（无 path() 方法）。
+- abc 发射实证（loader_out 反汇编字面量）：aboutToRecycle/aboutToReuse、
+  `__resetStateVarsOnReuse__Internal`（@Reusable 家族编译器内建）、页面 record 均在。
+- 运行时（bench26 实测）：selfcheck 4/4（@Computed 求值/@Local 写/@Trace 嵌套写穿/
+  @Monitor 多路径命中 2 次）；首轮 monitor 惰性（3/4）属 V2 回调等帧既有行为，复跑即过。
+  pool=0：普通 ForEach 全可见不触发复用池回收（需 LazyForEach 滚动场景）——池的运行时
+  行为不作为断言，abc 面证据为准。
+- opcode 覆盖 217/268 不变：V2 深形态发射在已覆盖指令面内（callruntime/属性链无新增助记符）。
 
 ### feat_heavy 指令农场
 

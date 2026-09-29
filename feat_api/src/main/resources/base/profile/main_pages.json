@@ -1,5 +1,6 @@
 {
   "src": [
+    "pages/ui/ReusableV2Demo",
     "pages/Index",
     "pages/api/HttpDemo",
     "pages/api/RcpDemo",

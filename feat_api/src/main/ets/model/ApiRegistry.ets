@@ -1,6 +1,7 @@
 import { DemoItem } from 'lib_common';
 
 export const API_DEMOS: DemoItem[] = [
+  new DemoItem('ui-v2reuse', 'V2 reuse: @ReusableV2 pool/opts + @Reusable + lifecycle + @Require + @Computed set + @Monitor paths + nested @ObservedV2', 'pages/ui/ReusableV2Demo'),
   new DemoItem('api-ohos4', '@ohos direct #4: predicates/dataAbility/errorManager/hiTraceMeter/usb/window', 'pages/api/OhosDirect4Demo'),
   new DemoItem('api-ohos5', '@ohos direct #5: gap-filler hilog/emitter/settings/resourceManager/audioHaptic/perfTest + enum/type faces', 'pages/api/OhosDirect5Demo'),
   new DemoItem('api-bait', 'FP-bait look-alikes', 'pages/api/SecurityBaitDemo'),
