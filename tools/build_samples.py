@@ -23,13 +23,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
-PROFILES: dict[str, dict[str, str]] = {
-    "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
-              "OVD_HEAVY_GIANT_STMTS": "0",
-              "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
-    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
-               "OVD_HEAVY_GIANT_STMTS": "0"},
-}
+sys.path.insert(0, str(ROOT))
+from build import TIER_ENVS as PROFILES  # 单源复用：档位旋钮只维护 build.py 一份
 
 
 def regen(env: dict[str, str] | None) -> None:

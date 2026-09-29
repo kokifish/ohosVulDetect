@@ -34,7 +34,7 @@
   现仅首次付费——三工具连续 243s → 76s；verify 全链 27.5s（原手工链 ~249s）。
 - **样本构建瘦身**：build_tier 只重编 feat_heavy（farm 旋钮仅影响该模块）+ 以标准 api26-release
   .app 为底 zip 条目级替换 feat_heavy hap——--samples-only 256s → 106s；产物条目集一致、
-  份额对齐（small 20.3%/medium 37.9%）、装机运行验证通过；失败自动回退全链。
+  份额对齐（small 20.3%/medium 50.2%，档位旋钮单源维护于 build.py TIER_ENVS）、装机运行验证通过；失败自动回退全链。
 - **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 10 代表条目
   （全 detection 形态含跨模块 interproc）锁定 score_output 判定口径——防"评分口径漂移被
   误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。

@@ -20,7 +20,7 @@
   build/samples/ohosVulDetect-sample-<tier>.app        两档样本（small/medium，均 api26-release；heavy 档 = 标准 api26-release 本身）
 
 三档样本说明：构建前用 OVD_HEAVY_* 环境变量重生成 feat_heavy 语料（small≈12 万指令 /
-medium≈29 万 / heavy≈594 万，即默认规模），构建后还原默认语料；档位差异见
+medium≈47 万 / heavy≈642 万，即默认规模），构建后还原默认语料；档位差异见
 tools/build_samples.py 与 docs/BENCHMARK.md「模块指令份额」。
 混淆规则：各模块 obfuscation-rules.txt（默认全开；若某规则导致运行异常，在对应文件中加 keep 名单）。
 """
@@ -50,7 +50,7 @@ TIER_ENVS = {
     "small": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
               "OVD_HEAVY_GIANT_STMTS": "0",
               "OVD_HEAVY_UI_STRUCTS": "24", "OVD_HEAVY_API_CAP": "2"},
-    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "43",
+    "medium": {"OVD_HEAVY_BIZ_FILES": "1", "OVD_HEAVY_BIZ_FUNCS": "170",
                "OVD_HEAVY_GIANT_STMTS": "0"},
 }
 
