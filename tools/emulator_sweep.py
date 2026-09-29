@@ -58,14 +58,21 @@ def detect_env():
 
 
 def dump():
-    subprocess.run(f'{HDC} shell "uitest dumpLayout -p /data/local/tmp/l.json"', shell=True,
-                   capture_output=True, timeout=30)
-    subprocess.run(f'{HDC} file recv /data/local/tmp/l.json /tmp/ovd_sweep_l.json', shell=True,
-                   capture_output=True, timeout=30)
-    try:
-        return json.load(open('/tmp/ovd_sweep_l.json'))
-    except Exception:
-        return []
+    # 空结果视为瞬态失败重试：新镜像（Beta2）上 dumpLayout 间歇返回 0 节点，
+    # 撞上即漏采（正常屏幕至少有状态栏节点，0 节点必为失败）
+    for _ in range(3):
+        subprocess.run(f'{HDC} shell "uitest dumpLayout -p /data/local/tmp/l.json"', shell=True,
+                       capture_output=True, timeout=30)
+        subprocess.run(f'{HDC} file recv /data/local/tmp/l.json /tmp/ovd_sweep_l.json', shell=True,
+                       capture_output=True, timeout=30)
+        try:
+            data = json.load(open('/tmp/ovd_sweep_l.json'))
+        except Exception:
+            data = []
+        if data:
+            return data
+        time.sleep(2.0)
+    return data
 
 
 def nodes(tree):
@@ -119,6 +126,8 @@ def dismiss_dialog():
 
 
 def goto_list():
+    global SHELL_BTN
+    SHELL_BTN = 'Vuln Challenges' if ABILITY == 'VulnAbility' else 'API Coverage'
     sh("aa force-stop com.koki.VD")
     time.sleep(1.0)
     if not USE_SHELL_ROUTE:
@@ -157,6 +166,21 @@ def collect_with_settle(seen, max_polls=6, stable_needed=2):
         if stable >= stable_needed:
             return
         time.sleep(3.0)
+
+
+def collect_tail(seen, passes=6):
+    """尾部沉降重采：跨线程用例（taskpool/worker）的 ✅ 行落地可达 30s+，且落在
+    日志 Scroll 尾部——轮询上滑翻屏合并，直至连续两轮无新行。"""
+    stable = 0
+    for _ in range(passes):
+        n = len(seen)
+        collect_result_lines(dump(), seen)
+        swipe_up()
+        time.sleep(3.0)
+        collect_result_lines(dump(), seen)
+        stable = stable + 1 if len(seen) == n else 0
+        if stable >= 2:
+            return
 
 
 def page_anchor():
@@ -231,6 +255,21 @@ def click_verified(b, waits=(3.0, 10.0, 20.0)):
     return False
 
 
+def click_until_line(b, seen, waits=(4.0, 10.0, 20.0)):
+    """点击并验证到行：Runner 点击即回写 `${label} …` 待完成行，以按钮 label 前缀的
+    行出现为点击回执——页面签名会被其他行变化误判（前序用例行落地后签名恒变，
+    吞击误判为成功）。跨线程用例（taskpool/worker）的 ✅ 行落地慢，逐级加大间隔重击。"""
+    for w in waits:
+        click(*center(b['bounds']), w)
+        deadline = time.time() + w + 12.0
+        while time.time() < deadline:
+            collect_result_lines(dump(), seen)
+            if any(l.startswith(b['text'] + ' ') for l in seen):
+                return True
+            time.sleep(2.0)
+    return False
+
+
 def run_page_buttons(page_name, max_rounds=2):
     """点击当前页全部 Button（快速点击 + 兜底验证式重击），合并收集结果行。
 
@@ -294,10 +333,14 @@ def run_page_buttons(page_name, max_rounds=2):
         elif page_name.startswith('ui-'):
             fallback = [b for b in btns if 'selfcheck' in b.get('text', '')]
         else:
-            fallback = btns if len(seen) < len(btns) else []
+            # 缺行按钮优先补击：重击已有行的按钮（如 taskpool 用例）会再次占满 UI 线程，
+            # 导致后续缺行按钮的点击继续被吞——先把安静的按钮点掉
+            fallback = [b for b in btns
+                        if not any(l.startswith(b['text'] + ' ') for l in seen)]
         for b in fallback:
-            click_verified(b)
+            click_until_line(b, seen)
             collect_with_settle(seen)
+        collect_tail(seen)
     stall = 0
     for _ in range(12):
         collect_result_lines(dump(), seen)

@@ -4358,6 +4358,94 @@
     "constants": []
    },
    "twin_of": "OVD-UST-001"
+  },
+  {
+   "id": "OVD-TNT-005",
+   "title": "cross-module taint chain: token constant in HAR record, file sink in feature (interproc)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-005.ets",
+   "function": "ovdTntSink5",
+   "expected": true,
+   "twin": "OVD-TNT-005S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdXmodTntSrc",
+      "constants": [
+       "tok_xmod_tnt_e5c2"
+      ]
+     },
+     {
+      "function": "ovdTntSink5",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-005S",
+   "title": "twin: HAR source 换聚合值，不落盘 (OVD-TNT-005)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTntSink5S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-TNT-005"
+  },
+  {
+   "id": "OVD-TNT-006",
+   "title": "cross-module taint chain: token constant in HSP record, file sink in feature (interproc)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-006.ets",
+   "function": "ovdTntSink6",
+   "expected": true,
+   "twin": "OVD-TNT-006S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdHspTntSrc",
+      "constants": [
+       "tok_hsp_tnt_c3a7"
+      ]
+     },
+     {
+      "function": "ovdTntSink6",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-006S",
+   "title": "twin: HSP source 换聚合值，不落盘 (OVD-TNT-006)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTntSink6S",
+   "expected": false,
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   },
+   "twin_of": "OVD-TNT-006"
   }
  ]
 }

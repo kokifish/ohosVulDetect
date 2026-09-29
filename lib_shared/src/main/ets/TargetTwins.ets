@@ -21,3 +21,8 @@ export function ovdXmod004S(deviceId: string): string {
 export function ovdXmod007S(): string {
   return 'hspS ticket not logged (aggregate only)';
 }
+
+// SAFE: OVD-TNT-006S 的 HSP 侧 source 锚：只返回聚合计数
+export function ovdHspTntSrcS(): string {
+  return 'aggregate-hsp-tnt-6';
+}

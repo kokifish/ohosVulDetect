@@ -1,6 +1,9 @@
 import { Case, DemoScaffold } from 'lib_common';
 import { common } from '@kit.AbilityKit';
 import { ovdTntSink } from '../vulns/tnt/OVD-TNT-001';
+import { ovdTntSink5 } from '../vulns/tnt/OVD-TNT-005';
+import { ovdTntSink6 } from '../vulns/tnt/OVD-TNT-006';
+import { ovdTntSink5S, ovdTntSink6S } from '../vulns/tnt/Twins';
 import { ovdTntSink as ovdTntSinkS, ovdTntSink2S } from '../vulns/tnt/Twins';
 import { ovdTntSink2 } from '../vulns/tnt/OVD-TNT-002';
 import { ovdTntSink3 } from '../vulns/tnt/OVD-TNT-003';
@@ -28,6 +31,14 @@ struct TaintVulnPage {
             ovdTntSink3(ctx)),
           new Case('tnt-003S aggregate', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
             ovdTntSink3S()),
+          new Case('tnt-005 xmod→feature chain', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdTntSink5(ctx)),
+          new Case('tnt-005S aggregate', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdTntSink5S()),
+          new Case('tnt-006 hsp→feature chain', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdTntSink6(ctx)),
+          new Case('tnt-006S aggregate', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
+            ovdTntSink6S()),
           new Case('tnt-004 pasteboard sink', () =>
             ovdTntSink4()),
           new Case('tnt-004S aggregate', () =>

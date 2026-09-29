@@ -14,7 +14,7 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 123 + 123（manifest 246 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 4 对、并发 SEN/worker WRK/UI 状态 UST 新家族各 1 对） | groundtruth/manifest.json |
+| 漏洞/孪生 | 125 + 125（manifest 250 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 6 对——其中 TNT-005/006 为跨模块组合形态：source 常量锚 HAR/HSP 记录、sink 在 feature） | groundtruth/manifest.json |
 | 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
 | feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
@@ -28,8 +28,6 @@
 
 ## 现行待办（跨会话欠账集中处，完成后即删）
 
-- **API26 模拟器镜像 + heavy 运行时复测**：feat_heavy 单 record + 巨方法形态的安装/启动/抽样
-  复测（api26-release），本地镜像目录暂无 API26 可下载，需 DevEco 侧补装镜像后执行。
 - **SDK/DevEco 升级（Beta2 → Release）**：AGENTS 优先级第一条；升级后重跑覆盖率归因 + sweep
   + corpus_meta，发射器行为变化记入基线表与本文件对应小节。
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
@@ -125,8 +123,9 @@ $HV --no-daemon assembleApp --mode project -p product=<default|api24> -p buildMo
 24.5 万/49.2 万指令均一次编译通过，es2abc 无上限迹象），旧形态最大方法仅 969 指令；样本档 pin 0
 保持小档规模。`BIZ_FILES>1` 为样本档拆分旋钮，small/medium 档 pin
 43 函数/文件（档位画像见 corpus_meta.json sample_tiers）。实测：5.93M 指令 / 23.4MB modules.abc，逆向工具链可完整解析（分钟级）；
-运行时安装/启动/抽样在旧 90 文件形态实测正常，单 record 形态待 API26 模拟器镜像恢复后复测
-（当前模拟器镜像目录无 API26 镜像，环境性受限）。
+运行时复测（2026-09-29，API26 真机 bench26/7.0.0.32 Beta2）：单 record + 巨方法形态
+安装/启动/六按钮抽样全部通过（counts biz=3871 biza=387 api=201 kit=30 kitdyn=142；
+biz n=3871 acc=8279；api total=201；apidyn n=205 ok=4；kit n=30；kitdyn n=142 ok=4）。
 
 - 生成器：`tools/gen_heavy_farm.py`（规模旋钮在文件头，按指令密度实测标定，勿手改生成物）。原料
   `tools/heavy_api_catalog.json` 由 `tools/gen_heavy_catalog.py` 从本地 SDK d.ts 提取
@@ -254,9 +253,18 @@ $E -stop ovdbench
 - 同 versionCode 覆盖安装可能不生效，建议先 `bm uninstall`；
 - 模拟器锁屏会拒绝 `aa start`（Error 10106102），先 `power-shell wakeup` + `uinput -T -m` 上滑解锁；
 - API26 模拟器（bench26）走 entry 壳路由，自动化遍历按 id 前缀取页面（见 AGENTS.md）；
+- bench26（HarmonyOS 7.0.0(26.0.0) Beta2）引导机理：Beta2 镜像在 `~/Library/Huawei/Sdk/system-image/HarmonyOS-7.0.0-B2`
+  但 `Emulator -imageList` 不列；`-create` 须带全串 "HarmonyOS 7.0.0(26.0.0) Beta2"；CLI `-start`
+  卡 uuid/sn 引导链（$TMPDIR 下需存在 config.ini uuid 同名临时文件，SN/部署路径初始化须
+  DevEco GUI Device Manager 完成一次）——GUI 里 ▶ 按钮 a11y 零 bounds，须以 event 策略
+  精确点 (1101,208) 类坐标；启动后 CLI hdc 交互正常，未签名 release .app 可直接 bm install；
 - 大按钮数页（≥14）日志区曾被按钮 Flex 挤出屏幕致结果行不可采（老 cat-perm 问题机理）：
   DemoScaffold 已重构为单 Scroll 流（按钮 + 日志同列，2026-09），任意页日志均可达，
   sweep 可正常采集全部 ✅/❌ 行；
+- 跨线程用例（taskpool/worker）孪生行采集竞态已修（2026-09-29）：`click_until_line` 以
+  `${label} …` 待完成行为点击回执防吞击误判 + **缺行按钮优先补击**（先重击已有行的
+  按钮会再次占满 UI 线程，缺行按钮点击继续被吞）+ dump 空结果重试（Beta2 镜像
+  dumpLayout 间歇返回 0 节点）；
 - 长遍历后 uitest dumpLayout 可能 30s 超时挂死，用 `tools/emulator_recover.sh`
   （探活/黑屏检测/冷启动）恢复；定向遍历单页可模块方式导入 sweep，设
   `es.ABILITY='VulnAbility'` 后 `es.visit_rows(['cat-xxx'], budget_seconds=600)`，
@@ -277,6 +285,8 @@ python3 ohosVulDetect/groundtruth/score_output.py test.out ohosVulDetect/build/o
 ### 评分口径（v2 评分器）
 
 - 布尔/数字常量按 IR 文本形态归一化；调用链规则为全 token AND + 引号形态；
+- interproc-chain 的 hop 可带 `source` 字段指向跨模块记录（TNT-005/006：source 锚
+  HAR/HSP 记录、sink 在 feature）——评分器逐 hop 切换记录域判定
 - NET-004/005 用 IR 谓词（return TRUE / emptyarray{}）；SECRET-005 标记 skip 不计分；
 - 函数/record 级信号定位；逆向工具 IR 与源码逐操作对应（Math.random 链、SQL 模板串 concat、
   Web 属性链等已抽查验证）；

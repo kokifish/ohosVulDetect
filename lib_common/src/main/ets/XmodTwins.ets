@@ -36,3 +36,8 @@ export function ovdXmod006S(ctx: common.Context): string {
   p.flush();
   return 'har gateway state only (no auth constant)';
 }
+
+// SAFE: OVD-TNT-005S 的 HAR 侧 source 锚：只返回聚合计数
+export function ovdXmodTntSrcS(): string {
+  return 'aggregate-xmod-tnt-5';
+}

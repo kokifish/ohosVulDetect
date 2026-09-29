@@ -84,6 +84,22 @@ def extract_from_app(app_path: str, hap_suffix: str, inner_suffixes: tuple[str, 
     return got
 
 
+def interproc_hit(hops: list, blocks, source: str):
+    """逐 hop 评估；hop 可带 source 指向跨模块记录（TNT×XMOD：source 在 HAR/HSP、
+    sink 在 feature）。无 source 的 hop 回退入口记录。"""
+    oks = 0
+    for h in hops:
+        hsrc = h.get("source", source)
+        rec_h = record_text(blocks, hsrc)
+        blk = function_block(blocks, hsrc, h.get("function", "-"))
+        scope = blk if blk is not None else rec_h
+        c_ok = all(any(f in scope for f in forms)
+                   for _, forms in norm_constants(h.get("constants", [])))
+        k_ok = all(tok in scope or f'"{tok}"' in scope for tok in h.get("call", []))
+        oks += 1 if (c_ok and k_ok) else 0
+    return oks == len(hops), f"interproc {oks}/{len(hops)}"
+
+
 def main() -> int:
     test_out_path, app_path = sys.argv[1], sys.argv[2]
     manifest_path = sys.argv[3] if len(sys.argv) > 3 else str(ROOT / "groundtruth" / "manifest.json")
@@ -121,17 +137,8 @@ def main() -> int:
         if not rec:
             return False, "block-not-found"
         if det.get("type") == "interproc-chain":
-            hops = det.get("hops", [])
-            oks = 0
-            for h in hops:
-                blk = function_block(blocks, source, h.get("function", "-"))
-                scope = blk if blk is not None else rec
-                c_ok = all(any(f in scope for f in forms)
-                           for _, forms in norm_constants(h.get("constants", [])))
-                k_ok = all(tok in scope or f'"{tok}"' in scope for tok in h.get("call", []))
-                oks += 1 if (c_ok and k_ok) else 0
-            hit = oks == len(hops)
-            return hit, f"interproc {oks}/{len(hops)}"
+            hit, detail = interproc_hit(det.get("hops", []), blocks, source)
+            return hit, detail
         fn = function_block(blocks, source, function)
         # a twin is judged by its own record only: a global-scope rule would find
         # the vulnerable twin's constant elsewhere in the app and false-positive

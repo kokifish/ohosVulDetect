@@ -44,3 +44,10 @@ export function ovdXmod006(ctx: common.Context): string {
   p.flush();
   return 'har gateway auth cached';
 }
+
+// OVD-TNT-005 source 锚：HAR 记录内令牌常量，由 feature 侧污点链取用
+export const XMOD_TNT_TOKEN = 'tok_xmod_tnt_e5c2';
+
+export function ovdXmodTntSrc(): string {
+  return XMOD_TNT_TOKEN;
+}

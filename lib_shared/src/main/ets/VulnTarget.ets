@@ -28,3 +28,10 @@ export function ovdXmod007(): string {
   hilog.info(0xFF01, 'VDSHARED', 'ticket %{public}s', 'tok_vd_hsp_ticket_77aa');
   return 'hsp ticket logged via hilog';
 }
+
+// OVD-TNT-006 source 锚：HSP 记录内令牌常量，由 feature 侧污点链取用
+export const HSP_TNT_TOKEN = 'tok_hsp_tnt_c3a7';
+
+export function ovdHspTntSrc(): string {
+  return HSP_TNT_TOKEN;
+}
