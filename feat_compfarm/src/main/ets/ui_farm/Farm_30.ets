@@ -48,6 +48,11 @@ export struct FarmTextInputComp {
         .onSecurityStateChange((v: boolean): void => {})
         .onTextSelectionChange((): void => {})
         .onWillAttachIME((v: IMEClient): void => {})
+        .onWillChange((v: EditableTextChangeValue): boolean => true)
+        .onWillCopy((v: string): boolean => true)
+        .onWillCut((v: string): boolean => true)
+        .onWillDelete((v: DeleteValue): boolean => true)
+        .onWillInsert((v: InsertValue): boolean => true)
         .orphanCharOptimization(true)
         .passwordIcon({ onIconSrc: 'ovd', offIconSrc: 'ovd' })
         .passwordRules('ovd')
@@ -76,11 +81,22 @@ export struct FarmTextInputComp {
   }
 }
 
+@Builder
+function _cmBuilderTextTimer(config: TextTimerConfiguration) {
+}
+
+class _CMTextTimer implements ContentModifier<TextTimerConfiguration> {
+  applyContent(): WrappedBuilder<[TextTimerConfiguration]> {
+    return wrapBuilder(_cmBuilderTextTimer);
+  }
+}
+
 @Component
 export struct FarmTextTimerComp {
   build() {
     Column() {
       TextTimer()
+        .contentModifier(new _CMTextTimer())
         .fontStyle(FontStyle.Normal)
         .textShadow({ radius: 1 })
     }

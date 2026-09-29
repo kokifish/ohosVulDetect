@@ -16,11 +16,22 @@ export struct FarmTimePickerComp {
   }
 }
 
+@Builder
+function _cmBuilderToggle(config: ToggleConfiguration) {
+}
+
+class _CMToggle implements ContentModifier<ToggleConfiguration> {
+  applyContent(): WrappedBuilder<[ToggleConfiguration]> {
+    return wrapBuilder(_cmBuilderToggle);
+  }
+}
+
 @Component
 export struct FarmToggleComp {
   build() {
     Column() {
       Toggle({ type: ToggleType.Checkbox })
+        .contentModifier(new _CMToggle())
         .switchPointColor(Color.Red)
         .switchStyle({ pointRadius: 1, unselectedColor: Color.Red })
     }

@@ -31,7 +31,7 @@ SKIP_METHODS = {"constructor"}
 # 特殊宿主组件（attribute 语义非通用链式），不进农场
 
 # 方法级排除（编译报错的方法，由 auto-iter 累积）：key = "组件.方法"
-EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRender"), ("EmbeddedComponent", "onDrawReady"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender"), ("AlphabetIndexer", "onRequestPopupData"), ("Grid", "editModeOptions"), ("Grid", "onScrollFrameBegin"), ("List", "editModeOptions"), ("List", "onScrollFrameBegin"), ("NavDestination", "customTransition"), ("NavDestination", "onSaveState"), ("Scroll", "onScrollFrameBegin"), ("Search", "editMenuOptions"), ("Swiper", "onContentWillScroll"), ("Tabs", "customContentTransition"), ("Tabs", "onContentWillChange"), ("Text", "editMenuOptions"), ("TextArea", "editMenuOptions"), ("TextInput", "editMenuOptions"), ("WaterFlow", "onScrollFrameBegin"), ("Web", "bindSelectionMenu"), ("Web", "editMenuOptions"), ("Web", "onInterceptKeyboardAttach"), ("Web", "onOverrideErrorPage"), ("Web", "onOverrideUrlLoading"), ("Web", "enableNativeMediaPlayer"), ("Text", "bindSelectionMenu"), ("Web", "registerNativeEmbedRule"), ("Web", "enableScrollDirectionalLock")])
+EXCLUDE_METHODS = set([("Component3D", "customRender"), ("Counter", "customRender"), ("EmbeddedComponent", "onDrawReady"), ("ResourceColor", "Color"), ("Shape", "mesh"), ("SideBarContainer", "mesh"), ("Tabs", "cachedMaxCount"), ("Text", "cachedMaxCount"), ("Text", "selection"), ("TextPicker", "selection"), ("XComponent", "customRender"), ("AlphabetIndexer", "onRequestPopupData"), ("Grid", "editModeOptions"), ("Grid", "onScrollFrameBegin"), ("List", "editModeOptions"), ("List", "onScrollFrameBegin"), ("NavDestination", "customTransition"), ("NavDestination", "onSaveState"), ("Scroll", "onScrollFrameBegin"), ("Search", "editMenuOptions"), ("Swiper", "onContentWillScroll"), ("Tabs", "customContentTransition"), ("Tabs", "onContentWillChange"), ("Text", "editMenuOptions"), ("TextArea", "editMenuOptions"), ("TextInput", "editMenuOptions"), ("WaterFlow", "onScrollFrameBegin"), ("Web", "bindSelectionMenu"), ("Web", "editMenuOptions"), ("Web", "onInterceptKeyboardAttach"), ("Web", "onOverrideErrorPage"), ("Web", "onOverrideUrlLoading"), ("Web", "enableNativeMediaPlayer"), ("Text", "bindSelectionMenu"), ("Web", "registerNativeEmbedRule"), ("Web", "enableScrollDirectionalLock"), ("Web", "onInterceptRequest")])
 # 曾全组件排除的 0 覆盖组件（Component3D/Counter/FolderStack/GridCol/StepperItem）
 # 已放回农场（2026-09 缺口专项）；编译报错方法由 auto-iter 继续累积进 EXCLUDE_METHODS。
 # Particle 构造需要复杂 ParticleOptions（emitter 必填嵌套），生成器无法保守映射，维持排除。
@@ -94,13 +94,30 @@ def methods_with_sig(text, comp):
     body = class_body(text, comp + "Attribute")
     if body is None:
         return None
+    def split_args(args):
+        # 逗号切分，<> 括号内不切（Callback<A, B> 这类双泛型参数不被截断）
+        parts, depth, cur = [], 0, ""
+        for ch in args:
+            if ch in "<(":
+                depth += 1
+            elif ch in ">)":
+                depth = max(0, depth - 1)
+            if ch == "," and depth == 0:
+                parts.append(cur)
+                cur = ""
+            else:
+                cur += ch
+        if cur.strip():
+            parts.append(cur)
+        return parts
+
     out = {}
     for mm in re.finditer(r"^\s+([a-zA-Z_]\w*)\s*\(([^)]*)\)\s*:", body, re.M):
         name = mm.group(1)
         if name in SKIP_METHODS:
             continue
         args = mm.group(2).strip()
-        first = args.split(",")[0].split(":")[-1].strip() if args else ""
+        first = split_args(args)[0].split(":")[-1].strip() if args else ""
         out.setdefault(name, []).append(first)
     return out
 
@@ -193,8 +210,15 @@ def interface_fields(iface_name, dts_text, depth=0):
         m = re.search(rf"^\s*(?:export\s+|declare\s+)?interface {iface_name}\b", src, re.M)
         if not m:
             continue
-        body = _brace_body(src, m.end())
-        required, optional, ok = [], [], True
+        header = src[m.start():src.find("{", m.start())]
+        body = _brace_body(src, m.start())
+        inherited, required, optional, ok = [], [], [], True
+        ext = re.search(r"extends\s+([^{]+)", header)
+        if ext:
+            for base in [x.strip() for x in ext.group(1).split(",") if re.fullmatch(r"[A-Z]\w*", x.strip())]:
+                bf = interface_fields(base, src, depth + 1)
+                if bf:
+                    inherited.extend(bf)
         for fm in re.finditer(r"^\s+([a-zA-Z_]\w*)(\?)?\s*:\s*([^;\n]+)[;\n]", body, re.M):
             fname, opt, ftype = fm.group(1), bool(fm.group(2)), fm.group(3).strip()
             v = None
@@ -212,7 +236,7 @@ def interface_fields(iface_name, dts_text, depth=0):
             (required if not opt else optional).append((fname, v))
         if not ok:
             continue
-        fields = required or optional[:2]
+        fields = inherited + required or (inherited + optional[:2]) or required + optional[:2]
         if fields:
             return fields
         return None  # 空接口不生成 {}（arkts 字面量校验风险）
@@ -264,6 +288,9 @@ def default_for(type_text: str, dts_text: str | None = None):
     m = re.fullmatch(r"Optional<(.+)>", t)
     if m:
         return default_for(m.group(1), dts_text)  # Optional<T> 解包（如 ScrollBar.enableNestedScroll）
+    m_cm = re.fullmatch(r"(?:Optional<)?ContentModifier<([A-Za-z]+)>?>?", t)
+    if m_cm:
+        return f"__CMEMIT__{m_cm.group(1)}"  # 哨兵：main 发射 implements 空实现类
     m = re.fullmatch(r"Record<([^,]+),\s*(.+)>", t)
     if m:
         v = default_for(m.group(2), dts_text)
@@ -288,8 +315,13 @@ def default_for(type_text: str, dts_text: str | None = None):
             return "[]"
         if part == "VoidCallback" or "=>" in part:
             return "(): void => {}"  # 无参空实现：实参可少于签名形参（TS 可赋值性）
-        if part.startswith("Callback<") and part.endswith(">"):
-            return f"(v: {part[len('Callback<'):-1]}): void => {{}}"
+        if part.startswith("Callback<"):
+            # Callback<A> 或 Callback<A, B>：B 为返回类型（boolean 常见）；A 首段为形参类型
+            inner = part[len("Callback<"):].rstrip(">")
+            seg = [x.strip() for x in inner.split(",")]
+            if len(seg) > 1 and seg[1] == "boolean":
+                return f"(v: {seg[0]}): boolean => true"
+            return f"(v: {seg[0]}): void => {{}}"
         # union 分支同样解析单一大写名（enum/alias/interface/命名回调），取首个可映射分支；
         # 注意命名回调类型（OnXxxCallback）也走 resolve_named，不能按 'Callback' 子串提前否决
         if re.fullmatch(r"[A-Z][A-Za-z0-9]*", part):
@@ -435,6 +467,19 @@ def main() -> int:
             lines.insert(1, "import { webview } from '@kit.ArkWeb';")
         for name, calls, ctor in group:
             host = HOST_OF.get(name)
+            cm_cfg = next((c[10:].rstrip('>') for _m, c in calls
+                           if isinstance(c, str) and c.startswith("__CMEMIT__")), None)
+            if cm_cfg:
+                lines.append("@Builder")
+                lines.append(f"function _cmBuilder{name}(config: {cm_cfg}) {{")
+                lines.append("}")
+                lines.append("")
+                lines.append(f"class _CM{name} implements ContentModifier<{cm_cfg}> {{")
+                lines.append(f"  applyContent(): WrappedBuilder<[{cm_cfg}]> {{")
+                lines.append(f"    return wrapBuilder(_cmBuilder{name});")
+                lines.append("  }")
+                lines.append("}")
+                lines.append("")
             lines.append("@Component")
             lines.append(f"export struct Farm{name}Comp {{")
             lines.append("  build() {")
@@ -446,8 +491,12 @@ def main() -> int:
             else:
                 lines.append(f"      {name}({ctor})")
                 chain_indent = "        "
+            cm_cfg = None
             for mname, dflt in calls:
-                if dflt:
+                if isinstance(dflt, str) and dflt.startswith("__CMEMIT__"):
+                    cm_cfg = dflt[len("__CMEMIT__"):]
+                    lines.append(f"{chain_indent}.{mname}(new _CM{name}())")
+                elif dflt:
                     lines.append(f"{chain_indent}.{mname}({dflt})")
                 else:
                     lines.append(f"{chain_indent}.{mname}()")

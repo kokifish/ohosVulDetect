@@ -22,7 +22,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2264765,
+   "app_bytes": 2268044,
    "app_file": "build/samples/ohosVulDetect-sample-medium.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -30,7 +30,7 @@
      "abc_bytes": 2007756,
      "bytes": 2131036,
      "functions": 3494,
-     "inst_share": 0.5243,
+     "inst_share": 0.5237,
      "instructions": 395504,
      "name": "feat_api",
      "type": "feature"
@@ -39,7 +39,7 @@
      "abc_bytes": 1515548,
      "bytes": 1632297,
      "functions": 9199,
-     "inst_share": 0.3808,
+     "inst_share": 0.3804,
      "instructions": 287271,
      "name": "feat_heavy",
      "records": {
@@ -84,17 +84,17 @@
      "abc_bytes": 412844,
      "bytes": 1808285,
      "functions": 1846,
-     "inst_share": 0.0598,
+     "inst_share": 0.0597,
      "instructions": 45115,
      "name": "feat_vuln",
      "type": "feature"
     },
     {
-     "abc_bytes": 189672,
-     "bytes": 306615,
-     "functions": 1260,
-     "inst_share": 0.0297,
-     "instructions": 22441,
+     "abc_bytes": 197776,
+     "bytes": 314719,
+     "functions": 1327,
+     "inst_share": 0.0309,
+     "instructions": 23336,
      "name": "feat_compfarm",
      "type": "feature"
     },
@@ -117,10 +117,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 16000,
-   "total_instructions": 754365,
-   "zip_raw_bytes": 6162631,
-   "zip_stored_bytes": 2263751
+   "total_functions": 16067,
+   "total_instructions": 755260,
+   "zip_raw_bytes": 6170735,
+   "zip_stored_bytes": 2267030
   },
   "small": {
    "api_version": {
@@ -128,7 +128,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2108696,
+   "app_bytes": 2111985,
    "app_file": "build/samples/ohosVulDetect-sample-small.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -136,7 +136,7 @@
      "abc_bytes": 2007756,
      "bytes": 2131036,
      "functions": 3494,
-     "inst_share": 0.674,
+     "inst_share": 0.673,
      "instructions": 395504,
      "name": "feat_api",
      "type": "feature"
@@ -145,7 +145,7 @@
      "abc_bytes": 592964,
      "bytes": 709713,
      "functions": 2016,
-     "inst_share": 0.204,
+     "inst_share": 0.2037,
      "instructions": 119679,
      "name": "feat_heavy",
      "records": {
@@ -190,17 +190,17 @@
      "abc_bytes": 412844,
      "bytes": 1808285,
      "functions": 1846,
-     "inst_share": 0.0769,
+     "inst_share": 0.0768,
      "instructions": 45115,
      "name": "feat_vuln",
      "type": "feature"
     },
     {
-     "abc_bytes": 189672,
-     "bytes": 306615,
-     "functions": 1260,
-     "inst_share": 0.0382,
-     "instructions": 22441,
+     "abc_bytes": 197776,
+     "bytes": 314719,
+     "functions": 1327,
+     "inst_share": 0.0397,
+     "instructions": 23336,
      "name": "feat_compfarm",
      "type": "feature"
     },
@@ -223,10 +223,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 8817,
-   "total_instructions": 586773,
-   "zip_raw_bytes": 5240047,
-   "zip_stored_bytes": 2107682
+   "total_functions": 8884,
+   "total_instructions": 587668,
+   "zip_raw_bytes": 5248151,
+   "zip_stored_bytes": 2110971
   }
  },
  "schema_version": "1.0",
@@ -297,7 +297,7 @@
     "release_type": "Beta2",
     "target": 24
    },
-   "app_bytes": 1635513,
+   "app_bytes": 1635515,
    "app_file": "build/out/ohosVulDetect-api24-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -341,7 +341,7 @@
    "total_functions": 5404,
    "total_instructions": 444324,
    "zip_raw_bytes": 4232766,
-   "zip_stored_bytes": 1634777
+   "zip_stored_bytes": 1634779
   },
   "api26-debug": {
    "api_version": {
@@ -349,7 +349,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 91643858,
+   "app_bytes": 91666226,
    "app_file": "build/out/ohosVulDetect-api26-debug-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -357,7 +357,7 @@
      "abc_bytes": 46605972,
      "bytes": 83831625,
      "functions": 60278,
-     "inst_share": 0.9377,
+     "inst_share": 0.9376,
      "instructions": 8025019,
      "name": "feat_heavy",
      "type": "feature"
@@ -381,11 +381,11 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 358828,
-     "bytes": 541564,
-     "functions": 1260,
-     "inst_share": 0.0041,
-     "instructions": 35451,
+     "abc_bytes": 375592,
+     "bytes": 563932,
+     "functions": 1327,
+     "inst_share": 0.0043,
+     "instructions": 36827,
      "name": "feat_compfarm",
      "type": "feature"
     },
@@ -408,10 +408,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 67079,
-   "total_instructions": 8558021,
-   "zip_raw_bytes": 91642940,
-   "zip_stored_bytes": 91642940
+   "total_functions": 67146,
+   "total_instructions": 8559397,
+   "zip_raw_bytes": 91665308,
+   "zip_stored_bytes": 91665308
   },
   "api26-release": {
    "api_version": {
@@ -419,7 +419,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 12343683,
+   "app_bytes": 12346973,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -427,7 +427,7 @@
      "abc_bytes": 25452348,
      "bytes": 25569097,
      "functions": 60278,
-     "inst_share": 0.9322,
+     "inst_share": 0.9321,
      "instructions": 6419552,
      "name": "feat_heavy",
      "records": {
@@ -487,11 +487,11 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 189672,
-     "bytes": 306615,
-     "functions": 1260,
-     "inst_share": 0.0033,
-     "instructions": 22441,
+     "abc_bytes": 197776,
+     "bytes": 314719,
+     "functions": 1327,
+     "inst_share": 0.0034,
+     "instructions": 23336,
      "name": "feat_compfarm",
      "type": "feature"
     },
@@ -514,10 +514,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 67079,
-   "total_instructions": 6886646,
-   "zip_raw_bytes": 30099431,
-   "zip_stored_bytes": 12342669
+   "total_functions": 67146,
+   "total_instructions": 6887541,
+   "zip_raw_bytes": 30107535,
+   "zip_stored_bytes": 12345959
   }
  }
 }

@@ -10,11 +10,22 @@ export struct FarmQRCodeComp {
   }
 }
 
+@Builder
+function _cmBuilderRadio(config: RadioConfiguration) {
+}
+
+class _CMRadio implements ContentModifier<RadioConfiguration> {
+  applyContent(): WrappedBuilder<[RadioConfiguration]> {
+    return wrapBuilder(_cmBuilderRadio);
+  }
+}
+
 @Component
 export struct FarmRadioComp {
   build() {
     Column() {
       Radio({ group: 'ovd', value: 'ovd' })
+        .contentModifier(new _CMRadio())
         .radioStyle({ checkedBackgroundColor: Color.Red, uncheckedBorderColor: Color.Red })
     }
   }

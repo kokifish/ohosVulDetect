@@ -17,10 +17,10 @@
 | 漏洞/孪生 | 123 + 123（manifest 246 条，双向一致；含跨模块 XMOD 7 对、interproc 污点链 4 对、并发 SEN/worker WRK/UI 状态 UST 新家族各 1 对） | groundtruth/manifest.json |
 | 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
 | feat_api 路由页 | 83（api 54 / ui 22 / lang 7 + Index，含提供方页 1；api-bait 为 FP-bait 困难模式页） | main_pages.json |
-| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 781 调用（生成） | farm_build 实测 |
+| feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与 133 规则常量双向零包含） | check_bait_fp.py |
-| 组件内 API | 818/1296（63.1%，feat_compfarm 农场 66 组件；组件级排除仅剩 Particle；跨文件 interface/enum 索引 + 全可选接口取可选字段 + Record 字面量 + 回调空实现映射；no-decl 36 + 参数复杂跳过 334 归因） | check_component_api_coverage.py |
+| 组件内 API | 1164/1296（89.8%，feat_compfarm 农场 68 组件；组件级排除仅剩 Particle；跨文件 interface/enum/type 别名三索引 + JSDoc 剥离枚举成员 + extends 跟随 + 多泛型 Callback 括号感知切分 + ContentModifier implements 空实现合成；no-decl 36 + skip 46 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
 
@@ -41,8 +41,7 @@
   ArkTS 特有形态（检测器区分度价值最高）；interproc 链加深为跨 record/跨模块组合形态
   （TNT×XMOD，source 在 HAR/HSP、sink 在 feature）。
 - **FP-bait 扩展**：api-bait 困难模式从调用面延伸到规则面（近似孪生混淆形态），量化检测器区分度。
-- **组件内 API 818→更高**：剩余缺失大头是 CustomBuilder/类型化 Callback/泛型参数，
-  需生成器「回调签名合成」；组件维度 21 项与 no-decl 36 已封顶不投入。
+- **组件内 API 1164→更高**：剩余 132 缺失集中于 CustomBuilder 返回类型/复杂构造（Skip 46 已逐项归因）；组件维度 21 项与 no-decl 36 已封顶不投入。
 - **打包形态**：多 HSP 依赖链、feature HAP 按需分发（distro）等输入形态对反编译管线的扩展，
   配套 corpus_meta 画像字段。
 - **评分基础设施**：固定 test.out 快照的评分器回归基线（防评分口径漂移）；工件 sidecar

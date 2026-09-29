@@ -1,10 +1,21 @@
 // Farm_29.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
+@Builder
+function _cmBuilderTextClock(config: TextClockConfiguration) {
+}
+
+class _CMTextClock implements ContentModifier<TextClockConfiguration> {
+  applyContent(): WrappedBuilder<[TextClockConfiguration]> {
+    return wrapBuilder(_cmBuilderTextClock);
+  }
+}
+
 @Component
 export struct FarmTextClockComp {
   build() {
     Column() {
       TextClock()
+        .contentModifier(new _CMTextClock())
         .fontFeature('ovd')
         .fontStyle(FontStyle.Normal)
         .textShadow({ radius: 1 })
@@ -51,6 +62,11 @@ export struct FarmTextAreaComp {
         .onDidDelete((v: DeleteValue): void => {})
         .onDidInsert((v: InsertValue): void => {})
         .onWillAttachIME((v: IMEClient): void => {})
+        .onWillChange((v: EditableTextChangeValue): boolean => true)
+        .onWillCopy((v: string): boolean => true)
+        .onWillCut((v: string): boolean => true)
+        .onWillDelete((v: DeleteValue): boolean => true)
+        .onWillInsert((v: InsertValue): boolean => true)
         .orphanCharOptimization(true)
         .placeholderColor(Color.Red)
         .placeholderFont({ size: 1, weight: FontWeight.Lighter })

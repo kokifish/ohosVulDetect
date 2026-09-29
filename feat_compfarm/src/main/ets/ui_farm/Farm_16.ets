@@ -11,11 +11,22 @@ export struct FarmPatternLockComp {
   }
 }
 
+@Builder
+function _cmBuilderProgress(config: ProgressConfiguration) {
+}
+
+class _CMProgress implements ContentModifier<ProgressConfiguration> {
+  applyContent(): WrappedBuilder<[ProgressConfiguration]> {
+    return wrapBuilder(_cmBuilderProgress);
+  }
+}
+
 @Component
 export struct FarmProgressComp {
   build() {
     Column() {
       Progress({ value: 40, total: 100, type: ProgressType.Linear })
+        .contentModifier(new _CMProgress())
         .privacySensitive(true)
         .value(1)
     }

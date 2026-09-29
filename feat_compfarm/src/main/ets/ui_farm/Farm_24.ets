@@ -1,5 +1,15 @@
 // Farm_24.ets — 组件 API 缺口补齐语料（生成，勿手改）
 
+@Builder
+function _cmBuilderSlider(config: SliderConfiguration) {
+}
+
+class _CMSlider implements ContentModifier<SliderConfiguration> {
+  applyContent(): WrappedBuilder<[SliderConfiguration]> {
+    return wrapBuilder(_cmBuilderSlider);
+  }
+}
+
 @Component
 export struct FarmSliderComp {
   build() {
@@ -10,6 +20,7 @@ export struct FarmSliderComp {
         .blockColor(Color.Red)
         .blockSize({ width: 1, height: 1 })
         .blockStyle({ type: SliderBlockType.DEFAULT })
+        .contentModifier(new _CMSlider())
         .digitalCrownSensitivity(CrownSensitivity.LOW)
         .enableHapticFeedback(true)
         .maxLabel('ovd')

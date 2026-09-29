@@ -37,6 +37,11 @@ export struct FarmSearchComp {
         .onPaste((): void => {})
         .onTextSelectionChange((): void => {})
         .onWillAttachIME((v: IMEClient): void => {})
+        .onWillChange((v: EditableTextChangeValue): boolean => true)
+        .onWillCopy((v: string): boolean => true)
+        .onWillCut((v: string): boolean => true)
+        .onWillDelete((v: DeleteValue): boolean => true)
+        .onWillInsert((v: InsertValue): boolean => true)
         .placeholderColor(Color.Red)
         .placeholderFont({ size: 1, weight: FontWeight.Lighter })
         .searchButton('ovd')
@@ -54,6 +59,16 @@ export struct FarmSearchComp {
   }
 }
 
+@Builder
+function _cmBuilderSelect(config: MenuItemConfiguration) {
+}
+
+class _CMSelect implements ContentModifier<MenuItemConfiguration> {
+  applyContent(): WrappedBuilder<[MenuItemConfiguration]> {
+    return wrapBuilder(_cmBuilderSelect);
+  }
+}
+
 @Component
 export struct FarmSelectComp {
   build() {
@@ -67,9 +82,10 @@ export struct FarmSelectComp {
         .keyboardAvoidMode(MenuKeyboardAvoidMode.NONE)
         .menuAlign(MenuAlignType.START)
         .menuBackgroundBlurStyle(BlurStyle.COMPONENT_ULTRA_THIN)
-        .menuBackgroundBlurStyleOptions({ policy: BlurStyleActivePolicy.FOLLOWS_WINDOW_ACTIVE_STATE, inactiveColor: Color.Red })
+        .menuBackgroundBlurStyleOptions({ colorMode: ThemeColorMode.SYSTEM, adaptiveColor: AdaptiveColor.DEFAULT })
         .menuBackgroundColor(Color.Red)
         .menuBackgroundEffect({ radius: 1 })
+        .menuItemContentModifier(new _CMSelect())
         .menuOutline({ width: 1, color: Color.Red })
         .optionBgColor(Color.Red)
         .optionFont({ size: 1, weight: FontWeight.Lighter })

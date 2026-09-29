@@ -29,12 +29,23 @@ export struct FarmAlphabetIndexerComp {
   }
 }
 
+@Builder
+function _cmBuilderButton(config: ButtonConfiguration) {
+}
+
+class _CMButton implements ContentModifier<ButtonConfiguration> {
+  applyContent(): WrappedBuilder<[ButtonConfiguration]> {
+    return wrapBuilder(_cmBuilderButton);
+  }
+}
+
 @Component
 export struct FarmButtonComp {
   build() {
     Column() {
       Button()
         .buttonStyle(ButtonStyleMode.NORMAL)
+        .contentModifier(new _CMButton())
         .controlSize(ControlSize.SMALL)
         .fontStyle(FontStyle.Normal)
         .labelStyle({ overflow: TextOverflow.None, maxLines: 1 })
