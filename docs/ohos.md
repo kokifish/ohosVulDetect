@@ -208,3 +208,33 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 5. ⏳ HSP 内 UIAbility（API14+）、集成态 HSP、独立卡片包（API20+）——形态补全，可选。
 
 **参考来源**：官方文档——创建ArkTS卡片（harmonyos-guides/arkts-ui-widget-creation）、HSP（in-app-hsp）、集成态HSP（integrated-hsp）、HAR（har-package）、构建HAR（ide-hvigor-build-har）、应用加密（code-protect）、napi_run_script_path 限制（harmonyos-faqs/faqs-ndk-65）、程序包结构（application-package-structure-stage）、混淆选项（source-obfuscation-rule-options）；本地——ets-loader `gen_abc_plugin.js`/`ark_define.js`/`module_mode.js`、hvigor-ohos-plugin `build-opt.d.ts`/`target-task-service.js`/`byte-code-har-utils.js`/`package-shared-tgz.js`、SDK `ets/component/component_config.json`。
+
+## 8. 混淆与加密专题（官方/第三方盘点 + 本项目现状 + 实测结论，2026-09-30）
+
+### 8.1 官方手段全景
+
+- **ArkGuard 源码混淆**（API10+，编译期 AST 改名）：选项 `-enable-property/toplevel/export/filename-obfuscation`、`-enable-string-property-obfuscation`（字符串字面量属性名，需 property 先开）、`-compact`、`-remove-log`、`-print/apply-namecache`、`-enable-lib-obfuscation-options`（合并依赖方混淆选项）；保留 `-keep-property/global/file-name`、`-keep-dts`、`-keep`（+通配符）。仅 release 生效。**明确不支持**：控制流混淆、数据混淆（常量/字面量加密）、指令替换、VMP/加壳；字符串不加密；函数参数名不混淆。规则合并：当前模块 rules + 依赖 HAR/HSP 的 consumer-rules（→ 远程包 obfuscation.txt），保留项取并集。
+- **ArkGuard 字节码混淆**（API20+ 新增）：同一 `arkOptions.obfuscation.ruleOptions` 体系，规则文件加 `-enable-bytecode-obfuscation`（+`-debugging` 产 `.pa`；本地解析器另认 `-arkui/-enhanced` 变体，文档未列）。**与源码混淆互斥**（开启后源码混淆自动关闭）。执行器为独立二进制 `panda_guard`（ets-loader/bin/ark/build-mac/bin/），产物 origin/obf + nameCache.json + systemApiCache.json（SDK API 白名单），报错栈用 hstack + nameCache 还原。门禁 compatibleSdkVersion ≥ API12-beta3。
+- 本地 arkguard 1.1.3（ets-loader node_modules）实际选项面比公开文档更宽：另有 `-remove-comments`、`-remove-nosideeffects-calls`、`-keep-object-props`、`-keep-parameter-names`、`-keep-uncompact`、`-print-kept-names`、`-keep-comments`。
+- **分发侧加密**：AppGallery 上架后对应用代码 AES 端到端加密（安装与运行态），与 ArkGuard 互补；官方文档明确「源码安全高要求者应叠加应用加密/第三方加固」。
+
+### 8.2 第三方加固生态
+
+- 已适配 NEXT 的安全类 SDK 60+ 款；加固厂商：梆梆安全、爱加密（智游网安）、网易易盾、顶象、360 加固宝等，宣称「混淆+加密+VMP」组合。
+- 实际技术面：ArkTS/abc 层受平台限制，第三方主要做 **native .so 加固/混淆 + 运行时反调试/反注入 + 资源加密**；ArkTS 层本质依赖官方 ArkGuard（社区评测：深度字节码改写能力有限）。商业加固本地不可实测，仅存列。
+- native 侧：BiSheng 工具链无官方混淆器（本项目 feat_vuln cpp 亦为普通 CMake）；o-llvm 类方案需自编工具链。
+
+### 8.3 本项目现状（2026-09-30）
+
+- **开启**：6 个模块（entry/feat_api/feat_vuln/feat_heavy/feat_compfarm/lib_shared）`-enable-property-obfuscation` + `-enable-toplevel-obfuscation`；lib_common 为 HAR 无自有配置——源码合并进消费方 abc，按消费方规则混淆。feat_vuln 另有半混淆 keep（`ovdDimpSink/ovdDimpSafe/DIMP_TOKEN`，服务 dimp 动态导入家族）。
+- **显式关闭**：`-enable-filename-obfuscation`（跨包模块加载 SyntaxError 崩溃）、`-enable-export-obfuscation`（HSP 跨包导出名解析失败 'b1'）——实测教训记录于各 obfuscation-rules.txt 注释。未开启 string-property/compact/remove-log 等。
+- **不存在/未涉及**：字符串加密（官方无此能力，token 类检测信号不受混淆影响）、签名（产物 unsigned）、native 混淆、分发加密（本地构建态）。
+
+### 8.4 实测结论（本机 SDK 26.0.0.32 Beta2 + hvigor 6.26.2）
+
+- **源码混淆 A/B**（feat_api debug vs release 反汇编）：函数总数不变（3547=3547），仅私有标识符被重命名（如 `baitSenEcho` release 消失、方法名坍缩为 `n.e.f` 形态）；导入/导出名、HAR 导出面（`DemoScaffold` 308=308）、字符串字面量（`string-density` 3=3，token 全存活）、ArkUI 组件属性全部不混淆——**string/token 类检测信号对混淆免疫**，识别符链规则受影响面 = 私有名。
+- **字节码混淆 e2e**：entry 开启后管线完整跑通（origin/obf + config.json + modules.pa + nameCache.json）；实际重命名高度克制（entry 仅 2 处顶层：`#Index`→`#a`、lib_common `#*#harCollectSessions`→`#*#b`），SDK/入口/导出名豁免面极大；HAR 代码在消费方构建期被字节码混淆。
+- **重大发现——本语料击杀官方字节码混淆器**：真实 entry abc 上 panda_guard 必崩（SIGABRT，`panda::guard::GuardContext::Init` 内 abort，`[Function]split scope and name get bad len`）；崩溃点随语料内容漂移（先后见 `#*##*#x`（methname 注入语料 mn10_mangle_pre）与完全正常的 `#*#ovdXmodTntSrc`）；16 种注入形态单独编译（script/`--module`）均不可复现，全部桩化后构建成功→**全程序合并语境相关 bug，非单一形态触发**。含义：①上游如需测字节码混淆 abc，当前语料须先规避或等 panda_guard 修复；②方法名注入面对官方混淆器同样成立（与 §红队结论同源）。
+- 若开启字节码混淆：与源码混淆互斥意味着现有 keep 体系（dimp 半混淆）需迁移评估；filename/export 在字节码模式下的跨包崩溃面未复测。
+
+**参考来源**：OpenHarmony docs master——source-obfuscation{,-overview,-guide,-practice}.md、bytecode-obfuscation{,-overview,-guide,-practice}.md（gitee raw 实取）；本地 ground truth——ets-loader `bytecode_obfuscator.js`/`bytecode_obfuscator_invoke.js`/`process_ark_config.js`（bcObfuscatorPath=panda_guard）、arkguard 1.1.3 选项清单、panda_guard 崩溃报告（~/Library/Logs/DiagnosticReports）；官方 ArkGuard 文档引用「应用加密 code-protect」；第三方生态为公开报道存列（梆梆/爱加密/易盾/顶象/360，60+ 安全 SDK 适配）。
