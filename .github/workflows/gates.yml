@@ -18,7 +18,13 @@ jobs:
       - name: check_keep_rules
         run: python3 tools/check_keep_rules.py
       - name: check_score_regression
-        run: python3 tools/check_score_regression.py || true  # 需构建产物，CI 无 SDK 时跳过
+        run: |
+          # 需构建产物，CI 无 SDK 时显式跳过（不再用 || true 掩盖真实回退）
+          if [ -f build/out/ohosVulDetect-api26-release-unsigned.app ]; then
+            python3 tools/check_score_regression.py
+          else
+            echo "skip: no build artifact in CI"
+          fi
       - name: sync_pages
         run: python3 tools/sync_pages.py
       - name: coverage audit (sdk manifest fixture)
@@ -29,18 +35,7 @@ jobs:
           python3 tools/check_corpus_coverage.py --use-fixture | tee /tmp/cov.txt
           grep -q '漂移检查 OK' /tmp/cov.txt
       - name: generator determinism (all)
-        run: |
-          # 全部纯源码生成器原地重生成，git diff --exit-code 验证与提交内容一致。
-          # gen_rawfile_abc 依赖 SDK 工具链（es2abc），保持本地执行、不进 CI。
-          for gen in tools/gen_string_stress.py tools/gen_lexwide_stress.py \
-                     tools/gen_sendable_stress.py tools/gen_wide_stress.py \
-                     tools/gen_stown_stress.py tools/gen_methname_stress.py \
-                     tools/gen_recursion_stress.py tools/gen_vulns_overview.py \
-                     tools/gen_heavy_farm.py; do
-            echo "--- $gen ---"
-            python3 "$gen"
-          done
-          git diff --exit-code
+        run: python3 tools/check_determinism.py  # 与 verify.py 同一脚本（单源）
       - name: python syntax check
         run: |
           find . -name '*.py' -not -path './oh_modules/*' -not -path './.hvigor/*' \

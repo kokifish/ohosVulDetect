@@ -15,7 +15,7 @@
 | 反编译准确性 + 指令覆盖评测（正式语料） | `build/out/ohosVulDetect-api26-release-unsigned.app` |
 | 漏洞检测评分 | `python3 groundtruth/score_output.py <工具产出的 test.out> <.app 路径>` |
 | 极端不均衡（app 级：feat_heavy 占 93% 指令） | 同 api26-release |
-| 极端不均衡（单模块/单 record/单方法隔离压测） | `build/out/feat_heavy-api26-release-unsigned.hap`（22.9MB 单 modules.abc） |
+| 极端不均衡（单模块/单 record/单方法隔离压测） | `build/out/feat_heavy-api26-release-unsigned.hap`（24.3MB 单 modules.abc） |
 | 存储膨胀对照（包大 ≠ 工作量大） | `build/out/ohosVulDetect-api26-debug-unsigned.app` |
 | 平衡小包对照 / 旧模拟器安装 | `build/out/ohosVulDetect-api24-release-unsigned.app` |
 | 不均衡梯度控制（非极端） | `build/samples/ohosVulDetect-sample-{small,medium}.app`（heavy 档 = api26-release 本身，不单独产出） |

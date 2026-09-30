@@ -22,7 +22,6 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from dis_cache import disasm
 
 OPCODE_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)", re.M)
-FUNC_RE = re.compile(r"^\.function\s+[^\s]+\s+([^\s(]+)", re.M)
 NOISE = {"u8", "u32", "u1", "i8", "i32", "f64"}
 DEFAULT_DIS = ("/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony"
                "/toolchains/ark_disasm")

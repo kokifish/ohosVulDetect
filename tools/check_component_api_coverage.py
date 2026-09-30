@@ -36,6 +36,8 @@ def load_sdk_component_dir():
     ets = None
     for cand in sorted(glob.glob(os.path.join(SDK, "*", "openharmony", "ets"))):
         ets = cand
+    if ets is None:
+        raise SystemExit(f"ERROR: 未找到 SDK ets 目录（DEVECO_SDK_HOME={SDK}）")
     cfg = os.path.join(ets, "component", "component_config.json")
     with open(cfg, encoding="utf-8") as fh:
         names = list(json.load(fh).keys())

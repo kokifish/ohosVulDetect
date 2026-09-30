@@ -96,6 +96,7 @@ def main() -> int:
         idents.update(re.findall(r"[A-Za-z_$][A-Za-z0-9_$]*", txt))
 
     problems: list[str] = []
+    all_src = "\n".join(t for _, t in blobs)
     print(f"== keep 规则新鲜度：{len(rules_files)} 个 rules 文件 × {len(blobs)} 个源文件")
     for rf in rules_files:
         parsed = parse_rules_file(rf)
@@ -106,7 +107,7 @@ def main() -> int:
             if any(c in n for c in "*?"):
                 if not any(fnmatch.fnmatchcase(i, n) for i in idents):
                     stale.append(n)
-            elif not re.search(r"\b" + re.escape(n) + r"\b", "\n".join(t for _, t in blobs)):
+            elif not re.search(r"\b" + re.escape(n) + r"\b", all_src):
                 stale.append(n)
         print(f"  {rf.relative_to(ROOT)}: options={len(parsed['options'])} "
               f"keep={len(names)} stale={len(stale)}")

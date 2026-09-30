@@ -39,7 +39,7 @@ FAMILY_DESC = OrderedDict([
     ('A11Y', '无障碍态侦察/读屏情报收集（AccessibilityKit）'),
     ('BGTASK', '常驻后台任务掩护静默采集'),
     ('DLINK', '深链参数无白名单执行/开放跳转/子串令牌放行'),
-    ('XMOD', '跨模块分布：HAR 硬编码主密钥·会话缓存链 / HSP 明文保险箱·恒真信任'),
+    ('XMOD', '跨模块分布：HAR 硬编码主密钥·会话缓存链·令牌中转 / HSP 明文保险箱·恒真信任'),
     ('CEVT', '公共事件明文广播会话令牌（无订阅方权限门）'),
     ('NOTIF', '通知栏明文携带验证码/会话令牌（锁屏可读）'),
     ('IRED', '不可信 want 字段原样转投 startAbility'),
@@ -48,6 +48,15 @@ FAMILY_DESC = OrderedDict([
     ('RSEC', '资源文件面硬编码秘密（string.json/rawfile，值不可见、访问面可检）'),
     ('MICC', '麦克风静默采集（无手势即录）'),
     ('TNT', '跨函数污点链（source/sink 分置，interproc 规则）'),
+    ('DEP', '跨模块依赖链：HSP 源 → HAR 中转 → feature 落盘（interproc 逐跳 source）'),
+    ('DEV', '设备指纹字段拼接明文落盘'),
+    ('DIMP', '动态 import 加载：固定/运行时拼接路径，sink 在动态目标 record（半混淆 keep 形态）'),
+    ('EMTR', 'emitter 固定事件明文广播（进程内可截获）'),
+    ('GEO', '精确定位坐标明文缓存'),
+    ('SEN', 'taskpool/@Concurrent 跨线程污点（结构化克隆越界）'),
+    ('UST', 'UI 全局状态存储明文持久化'),
+    ('WIFI', 'Wi-Fi 凭据/轨迹面泄露'),
+    ('WRK', 'worker 消息跨线程外传'),
 ])
 
 BEGIN = '<!-- VULNS-OVERVIEW:BEGIN -->'
@@ -68,7 +77,6 @@ def main():
                 d['cwe'].append(c)
 
     unknown = sorted(set(fam) - set(FAMILY_DESC))
-    missing = sorted(f for f in FAMILY_DESC if f in fam and False)  # FAMILY_DESC 可含未用族
     if unknown:
         raise SystemExit(f'ERROR: manifest 出现未知族 {unknown}，请在 FAMILY_DESC 补主题后重跑')
 

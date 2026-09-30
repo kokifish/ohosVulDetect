@@ -59,9 +59,6 @@ def check(module: str, fix: bool) -> list[str]:
         errors.append(f"{module}: main_pages 存在未登记页面（无 DemoItem 且不在 allowlist）{extra}")
     if undeclared:
         errors.append(f"{module}: allowlist 页面未注册 {undeclared}")
-    # 落盘（fix 分支可能已改）
-    if fix and (missing or not errors):
-        pass
     return errors
 
 

@@ -32,6 +32,7 @@
 - groundtruth/：manifest.json（漏洞+安全孪生清单的唯一事实源）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、check_string_stress.py（字符串应力语料操作数面 round-trip 门禁）、extract_ir_records.py（test.out 按 record 切分）。
 - tools/（单一入口 verify.py 编排下述门禁；用法细节见各脚本头注释）：
   - verify.py：构建后全部门禁一条命令（--fast 秒级快门禁；重门禁经 dis_cache 共享反汇编缓存）
+  - check_determinism.py：生成器确定性门禁（快照对比，verify 与 CI 同源；生成物约定勿手改）
   - dis_cache.py：abc md5 → 反汇编文本共享缓存（module_share/corpus_meta/opcode 三工具共用）
   - sync_pages.py：main_pages.json ↔ ApiRegistry DemoItem 双向一致门禁
   - check_twin_fp.py：孪生常量与漏洞规则信号隔离门禁（子串感知）
@@ -73,7 +74,7 @@
 
 ```bash
 python3 build.py                # 全量 4 变体 + feat_heavy 单体 + 两档样本（样本走 zip 替换瘦身链，失败自动回退全链）
-python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁秒级 + 重门禁走共享反汇编缓存，~30s；重门禁需 ISA_YAML 指向 isa.yaml）
+python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁并行 ~5s + 重门禁共享缓存，全链 ~23s；重门禁需 ISA_YAML 指向 isa.yaml）
 python3 tools/verify.py --fast  # 改动迭代期仅快门禁（含 manifest/twin_fp/bait_fp/keep 新鲜度/sync_pages/评分基线/信号双态/覆盖对账）
 ```
 

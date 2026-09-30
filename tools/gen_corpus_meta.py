@@ -13,6 +13,7 @@ feat_heavy record 级分布（模块内不均衡度）与推荐用法。一切�
   python3 tools/gen_corpus_meta.py --check    # 重算并与落盘文件比对，漂移则 exit 1
 """
 import argparse
+import hashlib
 import json
 import pathlib
 import re
@@ -35,7 +36,7 @@ REC_RE = re.compile(r"^\.function\s+\S+\s+&([^&]+)&\.")
 OP_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)")
 
 MODULE_TAGS = {
-    "entry": "HAP 壳：Index 两按钮跨 HAP 拉起 feature",
+    "entry": "HAP 壳：五按钮跨 HAP startAbility 拉起 Api/Vuln/Heavy/OvdShared/CompFarm",
     "feat_api": "反编译语料主模块：api-/ui-/lang- 路由页 + 受限语言特性（.ts/.js）+ concurrent/workers",
     "feat_vuln": "漏洞语料：带标签漏洞 + 安全孪生，groundtruth/manifest.json 锚定评分",
     "feat_heavy": "指令农场：超大 abc 输入压力样本（模块内不均衡度看 records.top1_share）",
@@ -196,6 +197,27 @@ def obf_profile() -> dict:
     return {"rules": rules, "namecache_sidecar": namecache}
 
 
+def profile_app_cached(app: pathlib.Path, dis: str, with_records: bool, key: str) -> dict:
+    """md5 键控的画像缓存：产物未变时跳过解包+反汇编重算（--check 重跑的主要成本）。
+    缓存按 .app 内容 md5 寻址，天然失效安全；落 build/dis_cache/（gitignored）。"""
+    cache_file = ROOT / "build" / "dis_cache" / "meta_profile_cache.json"
+    digest = hashlib.md5(app.read_bytes()).hexdigest()
+    ck = f"v1:{key}:{digest}"  # v1 = 画像口径版本；改 profile/record 统计逻辑时 bump
+    cache: dict = {}
+    if cache_file.exists():
+        try:
+            cache = json.loads(cache_file.read_text())
+        except (OSError, ValueError):
+            cache = {}
+    if ck in cache:
+        return cache[ck]
+    info = profile_app(app, dis, with_records)
+    cache[ck] = info
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    cache_file.write_text(json.dumps(cache))
+    return info
+
+
 def write_full_sidecar(path: pathlib.Path, info: dict) -> None:
     """产物旁写全量画像 sidecar（含每模块指令/函数/record 分布），覆盖 build.py 的基础版。"""
     sc = dict(info)
@@ -230,13 +252,14 @@ def main() -> int:
     variants: dict[str, dict] = {}
     for v in VARIANTS:
         print(f"== profile {apps[v].name}")
-        variants[v] = profile_app(apps[v], args.ark_disasm, with_records=(v == "api26-release"))
+        variants[v] = profile_app_cached(apps[v], args.ark_disasm,
+                                         with_records=(v == "api26-release"), key=v)
         write_full_sidecar(apps[v], variants[v])
     tiers: dict[str, dict] = {}
     for t in TIERS:
         p = apps[f"sample-{t}"]
         print(f"== profile {p.name}")
-        tiers[t] = profile_app(p, args.ark_disasm, with_records=True)
+        tiers[t] = profile_app_cached(p, args.ark_disasm, with_records=True, key=f"tier-{t}")
         write_full_sidecar(p, tiers[t])
 
     meta = {

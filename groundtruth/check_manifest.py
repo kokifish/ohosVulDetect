@@ -32,7 +32,7 @@ def main() -> int:
             errors.append(f"{v['id']}: 源文件缺失 {v['source']}")
             continue
         text = src.read_text(encoding="utf-8")
-        if src.suffix == ".ets":
+        if src.suffix in (".ets", ".ts"):
             marker = f"// VULN: {v['id']}" if v["expected"] else f"// SAFE: {v['id']}"
             if marker not in text:
                 errors.append(f"{v['id']}: 缺少标记 `{marker}` ({v['source']})")
@@ -49,8 +49,13 @@ def main() -> int:
                 errors.append(f"{v['id']}: twin 关系不互指 ({a}={ref})")
 
     registered = set(ids)
-    for f in list(ROOT.glob("feat_vuln/src/main/ets/**/*.ets")) + list(ROOT.glob("entry/src/main/ets/**/*.ets")) \
-            + list(ROOT.glob("feat_vuln/src/main/cpp/*.cpp")):
+    scan_globs: list[pathlib.Path] = []
+    for mod in ("feat_vuln", "entry", "feat_api", "feat_heavy", "feat_compfarm",
+                "lib_common", "lib_shared"):
+        scan_globs += list(ROOT.glob(f"{mod}/src/main/ets/**/*.ets"))
+        scan_globs += list(ROOT.glob(f"{mod}/src/main/ets/**/*.ts"))
+    scan_globs += list(ROOT.glob("feat_vuln/src/main/cpp/*.cpp"))
+    for f in scan_globs:
         for kind, mid in MARKER.findall(f.read_text(encoding="utf-8", errors="ignore")):
             if mid not in registered:
                 errors.append(f"源码标记未登记 manifest: {mid} ({f.relative_to(ROOT)})")

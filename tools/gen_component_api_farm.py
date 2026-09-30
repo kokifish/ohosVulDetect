@@ -55,6 +55,8 @@ def load_component_texts():
     ets = None
     for cand in sorted(glob.glob(os.path.join(SDK, "*", "openharmony", "ets"))):
         ets = cand
+    if ets is None:
+        raise SystemExit(f"ERROR: 未找到 SDK ets 目录（DEVECO_SDK_HOME={SDK}）")
     cfg = os.path.join(ets, "component", "component_config.json")
     names = list(json.load(open(cfg, encoding="utf-8")).keys())
     comp_dir = os.path.join(ets, "component")
@@ -420,9 +422,6 @@ def main() -> int:
         msig = methods_with_sig(text, name)
         if msig is None:
             continue
-        if not re.search(rf"\b{name}\s*\(", corpus_text) and not re.search(rf"\.{name.lower()}\(", corpus_text):
-            # 组件本体未覆盖的不在本次补齐范围（那些是结构缺失，另一维度）
-            pass
         missing = []
         for mname, ttypes in sorted(msig.items()):
             if re.search(rf"\.{re.escape(mname)}\s*\(", corpus_text):
@@ -449,7 +448,6 @@ def main() -> int:
         farms.append((name, missing, ctor))
         farm_comps.append(name)
 
-    print(f"DEBUG: farms={len(farms)} comps={len(farm_comps)}", flush=True)
     if not farm_comps:
         print("无缺失可生成（仅同步入口页）")
         write_entry_page()

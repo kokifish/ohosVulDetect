@@ -2,14 +2,16 @@
 """单一验证入口：一条命令跑完构建后全部门禁（替代 AGENTS Mandatory 的逐条手跑）。
 
 用法：
-  python3 tools/verify.py            # 快门禁（源码级，秒级）+ 重门禁（产物级，~1-2min，共享反汇编缓存）
+  python3 tools/verify.py            # 快门禁（并行，源码级，秒级）+ 重门禁（产物级，共享反汇编缓存）
   python3 tools/verify.py --fast     # 仅快门禁（改动迭代期）
 退出码：任一 FAIL → 1（CI/脚本可直接消费）。
+门禁集与 CI（gates.yml）同源：生成器确定性走 tools/check_determinism.py（CI 同款脚本）。
 """
 import os
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # isa.yaml 位于私有工具链仓库，路径不落公开仓库——一律经 ISA_YAML 环境变量注入
@@ -27,25 +29,21 @@ FAST = [
     ("组件内 API 对账", ["python3", "tools/check_component_api_coverage.py"]),
 ]
 HEAVY = [
+    ("生成器确定性（9 生成器重生成）", ["python3", "tools/check_determinism.py"]),
     ("语料画像一致性（--check 含重算）", ["python3", "tools/gen_corpus_meta.py", "--check"]),
     ("feat_heavy 份额门禁", ["python3", "tools/check_module_share.py"]),
     ("指令覆盖", ["python3", "tools/check_opcode_coverage.py", "--dump-dir", "compare_dis"]),
 ]
 
 
-def run(name: str, cmd: list[str]) -> bool:
+def run(name: str, cmd: list[str]) -> tuple[str, bool, float, str, str]:
     env = dict(os.environ)
     env["ISA_YAML"] = ISA_YAML
     t0 = time.time()
     r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, env=env)
     dt = time.time() - t0
     tail = (r.stdout or "").strip().splitlines()[-1:] or ["(no output)"]
-    mark = "OK  " if r.returncode == 0 else "FAIL"
-    print(f"[{mark}] {name} ({dt:.1f}s) — {tail[0][:100]}")
-    if r.returncode != 0:
-        print((r.stdout or "")[-1500:])
-        print((r.stderr or "")[-500:])
-    return r.returncode == 0
+    return name, r.returncode == 0, dt, tail[0][:100], ((r.stdout or "") + (r.stderr or ""))[-2000:]
 
 
 def main() -> int:
@@ -55,14 +53,24 @@ def main() -> int:
               "（私有路径不入库；--fast 不需要）")
         return 1
     ok = True
-    print("== verify: 快门禁 ==")
-    for name, cmd in FAST:
-        ok = run(name, cmd) and ok
+    t0 = time.time()
+    print("== verify: 快门禁（并行） ==")
+    with ThreadPoolExecutor(max_workers=4) as ex:
+        results = list(ex.map(lambda g: run(g[0], g[1]), FAST))
+    for name, ok_i, dt, tail, full in results:
+        print(f"[{'OK  ' if ok_i else 'FAIL'}] {name} ({dt:.1f}s) — {tail}")
+        if not ok_i:
+            ok = False
+            print(full)
     if not only_fast:
         print("== verify: 重门禁（共享反汇编缓存） ==")
         for name, cmd in HEAVY:
-            ok = run(name, cmd) and ok
-    print(f"\nresult: {'OK' if ok else 'FAIL'}")
+            name, ok_i, dt, tail, full = run(name, cmd)
+            print(f"[{'OK  ' if ok_i else 'FAIL'}] {name} ({dt:.1f}s) — {tail}")
+            if not ok_i:
+                ok = False
+                print(full)
+    print(f"\nresult: {'OK' if ok else 'FAIL'} (verify 总耗时 {time.time() - t0:.1f}s)")
     return 0 if ok else 1
 
 

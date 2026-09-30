@@ -97,16 +97,21 @@ def main():
     sdk_home = DEFAULT_SDK
     verbose = False
     json_out = None
+    def pop_arg(flag: str) -> str:
+        if not args:
+            raise SystemExit(f"ERROR: {flag} 需要一个路径参数")
+        return args.pop(0)
+
     while args:
         a = args.pop(0)
         if a == '--sdk':
-            sdk_home = args.pop(0)
+            sdk_home = pop_arg(a)
         elif a == '--verbose':
             verbose = True
         elif a == '--json':
-            json_out = args.pop(0)
+            json_out = pop_arg(a)
         elif a == '--dump-fixture':
-            dump_fixture(sdk_home, args.pop(0))
+            dump_fixture(sdk_home, pop_arg(a))
             return 0
         elif a == '--use-fixture':
             pass  # 在 load_sdk_or_fixture 生效（跳过 SDK 探测，强制清单快照）
