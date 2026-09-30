@@ -8,7 +8,8 @@ import { ovdTntSink as ovdTntSinkS, ovdTntSink2S } from '../vulns/tnt/Twins';
 import { ovdTntSink2 } from '../vulns/tnt/OVD-TNT-002';
 import { ovdTntSink3 } from '../vulns/tnt/OVD-TNT-003';
 import { ovdTntSink4 } from '../vulns/tnt/OVD-TNT-004';
-import { ovdTntSink3S, ovdTntSink4S } from '../vulns/tnt/Twins';
+import { ovdTnt007 } from '../vulns/tnt/OVD-TNT-007';
+import { ovdTntSink3S, ovdTntSink4S, ovdTnt007S } from '../vulns/tnt/Twins';
 
 // 跨函数污点面：TNT-001 source/sink 分置（interproc 规则）；001S 聚合值对照。
 @Entry
@@ -43,6 +44,10 @@ struct TaintVulnPage {
             ovdTntSink4()),
           new Case('tnt-004S aggregate', () =>
             ovdTntSink4S()),
+          new Case('tnt-007 then-chain', () =>
+            ovdTnt007()),
+          new Case('tnt-007S aggregate chain', () =>
+            ovdTnt007S()),
         ]
       })
     }

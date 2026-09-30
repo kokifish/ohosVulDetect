@@ -4631,6 +4631,180 @@
     "constants": []
    },
    "twin_of": "OVD-DEP-001"
+  },
+  {
+   "id": "OVD-WRK-002",
+   "title": "credential written to file inside worker thread via message handoff",
+   "category": "worker-messaging",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wrk/OVD-WRK-002.ets",
+   "function": "ovdWrk002",
+   "expected": true,
+   "twin": "OVD-WRK-002S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdWrk002",
+      "constants": [
+       "ovd_wrk2_tok_8d47c1"
+      ],
+      "call": [
+       "postMessage"
+      ]
+     },
+     {
+      "source": "feat_vuln/src/main/ets/workers/LeakWorker.ets",
+      "function": "ovdWrkSink",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-WRK-002S",
+   "title": "twin: worker 只落聚合串 (OVD-WRK-002)",
+   "category": "worker-messaging",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/wrk/Twins.ets",
+   "function": "ovdWrk002S",
+   "expected": false,
+   "twin_of": "OVD-WRK-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SEN-002",
+   "title": "taint survives via @Sendable shared-object field written in taskpool task",
+   "category": "concurrent-threading",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/OVD-SEN-002.ets",
+   "function": "ovdSen002",
+   "expected": true,
+   "twin": "OVD-SEN-002S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "ovd_sen2_tok_5f8b92"
+    ]
+   }
+  },
+  {
+   "id": "OVD-SEN-002S",
+   "title": "twin: 共享字段只写聚合计数 (OVD-SEN-002)",
+   "category": "concurrent-threading",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/Twins.ets",
+   "function": "ovdSen002S",
+   "expected": false,
+   "twin_of": "OVD-SEN-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-TNT-007",
+   "title": "token flows through Promise.then callback chain to http sink (interproc)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-007.ets",
+   "function": "ovdTnt007",
+   "expected": true,
+   "twin": "OVD-TNT-007S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdT7Source",
+      "constants": [
+       "tnt7_tok_ovd_92e410"
+      ]
+     },
+     {
+      "function": "ovdT7Mid"
+     },
+     {
+      "function": "ovdT7Sink",
+      "call": [
+       "request"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-007S",
+   "title": "twin: then 链只携聚合 (OVD-TNT-007)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTnt007S",
+   "expected": false,
+   "twin_of": "OVD-TNT-007",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-UST-002",
+   "title": "token reaches file sink via @StorageLink @Watch decorator callback",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/OVD-UST-002.ets",
+   "function": "ovdUst2Arm",
+   "expected": true,
+   "twin": "OVD-UST-002S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdUst2Seed",
+      "constants": [
+       "ovd_ust2_tok_c75e08"
+      ],
+      "call": [
+       "setOrCreate"
+      ]
+     },
+     {
+      "function": "onUst2Changed",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-UST-002S",
+   "title": "twin: 观察回调只落聚合计数 (OVD-UST-002)",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/Twins.ets",
+   "function": "ovdUst2ArmS",
+   "expected": false,
+   "twin_of": "OVD-UST-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
   }
  ]
 }

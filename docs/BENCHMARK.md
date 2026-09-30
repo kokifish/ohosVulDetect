@@ -16,7 +16,7 @@
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 130 + 130（manifest 260 条，双向一致；跨模块 XMOD 7 对、interproc 链 8 对（TNT-005/006 跨模块 + DEP-001 三层依赖链 HSP→HAR→feature）、动态加载 DIMP 2 对（固定/拼接路径，半混淆 keep 形态）、桥间污点 WEB-009/异步桥 010） | groundtruth/manifest.json |
 | 评分 | 评分口径漂移由 check_score_regression 门禁锁定；当前 260 条口径待下一轮工具链复评（score_output.py） | score_output.py |
-| feat_api 路由页 | 84（api 54 / ui 23 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
+| feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
 | bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与 133 规则常量双向零包含） | check_bait_fp.py |
@@ -29,6 +29,7 @@
 ## 测试流程基线（实测口径）
 
 - **单一验证入口**：`python3 tools/verify.py`（--fast 为快门禁）替代逐条手跑；任一 FAIL 退出码 1。
+  快门禁 9 项并行（~5s）；全链 13 门禁 ~23s（含生成器确定性 8.7s，与 CI 同源 tools/check_determinism.py）。
 - **共享反汇编缓存**（tools/dis_cache.py，build/dis_cache/，abc md5 → dis）：module_share /
   corpus_meta / opcode 三工具共用，重复反汇编仅首次付费；verify 全链约 27.5s。
 - **样本构建瘦身**：build_tier 只重编 feat_heavy（farm 旋钮仅影响该模块）+ 以标准 api26-release
@@ -37,6 +38,10 @@
 - **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 10 代表条目
   （全 detection 形态含跨模块 interproc）锁定 score_output 判定口径——防"评分口径漂移被
   误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。
+- **画像缓存 + 确定性单源（2026-10-01 审计轮）**：gen_corpus_meta 画像按 .app md5 键控缓存
+  （build/dis_cache/meta_profile_cache.json）——--check 冷 13.6s → 暖 0.3s；生成器确定性从
+  CI 内联循环抽为 tools/check_determinism.py（verify 与 CI 同一脚本；快照对比语义，脏树不误报）。
+  此前 CI 连红 4 轮而本地全绿（gen_vulns_overview 缺新族即崩、VULNS.md 漂移三代）即该盲区爆雷。
 - **sweep 加固**：dump() 捕获 dumpLayout 超时挂死（重试而非崩）；小页（≤6 按钮）自适应
   浅沉降（省 ~40s/页，大页保留全窗口）；行数断言——api/cat 页缺行在 stderr 摘要 +
   `--strict` 时退出码 2（采集质量与用例成败分离）。
@@ -55,6 +60,16 @@
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
 - **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
+- **cat-wrk/sen/tnt/ust 新对真机 sweep**：WRK-002/SEN-002/TNT-007/UST-002 四对
+  已过全门禁 + 评分器 e2e（4 hit + 4 twin miss）；bench26 CLI 拉起被 Beta2 GUI
+  引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 四页。
+- **真实工具 spot-check 常态化 + WEB 孪生同文件 FP 修复**：2026-10-01 审计轮实证
+  合成回归基线测不出「材料被 es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——
+  新增 interproc 形态时发版前须用逆向工具对 build/out 实跑评分抽查；存量
+  WEB-009S/010S 与漏洞同 record 致 record 域 string-literal 必误命中（实跑 FP），
+  修复方向：孪生迁独立 Twins 文件 + 代表条目纳入 check_score_regression。
+- **VULNS.md 正文散文补 9 新族**（DEP/DEV/DIMP/EMTR/GEO/SEN/UST/WIFI/WRK + TNT 增量）：
+  总览表已全，正文四问（是什么/长什么样/怎么利用/危害）对新族零覆盖，P2 跟进。
 - **字节码 HAR patch 指令注入 PoC（载荷侧）**：缺能产出 patch 对指令的 assembler；
   合并通道机制已实证（docs/ohos.md §6.1），待评估。
 - **AOT（.an）设备侧闭环（两步，机制与配方见 docs/ohos.md §6.5）**：① bench26 拉起后

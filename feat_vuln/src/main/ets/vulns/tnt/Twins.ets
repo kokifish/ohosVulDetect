@@ -90,3 +90,38 @@ export async function ovdTntSink6S(): Promise<string> {
   const payload: string = `h6(${ovdHspTntSrcS().length})`;
   return `tnt6S aggregate ${payload.length} (no file sink)`;
 }
+
+
+// SAFE: OVD-TNT-007S 同构 then 链，source 返回派生聚合、sink 只发常量（CWE-200 加固）
+function ovdT7SourceS(): string {
+  return 'then-chain-aggregate';
+}
+
+function ovdT7MidS(seed: string): string {
+  return `midS(${seed.length})`;
+}
+
+async function ovdT7SinkS(_payload: string): Promise<string> {
+  const req: http.HttpRequest = http.createHttp();
+  try {
+    await req.request('https://ovd-tnt7.example/aggregate', {
+      method: http.RequestMethod.POST,
+      header: { 'x-tnt7-flow': '0' },
+      extraData: 'aggregate-only'
+    });
+  } catch (e) {
+    // graceful
+  } finally {
+    req.destroy();
+  }
+  return 'tnt7S then-sink aggregate posted';
+}
+
+export async function ovdTnt007S(): Promise<string> {
+  try {
+    await Promise.resolve(ovdT7SourceS()).then(ovdT7MidS).then(ovdT7SinkS);
+  } catch (e) {
+    // graceful
+  }
+  return 'tnt7S then-chain completed';
+}
