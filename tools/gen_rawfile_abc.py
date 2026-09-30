@@ -33,9 +33,12 @@ def main() -> int:
         print(f"ERROR: es2abc 不存在: {args.es2abc}（可用 --es2abc 或环境变量 ES2ABC 覆盖）")
         return 1
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    cmd = [args.es2abc, str(SRC), "--output", str(OUT)]
-    print(f"+ {' '.join(cmd)}")
-    r = subprocess.run(cmd)
+    # 以相对路径传给 es2abc（cwd=ROOT）：abc 内嵌的 source 路径保持仓库相对形态，
+    # 不把构建机绝对路径（含私有目录名）写进提交态二进制语料。
+    cmd = [args.es2abc, "tools/rawfile_src/bench_script.js", "--output",
+           str(OUT.relative_to(ROOT))]
+    print(f"+ {' '.join(cmd)}  (cwd={ROOT})")
+    r = subprocess.run(cmd, cwd=ROOT)
     if r.returncode != 0:
         return 1
     print(f"OK: {OUT} ({OUT.stat().st_size} bytes)")

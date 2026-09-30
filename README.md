@@ -6,6 +6,8 @@
 2. 预埋带标签漏洞 + 安全孪生（`groundtruth/manifest.json`），作为检测评分基准（F1 口径）；
 3. `feat_heavy` 指令农场（仅 api26 变体），作为超大 abc 输入与模块不均衡压力样本。
 
+> 新人引导（了解鸿蒙、初次接触本项目）：[docs/GETTING-STARTED.md](docs/GETTING-STARTED.md)
+
 ## 外部消费者快速入口
 
 | 目标 | 产物 / 命令 |

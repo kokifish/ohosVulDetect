@@ -12,7 +12,8 @@ import sys
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ISA_YAML = os.environ.get("ISA_YAML", os.path.expanduser("~/git_space/ohre_dev/ohre/abcre/dis/enum/isa.yaml"))
+# isa.yaml 位于私有工具链仓库，路径不落公开仓库——一律经 ISA_YAML 环境变量注入
+ISA_YAML = os.environ.get("ISA_YAML", "")
 
 FAST = [
     ("manifest 双向一致", ["python3", "groundtruth/check_manifest.py"]),
@@ -49,6 +50,10 @@ def run(name: str, cmd: list[str]) -> bool:
 
 def main() -> int:
     only_fast = "--fast" in sys.argv
+    if not only_fast and not ISA_YAML:
+        print("ERROR: 重门禁的指令覆盖需要 ISA_YAML 环境变量指向 isa.yaml"
+              "（私有路径不入库；--fast 不需要）")
+        return 1
     ok = True
     print("== verify: 快门禁 ==")
     for name, cmd in FAST:

@@ -139,7 +139,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2540568,
+   "app_bytes": 2540570,
    "app_file": "build/samples/ohosVulDetect-sample-medium.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -237,7 +237,7 @@
    "total_functions": 17852,
    "total_instructions": 956237,
    "zip_raw_bytes": 7457301,
-   "zip_stored_bytes": 2539650
+   "zip_stored_bytes": 2539652
   },
   "small": {
    "api_version": {
@@ -245,7 +245,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 2114247,
+   "app_bytes": 2114248,
    "app_file": "build/samples/ohosVulDetect-sample-small.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -343,7 +343,7 @@
    "total_functions": 9053,
    "total_instructions": 601735,
    "zip_raw_bytes": 5811749,
-   "zip_stored_bytes": 2113329
+   "zip_stored_bytes": 2113330
   }
  },
  "schema_version": "1.1",
@@ -362,7 +362,7 @@
     "release_type": "Beta2",
     "target": 24
    },
-   "app_bytes": 8175789,
+   "app_bytes": 8175745,
    "app_file": "build/out/ohosVulDetect-api24-debug-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -376,8 +376,8 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 669540,
-     "bytes": 2340893,
+     "abc_bytes": 669496,
+     "bytes": 2340849,
      "functions": 1888,
      "inst_share": 0.1178,
      "instructions": 60338,
@@ -405,8 +405,8 @@
    ],
    "total_functions": 5571,
    "total_instructions": 512030,
-   "zip_raw_bytes": 8175117,
-   "zip_stored_bytes": 8175117
+   "zip_raw_bytes": 8175073,
+   "zip_stored_bytes": 8175073
   },
   "api24-release": {
    "api_version": {
@@ -414,7 +414,7 @@
     "release_type": "Beta2",
     "target": 24
    },
-   "app_bytes": 1774484,
+   "app_bytes": 1774463,
    "app_file": "build/out/ohosVulDetect-api24-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -428,8 +428,8 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 433456,
-     "bytes": 1827731,
+     "abc_bytes": 433412,
+     "bytes": 1827687,
      "functions": 1888,
      "inst_share": 0.1019,
      "instructions": 46682,
@@ -457,8 +457,8 @@
    ],
    "total_functions": 5571,
    "total_instructions": 458329,
-   "zip_raw_bytes": 4800397,
-   "zip_stored_bytes": 1773748
+   "zip_raw_bytes": 4800353,
+   "zip_stored_bytes": 1773727
   },
   "api26-debug": {
    "api_version": {
@@ -466,7 +466,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 92579597,
+   "app_bytes": 92579553,
    "app_file": "build/out/ohosVulDetect-api26-debug-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -489,8 +489,8 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 669228,
-     "bytes": 2341774,
+     "abc_bytes": 669184,
+     "bytes": 2341730,
      "functions": 1930,
      "inst_share": 0.0071,
      "instructions": 60644,
@@ -527,8 +527,8 @@
    ],
    "total_functions": 67315,
    "total_instructions": 8575020,
-   "zip_raw_bytes": 92578679,
-   "zip_stored_bytes": 92578679
+   "zip_raw_bytes": 92578635,
+   "zip_stored_bytes": 92578635
   },
   "api26-release": {
    "api_version": {
@@ -536,7 +536,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 12485682,
+   "app_bytes": 12485647,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -595,8 +595,8 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 427952,
-     "bytes": 1823414,
+     "abc_bytes": 427908,
+     "bytes": 1823370,
      "functions": 1930,
      "inst_share": 0.0068,
      "instructions": 46763,
@@ -633,8 +633,8 @@
    ],
    "total_functions": 67315,
    "total_instructions": 6901608,
-   "zip_raw_bytes": 30674870,
-   "zip_stored_bytes": 12484668
+   "zip_raw_bytes": 30674826,
+   "zip_stored_bytes": 12484633
   }
  }
 }

@@ -9,13 +9,13 @@
 | 维度 | 基线 | 事实源 |
 |---|---|---|
 | 指令覆盖 | 217/268（patch 注入 +29 见「patch abc 注入语料」节；其余 51 条归因见 docs/ohos.md §5.1） | check_opcode_coverage.py |
-| 模块指令份额 | feat_heavy 6,419,552 指令 / 60,278 函数（release 口径，占全 app 93.4%；目标 ≥5M / ≈55k）；biz 集中单 record：Biz0000 6,195,973 指令 = 96.5%；最大单方法 giant_000 476,641 指令（record/方法级分布见 corpus_meta.json） | check_module_share.py + gen_corpus_meta.py |
+| 模块指令份额 | feat_heavy 6,419,552 指令 / 60,278 函数（release 口径，占全 app 93.0%；目标 ≥5M / ≈55k）；biz 集中单 record：Biz0000 6,195,973 指令 = 96.5%；最大单方法 giant_000 476,641 指令（record/方法级分布见 corpus_meta.json） | check_module_share.py + gen_corpus_meta.py |
 | 语料画像（机器可读） | 各变体模块构成/指令·函数/份额、feat_heavy record 级分布、压缩画像；外部消费者入口 README.md → corpus_meta.json | gen_corpus_meta.py --check |
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 130 + 130（manifest 260 条，双向一致；跨模块 XMOD 7 对、interproc 链 8 对（TNT-005/006 跨模块 + DEP-001 三层依赖链 HSP→HAR→feature）、动态加载 DIMP 2 对（固定/拼接路径，半混淆 keep 形态）、桥间污点 WEB-009/异步桥 010） | groundtruth/manifest.json |
-| 评分 | 最近一次实测 F1=1.000（当时 97 对口径，6.1M 指令语料）；210 条口径待下一轮工具链复评（score_output.py） | score_output.py |
+| 评分 | 评分口径漂移由 check_score_regression 门禁锁定；当前 260 条口径待下一轮工具链复评（score_output.py） | score_output.py |
 | feat_api 路由页 | 84（api 54 / ui 23 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
@@ -26,14 +26,13 @@
 
 > 语料设计 checklist：见 AGENTS.md「新增内容 checklist」节（单源，勿在此重复维护）。
 
-## 测试流程基线（2026-09-29 优化轮，实测口径）
+## 测试流程基线（实测口径）
 
 - **单一验证入口**：`python3 tools/verify.py`（--fast 为快门禁）替代逐条手跑；任一 FAIL 退出码 1。
 - **共享反汇编缓存**（tools/dis_cache.py，build/dis_cache/，abc md5 → dis）：module_share /
-  corpus_meta / opcode 三工具原先各反汇编同一批 abc（feat_heavy 22MB 单次 23s、周期重复 3 次），
-  现仅首次付费——三工具连续 243s → 76s；verify 全链 27.5s（原手工链 ~249s）。
+  corpus_meta / opcode 三工具共用，重复反汇编仅首次付费；verify 全链约 27.5s。
 - **样本构建瘦身**：build_tier 只重编 feat_heavy（farm 旋钮仅影响该模块）+ 以标准 api26-release
-  .app 为底 zip 条目级替换 feat_heavy hap——--samples-only 256s → 106s；产物条目集一致、
+  .app 为底 zip 条目级替换 feat_heavy hap（--samples-only 约 106s）；产物条目集一致、
   份额对齐（small 20.3%/medium 50.2%，档位旋钮单源维护于 build.py TIER_ENVS）、装机运行验证通过；失败自动回退全链。
 - **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 10 代表条目
   （全 detection 形态含跨模块 interproc）锁定 score_output 判定口径——防"评分口径漂移被
@@ -55,33 +54,35 @@
   + corpus_meta，发射器行为变化记入基线表与本文件对应小节。
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
+- **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
+- **字节码 HAR patch 指令注入 PoC（载荷侧）**：缺能产出 patch 对指令的 assembler；
+  合并通道机制已实证（docs/ohos.md §6.1），待评估。
 
 ### 探索方向（按价值/成本排序，未排期；结构性封顶项不列）
 
 - **漏洞语料新家族**：sendable/@Concurrent 并发面、worker 通信面、UI 状态污染面三类
-  ArkTS 特有形态（检测器区分度价值最高）；interproc 链加深为跨 record/跨模块组合形态
-  （TNT×XMOD，source 在 HAR/HSP、sink 在 feature）。
+  ArkTS 特有形态（检测器区分度价值最高；interproc 跨模块链已落地 TNT×XMOD + DEP-001）。
 - **FP-bait 扩展**：api-bait 困难模式从调用面延伸到规则面（近似孪生混淆形态），量化检测器区分度。
-- **组件内 API 1164→更高**：剩余 132 缺失集中于 CustomBuilder 返回类型/复杂构造（Skip 46 已逐项归因）；组件维度 21 项与 no-decl 36 已封顶不投入。
+- 组件内 API 增量：**已决策不投入**——剩余 132 为 CustomBuilder 返回类型/复杂构造（Skip 46 已逐项归因）；组件维度 21 项与 no-decl 36 封顶。
 - **打包形态**：多 HSP 依赖链、feature HAP 按需分发（distro）等输入形态对反编译管线的扩展，
   配套 corpus_meta 画像字段。
-- **评分基础设施**：固定 test.out 快照的评分器回归基线（防评分口径漂移）；工件 sidecar
-  的父项目消费验证闭环。
+- **评分基础设施**：工件 sidecar 的父项目消费验证闭环（评分器回归基线已落地为
+  check_score_regression 门禁）。
 - **指令覆盖增量**：仅随 SDK 升级重探（callruntime/patch 管线新发射形态），不作为常态投入。
 
 ## 结构
 
 | 模块 | 类型 | 内容 |
 |---|---|---|
-| entry | entry HAP | 壳：拉起三个 feature（跨 HAP startAbility） |
-| feat_api | feature HAP | 良性语料路由页 82（api 53 / ui 22 / lang 7 + Index + EmbeddedProviderPage，见基线速查表） |
+| entry | entry HAP | 壳：五按钮跨 HAP startAbility 拉起 Api/Vuln/Heavy/OvdShared/CompFarm |
+| feat_api | feature HAP | 良性语料路由页（数量/构成见基线速查 feat_api 行，main_pages.json 为准） |
 | feat_vuln | feature HAP | 漏洞分类页（cat- 页 + Index + Backdoor）+ BackdoorAbility(exported, ovd://backdoor) + libentry.so |
 | feat_heavy | feature HAP（仅 default 产品） | 极端大单 record 指令农场：≥5M 指令 / ≈60k 函数，biz 集中单一编译单元（生成语料，勿手改），HeavyFarmPage 抽样 smoke，不进 sweep |
 | feat_compfarm | feature HAP（仅 default 产品） | 组件 API 缺口补齐农场（生成语料，勿手改），ComponentApiFarmPage 选择渲染，compfarm- 前缀不进 sweep |
 | lib_common | HAR | Logger / DemoItem / Runner + XMOD HAR 漏洞面（常量编入每个依赖方 HAP abc） |
 | lib_shared | HSP | 静态/动态 import 目标 + XMOD HSP 漏洞面（独立 abc） |
 
-每个模块编译为独立 `ets/modules.abc`；default 产品 `.app` = 4 hap + 1 hsp + pack.info（api24 产品无 feat_heavy）。
+每个模块编译为独立 `ets/modules.abc`；default 产品 `.app` = 5 hap + 1 hsp + pack.info（api24 无 feat_heavy/feat_compfarm）。
 
 ## 构建
 
@@ -173,16 +174,15 @@ aboutToReuse** 复用生命周期、**@Require @Param**、@Monitor 多路径（�
 
 ### feat_heavy 指令农场
 
-极端大单模块压力样本（逆向工具链超大 abc 输入用）：**≥500 万指令 / ≈6 万函数（release 口径）**，
-占全 app 指令 93%。仅进 default（api26）产品（`targets.applyToProducts`），api24 旧模拟器构建不含。
+极端大单模块压力样本（逆向工具链超大 abc 输入用）：规模门禁与实测见基线速查「模块指令份额」行
+（占全 app 份额 ~93%）。仅进 default（api26）产品（`targets.applyToProducts`），api24 旧模拟器构建不含。
 **「单模块」在 record（编译单元）级成立**：默认 `BIZ_FILES=1 / BIZ_FUNCS=3870`（=43×90），全部 biz
-指令集中于单一 record——实测 Biz0000 5,706,092 指令 = feat_heavy 的 96.2%（全 abc 136 record，
-旧 90 文件形态 top1 仅 1.1%）；es2abc 单文件 19MB / 47.8 万行实测可编译（峰值 ~1.3GB）。
+指令集中于单一 record——实测 Biz0000 6,195,973 指令 = feat_heavy 的 96.5%；es2abc 单文件
+19MB / 47.8 万行实测可编译（峰值 ~1.3GB）。
 **巨方法形态（方法级不均衡）**：`GIANT_STMTS=10000`（旋钮 OVD_HEAVY_GIANT_STMTS）在 Biz0000
-附加单一 `giant_000` 函数——实测 release 单方法 476,641 指令（探针 2k/5k/10k 块阶梯 ≈ 9.8 万/
-24.5 万/49.2 万指令均一次编译通过，es2abc 无上限迹象），旧形态最大方法仅 969 指令；样本档 pin 0
-保持小档规模。`BIZ_FILES>1` 为样本档拆分旋钮，small/medium 档 pin
-43 函数/文件（档位画像见 corpus_meta.json sample_tiers）。实测：5.93M 指令 / 23.4MB modules.abc，逆向工具链可完整解析（分钟级）；
+附加单一 `giant_000` 函数——实测 release 单方法 476,641 指令（2k/5k/10k 块阶梯探针均一次
+编译通过，es2abc 无上限迹象）；样本档 pin 0 保持小档规模。`BIZ_FILES>1` 为样本档拆分旋钮，small/medium 档 pin
+43 函数/文件（档位画像见 corpus_meta.json sample_tiers）。实测：6.42M 指令 / 24.3MB modules.abc，逆向工具链可完整解析（分钟级）；
 运行时复测（2026-09-29，API26 真机 bench26/7.0.0.32 Beta2）：单 record + 巨方法形态
 安装/启动/六按钮抽样全部通过（counts biz=3871 biza=387 api=201 kit=30 kitdyn=142；
 biz n=3871 acc=8279；api total=201；apidyn n=205 ok=4；kit n=30；kitdyn n=142 ok=4）。
@@ -352,10 +352,3 @@ python3 ohosVulDetect/groundtruth/score_output.py test.out ohosVulDetect/build/o
   Web 属性链等已抽查验证）；
 - native 密钥只在 libentry.so 可见（abc 级负样本成立）；`Math.random` 在 IR 中为 `Math."random"`。
 
-## 现行待办
-
-| 事项 | 阻塞点 | 验收 |
-|---|---|---|
-| 工具链 Beta2 → Release 升级 | 用户决策（暂缓） | 升级后重跑覆盖率归因 + 全量 sweep + 评分 |
-| ohre_dev 上层仓 snapshot+gitlink | 待 koki 提交 | 上层仓同步 |
-| 字节码 HAR patch 指令注入 PoC（载荷侧） | 缺能产出 patch 对指令的 assembler | 机制已实证（docs/ohos.md §7.1），待评估 |

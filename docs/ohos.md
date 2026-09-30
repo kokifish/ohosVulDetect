@@ -148,12 +148,12 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 已覆盖：generator/yield*/resume-with-arg、for-of/for-in/close、spread/rest/new-spread、解构 rest、Symbol 键、tagged template（成员 tag）、私有字段全家族、super[k]/super 展开、计算键、globalThis 预置赋值、可选链调用、动态下标调用（Record 形态）、闭包/lexenv 压力、wide 家族、async/await 链、try/catch/finally、泛型/union/枚举位运算、类继承多态等。
 **现状**：原候选全部落地或定性——BigInt/String.raw/标签 break/for-await-of/static 块/解构交换/逻辑赋值/accessor、WeakMap/WeakSet/WeakRef/Proxy/Reflect/RegExp 具名组·后行断言·dotAll（Sugars.ts/TypesDemo，运行时以模拟器 selfcheck 为准）；`new.target` 已落地（构造器内箭头捕获形态，见 sugarNewTarget；本 SDK 下编译为参数传递，见 §5.1 探针收口）；`satisfies` 仅类型层、无指令面，不作为语料目标。
 
-## 7. 打包形态专题：多 abc / HSP / HAR / 覆盖率提升
+## 6. 打包形态专题：多 abc / HSP / HAR / 覆盖率提升
 
 > 背景调研：如何构造「一个 HAP 内多个 abc」、HSP/HAR 还有哪些未覆盖形态、以及组件/API 覆盖率如何系统性提升。
 > 证据来源 = 本地工具链源码级核实（SDK 26.0.0.32 Beta2 / hvigor-ohos-plugin 6.26.2 / ets-loader）+ 华为官方文档（下附链接）+ 本仓库 build/out 产物实测 + ohpm 实测。
 
-### 7.1 多 abc：一个 HAP 里能出现几个 .abc？
+### 6.1 多 abc：一个 HAP 里能出现几个 .abc？
 
 **机制结论**：Stage 模型唯一现行编译模式 esmodule 下，es2abc 恒定带 `--merge-abc`，**每个 HAP/HSP 包强制只有一个 `ets/modules.abc`**，工具链不存在"关闭合并/按文件拆 abc"的 buildOption（`CompileModeEnum` 仅 jsbundle=FA 遗留 .js 路线 / esmodule）。本项目 4 包实测均如此（entry 21KB / feat_api 1.5MB / feat_vuln 125KB / lib_shared 3KB，各 1 个）。
 
@@ -169,7 +169,7 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 | 6 | 集成态 HSP | HSP 静态打进消费方，不增加 abc 数 | hvigor `package-shared-tgz.js` integratedHsp 分支 | ❌ 未覆盖（形态补全用） |
 | 7 | patch.abc（热修）/ 加密 abc（官方应用加密 code-protect） | 运行时/发布态形态，非正常构建产物 | 加密 abc 是逆向工具"野外"形态 | 观察项（不做语料目标） |
 
-### 7.2 HSP / HAR 开发形态全景（官方文档要点 + hvigor 选项核实）
+### 6.2 HSP / HAR 开发形态全景（官方文档要点 + hvigor 选项核实）
 
 **HSP（动态共享包，module.json5 type=shared）**：
 - 可导出 ArkUI 组件/类/native so/资源；不能做 entry；禁止循环依赖、**不支持依赖传递**；应用内 HSP 限同 bundleName/签名。
@@ -187,7 +187,7 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 
 **本项目形态对照**：✅ 应用内 HSP（静态+动态 import）、源码 HAR、多 HAP（entry+2 feature）、native so（libs/arm64-v8a）、release 混淆、**ArkTS 卡片 widgets.abc**、**rawfile abc + napi 执行**、**route_map 跨包 Navigation**；❌ HSP 内 UIAbility/ExtensionAbility、字节码 HAR 工程内依赖（机制已探针实证）、集成态 HSP、独立卡片包。
 
-### 7.3 组件/API 覆盖率：权威清单与提升路径
+### 6.3 组件/API 覆盖率：权威清单与提升路径
 
 **权威机器可核对清单（本地 SDK 26.0.0.32 实测，比文档树口径更准）**：
 - 组件：`ets/component/component_config.json` = **137 个**（ArkUI 组件名单一事实源；本文 §2 的 ~156/170 为文档树口径含子组件/专用形态）。
@@ -199,38 +199,38 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 - `ohpm.openharmony.cn`：真实三方库（大量**字节码 HAR**，含真实第三方 abc + 混淆变体）→ 作逆向工具**鲁棒性测试集**（非语料源；实测 @ohos/lottie 2.0.33 为源码 HAR，需挑选真正的字节码包）。
 - OpenHarmony-TPC、awesome-harmony 系列作补充。
 
-### 7.4 对本项目的落地建议（1–3 已落地；其余排在工具链升级 26.0.0 Release 之后）
+### 6.4 对本项目的落地建议（1–3 已落地；其余排在工具链升级 26.0.0 Release 之后）
 
 1. ✅ **ArkTS 卡片页**：feat_api FormExtensionAbility（ApiFormAbility）+ 动态卡片（ApiWidgetCard）→ `ets/widgets.abc` 第二 abc 形态 + FormKit API 域（formProvider/formInfo/formBindingData/postCardAction）+ 卡片受限组件集（SDK `ets/component/form_config.json` 即卡片组件白名单，38 个）。
 2. ✅ **rawfile abc + napi_run_script_path**：es2abc 脚本模式 abc 入 rawfile，feat_vuln cpp 执行——script 模式全局变量指令族（ldglobalvar/stglobalvar/stconsttoglobalrecord/sttoglobalrecord）+4 条，模块模式产物不含。
 3. ✅ **route_map.json 跨包 Navigation 路由**：lib_shared 注册系统路由表，feat_api api-route-map 页按名路由 + onPop 回程断言。
-4. ⏳ **字节码 HAR 注入 PoC（载荷侧）**：合并通道已实证（见 7.1 #4）；产出含 patch 对指令的 abc 载荷仍缺 assembler，维持待评估。
+4. ⏳ **字节码 HAR 注入 PoC（载荷侧）**：合并通道已实证（见 6.1 #4）；产出含 patch 对指令的 abc 载荷仍缺 assembler，维持待评估。
 5. ⏳ HSP 内 UIAbility（API14+）、集成态 HSP、独立卡片包（API20+）——形态补全，可选。
 
 **参考来源**：官方文档——创建ArkTS卡片（harmonyos-guides/arkts-ui-widget-creation）、HSP（in-app-hsp）、集成态HSP（integrated-hsp）、HAR（har-package）、构建HAR（ide-hvigor-build-har）、应用加密（code-protect）、napi_run_script_path 限制（harmonyos-faqs/faqs-ndk-65）、程序包结构（application-package-structure-stage）、混淆选项（source-obfuscation-rule-options）；本地——ets-loader `gen_abc_plugin.js`/`ark_define.js`/`module_mode.js`、hvigor-ohos-plugin `build-opt.d.ts`/`target-task-service.js`/`byte-code-har-utils.js`/`package-shared-tgz.js`、SDK `ets/component/component_config.json`。
 
-## 8. 混淆与加密专题（官方/第三方盘点 + 本项目现状 + 实测结论，2026-09-30）
+## 7. 混淆与加密专题（官方/第三方盘点 + 本项目现状 + 实测结论，2026-09-30）
 
-### 8.1 官方手段全景
+### 7.1 官方手段全景
 
 - **ArkGuard 源码混淆**（API10+，编译期 AST 改名）：选项 `-enable-property/toplevel/export/filename-obfuscation`、`-enable-string-property-obfuscation`（字符串字面量属性名，需 property 先开）、`-compact`、`-remove-log`、`-print/apply-namecache`、`-enable-lib-obfuscation-options`（合并依赖方混淆选项）；保留 `-keep-property/global/file-name`、`-keep-dts`、`-keep`（+通配符）。仅 release 生效。**明确不支持**：控制流混淆、数据混淆（常量/字面量加密）、指令替换、VMP/加壳；字符串不加密；函数参数名不混淆。规则合并：当前模块 rules + 依赖 HAR/HSP 的 consumer-rules（→ 远程包 obfuscation.txt），保留项取并集。
 - **ArkGuard 字节码混淆**（API20+ 新增）：同一 `arkOptions.obfuscation.ruleOptions` 体系，规则文件加 `-enable-bytecode-obfuscation`（+`-debugging` 产 `.pa`；本地解析器另认 `-arkui/-enhanced` 变体，文档未列）。**与源码混淆互斥**（开启后源码混淆自动关闭）。执行器为独立二进制 `panda_guard`（ets-loader/bin/ark/build-mac/bin/），产物 origin/obf + nameCache.json + systemApiCache.json（SDK API 白名单），报错栈用 hstack + nameCache 还原。门禁 compatibleSdkVersion ≥ API12-beta3。
 - 本地 arkguard 1.1.3（ets-loader node_modules）实际选项面比公开文档更宽：另有 `-remove-comments`、`-remove-nosideeffects-calls`、`-keep-object-props`、`-keep-parameter-names`、`-keep-uncompact`、`-print-kept-names`、`-keep-comments`。
 - **分发侧加密**：AppGallery 上架后对应用代码 AES 端到端加密（安装与运行态），与 ArkGuard 互补；官方文档明确「源码安全高要求者应叠加应用加密/第三方加固」。
 
-### 8.2 第三方加固生态
+### 7.2 第三方加固生态
 
 - 已适配 NEXT 的安全类 SDK 60+ 款；加固厂商：梆梆安全、爱加密（智游网安）、网易易盾、顶象、360 加固宝等，宣称「混淆+加密+VMP」组合。
 - 实际技术面：ArkTS/abc 层受平台限制，第三方主要做 **native .so 加固/混淆 + 运行时反调试/反注入 + 资源加密**；ArkTS 层本质依赖官方 ArkGuard（社区评测：深度字节码改写能力有限）。商业加固本地不可实测，仅存列。
 - native 侧：BiSheng 工具链无官方混淆器（本项目 feat_vuln cpp 亦为普通 CMake）；o-llvm 类方案需自编工具链。
 
-### 8.3 本项目现状（2026-09-30）
+### 7.3 本项目现状（2026-09-30）
 
 - **开启**：6 个模块（entry/feat_api/feat_vuln/feat_heavy/feat_compfarm/lib_shared）`-enable-property-obfuscation` + `-enable-toplevel-obfuscation`；lib_common 为 HAR 无自有配置——源码合并进消费方 abc，按消费方规则混淆。feat_vuln 另有半混淆 keep（`ovdDimpSink/ovdDimpSafe/DIMP_TOKEN`，服务 dimp 动态导入家族）。
 - **显式关闭**：`-enable-filename-obfuscation`（跨包模块加载 SyntaxError 崩溃）、`-enable-export-obfuscation`（HSP 跨包导出名解析失败 'b1'）——实测教训记录于各 obfuscation-rules.txt 注释。未开启 string-property/compact/remove-log 等。
 - **不存在/未涉及**：字符串加密（官方无此能力，token 类检测信号不受混淆影响）、签名（产物 unsigned）、native 混淆、分发加密（本地构建态）。
 
-### 8.4 实测结论（本机 SDK 26.0.0.32 Beta2 + hvigor 6.26.2）
+### 7.4 实测结论（本机 SDK 26.0.0.32 Beta2 + hvigor 6.26.2）
 
 - **源码混淆 A/B**（feat_api debug vs release 反汇编）：函数总数不变（3547=3547），仅私有标识符被重命名（如 `baitSenEcho` release 消失、方法名坍缩为 `n.e.f` 形态）；导入/导出名、HAR 导出面（`DemoScaffold` 308=308）、字符串字面量（`string-density` 3=3，token 全存活）、ArkUI 组件属性全部不混淆——**string/token 类检测信号对混淆免疫**，识别符链规则受影响面 = 私有名。
 - **字节码混淆 e2e**：entry 开启后管线完整跑通（origin/obf + config.json + modules.pa + nameCache.json）；实际重命名高度克制（entry 仅 2 处顶层：`#Index`→`#a`、lib_common `#*#harCollectSessions`→`#*#b`），SDK/入口/导出名豁免面极大；HAR 代码在消费方构建期被字节码混淆。

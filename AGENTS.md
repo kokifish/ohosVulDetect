@@ -25,14 +25,43 @@
 
 > 本文件不记录任何规模/基线数字（页数、文件数、漏洞数、覆盖率等）——它们随语料演进必然变化，一律以 docs/BENCHMARK.md（基线）、groundtruth/manifest.json（漏洞清单）、corpus_meta.json（语料画像，gen_corpus_meta.py 实测于构建产物）为唯一事实源，防止文档漂移。
 
-- entry（entry HAP 壳：Index 两按钮跨 HAP 拉起 feature）→ feat_api / feat_vuln（feature HAP，各编译独立 modules.abc）→ lib_common（HAR：DemoScaffold/Logger/DemoItem/Runner/Constants）→ lib_shared（HSP：静态/动态 import 目标）。
+- entry（entry HAP 壳：Index 五按钮跨 HAP startAbility 拉起 Api/Vuln/Heavy/OvdShared/CompFarm 各 Ability）→ feat_api / feat_vuln（feature HAP，各编译独立 modules.abc）→ lib_common（HAR：DemoScaffold/Logger/DemoItem/Runner/Constants）→ lib_shared（HSP：静态/动态 import 目标）。
 - feat_api：路由页 pages/api、pages/ui、pages/lang（页清单 = main_pages.json 注册项 + ApiRegistry.ets DemoItem，sweep 按 id 前缀 api-/ui-/lang- 遍历）；受限特性（generator/for-in/Symbol 等，arkts-* 严格 lint 只查 .ets）放 pages/lang 下 .ts/.js（TsFeatures.ts、RuntimeHelpers.ts、WideForms*.ts、GlobalAssign.js）仍编译进同一 abc；concurrent/ 与 workers/ 为非页源码。
 - feat_vuln：vulns/ 分类源文件 + web/（NativeBridge）；分类页（Index.ets 内联 cat- 清单）+ Backdoor 页/Ability(exported, ovd://backdoor) + cpp libentry.so。
 - feat_heavy：极端大单 record 指令农场（默认 BIZ_FILES=1 / BIZ_FUNCS=3870，biz 全量集中单一编译单元；生成语料，勿手改，改 tools/gen_heavy_farm.py 再重新生成）；仅 default（api26）产品；HeavyFarmPage 抽样 smoke，heavy- 前缀不进 sweep；份额门禁 check_module_share.py。
 - groundtruth/：manifest.json（漏洞+安全孪生清单的唯一事实源）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、check_string_stress.py（字符串应力语料操作数面 round-trip 门禁）、extract_ir_records.py（test.out 按 record 切分）。
-- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）、check_signal_dual_state.py（信号双态存活门禁：manifest 信号材料须在 debug×release 产物同时存在，三面分流 abc/native/资源）、check_keep_rules.py（keep 规则新鲜度门禁：keep 名须仍存活于源码）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成））；gen_heavy_farm.py（feat_heavy 指令农场，原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取）+ check_module_share.py（模块指令份额门禁）；gen_corpus_meta.py（构建产物实测 → 仓库根 corpus_meta.json 语料画像：模块构成/指令量/record 分布/压缩画像，--check 防漂移，外部消费者入口，产物旁同名 .meta.json sidecar 随之刷新）+ README.md（外部消费者须知，不记数字只留指针）+ emulator_recover.sh（模拟器探活/黑屏检测/冷启动恢复）。
+- tools/（单一入口 verify.py 编排下述门禁；用法细节见各脚本头注释）：
+  - verify.py：构建后全部门禁一条命令（--fast 秒级快门禁；重门禁经 dis_cache 共享反汇编缓存）
+  - dis_cache.py：abc md5 → 反汇编文本共享缓存（module_share/corpus_meta/opcode 三工具共用）
+  - sync_pages.py：main_pages.json ↔ ApiRegistry DemoItem 双向一致门禁
+  - check_twin_fp.py：孪生常量与漏洞规则信号隔离门禁（子串感知）
+  - check_bait_fp.py：bait 陷阱常量与规则常量双向零包含门禁
+  - check_keep_rules.py：keep 规则新鲜度门禁（keep 名须仍存活于源码；选项名对照本地 arkguard 支持面）
+  - check_signal_dual_state.py：信号双态存活门禁（manifest 信号材料须在 debug×release 产物同时存在；三面分流 abc / native+资源 / 无池材料）
+  - check_corpus_coverage.py：组件/Kit/@ohos 三维对账 + 清单漂移门禁（CI 走 --use-fixture）
+  - check_component_api_coverage.py：组件内 API 覆盖对账（依赖本地 SDK d.ts，不进 CI）
+  - check_opcode_coverage.py：指令覆盖统计（全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）
+  - check_module_share.py：feat_heavy 模块指令份额门禁（阈值 + 原型分桶）
+  - check_score_regression.py：评分器回归基线（合成 test.out × 代表条目锁 score_output 判定口径）
+  - build_samples.py：样本矩阵构建器（farm 旋钮产出两档梯度样本到 build/samples）
+  - 生成器（生成物均勿手改，改生成器再重新生成）：
+    - gen_heavy_farm.py → feat_heavy 指令农场（原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取，SDK 升级后本地重跑不进 CI）
+    - gen_component_api_farm.py → feat_compfarm 组件 API 农场
+    - gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts
+    - gen_methname_stress.py → 方法名注入语料 MethNameStressLab.ts（entry/methname/）
+    - gen_string_stress.py → 字符串边界压力语料 StringStressLab.ts（round-trip 门禁在 groundtruth/check_string_stress.py）
+    - gen_string_density.py → 字符串池密度失衡语料 StringDensityLab.ts
+    - gen_recursion_stress.py → 递归深度压力语料
+    - gen_rawfile_abc.py → rawfile 独立 abc（es2abc 相对路径编译 tools/rawfile_src/bench_script.js，本地 SDK 不进 CI）
+    - gen_patch_abc.py → patch_cooked_*.abc 二进制改写注入语料（裸 isfalse/istrue 等野生产物指令）
+    - gen_vulns_overview.py → docs/VULNS.md 总览表
+  - gen_corpus_meta.py：构建产物实测 → corpus_meta.json 语料画像（schema 1.1：模块构成/指令量/record 分布/压缩画像/混淆画像，--check 防漂移，外部消费者入口，产物旁 .meta.json sidecar 随之刷新）
+  - emulator_sweep.py：模拟器遍历（按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号；缺行 stderr 摘要 + --strict 退出码 2）
+  - emulator_recover.sh：模拟器探活/黑屏检测/冷启动恢复
+  - sdk_manifest.json：SDK API 清单快照（CI 覆盖对账 fixture；漂移时本地 --dump-fixture 重新生成）
 - docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/各专题教训/现行待办），改语料前先读，一切数字以此为准；文档只记现状、教训与关键决策，不记历史过程。
 - docs/ohos.md = 鸿蒙能力全集调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）、指令可达性归因结论与打包形态机制专题；动态差距以 check_corpus_coverage.py 对账为准，语料扩展前先读。
+- docs/GETTING-STARTED.md = 新人引导（面向了解鸿蒙、不了解逆向的读者）；docs/VULNS.md = 漏洞清单人类可读总览（gen_vulns_overview.py 生成，表体勿手改）；root README.md = 外部消费者须知（不记数字只留指针）。
 
 ## 新增内容 checklist
 
@@ -44,7 +73,7 @@
 
 ```bash
 python3 build.py                # 全量 4 变体 + feat_heavy 单体 + 两档样本（样本走 zip 替换瘦身链，失败自动回退全链）
-python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁秒级 + 重门禁走共享反汇编缓存，~30s）
+python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁秒级 + 重门禁走共享反汇编缓存，~30s；重门禁需 ISA_YAML 指向 isa.yaml）
 python3 tools/verify.py --fast  # 改动迭代期仅快门禁（含 manifest/twin_fp/bait_fp/keep 新鲜度/sync_pages/评分基线/信号双态/覆盖对账）
 ```
 
