@@ -30,7 +30,7 @@
 - feat_vuln：vulns/ 分类源文件 + web/（NativeBridge）；分类页（Index.ets 内联 cat- 清单）+ Backdoor 页/Ability(exported, ovd://backdoor) + cpp libentry.so。
 - feat_heavy：极端大单 record 指令农场（默认 BIZ_FILES=1 / BIZ_FUNCS=3870，biz 全量集中单一编译单元；生成语料，勿手改，改 tools/gen_heavy_farm.py 再重新生成）；仅 default（api26）产品；HeavyFarmPage 抽样 smoke，heavy- 前缀不进 sweep；份额门禁 check_module_share.py。
 - groundtruth/：manifest.json（漏洞+安全孪生清单的唯一事实源）；check_manifest.py（manifest↔源码一致性门禁）、score_output.py（对逆向工具 test.out 评分）、compare_src_ir.py（源码 vs IR 逐函数比对）、check_string_stress.py（字符串应力语料操作数面 round-trip 门禁）、extract_ir_records.py（test.out 按 record 切分）。
-- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成））；gen_heavy_farm.py（feat_heavy 指令农场，原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取）+ check_module_share.py（模块指令份额门禁）；gen_corpus_meta.py（构建产物实测 → 仓库根 corpus_meta.json 语料画像：模块构成/指令量/record 分布/压缩画像，--check 防漂移，外部消费者入口，产物旁同名 .meta.json sidecar 随之刷新）+ README.md（外部消费者须知，不记数字只留指针）+ emulator_recover.sh（模拟器探活/黑屏检测/冷启动恢复）。
+- tools/：emulator_sweep.py（模拟器遍历，按 id 前缀 api-/ui-/lang-/cat- 自动发现页面，双 API 自适应；按钮全量遍历+补击，lang 页 `✅ selfcheck` 行即动态自检信号）、check_opcode_coverage.py（指令覆盖统计，全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）、check_corpus_coverage.py（组件/Kit/@ohos 三维对账 + 清单漂移门禁）、check_signal_dual_state.py（信号双态存活门禁：manifest 信号材料须在 debug×release 产物同时存在，三面分流 abc/native/资源）、check_keep_rules.py（keep 规则新鲜度门禁：keep 名须仍存活于源码）；生成器 gen_sendable_stress.py / gen_lexwide_stress.py / gen_wide_stress.py / gen_stown_stress.py → 生成物 SendableWide*、LexWideLab.ets、WideForms*、WideNs*（star-import 微模块群）、WideStoreLab.ts（均勿手改，改生成器再重新生成））；gen_heavy_farm.py（feat_heavy 指令农场，原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取）+ check_module_share.py（模块指令份额门禁）；gen_corpus_meta.py（构建产物实测 → 仓库根 corpus_meta.json 语料画像：模块构成/指令量/record 分布/压缩画像，--check 防漂移，外部消费者入口，产物旁同名 .meta.json sidecar 随之刷新）+ README.md（外部消费者须知，不记数字只留指针）+ emulator_recover.sh（模拟器探活/黑屏检测/冷启动恢复）。
 - docs/BENCHMARK.md = 唯一手册与基线记录处（构建/评分/模拟器/各专题教训/现行待办），改语料前先读，一切数字以此为准；文档只记现状、教训与关键决策，不记历史过程。
 - docs/ohos.md = 鸿蒙能力全集调研快照（组件/Kit/指令集/arkts-* 约束 + 参考来源）、指令可达性归因结论与打包形态机制专题；动态差距以 check_corpus_coverage.py 对账为准，语料扩展前先读。
 
@@ -45,12 +45,12 @@
 ```bash
 python3 build.py                # 全量 4 变体 + feat_heavy 单体 + 两档样本（样本走 zip 替换瘦身链，失败自动回退全链）
 python3 tools/verify.py         # 构建后全部门禁一条命令（快门禁秒级 + 重门禁走共享反汇编缓存，~30s）
-python3 tools/verify.py --fast  # 改动迭代期仅快门禁（含 manifest/twin_fp/bait_fp/sync_pages/评分基线/覆盖对账）
+python3 tools/verify.py --fast  # 改动迭代期仅快门禁（含 manifest/twin_fp/bait_fp/keep 新鲜度/sync_pages/评分基线/信号双态/覆盖对账）
 ```
 
 语料/产物构成变化后（新增模块、规模调整）：verify 前先 `python3 tools/gen_corpus_meta.py` 刷新画像再 verify（--check 含在其中）。
 
-产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。
+产物统一收集于 `build/out/`，文件名区分 `api26|api24 × release|debug`（如 `ohosVulDetect-api26-release-unsigned.app`；hvigor 原始产物按 product 名在 `build/outputs/` 下，default 即 api26）。release 变体另有 `<artifact>.obfmeta/` 目录（collect_obf_meta 收各模块 nameCache/systemApiCache——官方名称还原坐标系）。
 
 1. 指令覆盖验证：`python3 tools/check_opcode_coverage.py --dump-dir compare_dis`（默认全量构建已含 release+debug，构建后跑一次即得并集；当前覆盖率与不可达清单见 docs/BENCHMARK.md）。
 2. 评分：`python3 groundtruth/score_output.py <逆向工具产出的 test.out> build/out/ohosVulDetect-api26-release-unsigned.app`。

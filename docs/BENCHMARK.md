@@ -22,7 +22,7 @@
 | bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与 133 规则常量双向零包含） | check_bait_fp.py |
 | 组件内 API | 1164/1296（89.8%，feat_compfarm 农场 68 组件；组件级排除仅剩 Particle；跨文件 interface/enum/type 别名三索引 + JSDoc 剥离枚举成员 + extends 跟随 + 多泛型 Callback 括号感知切分 + ContentModifier implements 空实现合成；no-decl 36 + skip 46 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
-| 门禁工作流 | manifest / twin_fp / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
+| 门禁工作流 | manifest / twin_fp / bait_fp / keep 新鲜度 / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
 
 > 语料设计 checklist：见 AGENTS.md「新增内容 checklist」节（单源，勿在此重复维护）。
 
@@ -41,6 +41,13 @@
 - **sweep 加固**：dump() 捕获 dumpLayout 超时挂死（重试而非崩）；小页（≤6 按钮）自适应
   浅沉降（省 ~40s/页，大页保留全窗口）；行数断言——api/cat 页缺行在 stderr 摘要 +
   `--strict` 时退出码 2（采集质量与用例成败分离）。
+- **混淆轮双门禁 + 还原坐标系 sidecar（2026-09-30）**：check_keep_rules.py（keep 名
+  新鲜度 + 选项可识别性，进 verify 快门禁与 CI）；check_signal_dual_state.py（manifest
+  信号材料须在 debug×release 双产物同时存活——既防漏接线/tree-shake 丢信号，又锁混淆
+  免疫性；三面分流 abc / native+资源 / 无池材料 predicate-only、enum-ref；首次运行即
+  修正 BACK-001 常量为打包稳定形态）。build.py collect_obf_meta 把各模块
+  nameCache/systemApiCache 收进 `build/out/<artifact>.obfmeta/`（官方名称还原坐标系）；
+  corpus_meta schema 1.1 增 obfuscation 段（选项/keep 规模/改名映射规模）。
 
 ## 现行待办（跨会话欠账集中处，完成后即删）
 

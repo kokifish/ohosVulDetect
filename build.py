@@ -94,6 +94,31 @@ def write_sidecar(dst: pathlib.Path, sdk: str, mode: str) -> None:
         json.dumps(meta, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def collect_obf_meta(sdks: list[str], mode: str) -> None:
+    """release 构建：把各模块 obfuscation 缓存的 nameCache/systemApiCache 收进
+    build/out/<artifact>.obfmeta/——官方名称还原坐标系（改名映射 + SDK API 白名单），
+    供外部消费者做名称对照/还原评测。debug 不混淆，无此产物。"""
+    if mode != "release":
+        return
+    for sdk in sdks:
+        product = PRODUCT_OF[sdk]
+        dst_dir = BUILD_OUT / f"ohosVulDetect-{sdk}-{mode}-unsigned.obfmeta"
+        if dst_dir.exists():
+            shutil.rmtree(dst_dir)
+        dst_dir.mkdir(parents=True, exist_ok=True)
+        found = 0
+        for mod in sorted(p for p in ROOT.iterdir()
+                          if p.is_dir() and (p / "build-profile.json5").exists()):
+            base = mod / "build" / product / "cache"
+            for nc in sorted(base.glob("*/default@CompileArkTS/esmodule/release/obfuscation/nameCache.json")):
+                shutil.copy2(nc, dst_dir / f"{mod.name}.nameCache.json")
+                sac = nc.parent / "systemApiCache.json"
+                if sac.exists():
+                    shutil.copy2(sac, dst_dir / f"{mod.name}.systemApiCache.json")
+                found += 1
+        print(f"== obfmeta[{sdk}-{mode}] {found} 模块 → build/out/{dst_dir.name}/")
+
+
 def collect(sdks: list[str], mode: str) -> list[pathlib.Path]:
     """把 hvigor 产物复制收集到 build/out/，文件名改为 <名>-<sdk>-<mode>-<签名态>。"""
     out_dir = BUILD_OUT
@@ -118,6 +143,7 @@ def collect(sdks: list[str], mode: str) -> list[pathlib.Path]:
             shutil.copy2(f, dst)
             write_sidecar(dst, sdk, mode)
             copied.append(dst)
+    collect_obf_meta(sdks, mode)
     return copied
 
 
@@ -226,8 +252,9 @@ def main() -> int:
 
     copied: list[pathlib.Path] = []
     if args.samples_only:
-        # 注意：瘦身体身链不写 build/out；若回退全链，标准 api26-release .app 会被样本档
-        # farm 状态覆盖——单跑 --samples-only 后需重跑标准链（或全量 build.py）再 verify
+        # 注意：瘦身体身链不写 build/out；若回退全链，标准 api26-release .app（含
+        # obfmeta sidecar）会被样本档 farm 状态覆盖——单跑 --samples-only 后需重跑
+        # 标准链（或全量 build.py）再 verify
         SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
         for tier in ("small", "medium"):
             build_tier(tier, e)

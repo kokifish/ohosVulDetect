@@ -1127,7 +1127,7 @@
    "detection": {
     "type": "manifest",
     "constants": [
-     "\"allowToBackupRestore\": true"
+     "\"allowToBackupRestore\""
     ]
    },
    "twin": "OVD-BACK-001S"

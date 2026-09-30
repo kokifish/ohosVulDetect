@@ -18,8 +18,10 @@ FAST = [
     ("manifest 双向一致", ["python3", "groundtruth/check_manifest.py"]),
     ("孪生 FP 隔离", ["python3", "tools/check_twin_fp.py"]),
     ("bait FP 隔离", ["python3", "tools/check_bait_fp.py"]),
+    ("keep 规则新鲜度", ["python3", "tools/check_keep_rules.py"]),
     ("页面注册一致", ["python3", "tools/sync_pages.py"]),
     ("评分器回归基线", ["python3", "tools/check_score_regression.py"]),
+    ("信号双态存活（debug×release）", ["python3", "tools/check_signal_dual_state.py"]),
     ("组件/Kit/@ohos 覆盖对账", ["python3", "tools/check_corpus_coverage.py"]),
     ("组件内 API 对账", ["python3", "tools/check_component_api_coverage.py"]),
 ]

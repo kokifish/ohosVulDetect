@@ -25,6 +25,7 @@ import zipfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from check_module_share import DEFAULT_DIS, NOISE, analyze  # noqa: E402
+from check_keep_rules import parse_rules_file  # noqa: E402
 from dis_cache import disasm  # noqa: E402
 
 OUT = ROOT / "corpus_meta.json"
@@ -55,6 +56,8 @@ NOTES = [
     "feat_heavy / feat_compfarm 仅存在于 api26（product=default）变体，api24 变体没有",
     "指令口径：ark_disasm 反汇编文本指令实例数（非去重），同 check_module_share.py",
     "record = 编译单元（源文件级），对应反编译工具看到的模块；HAP/module 与 record 是两个层级",
+    "混淆：release 变体开 ArkGuard property+toplevel；nameCache/systemApiCache 官方名称还原"
+    "坐标系收于 build/out/*.obfmeta/（构建时自动收集），画像见 obfuscation 段",
 ]
 
 
@@ -163,6 +166,36 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
     return info
 
 
+def obf_profile() -> dict:
+    """混淆画像：各模块启用选项/keep 规模（repo rules 文件）+ 各 release 变体
+    nameCache sidecar 实测（官方名称还原坐标系的映射规模）。"""
+    rules: dict[str, dict] = {}
+    for f in sorted(ROOT.glob("*/obfuscation-rules.txt")):
+        p = parse_rules_file(f)
+        kp = p["keep"].get("-keep-property-name", []) + p["keep"].get("-keep-property-names", [])
+        kg = p["keep"].get("-keep-global-name", []) + p["keep"].get("-keep-global-names", [])
+        rules[f.parent.name] = {"options": p["options"],
+                                "keep_property": len(kp), "keep_global": len(kg)}
+    namecache: dict[str, dict] = {}
+    for v in ("api26-release", "api24-release"):
+        d = ROOT / "build" / "out" / f"ohosVulDetect-{v}-unsigned.obfmeta"
+        mods: dict[str, dict] = {}
+        for nc in sorted(d.glob("*.nameCache.json")):
+            try:
+                data = json.loads(nc.read_text())
+            except (OSError, ValueError):
+                continue
+            entries = [x for x in data.values() if isinstance(x, dict)]
+            mods[nc.name.split(".")[0]] = {
+                "files": len(entries),
+                "identifiers": sum(len(x.get("IdentifierCache", {})) for x in entries),
+                "member_methods": sum(len(x.get("MemberMethodCache", {})) for x in entries),
+            }
+        if mods:
+            namecache[v] = {"sidecar": f"build/out/{d.name}", "modules": mods}
+    return {"rules": rules, "namecache_sidecar": namecache}
+
+
 def write_full_sidecar(path: pathlib.Path, info: dict) -> None:
     """产物旁写全量画像 sidecar（含每模块指令/函数/record 分布），覆盖 build.py 的基础版。"""
     sc = dict(info)
@@ -207,10 +240,11 @@ def main() -> int:
         write_full_sidecar(p, tiers[t])
 
     meta = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "generator": "tools/gen_corpus_meta.py",
         "variants": variants,
         "sample_tiers": tiers,
+        "obfuscation": obf_profile(),
         "module_tags": MODULE_TAGS,
         "usage": USAGE,
         "notes": NOTES,

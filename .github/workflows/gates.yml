@@ -15,6 +15,8 @@ jobs:
         run: python3 tools/check_twin_fp.py
       - name: check_bait_fp
         run: python3 tools/check_bait_fp.py
+      - name: check_keep_rules
+        run: python3 tools/check_keep_rules.py
       - name: check_score_regression
         run: python3 tools/check_score_regression.py || true  # 需构建产物，CI 无 SDK 时跳过
       - name: sync_pages
