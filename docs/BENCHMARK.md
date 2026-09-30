@@ -57,6 +57,11 @@
 - **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
 - **字节码 HAR patch 指令注入 PoC（载荷侧）**：缺能产出 patch 对指令的 assembler；
   合并通道机制已实证（docs/ohos.md §6.1），待评估。
+- **AOT（.an）设备侧闭环（两步，机制与配方见 docs/ohos.md §6.5）**：① bench26 拉起后
+  `hdc shell "find /data -name '*.an' -o -name '*.ap'` 验证运行时是否自发 AOT/PGO 产物；
+  ② 应用运行采集 `modules.ap` → 模块 `arkOptions.hostPGO: true` 构建 → 产出首个 arm64 .an
+  随 HAP 分发的运行形态（build/out 现有 x86-64 解析面探针 hap：
+  feat_compfarm-api26-release-aot-unsigned.hap，abc↔.an 同源配对）。
 
 ### 探索方向（按价值/成本排序，未排期；结构性封顶项不列）
 

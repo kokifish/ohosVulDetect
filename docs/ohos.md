@@ -207,6 +207,18 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 4. ⏳ **字节码 HAR 注入 PoC（载荷侧）**：合并通道已实证（见 6.1 #4）；产出含 patch 对指令的 abc 载荷仍缺 assembler，维持待评估。
 5. ⏳ HSP 内 UIAbility（API14+）、集成态 HSP、独立卡片包（API20+）——形态补全，可选。
 
+### 6.5 AOT（.an）形态（2026-09-30 实测）
+
+**机制**：abc 运行时三层执行——解释器（启动快）/ JIT（热点）/ AOT（提前编译为机器码，消除解释与预热开销）。AOT 产物即 `.an`（ELF 形态机器码），配套 `.ai` 索引占位。生成链路三条：
+
+1. **宿主直编**（实测✓）：`ets-loader/bin/ark/build-mac/bin/ark_aot_compiler --aot-file=<名> <名>.abc`。坑：Beta2 该二进制缺 3 个 dylib（libuv/libshared_libz 等不在 rpath），从 `previewer/common/bin/` 拷至同级即可运行。**无交叉架构选项，只出宿主架构（x86-64）**；真机形态 arm64-v8a 需设备/交叉链路。
+2. **构建期入包**（机制实证+探针实测✓）：hvigor 开关 = 模块 `buildOption(Set).arkOptions.hostPGO: true`（API≥10；直接写 `aotCompileMode` 在本链被忽略）。语义：hostPGO → AOT_PARTIAL，**硬性要求 `apPath` 指向设备侧采集的 `.ap` profile（modules.ap）**——无 profile 构建立即失败（实测报错原文「The file corresponding to apPath … was not found in …/modules.ap」）。AOT_TYPE（无 profile、纯静态类型）分支在本链对 ohos SDK 默认不可达（仅 API9 的 `aotCompileMode` 或非 ohos SDK 可达）。中间产物目录：`<loader-out>/an/arm64-v8a/<module>.an`（构建链目标即 arm64）。
+3. **设备侧运行时**（待实验）：runtime 安装/运行/后台对热点方法自发 AOT 缓存——见 BENCHMARK 现行待办两步实验。
+
+**结构解剖**（feat_compfarm 实测）：ELF，`.text` 1.4MB + `.symtab` 1368 符号；**符号自描述**——`方法名@bundle|module|版本|record源文件@方法ID@源abc文件名`（如 `#*#@feat_compfarm|…|Farm_00.ts@19859@feat_compfarm.abc`），abc↔.an 函数级映射零成本建立（llvm-nm 一把出）；混淆态继承 abc（符号为改名后形态），不构成额外泄漏面。体积 ~15×（194KB abc → 2.9MB .an；heavy 25MB 估算 ~375MB，不可整模块入语料）。
+
+**已产出**：`build/out/feat_compfarm-api26-release-aot-unsigned.hap`（x86-64 解析面探针：包内 `ets/an/arm64-v8a/feat_compfarm.an + .ai`，abc 与 .an 逐字节同源，meta sidecar 注明属性与限制）。**待设备闭环**：arm64 .an 产出、HAP 内真实加载路径、运行时自发形态确认——闭环后 AOT 语料面（abc↔.an 同源配对评分）才有落地前提。
+
 **参考来源**：官方文档——创建ArkTS卡片（harmonyos-guides/arkts-ui-widget-creation）、HSP（in-app-hsp）、集成态HSP（integrated-hsp）、HAR（har-package）、构建HAR（ide-hvigor-build-har）、应用加密（code-protect）、napi_run_script_path 限制（harmonyos-faqs/faqs-ndk-65）、程序包结构（application-package-structure-stage）、混淆选项（source-obfuscation-rule-options）；本地——ets-loader `gen_abc_plugin.js`/`ark_define.js`/`module_mode.js`、hvigor-ohos-plugin `build-opt.d.ts`/`target-task-service.js`/`byte-code-har-utils.js`/`package-shared-tgz.js`、SDK `ets/component/component_config.json`。
 
 ## 7. 混淆与加密专题（官方/第三方盘点 + 本项目现状 + 实测结论，2026-09-30）
@@ -234,7 +246,7 @@ LocationButton 需专用宿主（卡片/嵌入/系统应用）或系统能力。
 
 - **源码混淆 A/B**（feat_api debug vs release 反汇编）：函数总数不变（3547=3547），仅私有标识符被重命名（如 `baitSenEcho` release 消失、方法名坍缩为 `n.e.f` 形态）；导入/导出名、HAR 导出面（`DemoScaffold` 308=308）、字符串字面量（`string-density` 3=3，token 全存活）、ArkUI 组件属性全部不混淆——**string/token 类检测信号对混淆免疫**，识别符链规则受影响面 = 私有名。
 - **字节码混淆 e2e**：entry 开启后管线完整跑通（origin/obf + config.json + modules.pa + nameCache.json）；实际重命名高度克制（entry 仅 2 处顶层：`#Index`→`#a`、lib_common `#*#harCollectSessions`→`#*#b`），SDK/入口/导出名豁免面极大；HAR 代码在消费方构建期被字节码混淆。
-- **重大发现——本语料击杀官方字节码混淆器**：真实 entry abc 上 panda_guard 必崩（SIGABRT，`panda::guard::GuardContext::Init` 内 abort，`[Function]split scope and name get bad len`）；崩溃点随语料内容漂移（先后见 `#*##*#x`（methname 注入语料 mn10_mangle_pre）与完全正常的 `#*#ovdXmodTntSrc`）；16 种注入形态单独编译（script/`--module`）均不可复现，全部桩化后构建成功→**全程序合并语境相关 bug，非单一形态触发**。含义：①上游如需测字节码混淆 abc，当前语料须先规避或等 panda_guard 修复；②方法名注入面对官方混淆器同样成立（与 §红队结论同源）。
+- **重大发现——本语料击杀官方字节码混淆器（矩阵化实证）**：6 个真实模块 abc 中 **3 个必崩**（entry 30KB / feat_api 2.5MB / feat_heavy 25MB，SIGABRT 于 `panda::guard::GuardContext::Init`，`[Function]split scope and name get bad len`）；3 个通过（feat_vuln/feat_compfarm/lib_shared）。逐输入**确定性强**：feat_api 的 debug（未混淆）形态崩在同一函数（`#*#tsForOfClose`）；feat_heavy 崩于 `#*#giant_000`（巨方法）；entry 崩点在 `#*##*#x`（methname 注入名）与 `#*#ovdXmodTntSrc`（正常名）间漂移。反证：heavy 小档（43 函数）通过；两个直觉最小复现——for-of close 协议、10 万语句巨函数（5.9MB abc）——均**不**复现；16 种注入形态单独编译（script/`--module`）全通过。结论：**触发依赖复杂上下文，无法快速最小化，但最小崩溃输入 = entry 30KB abc 且复现项目公开**——上游反馈（华为开发者社区/arkcompiler 渠道）可直接引用本仓库复现，无需脱敏。含义：①字节码混淆语料档位被上游 bug 阻塞，修复前须规避；②方法名注入面对官方混淆器同样成立（与红队结论同源）。
 - 若开启字节码混淆：与源码混淆互斥意味着现有 keep 体系（dimp 半混淆）需迁移评估；filename/export 在字节码模式下的跨包崩溃面未复测。
 
 **参考来源**：OpenHarmony docs master——source-obfuscation{,-overview,-guide,-practice}.md、bytecode-obfuscation{,-overview,-guide,-practice}.md（gitee raw 实取）；本地 ground truth——ets-loader `bytecode_obfuscator.js`/`bytecode_obfuscator_invoke.js`/`process_ark_config.js`（bcObfuscatorPath=panda_guard）、arkguard 1.1.3 选项清单、panda_guard 崩溃报告（~/Library/Logs/DiagnosticReports）；官方 ArkGuard 文档引用「应用加密 code-protect」；第三方生态为公开报道存列（梆梆/爱加密/易盾/顶象/360，60+ 安全 SDK 适配）。
