@@ -4540,7 +4540,7 @@
    "category": "webview-risk",
    "cwe": "CWE-200",
    "module": "feat_vuln",
-   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
    "function": "bridgeReportSinkS",
    "expected": false,
    "detection": {
@@ -4572,7 +4572,7 @@
    "category": "webview-risk",
    "cwe": "CWE-200",
    "module": "feat_vuln",
-   "source": "feat_vuln/src/main/ets/web/NativeBridge.ets",
+   "source": "feat_vuln/src/main/ets/vulns/web/Twins.ets",
    "function": "bridgeAsyncInjectExprS",
    "expected": false,
    "detection": {

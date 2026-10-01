@@ -1,4 +1,5 @@
-// SAFE 孪生集合（web）：OVD-WEB-001S..007S（WebView 安全配置面），合并文件，勿手改。
+// SAFE 孪生集合（web）：OVD-WEB-001S..007S（WebView 安全配置面），合并文件，勿手改。009S/010S 自 NativeBridge 迁入（同 record 孪生会被
+// record 域 string-literal 规则误命中——真实工具实跑 FP 根因，2026-10-01）。
 import { webview } from '@kit.ArkWeb';
 
 // SAFE: OVD-WEB-001S 发布包关闭 Web 调试（CWE-489 加固）
@@ -51,3 +52,13 @@ export function ovdWeb007S(controller: webview.WebviewController, method: string
   return `bridge allowed for ${host}: ${method}`;
 }
 
+
+// SAFE: OVD-WEB-009S 桥上报仅聚合计数，无令牌（CWE-200 加固）
+export function bridgeReportSinkS(): string {
+  return 'beacon count=1 (aggregate only)';
+}
+
+// SAFE: OVD-WEB-010S 异步注入仅无敏感标识表达式（CWE-200 加固）
+export function bridgeAsyncInjectExprS(): string {
+  return 'window.__ready=1';
+}

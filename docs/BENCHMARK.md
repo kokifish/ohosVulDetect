@@ -15,7 +15,7 @@
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
 | 漏洞/孪生 | 130 + 130（manifest 260 条，双向一致；跨模块 XMOD 7 对、interproc 链 8 对（TNT-005/006 跨模块 + DEP-001 三层依赖链 HSP→HAR→feature）、动态加载 DIMP 2 对（固定/拼接路径，半混淆 keep 形态）、桥间污点 WEB-009/异步桥 010） | groundtruth/manifest.json |
-| 评分 | 评分口径漂移由 check_score_regression 门禁锁定；当前 260 条口径待下一轮工具链复评（score_output.py） | score_output.py |
+| 评分 | **F1=1.000（2026-10-01 实测：TP=134 FN=0 FP=0 TN=134，268 条口径）**；评分口径漂移由 check_score_regression 门禁锁定（12 代表条目含桥形态与跨模块 interproc） | score_output.py |
 | feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
@@ -63,11 +63,10 @@
 - **cat-wrk/sen/tnt/ust 新对真机 sweep**：WRK-002/SEN-002/TNT-007/UST-002 四对
   已过全门禁 + 评分器 e2e（4 hit + 4 twin miss）；bench26 CLI 拉起被 Beta2 GUI
   引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 四页。
-- **真实工具 spot-check 常态化 + WEB 孪生同文件 FP 修复**：2026-10-01 审计轮实证
-  合成回归基线测不出「材料被 es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——
-  新增 interproc 形态时发版前须用逆向工具对 build/out 实跑评分抽查；存量
-  WEB-009S/010S 与漏洞同 record 致 record 域 string-literal 必误命中（实跑 FP），
-  修复方向：孪生迁独立 Twins 文件 + 代表条目纳入 check_score_regression。
+- **真实工具 spot-check 常态化**：2026-10-01 审计轮实证合成回归基线测不出「材料被
+  es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——新增 interproc 形态时发版前
+  须用逆向工具对 build/out 实跑评分抽查（已执行，F1=1.000）。WEB-009S/010S 同 record
+  孪生 FP 已修（孪生迁独立 Twins 文件 + WEB-009/009S 纳入评分基线代表集）。
 - **VULNS.md 正文散文补 9 新族**（DEP/DEV/DIMP/EMTR/GEO/SEN/UST/WIFI/WRK + TNT 增量）：
   总览表已全，正文四问（是什么/长什么样/怎么利用/危害）对新族零覆盖，P2 跟进。
 - **字节码 HAR patch 指令注入 PoC（载荷侧）**：缺能产出 patch 对指令的 assembler；

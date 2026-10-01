@@ -29,6 +29,8 @@ CASES = {
     "OVD-UST-001": True,      # persistProp + 常量
     "OVD-STOR-001S": False,   # safe-twin：孪生记录按其规则应不命中
     "OVD-TNT-005S": False,
+    "OVD-WEB-009": True,      # string-literal（桥间污点 token；跨文件孪生防同 record FP 回潮）
+    "OVD-WEB-009S": False,
 }
 
 

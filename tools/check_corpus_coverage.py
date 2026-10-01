@@ -127,6 +127,9 @@ def main():
         rf'\b{re.escape(n)}\s*\(|\bnew\s+{re.escape(n)}\b'
         rf'|\b{re.escape(n)}\s*\.\s*(?:show|open)\s*\(|@{re.escape(n)}\b'))
         for n in components]
+    # 候选名预筛：完整模式均要求名字先以词形出现——联合词表正则一遍找出文件内
+    # 出现过的组件名，只对候选跑完整模式（语义等价，省 ~137×N 次无效正则扫描）。
+    names_re = re.compile(r"\b(" + "|".join(re.escape(n) for n in components) + r")\b") if components else None
     kit_re = re.compile(r"['\"]@kit\.([A-Za-z0-9_]+)['\"]")
     api_re = re.compile(r"['\"]@ohos\.([A-Za-z0-9_.]+?)['\"]")
 
@@ -135,8 +138,9 @@ def main():
             text = fh.read()
         r = rel(path)
         if path.endswith('.ets'):
+            candidates = {m.group(1) for m in names_re.finditer(text)} if names_re else set()
             for name, pat in comp_patterns:
-                if pat.search(text):
+                if name in candidates and pat.search(text):
                     comp_used.setdefault(name, set()).add(r)
         for m in kit_re.finditer(text):
             kit_used.setdefault(m.group(1), set()).add(r)

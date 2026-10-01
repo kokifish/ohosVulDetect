@@ -7,7 +7,8 @@ import { common } from '@kit.AbilityKit';
 import { fileIo as FileIo } from '@kit.CoreFileKit';
 import { Runner } from 'lib_common';
 import { NativeBridge } from '../web/NativeBridge';
-import { bridgeReportSink, bridgeAsyncInjectExpr, bridgeReportSinkS, bridgeAsyncInjectExprS } from '../web/NativeBridge';
+import { bridgeReportSink, bridgeAsyncInjectExpr } from '../web/NativeBridge';
+import { bridgeReportSinkS, bridgeAsyncInjectExprS } from '../vulns/web/Twins';
 
 // WebView 漏洞集：OVD-WEB-001/002/003/004/005 + OVD-NET-003（onSslErrorReceive confirm）
 @Entry

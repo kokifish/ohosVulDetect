@@ -536,7 +536,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 12491736,
+   "app_bytes": 12491745,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -634,7 +634,7 @@
    "total_functions": 67399,
    "total_instructions": 6903948,
    "zip_raw_bytes": 30691502,
-   "zip_stored_bytes": 12490722
+   "zip_stored_bytes": 12490731
   }
  }
 }

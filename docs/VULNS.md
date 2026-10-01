@@ -499,6 +499,85 @@
   - 危害：凭据在展示层失守（孪生 001S 用 `InputType.Password` 圆点掩码并只回显长度）。
   - 检测形态：**UI 属性面**——placeholder 字符串与明文回显标记 `'plain-echo: '` 同记录共现（string-literal 双常量），首个非源码调用面的规则样本。
 
+## OVD-TNT — 跨函数污点链（interproc 家族，CWE-200/312）
+
+过程间污点主家族：source 与 sink 分置，单函数内 call+constant 不可 AND，要求检测器建立跨函数数据流。
+
+- **001 source→relay→sink 双跳**：令牌常量在 source 函数、http 外传在另一函数，中经 relay 变换。
+- **002/003 三跳/四跳链**：链长递增（002 http sink、003 file sink），考链路追踪深度。
+- **004 pasteboard sink**：链尾落剪贴板——离开文件/网络域的系统面 sink。
+- **005/006 跨模块链**：source 锚 HAR record（005）/ HSP record（006），sink 在 feature——逐跳 `source` 锚定的跨 record 形态。
+- **007 Promise.then 回调链**：source→mid→sink 以具名函数挂入 then 链，调用边由 Promise 语义建立；helpers 全部 export 以在 release（ArkGuard 改名）下保住 hop 级匹配（孪生均同构只携聚合）。
+
+## OVD-DEP — 跨模块依赖链（CWE-200/312）
+
+- **OVD-DEP-001 三层依赖链污点：HSP 源 → HAR 中转 → feature 落盘**
+  - 成因：令牌定义在 lib_shared（HSP），经 lib_common（HAR）中转函数原样转发，feature 侧 fileIo 落盘——依赖图从星型变含链。
+  - 利用：链上每跳在不同包形态里，任一消费方拼接完整链即外传。
+  - 危害：源在共享包被多 HAP 复用，泄露面按消费方数量放大。
+  - 检测形态：interproc 三跳、逐跳 `source` 锚定三个不同 record（孪生 001S 链上只携聚合）。
+
+## OVD-DEV — 设备指纹（CWE-359）
+
+- **OVD-DEV-001 设备指纹字段拼接明文落盘**
+  - 成因：多设备标识字段拼接后整体写入明文 preferences。
+  - 利用：读应用沙箱即得稳定设备指纹，可跨应用/跨会话追踪。
+  - 危害：持久化设备级标识与匿名化预期冲突（孪生 001S 仅存聚合计数）。
+
+## OVD-DIMP — 动态 import 加载（CWE-312/200）
+
+- **OVD-DIMP-001 固定路径动态导入 record 内落盘**：sink 藏在 `await import('./DynTarget')` 目标 record，静态页面不直接引用。
+- **OVD-DIMP-002 运行时拼接路径**：导入路径运行时拼接，静态模块解析与调用图双断。
+  - 利用：动态目标 record 不进首屏依赖闭包，扫描易整块漏看；凭据在"看不见的 record"里落盘。
+  - 危害：动态加载是发布形态常态，审计工具对它的覆盖普遍薄弱。
+  - 检测形态：api-call+constant（putSync+token 锚定动态目标 record）；配合半混淆 keep（`ovdDimpSink/ovdDimpSafe/DIMP_TOKEN` 保留、其余混淆）表达真实发布形态（孪生走 keep 面的 Safe 函数）。
+
+## OVD-EMTR — 进程内事件广播（CWE-200）
+
+- **OVD-EMTR-001 会话令牌按固定 eventId 广播**
+  - 成因：`emitter.emit` 携令牌、eventId 硬编码，进程内任意订阅者可截获。
+  - 利用：同进程越权模块 `emitter.on` 同 id 即收令牌。
+  - 危害：事件总线成为进程内凭据旁路（孪生 001S 只发聚合计数）。
+
+## OVD-GEO — 精确定位缓存（CWE-359/312）
+
+- **OVD-GEO-001 精确坐标明文缓存 preferences**
+  - 成因：`geoLocationManager.getLastLocation` 结果未脱敏直接 putSync。
+  - 利用：读沙箱得最近一次精确经纬度。
+  - 危害：单点位置即可推断行踪锚点（孪生 001S 存低精度聚合）。
+
+## OVD-SEN — 并发线程边界（CWE-200/312）
+
+- **OVD-SEN-001 令牌作参数过 taskpool 结构化克隆并明文落盘**：@Concurrent 任务参数携带令牌（结构化克隆跨线程），任务线程内明文写文件。
+- **OVD-SEN-002 @Sendable 共享对象字段污点**：任务内写共享对象字段（共享内存别名，非消息副本），UI 线程读同一字段落盘。
+  - 利用：线程边界既能携带凭据（克隆通道）也能隐式共享凭据（别名通道）。
+  - 危害：凭据离开 UI 线程沙箱；别名通道无显式数据流语法可循。
+  - 检测形态：001 = execute+token；002 = putSync+token 锚定共享字段消费（孪生均只携聚合）。
+
+## OVD-UST — UI 全局状态污染（CWE-312/922）
+
+- **OVD-UST-001 persistProp 明文持久化全局状态**：`PersistentStorage.persistProp` 把含令牌的 AppStorage 属性同步落盘，磁盘+跨页双可达。
+- **OVD-UST-002 装饰器观察回调外传**：`AppStorage.setOrCreate` 写令牌后，`@StorageLink+@Watch` 注册的观察回调被框架隐式触发，回调内 fileIo 落盘。
+  - 利用：状态中心成为凭据集散地；"写状态"与"落盘"在源码上无显式连接。
+  - 危害：调用边是框架注册的不可见边，显式调用图分析天然漏报。
+  - 检测形态：001 = persistProp+token；002 = interproc 两跳（seed→onUst2Changed，hop2 为 struct 方法名）（孪生均内存态聚合）。
+
+## OVD-WIFI — Wi-Fi 凭据与轨迹（CWE-312/359）
+
+- **OVD-WIFI-001 热点 PSK 硬编码并明文缓存**：`wifiManager.addDeviceConfig` 携硬编码 WPA 预共享密钥，结果明文入库。
+- **OVD-WIFI-002 SSID/BSSID 明文持久化**：扫描结果的 ssid/bssid 对明文落盘。
+  - 利用：PSK 直接入网；BSSID 集合可恢复历史轨迹与常驻位置。
+  - 危害：网络凭据泄露 + 位置轨迹重建双面（孪生只存聚合计数）。
+  - 检测形态：001 = api-call+constant（模块名形态 call token）；002 = string-literal（'ssid_bssid' 键面）。
+
+## OVD-WRK — Worker 跨线程消息（CWE-200/312）
+
+- **OVD-WRK-001 令牌 postMessage 投递跨线程**：令牌进 worker 消息（结构化克隆序列化），线程边界即泄露面。
+- **OVD-WRK-002 worker 侧落盘 sink**：消息交接后 worker 线程内 fileIo 明文写文件，sink 与 UI 线程分属两个 record。
+  - 利用：跨线程消息可被任意 worker 处置；接收侧逻辑在独立 record，主线程审计覆盖不到。
+  - 危害：凭据跨线程且在沙箱内持久化，两段式泄露。
+  - 检测形态：001 = postMessage+token；002 = interproc 两跳跨 record（hop2 source 锚 worker 文件；hop1 材料须留在具名函数体——es2abc 会把 Promise executor 降为独立闭包 record，2026-10-01 实测教训）。
+
 ## 检测口径备注（评分联动）
 
 - 规则形态分布见 manifest `detection.type`：string-literal / api-call+constant / api-call+string-concat / call-chain / predicate / string-op-flow / enum-ref / manifest / native / constant-flag 等——**有意覆盖多形态**，检验检测器不只靠 grep 字符串。

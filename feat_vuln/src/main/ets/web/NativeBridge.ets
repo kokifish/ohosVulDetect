@@ -43,13 +43,3 @@ export const BRIDGE_ASYNC_TOKEN = 'ovd_web10_async_tok_8b4c';
 export function bridgeAsyncInjectExpr(): string {
   return `window.__t='${BRIDGE_ASYNC_TOKEN}'`;
 }
-
-// SAFE: OVD-WEB-009S 桥上报仅聚合计数，无令牌（CWE-200 加固）
-export function bridgeReportSinkS(): string {
-  return 'beacon count=1 (aggregate only)';
-}
-
-// SAFE: OVD-WEB-010S 异步注入仅无敏感标识表达式（CWE-200 加固）
-export function bridgeAsyncInjectExprS(): string {
-  return 'window.__ready=1';
-}
