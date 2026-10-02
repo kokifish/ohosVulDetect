@@ -23,11 +23,14 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-PREDICATES = {
-    "return-true": lambda blk: "return TRUE" in blk,
-    "empty-array": lambda blk: "emptyarray{}" in blk,
-    "fixed-nonce": lambda blk: "bench-fixed-nonce" in blk,
+# 谓词名 → IR 文本短语（单源）：manifest_signals/回归基线引用本表，勿在别处复制映射。
+PREDICATE_PHRASES = {
+    "return-true": "return TRUE",
+    "empty-array": "emptyarray{}",
+    "fixed-nonce": "bench-fixed-nonce",
 }
+PREDICATES = {name: (lambda blk, phrase=phrase: phrase in blk)
+              for name, phrase in PREDICATE_PHRASES.items()}
 
 
 def load_blocks(test_out: str):
@@ -46,10 +49,19 @@ def record_text(blocks, source: str) -> str:
     return "\n".join(text for sig, text in blocks if key in sig)
 
 
+_FN_RE_CACHE: dict[str, re.Pattern] = {}
+
+
 def function_block(blocks, source: str, function: str):
+    """命名函数块定位：签名需含 record key，且函数名以 # 或 > 前缀紧邻出现
+    （abc 方法名形态 `&rec&.#*#fn` / `&rec&.#~@N>#fn`），词边界防 fnS 前缀误配。"""
     key = record_key(source)
+    pat = _FN_RE_CACHE.get(function)
+    if pat is None:
+        pat = re.compile(rf"[#>]{re.escape(function)}\b")
+        _FN_RE_CACHE[function] = pat
     for sig, text in blocks:
-        if key in sig and (f"#*#{function}" in sig or f">{function}" in sig):
+        if key in sig and pat.search(sig):
             return text
     return None
 
@@ -86,18 +98,46 @@ def extract_from_app(app_path: str, hap_suffix: str, inner_suffixes: tuple[str, 
 
 def interproc_hit(hops: list, blocks, source: str):
     """逐 hop 评估；hop 可带 source 指向跨模块记录（TNT×XMOD：source 在 HAR/HSP、
-    sink 在 feature）。无 source 的 hop 回退入口记录。"""
+    sink 在 feature）。无 source 的 hop 回退入口记录。hop 材料严格锚定命名函数块：
+    找不到函数块即该 hop 失败（2026-10-01 下限实验：record 回退会让"每 record 一块的
+    无语义 dump 工具"白拿 interproc 分——粒度反转，故取消）。"""
     oks = 0
     for h in hops:
         hsrc = h.get("source", source)
-        rec_h = record_text(blocks, hsrc)
         blk = function_block(blocks, hsrc, h.get("function", "-"))
-        scope = blk if blk is not None else rec_h
-        c_ok = all(any(f in scope for f in forms)
+        if blk is None:
+            continue
+        c_ok = all(any(f in blk for f in forms)
                    for _, forms in norm_constants(h.get("constants", [])))
-        k_ok = all(tok in scope or f'"{tok}"' in scope for tok in h.get("call", []))
+        k_ok = all(tok in blk or f'"{tok}"' in blk for tok in h.get("call", []))
         oks += 1 if (c_ok and k_ok) else 0
     return oks == len(hops), f"interproc {oks}/{len(hops)}"
+
+
+def tier_of(v: dict, by_id: dict) -> str:
+    """难度分档（纯 manifest 字段派生，报告性输出；孪生按其规则条目分档）：
+    T4 非 abc 面（native/manifest）；T3 跨函数/跨记录（interproc-chain）；
+    T2 形态重构（谓词/枚举引用/布尔·数值常量——与参考工具 IR 文本形态约定耦合，
+    见 BENCHMARK「评分口径」）；T1 字面直配（其余）。"""
+    rule = by_id[v["twin_of"]] if not v.get("expected", True) and "twin_of" in v else v
+    det = rule.get("detection", {})
+    dtype = det.get("type", "")
+    if dtype in ("native", "manifest"):
+        return "T4"
+    if dtype == "interproc-chain":
+        return "T3"
+    if det.get("predicate") or dtype == "enum-ref" or \
+            any(isinstance(c, (bool, int, float)) for c in det.get("constants", [])):
+        return "T2"
+    return "T1"
+
+
+TIERS = [
+    ("T1", "字面直配"),
+    ("T2", "形态重构(IR文本约定)"),
+    ("T3", "跨函数/跨记录"),
+    ("T4", "非abc面"),
+]
 
 
 def main() -> int:
@@ -195,6 +235,29 @@ def main() -> int:
         print(f"{rid:22} {str(e):5} {str(h):4} {d}{'' if e == h else ('  <-- FN' if e else '  <-- FP(twin)')}")
     if skipped:
         print(f"skip（不计分）: {', '.join(skipped)}")
+
+    # 难度分档 sub-F1（报告性；让"满分"可分辨工具真实能力差距）
+    by_id_t = by_id
+    tstat: dict[str, list[int]] = {t[0]: [0, 0, 0, 0] for t in TIERS}  # n tp fn fp
+    for v in manifest["vulns"]:
+        if v.get("detection", {}).get("skip"):
+            continue
+        tid = tier_of(v, by_id_t)
+        st = tstat[tid]
+        st[0] += 1
+        hit = next(h for rid, _, h, _ in rows if rid == v["id"])
+        if v.get("expected", True):
+            st[1] += 1 if hit else 0
+            st[2] += 0 if hit else 1
+        else:
+            st[3] += 1 if hit else 0
+    print("\n== 难度分档 sub-F1（报告性输出）==")
+    for tid, label in TIERS:
+        n, ttp, tfn, tfp = tstat[tid]
+        tprec = ttp / (ttp + tfp) if ttp + tfp else 0.0
+        trec = ttp / (ttp + tfn) if ttp + tfn else 0.0
+        tf1 = 2 * tprec * trec / (tprec + trec) if tprec + trec else 0.0
+        print(f"  {tid} {label:22} n={n:3}  TP={ttp:3} FN={tfn:2} FP={tfp:2}  sub-F1={tf1:.3f}")
     rv_total = rv_found = 0
     rv_miss = []
     for v in manifest["vulns"]:

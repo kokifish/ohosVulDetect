@@ -5,15 +5,15 @@ import { common } from '@kit.AbilityKit';
 
 const TOKEN3 = 'tnt3_tok_ovd_c74a12';
 
-function src3(): string {
+export function src3(): string {
   return TOKEN3;
 }
 
-function hop3a(s: string): string {
+export function hop3a(s: string): string {
   return `a(${s.length})${s}`;
 }
 
-function hop3b(s: string): string {
+export function hop3b(s: string): string {
   return s.toUpperCase();
 }
 

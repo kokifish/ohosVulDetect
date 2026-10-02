@@ -4,15 +4,15 @@ import http from '@ohos.net.http';
 
 const TOKEN2 = 'tnt2_tok_ovd_b8321d';
 
-function src2(): string {
+export function src2(): string {
   return TOKEN2;
 }
 
-function hop1(s: string): string {
+export function hop1(s: string): string {
   return `h1<${s.length}>${s}`;
 }
 
-function hop2(s: string): string {
+export function hop2(s: string): string {
   return s.replace('h1', 'h2');
 }
 

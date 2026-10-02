@@ -33,6 +33,7 @@
 - tools/（单一入口 verify.py 编排下述门禁；用法细节见各脚本头注释）：
   - verify.py：构建后全部门禁一条命令（--fast 秒级快门禁；重门禁经 dis_cache 共享反汇编缓存）
   - check_determinism.py：生成器确定性门禁（快照对比，verify 与 CI 同源；生成物约定勿手改）
+  - manifest_signals.py：manifest 信号材料/字段枚举/谓词短语单源库（check_signal_dual_state、check_score_regression、check_manifest 共用；gen_heavy_farm 有意不用的更严策略见其 docstring）
   - dis_cache.py：abc md5 → 反汇编文本共享缓存（module_share/corpus_meta/opcode 三工具共用）
   - sync_pages.py：main_pages.json ↔ ApiRegistry DemoItem 双向一致门禁
   - check_twin_fp.py：孪生常量与漏洞规则信号隔离门禁（子串感知）
@@ -44,7 +45,7 @@
   - check_opcode_coverage.py：指令覆盖统计（全集 = ISA_YAML 环境变量或 --isa-yaml 指向的 isa.yaml）
   - check_module_share.py：feat_heavy 模块指令份额门禁（阈值 + 原型分桶）
   - check_score_regression.py：评分器回归基线（合成 test.out × 代表条目锁 score_output 判定口径）
-  - build_samples.py：样本矩阵构建器（farm 旋钮产出两档梯度样本到 build/samples）
+  - build_samples.py：样本构建兼容壳（转发 build.py --samples-only + 份额汇总；新代码勿依赖）
   - 生成器（生成物均勿手改，改生成器再重新生成）：
     - gen_heavy_farm.py → feat_heavy 指令农场（原料 heavy_api_catalog.json 由 gen_heavy_catalog.py 从本地 SDK 提取，SDK 升级后本地重跑不进 CI）
     - gen_component_api_farm.py → feat_compfarm 组件 API 农场

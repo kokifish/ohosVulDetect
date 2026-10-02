@@ -5,11 +5,11 @@ import http from '@ohos.net.http';
 
 const TOKEN = 'tnt_tok_ovd_e5a91b7f';
 
-function ovdTntSource(): string {
+export function ovdTntSource(): string {
   return TOKEN;
 }
 
-function ovdTntRelay(seed: string): string {
+export function ovdTntRelay(seed: string): string {
   return `relay(${seed.length})=${seed}`;
 }
 

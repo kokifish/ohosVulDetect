@@ -42,3 +42,30 @@ export const DEP_CHAIN_TOKEN = 'ovd_dep_tok_chain_5c19';
 export function ovdDepSrc(): string {
   return DEP_CHAIN_TOKEN;
 }
+
+
+// OVD-TNT-009 sink 锚：经导入别名（alias）被 feature 调用——调用点函数体文本只有别名，
+// 真名只存在于 import/export 表（考跨 record 调用边经别名解析的能力）
+export async function ovdT9Sink(ctx: common.Context, payload: string): Promise<string> {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_t9_alias' });
+  p.putSync('t9_payload', payload);
+  p.flush();
+  return `t9 alias-sink stored:${payload.length}`;
+}
+
+// SAFE: OVD-TNT-009S 同构别名 sink 只落聚合计数（CWE-200 加固）
+export async function ovdT9SinkS(ctx: common.Context, n: number): Promise<string> {
+  const p: preferences.Preferences = preferences.getPreferencesSync(ctx, { name: 'vd_t9_alias_s' });
+  p.putSync('t9_agg', `agg:${n}`);
+  p.flush();
+  return `t9S aggregate stored:${n}`;
+}
+
+// OVD-DEP-002 分段锚 1（HSP）：完整令牌不落在任何单一 record，需跨 record 重组
+export function ovdDep2P1(): string {
+  return 'ovdspl_';
+}
+
+export function ovdDep2P1S(): string {
+  return 'dep2sa_';
+}

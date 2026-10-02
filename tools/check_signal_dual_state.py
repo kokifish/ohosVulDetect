@@ -27,6 +27,9 @@ import sys
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from manifest_signals import rule_material  # noqa: E402  # 信号材料单源
+
 NO_POOL_TYPES = {"predicate", "enum-ref"}
 
 
@@ -40,20 +43,6 @@ def classify(entry: dict) -> str:
     if dtype == "manifest" or src.endswith(".json"):
         return "nonabc"
     return "abc"
-
-
-def rule_material(entry: dict) -> list[str]:
-    """单条漏洞规则的信号材料（与 check_score_regression 合成器同口径）。"""
-    det = entry.get("detection", {})
-    mat: list[str] = []
-    for c in det.get("constants", []):
-        if isinstance(c, str):
-            mat.append(c)
-    mat += [t for t in det.get("call", []) if isinstance(t, str)]
-    for h in det.get("hops", []):
-        mat += [str(c) for c in h.get("constants", []) if isinstance(c, str)]
-        mat += [t for t in h.get("call", []) if isinstance(t, str)]
-    return mat
 
 
 def app_blobs(app: pathlib.Path) -> tuple[bytes, bytes]:

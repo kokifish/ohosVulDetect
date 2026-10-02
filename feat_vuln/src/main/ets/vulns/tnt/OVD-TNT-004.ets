@@ -3,11 +3,11 @@ import { pasteboard } from '@kit.BasicServicesKit';
 
 const TOKEN4 = 'tnt4_tok_ovd_d91f33';
 
-function src4(): string {
+export function src4(): string {
   return TOKEN4;
 }
 
-function mask4(s: string): string {
+export function mask4(s: string): string {
   return s.slice(0, 8);
 }
 

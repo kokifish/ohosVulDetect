@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """评分器回归基线：合成 test.out + 固定 manifest 代表集 → score_output 判定快照锁定。
 
-score_output.py 的任何口径变化（命中范围/归一化/记录域切换）都会改变这里的
-TP/FN 结果——父项目跨版本对比前先过本门禁，杜绝"评分口径漂移被误读为工具回退"。
-代表集覆盖全部 detection 形态：api-call+constant / string-literal / call-chain /
-interproc（含跨模块 per-hop source）/ predicate / safe-twin。
+score_output.py 的任何口径变化（命中范围/归一化/记录域切换/interproc 锚定）都会
+改变这里的 TP/FN 结果——父项目跨版本对比前先过本门禁，杜绝"评分口径漂移被误读为
+工具回退"。代表集覆盖全部 16 个 detection.type 与评分器全部分支（含 predicate /
+enum-ref / native / manifest-source-config / scope=global / constant-flag /
+string-op-flow / const-array / call-chain / interproc 含跨模块 per-hop source /
+safe-twin）。
 """
 import json
 import os
@@ -16,6 +18,8 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 APP = ROOT / "build" / "out" / "ohosVulDetect-api26-release-unsigned.app"
+
+from manifest_signals import PREDICATE_PHRASES as PRED_PHRASE  # noqa: F401  # 谓词短语单源
 
 # 代表条目 → 期望（True=应命中）。跨模块 interproc 的合成块含双记录域材料。
 CASES = {
@@ -31,6 +35,16 @@ CASES = {
     "OVD-TNT-005S": False,
     "OVD-WEB-009": True,      # string-literal（桥间污点 token；跨文件孪生防同 record FP 回潮）
     "OVD-WEB-009S": False,
+    "OVD-NET-004": True,      # predicate（return-true 谓词分支）
+    "OVD-CERT-002": True,     # predicate+call（谓词 AND call 双条件）
+    "OVD-WEB-004": True,      # enum-ref（枚举引用形态）
+    "OVD-NATIVE-001": True,   # native（.so 字符串分支，读真实 .app）
+    "OVD-IPC-001": True,      # manifest（source-config 分支，读源文件）
+    "OVD-INJ-003": True,      # scope=global（全域匹配 + 孪生互锁语义）
+    "OVD-DEBUG-001": True,    # constant-flag
+    "OVD-SECRET-005": True,   # string-op-flow（反 grep 片段）
+    "OVD-NET-003": True,      # call-chain（纯 call 无常量）
+    "OVD-CRYPTO-004": True,   # api-call+const-array
 }
 
 
@@ -51,6 +65,8 @@ def synth_test_out(manifest: dict) -> str:
             mat.append(str(c))
         for tok in det.get("call", []):
             mat.append(f'"{tok}"')
+        if det.get("predicate"):
+            mat.append(PRED_PHRASE[det["predicate"]])
         for h in det.get("hops", []):
             hsrc = h.get("source", e["source"])
             if is_twin and hsrc == e["source"]:

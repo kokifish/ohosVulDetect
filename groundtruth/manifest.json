@@ -4805,6 +4805,148 @@
     "type": "safe-twin",
     "constants": []
    }
+  },
+  {
+   "id": "OVD-TNT-008",
+   "title": "token via dispatch-table indirect call to http sink (interproc)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-008.ets",
+   "function": "ovdTnt008",
+   "expected": true,
+   "twin": "OVD-TNT-008S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdD8Source",
+      "constants": [
+       "tnt8_tok_ovd_47c2a9"
+      ]
+     },
+     {
+      "function": "ovdD8SinkB",
+      "call": [
+       "request"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-008S",
+   "title": "twin: 派发表只聚合 (OVD-TNT-008)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTnt008S",
+   "expected": false,
+   "twin_of": "OVD-TNT-008",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-TNT-009",
+   "title": "token to cross-record sink via import alias (call site holds alias only)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-009.ets",
+   "function": "ovdTnt009",
+   "expected": true,
+   "twin": "OVD-TNT-009S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdT9Source",
+      "constants": [
+       "tnt9_tok_ovd_e18f53"
+      ]
+     },
+     {
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdT9Sink",
+      "call": [
+       "putSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-009S",
+   "title": "twin: 别名 sink 只聚合 (OVD-TNT-009)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTnt009S",
+   "expected": false,
+   "twin_of": "OVD-TNT-009",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-DEP-002",
+   "title": "token split into 3 fragments across HSP/HAR/feature, reassembled at runtime",
+   "category": "dependency-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/OVD-DEP-002.ets",
+   "function": "ovdDep2Sink",
+   "expected": true,
+   "twin": "OVD-DEP-002S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "source": "lib_shared/src/main/ets/VulnTarget.ets",
+      "function": "ovdDep2P1",
+      "constants": [
+       "ovdspl_"
+      ]
+     },
+     {
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdDep2Join"
+     },
+     {
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdDep2P2",
+      "constants": [
+       "tok_5d"
+      ]
+     },
+     {
+      "function": "ovdDep2Sink",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-DEP-002S",
+   "title": "twin: 三段聚合无凭据 (OVD-DEP-002)",
+   "category": "dependency-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/dimp/Twins.ets",
+   "function": "ovdDep2SinkS",
+   "expected": false,
+   "twin_of": "OVD-DEP-002",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
   }
  ]
 }

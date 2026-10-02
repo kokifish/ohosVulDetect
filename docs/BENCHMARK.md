@@ -14,17 +14,23 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 130 + 130（manifest 260 条，双向一致；跨模块 XMOD 7 对、interproc 链 8 对（TNT-005/006 跨模块 + DEP-001 三层依赖链 HSP→HAR→feature）、动态加载 DIMP 2 对（固定/拼接路径，半混淆 keep 形态）、桥间污点 WEB-009/异步桥 010） | groundtruth/manifest.json |
-| 评分 | **F1=1.000（2026-10-01 实测：TP=134 FN=0 FP=0 TN=134，268 条口径）**；评分口径漂移由 check_score_regression 门禁锁定（12 代表条目含桥形态与跨模块 interproc） | score_output.py |
+| 漏洞/孪生 | 137 + 137（manifest 274 条，双向一致；interproc 链 13 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名等；动态加载 DIMP 2 对半混淆 keep 形态；桥间污点 WEB-009/010） | groundtruth/manifest.json |
+| 评分 | **F1=1.000（2026-10-01 实测：TP=137 FN=0 FP=0 TN=137，274 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 F1=0.917（T3=0.000/T2=0.200）——分层让「满分」可分辨工具真实重构能力 | score_output.py |
 | feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
-| bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与 133 规则常量双向零包含） | check_bait_fp.py |
+| bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与全部规则常量双向零包含，子串感知） | check_bait_fp.py |
 | 组件内 API | 1164/1296（89.8%，feat_compfarm 农场 68 组件；组件级排除仅剩 Particle；跨文件 interface/enum/type 别名三索引 + JSDoc 剥离枚举成员 + extends 跟随 + 多泛型 Callback 括号感知切分 + ContentModifier implements 空实现合成；no-decl 36 + skip 46 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / bait_fp / keep 新鲜度 / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
 
 > 语料设计 checklist：见 AGENTS.md「新增内容 checklist」节（单源，勿在此重复维护）。
+
+> 外部公开同类工具参照（评分对照候选，非竞品清零）：京东 arkdecompiler（abc→Panda IR→源码，
+> Black Hat 2026 Arsenal）、DARKNAVY abcD（含应用市场加密 abc 解密实战，披露 HwMapKit RPC
+> 无鉴权 + 动态 import 穿越已修复原语）、DEKRA Harm0niz3r/DVHA（渗透框架+脆弱应用，2026 停滞）、
+> ohos-decompiler/abc-decompiler（227/282 指令，2024 末停滞）。均为源码/渗透向或停滞状态，
+> 带 groundtruth 的 abc 级标注基准仍无公开竞品。
 
 ## 测试流程基线（实测口径）
 
@@ -35,9 +41,15 @@
 - **样本构建瘦身**：build_tier 只重编 feat_heavy（farm 旋钮仅影响该模块）+ 以标准 api26-release
   .app 为底 zip 条目级替换 feat_heavy hap（--samples-only 约 106s）；产物条目集一致、
   份额对齐（small 20.3%/medium 50.2%，档位旋钮单源维护于 build.py TIER_ENVS）、装机运行验证通过；失败自动回退全链。
-- **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 10 代表条目
-  （全 detection 形态含跨模块 interproc）锁定 score_output 判定口径——防"评分口径漂移被
+- **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 22 代表条目
+  （全部 16 个 detection.type，锁 predicate/native/manifest/scope=global 等全部分支）锁定 score_output 判定口径——防"评分口径漂移被
   误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。
+- **评分区分度轮（2026-10-01）**：下限实验（零语义 record-dump 工具实评 F1=0.969）暴露粒度反转——
+  interproc hop 找不到函数块时回退 record 域，更笨的 dump 反而多拿分。修复：hop 严格锚定命名
+  函数块（不回退）；function_block 改词边界正则（`[#>]fn\b`，顺带修 fnS 前缀误配）；interproc
+  hop 函数须具名导出（TNT-001~004 helper 补 export）。score_output 输出 T1 字面直配/T2 形态重构
+  （IR 文本约定，文档化）/T3 跨函数跨记录/T4 非 abc 面四档 sub-F1。语料同步：+TNT-008 派发表、
+  +TNT-009 导入别名、+DEP-002 三模块令牌拆分重组（manifest 274 条）。
 - **画像缓存 + 确定性单源（2026-10-01 审计轮）**：gen_corpus_meta 画像按 .app md5 键控缓存
   （build/dis_cache/meta_profile_cache.json）——--check 冷 13.6s → 暖 0.3s；生成器确定性从
   CI 内联循环抽为 tools/check_determinism.py（verify 与 CI 同一脚本；快照对比语义，脏树不误报）。

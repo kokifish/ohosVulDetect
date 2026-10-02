@@ -1,6 +1,8 @@
 // SAFE: OVD-TNT-001S 同构跨函数链，source 返回派生聚合值、
 // sink 落点为聚合端点——污点规则应在 hop1 上失配（CWE-200 加固）。
 import http from '@ohos.net.http';
+import { common } from '@kit.AbilityKit';
+import { ovdT9SinkS as relay9S } from 'lib_shared';
 import { ovdXmodTntSrcS } from 'lib_common';
 import { ovdHspTntSrcS } from 'lib_shared';
 
@@ -124,4 +126,23 @@ export async function ovdTnt007S(): Promise<string> {
     // graceful
   }
   return 'tnt7S then-chain completed';
+}
+
+
+// SAFE: OVD-TNT-008S 同构派发表只聚合（CWE-200 加固）
+export async function ovdD8SinkAggS(p: string): Promise<string> {
+  return `dispatch-aggS:${p.length}`;
+}
+
+export async function ovdTnt008S(): Promise<string> {
+  const table: Array<(p: string) => Promise<string>> = [ovdD8SinkAggS, ovdD8SinkAggS];
+  const pick: number = 9 > 0 ? 0 : 1;
+  await table[pick]('then-dispatch-aggregate');
+  return 'tnt8S dispatch-chain completed';
+}
+
+// SAFE: OVD-TNT-009S 别名 sink 只聚合（CWE-200 加固）
+export async function ovdTnt009S(ctx: common.Context): Promise<string> {
+  await relay9S(ctx, 9);
+  return 'tnt9S alias aggregate completed';
 }

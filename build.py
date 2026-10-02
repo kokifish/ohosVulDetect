@@ -5,7 +5,7 @@
 
 用法（--sdk 与 --mode 可自由组合）：
   python3 build.py                    # 默认全量：标准 4 变体（api26+api24 × release+debug）
-                                      # + 三档样本（small/medium/heavy，均为 api26-release）
+                                      # + 两档梯度样本（small/medium；heavy 档=标准 api26-release 本身）
   python3 build.py --sdk api26        # 仅 API 26（SDK 26.0.0，正式语料），双模式
   python3 build.py --sdk api24        # 仅 API 24（compatibleSdkVersion 6.1.1(24)，旧模拟器镜像安装用）
   python3 build.py --mode release     # 仅 release（ArkGuard 混淆全开），双 SDK

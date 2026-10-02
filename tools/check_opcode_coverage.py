@@ -19,14 +19,12 @@ import subprocess
 import sys
 import tempfile
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from dis_cache import disasm
+from dis_cache import NOISE, OPCODE_RE, disasm  # 口径单源（同 module_share/corpus_meta）
 
 MODULES = ["entry", "feat_api", "feat_vuln", "feat_heavy", "lib_shared"]
 PRODUCTS = ["api26", "api24"]
 # hvigor 强制要求名为 "default" 的 product 存在，default 即 api26
 PRODUCT_OF = {"api26": "default", "api24": "api24"}
-OPCODE_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)", re.M)
-NOISE = {"u8", "u32", "u1", "i8", "i32", "f64"}
 
 
 def main() -> int:

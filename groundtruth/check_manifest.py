@@ -12,6 +12,9 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+from manifest_signals import DETECTION_TYPES, PREDICATE_NAMES  # noqa: E402
+
 MARKER = re.compile(r"//\s*(VULN|SAFE):\s*(OVD-[A-Z0-9-]+)")
 
 
@@ -25,6 +28,21 @@ def main() -> int:
     dup = {i for i in ids if ids.count(i) > 1}
     if dup:
         errors.append(f"重复 id: {sorted(dup)}")
+
+    vuln_cnt = sum(1 for v in vulns if v.get("expected", True))
+    if vuln_cnt != len(vulns) - vuln_cnt:
+        errors.append(f"vuln({vuln_cnt}) != twin({len(vulns) - vuln_cnt}) 计数不平")
+    for v in vulns:
+        det = v.get("detection", {})
+        dtype = det.get("type", "")
+        if dtype not in DETECTION_TYPES:
+            errors.append(f"{v['id']}: 未知 detection.type `{dtype}`")
+        if det.get("predicate") and det["predicate"] not in PREDICATE_NAMES:
+            errors.append(f"{v['id']}: 未知 predicate `{det['predicate']}`")
+        src = v.get("source", "")
+        mod = v.get("module", "")
+        if mod and not src.startswith(mod + "/"):
+            errors.append(f"{v['id']}: module `{mod}` 与 source 前缀 `{src.split('/')[0]}` 不一致")
 
     for v in vulns:
         src = ROOT / v["source"]

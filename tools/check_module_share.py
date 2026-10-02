@@ -19,10 +19,8 @@ import sys
 import tempfile
 import zipfile
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from dis_cache import disasm
+from dis_cache import NOISE, OPCODE_RE, disasm  # noqa: F402  # 口径单源（gen_corpus_meta 复用本模块导出）
 
-OPCODE_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)", re.M)
-NOISE = {"u8", "u32", "u1", "i8", "i32", "f64"}
 DEFAULT_DIS = ("/Applications/DevEco-Studio.app/Contents/sdk/default/openharmony"
                "/toolchains/ark_disasm")
 PREFIXES = ("biz_", "ovw_", "ktw_", "uicomp", "reg_", "rega_", "areg_", "kreg", "dreg",

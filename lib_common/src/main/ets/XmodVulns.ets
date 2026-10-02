@@ -57,3 +57,17 @@ export function ovdXmodTntSrc(): string {
 export function ovdDepRelay(): string {
   return `relay(${ovdDepSrc().length})`;
 }
+
+
+// OVD-DEP-002 分段锚 2 与拼接中转（HAR）
+export function ovdDep2P2(): string {
+  return 'tok_5d';
+}
+
+export function ovdDep2Join(a: string, b: string): string {
+  return a + b;
+}
+
+export function ovdDep2P2S(): string {
+  return 'dep2sb';
+}

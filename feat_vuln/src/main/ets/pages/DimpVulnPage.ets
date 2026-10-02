@@ -2,8 +2,9 @@ import { common } from '@kit.AbilityKit';
 import { Case, DemoScaffold } from 'lib_common';
 import { ovdDimp001 } from '../vulns/dimp/OVD-DIMP-001';
 import { ovdDimp002 } from '../vulns/dimp/OVD-DIMP-002';
-import { ovdDimp001S, ovdDimp002S, ovdDepSinkS } from '../vulns/dimp/Twins';
+import { ovdDimp001S, ovdDimp002S, ovdDepSinkS, ovdDep2SinkS } from '../vulns/dimp/Twins';
 import { ovdDepSink } from '../vulns/dimp/OVD-DEP-001';
+import { ovdDep2Sink } from '../vulns/dimp/OVD-DEP-002';
 
 // 动态加载面：DIMP-001 固定路径 / DIMP-002 拼接路径动态导入调用目标 record 的 sink；
 // 孪生同构动态调用安全函数。半混淆形态见 DynTarget.ets 头注。
@@ -25,6 +26,10 @@ struct DimpVulnPage {
             ovdDimp002S(ctx, '')),
           new Case('dep-001 3-layer chain', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
             ovdDepSink(ctx)),
+          new Case('dep-002 split-token join', (ctx2: common.UIAbilityContext) =>
+            ovdDep2Sink(ctx2)),
+          new Case('dep-002S aggregate split', (ctx2: common.UIAbilityContext) =>
+            ovdDep2SinkS(ctx2)),
           new Case('dep-001S aggregate', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
             ovdDepSinkS())
         ]

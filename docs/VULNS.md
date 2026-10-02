@@ -45,8 +45,8 @@
 | DKV | 2 | 分布式 KV 明文令牌自动组网同步 | 312 |
 | RSEC | 1 | 资源文件面硬编码秘密（string.json/rawfile，值不可见、访问面可检） | 798 |
 | MICC | 1 | 麦克风静默采集（无手势即录） | 200 |
-| TNT | 7 | 跨函数污点链（source/sink 分置，interproc 规则） | 200 |
-| DEP | 1 | 跨模块依赖链：HSP 源 → HAR 中转 → feature 落盘（interproc 逐跳 source） | 200 |
+| TNT | 9 | 跨函数污点链（source/sink 分置，interproc 规则） | 200 |
+| DEP | 2 | 跨模块依赖链：HSP 源 → HAR 中转 → feature 落盘（interproc 逐跳 source） | 200 |
 | DEV | 1 | 设备指纹字段拼接明文落盘 | 359 |
 | DIMP | 2 | 动态 import 加载：固定/运行时拼接路径，sink 在动态目标 record（半混淆 keep 形态） | 312 |
 | EMTR | 1 | emitter 固定事件明文广播（进程内可截获） | 200 |
@@ -56,7 +56,7 @@
 | WIFI | 2 | Wi-Fi 凭据/轨迹面泄露 | 312/359 |
 | WRK | 2 | worker 消息跨线程外传 | 200/312 |
 
-共 43 族 134 条（另有同数安全孪生，manifest 总条目 268）。
+共 43 族 137 条（另有同数安全孪生，manifest 总条目 274）。
 <!-- VULNS-OVERVIEW:END -->
 
 ---
@@ -508,6 +508,9 @@
 - **004 pasteboard sink**：链尾落剪贴板——离开文件/网络域的系统面 sink。
 - **005/006 跨模块链**：source 锚 HAR record（005）/ HSP record（006），sink 在 feature——逐跳 `source` 锚定的跨 record 形态。
 - **007 Promise.then 回调链**：source→mid→sink 以具名函数挂入 then 链，调用边由 Promise 语义建立；helpers 全部 export 以在 release（ArkGuard 改名）下保住 hop 级匹配（孪生均同构只携聚合）。
+- **008 函数派发表间接调用**：sink 以函数引用进数组，调用点为 ldobjbyvalue + 间接 call——sink 名不出现在调用点文本（只在 definefunc 槽位映射），考一等函数/派发结构还原能力。
+- **009 导入别名跨 record sink**：调用点函数体只有别名（`import {ovdT9Sink as relay9}`），真名只在 import/export 表，sink 在 lib_shared record——考调用边经别名解析 + 跨 record 锚定。
+- 通用约束（001–009）：hop 锚定的函数须具名且 export（release 下 ArkGuard 改名私有函数，评分器按命名函数块严格锚定，不回退 record 域）。
 
 ## OVD-DEP — 跨模块依赖链（CWE-200/312）
 
@@ -516,6 +519,11 @@
   - 利用：链上每跳在不同包形态里，任一消费方拼接完整链即外传。
   - 危害：源在共享包被多 HAP 复用，泄露面按消费方数量放大。
   - 检测形态：interproc 三跳、逐跳 `source` 锚定三个不同 record（孪生 001S 链上只携聚合）。
+- **OVD-DEP-002 令牌三段分置三模块，运行时拼接**
+  - 成因：令牌三段分置 HSP/HAR/feature，经 HAR 中转函数拼接后落盘——完整令牌不出现在任何单一 record。
+  - 利用：反汇编文本层永远看不到完整凭据，审计按 record 抽查必漏。
+  - 危害：碎片本身无语义，泄露检测须先重组。
+  - 检测形态：interproc 四跳（P1 片段 / join 中转 / P2 片段 / sink 落盘，前三跳跨 record 锚定；孪生 002S 同构三段仅聚合、片段值互斥）。
 
 ## OVD-DEV — 设备指纹（CWE-359）
 
