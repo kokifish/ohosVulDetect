@@ -1,6 +1,7 @@
 // SAFE: OVD-SEN-001S 同构 taskpool 路径只携带聚合计数，无凭据（CWE-200/312 加固）
 import { taskpool } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
+import { ovdXmodT3Task } from 'lib_common';
 
 @Concurrent
 function senAgg(n: number): number {
@@ -33,4 +34,10 @@ export async function ovdSen002S(_ctx: common.UIAbilityContext): Promise<string>
   const holder = new Sen2HolderS();
   const len: number = await taskpool.execute(sen2WriteSharedS, holder, 9) as number;
   return `sen2S shared-field aggregate: len=${len}, value=${holder.payload}`;
+}
+
+// SAFE: OVD-SEN-003S 跨模块任务只传聚合（CWE-200 加固）
+export async function ovdSen003S(): Promise<string> {
+  const len: number = await taskpool.execute(ovdXmodT3Task, 9) as number;
+  return `sen3S cross-module aggregate: len=${len}`;
 }

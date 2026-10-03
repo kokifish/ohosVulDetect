@@ -59,6 +59,13 @@ export function ovdDepRelay(): string {
 }
 
 
+// OVD-SEN-003 跨模块 @Concurrent 任务（HAR 定义、feature 执行——taskpool 任务
+// 函数本体在 HAR record 中，凭据经结构化克隆传入）
+@Concurrent
+export function ovdXmodT3Task(payload: string): number {
+  return payload.length * 3;
+}
+
 // OVD-DEP-002 分段锚 2 与拼接中转（HAR）
 export function ovdDep2P2(): string {
   return 'tok_5d';

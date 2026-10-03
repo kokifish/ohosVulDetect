@@ -4947,6 +4947,160 @@
     "type": "safe-twin",
     "constants": []
    }
+  },
+  {
+   "id": "OVD-B64-001",
+   "title": "base64-encoded token decoded at runtime and stored plaintext (encoded-literal face)",
+   "category": "encoding-obfuscation",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/b64/OVD-B64-001.ets",
+   "function": "ovdB64001",
+   "expected": true,
+   "twin": "OVD-B64-001S",
+   "detection": {
+    "type": "api-call+constant",
+    "call": [
+     "decodeSync"
+    ],
+    "constants": [
+     "b3ZkX2I2NF90b2tfN2sybTk0"
+    ]
+   }
+  },
+  {
+   "id": "OVD-B64-001S",
+   "title": "twin: base64 路径解码值仅聚合 (OVD-B64-001)",
+   "category": "encoding-obfuscation",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/b64/Twins.ets",
+   "function": "ovdB64001S",
+   "expected": false,
+   "twin_of": "OVD-B64-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-ENUM-001",
+   "title": "TLS policy enum misused: LENIENT member selected cross-record",
+   "category": "enum-misuse",
+   "cwe": "CWE-757",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/enum/OVD-ENUM-001.ets",
+   "function": "ovdEnum001",
+   "expected": true,
+   "twin": "OVD-ENUM-001S",
+   "detection": {
+    "type": "enum-ref",
+    "constants": [
+     "LENIENT"
+    ]
+   }
+  },
+  {
+   "id": "OVD-ENUM-001S",
+   "title": "twin: 枚举选择 STRICT 成员 (OVD-ENUM-001)",
+   "category": "enum-misuse",
+   "cwe": "CWE-757",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/enum/Twins.ets",
+   "function": "ovdEnum001S",
+   "expected": false,
+   "twin_of": "OVD-ENUM-001",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-UST-003",
+   "title": "token reaches file sink via @ObservedV2/@Trace/@Monitor generated flow",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/OVD-UST-003.ets",
+   "function": "ovdUst3Arm",
+   "expected": true,
+   "twin": "OVD-UST-003S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdUst3Seed",
+      "constants": [
+       "ovd_ust3_tok_b41d66"
+      ]
+     },
+     {
+      "function": "onUst3Changed",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-UST-003S",
+   "title": "twin: V2 观察回调只落聚合计数 (OVD-UST-003)",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/Twins.ets",
+   "function": "ovdUst3ArmS",
+   "expected": false,
+   "twin_of": "OVD-UST-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-SEN-003",
+   "title": "credential passed into @Concurrent task defined in HAR record (cross-module thread boundary)",
+   "category": "concurrent-threading",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/OVD-SEN-003.ets",
+   "function": "ovdSen003",
+   "expected": true,
+   "twin": "OVD-SEN-003S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdSen003",
+      "constants": [
+       "ovd_sen3_tok_e6c418"
+      ],
+      "call": [
+       "execute"
+      ]
+     },
+     {
+      "source": "lib_common/src/main/ets/XmodVulns.ets",
+      "function": "ovdXmodT3Task"
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-SEN-003S",
+   "title": "twin: 跨模块任务只传聚合 (OVD-SEN-003)",
+   "category": "concurrent-threading",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/sen/Twins.ets",
+   "function": "ovdSen003S",
+   "expected": false,
+   "twin_of": "OVD-SEN-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
   }
  ]
 }

@@ -61,6 +61,12 @@ export async function ovdT9SinkS(ctx: common.Context, n: number): Promise<string
   return `t9S aggregate stored:${n}`;
 }
 
+// OVD-ENUM 跨 record 枚举（HSP 定义，feature 侧成员访问）——安全策略语义由枚举成员表达
+export enum OvdTlsPolicy {
+  STRICT = 'strict',
+  LENIENT = 'lenient'
+}
+
 // OVD-DEP-002 分段锚 1（HSP）：完整令牌不落在任何单一 record，需跨 record 重组
 export function ovdDep2P1(): string {
   return 'ovdspl_';

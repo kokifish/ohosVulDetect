@@ -38,6 +38,8 @@
     "pages/SenVulnPage",
     "pages/WrkVulnPage",
     "pages/UstVulnPage",
-    "pages/DimpVulnPage"
+    "pages/DimpVulnPage",
+    "pages/B64VulnPage",
+    "pages/EnumVulnPage"
   ]
 }

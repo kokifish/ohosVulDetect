@@ -63,3 +63,53 @@ export struct Ust2WatchCompS {
     }
   }
 }
+
+// SAFE: OVD-UST-003S V2 观察回调只落聚合计数（CWE-312 加固）
+@ObservedV2
+export class Ust3SessionS {
+  @Trace count: number = 0;
+
+  @Monitor('count')
+  onUst3ChangedS(mon: IMonitor): void {
+    const dir = AppStorage.get<string>('ovd_ust3s_dir') ?? '';
+    if (dir === '' || this.count <= 0) {
+      return;
+    }
+    const f = fs.openSync(dir + '/ovd_ust3s_watch.txt',
+      fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE | fs.OpenMode.TRUNC);
+    fs.writeSync(f.fd, `agg:${this.count}`);
+    fs.closeSync(f);
+  }
+}
+
+export const ust3SessionS = new Ust3SessionS();
+
+export function ovdUst3ArmS(ctx: common.UIAbilityContext): Promise<string> {
+  AppStorage.setOrCreate('ovd_ust3s_dir', ctx.filesDir);
+  return new Promise<string>((resolve: (v: string) => void) => {
+    ust3SessionS.count = 9;
+    const path = ctx.filesDir + '/ovd_ust3s_watch.txt';
+    let n = 0;
+    const timer = setInterval(() => {
+      n += 1;
+      let ok = false;
+      try {
+        const f = fs.openSync(path, fs.OpenMode.READ_ONLY);
+        fs.closeSync(f);
+        ok = true;
+      } catch (e) {
+        // 尚未写入，继续等
+      }
+      if (ok || n >= 30) {
+        clearInterval(timer);
+        try {
+          fs.unlinkSync(path);
+        } catch (e) {
+          // 已存在性不一致不阻塞
+        }
+        AppStorage.delete('ovd_ust3s_dir');
+        resolve(`ust3S v2-monitor sink ${ok ? 'written' : 'timeout'} (polls=${n})`);
+      }
+    }, 50);
+  });
+}

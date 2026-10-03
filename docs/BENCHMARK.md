@@ -14,12 +14,12 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 137 + 137（manifest 274 条，双向一致；interproc 链 13 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名等；动态加载 DIMP 2 对半混淆 keep 形态；桥间污点 WEB-009/010） | groundtruth/manifest.json |
-| 评分 | **F1=1.000（2026-10-01 实测：TP=137 FN=0 FP=0 TN=137，274 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 F1=0.917（T3=0.000/T2=0.200）——分层让「满分」可分辨工具真实重构能力 | score_output.py |
+| 漏洞/孪生 | 141 + 141（manifest 282 条，双向一致；interproc 链 15 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002/003 V1/V2 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名、SEN-003 跨模块并发等；动态加载 DIMP 2 对半混淆 keep 形态；B64 编码对抗面；ENUM 跨 record 枚举；桥间污点 WEB-009/010） | groundtruth/manifest.json |
+| 评分 | **F1=1.000（2026-10-03 实测：TP=141 FN=0 FP=0 TN=141，282 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 0.917（T3=0.000）；参考判定快照 groundtruth/reference_eval.json（score_output --export-json 生成，第三方 diff 对比用） | score_output.py |
 | feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
-| bait 隔离门禁 | FAIL=0（9 规则面陷阱 near-miss 常量与全部规则常量双向零包含，子串感知） | check_bait_fp.py |
+| bait 隔离门禁 | FAIL=0（15 规则面陷阱——覆盖 interproc/enum/string-literal/const-array/call-chain/scope 全部策略面——near-miss 常量与全部规则常量双向零包含） | check_bait_fp.py |
 | 组件内 API | 1164/1296（89.8%，feat_compfarm 农场 68 组件；组件级排除仅剩 Particle；跨文件 interface/enum/type 别名三索引 + JSDoc 剥离枚举成员 + extends 跟随 + 多泛型 Callback 括号感知切分 + ContentModifier implements 空实现合成；no-decl 36 + skip 46 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / bait_fp / keep 新鲜度 / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
@@ -44,6 +44,15 @@
 - **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 22 代表条目
   （全部 16 个 detection.type，锁 predicate/native/manifest/scope=global 等全部分支）锁定 score_output 判定口径——防"评分口径漂移被
   误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。
+- **标注完备性 + 对抗面二批（2026-10-03）**：check_fn_anchors.py（interproc hop 锚点
+  存活硬门禁 + 条目 function 软 WARN——锚点退化静态化，native/manifest 面跳过）；
+  score_output --export-json（参考判定快照 + tier 导出）；tools/split_folds.py（按族
+  分层 train/test 划分建议，seed=2026）；bait 9→15（补 interproc/enum/string-literal/
+  const-array/call-chain/scope 六策略面）；语料 +B64-001（base64 编码令牌，文本层无明文）/
+  +ENUM-001（跨 record 枚举误用）/ +UST-003（V2 @ObservedV2/@Trace/@Monitor 流）/
+  +SEN-003（跨模块 @Concurrent）——manifest 282 条。实测教训：V2 @Monitor 必须带路径
+  参数；es2abc 对本地字符串枚举编译期值内联（导入枚举才保成员名）；跨 record 自定义
+  枚举连写不被参考工具重构（规则材料取成员名片段）。
 - **评分区分度轮（2026-10-01）**：下限实验（零语义 record-dump 工具实评 F1=0.969）暴露粒度反转——
   interproc hop 找不到函数块时回退 record 域，更笨的 dump 反而多拿分。修复：hop 严格锚定命名
   函数块（不回退）；function_block 改词边界正则（`[#>]fn\b`，顺带修 fnS 前缀误配）；interproc
@@ -72,9 +81,9 @@
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
 - **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
-- **cat-wrk/sen/tnt/ust 新对真机 sweep**：WRK-002/SEN-002/TNT-007/UST-002 四对
-  已过全门禁 + 评分器 e2e（4 hit + 4 twin miss）；bench26 CLI 拉起被 Beta2 GUI
-  引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 四页。
+- **cat-wrk/sen/tnt/ust/b64/enum 新对真机 sweep**：WRK-002/SEN-002/003、TNT-007/008/009、
+  UST-002/003、B64-001、ENUM-001 九对已过全门禁 + 合成 e2e；bench26 CLI 拉起被 Beta2 GUI
+  引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 各页。
 - **真实工具 spot-check 常态化**：2026-10-01 审计轮实证合成回归基线测不出「材料被
   es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——新增 interproc 形态时发版前
   须用逆向工具对 build/out 实跑评分抽查（已执行，F1=1.000）。WEB-009S/010S 同 record

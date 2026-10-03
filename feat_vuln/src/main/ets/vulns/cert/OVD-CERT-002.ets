@@ -2,7 +2,7 @@
 import { cert } from '@kit.DeviceCertificateKit';
 import { util } from '@kit.ArkTS';
 
-function certGateCheck(): boolean {
+export function certGateCheck(): boolean {
   const encoder = new util.TextEncoder();
   const blob: cert.EncodingBlob = {
     data: encoder.encodeInto('-----BEGIN CERTIFICATE-----\nanycert\n-----END CERTIFICATE-----').slice(),

@@ -1,0 +1,2020 @@
+{
+ "note": "参考判定快照（机器可读）：真实/合成工具 test.out × 本 app 的 per-entry 判定，供第三方工具 diff 对比与评分器自校验。tier 语义见 BENCHMARK「评分口径」。",
+ "test_out": "/tmp/ovd_final2/test.out",
+ "app": "build/out/ohosVulDetect-api26-release-unsigned.app",
+ "summary": {
+  "tp": 141,
+  "fn": 0,
+  "fp": 0,
+  "tn": 141,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0
+ },
+ "tiers": {
+  "T1": {
+   "label": "字面直配",
+   "n": 222,
+   "tp": 111,
+   "fn": 0,
+   "fp": 0
+  },
+  "T2": {
+   "label": "形态重构(IR文本约定)",
+   "n": 20,
+   "tp": 10,
+   "fn": 0,
+   "fp": 0
+  },
+  "T3": {
+   "label": "跨函数/跨记录",
+   "n": 30,
+   "tp": 15,
+   "fn": 0,
+   "fp": 0
+  },
+  "T4": {
+   "label": "非abc面",
+   "n": 10,
+   "tp": 5,
+   "fn": 0,
+   "fp": 0
+  }
+ },
+ "results": [
+  {
+   "id": "OVD-SECRET-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SECRET-001: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-NET-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NET-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NET-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NET-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=2/2 rec-blk"
+  },
+  {
+   "id": "OVD-NET-004",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=0/0 pred=1 fn"
+  },
+  {
+   "id": "OVD-NET-005",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=0/0 pred=1 fn"
+  },
+  {
+   "id": "OVD-WEB-001",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WEB-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=3/3 calls=1/1 rec-blk"
+  },
+  {
+   "id": "OVD-WEB-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=1/1 rec-blk"
+  },
+  {
+   "id": "OVD-WEB-004",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 rec-blk"
+  },
+  {
+   "id": "OVD-WEB-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 rec-blk"
+  },
+  {
+   "id": "OVD-WEB-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-INJ-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-INJ-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-INJ-001: consts=0/0 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-INJ-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-INJ-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-INJ-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-STOR-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-STOR-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-STOR-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-STOR-003",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-STOR-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-LOG-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-LOG-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-LOG-001: consts=0/2 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-LOG-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-IPC-001",
+   "tier": "T4",
+   "expected": true,
+   "hit": true,
+   "detail": "source-config"
+  },
+  {
+   "id": "OVD-IPC-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-IPC-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-IPC-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-IPC-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-PERM-001",
+   "tier": "T4",
+   "expected": true,
+   "hit": true,
+   "detail": "source-config"
+  },
+  {
+   "id": "OVD-PASTE-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PASTE-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PRIV-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-PRIV-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-AUTH-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-AUTH-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-001: consts=1/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-AUTH-002",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-AUTH-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DEBUG-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DEBUG-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-CONF-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-CONF-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NATIVE-001",
+   "tier": "T4",
+   "expected": true,
+   "hit": true,
+   "detail": "so-strings"
+  },
+  {
+   "id": "OVD-NATIVE-002",
+   "tier": "T4",
+   "expected": true,
+   "hit": true,
+   "detail": "so-strings"
+  },
+  {
+   "id": "OVD-CRYPTO-007",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-BACK-001",
+   "tier": "T4",
+   "expected": true,
+   "hit": true,
+   "detail": "source-config"
+  },
+  {
+   "id": "OVD-SECRET-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SECRET-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SECRET-003: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SECRET-004: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-SECRET-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SECRET-005: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-RSEC-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-RSEC-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-RSEC-001: consts=0/1 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-CRYPTO-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-003: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-004: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-005: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-CRYPTO-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-006: consts=0/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-007S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-007: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-008S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CRYPTO-008: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-CRYPTO-008",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-NET-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NET-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-003: consts=0/0 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-NET-004S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-004: consts=0/0 calls=0/0 pred=0 fn"
+  },
+  {
+   "id": "OVD-NET-005S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-005: consts=0/0 calls=0/0 pred=0 fn"
+  },
+  {
+   "id": "OVD-WEB-001S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-001: consts=1/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-002: consts=1/3 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-003: consts=0/0 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-004S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-004: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-WEB-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-005: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-006: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-INJ-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-INJ-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-INJ-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-INJ-003: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-INJ-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-INJ-004: consts=0/1 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-STOR-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-002: consts=0/2 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-STOR-003S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-003: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-STOR-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-004: consts=1/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-BACK-001S",
+   "tier": "T4",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-BACK-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-LOG-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-LOG-002: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-IPC-001S",
+   "tier": "T4",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IPC-001: consts=1/3 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-IPC-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IPC-002: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-IPC-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IPC-003: consts=0/2 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-IPC-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IPC-004: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-IPC-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IPC-005: consts=0/1 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-PERM-001S",
+   "tier": "T4",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PERM-001: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-PASTE-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PASTE-001: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-PASTE-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PASTE-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PRIV-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PRIV-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-PRIV-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PRIV-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-AUTH-002S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-002: consts=0/1 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-AUTH-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-003: consts=0/0 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-DEBUG-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEBUG-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DEBUG-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEBUG-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-CONF-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CONF-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-CONF-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CONF-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NATIVE-001S",
+   "tier": "T4",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NATIVE-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-NATIVE-002S",
+   "tier": "T4",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NATIVE-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-AUTH-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-AUTH-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-AUTH-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-FORM-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-FORM-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WEB-007",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PASTE-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-AUTH-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-004: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-AUTH-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-005: consts=0/2 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-AUTH-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-006: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-FORM-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-FORM-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-FORM-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-FORM-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WEB-007S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-007: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-008S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-008: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WEB-008",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-TNT-001",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-001S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-001: interproc 1/2"
+  },
+  {
+   "id": "OVD-PASTE-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PASTE-003: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-CERT-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CERT-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CERT-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CERT-002",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=1/1 pred=1 fn"
+  },
+  {
+   "id": "OVD-CERT-002S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CERT-002: consts=0/0 calls=1/1 pred=0 rec"
+  },
+  {
+   "id": "OVD-MEDIA-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-MEDIA-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-MEDIA-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-MEDIA-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-MEDIA-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-MEDIA-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-KEYLOG-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-KEYLOG-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-KEYLOG-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-KEYLOG-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-KEYLOG-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-KEYLOG-002: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-DRM-001",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=1/1 pred=1 fn"
+  },
+  {
+   "id": "OVD-DRM-001S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DRM-001: consts=0/0 calls=1/1 pred=0 fn"
+  },
+  {
+   "id": "OVD-DRM-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-DRM-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DRM-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SPEECH-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SPEECH-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SPEECH-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SPEECH-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SPEECH-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SPEECH-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-A11Y-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-A11Y-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-A11Y-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-A11Y-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-A11Y-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-A11Y-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PRIV-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-PRIV-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PRIV-003: consts=0/1 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-NET-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-NET-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NET-006: consts=0/2 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-CERT-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CERT-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CERT-003: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-KEYLOG-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-KEYLOG-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-KEYLOG-003: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-MEDIA-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-MEDIA-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-MEDIA-003: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-PASTE-004",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PASTE-004S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PASTE-004: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-AUTH-007",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-AUTH-007S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-AUTH-007: consts=0/1 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-BGTASK-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-BGTASK-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-BGTASK-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-MICC-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-MICC-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-MICC-001: consts=0/1 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-DLINK-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DLINK-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DLINK-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DLINK-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DLINK-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DLINK-002: consts=0/0 calls=1/2 rec"
+  },
+  {
+   "id": "OVD-DLINK-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DLINK-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DLINK-003: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-XMOD-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-XMOD-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-XMOD-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-XMOD-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-002: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-XMOD-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-XMOD-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-003: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-XMOD-004",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=0/0 calls=0/0 pred=1 fn"
+  },
+  {
+   "id": "OVD-XMOD-004S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-004: consts=0/0 calls=0/0 pred=0 fn"
+  },
+  {
+   "id": "OVD-CEVT-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-CEVT-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CEVT-001: consts=0/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-NOTIF-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-NOTIF-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NOTIF-001: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-IRED-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-IRED-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IRED-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PWDIN-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=2/2 calls=0/0 rec-blk"
+  },
+  {
+   "id": "OVD-PWDIN-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PWDIN-001: consts=0/2 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DKV-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DKV-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DKV-001: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-WIFI-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WIFI-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WIFI-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-GEO-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-GEO-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-GEO-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-DEV-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DEV-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEV-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-EMTR-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-EMTR-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-EMTR-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PASTE-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PASTE-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PASTE-005: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-STOR-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-STOR-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-005: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-XMOD-005",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-XMOD-005S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-005: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-TNT-002",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-002S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-002: interproc 0/2"
+  },
+  {
+   "id": "OVD-TNT-003",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-003S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-003: interproc 0/2"
+  },
+  {
+   "id": "OVD-TNT-004",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-004S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-004: interproc 0/2"
+  },
+  {
+   "id": "OVD-XMOD-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-XMOD-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-006: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-XMOD-007",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-XMOD-007S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-XMOD-007: consts=0/1 calls=0/2 rec"
+  },
+  {
+   "id": "OVD-CEVT-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-CEVT-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CEVT-002: consts=0/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-LOG-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-LOG-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-LOG-003: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DEBUG-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DEBUG-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEBUG-003: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-CONF-003",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-CONF-003S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-CONF-003: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-DKV-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-DKV-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DKV-002: consts=0/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-BGTASK-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-BGTASK-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-BGTASK-002: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-IRED-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-IRED-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-IRED-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-NOTIF-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=2/2 fn"
+  },
+  {
+   "id": "OVD-NOTIF-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-NOTIF-002: consts=0/1 calls=2/2 rec"
+  },
+  {
+   "id": "OVD-PERM-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-PERM-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-PERM-002: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WIFI-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-WIFI-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WIFI-002: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-STOR-006",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-STOR-006S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-STOR-006: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-SEN-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SEN-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SEN-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-WRK-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-WRK-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WRK-001: consts=0/1 calls=1/1 rec"
+  },
+  {
+   "id": "OVD-UST-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-UST-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-UST-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-TNT-005",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-005S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-005: interproc 1/2"
+  },
+  {
+   "id": "OVD-TNT-006",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-006S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-006: interproc 1/2"
+  },
+  {
+   "id": "OVD-DIMP-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-DIMP-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DIMP-001: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-DIMP-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-DIMP-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DIMP-002: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-WEB-009",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-WEB-009S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-009: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-WEB-010",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-WEB-010S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WEB-010: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-DEP-001",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 3/3"
+  },
+  {
+   "id": "OVD-DEP-001S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEP-001: interproc 2/3"
+  },
+  {
+   "id": "OVD-WRK-002",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-WRK-002S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-WRK-002: interproc 1/2"
+  },
+  {
+   "id": "OVD-SEN-002",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-SEN-002S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SEN-002: consts=0/1 calls=0/1 rec"
+  },
+  {
+   "id": "OVD-TNT-007",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 3/3"
+  },
+  {
+   "id": "OVD-TNT-007S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-007: interproc 0/3"
+  },
+  {
+   "id": "OVD-UST-002",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-UST-002S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-UST-002: interproc 0/2"
+  },
+  {
+   "id": "OVD-TNT-008",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-008S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-008: interproc 0/2"
+  },
+  {
+   "id": "OVD-TNT-009",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-TNT-009S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-TNT-009: interproc 1/2"
+  },
+  {
+   "id": "OVD-DEP-002",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 4/4"
+  },
+  {
+   "id": "OVD-DEP-002S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-DEP-002: interproc 3/4"
+  },
+  {
+   "id": "OVD-B64-001",
+   "tier": "T1",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-B64-001S",
+   "tier": "T1",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-B64-001: consts=0/1 calls=1/1 fn"
+  },
+  {
+   "id": "OVD-ENUM-001",
+   "tier": "T2",
+   "expected": true,
+   "hit": true,
+   "detail": "consts=1/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-ENUM-001S",
+   "tier": "T2",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-ENUM-001: consts=0/1 calls=0/0 fn"
+  },
+  {
+   "id": "OVD-UST-003",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-UST-003S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-UST-003: interproc 0/2"
+  },
+  {
+   "id": "OVD-SEN-003",
+   "tier": "T3",
+   "expected": true,
+   "hit": true,
+   "detail": "interproc 2/2"
+  },
+  {
+   "id": "OVD-SEN-003S",
+   "tier": "T3",
+   "expected": false,
+   "hit": false,
+   "detail": "rule-of-OVD-SEN-003: interproc 1/2"
+  }
+ ]
+}

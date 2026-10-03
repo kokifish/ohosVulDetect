@@ -9,7 +9,14 @@ import { distributedKVStore } from '@kit.ArkData';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import emitter from '@ohos.events.emitter';
 import worker, { MessageEvents } from '@ohos.worker';
+import { fileIo as fs } from '@kit.CoreFileKit';
 import { Case, DemoScaffold } from 'lib_common';
+
+function fsOpenSyncShim(path: string): number {
+  const f = fs.openSync(path, fs.OpenMode.READ_ONLY);
+  fs.closeSync(f);
+  return f.fd;
+}
 
 // FP-bait 页（困难模式）：全部为合法用法，但形状与 manifest 规则面高度相似——
 // near-miss（call 同形+常量异构）/ const-only（AND 断链）双维度陷阱，注册于
@@ -137,10 +144,79 @@ struct SecurityBaitDemo {
             store.putSync('theme', 'dark');
             await store.flush();
             return 'bait prefs non-pii stored';
+          }),
+          new Case('bait web-endpoint near-miss', (): string => {
+            // mimics OVD-WEB-009（string-literal 面）：端点串仅末位异构
+            return baitWebBeacon('count=2');
+          }),
+          new Case('bait then-chain marker', async (): Promise<string> => {
+            // mimics OVD-TNT-007（interproc/then 面）：request 同形 + 常量异构
+            const req: http.HttpRequest = http.createHttp();
+            try {
+              await req.request('https://ovd-bait.example/ingest', {
+                method: http.RequestMethod.POST,
+                extraData: 'bait_then_marker_8w5'
+              });
+            } catch (e) {
+              // graceful
+            } finally {
+              req.destroy();
+            }
+            return 'bait then-chain posted';
+          }),
+          new Case('bait enum lenient near-miss', (): string => {
+            // mimics OVD-ENUM-001（enum-ref 面）：枚举名/成员名片段同形度
+            return `bait tls-mode: ${BaitTlsMode.LX_MODE}`;
+          }),
+          new Case('bait cipher gcm128 near-miss', (): string => {
+            // mimics OVD-CRYPTO-004（const-array 面）：模式串仅密钥长度异构
+            const cipher = cryptoFramework.createCipher('AES128|GCM|NoPadding');
+            return `bait cipher=${cipher.algName}`;
+          }),
+          new Case('bait ssl-handler chain near-miss', (): string => {
+            // mimics OVD-NET-003（call-chain 面）：handler 方法名同形
+            const h = new BaitSslHandler();
+            return h.onSslErrorEventReceive();
+          }),
+          new Case('bait global-open near-miss', (): string => {
+            // mimics OVD-INJ-003（scope=global 面）：openSync 同形 + 路径异构
+            return baitOpenProbe();
           })
         ]
       })
     }
     .height('100%')
+  }
+}
+
+
+// ---- bait 辅助（信号源：近失常量与方法名，注册于 groundtruth/bait.json）----
+
+const BAIT_WEB_ENDPOINT = 'ovd_web9_endpoint_2f32';
+
+function baitWebBeacon(meta: string): string {
+  return `beacon ${meta} -> ${BAIT_WEB_ENDPOINT}`;
+}
+
+enum BaitTlsMode {
+  LX_MODE = 'bait-lenient'
+}
+
+class BaitSslHandler {
+  onSslErrorEventReceive(): string {
+    return this.handleConfirm('bait_ssl_marker_2v7');
+  }
+
+  handleConfirm(marker: string): string {
+    return `ssl-handler confirm ${marker}`;
+  }
+}
+
+function baitOpenProbe(): string {
+  try {
+    const f = fsOpenSyncShim('/proc/net/tcp');
+    return `bait probe fd=${f}`;
+  } catch (e) {
+    return 'bait probe unavailable';
   }
 }

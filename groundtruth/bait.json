@@ -129,6 +129,88 @@
      "ovd_wrk_tok_62c4d3"
     ]
    }
+  },
+  {
+   "id": "bait-web-endpoint",
+   "mode": "near-miss",
+   "mimics": "OVD-WEB-009",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [],
+    "constants": [
+     "ovd_web9_endpoint_2f32"
+    ]
+   }
+  },
+  {
+   "id": "bait-then-chain",
+   "mode": "near-miss",
+   "mimics": "OVD-TNT-007",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "request"
+    ],
+    "constants": [
+     "bait_then_marker_8w5"
+    ]
+   }
+  },
+  {
+   "id": "bait-enum-lenient",
+   "mode": "near-miss",
+   "mimics": "OVD-ENUM-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [],
+    "constants": [
+     "bait-lenient"
+    ]
+   },
+   "note": "本地 enum 值被 es2abc 内联，成员名不保留；信号取内联值（导入枚举才保成员名，见 OVD-ENUM-001）"
+  },
+  {
+   "id": "bait-cipher-gcm128",
+   "mode": "near-miss",
+   "mimics": "OVD-CRYPTO-004",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "createCipher"
+    ],
+    "constants": [
+     "AES128|GCM|NoPadding"
+    ]
+   }
+  },
+  {
+   "id": "bait-ssl-handler",
+   "mode": "near-miss",
+   "mimics": "OVD-NET-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "onSslErrorEventReceive",
+     "handleConfirm"
+    ],
+    "constants": [
+     "bait_ssl_marker_2v7"
+    ]
+   }
+  },
+  {
+   "id": "bait-global-open",
+   "mode": "near-miss",
+   "mimics": "OVD-INJ-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "openSync"
+    ],
+    "constants": [
+     "proc/net/tcp"
+    ]
+   }
   }
  ]
 }

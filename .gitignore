@@ -14,3 +14,8 @@
 __pycache__/
 BuildProfile.ets
 compare_dis/
+/extracted_methods/
+# 逆向工具在仓库根误跑时的输出（正常应写 /tmp）
+/test.out
+/test_IR_LLM_WHOLE.out
+/ohre_test.log

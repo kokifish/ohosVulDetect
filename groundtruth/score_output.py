@@ -141,8 +141,18 @@ TIERS = [
 
 
 def main() -> int:
-    test_out_path, app_path = sys.argv[1], sys.argv[2]
-    manifest_path = sys.argv[3] if len(sys.argv) > 3 else str(ROOT / "groundtruth" / "manifest.json")
+    argv = sys.argv[1:]
+    export_json: str | None = None
+    if "--export-json" in argv:
+        i = argv.index("--export-json")
+        if i + 1 >= len(argv):
+            sys.exit("ERROR: --export-json 需要一个输出路径参数")
+        export_json = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
+    if len(argv) < 2:
+        sys.exit(__doc__)
+    test_out_path, app_path = argv[0], argv[1]
+    manifest_path = argv[2] if len(argv) > 2 else str(ROOT / "groundtruth" / "manifest.json")
 
     test_out = pathlib.Path(test_out_path).read_text(encoding="utf-8", errors="ignore")
     blocks = load_blocks(test_out)
@@ -188,9 +198,13 @@ def main() -> int:
         calls = det.get("call", [])
         scope_txt = fn if fn is not None else where
         # 回调/闭包编译为独立方法块：函数块未全中时降级 record 域并标注
-        scope_tag = "fn"
-        if calls and fn is not None and not all(tok in fn or f'"{tok}"' in fn for tok in calls):
-            scope_txt, scope_tag = where, "rec"
+        # （scope_tag 反映调用 token 的实际匹配域；fn 块不存在时标 rec-blk）
+        if fn is None:
+            scope_txt, scope_tag = where, "rec-blk"
+        else:
+            scope_txt, scope_tag = fn, "fn"
+            if calls and not all(tok in fn or f'"{tok}"' in fn for tok in calls):
+                scope_txt, scope_tag = where, "rec"
         k_ok = all(tok in scope_txt or f'"{tok}"' in scope_txt for tok in calls)
         pred = det.get("predicate")
         p_ok = PREDICATES[pred](fn if fn is not None else rec) if pred else True
@@ -213,26 +227,27 @@ def main() -> int:
                 src = (ROOT / v["source"]).read_text(encoding="utf-8")  # 编译后不以原始形态存在，按源文件核验
                 hit, detail = all(c in src for c in det.get("constants", [])), "source-config"
             else:
+                # 预留：source 指向 ets/.ts 的 manifest 条目在打包 module.json 内核验（当前无此类条目）
                 hit, detail = all(c in module_json for c in det.get("constants", [])), "module.json"
         elif not v.get("expected", True) and "twin_of" in v:
             hit, detail = hit_of(by_id[v["twin_of"]].get("detection", {}), v["source"], v.get("function", "-"), twin=True)
             detail = f"rule-of-{v['twin_of']}: {detail}"
         else:
             hit, detail = hit_of(det, v["source"], v.get("function", "-"))
-        rows.append((v["id"], v["expected"], hit, detail))
+        rows.append((v["id"], v["expected"], hit, detail, tier_of(v, by_id)))
 
-    tp = sum(1 for _, e, h, _ in rows if e and h)
-    fn = sum(1 for _, e, h, _ in rows if e and not h)
-    fp = sum(1 for _, e, h, _ in rows if not e and h)
-    tn = sum(1 for _, e, h, _ in rows if not e and not h)
+    tp = sum(1 for _, e, h, _, _ in rows if e and h)
+    fn = sum(1 for _, e, h, _, _ in rows if e and not h)
+    fp = sum(1 for _, e, h, _, _ in rows if not e and h)
+    tn = sum(1 for _, e, h, _, _ in rows if not e and not h)
     prec = tp / (tp + fp) if tp + fp else 0.0
     rec = tp / (tp + fn) if tp + fn else 0.0
     f1 = 2 * prec * rec / (prec + rec) if prec + rec else 0.0
     fpr = fp / (fp + tn) if fp + tn else 0.0
 
-    print(f"{'id':22} {'exp':5} {'hit':4} detail")
-    for rid, e, h, d in rows:
-        print(f"{rid:22} {str(e):5} {str(h):4} {d}{'' if e == h else ('  <-- FN' if e else '  <-- FP(twin)')}")
+    print(f"{'id':22} {'tier':4} {'exp':5} {'hit':4} detail")
+    for rid, e, h, d, tier in rows:
+        print(f"{rid:22} {tier:4} {str(e):5} {str(h):4} {d}{'' if e == h else ('  <-- FN' if e else '  <-- FP(twin)')}")
     if skipped:
         print(f"skip（不计分）: {', '.join(skipped)}")
 
@@ -245,7 +260,7 @@ def main() -> int:
         tid = tier_of(v, by_id_t)
         st = tstat[tid]
         st[0] += 1
-        hit = next(h for rid, _, h, _ in rows if rid == v["id"])
+        hit = next(h for rid, _, h, _, _ in rows if rid == v["id"])
         if v.get("expected", True):
             st[1] += 1 if hit else 0
             st[2] += 0 if hit else 1
@@ -283,20 +298,37 @@ def main() -> int:
             kept = 0
             print("\nbait-face（FP 压力面板：陷阱信号在反编译产物中的保留率，不计入 F1）")
             for c in bait.get("cases", []):
-                rec = record_text(blocks, c["source"])
-                if not rec:
+                brec = record_text(blocks, c["source"])
+                if not brec:
                     print(f"  {c['id']:24} missing-block")
                     continue
                 det = c["signals"]
                 consts = norm_constants(det.get("constants", []))
-                c_ok = all(any(f in rec for f in forms) for _, forms in consts)
-                k_ok = all(tok in rec or f'"{tok}"' in rec for tok in det.get("call", []))
+                c_ok = all(any(f in brec for f in forms) for _, forms in consts)
+                k_ok = all(tok in brec or f'"{tok}"' in brec for tok in det.get("call", []))
                 if c_ok and k_ok:
                     kept += 1
                 print(f"  {c['id']:24} preserved={str(c_ok and k_ok):5} consts={c_ok} calls={k_ok} "
                       f"mode={c.get('mode', '-')} mimics={c['mimics']}")
             print(f"bait-face preserved {kept}/{len(bait.get('cases', []))} — "
                   f"每个 preserved 陷阱 = 下游弱检测器一个潜在 FP（隔离由 check_bait_fp.py 保证）")
+
+    if export_json:
+        snap = {
+            "note": "参考判定快照（机器可读）：真实/合成工具 test.out × 本 app 的 per-entry 判定，"
+                    "供第三方工具 diff 对比与评分器自校验。tier 语义见 BENCHMARK「评分口径」。",
+            "test_out": test_out_path,
+            "app": app_path,
+            "summary": {"tp": tp, "fn": fn, "fp": fp, "tn": tn,
+                        "precision": round(prec, 4), "recall": round(rec, 4), "f1": round(f1, 4)},
+            "tiers": {tid: {"label": label, "n": tstat[tid][0], "tp": tstat[tid][1],
+                            "fn": tstat[tid][2], "fp": tstat[tid][3]} for tid, label in TIERS},
+            "results": [{"id": rid, "tier": tier, "expected": e, "hit": h, "detail": d}
+                        for rid, e, h, d, tier in rows],
+        }
+        pathlib.Path(export_json).write_text(json.dumps(snap, ensure_ascii=False, indent=1) + "\n",
+                                             encoding="utf-8")
+        print(f"\n判定快照已导出: {export_json}")
     return 0
 
 

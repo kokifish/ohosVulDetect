@@ -57,6 +57,8 @@ FAMILY_DESC = OrderedDict([
     ('UST', 'UI 全局状态存储明文持久化'),
     ('WIFI', 'Wi-Fi 凭据/轨迹面泄露'),
     ('WRK', 'worker 消息跨线程外传'),
+    ('B64', 'base64 编码令牌运行时解码（文本层无凭据明文的对抗面）'),
+    ('ENUM', '跨 record 枚举成员误用（安全策略语义面）'),
 ])
 
 BEGIN = '<!-- VULNS-OVERVIEW:BEGIN -->'

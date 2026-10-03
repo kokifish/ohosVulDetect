@@ -1,7 +1,7 @@
 // VULN: OVD-DRM-001 内容保护级别不校验即播放（弱级别接受，CWE-757/693）
 import { drm } from '@kit.DrmKit';
 
-function drmLevelGate(): boolean {
+export function drmLevelGate(): boolean {
   const ks = drm.createMediaKeySystem('com.vd-vuln.clearkey');
   const level = ks.getMaxContentProtectionLevel();
   // 不比较级别，直接放行播放

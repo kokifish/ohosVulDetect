@@ -2,7 +2,8 @@ import { common } from '@kit.AbilityKit';
 import { Case, DemoScaffold } from 'lib_common';
 import { ovdSen001 } from '../vulns/sen/OVD-SEN-001';
 import { ovdSen002 } from '../vulns/sen/OVD-SEN-002';
-import { ovdSen001S, ovdSen002S } from '../vulns/sen/Twins';
+import { ovdSen003 } from '../vulns/sen/OVD-SEN-003';
+import { ovdSen001S, ovdSen002S, ovdSen003S } from '../vulns/sen/Twins';
 
 // 并发面（taskpool/@Concurrent）：SEN-001 令牌经结构化克隆跨线程并明文落盘；001S 只传聚合。
 @Entry
@@ -20,7 +21,11 @@ struct SenVulnPage {
           new Case('sen-002 shared-field taint', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
             ovdSen002(ctx)),
           new Case('sen-002S aggregate field', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
-            ovdSen002S(ctx))
+            ovdSen002S(ctx)),
+          new Case('sen-003 cross-module task', () =>
+            ovdSen003()),
+          new Case('sen-003S aggregate task', () =>
+            ovdSen003S())
         ]
       })
     }

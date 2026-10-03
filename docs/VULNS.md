@@ -51,12 +51,14 @@
 | DIMP | 2 | 动态 import 加载：固定/运行时拼接路径，sink 在动态目标 record（半混淆 keep 形态） | 312 |
 | EMTR | 1 | emitter 固定事件明文广播（进程内可截获） | 200 |
 | GEO | 1 | 精确定位坐标明文缓存 | 359 |
-| SEN | 2 | taskpool/@Concurrent 跨线程污点（结构化克隆越界） | 200/312 |
-| UST | 2 | UI 全局状态存储明文持久化 | 312 |
+| SEN | 3 | taskpool/@Concurrent 跨线程污点（结构化克隆越界） | 200/312 |
+| UST | 3 | UI 全局状态存储明文持久化 | 312 |
 | WIFI | 2 | Wi-Fi 凭据/轨迹面泄露 | 312/359 |
 | WRK | 2 | worker 消息跨线程外传 | 200/312 |
+| B64 | 1 | base64 编码令牌运行时解码（文本层无凭据明文的对抗面） | 312 |
+| ENUM | 1 | 跨 record 枚举成员误用（安全策略语义面） | 757 |
 
-共 43 族 137 条（另有同数安全孪生，manifest 总条目 274）。
+共 45 族 141 条（另有同数安全孪生，manifest 总条目 282）。
 <!-- VULNS-OVERVIEW:END -->
 
 ---
@@ -561,6 +563,10 @@
   - 利用：线程边界既能携带凭据（克隆通道）也能隐式共享凭据（别名通道）。
   - 危害：凭据离开 UI 线程沙箱；别名通道无显式数据流语法可循。
   - 检测形态：001 = execute+token；002 = putSync+token 锚定共享字段消费（孪生均只携聚合）。
+- **OVD-SEN-003 跨模块 @Concurrent 任务**
+  - 成因：task 函数本体定义在 lib_common（HAR record），凭据经结构化克隆跨线程且跨模块传入。
+  - 危害：线程边界 + record 边界双重跨越，凭据处理逻辑在共享包中随消费方扩散。
+  - 检测形态：interproc 两跳（execute+token → HAR record 内 task 函数锚定，hop2 无材料仅锚定存在性；孪生只传聚合）。
 
 ## OVD-UST — UI 全局状态污染（CWE-312/922）
 
@@ -569,6 +575,9 @@
   - 利用：状态中心成为凭据集散地；"写状态"与"落盘"在源码上无显式连接。
   - 危害：调用边是框架注册的不可见边，显式调用图分析天然漏报。
   - 检测形态：001 = persistProp+token；002 = interproc 两跳（seed→onUst2Changed，hop2 为 struct 方法名）（孪生均内存态聚合）。
+- **OVD-UST-003 V2 状态装饰器流**
+  - 成因：@ObservedV2 类的 @Trace 字段被赋值 → @Monitor 回调隐式触发并落盘——与 002 同构但走 V2 运行时观察链路（生成访问器 + IMonitor 回调）。
+  - 检测形态：interproc 两跳（seed→onUst3Changed）；V2 的 @Monitor 必须带监听路径参数（`@Monitor('token')`），回调经框架生成代码分发（孪生 003S 只写聚合计数）。
 
 ## OVD-WIFI — Wi-Fi 凭据与轨迹（CWE-312/359）
 
@@ -585,6 +594,22 @@
   - 利用：跨线程消息可被任意 worker 处置；接收侧逻辑在独立 record，主线程审计覆盖不到。
   - 危害：凭据跨线程且在沙箱内持久化，两段式泄露。
   - 检测形态：001 = postMessage+token；002 = interproc 两跳跨 record（hop2 source 锚 worker 文件；hop1 材料须留在具名函数体——es2abc 会把 Promise executor 降为独立闭包 record，2026-10-01 实测教训）。
+
+## OVD-B64 — 编码对抗面（CWE-312/327）
+
+- **OVD-B64-001 base64 编码令牌运行时解码后明文落盘**
+  - 成因：凭据仅以 base64 编码串入字面量池，运行时 `Base64Helper.decodeSync` + TextDecoder 还原后落盘。
+  - 利用：文本层永远看不到凭据明文——按字面量扫描的审计工具整条漏检。
+  - 危害：编码不是加密，但足以击穿静态字面量类检测。
+  - 检测形态：**api-call+constant（decodeSync 调用 + 编码串常量）**——考检测器的编码感知而非明文匹配；明文只存在于运行时（孪生 001S 解码值仅聚合）。
+
+## OVD-ENUM — 跨 record 枚举面（CWE-757）
+
+- **OVD-ENUM-001 TLS 策略枚举误用宽松成员**
+  - 成因：安全策略由枚举成员表达（HSP 定义），feature 侧选择 LENIENT 绕过严格校验。
+  - 利用：枚举误用属语义级缺陷，代码形似合法配置。
+  - 危害：校验被"配置选择"绕过，无任何报错痕迹。
+  - 检测形态：**enum-ref（成员名片段材料 `LENIENT`）**——成员访问编译为 ldobjbyname 字符串存活于使用 record；连写形态 `枚举名.成员` 经真实工具实测不被重构（跨 record 自定义枚举），故材料取成员名片段（T2 档按形态标注；孪生 001S 选 STRICT 同构安全成员）。
 
 ## 检测口径备注（评分联动）
 
