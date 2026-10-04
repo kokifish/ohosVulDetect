@@ -5101,6 +5101,50 @@
     "type": "safe-twin",
     "constants": []
    }
+  },
+  {
+   "id": "OVD-IPC-006",
+   "title": "exported dispatcher without caller auth: caller-controlled module path into dynamic import (traversal) + arbitrary member invocation",
+   "category": "ipc-rpc-traversal",
+   "cwe": "CWE-862/940/915",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/OVD-IPC-006.ets",
+   "function": "ovdIpc6Dispatch",
+   "expected": true,
+   "twin": "OVD-IPC-006S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdIpc6Dispatch",
+      "constants": [
+       "no-caller-check"
+      ]
+     },
+     {
+      "source": "feat_vuln/src/main/ets/vulns/ipc/RpcSecret.ets",
+      "function": "ovdIpc6Secret",
+      "constants": [
+       "ovd_ipc6_cred_8f41a2"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-IPC-006S",
+   "title": "twin: 白名单固定派发仅聚合 (OVD-IPC-006)",
+   "category": "ipc-rpc-traversal",
+   "cwe": "CWE-862",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ipc/Twins.ets",
+   "function": "ovdIpc6DispatchS",
+   "expected": false,
+   "twin_of": "OVD-IPC-006",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
   }
  ]
 }

@@ -1,5 +1,6 @@
 // SAFE 孪生集合（ipc）：OVD-IPC-001S..005S + OVD-CEVT-001S，合并文件。
 import { commonEventManager, BusinessError } from '@kit.BasicServicesKit';
+import { safeOp } from './mods/SafeMod';
 
 // SAFE: OVD-IPC-001S 跨进程入口校验调用方身份后才处理（CWE-862 加固）
 export function ovdIpc001S(callerBundle: string): string {
@@ -64,4 +65,16 @@ export async function ovdCevt002S(log: (s: string) => void): Promise<string> {
       resolve('cevt2S empty payload (topology never broadcast)');
     });
   });
+}
+
+// SAFE: OVD-IPC-006S 白名单固定模块 + 固定成员 + 聚合（CWE-862/940 加固）
+interface SafeModIface {
+  safeOp(p: string): string;
+}
+
+export async function ovdIpc6DispatchS(): Promise<string> {
+  const allowlist = ['SafeMod'];
+  const target = allowlist[0];
+  const mod = await import('./mods/' + target) as SafeModIface;
+  return safeOp(`agg:${target.length}`);
 }

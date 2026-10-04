@@ -66,8 +66,8 @@
       "member_methods": 740
      },
      "feat_vuln": {
-      "files": 215,
-      "identifiers": 1026,
+      "files": 218,
+      "identifiers": 1035,
       "member_methods": 78
      },
      "lib_shared": {
@@ -466,7 +466,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 92687510,
+   "app_bytes": 92693780,
    "app_file": "build/out/ohosVulDetect-api26-debug-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -489,11 +489,11 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 733340,
-     "bytes": 2435357,
-     "functions": 2116,
+     "abc_bytes": 737172,
+     "bytes": 2441627,
+     "functions": 2127,
      "inst_share": 0.0078,
-     "instructions": 66925,
+     "instructions": 67196,
      "name": "feat_vuln",
      "type": "feature"
     },
@@ -525,10 +525,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 67533,
-   "total_instructions": 8582150,
-   "zip_raw_bytes": 92686592,
-   "zip_stored_bytes": 92686592
+   "total_functions": 67544,
+   "total_instructions": 8582421,
+   "zip_raw_bytes": 92692862,
+   "zip_stored_bytes": 92692862
   },
   "api26-release": {
    "api_version": {
@@ -536,7 +536,7 @@
     "release_type": "Beta2",
     "target": 26
    },
-   "app_bytes": 12502379,
+   "app_bytes": 12503437,
    "app_file": "build/out/ohosVulDetect-api26-release-unsigned.app",
    "bundle": "com.koki.VD",
    "modules": [
@@ -595,11 +595,11 @@
      "type": "feature"
     },
     {
-     "abc_bytes": 466056,
-     "bytes": 1861559,
-     "functions": 2116,
+     "abc_bytes": 468644,
+     "bytes": 1864147,
+     "functions": 2127,
      "inst_share": 0.0075,
-     "instructions": 51555,
+     "instructions": 51783,
      "name": "feat_vuln",
      "type": "feature"
     },
@@ -631,10 +631,10 @@
      "type": "shared"
     }
    ],
-   "total_functions": 67533,
-   "total_instructions": 6907054,
-   "zip_raw_bytes": 30718567,
-   "zip_stored_bytes": 12501365
+   "total_functions": 67544,
+   "total_instructions": 6907282,
+   "zip_raw_bytes": 30721155,
+   "zip_stored_bytes": 12502423
   }
  }
 }

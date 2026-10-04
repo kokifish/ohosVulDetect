@@ -2,8 +2,9 @@ import { common, Want } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 import { emitter } from '@kit.BasicServicesKit';
 import { Case, DemoScaffold } from 'lib_common';
-import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S, ovdCevt001S } from '../vulns/ipc/Twins';
+import { ovdIpc001S, ovdIpc002S, ovdIpc003S, ovdIpc004S, ovdIpc005S, ovdCevt001S, ovdIpc6DispatchS } from '../vulns/ipc/Twins';
 import { ovdIpc003 } from '../vulns/ipc/OVD-IPC-003';
+import { ovdIpc6Dispatch } from '../vulns/ipc/OVD-IPC-006';
 import { ovdCevt001 } from '../vulns/ipc/OVD-CEVT-001';
 import { ovdIpc002MagicLocal, ovdIpc004ReadLocal } from '../abilities/BackdoorAbility';
 import { ovdCevt002 } from '../vulns/ipc/OVD-CEVT-002';
@@ -80,6 +81,10 @@ struct IpcPage {
             ovdCevt002(log)),
           new Case('cevt-002S minimal payload', (ctx: common.UIAbilityContext, log: (s: string) => void) =>
             ovdCevt002S(log)),
+          new Case('ipc-006 rpc traversal', async (): Promise<string> =>
+            ovdIpc6Dispatch('../RpcSecret', 'ovdIpc6Secret')),
+          new Case('ipc-006S allowlist dispatch', async (): Promise<string> =>
+            ovdIpc6DispatchS()),
         ]
       })
 

@@ -19,7 +19,7 @@
 | INJ | 4 | SQL 注入/路径穿越/不安全反序列化导航 | 89/22/20 |
 | STOR | 6 | 明文存储/低安全级数据库/PII 缓存 | 312/668/359/530 |
 | LOG | 3 | 日志泄露令牌/口令 | 532 |
-| IPC | 5 | exported 面/魔杖参数/TCP 后门/deeplink 穿越/事件提权 | 862/200/306/22/345 |
+| IPC | 6 | exported 面/魔杖参数/TCP 后门/deeplink 穿越/事件提权 | 862/200/306/22/345 |
 | PERM | 2 | 权限申请-不用 | 732/250 |
 | PASTE | 5 | 剪贴板敏感数据（跨设备/常驻监听） | 200 |
 | PRIV | 3 | 设备指纹/持续定位外传（含读→传链） | 359 |
@@ -58,7 +58,7 @@
 | B64 | 1 | base64 编码令牌运行时解码（文本层无凭据明文的对抗面） | 312 |
 | ENUM | 1 | 跨 record 枚举成员误用（安全策略语义面） | 757 |
 
-共 45 族 141 条（另有同数安全孪生，manifest 总条目 282）。
+共 45 族 142 条（另有同数安全孪生，manifest 总条目 284）。
 <!-- VULNS-OVERVIEW:END -->
 
 ---
@@ -258,6 +258,15 @@
   - 成因：entry `backup_config.json` `allowToBackupRestore: true`，而 STOR-001/002 存明文。
   - 利用：用户/攻击者触发备份 → 明文凭据随备份流落外部存储或电脑。
   - 危害：把设备内漏洞放大为"合法通道"的数据外带。
+
+## OVD-IPC-006 — RPC 派发穿越（HwMapKit 型，CWE-862/940/915）
+
+- **OVD-IPC-006 导出面无调用方鉴权 + 调用方可控模块路径动态 import 穿越**
+  - 成因：dispatcher 形态——导出接口不校验调用方（callerPolicy 缺失声明）、模块名来自调用方拼入动态 import（`'../'` 可越出白名单目录）、返回模块按调用方成员名索引调用。
+  - 利用：三要素组合达成「任意 record 任意函数」可达——真实野生原语（HwMapKit OfflineDataServiceAbility，DARKNAVY 披露、厂商已修复）。
+  - 危害：遍历目标 record 内凭据载体被任意调用；白名单机制被路径拼接绕过。
+  - 检测形态：interproc 两跳（dispatcher 携 no-caller-check → 凭据 record 锚定）；**工程要点：遍历目标 record 须静态导入入包防 tree-shake 静默丢弃**（__diag__ 分支引用，正式路径仍走动态穿越）。
+  - 孪生 006S：白名单固定模块 + 固定成员 + 聚合回显（同构动态 import 形态）。
 
 ## OVD-PERM / OVD-PASTE / OVD-PRIV — 权限与隐私面（CWE-732/200/359）
 

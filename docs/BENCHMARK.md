@@ -14,8 +14,8 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 141 + 141（manifest 282 条，双向一致；interproc 链 15 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002/003 V1/V2 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名、SEN-003 跨模块并发等；动态加载 DIMP 2 对半混淆 keep 形态；B64 编码对抗面；ENUM 跨 record 枚举；桥间污点 WEB-009/010） | groundtruth/manifest.json |
-| 评分 | **F1=1.000（2026-10-03 实测：TP=141 FN=0 FP=0 TN=141，282 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 0.917（T3=0.000）；参考判定快照 groundtruth/reference_eval.json（score_output --export-json 生成，第三方 diff 对比用） | score_output.py |
+| 漏洞/孪生 | 142 + 142（manifest 284 条，双向一致；interproc 链 16 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002/003 V1/V2 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名、SEN-003 跨模块并发、IPC-006 RPC 派发穿越（HwMapKit 型真实原语）等；动态加载 DIMP 2 对半混淆 keep 形态；B64 编码对抗面；ENUM 跨 record 枚举；桥间污点 WEB-009/010） | groundtruth/manifest.json |
+| 评分 | **F1=1.000（2026-10-04 实测：TP=142 FN=0 FP=0 TN=142，284 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 0.917（T3=0.000）；参考判定快照 groundtruth/reference_eval.json（score_output --export-json 生成，第三方 diff 对比用） | score_output.py |
 | feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
@@ -81,9 +81,9 @@
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
 - **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
-- **cat-wrk/sen/tnt/ust/b64/enum 新对真机 sweep**：WRK-002/SEN-002/003、TNT-007/008/009、
-  UST-002/003、B64-001、ENUM-001 九对已过全门禁 + 合成 e2e；bench26 CLI 拉起被 Beta2 GUI
-  引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 各页。
+- **cat-wrk/sen/tnt/ust/b64/enum/ipc 新对真机 sweep**：WRK-002/003、SEN-002/003、
+  TNT-007/008/009、UST-002/003、B64-001、ENUM-001、IPC-006 十对已过全门禁 + 合成 e2e；
+  bench26 CLI 拉起被 Beta2 GUI 引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 各页。
 - **真实工具 spot-check 常态化**：2026-10-01 审计轮实证合成回归基线测不出「材料被
   es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——新增 interproc 形态时发版前
   须用逆向工具对 build/out 实跑评分抽查（已执行，F1=1.000）。WEB-009S/010S 同 record
