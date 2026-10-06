@@ -52,7 +52,10 @@
   +ENUM-001（跨 record 枚举误用）/ +UST-003（V2 @ObservedV2/@Trace/@Monitor 流）/
   +SEN-003（跨模块 @Concurrent）——manifest 282 条。实测教训：V2 @Monitor 必须带路径
   参数；es2abc 对本地字符串枚举编译期值内联（导入枚举才保成员名）；跨 record 自定义
-  枚举连写不被参考工具重构（规则材料取成员名片段）。
+  枚举连写不被参考工具重构（规则材料取成员名片段）。IPC-006 补充：遍历目标 record 须
+  静态导入防 tree-shake（fn_anchors 门禁拦截）。配套：corpus_meta schema 1.1 records
+  扩展到 feat_vuln（画像缓存键 bump v2）；check_fn_anchors / reference_eval.json /
+  split_folds.py 构成外部消费者接入面。
 - **评分区分度轮（2026-10-01）**：下限实验（零语义 record-dump 工具实评 F1=0.969）暴露粒度反转——
   interproc hop 找不到函数块时回退 record 域，更笨的 dump 反而多拿分。修复：hop 严格锚定命名
   函数块（不回退）；function_block 改词边界正则（`[#>]fn\b`，顺带修 fnS 前缀误配）；interproc

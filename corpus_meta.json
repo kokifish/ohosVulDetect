@@ -204,6 +204,42 @@
      "inst_share": 0.0536,
      "instructions": 51555,
      "name": "feat_vuln",
+     "records": {
+      "count": 207,
+      "max_method": {
+       "instructions": 1577,
+       "name": "func_main_0",
+       "record": "feat_vuln.src.main.ets.workers.LeakWorker"
+      },
+      "top1": {
+       "functions": 0,
+       "instructions": 6033,
+       "name": "<none>"
+      },
+      "top1_share": 0.117,
+      "top5": [
+       {
+        "instructions": 6033,
+        "name": "<none>"
+       },
+       {
+        "instructions": 1786,
+        "name": "feat_vuln.src.main.ets.workers.LeakWorker"
+       },
+       {
+        "instructions": 1676,
+        "name": "feat_vuln.src.main.ets.pages.WebPage"
+       },
+       {
+        "instructions": 1376,
+        "name": "feat_vuln.src.main.ets.pages.IpcPage"
+       },
+       {
+        "instructions": 1152,
+        "name": "feat_vuln.src.main.ets.pages.Backdoor"
+       }
+      ]
+     },
      "type": "feature"
     },
     {
@@ -310,6 +346,42 @@
      "inst_share": 0.0849,
      "instructions": 51555,
      "name": "feat_vuln",
+     "records": {
+      "count": 207,
+      "max_method": {
+       "instructions": 1577,
+       "name": "func_main_0",
+       "record": "feat_vuln.src.main.ets.workers.LeakWorker"
+      },
+      "top1": {
+       "functions": 0,
+       "instructions": 6033,
+       "name": "<none>"
+      },
+      "top1_share": 0.117,
+      "top5": [
+       {
+        "instructions": 6033,
+        "name": "<none>"
+       },
+       {
+        "instructions": 1786,
+        "name": "feat_vuln.src.main.ets.workers.LeakWorker"
+       },
+       {
+        "instructions": 1676,
+        "name": "feat_vuln.src.main.ets.pages.WebPage"
+       },
+       {
+        "instructions": 1376,
+        "name": "feat_vuln.src.main.ets.pages.IpcPage"
+       },
+       {
+        "instructions": 1152,
+        "name": "feat_vuln.src.main.ets.pages.Backdoor"
+       }
+      ]
+     },
      "type": "feature"
     },
     {
@@ -601,6 +673,42 @@
      "inst_share": 0.0075,
      "instructions": 51783,
      "name": "feat_vuln",
+     "records": {
+      "count": 210,
+      "max_method": {
+       "instructions": 1577,
+       "name": "func_main_0",
+       "record": "feat_vuln.src.main.ets.workers.LeakWorker"
+      },
+      "top1": {
+       "functions": 0,
+       "instructions": 6033,
+       "name": "<none>"
+      },
+      "top1_share": 0.1165,
+      "top5": [
+       {
+        "instructions": 6033,
+        "name": "<none>"
+       },
+       {
+        "instructions": 1786,
+        "name": "feat_vuln.src.main.ets.workers.LeakWorker"
+       },
+       {
+        "instructions": 1676,
+        "name": "feat_vuln.src.main.ets.pages.WebPage"
+       },
+       {
+        "instructions": 1488,
+        "name": "feat_vuln.src.main.ets.pages.IpcPage"
+       },
+       {
+        "instructions": 1152,
+        "name": "feat_vuln.src.main.ets.pages.Backdoor"
+       }
+      ]
+     },
      "type": "feature"
     },
     {

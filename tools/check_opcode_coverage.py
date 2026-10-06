@@ -21,6 +21,7 @@ import tempfile
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from dis_cache import NOISE, OPCODE_RE, disasm  # 口径单源（同 module_share/corpus_meta）
 
+# feat_compfarm 有意不计入覆盖口径：其指令均在已覆盖集内，21 个未覆盖组件亦不在其中
 MODULES = ["entry", "feat_api", "feat_vuln", "feat_heavy", "lib_shared"]
 PRODUCTS = ["api26", "api24"]
 # hvigor 强制要求名为 "default" 的 product 存在，default 即 api26

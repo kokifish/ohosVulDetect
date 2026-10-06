@@ -24,6 +24,7 @@ import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# feat_compfarm 的组件调用不参与三维对账（组件面以 SDK 全集为分母，农场是补齐语料非覆盖证据）
 MODULES = ['entry', 'feat_api', 'feat_vuln', 'feat_heavy', 'lib_common', 'lib_shared']
 DEFAULT_SDK = os.environ.get(
     'DEVECO_SDK_HOME', '/Applications/DevEco-Studio.app/Contents/sdk')

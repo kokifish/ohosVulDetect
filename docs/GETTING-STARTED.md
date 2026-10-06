@@ -57,6 +57,8 @@ ArkTS 源码 → hvigor/es2abc 编译 → 每模块一个 modules.abc（方舟�
 | 修改语料/页面 | 先读 `AGENTS.md`（checklist + Mandatory 门禁），一切数字先查 `docs/BENCHMARK.md` |
 | 构建后全量自检 | `python3 tools/verify.py`（--fast 为秒级快门禁） |
 | 查鸿蒙能力全景/指令可达性归因 | `docs/ohos.md` |
+| 对比自己的工具与参考判定 | `groundtruth/reference_eval.json`（per-entry 快照）+ `python3 groundtruth/score_output.py --export-json` 自导出 |
+| 防止规则过拟合全集 | `python3 tools/split_folds.py`（按族分层 train/test 建议） |
 | 看构建/部署踩坑记录 | `docs/BENCHMARK.md` 对应小节 |
 
 ## 五、三条标准使用路径

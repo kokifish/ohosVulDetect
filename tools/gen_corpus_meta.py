@@ -34,6 +34,8 @@ VARIANTS = ["api26-release", "api26-debug", "api24-release", "api24-debug"]
 TIERS = ["small", "medium"]
 REC_RE = re.compile(r"^\.function\s+\S+\s+&([^&]+)&\.")
 OP_RE = re.compile(r"^\s+([a-z][a-z0-9._]+)")
+# 输出 record 级分布的模块（feat_heavy=不均衡主轴；feat_vuln=漏洞 record 布局，外部消费者定位用）
+RECORD_MODULES = {"feat_heavy", "feat_vuln"}
 
 MODULE_TAGS = {
     "entry": "HAP 壳：五按钮跨 HAP startAbility 拉起 Api/Vuln/Heavy/OvdShared/CompFarm",
@@ -132,7 +134,7 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
                 i, f, _ = analyze(text)
                 inst += i
                 funcs += f
-                if with_records and name == "feat_heavy":
+                if with_records and name in RECORD_MODULES:
                     rs, mm = record_stats(text)
                     for rec, (ri, rf) in rs.items():
                         cur = rec_stats.setdefault(rec, [0, 0])
@@ -142,7 +144,7 @@ def profile_app(app: pathlib.Path, dis: str, with_records: bool) -> dict:
                         max_method = mm
             entry = {"name": name, "type": mods_meta.get(name, ""), "bytes": pkg.stat().st_size,
                      "abc_bytes": abc_bytes, "instructions": inst, "functions": funcs}
-            if rec_stats:
+            if rec_stats and name in RECORD_MODULES:
                 tops = sorted(rec_stats.items(), key=lambda kv: -kv[1][0])
                 total = sum(v[0] for v in rec_stats.values())
                 entry["records"] = {
@@ -202,7 +204,7 @@ def profile_app_cached(app: pathlib.Path, dis: str, with_records: bool, key: str
     缓存按 .app 内容 md5 寻址，天然失效安全；落 build/dis_cache/（gitignored）。"""
     cache_file = ROOT / "build" / "dis_cache" / "meta_profile_cache.json"
     digest = hashlib.md5(app.read_bytes()).hexdigest()
-    ck = f"v1:{key}:{digest}"  # v1 = 画像口径版本；改 profile/record 统计逻辑时 bump
+    ck = f"v2:{key}:{digest}"  # 口径版本：v2 = RECORD_MODULES 扩展 feat_vuln records；改画像逻辑时 bump
     cache: dict = {}
     if cache_file.exists():
         try:

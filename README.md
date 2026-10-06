@@ -32,7 +32,9 @@
 
 | 文件 | 内容 |
 |---|---|
-| `corpus_meta.json` | 机器可读语料画像：各变体模块构成、指令/函数/份额、feat_heavy record 级分布、压缩画像、混淆画像（选项/keep/改名映射规模）、推荐用法。实测于构建产物，`python3 tools/gen_corpus_meta.py` 刷新、`--check` 防漂移 |
+| `corpus_meta.json` | 机器可读语料画像：各变体模块构成、指令/函数/份额、record 级分布（feat_heavy 不均衡主轴 + feat_vuln 漏洞 record 布局）、压缩画像、混淆画像（选项/keep/改名映射规模）、推荐用法。实测于构建产物，`python3 tools/gen_corpus_meta.py` 刷新、`--check` 防漂移 |
+| `groundtruth/reference_eval.json` | 参考判定快照：参考工具对全部条目的 per-entry 判定 + 分档 sub-F1（`score_output --export-json` 生成，语料演进后随真实工具实跑刷新）；第三方工具 diff 对比与评分器自校验入口 |
+| `tools/split_folds.py` | 按族分层 train/test 划分建议（确定性 seed）——外部工具调试规则时避免在全集上过拟合 |
 | `docs/BENCHMARK.md` | 唯一手册与基线：构建/评分/模拟器/各专题教训，一切数字以此为准 |
 | `groundtruth/manifest.json` | 漏洞 + 安全孪生清单唯一事实源（`groundtruth/check_manifest.py` 双向门禁） |
 | `AGENTS.md` | 仓库结构、checklist、门禁工作流（面向修改本仓库的人） |
