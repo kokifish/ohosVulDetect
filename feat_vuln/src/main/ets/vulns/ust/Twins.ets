@@ -113,3 +113,33 @@ export function ovdUst3ArmS(ctx: common.UIAbilityContext): Promise<string> {
     }, 50);
   });
 }
+
+
+// SAFE: OVD-UST-004S 同构深继承链仅携带聚合计数，无凭据无持久化（CWE-312 加固）
+class Ust4BaseS {
+  protected cnt: number = 0;
+  seedS(n: number): void {
+    this.cnt = n;
+  }
+  carryRawS(): number {
+    return this.cnt;
+  }
+}
+
+class Ust4MidS extends Ust4BaseS {
+  carryS(): number {
+    return this.carryRawS();
+  }
+}
+
+class Ust4LeafS extends Ust4MidS {
+  carryS(): number {
+    return super.carryS();
+  }
+}
+
+export function ovdUst004S(): string {
+  const leaf = new Ust4LeafS();
+  leaf.seedS(7);
+  return `ust4S chain aggregate ${leaf.carryS()} (no persistence)`;
+}

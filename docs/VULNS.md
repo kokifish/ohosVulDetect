@@ -45,20 +45,20 @@
 | DKV | 2 | 分布式 KV 明文令牌自动组网同步 | 312 |
 | RSEC | 1 | 资源文件面硬编码秘密（string.json/rawfile，值不可见、访问面可检） | 798 |
 | MICC | 1 | 麦克风静默采集（无手势即录） | 200 |
-| TNT | 9 | 跨函数污点链（source/sink 分置，interproc 规则） | 200 |
+| TNT | 10 | 跨函数污点链（source/sink 分置，interproc 规则） | 200 |
 | DEP | 2 | 跨模块依赖链：HSP 源 → HAR 中转 → feature 落盘（interproc 逐跳 source） | 200 |
 | DEV | 1 | 设备指纹字段拼接明文落盘 | 359 |
 | DIMP | 2 | 动态 import 加载：固定/运行时拼接路径，sink 在动态目标 record（半混淆 keep 形态） | 312 |
 | EMTR | 1 | emitter 固定事件明文广播（进程内可截获） | 200 |
 | GEO | 1 | 精确定位坐标明文缓存 | 359 |
 | SEN | 3 | taskpool/@Concurrent 跨线程污点（结构化克隆越界） | 200/312 |
-| UST | 3 | UI 全局状态存储明文持久化 | 312 |
+| UST | 4 | UI 全局状态存储明文持久化 | 312 |
 | WIFI | 2 | Wi-Fi 凭据/轨迹面泄露 | 312/359 |
 | WRK | 2 | worker 消息跨线程外传 | 200/312 |
 | B64 | 1 | base64 编码令牌运行时解码（文本层无凭据明文的对抗面） | 312 |
 | ENUM | 1 | 跨 record 枚举成员误用（安全策略语义面） | 757 |
 
-共 45 族 142 条（另有同数安全孪生，manifest 总条目 284）。
+共 45 族 144 条（另有同数安全孪生，manifest 总条目 288）。
 <!-- VULNS-OVERVIEW:END -->
 
 ---
@@ -521,7 +521,8 @@
 - **007 Promise.then 回调链**：source→mid→sink 以具名函数挂入 then 链，调用边由 Promise 语义建立；helpers 全部 export 以在 release（ArkGuard 改名）下保住 hop 级匹配（孪生均同构只携聚合）。
 - **008 函数派发表间接调用**：sink 以函数引用进数组，调用点为 ldobjbyvalue + 间接 call——sink 名不出现在调用点文本（只在 definefunc 槽位映射），考一等函数/派发结构还原能力。
 - **009 导入别名跨 record sink**：调用点函数体只有别名（`import {ovdT9Sink as relay9}`），真名只在 import/export 表，sink 在 lib_shared record——考调用边经别名解析 + 跨 record 锚定。
-- 通用约束（001–009）：hop 锚定的函数须具名且 export（release 下 ArkGuard 改名私有函数，评分器按命名函数块严格锚定，不回退 record 域）。
+- **010 动态键属性存取（反射式访问）**：Record 键由运行期拼接派生，abc 面为 stobjbyvalue/ldobjbyvalue（键在寄存器）——属性名不进 IR，按属性名匹配存取链的检测器在此断流，须追踪键值数据流（孪生 010S 同构动态键仅聚合）。
+- 通用约束（001–010）：hop 锚定的函数须具名且 export（release 下 ArkGuard 改名私有函数，评分器按命名函数块严格锚定，不回退 record 域）。
 
 ## OVD-DEP — 跨模块依赖链（CWE-200/312）
 
@@ -587,6 +588,10 @@
 - **OVD-UST-003 V2 状态装饰器流**
   - 成因：@ObservedV2 类的 @Trace 字段被赋值 → @Monitor 回调隐式触发并落盘——与 002 同构但走 V2 运行时观察链路（生成访问器 + IMonitor 回调）。
   - 检测形态：interproc 两跳（seed→onUst3Changed）；V2 的 @Monitor 必须带监听路径参数（`@Monitor('token')`），回调经框架生成代码分发（孪生 003S 只写聚合计数）。
+- **OVD-UST-004 深继承链落盘**
+  - 成因：cred 字段定义在基类，取值经 Mid→Leaf 两级方法覆盖 + super 逐级上溯后 fileIo 落盘——字面量物化与落盘分处不同函数块，类继承链是唯一传输介质。
+  - 危害：按 record 抽查只见「基类存、叶子写」两段无害片段；须解析 extends 链上的字段归属才见全貌。
+  - 检测形态：interproc 两跳（ovdUst4Source→ovdUst4Store），类成员名不参与锚定（release 下照常混淆），靠 token 常量 + writeSync 调用面（孪生 004S 同构继承链仅聚合）。
 
 ## OVD-WIFI — Wi-Fi 凭据与轨迹（CWE-312/359）
 

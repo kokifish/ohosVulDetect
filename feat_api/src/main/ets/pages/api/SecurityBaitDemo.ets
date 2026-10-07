@@ -1,15 +1,25 @@
-import { common } from '@kit.AbilityKit';
-import { http } from '@kit.NetworkKit';
+import { common, wantAgent, Want } from '@kit.AbilityKit';
+import { http, socket } from '@kit.NetworkKit';
 import { cryptoFramework } from '@kit.CryptoArchitectureKit';
-import { pasteboard } from '@kit.BasicServicesKit';
+import { pasteboard, commonEventManager } from '@kit.BasicServicesKit';
 import { preferences } from '@kit.ArkData';
-import { taskpool } from '@kit.ArkTS';
+import { taskpool, util } from '@kit.ArkTS';
 import wifiManager from '@ohos.wifiManager';
 import { distributedKVStore } from '@kit.ArkData';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import emitter from '@ohos.events.emitter';
 import worker, { MessageEvents } from '@ohos.worker';
 import { fileIo as fs } from '@kit.CoreFileKit';
+import { notificationManager } from '@kit.NotificationKit';
+import { inputConsumer } from '@kit.InputKit';
+import audio from '@ohos.multimedia.audio';
+import { speechRecognizer } from '@kit.CoreSpeechKit';
+import { photoAccessHelper } from '@kit.MediaLibraryKit';
+import { drm } from '@kit.DrmKit';
+import { backgroundTaskManager } from '@kit.BackgroundTasksKit';
+import { accessibility } from '@kit.AccessibilityKit';
+import { cert } from '@kit.DeviceCertificateKit';
+import geoLocationManager from '@ohos.geoLocationManager';
 import { Case, DemoScaffold } from 'lib_common';
 
 function fsOpenSyncShim(path: string): number {
@@ -181,6 +191,252 @@ struct SecurityBaitDemo {
           new Case('bait global-open near-miss', (): string => {
             // mimics OVD-INJ-003（scope=global 面）：openSync 同形 + 路径异构
             return baitOpenProbe();
+          }),
+          new Case('bait a11y probe near-miss', (): string => {
+            // mimics OVD-A11Y-001（读屏侦察+采集端点面）：读态同形，端点仅本地串
+            const open = accessibility.isScreenReaderOpenSync();
+            const endpoint = 'https://bait-metrics.example/a11x';
+            return `bait-a11y probe endpoint=${endpoint.length}B (local only) reader=${open}`;
+          }),
+          new Case('bait auth hardcode near-miss', (): string => {
+            // mimics OVD-AUTH-001（内置口令对比面）：本地 mock 校验，常量异构
+            const role = 'operator';
+            const pin = 'Bench@456';
+            const ok = role === 'operator' && pin.length === 9;
+            return `bait-auth mock login ${ok ? 'ok' : 'deny'}`;
+          }),
+          new Case('bait b64 decode near-miss', (): string => {
+            // mimics OVD-B64-001（decodeSync 编码载荷面）：解码值仅聚合
+            const helper = new util.Base64Helper();
+            const bytes = helper.decodeSync('YmFpdF9iNjRfbWFya2VyXzIyMg==');
+            return `bait-b64 decoded len=${bytes.length} (no store)`;
+          }),
+          new Case('bait bgtask idle near-miss', async (ctx: common.UIAbilityContext): Promise<string> => {
+            // mimics OVD-BGTASK-001（startBackgroundRunning 面）：死分支调用面
+            if (baitGate()) {
+              const waInfo: wantAgent.WantAgentInfo = {
+                wants: [{ bundleName: 'com.koki.VD', abilityName: 'EntryAbility' }],
+                requestCode: 0
+              };
+              const agentObj = await wantAgent.getWantAgent(waInfo);
+              await backgroundTaskManager.startBackgroundRunning(ctx,
+                backgroundTaskManager.BackgroundMode.DATA_TRANSFER, agentObj);
+              await backgroundTaskManager.stopBackgroundRunning(ctx);
+            }
+            return 'bait-bgtask idle shape (bait-bg-task-m1, gated)';
+          }),
+          new Case('bait cert public near-miss', async (): Promise<string> => {
+            // mimics OVD-CERT-001（createX509Cert 自签面）：解析失败即弃，标记异构
+            try {
+              const blob: cert.EncodingBlob = {
+                data: new util.TextEncoder()
+                  .encodeInto('-----BEGIN CERTIFICATE-----\nbait-certs-public\n-----END CERTIFICATE-----').slice(),
+                encodingFormat: cert.EncodingFormat.FORMAT_PEM
+              };
+              await cert.createX509Cert(blob);
+            } catch (e) {
+            }
+            return 'bait-cert public shape (parse-only)';
+          }),
+          new Case('bait cevt echo near-miss', (): string => {
+            // mimics OVD-CEVT-001（公共事件明文广播面）：死分支发布，事件名异构
+            if (baitGate()) {
+              commonEventManager.publish('bait.session.echo', { code: 0, data: 'aggregate=1' }, () => {
+              });
+            }
+            return 'bait-cevt echo shape (bait.session.echo, gated)';
+          }),
+          new Case('bait conf key near-miss', async (): Promise<string> => {
+            // mimics OVD-CONF-003（api-key 请求头面）：头键同形、常量异构、端点 example
+            const req = http.createHttp();
+            try {
+              await req.request('https://bait-conf3.example/api', {
+                method: http.RequestMethod.GET,
+                header: { 'x-api-key': 'bait_conf3_key_yy17' },
+                connectTimeout: 3000,
+                readTimeout: 3000
+              });
+            } catch (e) {
+            }
+            req.destroy();
+            return 'bait-conf3 request carried bait key';
+          }),
+          new Case('bait debug diag near-miss', (): string => {
+            // mimics OVD-DEBUG-003（hilog debug 开关残留面）：诊断标记异构
+            hilog.debug(0xFF0B, 'BAIT', 'diag %{public}s enabled', 'bait_debug3_diag');
+            return 'bait-debug3 diag switch logged';
+          }),
+          new Case('bait dep local near-miss', async (): Promise<string> => {
+            // mimics OVD-DEP-001（动态 import 取凭据面）：动态加载仅取版本号
+            const mod = await import('lib_shared') as Record<string, Object>;
+            const verFn = mod['hspVersion'] as () => string;
+            return `bait dep local: ${verFn()} (bait_dep_marker_q1)`;
+          }),
+          new Case('bait dev fp near-miss', (): string => {
+            // mimics OVD-DEV-001（设备指纹常量面）：指纹串仅本地拼接不落盘
+            const fp = 'bait_dev_fp_d42c';
+            return `bait-dev fp len=${fp.length}`;
+          }),
+          new Case('bait dimp sync near-miss', (ctx: common.UIAbilityContext): string => {
+            // mimics OVD-DIMP-001（动态目标 putSync 面）：putSync 同形、常量异构
+            const p = preferences.getPreferencesSync(ctx, { name: 'bait_dimp' });
+            p.putSync('bait_dimp_metric', 'bait_dimp_tok_7f3e92');
+            p.deleteSync('bait_dimp_metric');
+            return 'bait-dimp near-miss shape (metric only)';
+          }),
+          new Case('bait dlink purge near-miss', (): string => {
+            // mimics OVD-DLINK-001（深链 purge 指令字面量面）：指令字异构不路由
+            const cmd = 'purge-cache-later';
+            return `bait-dlink cmd=${cmd} (not routed)`;
+          }),
+          new Case('bait drm level near-miss', (): string => {
+            // mimics OVD-DRM-001（createMediaKeySystem 级别放行面）：级别读取并遵守，标记异构
+            let level = -1;
+            try {
+              const ks = drm.createMediaKeySystem('com.bait.clearkey');
+              level = ks.getMaxContentProtectionLevel();
+            } catch (e) {
+            }
+            return `bait-drm level=${level} (gate enforced, com.bait.clearkey)`;
+          }),
+          new Case('bait form event near-miss', async (ctx: common.UIAbilityContext): Promise<string> => {
+            // mimics OVD-FORM-002（卡片事件 KV put 面）：put 同形、键异构
+            const store = preferences.getPreferencesSync(ctx, { name: 'bait_form' });
+            await store.put('bait_form_event', 1);
+            await store.flush();
+            return 'bait-form event put (benign counter)';
+          }),
+          new Case('bait geo country near-miss', async (): Promise<string> => {
+            // mimics OVD-GEO-001（精确坐标缓存面）：仅读国家码无需授权，标记异构
+            try {
+              const cc = await geoLocationManager.getCountryCode();
+              return `bait-geo country=${cc.country} (bait_geo_coarse_d1)`;
+            } catch (e) {
+              return 'bait-geo country unavailable (bait_geo_coarse_d1)';
+            }
+          }),
+          new Case('bait ipc local near-miss', async (): Promise<string> => {
+            // mimics OVD-IPC-003（任意来源 TCP 服务面）：死分支回环绑定，常量异构
+            if (baitGate()) {
+              const s = socket.constructTCPSocketInstance();
+              try {
+                await s.bind({ address: '127.0.0.1', port: 38888 });
+                await s.send({ data: 'ping' });
+              } finally {
+                s.close();
+              }
+            }
+            return 'bait-ipc loopback shape 127.0.0.1:38888 (gated)';
+          }),
+          new Case('bait ired echo near-miss', async (ctx: common.UIAbilityContext): Promise<string> => {
+            // mimics OVD-IRED-001（startAbility 意图重定向面）：死分支重定向，事件字异构
+            if (baitGate()) {
+              await ctx.startAbility({ action: 'bait.ired.echo' } as Want);
+            }
+            return 'bait-ired echo shape (bait.ired.echo, gated)';
+          }),
+          new Case('bait keylog hot near-miss', (): string => {
+            // mimics OVD-KEYLOG-002（hotkeyChange 聚合落盘面）：监听即注销无落盘
+            try {
+              const cb = (ho: inputConsumer.HotkeyOptions): void => {
+              };
+              inputConsumer.on('hotkeyChange', { preKeys: [2019], finalKey: 2020 }, cb);
+              inputConsumer.off('hotkeyChange', { preKeys: [2019], finalKey: 2020 });
+            } catch (e) {
+            }
+            return 'bait-keylog hotkey shape (bait-hotkeys.log, no sink)';
+          }),
+          new Case('bait media album near-miss', async (ctx: common.UIAbilityContext): Promise<string> => {
+            // mimics OVD-MEDIA-001（getAssets 相册枚举面）：死分支查询，端点异构
+            if (baitGate()) {
+              const helper = photoAccessHelper.getPhotoAccessHelper(ctx);
+              const result = await helper.getAssets({} as photoAccessHelper.FetchOptions);
+              result.close();
+            }
+            return 'bait-media album shape (https://bait-metrics.example/album, gated)';
+          }),
+          new Case('bait micc check near-miss', async (): Promise<string> => {
+            // mimics OVD-MICC-001（createAudioCapturer 静默采集面）：死分支创建即释放
+            if (baitGate()) {
+              const opts: audio.AudioCapturerOptions = {
+                streamInfo: {
+                  samplingRate: 16000,
+                  channels: audio.AudioChannel.CHANNEL_1,
+                  sampleFormat: audio.AudioSampleFormat.SAMPLE_FORMAT_S16LE,
+                  encodingType: audio.AudioEncodingType.ENCODING_TYPE_RAW
+                },
+                capturerInfo: { source: audio.SourceType.SOURCE_TYPE_MIC, capturerFlags: 0 }
+              };
+              const capturer: audio.AudioCapturer = await audio.createAudioCapturer(opts);
+              await capturer.release();
+            }
+            return 'bait-micc check shape (bait-mic-check-e5b2, gated)';
+          }),
+          new Case('bait notif agg near-miss', async (): Promise<string> => {
+            // mimics OVD-NOTIF-002（通知 publish 令牌面）：死分支发布聚合计数
+            if (baitGate()) {
+              const req: notificationManager.NotificationRequest = {
+                id: 902,
+                content: {
+                  notificationContentType: notificationManager.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
+                  normal: { title: 'bait', text: 'bait_notif2_cnt_46cd' }
+                }
+              };
+              await notificationManager.publish(req);
+            }
+            return 'bait-notif aggregate shape';
+          }),
+          new Case('bait perm clip near-miss', async (): Promise<string> => {
+            // mimics OVD-PERM-002（剪贴板读取画像面）：读取即弃不聚合
+            const d = await pasteboard.getSystemPasteboard().getData();
+            const text = d.getPrimaryText() ?? '';
+            return `bait perm foreground only len=${text.length}`;
+          }),
+          new Case('bait priv metrics near-miss', (): string => {
+            // mimics OVD-PRIV-001（隐私采集端点字面量面）：端点串仅本地存在
+            const endpoint = 'http://127.0.0.1:8080/metrics';
+            return `bait-priv endpoint len=${endpoint.length}`;
+          }),
+          new Case('bait pwdin echo near-miss', (): string => {
+            // mimics OVD-PWDIN-001（密码框明文回显面）：搜索框标签回显
+            const label = 'bench search field';
+            return `plain-log: ${label.length} chars`;
+          }),
+          new Case('bait rsec res near-miss', (ctx: common.UIAbilityContext): string => {
+            // mimics OVD-RSEC-001（资源名 API key 面）：资源名不存在即回退，标记异构
+            try {
+              const v = ctx.resourceManager.getStringByNameSync('bait_res_metric');
+              return `bait-rsec res=${v}`;
+            } catch (e) {
+              return 'bait-rsec res fallback (name absent)';
+            }
+          }),
+          new Case('bait secret sample near-miss', (): string => {
+            // mimics OVD-SECRET-002（sk- 密钥字面量面）：样例格式串仅取长度
+            const sample = 'sk-baitbench-0a1b2c3d4e5f60718293a4b5c6d7e8f9';
+            return `bait-secret sample len=${sample.length}`;
+          }),
+          new Case('bait speech voice near-miss', async (): Promise<string> => {
+            // mimics OVD-SPEECH-001（startListening 语音外传面）：死分支引擎创建即停止
+            if (baitGate()) {
+              const engine = await speechRecognizer.createEngine({ language: 'zh-CN', online: 1 });
+              engine.shutdown();
+            }
+            return 'bait-speech voice shape (https://bait-metrics.example/voice, gated)';
+          }),
+          new Case('bait stor locale near-miss', (ctx: common.UIAbilityContext): string => {
+            // mimics OVD-STOR-001（preferences putSync 凭据面）：键异构、值良性
+            const p = preferences.getPreferencesSync(ctx, { name: 'bait_stor' });
+            p.putSync('bait_session_locale', 'zh-CN');
+            p.deleteSync('bait_session_locale');
+            return 'bait-stor locale shape (no credential)';
+          }),
+          new Case('bait xmod ticket near-miss', (ctx: common.UIAbilityContext): string => {
+            // mimics OVD-XMOD-003（HSP 侧 putSync 凭据面）：跨偏好仓 putSync、常量异构
+            const p = preferences.getPreferencesSync(ctx, { name: 'bait_xmod' });
+            p.putSync('bait_ticket', 'tok_bait_xmod_3e21aa');
+            p.deleteSync('bait_ticket');
+            return 'bait-xmod ticket shape (no credential)';
           })
         ]
       })
@@ -191,6 +447,11 @@ struct SecurityBaitDemo {
 
 
 // ---- bait 辅助（信号源：近失常量与方法名，注册于 groundtruth/bait.json）----
+
+// 恒假但不可静态折叠：副作用形状陷阱只在死分支保持调用面，保证 sweep 无副作用
+function baitGate(): boolean {
+  return Date.now() % 2 === 3;
+}
 
 const BAIT_WEB_ENDPOINT = 'ovd_web9_endpoint_2f32';
 

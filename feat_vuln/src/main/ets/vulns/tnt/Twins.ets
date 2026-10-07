@@ -146,3 +146,28 @@ export async function ovdTnt009S(ctx: common.Context): Promise<string> {
   await relay9S(ctx, 9);
   return 'tnt9S alias aggregate completed';
 }
+
+
+// SAFE: OVD-TNT-010S 同构动态键存取仅聚合（CWE-200 加固）
+function ovdT10KeyS(parts: string[]): string {
+  let k = '';
+  for (let i = 0; i < parts.length; i++) {
+    k += parts[i];
+  }
+  return k;
+}
+
+function ovdT10SourceS(): string {
+  return 'dyn-key-aggregate-9';
+}
+
+async function ovdT10SinkS(_v: string): Promise<string> {
+  return 'tnt10S aggregate sink skipped';
+}
+
+export async function ovdTnt010S(): Promise<string> {
+  const bag: Record<string, string> = {};
+  bag[ovdT10KeyS(['t', '10'])] = ovdT10SourceS();
+  await ovdT10SinkS(bag[ovdT10KeyS(['t', '10'])]);
+  return `tnt10S dyn-key aggregate ${bag[ovdT10KeyS(['t', '10'])].length}`;
+}

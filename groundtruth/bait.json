@@ -211,6 +211,402 @@
      "proc/net/tcp"
     ]
    }
+  },
+  {
+   "id": "bait-a11y-probe",
+   "mode": "near-miss",
+   "mimics": "OVD-A11Y-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "isScreenReaderOpenSync"
+    ],
+    "constants": [
+     "https://bait-metrics.example/a11x"
+    ]
+   }
+  },
+  {
+   "id": "bait-auth-hardcode",
+   "mode": "near-miss",
+   "mimics": "OVD-AUTH-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "operator",
+     "Bench@456"
+    ]
+   }
+  },
+  {
+   "id": "bait-b64-decode",
+   "mode": "near-miss",
+   "mimics": "OVD-B64-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "decodeSync"
+    ],
+    "constants": [
+     "YmFpdF9iNjRfbWFya2VyXzIyMg=="
+    ]
+   }
+  },
+  {
+   "id": "bait-bgtask-idle",
+   "mode": "near-miss",
+   "mimics": "OVD-BGTASK-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "startBackgroundRunning"
+    ],
+    "constants": [
+     "bait-bg-task-m1"
+    ]
+   }
+  },
+  {
+   "id": "bait-cert-public",
+   "mode": "near-miss",
+   "mimics": "OVD-CERT-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "createX509Cert"
+    ],
+    "constants": [
+     "bait-certs-public"
+    ]
+   }
+  },
+  {
+   "id": "bait-cevt-echo",
+   "mode": "near-miss",
+   "mimics": "OVD-CEVT-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "commonEventManager",
+     "publish"
+    ],
+    "constants": [
+     "bait.session.echo"
+    ]
+   }
+  },
+  {
+   "id": "bait-conf-key",
+   "mode": "near-miss",
+   "mimics": "OVD-CONF-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "createHttp"
+    ],
+    "constants": [
+     "bait_conf3_key_yy17"
+    ]
+   }
+  },
+  {
+   "id": "bait-debug-diag",
+   "mode": "near-miss",
+   "mimics": "OVD-DEBUG-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "hilog",
+     "debug"
+    ],
+    "constants": [
+     "bait_debug3_diag"
+    ]
+   }
+  },
+  {
+   "id": "bait-dep-local",
+   "mode": "near-miss",
+   "mimics": "OVD-DEP-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "import"
+    ],
+    "constants": [
+     "bait_dep_marker_q1"
+    ]
+   }
+  },
+  {
+   "id": "bait-dev-fp",
+   "mode": "near-miss",
+   "mimics": "OVD-DEV-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "bait_dev_fp_d42c"
+    ]
+   }
+  },
+  {
+   "id": "bait-dimp-sync",
+   "mode": "near-miss",
+   "mimics": "OVD-DIMP-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "bait_dimp_tok_7f3e92"
+    ]
+   }
+  },
+  {
+   "id": "bait-dlink-purge",
+   "mode": "near-miss",
+   "mimics": "OVD-DLINK-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "purge-cache-later"
+    ]
+   }
+  },
+  {
+   "id": "bait-drm-level",
+   "mode": "near-miss",
+   "mimics": "OVD-DRM-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "createMediaKeySystem"
+    ],
+    "constants": [
+     "com.bait.clearkey"
+    ]
+   }
+  },
+  {
+   "id": "bait-form-event",
+   "mode": "near-miss",
+   "mimics": "OVD-FORM-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "put"
+    ],
+    "constants": [
+     "bait_form_event"
+    ]
+   }
+  },
+  {
+   "id": "bait-geo-country",
+   "mode": "near-miss",
+   "mimics": "OVD-GEO-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "geoLocationManager"
+    ],
+    "constants": [
+     "bait_geo_coarse_d1"
+    ]
+   }
+  },
+  {
+   "id": "bait-ipc-local",
+   "mode": "near-miss",
+   "mimics": "OVD-IPC-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "bind",
+     "send"
+    ],
+    "constants": [
+     "127.0.0.1",
+     "38888"
+    ]
+   }
+  },
+  {
+   "id": "bait-ired-echo",
+   "mode": "near-miss",
+   "mimics": "OVD-IRED-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "startAbility"
+    ],
+    "constants": [
+     "bait.ired.echo"
+    ]
+   }
+  },
+  {
+   "id": "bait-keylog-hot",
+   "mode": "near-miss",
+   "mimics": "OVD-KEYLOG-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "hotkeyChange"
+    ],
+    "constants": [
+     "bait-hotkeys.log"
+    ]
+   }
+  },
+  {
+   "id": "bait-media-album",
+   "mode": "near-miss",
+   "mimics": "OVD-MEDIA-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "getAssets"
+    ],
+    "constants": [
+     "https://bait-metrics.example/album"
+    ]
+   }
+  },
+  {
+   "id": "bait-micc-check",
+   "mode": "near-miss",
+   "mimics": "OVD-MICC-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "createAudioCapturer"
+    ],
+    "constants": [
+     "bait-mic-check-e5b2"
+    ]
+   }
+  },
+  {
+   "id": "bait-notif-agg",
+   "mode": "near-miss",
+   "mimics": "OVD-NOTIF-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "notificationManager",
+     "publish"
+    ],
+    "constants": [
+     "bait_notif2_cnt_46cd"
+    ]
+   }
+  },
+  {
+   "id": "bait-perm-clip",
+   "mode": "near-miss",
+   "mimics": "OVD-PERM-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "getData"
+    ],
+    "constants": [
+     "bait perm foreground only"
+    ]
+   }
+  },
+  {
+   "id": "bait-priv-metrics",
+   "mode": "near-miss",
+   "mimics": "OVD-PRIV-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "http://127.0.0.1:8080/metrics"
+    ]
+   }
+  },
+  {
+   "id": "bait-pwdin-echo",
+   "mode": "near-miss",
+   "mimics": "OVD-PWDIN-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "bench search field",
+     "plain-log: "
+    ]
+   }
+  },
+  {
+   "id": "bait-rsec-res",
+   "mode": "near-miss",
+   "mimics": "OVD-RSEC-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "resourceManager",
+     "getStringByNameSync"
+    ],
+    "constants": [
+     "bait_res_metric"
+    ]
+   }
+  },
+  {
+   "id": "bait-secret-sample",
+   "mode": "near-miss",
+   "mimics": "OVD-SECRET-002",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "constants": [
+     "sk-baitbench-0a1b2c3d4e5f60718293a4b5c6d7e8f9"
+    ]
+   }
+  },
+  {
+   "id": "bait-speech-voice",
+   "mode": "near-miss",
+   "mimics": "OVD-SPEECH-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "startListening"
+    ],
+    "constants": [
+     "https://bait-metrics.example/voice"
+    ]
+   }
+  },
+  {
+   "id": "bait-stor-locale",
+   "mode": "near-miss",
+   "mimics": "OVD-STOR-001",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "bait_session_locale"
+    ]
+   }
+  },
+  {
+   "id": "bait-xmod-ticket",
+   "mode": "near-miss",
+   "mimics": "OVD-XMOD-003",
+   "source": "feat_api/src/main/ets/pages/api/SecurityBaitDemo.ets",
+   "signals": {
+    "call": [
+     "putSync"
+    ],
+    "constants": [
+     "tok_bait_xmod_3e21aa"
+    ]
+   }
   }
  ]
 }

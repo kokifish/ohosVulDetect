@@ -11,7 +11,8 @@ import { ovdTntSink4 } from '../vulns/tnt/OVD-TNT-004';
 import { ovdTnt007 } from '../vulns/tnt/OVD-TNT-007';
 import { ovdTnt008 } from '../vulns/tnt/OVD-TNT-008';
 import { ovdTnt009 } from '../vulns/tnt/OVD-TNT-009';
-import { ovdTntSink3S, ovdTntSink4S, ovdTnt007S, ovdTnt008S, ovdTnt009S } from '../vulns/tnt/Twins';
+import { ovdTnt010 } from '../vulns/tnt/OVD-TNT-010';
+import { ovdTntSink3S, ovdTntSink4S, ovdTnt007S, ovdTnt008S, ovdTnt009S, ovdTnt010S } from '../vulns/tnt/Twins';
 
 // 跨函数污点面：TNT-001 source/sink 分置（interproc 规则）；001S 聚合值对照。
 @Entry
@@ -58,6 +59,10 @@ struct TaintVulnPage {
             ovdTnt009(ctx)),
           new Case('tnt-009S aggregate alias', (ctx: common.UIAbilityContext) =>
             ovdTnt009S(ctx)),
+          new Case('tnt-010 dyn-key chain', () =>
+            ovdTnt010()),
+          new Case('tnt-010S aggregate dyn-key', () =>
+            ovdTnt010S()),
         ]
       })
     }

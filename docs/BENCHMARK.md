@@ -14,12 +14,12 @@
 | 组件覆盖 | 116/137（剩余 21 全部归因，见 docs/ohos.md §5.2） | check_corpus_coverage.py |
 | Kit 覆盖 | 103/103（feat_heavy Kit 农场静态/动态 import 全量覆盖） | check_corpus_coverage.py |
 | @ohos 直连 | 418/447（feat_api 直连五批 + feat_heavy 农场：117 模块零参调用 / 202 命名空间模块动态 import / class·type 静态引用；剩余 29 个全部为 FA-only/安全敏感/策略排除） | check_corpus_coverage.py |
-| 漏洞/孪生 | 142 + 142（manifest 284 条，双向一致；interproc 链 16 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002/003 V1/V2 装饰器回调、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名、SEN-003 跨模块并发、IPC-006 RPC 派发穿越（HwMapKit 型真实原语）等；动态加载 DIMP 2 对半混淆 keep 形态；B64 编码对抗面；ENUM 跨 record 枚举；桥间污点 WEB-009/010） | groundtruth/manifest.json |
-| 评分 | **F1=1.000（2026-10-04 实测：TP=142 FN=0 FP=0 TN=142，284 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 0.917（T3=0.000）；参考判定快照 groundtruth/reference_eval.json（score_output --export-json 生成，第三方 diff 对比用） | score_output.py |
+| 漏洞/孪生 | 144 + 144（manifest 288 条，双向一致；interproc 链 18 对：TNT×XMOD 跨模块、DEP-001 三层依赖链、DEP-002 三模块令牌拆分重组、WRK-002 worker 跨 record、UST-002/003 V1/V2 装饰器回调、UST-004 深继承链、TNT-007 then 链、TNT-008 派发表、TNT-009 导入别名、TNT-010 动态键存取、SEN-003 跨模块并发、IPC-006 RPC 派发穿越（HwMapKit 型真实原语）等；动态加载 DIMP 2 对半混淆 keep 形态；B64 编码对抗面；ENUM 跨 record 枚举；桥间污点 WEB-009/010） | groundtruth/manifest.json |
+| 评分 | **F1=1.000（2026-10-04 实测：TP=142 FN=0 FP=0 TN=142，284 条口径）**，分档 sub-F1：T1/T2/T3/T4 全 1.000；下限对照：零语义 record-dump 工具 0.917（T3=0.000）；参考判定快照 groundtruth/reference_eval.json（score_output --export-json 生成，第三方 diff 对比用；钉在 284 条口径语料，其后新增条目不在快照内） | score_output.py |
 | feat_api 路由页 | 84（api 55 / ui 22 / lang 7 + Index，含提供方页 1；ui-v2reuse 为 V2 复用/深形态页） | main_pages.json |
 | feat_compfarm | default 产品独立模块：组件 API 缺口补齐语料 34 文件 / 68 组件 / 821 调用（生成） | farm_build 实测 |
 | 孪生 FP 门禁 | FAIL=0（call 级同形 WARN 为设计内） | check_twin_fp.py |
-| bait 隔离门禁 | FAIL=0（15 规则面陷阱——覆盖 interproc/enum/string-literal/const-array/call-chain/scope 全部策略面——near-miss 常量与全部规则常量双向零包含） | check_bait_fp.py |
+| bait 隔离门禁 | FAIL=0（44 规则面陷阱——45 规则族除 BACK/NATIVE 外全族覆盖（manifest/native 面无 abc 信号不设陷阱），含 interproc/enum/string-literal/const-array/call-chain/scope 全部策略面——near-miss 常量与全部规则常量双向零包含） | check_bait_fp.py |
 | 组件内 API | 1164/1296（89.8%，feat_compfarm 农场 68 组件；组件级排除仅剩 Particle；跨文件 interface/enum/type 别名三索引 + JSDoc 剥离枚举成员 + extends 跟随 + 多泛型 Callback 括号感知切分 + ContentModifier implements 空实现合成；no-decl 36 + skip 46 归因） | check_component_api_coverage.py |
 | 字符串应力门禁 | 207/207 + LITERALS 面 OK | check_string_stress.py |
 | 门禁工作流 | manifest / twin_fp / bait_fp / keep 新鲜度 / sync_pages / 生成器确定性 / py 语法 / 条目数 / 覆盖对账（SDK 清单快照 fixture） | .github/workflows/gates.yml |
@@ -44,6 +44,16 @@
 - **评分器回归基线**（tools/check_score_regression.py）：合成 test.out × 22 代表条目
   （全部 16 个 detection.type，锁 predicate/native/manifest/scope=global 等全部分支）锁定 score_output 判定口径——防"评分口径漂移被
   误读为工具回退"污染父项目跨版本对比；已进 verify 快门禁与 CI。
+- **困难对三批 + bait 全族覆盖（2026-10-07）**：+TNT-010（动态键 Record 存取——
+  stobjbyvalue/ldobjbyvalue 键在寄存器、属性名不进 IR，考键值数据流追踪）/+UST-004
+  （深继承链——基类字段经两级覆盖 + super 上溯后落盘），manifest 288 条；bait 15→44
+  （除 manifest/native 面外全规则族覆盖；副作用形状陷阱以恒假不可折叠 gate 保持调用面、
+  运行期零副作用，api-bait 29 新陷阱 sweep 全 ✅）。实测教训：@Watch/@Monitor 装饰器引用的
+  方法名 release 存活（UST-002/003 hop 锚点依赖此），普通类方法名照常改名（UST-004
+  release 实测 carryRaw→i17、两级 carry 同名 j17）——interproc hop 一律锚导出顶层函数；
+  合成 e2e 4/4（新对 interproc 2/2、孪生 miss）。sweep 工具缺陷定位：run_page_buttons
+  rounds 循环不滚动按钮列，>14 按钮页尾部按钮永不进 dump（cat-taint 两轮均停在 tnt-007S），
+  本轮以定点遍历补齐（bench24/API24），工具修复待办。
 - **标注完备性 + 对抗面二批（2026-10-03）**：check_fn_anchors.py（interproc hop 锚点
   存活硬门禁 + 条目 function 软 WARN——锚点退化静态化，native/manifest 面跳过）；
   score_output --export-json（参考判定快照 + tier 导出）；tools/split_folds.py（按族
@@ -84,9 +94,15 @@
 - **工具链修复回归**：方法名注入面（MethNameStressLab 载荷已在语料）等工具链侧修复落地后，
   回归并更新「逆向工具输出」相关结论与记忆。
 - **上层工具链仓库 snapshot+gitlink**：待 koki 提交。
-- **cat-wrk/sen/tnt/ust/b64/enum/ipc 新对真机 sweep**：WRK-002/003、SEN-002/003、
-  TNT-007/008/009、UST-002/003、B64-001、ENUM-001、IPC-006 十对已过全门禁 + 合成 e2e；
-  bench26 CLI 拉起被 Beta2 GUI 引导门阻塞（拉起配方见模拟器节），按配方恢复后跑 sweep 各页。
+- **新对真机 sweep（bench26 侧）**：WRK-002/003、SEN-002/003、TNT-007/008/009、
+  UST-002/003、B64-001、ENUM-001、IPC-006 及 2026-10-07 批（TNT-010、UST-004、29 bait）
+  已过全门禁 + 合成 e2e；TNT/UST 新对 + bait 页已于 2026-10-07 在 bench24（API24 镜像、
+  api24 release 包）定点 sweep 全 ✅；bench26 侧 sweep 仍被 Beta2 GUI 引导门阻塞
+  （拉起配方见模拟器节），按配方恢复后补跑。
+- **sweep 工具修复：大页尾部按钮**：run_page_buttons 的 rounds 循环只点当前视口可见按钮、
+  不滚动按钮列——>14 按钮页（cat-taint 22、api-bait 47）尾部按钮永不进 dump，缺行只被
+  missing_lines 报告不被修复。2026-10-07 以「滚屏找按钮 → 点击 → 等行落」定点配方人工补齐；
+  修法候选：rounds 循环内 new 为空时 swipe 翻屏再 dump（修后需全量页回归）。
 - **真实工具 spot-check 常态化**：2026-10-01 审计轮实证合成回归基线测不出「材料被
   es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——新增 interproc 形态时发版前
   须用逆向工具对 build/out 实跑评分抽查（已执行，F1=1.000）。WEB-009S/010S 同 record
@@ -103,9 +119,6 @@
 
 ### 探索方向（按价值/成本排序，未排期；结构性封顶项不列）
 
-- **漏洞语料新家族**：sendable/@Concurrent 并发面、worker 通信面、UI 状态污染面三类
-  ArkTS 特有形态（检测器区分度价值最高；interproc 跨模块链已落地 TNT×XMOD + DEP-001）。
-- **FP-bait 扩展**：api-bait 困难模式从调用面延伸到规则面（近似孪生混淆形态），量化检测器区分度。
 - 组件内 API 增量：**已决策不投入**——剩余 132 为 CustomBuilder 返回类型/复杂构造（Skip 46 已逐项归因）；组件维度 21 项与 no-decl 36 封顶。
 - **打包形态**：多 HSP 依赖链、feature HAP 按需分发（distro）等输入形态对反编译管线的扩展，
   配套 corpus_meta 画像字段。

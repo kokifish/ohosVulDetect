@@ -4894,6 +4894,49 @@
    }
   },
   {
+   "id": "OVD-TNT-010",
+   "title": "token via dynamic-key record access to http sink (reflect-style interproc)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/OVD-TNT-010.ets",
+   "function": "ovdTnt010",
+   "expected": true,
+   "twin": "OVD-TNT-010S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdT10Source",
+      "constants": [
+       "tnt10_tok_ovd_5d3a71"
+      ]
+     },
+     {
+      "function": "ovdT10Sink",
+      "call": [
+       "request"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-TNT-010S",
+   "title": "twin: 动态键存取只聚合 (OVD-TNT-010)",
+   "category": "taint-chain",
+   "cwe": "CWE-200",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/tnt/Twins.ets",
+   "function": "ovdTnt010S",
+   "expected": false,
+   "twin_of": "OVD-TNT-010",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
    "id": "OVD-DEP-002",
    "title": "token split into 3 fragments across HSP/HAR/feature, reassembled at runtime",
    "category": "dependency-chain",
@@ -5053,6 +5096,49 @@
    "function": "ovdUst3ArmS",
    "expected": false,
    "twin_of": "OVD-UST-003",
+   "detection": {
+    "type": "safe-twin",
+    "constants": []
+   }
+  },
+  {
+   "id": "OVD-UST-004",
+   "title": "credentials persist via deep inheritance chain (base-field, 2-level override + super) to file sink",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/OVD-UST-004.ets",
+   "function": "ovdUst004",
+   "expected": true,
+   "twin": "OVD-UST-004S",
+   "detection": {
+    "type": "interproc-chain",
+    "hops": [
+     {
+      "function": "ovdUst4Source",
+      "constants": [
+       "ovd_ust4_tok_c58e02"
+      ]
+     },
+     {
+      "function": "ovdUst4Store",
+      "call": [
+       "writeSync"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "OVD-UST-004S",
+   "title": "twin: 深继承链只携聚合计数 (OVD-UST-004)",
+   "category": "ui-state-pollution",
+   "cwe": "CWE-312",
+   "module": "feat_vuln",
+   "source": "feat_vuln/src/main/ets/vulns/ust/Twins.ets",
+   "function": "ovdUst004S",
+   "expected": false,
+   "twin_of": "OVD-UST-004",
    "detection": {
     "type": "safe-twin",
     "constants": []
