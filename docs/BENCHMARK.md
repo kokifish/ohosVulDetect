@@ -99,10 +99,6 @@
   已过全门禁 + 合成 e2e；TNT/UST 新对 + bait 页已于 2026-10-07 在 bench24（API24 镜像、
   api24 release 包）定点 sweep 全 ✅；bench26 侧 sweep 仍被 Beta2 GUI 引导门阻塞
   （拉起配方见模拟器节），按配方恢复后补跑。
-- **sweep 工具修复：大页尾部按钮**：run_page_buttons 的 rounds 循环只点当前视口可见按钮、
-  不滚动按钮列——>14 按钮页（cat-taint 22、api-bait 47）尾部按钮永不进 dump，缺行只被
-  missing_lines 报告不被修复。2026-10-07 以「滚屏找按钮 → 点击 → 等行落」定点配方人工补齐；
-  修法候选：rounds 循环内 new 为空时 swipe 翻屏再 dump（修后需全量页回归）。
 - **真实工具 spot-check 常态化**：2026-10-01 审计轮实证合成回归基线测不出「材料被
   es2abc 降进闭包 record」（WRK-002 首版 FN 即漏网）——新增 interproc 形态时发版前
   须用逆向工具对 build/out 实跑评分抽查（已执行，F1=1.000）。WEB-009S/010S 同 record
@@ -381,6 +377,28 @@ $E -stop ovdbench
   `${label} …` 待完成行为点击回执防吞击误判 + **缺行按钮优先补击**（先重击已有行的
   按钮会再次占满 UI 线程，缺行按钮点击继续被吞）+ dump 空结果重试（Beta2 镜像
   dumpLayout 间歇返回 0 节点）；
+- **大页按钮翻屏遍历已修（2026-10-13）**：单 Scroll 流（按钮+日志同列）按钮块可跨多屏，
+  `run_page_buttons` 原只点当前视口——cat-taint（20 案例）、api-bait（48 案例）尾部按钮
+  永不进 dump。现 `viewports_down` 按钮区小翻（0.45→0.15；0.8 起点落进日志区）逐视口
+  推进，rnd>0 补击轮与兜底补击前 `ensure_top` 回页顶（页首锚文本判据）。定点实证：
+  cat-taint 20/20、api-bait 48/48 出线。同轮连带修复（同根：单视口/单状态假设）：
+  - `click_until_line` 轮询翻日志屏再采——修复后单页行数达百级，日志很快长出视口，
+    只采首屏把「已出线」误判为吞击（每按钮白烧 104s 重击梯，页均 10-20 分钟）；
+    且翻屏会移动按钮块，**每次重击前按文本重找按钮现位**（实测页差 55px 即全空放），
+    修后 cat-secret 首次 12/12 出线、重击 10s/个；
+  - `visit_rows` 行点击加导航确认（滚动力矩中点击落空 → 对列表跑 0 按钮幽灵遍历，
+    clicked_known 空使 missing_lines 恒空假绿）：锚文本离开行 id 前缀才算进入页面，
+    `run_page_buttons` 返回按钮数，0 按钮访问不标记 visited；
+  - `goto_list` 以列表行前缀渲染为就绪信号并整链重试（原 3.5s 定长等待在冷启动上
+    会静默落空，全程对着桌面 dump）；重试路径补滚动扫描（原只查首屏，结构性找不到
+    折叠下方目标行）；
+  - `uitest uiInput` 带超时+挂死客户端清理（某次冷启动后 uiInput 客户端永久挂死
+    占住服务单槽，CLI 已回 'No Error' 而注入永不执行，pkill -9 uitest 解）；
+    uitest swipe 静默失效时自动切 `uinput -T -m`（首次滑动验签，误判无害）。
+- **陈旧安装包伪装成遍历故障（2026-10-13）**：冷启动后设备上残留旧版 HAP，列表页仅 13
+  个分类且不可滚（新包 39 个），表现为「swipe 全局失灵 + cat-taint 行不存在」，极易误判
+  为输入栈故障（本轮为此重装了模拟器）。凡列表行数/页面内容与源码对不上，先
+  `bm uninstall` + `file send`（md5 比对）+ `bm install` 重装再排查；
 - 长遍历后 uitest dumpLayout 可能 30s 超时挂死，用 `tools/emulator_recover.sh`
   （探活/黑屏检测/冷启动）恢复；定向遍历单页可模块方式导入 sweep，设
   `es.ABILITY='VulnAbility'` 后 `es.visit_rows(['cat-xxx'], budget_seconds=600)`，

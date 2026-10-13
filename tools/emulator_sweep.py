@@ -16,7 +16,8 @@
     （启动 EntryAbility → 点 "API Coverage"/"Vuln Challenges" 按钮）；
   - 分辨率按 `hidumper -s RenderService` 实测值做比例坐标滑动（新镜像 1320x2232，旧 1260x2720）。
 
-按钮遍历按文本去重后全量点击（不设上限；设上限会导致大页尾部案例漏遍历），每轮点击后即采集
+按钮遍历按文本去重后全量点击（不设上限；设上限会导致大页尾部案例漏遍历），按钮块跨屏的页面
+按视口翻屏推进（单 Scroll 流，cat-taint 22 / api-bait 47 按钮块超出首屏），每轮点击后即采集
 结果行并在日志区翻屏合并——DemoScaffold 结果区是 layoutWeight 滚动区，案例多时尾部
 ✅/❌ 行在首屏外。
 
@@ -67,7 +68,8 @@ def dump():
             subprocess.run(f'{HDC} file recv /data/local/tmp/l.json /tmp/ovd_sweep_l.json', shell=True,
                            capture_output=True, timeout=30)
         except subprocess.TimeoutExpired:
-            time.sleep(5.0)  # uitest 挂死（长遍历后已知形态）：重试而非崩溃
+            clear_ui_hang()  # dumpLayout 与 uiInput 同队列：清挂死客户端后重试
+            time.sleep(5.0)
             continue
         try:
             data = json.load(open('/tmp/ovd_sweep_l.json'))
@@ -97,9 +99,42 @@ def center(b):
     return (x1 + x2) // 2, (y1 + y2) // 2
 
 
+def clear_ui_hang():
+    """清掉挂死的 uitest 客户端进程：uiInput 服务单槽被某个永不退出的客户端占住后，
+    后续注入全部排队（CLI 已回 'No Error' 而注入永不执行，2026-10-13 实证）；
+    只杀瞬态客户端进程（ps 仅有 CLI 形态），不影响常驻服务。"""
+    sh("pkill -9 uitest")
+    time.sleep(1.0)
+
+
+def ui_input(args, timeout=15.0, retries=1):
+    """带超时执行 uitest uiInput：无超时的注入调用会在服务被挂死客户端占住时永久阻塞
+    （click/swipe 曾因此把整轮 sweep 卡死数分钟）。超时清进程后重试一次。"""
+    for attempt in range(retries + 1):
+        try:
+            subprocess.run(f'{HDC} shell "uitest uiInput {args}"', shell=True,
+                           capture_output=True, timeout=timeout)
+            return
+        except subprocess.TimeoutExpired:
+            if attempt < retries:
+                clear_ui_hang()
+    print(f"# WARN: uiInput {args.split()[0]} 超时未恢复", file=sys.stderr)
+
+
 def click(x, y, wait=1.2):
-    subprocess.run(f'{HDC} shell "uitest uiInput click {x} {y}"', shell=True, capture_output=True)
+    ui_input(f"click {x} {y}")
     time.sleep(wait)
+
+
+UITEST_SWIPE_OK = None  # None=未验证；True=正常；False=已证实静默失效，直接走 uinput
+
+
+def _uinput_swipe(x, y1, y2):
+    try:
+        subprocess.run(f'{HDC} shell "uinput -T -m {x} {y1} {x} {y2} 500"', shell=True,
+                       capture_output=True, timeout=15)
+    except subprocess.TimeoutExpired:
+        pass  # 单次滑动丢失无害：验证式补击/沉降轮会兜底
 
 
 def swipe_up(wait=1.5):
@@ -108,10 +143,26 @@ def swipe_up(wait=1.5):
 
 
 def swipe_region(y_from_frac, y_to_frac, wait=1.5):
-    """在屏幕竖向指定比例区间内上滑（0.8→0.2 即列表翻页，0.45→0.15 即按钮区小翻）。"""
-    subprocess.run(f'{HDC} shell "uitest uiInput swipe {SCREEN_W // 2} {int(SCREEN_H * y_from_frac)} '
-                   f'{SCREEN_W // 2} {int(SCREEN_H * y_to_frac)} 300"', shell=True, capture_output=True)
+    """在屏幕竖向指定比例区间内上滑（0.8→0.2 即列表翻页，0.45→0.15 即按钮区小翻）。
+    uitest uiInput swipe 在个别冷启动会话上会静默失效（同会话 click/keyEvent 正常、
+    swipe 无效果，2026-10-13 bench24 冷启动实证）：首次滑动比对页面签名，无变化即
+    永久切 uinput（内核级注入，另一条栈）——误判无害，两路注入等效。"""
+    global UITEST_SWIPE_OK
+    x = SCREEN_W // 2
+    y1, y2 = int(SCREEN_H * y_from_frac), int(SCREEN_H * y_to_frac)
+    if UITEST_SWIPE_OK is False:
+        _uinput_swipe(x, y1, y2)
+        time.sleep(wait)
+        return
+    before = page_signature()
+    ui_input(f"swipe {x} {y1} {x} {y2} 300")
     time.sleep(wait)
+    if page_signature() == before:
+        UITEST_SWIPE_OK = False
+        _uinput_swipe(x, y1, y2)
+        time.sleep(wait)
+    else:
+        UITEST_SWIPE_OK = True
 
 
 def dismiss_dialog():
@@ -129,28 +180,46 @@ def dismiss_dialog():
     return False
 
 
+LIST_ROW_PREFIXES = ('cat-', 'api-', 'ui-', 'lang-')  # 列表行 id 前缀 = 列表就绪信号
+
+
 def goto_list():
     global SHELL_BTN
     SHELL_BTN = 'Vuln Challenges' if ABILITY == 'VulnAbility' else 'API Coverage'
-    sh("aa force-stop com.koki.VD")
-    time.sleep(1.0)
-    if not USE_SHELL_ROUTE:
-        sh(f"aa start -a {ABILITY} -b com.koki.VD")
-        time.sleep(3.5)
-        return
-    sh("aa start -a EntryAbility -b com.koki.VD")
-    time.sleep(4.5)
-    dismiss_dialog()
-    for a in nodes(dump()):
-        if SHELL_BTN in a.get('text', ''):
-            click(*center(a['bounds']), 4.5)
-            return
-    print(f"# WARN: 壳入口按钮 {SHELL_BTN!r} 未找到", file=sys.stderr)
+    # 就绪判据 = 列表行前缀渲染（冷启动镜像上 aa start 可能静默失败落在桌面，定长等待
+    # 不可靠）：未就绪则 force-stop 后整链重试，最多 4 次
+    for _attempt in range(4):
+        sh("aa force-stop com.koki.VD")
+        time.sleep(1.0)
+        if not USE_SHELL_ROUTE:
+            sh(f"aa start -a {ABILITY} -b com.koki.VD")
+            for _ in range(6):
+                time.sleep(2.5)
+                if any(a.get('text', '').startswith(LIST_ROW_PREFIXES) for a in nodes(dump())):
+                    return
+        else:
+            sh("aa start -a EntryAbility -b com.koki.VD")
+            time.sleep(4.5)
+            dismiss_dialog()
+            for a in nodes(dump()):
+                if SHELL_BTN in a.get('text', ''):
+                    click(*center(a['bounds']), 4.5)
+                    break
+            for _ in range(4):
+                if any(a.get('text', '').startswith(LIST_ROW_PREFIXES) for a in nodes(dump())):
+                    return
+                time.sleep(2.5)
+    print(f"# WARN: goto_list 未确认列表就绪（{ABILITY}），继续按当前画面推进", file=sys.stderr)
 
 
 results = {}
 missing_lines = {}
 visited = set()
+
+
+def trace(msg):
+    """阶段轨迹：长遍历（单页可达 10 分钟级）无轨迹时无法定位卡点，stderr 简短输出。"""
+    print(f"# [{time.strftime('%H:%M:%S')}] {msg}", file=sys.stderr, flush=True)
 
 
 def collect_result_lines(tree, seen):
@@ -260,28 +329,86 @@ def click_verified(b, waits=(3.0, 10.0, 20.0)):
     return False
 
 
-def click_until_line(b, seen, waits=(4.0, 10.0, 20.0)):
+def find_button(text, tree=None):
+    """按文本在当前 dump 中找按钮节点（重击前重定位用：翻屏会移动单 Scroll 的按钮块，
+    旧 bounds 随滚动失效）。"""
+    for a in nodes(dump() if tree is None else tree):
+        if a.get('type') == 'Button' and a.get('text', '') == text:
+            return a
+    return None
+
+
+def click_until_line(b, seen, anchor, waits=(4.0, 10.0, 20.0)):
     """点击并验证到行：Runner 点击即回写 `${label} …` 待完成行，以按钮 label 前缀的
     行出现为点击回执——页面签名会被其他行变化误判（前序用例行落地后签名恒变，
-    吞击误判为成功）。跨线程用例（taskpool/worker）的 ✅ 行落地慢，逐级加大间隔重击。"""
+    吞击误判为成功）。跨线程用例（taskpool/worker）的 ✅ 行落地慢，逐级加大间隔重击。
+    轮询须翻日志屏再采：行落在日志列尾部，翻屏按钮修复后单页行数可达百级，日志很快
+    长出视口——只采首屏会把「已出线」误判为吞击。翻屏同时移动按钮块，故每次重击前
+    按文本重找按钮现位（视口外先回顶），否则重击落在旧坐标的空白处（实测页差 55px
+    即全空放）。"""
+    label = b['text']
     for w in waits:
-        click(*center(b['bounds']), w)
+        node = find_button(label)
+        if node is None:
+            ensure_top(anchor)
+            node = find_button(label)
+            if node is None:
+                return False  # 按钮不在页面上（异常态），交 missing_lines 报告
+        click(*center(node['bounds']), w)
         deadline = time.time() + w + 12.0
         while time.time() < deadline:
             collect_result_lines(dump(), seen)
-            if any(l.startswith(b['text'] + ' ') for l in seen):
+            if any(l.startswith(label + ' ') for l in seen):
+                return True
+            swipe_region(0.85, 0.45, wait=1.0)
+            collect_result_lines(dump(), seen)
+            if any(l.startswith(label + ' ') for l in seen):
                 return True
             time.sleep(2.0)
     return False
 
 
+def button_nodes(tree):
+    return [a for a in nodes(tree)
+            if a.get('type') == 'Button' and a.get('clickable') == 'true' and a.get('text', '')]
+
+
+def ensure_top(anchor, max_tries=20):
+    """回页顶：DemoScaffold 是单 Scroll 流（按钮+日志同列），页首文本即页标题
+    （page_anchor 约定），大幅下滑直至首文本回到锚点。翻屏遍历后停在按钮块底/
+    日志区，rnd>0 补击轮与兜底补击都须先回顶，否则只覆盖尾部视口的按钮。"""
+    for _ in range(max_tries):
+        if page_anchor() == anchor:
+            return True
+        swipe_region(0.2, 0.85)
+    return page_anchor() == anchor
+
+
+def viewports_down(max_screens=15):
+    """产出按钮块各视口的按钮节点列表：按钮区小翻（0.45→0.15；0.8 起点会落进日志区
+    滚错内容）下滚，视口按钮集合不再新增（走完按钮块/只剩日志行）即止。单次 dump 只见
+    当前视口，不翻屏则 >14 按钮页（cat-taint 22、api-bait 47）尾部按钮永不进 dump。"""
+    prev_texts = None
+    for _ in range(max_screens):
+        btns = button_nodes(dump())
+        texts = {b['text'] for b in btns}
+        if prev_texts is not None and (not texts or texts <= prev_texts):
+            return
+        yield btns
+        prev_texts = texts
+        swipe_region(0.45, 0.15)
+
+
 def run_page_buttons(page_name, max_rounds=2):
     """点击当前页全部 Button（快速点击 + 兜底验证式重击），合并收集结果行。
 
-    三个已知缺陷的修复：
+    四个已知缺陷的修复：
     1. 旧版只点前 8 个按钮——大页（如 CryptoPage 14 案例）尾部案例漏遍历；
     2. 注入点击在 UI 线程忙时会被静默吞掉（重电池 handler + GC 尾巴可长达 ~20s）；
-    3. 日志区是 layoutWeight 滚动区，多行结果首屏外的 ✅/❌ 采不到。
+    3. 日志区是 layoutWeight 滚动区，多行结果首屏外的 ✅/❌ 采不到；
+    4. 按钮块翻屏：单 Scroll 流按钮块可跨多屏，rounds 循环原只点当前视口——
+       >14 按钮页（cat-taint 22、api-bait 47）尾部按钮永不进 dump（2026-10-13 修复，
+       viewports_down 翻屏推进 + rnd>0 轮/兜底补击前 ensure_top 回顶）。
     快路径：普通间隔顺序点击 + 补击轮（绝大多数页在此收敛，耗时与旧版同量级）。
     兜底：应有信号却 0 行（lang 页有 selfcheck 按钮、api/cat 页有 Case 按钮）才逐按钮
     做长间隔验证式重击——空闲窗口正是被吞点击的解药。
@@ -289,7 +416,8 @@ def run_page_buttons(page_name, max_rounds=2):
     clicked_known = set()
     seen = set()
     prev = -1
-    time.sleep(2.0)  # 进页过渡沉降：过早点首屏 dump 会拿到列表页残留按钮而串页
+    time.sleep(6.0)  # 进页过渡沉降：过早点首屏 dump 会拿到列表页残留按钮而串页；
+    # 6s 给足页模块加载——加载期 UI 线程忙，点击整批被吞（实测 2s 沉降下 24 击 1 线）
     anchor = page_anchor()
     # 进页先做验证式自检：selfcheck 的全电池重跑依赖干净堆，且导航后 UI 忙会吞点击——
     # click_verified 的递增空闲窗口正好同时解决两者；等电池跑过再点就永远出不来了。
@@ -302,69 +430,88 @@ def run_page_buttons(page_name, max_rounds=2):
         click_verified(sc_btn)
         collect_with_settle(seen)
     for rnd in range(max_rounds):
-        tree = dump()
-        btns = [a for a in nodes(tree)
-                if a.get('type') == 'Button' and a.get('clickable') == 'true' and a.get('text', '')]
-        new = [b for b in btns if b['text'] not in clicked_known]
-        clicked_known.update(b['text'] for b in new)
-        targets = btns if (rnd > 0 or len(new) < len(btns)) else new
-        # selfcheck 按钮优先：其全电池重跑依赖干净堆，须先于其他电池执行
-        targets = sorted(targets, key=lambda b: 0 if 'selfcheck' in b.get('text', '') else 1)
-        for b in targets:
-            click(*center(b['bounds']), 3.0)
-            # 逐按钮即点即采：Runner 对异步用例完成后把 ✅/❌ 行"追加"到日志尾部，
-            # 日志 Scroll 不自动滚底——攒到整轮结束再采，先落的行已被顶出视口（实测
-            # cat-perm 大页固定漏 ~10 行）。单次 dump 代价小，漏采代价是整页基线失真。
-            collect_result_lines(dump(), seen)
-            if not post_click(anchor):
-                # 部分漏洞用例会真实导航跳页（如 INJ-004 无白名单 pushUrl，漏洞语义本身）：
-                # 重回本页继续点剩余按钮，已出信号按集合去重不受影响
-                if not reopen_page(page_name):
-                    break
-                time.sleep(2.0)
-                anchor = page_anchor()
-        collect_with_settle(seen)
-        if rnd >= 1 and not new and len(seen) == prev:
+        trace(f"{page_name} round {rnd}")
+        if rnd > 0:
+            # 上一轮翻屏后停在按钮块底/日志区：先回顶，否则补击轮只覆盖尾部视口
+            ensure_top(anchor)
+        round_new = []
+        aborted = False
+        for btns in viewports_down():
+            trace(f"{page_name} viewport: {len(btns)} btns")
+            new = [b for b in btns if b['text'] not in clicked_known]
+            round_new += [b['text'] for b in new]
+            clicked_known.update(b['text'] for b in new)
+            targets = btns if (rnd > 0 or len(new) < len(btns)) else new
+            # selfcheck 按钮优先：其全电池重跑依赖干净堆，须先于其他电池执行
+            targets = sorted(targets, key=lambda b: 0 if 'selfcheck' in b.get('text', '') else 1)
+            for b in targets:
+                click(*center(b['bounds']), 3.0)
+                # 逐按钮即点即采：Runner 对异步用例完成后把 ✅/❌ 行"追加"到日志尾部，
+                # 日志 Scroll 不自动滚底——攒到整轮结束再采，先落的行已被顶出视口（实测
+                # cat-perm 大页固定漏 ~10 行）。单次 dump 代价小，漏采代价是整页基线失真。
+                collect_result_lines(dump(), seen)
+                if not post_click(anchor):
+                    # 部分漏洞用例会真实导航跳页（如 INJ-004 无白名单 pushUrl，漏洞语义本身）：
+                    # 重回本页继续点剩余按钮，已出信号按集合去重不受影响
+                    if not reopen_page(page_name):
+                        aborted = True
+                        break
+                    time.sleep(2.0)
+                    anchor = page_anchor()
+            collect_with_settle(seen)
+            if aborted:
+                break
+        if rnd >= 1 and not round_new and len(seen) == prev:
             break
         prev = len(seen)
-    if not seen or (not page_name.startswith(('lang-', 'ui-'))):
+    if not aborted and (not seen or (not page_name.startswith(('lang-', 'ui-')))):
         # api/cat 页每个 Case 按钮都应出一条信号：行数 < 按钮数 = 有点击被吞，验证式补击；
         # lang 页仅 selfcheck 出信号（进页已优先处理）；ui 页 by design 无 ✅/❌ 行。
-        tree = dump()
-        btns = [a for a in nodes(tree)
-                if a.get('type') == 'Button' and a.get('clickable') == 'true' and a.get('text', '')]
-        if page_name.startswith('lang-'):
-            fallback = [] if seen else [b for b in btns if 'selfcheck' in b.get('text', '')]
-        elif page_name.startswith('ui-'):
-            fallback = [b for b in btns if 'selfcheck' in b.get('text', '')]
-        else:
-            # 缺行按钮优先补击：重击已有行的按钮（如 taskpool 用例）会再次占满 UI 线程，
-            # 导致后续缺行按钮的点击继续被吞——先把安静的按钮点掉
-            fallback = [b for b in btns
-                        if not any(l.startswith(b['text'] + ' ') for l in seen)]
-        for b in fallback:
-            click_until_line(b, seen)
-            collect_with_settle(seen)
+        # 补击面同按翻屏遍历：rounds 结束停在页底，缺行按钮可能留在上方视口——先回顶再下滚。
+        # 先翻日志把已落地行收全：行在视口外时 quiet 判定会把「已出线」误当缺行而无效重击
+        # （重击占满 UI 线程还会连累后续真缺行按钮）。
+        trace(f"{page_name} fallback: seen={len(seen)}")
+        ensure_top(anchor)
         collect_tail(seen)
-    # 自适应沉降：小页（≤6 按钮）无慢异步面，深沉降纯耗时；大页保留全窗口
-    stall_rounds = 12 if len(clicked_known) > 6 else 4
-    stall = 0
-    for _ in range(stall_rounds):
-        collect_result_lines(dump(), seen)
-        n = len(seen)
-        swipe_region(0.85, 0.45)
-        # 异步用例（userAuth/定位超时等）的 ✅/❌ 行在点击后 30-60s 才落地，沉降轮须给足窗口
-        time.sleep(2.0)
-        collect_result_lines(dump(), seen)
-        stall = stall + 1 if len(seen) == n else 0
-        if stall >= 3:
-            break
+        ensure_top(anchor)
+        for btns in viewports_down():
+            if page_name.startswith('lang-'):
+                fallback = [] if seen else [b for b in btns if 'selfcheck' in b.get('text', '')]
+            elif page_name.startswith('ui-'):
+                fallback = [b for b in btns if 'selfcheck' in b.get('text', '')]
+            else:
+                # 缺行按钮优先补击：重击已有行的按钮（如 taskpool 用例）会再次占满 UI 线程，
+                # 导致后续缺行按钮的点击继续被吞——先把安静的按钮点掉
+                fallback = [b for b in btns
+                            if not any(l.startswith(b['text'] + ' ') for l in seen)]
+            for b in fallback:
+                trace(f"{page_name} re-click {b['text'][:30]!r}")
+                click_until_line(b, seen, anchor)
+                collect_with_settle(seen)
+        collect_tail(seen)
+    if not aborted:
+        # 自适应沉降：小页（≤6 按钮）无慢异步面，深沉降纯耗时；大页保留全窗口
+        stall_rounds = 12 if len(clicked_known) > 6 else 4
+        stall = 0
+        for _ in range(stall_rounds):
+            collect_result_lines(dump(), seen)
+            n = len(seen)
+            swipe_region(0.85, 0.45)
+            # 异步用例（userAuth/定位超时等）的 ✅/❌ 行在点击后 30-60s 才落地，沉降轮须给足窗口
+            time.sleep(2.0)
+            collect_result_lines(dump(), seen)
+            stall = stall + 1 if len(seen) == n else 0
+            if stall >= 3:
+                break
+    trace(f"{page_name} done: {len(seen)} lines, {len(clicked_known)} btns")
     dismiss_dialog()
     results[page_name] = sorted(seen)
     # 行数断言材料：api/cat 页每个 Case 按钮都应出一条信号，缺行=采集质量缺口
     if not page_name.startswith(('lang-', 'ui-')):
         missing_lines[page_name] = [b for b in clicked_known
                                     if not any(l.startswith(b + ' ') for l in seen)]
+    # 返回按钮数：0 = 导航落空的幽灵遍历（列表被当目标页扫了一遍），visit_rows 不标记 visited
+    return len(clicked_known)
 
 
 LIST_HEADERS = ('API 域覆盖', '漏洞挑战')  # 列表页就绪信号
@@ -400,10 +547,15 @@ def visit_rows(prefix_list, budget_seconds=600):
                             break
                         time.sleep(3.0)
                     time.sleep(2.0)
-                    tree2 = dump()
-                    if any(a.get('text', '').startswith(p) and a.get('text', '') not in visited
-                           for a in nodes(tree2) for p in prefix_list):
-                        ok = True
+                    # 重启后列表回顶：目标行可能在折叠下方，仅查首屏会让重试路径结构性找不到
+                    for _scan in range(10):
+                        tree2 = dump()
+                        if any(a.get('text', '').startswith(p) and a.get('text', '') not in visited
+                               for a in nodes(tree2) for p in prefix_list):
+                            ok = True
+                            break
+                        swipe_up()
+                    if ok:
                         break
                 if ok:
                     continue
@@ -411,11 +563,31 @@ def visit_rows(prefix_list, budget_seconds=600):
                 break
             continue
         name = rows[0][0]
-        x, y = center(rows[0][1])
-        click(x, y, 2.0)
+        entered = False
+        for _retry in range(3):
+            hit = [a for a in nodes(dump()) if a.get('text', '') == name]
+            if not hit:
+                break  # 行被力矩滚出视口：goto_list 重来，下轮发现循环会重新找到它
+            x, y = center(hit[0]['bounds'])
+            click(x, y, 2.0)
+            # 导航确认：列表滚动力矩未消时行点击会落空，随后对列表跑出 0 按钮幽灵遍历，
+            # 且 clicked_known 为空使 missing_lines 恒空（假绿）——以锚文本离开行 id 前缀
+            # 为进入页面信号，未进入不标记 visited
+            for _ in range(4):
+                a = page_anchor()
+                if a and not a.startswith(LIST_ROW_PREFIXES):
+                    entered = True
+                    break
+                time.sleep(1.5)
+            if entered:
+                break
+        if not entered:
+            print(f'# WARN: {name} 行点击未导航成功，重发现后再试', file=sys.stderr)
+            goto_list()
+            continue
         print(f'# visit {name}', file=sys.stderr)
-        run_page_buttons(name)
-        visited.add(name)
+        if run_page_buttons(name) > 0:
+            visited.add(name)
         goto_list()
 
 
